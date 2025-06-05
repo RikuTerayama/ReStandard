@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>News - ReStandard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    :root {
+      --main-color: #333333;
+      --accent-color: #888;
+      --hover-bg: #f8f8f8;
+      --gradient-start: #ffffff;
+      --gradient-end:   #dedbd6;
+      --heading-font: 'Noto Serif JP', serif;
+      --body-font: 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+      color: var(--main-color);
+      text-align: center;
+      line-height: 1.7;
+      font-feature-settings: "palt";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid #ccc;
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar-brand {
+      font-family: var(--heading-font);
+      color: var(--main-color) !important;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--main-color) !important;
+      position: relative;
+      transition: all 0.3s var(--transition-timing);
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    .nav-link.active {
+      font-weight: 700;
+    }
+    
+    .brand-name-caption {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 60px;
+    }
+
+    /* ニュース記事のスタイル */
+    .news-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .news-item {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .news-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .news-date {
+      font-family: var(--heading-font);
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .news-title {
+      font-family: var(--heading-font);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .news-content {
+      text-align: left;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .news-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .news-tag {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background: var(--main-color);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-link {
+      color: var(--main-color);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .contact-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--main-color);
+      transition: transform 0.3s ease;
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+
+    .contact-link:hover {
+      color: var(--accent-color);
+    }
+
+    .contact-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* フッターのスタイル */
+    footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 3rem 0;
+      margin-top: 4rem;
+    }
+
+    footer .nav {
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    footer .nav-link {
+      color: var(--main-color) !important;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease;
+    }
+
+    footer .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #333, #666);
+      color: white !important;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      background: linear-gradient(45deg, #444, #777);
+    }
+
+    .copyright {
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      margin-top: 1rem;
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .social-links a {
+        font-size: 1.2rem;
+        width: 35px;
+        height: 35px;
+        margin: 0 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーションバー -->
+<nav class="sticky-top navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <div class="d-lg-none" style="width: 40px;"></div>
+    <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+        <li class="nav-item"><a class="nav-link active" href="news.html">News</a></li>
+        <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="language-switcher">
+        <button onclick="switchLanguage('ja')" class="active">JA</button>
+        <button onclick="switchLanguage('en')">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- メインコンテンツ -->
+<section class="news-section">
+  <h1 class="section-title text-reveal">
+    <span>News</span>
+  </h1>
+
+  <div class="news-item">
+    <div class="news-date">2024.06.05</div>
+    <h2 class="news-title">「Rockmount 25AW」のお知らせ</h2>
+    <div class="news-content">
+      <p>「Rockmount 25AW」の商品が入荷しております。</p>
+      <p>「Rockmount」は、1946年にアメリカで創業された伝統あるブランドで、クラシックなデザインと高品質な素材を使用した製品を提供しています。</p>
+      <img src="image/rockmount3.png" alt="Rockmount" class="news-image">
+      <p>今後とも、皆様に素晴らしい商品をお届けできるよう努めてまいります。</p>
+    </div>
+    </div>
+  </div>
+
+  <div class="news-item">
+    <div class="news-date">2024.03.10</div>
+    <h2 class="news-title">春の新作コレクション入荷のお知らせ</h2>
+    <div class="news-content">
+      <p>春の新作コレクションが入荷いたしました。</p>
+      <p>今シーズンは、明るく爽やかな色合いと、軽やかな素材感を重視したアイテムを多数取り揃えております。</p>
+      <p>ぜひ<a href="contact.html" class="contact-link">Contactフォーム</a>よりお問い合わせください。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-5 text-center">
+  <div class="container">
+    <ul class="nav justify-content-center">
+      <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+      <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+      <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
+      <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+      <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="social-links">
+      <a href="https://www.instagram.com/restandard_jp" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.facebook.com/restandard_jp" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </div>
+    
+    <div class="copyright">©2025 Restandard Inc. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // スクロールアニメーション
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    // アニメーション対象の要素を監視
+    document.querySelectorAll('.scroll-fade, .text-block, .news-item').forEach(el => {
+      observer.observe(el);
+    });
+
+    // 保存された言語設定を読み込む
+    const savedLang = localStorage.getItem('preferred-language');
+    if (savedLang) {
+      switchLanguage(savedLang, false);
+    }
+  });
+
+  // 言語切り替え機能
+  function switchLanguage(lang, animate = true) {
+    document.documentElement.lang = lang;
+    
+    document.querySelectorAll('.language-switcher button').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang));
+    });
+
+    if (animate) {
+      const contents = document.querySelectorAll(`.${lang}-content`);
+      contents.forEach(content => {
+        content.classList.add('language-transition');
+        content.addEventListener('animationend', () => {
+          content.classList.remove('language-transition');
+        }, { once: true });
+      });
+    }
+    
+    localStorage.setItem('preferred-language', lang);
+
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'visually-hidden';
+    announcement.textContent = lang === 'ja' ? '日本語に切り替えました' : 'Switched to English';
+    document.body.appendChild(announcement);
+    setTimeout(() => announcement.remove(), 1000);
+  }
+</script>
+</body>
+</html> 
