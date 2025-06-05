@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ReStandardは、高品質なアパレルブランドを取り扱うセレクトショップです。">
+  <meta name="keywords" content="ReStandard, セレクトショップ, アパレル, ファッション">
+  <title>ReStandard</title>
+  
+  <!-- プリロード -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
+  <link rel="preload" href="css/style.css" as="style">
+  
+  <!-- スタイルシート -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://restandard.jp/">
+  <meta property="og:title" content="ReStandard - 「Standard（定番）を再定義し、再構築する」">
+  <meta property="og:description" content="ReStandardは、「Standard（定番）を再定義し、再構築する」。">
+  <meta property="og:image" content="image/ogp.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://restandard.jp/">
+  <meta property="twitter:title" content="ReStandard">
+  <meta property="twitter:description" content="ReStandardは、「Standard（定番）を再定義し、再構築する」。">
+  <meta property="twitter:image" content="image/ogp.jpg">
+
+  <style>
+    :root {
+      --main-color: #333333;
+      --accent-color: #888;
+      --hover-bg: #f8f8f8;
+      --gradient-start: #ffffff;
+      --gradient-end:   #dedbd6;
+      --heading-font: 'Noto Serif JP', serif;
+      --body-font: 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+      color: var(--main-color);
+      text-align: center;
+      line-height: 1.7;
+      font-feature-settings: "palt";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid #ccc;
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar .container-fluid {
+      padding: 0 1.5rem;
+    }
+
+    .navbar-brand {
+      font-family: var(--heading-font);
+      color: var(--main-color) !important;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .navbar-nav {
+      margin-right: 1rem;
+    }
+
+    .navbar-nav .nav-item {
+      margin: 0 0.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--main-color) !important;
+      position: relative;
+      transition: all 0.3s var(--transition-timing);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s var(--transition-timing);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+      width: 70%;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    .nav-link.active {
+      font-weight: 700;
+    }
+
+    .nav-link.active::after {
+      width: 70%;
+    }
+
+    /* 言語切り替えボタンのスタイル */
+    .language-switcher {
+      display: flex;
+      align-items: center;
+      margin-left: 2rem;
+      position: relative;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(51, 51, 51, 0.1);
+      border-radius: 24px;
+      padding: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .language-switcher button {
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: all 0.3s var(--transition-timing);
+      border-radius: 20px;
+      font-family: var(--heading-font);
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .language-switcher button.active {
+      color: #fff;
+      font-weight: 500;
+      background: var(--main-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+
+    /* モバイル対応 */
+    @media (max-width: 991px) {
+      .navbar-nav {
+        margin-right: 0;
+        text-align: center;
+        padding: 1rem 0;
+      }
+
+      .navbar-nav .nav-item {
+        margin: 0.5rem 0;
+      }
+
+      .language-switcher {
+        margin: 1rem auto;
+        width: fit-content;
+      }
+
+      .navbar-brand {
+        font-size: 1.3rem;
+      }
+    }
+
+    .brand-name-caption {
+      font-family: var(--heading-font);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .carousel-container {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+    #homeCarousel .carousel-inner {
+      height: 500px;
+      align-items: center;
+      justify-content: center;
+    }
+    #homeCarousel .carousel-item {
+      justify-content: center;
+      align-items: center;
+      height: 500px;
+      background-color: #fff;
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    }
+
+    #homeCarousel .carousel-item img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      object-fit: contain;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 20px;
+    }
+
+    .carousel-indicators-line {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      padding-left: 0;
+      margin: 0;
+      list-style: none;
+      z-index: 10;
+    }
+
+    .carousel-indicators-line button {
+      width: 40px;
+      height: 6px;
+      margin: 6px 4px;
+      background-color: #000 !important;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+      border: none;
+    }
+
+    .carousel-indicators-line .active {
+      opacity: 1;
+    }
+
+    .brand-section-title {
+      font-family: var(--heading-font);
+      font-size: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .brandlogo {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      aspect-ratio: 1;
+    }
+
+    .brandlogo:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .brandlogo img {
+      max-width: 140px;
+      width: 100%;
+      height: auto;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      filter: grayscale(20%);
+    }
+
+    .brandlogo:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+
+    .preview {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -100%) scale(0.95);
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 10;
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      width: 250px;
+    }
+
+    .preview img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      filter: none;
+    }
+
+    .brandlogo:hover .preview {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -110%) scale(1);
+    }
+
+    footer {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(204, 204, 204, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    footer .nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    footer .nav-link {
+      color: var(--main-color) !important;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      position: relative;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    footer .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    footer .nav-link:hover::after {
+      width: 70%;
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #333, #666);
+      color: white !important;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      background: linear-gradient(45deg, #444, #777);
+    }
+
+    .copyright {
+      font-family: var(--body-font);
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      margin-top: 2rem;
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body>
+  <nav class="sticky-top navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <div class="d-lg-none" style="width: 40px;"></div>
+      <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#brands">Brands</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+          <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+        <div class="language-switcher">
+          <button onclick="switchLanguage('ja')" class="active">JA</button>
+          <button onclick="switchLanguage('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home" class="mb-5" aria-label="ブランドカルーセル">
+    <div class="carousel-wrapper">
+      <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" aria-roledescription="カルーセル" aria-label="ブランド画像のスライドショー">
+        <div class="carousel-inner">
+          <div class="carousel-item active" aria-roledescription="スライド" aria-label="Rockmount" data-brand-name="Rockmount">
+            <div class="carousel-image-container">
+              <a href="https://rockmount.com/" aria-label="Rockmountのウェブサイトへ">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/rockmount2.jpg">
+                  <img src="image/rockmount3.png" alt="Rockmount" loading="lazy">
+                </picture>
+              </a>
+            </div>
+          </div>
+          <div class="carousel-item" aria-roledescription="スライド" aria-label="Harley" data-brand-name="Harley of Scotland">
+            <div class="carousel-image-container">
+              <a href="https://www.harleyofscotland.com/" aria-label="Harley of Scotlandのウェブサイトへ">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/Harley1.jpg">
+                  <img src="image/harley 24AW.png" alt="Harley of Scotland" loading="lazy">
+                </picture>
+              </a>
+            </div>
+          </div>
+          <div class="carousel-item" aria-roledescription="スライド" aria-label="William Lockie" data-brand-name="William Lockie">
+            <div class="carousel-image-container">
+              <a href="https://williamlockie.com/" aria-label="William Lockieのウェブサイトへ">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/william2.webp">
+                  <img src="image/william2.webp" alt="William Lockie" loading="lazy">
+                </picture>
+              </a>
+            </div>
+          </div>
+          <div class="carousel-item" aria-roledescription="スライド" aria-label="Eribe" data-brand-name="Eribe">
+            <div class="carousel-image-container">
+              <a href="https://www.eribe.com/" aria-label="Eribeのウェブサイトへ">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/eribe1.webp">
+                  <img src="image/eribe.png" alt="Eribe" loading="lazy">
+                </picture>
+              </a>
+            </div>
+          </div>
+          <div class="carousel-item" aria-roledescription="スライド" aria-label="Kopka" data-brand-name="Kopka">
+            <div class="carousel-image-container">
+              <a href="https://www.kopka-accessories.com/" aria-label="Kopkaのウェブサイトへ">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/kopka2.webp">
+                  <img src="image/kopka2.webp" alt="Kopka" loading="lazy">
+                </picture>
+              </a>
+            </div>
+          </div>
+          <div class="carousel-item" aria-roledescription="スライド" aria-label="Le Minor" data-brand-name="Le Minor">
+            <div class="carousel-image-container">
+              <a href="https://leminor.fr/en" aria-label="Le Minorのウェブサイトへ">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/leminor2.webp">
+                  <img src="image/leminor25AW.png" alt="Le Minor" loading="lazy">
+                </picture>
+              </a>
+            </div>
+          </div>
+          <div class="carousel-item" aria-roledescription="スライド" aria-label="Glen Prince" data-brand-name="Glen Prince">
+            <div class="carousel-image-container">
+              <a href="https://www.glenprince.com/" aria-label="Glen Princeのウェブサイトへ">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/glenprince2.jpg">
+                  <img src="image/glenprince25AW.png" alt="Glen Prince" loading="lazy">
+                </picture>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-indicators carousel-indicators-line" role="tablist" aria-label="カルーセルインジケーター">
+          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-label="スライド1" aria-selected="true" role="tab"></button>
+          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="スライド2" aria-selected="false" role="tab"></button>
+          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="スライド3" aria-selected="false" role="tab"></button>
+          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="3" aria-label="スライド4" aria-selected="false" role="tab"></button>
+          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="4" aria-label="スライド5" aria-selected="false" role="tab"></button>
+          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="5" aria-label="スライド6" aria-selected="false" role="tab"></button>
+          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="6" aria-label="スライド7" aria-selected="false" role="tab"></button>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev" aria-label="前のスライド">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">前へ</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next" aria-label="次のスライド">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">次へ</span>
+        </button>
+      </div>
+    </div>
+    <div id="brandName" class="brand-name-caption">Rockmount</div>
+  </section>
+
+   <!-- About -->
+<section id="brands" class="mb-5">
+  <h1 class="section-title text-reveal">
+    <span>Brands</span>
+  </h1>
+  <div class="brands-grid section-content">
+    <a class="brandlogo" href="https://rockmount.com/">
+      <img src="image/rockmount.webp" alt="Rockmount" loading="lazy">
+      <div class="preview"><img src="image/rockmount3.png" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://www.harleyofscotland.com/">
+      <img src="image/Harley.webp" alt="Harley" loading="lazy">
+      <div class="preview"><img src="image/Harley1.jpg" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://williamlockie.com/">
+      <img src="image/william lockie.png" alt="William Lockie" loading="lazy">
+      <div class="preview"><img src="image/william2.webp" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://www.eribe.com/">
+      <img src="image/eribe.svg" alt="Eribe" loading="lazy">
+      <div class="preview"><img src="image/eribe.png" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://www.glenprince.com/">
+      <img src="image/glen prince.png" alt="Glen Prince" loading="lazy">
+      <div class="preview"><img src="image/glenprince25AW.png" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://www.athenaknitwear.com/">
+      <img src="image/athena designs.png" alt="Athena" loading="lazy">
+      <div class="preview"><img src="image/athenadesigns.png" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://www.kopka-accessories.com/">
+      <img src="image/kopka.png" alt="Kopka" loading="lazy">
+      <div class="preview"><img src="image/kopka2.webp" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://leminor.fr/en">
+      <img src="image/leminor.gif" alt="Le Minor" loading="lazy">
+      <div class="preview"><img src="image/leminor25AW.png" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://sans-arcidet.fr/">
+      <img src="image/san arcident.webp" alt="San Arcidet" loading="lazy">
+      <div class="preview"><img src="image/sansarcident.png" alt="Preview" loading="lazy"></div>
+    </a>
+
+    <a class="brandlogo" href="https://hatattack.com/">
+      <img src="image/hat attack.png" alt="Hat Attack" loading="lazy">
+      <div class="preview"><img src="image/hatattack.png" alt="Preview" loading="lazy"></div>
+    </a>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+<footer class="py-5 text-center">
+  <ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+    <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+    <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+  </ul>
+
+  <div class="social-links">
+    <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.facebook.com/restandard_jp" target="_blank" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+  </div>
+  
+  <div class="copyright">©2025 Restandard Inc. All Rights Reserved.</div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // スクロールアニメーション
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, options);
+
+      // アニメーション対象の要素を監視
+      document.querySelectorAll('.scroll-fade, .text-block').forEach(el => {
+        observer.observe(el);
+      });
+
+      // カルーセルのブランド名更新
+      const carousel = document.getElementById('homeCarousel');
+      const brandNameElement = document.getElementById('brandName');
+
+      carousel.addEventListener('slide.bs.carousel', function(event) {
+        const nextSlide = event.relatedTarget;
+        const brandName = nextSlide.getAttribute('data-brand-name');
+        if (brandName) {
+          brandNameElement.textContent = brandName;
+        }
+      });
+
+      // Brandsセクションのアクティブ状態管理
+      const brandsSection = document.getElementById('brands');
+      const brandsLink = document.querySelector('a[href="#brands"]');
+      
+      const brandsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            brandsLink.classList.add('active');
+          } else {
+            brandsLink.classList.remove('active');
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      if (brandsSection) {
+        brandsObserver.observe(brandsSection);
+      }
+
+      // 保存された言語設定を読み込む
+      const savedLang = localStorage.getItem('preferred-language');
+      if (savedLang) {
+        switchLanguage(savedLang, false);
+      }
+    });
+
+    // 言語切り替え機能の改善
+    function switchLanguage(lang, animate = true) {
+      // 現在の言語を保存
+      const prevLang = document.documentElement.lang;
+      
+      // 言語を切り替え
+      document.documentElement.lang = lang;
+      
+      // ボタンの状態を更新
+      document.querySelectorAll('.language-switcher button').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang));
+      });
+
+      // コンテンツのアニメーション
+      if (animate && prevLang !== lang) {
+        const contents = document.querySelectorAll(`.${lang}-content`);
+        contents.forEach(content => {
+          content.classList.add('language-transition');
+          content.addEventListener('animationend', () => {
+            content.classList.remove('language-transition');
+          }, { once: true });
+        });
+      }
+      
+      // 言語設定を保存
+      localStorage.setItem('preferred-language', lang);
+
+      // アクセシビリティのための通知
+      const announcement = document.createElement('div');
+      announcement.setAttribute('role', 'status');
+      announcement.setAttribute('aria-live', 'polite');
+      announcement.className = 'visually-hidden';
+      announcement.textContent = lang === 'ja' ? '日本語に切り替えました' : 'Switched to English';
+      document.body.appendChild(announcement);
+      setTimeout(() => announcement.remove(), 1000);
+    }
+  </script>
+</body>
+</html>

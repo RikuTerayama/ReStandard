@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Location - ReStandard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    :root {
+      --main-color: #333333;
+      --accent-color: #888;
+      --hover-bg: #f8f8f8;
+      --gradient-start: #ffffff;
+      --gradient-end:   #dedbd6;
+      --heading-font: 'Noto Serif JP', serif;
+      --body-font: 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+      color: var(--main-color);
+      text-align: center;
+      line-height: 1.7;
+      font-feature-settings: "palt";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid #ccc;
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar-brand {
+      font-family: var(--heading-font);
+      color: var(--main-color) !important;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--main-color) !important;
+      position: relative;
+      transition: all 0.3s var(--transition-timing);
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    .nav-link.active {
+      font-weight: 700;
+    }
+    
+    .brand-name-caption {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 60px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .location-title {
+      font-family: var(--heading-font);
+      font-size: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .location-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+
+    .address-title {
+      font-family: var(--heading-font);
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin: 2rem 0 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    .address-details {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    footer .nav-link {
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .copyright {
+      font-family: var(--body-font);
+      letter-spacing: 0.02em;
+    }
+
+    </style>
+  
+</head>
+<body>
+
+<!-- ▼ ナビゲーションバー（共通） -->
+<nav class="sticky-top navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <div class="d-lg-none" style="width: 40px;"></div>
+    <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+        <li class="nav-item"><a class="nav-link active" href="location.html">Location</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="language-switcher">
+        <button onclick="switchLanguage('ja')" class="active">JA</button>
+        <button onclick="switchLanguage('en')">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- ▲ ナビゲーションここまで -->
+
+<!-- ▼ メイン内容 -->
+<section class="location-section mb-5">
+  <h1 class="section-title text-reveal">
+    <span>Location</span>
+  </h1>
+  <div class="section-content">
+    <div class="container">
+      <div class="text-block delay-1">
+        <div class="ja-content">
+          <p class="mt-4">
+            オフィス所在地：東京都練馬区北町近辺<br>
+            最寄駅：副都心線・有楽町線「地下鉄赤塚駅」より徒歩約7分
+          </p>
+        </div>
+        <div class="en-content">
+          <p class="mt-4">
+            Office Location: Near Kitamachi, Nerima-ku, Tokyo<br>
+            Access: 7 minutes walk from Chikatetsu-Akatsuka Station (Fukutoshin Line / Yurakucho Line)
+          </p>
+        </div>
+      </div>
+
+      <div class="text-block delay-2">
+        <div class="ja-content">
+          <p>
+            お打ち合わせや商品に関するご相談は、事前予約のうえご来訪いただけます。<br>
+            詳細なアクセス方法は、お問い合わせフォームよりお気軽にご連絡ください。
+          </p>
+        </div>
+        <div class="en-content">
+          <p>
+            Visits for meetings and product consultations are welcome by appointment.<br>
+            Please feel free to contact us through the inquiry form for detailed access information.
+          </p>
+        </div>
+      </div>
+
+      <div class="text-block delay-3">
+        <div class="mt-4">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.2198323627536!2d139.64144777579176!3d35.769975972558676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ec641fde68af%3A0x3ea75c127955922b!2z5Zyw5LiL6YmE6LWk5aGa6aeF!5e0!3m2!1sja!2sjp!4v1743276776443!5m2!1sja!2sjp" 
+                width="600" height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // スクロールアニメーション
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    // アニメーション対象の要素を監視
+    document.querySelectorAll('.scroll-fade, .text-block').forEach(el => {
+      observer.observe(el);
+    });
+
+    // 保存された言語設定を読み込む
+    const savedLang = localStorage.getItem('preferred-language');
+    if (savedLang) {
+      switchLanguage(savedLang, false);
+    }
+  });
+
+  // 言語切り替え機能の改善
+  function switchLanguage(lang, animate = true) {
+    // 現在の言語を保存
+    const prevLang = document.documentElement.lang;
+    
+    // 言語を切り替え
+    document.documentElement.lang = lang;
+    
+    // ボタンの状態を更新
+    document.querySelectorAll('.language-switcher button').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang));
+    });
+
+    // コンテンツのアニメーション
+    if (animate && prevLang !== lang) {
+      const contents = document.querySelectorAll(`.${lang}-content`);
+      contents.forEach(content => {
+        content.classList.add('language-transition');
+        content.addEventListener('animationend', () => {
+          content.classList.remove('language-transition');
+        }, { once: true });
+      });
+    }
+    
+    // 言語設定を保存
+    localStorage.setItem('preferred-language', lang);
+
+    // アクセシビリティのための通知
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'visually-hidden';
+    announcement.textContent = lang === 'ja' ? '日本語に切り替えました' : 'Switched to English';
+    document.body.appendChild(announcement);
+    setTimeout(() => announcement.remove(), 1000);
+  }
+</script>
+
+  <!-- Footer -->
+  <footer class="py-5 text-center">
+    <style>
+      footer {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-top: 1px solid rgba(204, 204, 204, 0.3);
+        backdrop-filter: blur(10px);
+      }
+  
+      footer .nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+  
+      footer .nav-link {
+        color: var(--main-color) !important;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+  
+      footer .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: var(--main-color);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+  
+      footer .nav-link:hover::after {
+        width: 70%;
+      }
+  
+      .social-links {
+        margin: 2rem 0;
+      }
+  
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin: 0 10px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #333, #666);
+        color: white !important;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+  
+      .social-links a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        background: linear-gradient(45deg, #444, #777);
+      }
+  
+      .copyright {
+        font-size: 0.9rem;
+        color: var(--accent-color);
+        margin-top: 2rem;
+      }
+    </style>
+  
+    <ul class="nav">
+      <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+      <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+      <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+      <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    </ul>
+  
+    <div class="social-links">
+      <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.facebook.com/restandard_jp" target="_blank" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </div>
+    
+    <div class="copyright">©2025 Restandard Inc. All Rights Reserved.</div>
+  </footer>
+    
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

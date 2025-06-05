@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>About Us - ReStandard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    :root {
+      --main-color: #333333;
+      --accent-color: #888;
+      --hover-bg: #f8f8f8;
+      --gradient-start: #ffffff;
+      --gradient-end:   #dedbd6;
+      --heading-font: 'Noto Serif JP', serif;
+      --body-font: 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+      color: var(--main-color);
+      text-align: center;
+      line-height: 1.7;
+      font-feature-settings: "palt";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid #ccc;
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar-brand {
+      font-family: var(--heading-font);
+      color: var(--main-color) !important;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--main-color) !important;
+      position: relative;
+      transition: all 0.3s var(--transition-timing);
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    .nav-link.active {
+      font-weight: 700;
+    }
+    
+    .brand-name-caption {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 60px;
+    }
+
+    .brand-description {
+      margin: 2rem 0;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .brand-name {
+      font-family: var(--heading-font);
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin: 1rem 0;
+      letter-spacing: 0.03em;
+    }
+
+    footer .nav-link {
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .copyright {
+      font-family: var(--body-font);
+      letter-spacing: 0.02em;
+    }
+
+    /* About セクションのスタイル追加 */
+    .about-section {
+      text-align: center;
+    }
+
+    .about-section .section-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-section .text-block {
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    .about-section img {
+      display: block;
+      margin: 0 auto 1rem;
+    }
+
+  </style>
+  
+</head>
+<body>
+
+<!-- ナビゲーションバー -->
+<nav class="sticky-top navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <div class="d-lg-none" style="width: 40px;"></div>
+    <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+        <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+        <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="language-switcher">
+        <button onclick="switchLanguage('ja')" class="active">JA</button>
+        <button onclick="switchLanguage('en')">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- 本文 -->
+<section class="about-section mb-5">
+  <h1 class="section-title text-reveal">
+    <span>About Us</span>
+  </h1>
+  <div class="section-content">
+    <div class="ja-content">
+      <p class="text-block delay-1 text-center">
+        私たちは<strong>「Standard（定番）を再定義し、再構築する」</strong>を理念に、<br>
+        欧米を中心に上質なアパレルブランドを日本へ輸入・ご紹介しています。<br>
+        長年にわたって信頼あるパートナーと築き上げた関係性を基盤に、<br>
+        普遍的な価値を持つアイテムを国内のお客様へご提案しています。
+      </p>
+    </div>
+    <div class="en-content">
+      <p class="text-block delay-1 text-center">
+        With our philosophy of <strong>"Redefining and Reconstructing Standards,"</strong><br>
+        we import and introduce high-quality apparel brands from Europe and America to Japan.<br>
+        Based on long-standing trusted partnerships,<br>
+        we offer timeless, valuable items to our customers in Japan.
+      </p>
+    </div>
+
+    <div class="text-block delay-2 text-center">
+      <a href="https://rockmount.com/" target="_blank" rel="noopener">
+        <img src="image/rockmount.webp" alt="Rockmount Mfg. Co." style="max-width: 300px; height: auto; margin-bottom: 1rem;">
+      </a><br>
+      <strong>Rockmount Mfg. Co. (USA)</strong><br>
+      <div class="ja-content">
+        アメリカの老舗ブランド。<br>
+        1946年にアメリカ、デンバーで創業。<br>
+        ウェスタンシャツに初めてスナップボタンを採用しました。<br>
+        顧客にはエリック•クラプトンやロバート•レッドフォードがいます。
+      </div>
+      <div class="en-content">
+        A historic American brand.<br>
+        Founded in 1946 in Denver, USA.<br>
+        Pioneered the use of snap buttons in Western shirts.<br>
+        Customers include Eric Clapton and Robert Redford.
+      </div>
+    </div>
+
+    <div class="text-block delay-3 text-center">
+      <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
+        <img src="image/Harley.avif" alt="Harley" style="max-width: 300px; height: auto; margin-bottom: 1rem;">
+      </a><br>
+      <strong>Harley of Scotland</strong><br>
+      <div class="ja-content">
+        スコットランドのファクトリーニットブランドであるHarley of Scotland とは10年にわたりカラー別注などの当社独自のスタイルを展開しています。<br>
+        シームレスなニットは着用にストレスがなく着心地は最上級です。
+      </div>
+      <div class="en-content">
+        We have been developing our original styles, including custom colors, with Harley of Scotland, a Scottish factory knitwear brand, for 10 years.<br>
+        Their seamless knits offer supreme comfort with zero stress during wear.
+      </div>
+    </div>
+
+    <div class="text-block delay-4 text-center">
+      <a href="https://www.eribe.com/" target="_blank" rel="noopener">
+        <img src="image/eribe.svg" alt="Eribe" style="max-width: 300px; height: auto; margin-bottom: 1rem;">
+      </a><br>
+      <strong>Eribe Knitwear (Scotland)</strong><br>
+      <div class="ja-content">
+        同じくスコットランドのニットアルチザンであるEribe knitwearからは15年以上にわたりカラーコンビネーションがユニークなセーターやマフラー、手袋などのニット小物類をご紹介しています。
+      </div>
+      <div class="en-content">
+        For over 15 years, we have been introducing uniquely color-combined sweaters, scarves, gloves, and other knit accessories from Eribe Knitwear, another Scottish knit artisan.
+      </div>
+    </div>
+
+    <div class="text-block delay-5 text-center">
+      <a href="https://leminor.fr/en" target="_blank" rel="noopener">
+        <img src="image/leminor.gif" alt="Eribe" style="max-width: 300px; height: auto; margin-bottom: 1rem;">
+      </a><br>
+      <strong>Le Minor (France/Grammatico)</strong><br>
+      <div class="ja-content">
+        フランスのLe Minor(Grammatico)からは20ゲージのコットン糸を使用したボーダーニットシャツを企画販売しています。<br>
+        ワイドTシャツ、ロングスリーブ、ショートスリーブなど全て別注のスタイルです。
+      </div>
+      <div class="en-content">
+        We plan and sell border knit shirts using 20-gauge cotton yarn from Le Minor (Grammatico) in France.<br>
+        All styles, including wide T-shirts, long sleeves, and short sleeves, are custom-made.
+      </div>
+    </div>
+
+    <div class="text-block delay-6 text-center">
+      <div class="ja-content">
+        RockmountやHarleyをはじめとする欧米の厳選ブランドとの取引を32年間継続しており、<br>
+        現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。
+      </div>
+      <div class="en-content">
+        We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, for 32 years,<br>
+        and have established partnerships with <b>more than 25 manufacturers</b> to date.
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="py-5 text-center">
+    <style>
+      footer {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-top: 1px solid rgba(204, 204, 204, 0.3);
+        backdrop-filter: blur(10px);
+      }
+  
+      footer .nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+  
+      footer .nav-link {
+        color: var(--main-color) !important;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+  
+      footer .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: var(--main-color);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+  
+      footer .nav-link:hover::after {
+        width: 70%;
+      }
+  
+      .social-links {
+        margin: 2rem 0;
+      }
+  
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin: 0 10px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #333, #666);
+        color: white !important;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+  
+      .social-links a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        background: linear-gradient(45deg, #444, #777);
+      }
+  
+      .copyright {
+        font-size: 0.9rem;
+        color: var(--accent-color);
+        margin-top: 2rem;
+      }
+    </style>
+  
+    <ul class="nav">
+      <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+      <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+      <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+      <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    </ul>
+  
+    <div class="social-links">
+      <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.facebook.com/restandard_jp" target="_blank" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </div>
+    
+    <div class="copyright">©2025 Restandard Inc. All Rights Reserved.</div>
+  </footer>
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // スクロールアニメーション
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    // アニメーション対象の要素を監視
+    document.querySelectorAll('.scroll-fade, .text-block').forEach(el => {
+      observer.observe(el);
+    });
+
+    // 保存された言語設定を読み込む
+    const savedLang = localStorage.getItem('preferred-language');
+    if (savedLang) {
+      switchLanguage(savedLang, false);
+    }
+  });
+
+  // 言語切り替え機能の改善
+  function switchLanguage(lang, animate = true) {
+    // 現在の言語を保存
+    const prevLang = document.documentElement.lang;
+    
+    // 言語を切り替え
+    document.documentElement.lang = lang;
+    
+    // ボタンの状態を更新
+    document.querySelectorAll('.language-switcher button').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang));
+    });
+
+    // コンテンツのアニメーション
+    if (animate && prevLang !== lang) {
+      const contents = document.querySelectorAll(`.${lang}-content`);
+      contents.forEach(content => {
+        content.classList.add('language-transition');
+        content.addEventListener('animationend', () => {
+          content.classList.remove('language-transition');
+        }, { once: true });
+      });
+    }
+    
+    // 言語設定を保存
+    localStorage.setItem('preferred-language', lang);
+
+    // アクセシビリティのための通知
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'visually-hidden';
+    announcement.textContent = lang === 'ja' ? '日本語に切り替えました' : 'Switched to English';
+    document.body.appendChild(announcement);
+    setTimeout(() => announcement.remove(), 1000);
+  }
+</script>
+</body>
+</html>
