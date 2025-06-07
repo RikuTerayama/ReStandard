@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /css/
-Disallow: /js/
-Disallow: /image/
 
 Sitemap: https://restandard.jp/sitemap.xml 
