@@ -26,8 +26,15 @@
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
   
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/style.css">
   
   <style>
@@ -39,6 +46,11 @@
       --gradient-end:   #dedbd6;
       --heading-font: 'Noto Serif JP', serif;
       --body-font: 'Noto Sans JP', sans-serif;
+      --font-size-sm: 0.9rem;
+      --font-size-lg: 1.1rem;
+      --font-size-xl: 1.3rem;
+      --font-size-3xl: 2rem;
+      --font-size-4xl: 2.5rem;
     }
 
     body {
@@ -78,7 +90,7 @@
 
     .nav-link {
       font-family: var(--heading-font);
-      font-size: 0.9rem;
+      font-size: var(--font-size-sm);
       padding: 0.5rem 1rem;
       font-weight: 500;
       letter-spacing: 0.05em;
@@ -96,21 +108,21 @@
     }
     
     .brand-name-caption {
-      font-size: 2rem;
+      font-size: var(--font-size-3xl);
       font-weight: bold;
       margin-top: 60px;
     }
     
     .vision-title {
       font-family: var(--heading-font);
-      font-size: 2.5rem;
+      font-size: var(--font-size-4xl);
       margin-bottom: 2.5rem;
       position: relative;
       display: inline-block;
     }
 
     .vision-content {
-      font-size: 1.1rem;
+      font-size: var(--font-size-lg);
       line-height: 1.8;
       margin: 2rem auto;
       max-width: 800px;
@@ -118,7 +130,7 @@
 
     .vision-highlight {
       font-family: var(--heading-font);
-      font-size: 1.3rem;
+      font-size: var(--font-size-xl);
       font-weight: 500;
       margin: 2rem 0;
       letter-spacing: 0.03em;
@@ -128,11 +140,13 @@
     footer .nav-link {
       font-weight: 500;
       letter-spacing: 0.02em;
+      font-size: var(--font-size-sm);
     }
 
     .copyright {
       font-family: var(--body-font);
       letter-spacing: 0.02em;
+      font-size: var(--font-size-sm);
     }
   </style>
   
@@ -266,7 +280,7 @@
   
       footer .nav-link {
         color: var(--main-color) !important;
-        font-size: 0.9rem;
+        font-size: var(--font-size-sm);
         padding: 0.5rem 1rem;
         position: relative;
         transition: all 0.3s ease;
@@ -313,7 +327,7 @@
       }
   
       .copyright {
-        font-size: 0.9rem;
+        font-size: var(--font-size-sm);
         color: var(--accent-color);
         margin-top: 2rem;
       }
