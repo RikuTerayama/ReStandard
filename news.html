@@ -328,10 +328,79 @@
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="py-5 text-center">
-  <div class="container">
-    <ul class="nav justify-content-center">
+  <!-- Footer -->
+  <footer class="py-5 text-center">
+    <style>
+      footer {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-top: 1px solid rgba(204, 204, 204, 0.3);
+        backdrop-filter: blur(10px);
+      }
+  
+      footer .nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+  
+      footer .nav-link {
+        color: var(--main-color) !important;
+        font-size: var(--font-size-sm);
+        padding: 0.5rem 1rem;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+  
+      footer .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: var(--main-color);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+  
+      footer .nav-link:hover::after {
+        width: 70%;
+      }
+  
+      .social-links {
+        margin: 2rem 0;
+      }
+  
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin: 0 10px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #333, #666);
+        color: white !important;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+  
+      .social-links a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        background: linear-gradient(45deg, #444, #777);
+      }
+  
+      .copyright {
+        font-size: var(--font-size-sm);
+        color: var(--accent-color);
+        margin-top: 2rem;
+      }
+    </style>
+  
+    <ul class="nav">
       <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
       <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
       <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
@@ -339,7 +408,7 @@
       <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
       <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
     </ul>
-
+  
     <div class="social-links">
       <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
         <i class="fab fa-instagram"></i>
@@ -352,72 +421,13 @@
       </a>
       <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
         <i class="fas fa-book-open"></i>
-      </a>å
+      </a>
     </div>
     
     <div class="copyright">©2025 Restandard Inc. All Rights Reserved.</div>
-  </div>
-</footer>
+  </footer>
+    
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // スクロールアニメーション
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, options);
-
-    // アニメーション対象の要素を監視
-    document.querySelectorAll('.scroll-fade, .text-block, .news-item').forEach(el => {
-      observer.observe(el);
-    });
-
-    // 保存された言語設定を読み込む
-    const savedLang = localStorage.getItem('preferred-language');
-    if (savedLang) {
-      switchLanguage(savedLang, false);
-    }
-  });
-
-  // 言語切り替え機能
-  function switchLanguage(lang, animate = true) {
-    document.documentElement.lang = lang;
-    
-    document.querySelectorAll('.language-switcher button').forEach(btn => {
-      btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang));
-    });
-
-    if (animate) {
-      const contents = document.querySelectorAll(`.${lang}-content`);
-      contents.forEach(content => {
-        content.classList.add('language-transition');
-        content.addEventListener('animationend', () => {
-          content.classList.remove('language-transition');
-        }, { once: true });
-      });
-    }
-    
-    localStorage.setItem('preferred-language', lang);
-
-    const announcement = document.createElement('div');
-    announcement.setAttribute('role', 'status');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.className = 'visually-hidden';
-    announcement.textContent = lang === 'ja' ? '日本語に切り替えました' : 'Switched to English';
-    document.body.appendChild(announcement);
-    setTimeout(() => announcement.remove(), 1000);
-  }
-</script>
 </body>
-</html> 
+</html>
