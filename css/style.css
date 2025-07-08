@@ -907,6 +907,9 @@ body {
   .note-embed {
     height: 200px !important;
   }
+  .location-section .section-content {
+    font-size: 0.7rem !important;
+  }
 }
 
 .about-section-box img {
