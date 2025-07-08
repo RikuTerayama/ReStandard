@@ -13,8 +13,8 @@
 </script>
   <title>ReStandard | 最新ニュースとイベント情報</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ReStandardの最新の入荷情報、イベント、お知らせを掲載。アパレル業界の動向やブランドの裏側をお届けします。">
-  <meta name="keywords" content="ReStandard, ニュース, 新商品, イベント, お知らせ, アパレル, セレクトショップ">
+  <meta name="description" content="ReStandardの最新ニュース・入荷情報・イベント情報をお届け。欧米アパレルブランドの新着やセレクトショップならではの最新動向をチェックできます。">
+  <meta name="keywords" content="ニュース, 最新情報, 入荷, イベント, 欧米ブランド, ReStandard, アパレル, セレクトショップ, ブランド, 新着, ファッション, 日本">
   <meta name="author" content="ReStandard">
   <meta name="robots" content="index, follow">
   
@@ -93,7 +93,7 @@
       --body-font: 'Noto Sans JP', sans-serif;
       --font-size-sm: 0.9rem;
       --font-size-3xl: 2rem;
-      --font-size-4xl: 1.5rem;
+      --font-size-4xl: 2.5rem;
       --font-size-lg: 1.1rem;
       --font-size-2xl: 1.5rem;
       --font-size-xs: 0.8rem;
@@ -292,12 +292,10 @@
     }
 
     .section-title {
-      opacity: 0;
-      animation: fadeInUp 1s var(--text-reveal-timing) 0.2s forwards;
-      font-family: var(--heading-font);
       font-size: var(--font-size-4xl);
+      font-family: var(--heading-font);
       font-weight: 700;
-      margin-bottom: 2.5rem;
+      margin-bottom: -0.5rem;
       letter-spacing: 0.05em;
       display: inline-block;
       color: var(--main-color);
@@ -310,6 +308,30 @@
       letter-spacing: 0.05em;
       color: var(--main-color);
       display: inline-block;
+    }
+
+    .note-embeds {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0rem;
+      min-height: 100vh;
+    }
+    .note-embed {
+      border: none;
+      max-width: 480px;
+      width: 100%;
+      height: 225px;
+      max-height: 300px;
+      transition: none;
+    }
+
+    a, .internal-link {
+      cursor: pointer;
+    }
+    a:hover, .internal-link:hover {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
     }
   </style>
 </head>
@@ -341,7 +363,12 @@
     </div>
   </div>
 </nav>
-
+<!-- 本文 -->
+<section class="about-section mb-5" style="margin-bottom: 0 !important;">
+  <h1 class="section-title text-reveal">
+    <span>News</span>
+  </h1>
+</section>
 <!-- note記事のみ中央揃えで表示 -->
 <div class="note-embeds" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; min-height: 100vh;">
   <iframe class="note-embed" src="https://note.com/embed/notes/nb5aee4061d0f" style="border: none; max-width: 600px; width: 100%;" height="400"></iframe>
