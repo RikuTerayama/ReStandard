@@ -242,6 +242,21 @@ section p {
   .carousel-wrapper {
     margin-top: -7rem;
   }
+
+  .mobile-swiper, .mobile-swiper .swiper-slide {
+    height: 450px;
+    max-width: 100%;
+  }
+  .mobile-swiper .swiper-slide img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* タブレット用のスタイル */
@@ -804,3 +819,18 @@ body {
 .text-2xl { font-size: var(--font-size-2xl); }
 .text-3xl { font-size: var(--font-size-3xl); }
 .text-4xl { font-size: var(--font-size-4xl); }
+
+/* PC・スマホでカルーセルを切り替え */
+#home-desktop, #home-mobile { display: none; }
+@media (min-width: 769px) { #home-desktop { display: block; } }
+@media (max-width: 768px) { #home-mobile { display: block; } }
+
+.swiper-slide { position: relative; }
+.swiper-slide .slide-link {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: block;
+  background: transparent;
+  cursor: pointer;
+}
