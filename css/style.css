@@ -896,6 +896,17 @@ body {
   .about-section-box:last-child {
     margin-bottom: 0.5rem;
   }
+  .about-section-box h3.text-center,
+  .vision-section .about-section-box h3.text-center {
+    font-size: 1.08rem;
+  }
+  .about-section-box p.text-center,
+  .vision-section .about-section-box p.text-center {
+    font-size: 1rem;
+  }
+  .note-embed {
+    height: 200px !important;
+  }
 }
 
 .about-section-box img {
