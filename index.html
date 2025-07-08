@@ -70,6 +70,35 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/style.css">
 
+  <link rel="canonical" href="https://restandard-2025.netlify.app/">
+  <link rel="alternate" href="https://restandard-2025.netlify.app/" hreflang="ja" />
+  <link rel="alternate" href="https://restandard-2025.netlify.app/en/" hreflang="en" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ReStandard",
+    "url": "https://restandard-2025.netlify.app/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://restandard-2025.netlify.app/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://restandard-2025.netlify.app/"}
+    ]
+  }
+  </script>
+
+  <!-- Swiper.js CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <style>
     :root {
       --main-color: #333333;
@@ -221,12 +250,10 @@
     }
 
     .brand-name-caption {
-      font-family: var(--heading-font);
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      font-size: 2rem;
+      font-size: var(--font-size-3xl);
       font-weight: bold;
-      margin-top: 5px;
+      margin-top: 30px;
+      margin-bottom: 10px;
     }
 
     .carousel-container {
@@ -293,11 +320,14 @@
     }
 
     .brand-section-title {
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
       font-family: var(--heading-font);
-      font-size: 2.5rem;
-      margin-bottom: 2.5rem;
-      position: relative;
-      display: inline-block;
+      font-size: var(--font-size-4xl);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--main-color);
+      text-align: center;
     }
 
     .brands-grid {
@@ -441,6 +471,151 @@
       margin-top: 2rem;
       letter-spacing: 0.02em;
     }
+
+    .desktop-only { display: block; }
+    .mobile-only { display: none; }
+    @media (max-width: 600px) {
+      .desktop-only { display: none !important; }
+      .mobile-only { display: inline !important; }
+    }
+
+    a, .internal-link {
+      cursor: pointer;
+    }
+    a:hover, .internal-link:hover {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
+    }
+
+    /* Swiper カルーセルのカスタムデザイン */
+    .swiper {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto -3rem auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(9, 9, 9, 0.1);
+      overflow: hidden;
+      background: #fff;
+    }
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      height: 500px;
+      background: #fff;
+      transition: box-shadow 0.3s;
+    }
+    .swiper-slide img {
+      max-height: 100%;
+      width: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.3s;
+    }
+    .swiper-slide img:hover {
+      transform: scale(1.03);
+    }
+    .brand-overlay {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      background: rgba(51,51,51,0.55);
+      color: #fff;
+      font-size: 1.5rem;
+      font-family: var(--heading-font);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 1rem 0;
+      text-align: center;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    /* カスタム矢印（SVG＋アニメーション） */
+    .swiper-button-next, .swiper-button-prev {
+      color: #333;
+      background: rgba(255,255,255,0.92);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
+      z-index: 10;
+      border: none;
+    }
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+      background: #333;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .swiper-button-next svg, .swiper-button-prev svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .swiper-button-next:hover svg {
+      transform: translateX(4px) scale(1.1);
+    }
+    .swiper-button-prev:hover svg {
+      transform: translateX(-4px) scale(1.1);
+    }
+    .swiper-button-next:after, .swiper-button-prev:after {
+      display: none;
+    }
+    .swiper-pagination {
+      bottom: 10px !important;
+    }
+    .swiper-pagination-bullet {
+      background: #888;
+      opacity: 0.7;
+      width: 12px;
+      height: 12px;
+      margin: 0 4px !important;
+      transition: background 0.2s;
+    }
+    .swiper-pagination-bullet-active {
+      background: #333;
+      opacity: 1;
+    }
+    .swiper-thumbs {
+      margin: 0 auto 2rem auto;
+      max-width: 900px;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .swiper-thumbs .swiper-slide {
+      width: 100px;
+      height: 60px;
+      opacity: 0.5;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: opacity 0.2s, border 0.2s;
+    }
+    .swiper-thumbs .swiper-slide-thumb-active {
+      opacity: 1;
+      border: 2px solid #333;
+    }
+    @media (max-width: 600px) {
+      .swiper, .swiper-thumbs { max-width: 100%; }
+      .swiper-slide { height: 220px; }
+      .brand-overlay { font-size: 1.1rem; padding: 0.5rem 0; }
+      .swiper-thumbs .swiper-slide { width: 60px; height: 36px; }
+    }
+    .swiper-pagination,
+    .swiper-thumbs {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -469,103 +644,125 @@
     </div>
   </nav>
 
-  <section id="home" class="mb-5" aria-label="ブランドカルーセル">
-    <div class="carousel-wrapper">
-      <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" aria-roledescription="カルーセル" aria-label="ブランド画像のスライドショー">
-        <div class="carousel-inner">
-          <div class="carousel-item active" aria-roledescription="スライド" aria-label="Rockmount" data-brand-name="Rockmount">
-            <div class="carousel-image-container">
-              <a href="https://rockmount.com/" aria-label="Rockmountのウェブサイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/rockmount2.webp">
-                  <img src="image/rockmount3.webp" alt="Rockmount" width="889" height="500">
-                </picture>
-              </a>
-            </div>
-          </div>
-          <div class="carousel-item" aria-roledescription="スライド" aria-label="Harley" data-brand-name="Harley of Scotland">
-            <div class="carousel-image-container">
-              <a href="https://www.harleyofscotland.com/" aria-label="Harley of Scotlandのウェブサイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/Harley1.webp">
-                  <img src="image/harley 24AW.webp" alt="Harley of Scotland" width="889" height="500">
-                </picture>
-              </a>
-            </div>
-          </div>
-          <div class="carousel-item" aria-roledescription="スライド" aria-label="William Lockie" data-brand-name="William Lockie">
-            <div class="carousel-image-container">
-              <a href="https://williamlockie.com/" aria-label="William Lockieのウェブサイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/william2.webp">
-                  <img src="image/william2.webp" alt="William Lockie" width="889" height="500">
-                </picture>
-              </a>
-            </div>
-          </div>
-          <div class="carousel-item" aria-roledescription="スライド" aria-label="Eribe" data-brand-name="Eribe">
-            <div class="carousel-image-container">
-              <a href="https://www.eribe.com/" aria-label="Eribeのウェブサイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/eribe1.webp">
-                  <img src="image/eribe.webp" alt="Eribe" width="889" height="500">
-                </picture>
-              </a>
-            </div>
-          </div>
-          <div class="carousel-item" aria-roledescription="スライド" aria-label="Kopka" data-brand-name="Kopka">
-            <div class="carousel-image-container">
-              <a href="https://www.kopka-accessories.com/" aria-label="Kopkaのウェブサイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/kopka2.webp">
-                  <img src="image/kopka2.webp" alt="Kopka" width="889" height="500">
-                </picture>
-              </a>
-            </div>
-          </div>
-          <div class="carousel-item" aria-roledescription="スライド" aria-label="Le Minor" data-brand-name="Le Minor">
-            <div class="carousel-image-container">
-              <a href="https://leminor.fr/en" aria-label="Le Minorのウェブサイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/leminor2.webp">
-                  <img src="image/leminor25AW.webp" alt="Le Minor" width="889" height="500">
-                </picture>
-              </a>
-            </div>
-          </div>
-          <div class="carousel-item" aria-roledescription="スライド" aria-label="Glen Prince" data-brand-name="Glen Prince">
-            <div class="carousel-image-container">
-              <a href="https://www.glenprince.com/" aria-label="Glen Princeのウェブサイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/glenprince2.webp">
-                  <img src="image/glenprince25AW.webp" alt="Glen Prince" width="889" height="500">
-                </picture>
-              </a>
-            </div>
-          </div>
+  <!-- デスクトップ用カルーセル -->
+  <section id="home-desktop" class="mb-5" aria-label="ブランドカルーセル（デスクトップ）">
+    <div class="swiper main-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="image/rockmount3.webp" alt="Rockmount 25AW 欧米アパレルブランドの定番シャツ" loading="lazy">
+          <div class="brand-overlay">Rockmount</div>
+          <a href="https://rockmount.com/" target="_blank" rel="noopener" aria-label="Rockmountのウェブサイトへ" class="slide-link"></a>
         </div>
-
-        <div class="carousel-indicators carousel-indicators-line" role="tablist" aria-label="カルーセルインジケーター">
-          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-label="スライド1" aria-selected="true" role="tab"></button>
-          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="スライド2" aria-selected="false" role="tab"></button>
-          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="スライド3" aria-selected="false" role="tab"></button>
-          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="3" aria-label="スライド4" aria-selected="false" role="tab"></button>
-          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="4" aria-label="スライド5" aria-selected="false" role="tab"></button>
-          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="5" aria-label="スライド6" aria-selected="false" role="tab"></button>
-          <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="6" aria-label="スライド7" aria-selected="false" role="tab"></button>
+        <div class="swiper-slide">
+          <img src="image/harley 24AW.webp" alt="Harley of Scotland" loading="lazy">
+          <div class="brand-overlay">Harley of Scotland</div>
+          <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" aria-label="Harley of Scotlandのウェブサイトへ" class="slide-link"></a>
         </div>
+        <div class="swiper-slide">
+          <img src="image/eribe.webp" alt="Eribe" loading="lazy">
+          <div class="brand-overlay">Eribe</div>
+          <a href="https://www.eribe.com/" target="_blank" rel="noopener" aria-label="Eribeのウェブサイトへ" class="slide-link"></a>
+        </div>
+        <div class="swiper-slide">
+          <img src="image/leminor25AW.webp" alt="Le Minor" loading="lazy">
+          <div class="brand-overlay">Le Minor</div>
+          <a href="https://leminor.fr/en" target="_blank" rel="noopener" aria-label="Le Minorのウェブサイトへ" class="slide-link"></a>
+        </div>
+        <div class="swiper-slide">
+          <img src="image/glenprince25AW.webp" alt="Glen Prince" loading="lazy">
+          <div class="brand-overlay">Glen Prince</div>
+          <a href="https://www.glenprince.com/" target="_blank" rel="noopener" aria-label="Glen Princeのウェブサイトへ" class="slide-link"></a>
+        </div>
+        <div class="swiper-slide">
+          <img src="image/kopka2.webp" alt="Kopka" loading="lazy">
+          <div class="brand-overlay">Kopka</div>
+          <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" aria-label="Kopkaのウェブサイトへ" class="slide-link"></a>
+        </div>
+        <div class="swiper-slide">
+          <img src="image/william2.webp" alt="William Lockie" loading="lazy">
+          <div class="brand-overlay">William Lockie</div>
+          <a href="https://williamlockie.com/" target="_blank" rel="noopener" aria-label="William Lockieのウェブサイトへ" class="slide-link"></a>
+        </div>
+      </div>
+      <!-- カスタム矢印（SVG） -->
+      <button class="swiper-button-prev" tabindex="0" aria-label="前のスライド">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15" stroke="#888" stroke-width="2"/><path d="M19.5 8L12.5 16L19.5 24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="swiper-button-next" tabindex="0" aria-label="次のスライド">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15" stroke="#888" stroke-width="2"/><path d="M12.5 8L19.5 16L12.5 24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev" aria-label="前のスライド">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">前へ</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next" aria-label="次のスライド">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">次へ</span>
-        </button>
+  <!-- スマートフォン用カルーセル（SwiperでPCと同じアニメーション、矢印なし） -->
+  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
+    <div class="swiper mobile-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <a href="https://rockmount.com/" target="_blank" rel="noopener" aria-label="Rockmountのウェブサイトへ">
+            <picture>
+              <source media="(max-width: 768px)" srcset="image/rockmount2.webp">
+              <img src="image/rockmount3.webp" alt="Rockmount" width="889" height="500">
+            </picture>
+            <div class="brand-overlay">Rockmount</div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" aria-label="Harley of Scotlandのウェブサイトへ">
+            <picture>
+              <source media="(max-width: 768px)" srcset="image/Harley1.webp">
+              <img src="image/harley 24AW.webp" alt="Harley of Scotland" width="889" height="500">
+            </picture>
+            <div class="brand-overlay">Harley of Scotland</div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.eribe.com/" target="_blank" rel="noopener" aria-label="Eribeのウェブサイトへ">
+            <picture>
+              <source media="(max-width: 768px)" srcset="image/eribe1.webp">
+              <img src="image/eribe.webp" alt="Eribe" width="889" height="500">
+            </picture>
+            <div class="brand-overlay">Eribe</div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://leminor.fr/en" target="_blank" rel="noopener" aria-label="Le Minorのウェブサイトへ">
+            <picture>
+              <source media="(max-width: 768px)" srcset="image/leminor2.webp">
+              <img src="image/leminor25AW.webp" alt="Le Minor" width="889" height="500">
+            </picture>
+            <div class="brand-overlay">Le Minor</div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.glenprince.com/" target="_blank" rel="noopener" aria-label="Glen Princeのウェブサイトへ">
+            <picture>
+              <source media="(max-width: 768px)" srcset="image/glenprince2.webp">
+              <img src="image/glenprince25AW.webp" alt="Glen Prince" width="889" height="500">
+            </picture>
+            <div class="brand-overlay">Glen Prince</div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://williamlockie.com/" target="_blank" rel="noopener" aria-label="William Lockieのウェブサイトへ">
+            <picture>
+              <source media="(max-width: 768px)" srcset="image/william2.webp">
+              <img src="image/william2.webp" alt="William Lockie" width="889" height="500">
+            </picture>
+            <div class="brand-overlay">William Lockie</div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" aria-label="Kopkaのウェブサイトへ">
+            <picture>
+              <source media="(max-width: 768px)" srcset="image/kopka2.webp">
+              <img src="image/kopka2.webp" alt="Kopka" width="889" height="500">
+            </picture>
+            <div class="brand-overlay">Kopka</div>
+          </a>
+        </div>
       </div>
     </div>
-    <div id="brandName" class="brand-name-caption">Rockmount</div>
   </section>
 
    <!-- About -->
@@ -575,65 +772,66 @@
   </h1>
   <div class="brands-grid section-content">
     <a class="brandlogo" href="https://rockmount.com/">
-      <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140">
-      <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140"></div>
+      <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.harleyofscotland.com/">
-      <img src="image/Harley.webp" alt="Harley" width="140" height="140">
-      <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://www.harleyofscotland.com/" loading="lazy">
+      <img src="image/Harley.webp" alt="Harley" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://williamlockie.com/">
-      <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140">
-      <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://williamlockie.com/" loading="lazy">
+      <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.eribe.com/">
-      <img src="image/eribe.svg" alt="Eribe" width="140" height="140">
-      <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://www.eribe.com/" loading="lazy">
+      <img src="image/eribe.svg" alt="Eribe" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.glenprince.com/">
-      <img src="image/glen prince.webp" alt="Glen Prince" width="140" height="140">
-      <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://www.glenprince.com/" loading="lazy">
+      <img src="image/glen prince.webp" alt="Glen Prince" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.athenaknitwear.com/">
-      <img src="image/athena designs.webp" alt="Athena" width="140" height="140">
-      <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://www.athenaknitwear.com/" loading="lazy">
+      <img src="image/athena designs.webp" alt="Athena" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.kopka-accessories.com/">
-      <img src="image/kopka.webp" alt="Kopka" width="140" height="140">
-      <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://www.kopka-accessories.com/" loading="lazy">
+      <img src="image/kopka.webp" alt="Kopka" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://leminor.fr/en">
-      <img src="image/leminor.webp" alt="Le Minor" width="140" height="140">
-      <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://leminor.fr/en" loading="lazy">
+      <img src="image/leminor.webp" alt="Le Minor" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://sans-arcidet.fr/">
-      <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140">
-      <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://sans-arcidet.fr/" loading="lazy">
+      <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://hatattack.com/">
-      <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140">
-      <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140"></div>
+    <a class="brandlogo" href="https://hatattack.com/" loading="lazy">
+      <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140" loading="lazy">
+      <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
   </div>
 </section>
 
 <!-- New section for internal links -->
 <section id="overview" class="mb-5">
-  <h2 class="section-title text-reveal mb-4">
-    <span class="ja-content">ReStandardについて</span>
+  <h2 class="brand-section-title">
+    <span class="ja-content desktop-only">ReStandardについて</span>
+    <span class="ja-content mobile-only">ReStandard<br>について</span>
     <span class="en-content">About ReStandard</span>
   </h2>
   <div class="container text-center">
-    <p class="overview-text">
+    <p class="overview-text desktop-only">
       <span class="ja-content">
         ReStandardは、欧米の厳選されたアパレルブランドを日本のセレクトショップに卸すBtoB専門パートナーです。<br>
         RockmountやHarleyをはじめとする<b>欧米の厳選ブランドとの取引を32年間継続</b>しており、<br>
@@ -646,6 +844,18 @@
         We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, <b>for 32 years</b>,and have established partnerships with <b>more than 25 manufacturers</b> to date.<br>
         Learn more about our <a href="about.html" class="internal-link">philosophy</a> and <a href="vision.html" class="internal-link">vision</a> on their respective pages.<br>
         For the latest <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access information</a>, and <a href="contact.html" class="internal-link">inquiries</a>, please visit each page.<br>
+      </span>
+    </p>
+    <p class="overview-text mobile-only">
+      <span class="ja-content">
+        欧米の厳選アパレルを日本のセレクトショップへ卸すBtoB専門パートナー。<br>
+        RockmountやHarleyなど<b>計25メーカーと32年の取引実績</b>。<br>
+        <a href="about.html" class="internal-link">理念</a>・<a href="vision.html" class="internal-link">ビジョン</a>・<a href="news.html" class="internal-link">ニュース</a>・<a href="location.html" class="internal-link">アクセス</a>・<a href="contact.html" class="internal-link">お問い合わせ</a>はこちら。
+      </span>
+      <span class="en-content">
+        B2B partner for select shops in Japan, offering top European & US brands.<br>
+        32 years of experience with Rockmount, Harley, and more.<br>
+        See <a href="about.html" class="internal-link">philosophy</a>, <a href="vision.html" class="internal-link">vision</a>, <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access</a>, <a href="contact.html" class="internal-link">contact</a>.
       </span>
     </p>
   </div>
@@ -782,6 +992,39 @@
       document.body.appendChild(announcement);
       setTimeout(() => announcement.remove(), 1000);
     }
+  </script>
+
+  <!-- Swiper.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // メインSwiper
+    const mainSwiper = new Swiper('.main-swiper', {
+      loop: true,
+      spaceBetween: 0,
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      speed: 1200,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+    });
+    // スマートフォン用Swiper
+    const mobileSwiper = new Swiper('.mobile-swiper', {
+      loop: true,
+      spaceBetween: 0,
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      speed: 1200,
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+    });
   </script>
 </body>
 </html>
