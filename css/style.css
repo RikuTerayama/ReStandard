@@ -976,3 +976,14 @@ body {
     font-size: 1rem;
   }
 }
+
+.vision-section .about-section-box h3.text-center {
+  font-size: 1.13rem;
+  color: #333;
+  font-weight: 700;
+}
+@media (max-width: 600px) {
+  .vision-section .about-section-box h3.text-center {
+    font-size: 0.98rem;
+  }
+}
