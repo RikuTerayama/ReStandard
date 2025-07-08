@@ -257,6 +257,10 @@ section p {
     margin-left: auto;
     margin-right: auto;
   }
+
+  #home-desktop {
+    display: none !important;
+  }
 }
 
 /* タブレット用のスタイル */
