@@ -926,6 +926,7 @@ body {
   border-radius: 8px;
 }
 
+/* about/vision共通のボックスデザイン */
 .about-section-box {
   background: #fff;
   border-radius: 18px;
@@ -936,7 +937,6 @@ body {
   text-align: left;
   position: relative;
 }
-
 @media (max-width: 768px) {
   .about-section-box {
     padding: 1.2rem 0.7rem 1.2rem 0.7rem;
@@ -944,60 +944,28 @@ body {
     border-radius: 12px;
   }
 }
-
-.about-section-subtitle {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 1.1rem;
-  letter-spacing: 0.04em;
-  border-left: 4px solid #dedbd6;
-  padding-left: 0.7em;
-  background: linear-gradient(90deg, #f7f7f7 80%, rgba(255,255,255,0));
-  display: inline-block;
-  text-align: center;
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .about-section-subtitle {
-    font-size: 1.08rem;
-    padding-left: 0.5em;
-    margin-bottom: 0.7rem;
-  }
-}
-
+/* h3/pのデザインも完全統一 */
 .about-section-box h3.text-center,
 .vision-section .about-section-box h3.text-center {
   font-family: 'Noto Serif JP', serif;
   font-weight: 700;
   letter-spacing: 0.05em;
-  font-size: 1.25rem;
+  font-size: 1.13rem;
+  color: #333;
 }
-
+@media (max-width: 600px) {
+  .about-section-box h3.text-center,
+  .vision-section .about-section-box h3.text-center {
+    font-size: 0.98rem;
+  }
+}
 .about-section-box p.text-center,
 .vision-section .about-section-box p.text-center {
   font-size: 1.1rem;
 }
-
 @media (max-width: 600px) {
-  .about-section-box h3.text-center,
-  .vision-section .about-section-box h3.text-center {
-    font-size: 1.08rem;
-  }
   .about-section-box p.text-center,
   .vision-section .about-section-box p.text-center {
     font-size: 1rem;
-  }
-}
-
-.vision-section .about-section-box h3.text-center {
-  font-size: 1.13rem;
-  color: #333;
-  font-weight: 700;
-}
-@media (max-width: 600px) {
-  .vision-section .about-section-box h3.text-center {
-    font-size: 0.98rem;
   }
 }
