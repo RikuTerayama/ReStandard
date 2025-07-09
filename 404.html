@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ページが見つかりません | ReStandard</title>
+  <title>404 Not Found | ページが見つかりません | ReStandard</title>
+  <meta name="description" content="お探しのページが見つかりませんでした。ReStandardのトップページや主要ページへお戻りください。">
+  <meta name="keywords" content="404, ページが見つかりません, ReStandard, エラーページ">
+  <meta property="og:title" content="404 Not Found | ページが見つかりません | ReStandard">
+  <meta property="og:description" content="お探しのページが見つかりませんでした。ReStandardのトップページや主要ページへお戻りください。">
+  <meta name="twitter:title" content="404 Not Found | ページが見つかりません | ReStandard">
+  <meta name="twitter:description" content="お探しのページが見つかりませんでした。ReStandardのトップページや主要ページへお戻りください。">
   <meta name="robots" content="noindex, follow">
+  <link rel="stylesheet" href="css/style.css">
   <style>
     body {
       min-height: 100vh;
@@ -16,18 +23,36 @@
       font-family: 'Noto Sans JP', sans-serif;
       color: #333;
       margin: 0;
+      text-align: center;
+    }
+    .error-container {
+      max-width: 600px;
+      padding: 2rem;
     }
     .error-code {
       font-size: 6rem;
       font-weight: bold;
       color: #888;
       margin-bottom: 0.5rem;
+      font-family: 'Noto Serif JP', serif;
     }
     .error-message {
       font-size: 1.5rem;
       margin-bottom: 2rem;
+      font-family: 'Noto Serif JP', serif;
     }
-    .home-link {
+    .error-description {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .navigation-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .nav-link {
       display: inline-block;
       padding: 0.75rem 2rem;
       background: #333;
@@ -35,16 +60,53 @@
       border-radius: 30px;
       text-decoration: none;
       font-size: 1rem;
-      transition: background 0.2s;
+      transition: all 0.3s ease;
+      font-family: 'Noto Serif JP', serif;
     }
-    .home-link:hover {
+    .nav-link:hover {
       background: #888;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .nav-link.secondary {
+      background: transparent;
+      color: #333;
+      border: 2px solid #333;
+    }
+    .nav-link.secondary:hover {
+      background: #333;
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 4rem;
+      }
+      .error-message {
+        font-size: 1.2rem;
+      }
+      .error-description {
+        font-size: 1rem;
+      }
+      .navigation-links {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="error-code">404</div>
-  <div class="error-message">お探しのページは見つかりませんでした。</div>
-  <a href="index.html" class="home-link">トップページへ戻る</a>
+<body role="main" aria-label="404エラーページ">
+  <div class="error-container">
+    <h1 class="error-code" aria-label="エラーコード">404</h1>
+    <div class="error-message">お探しのページは見つかりませんでした。</div>
+    <div class="error-description">
+      申し訳ございませんが、お探しのページは存在しないか、移動・削除された可能性があります。<br>
+      下記のリンクから主要ページへお戻りください。
+    </div>
+    <div class="navigation-links">
+      <a href="index.html" class="nav-link" aria-label="トップページへ戻る">トップページへ戻る</a>
+      <a href="about.html" class="nav-link secondary" aria-label="会社概要ページへ">About</a>
+      <a href="contact.html" class="nav-link secondary" aria-label="お問い合わせページへ">Contact</a>
+    </div>
+  </div>
 </body>
 </html> 
