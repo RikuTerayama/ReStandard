@@ -153,7 +153,8 @@
   </script>
 
   <!-- Swiper.js CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
 
   <style>
     :root {
@@ -756,67 +757,67 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide">
           <a href="https://rockmount.com/" target="_blank" rel="noopener" aria-label="Rockmount公式サイトへ">
-            <picture>
-              <source media="(max-width: 768px)" srcset="image/rockmount2.webp">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/rockmount2.webp">
               <img src="image/rockmount3.webp" alt="Rockmount 25AW 欧米アパレルブランドの定番シャツ" width="889" height="500" loading="lazy">
-            </picture>
+                </picture>
             <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Rockmount</div>
-          </a>
-        </div>
+              </a>
+            </div>
         <div class="swiper-slide">
           <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" aria-label="Harley of Scotland公式サイトへ">
-            <picture>
-              <source media="(max-width: 768px)" srcset="image/Harley1.webp">
+                <picture>
+                  <source media="(max-width: 768px)" srcset="image/Harley1.webp">
               <img src="image/harley 24AW.webp" alt="Harley of Scotland 伝統的ニットブランド" width="889" height="500" loading="lazy">
-            </picture>
+                </picture>
             <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Harley of Scotland</div>
-          </a>
-        </div>
+              </a>
+            </div>
         <div class="swiper-slide">
           <a href="https://www.eribe.com/" target="_blank" rel="noopener" aria-label="Eribe公式サイトへ">
-            <picture>
+                <picture>
               <source media="(max-width: 768px)" srcset="image/eribe1.webp">
               <img src="image/eribe.webp" alt="Eribe スコットランドのフェアアイルニット" width="889" height="500" loading="lazy">
-            </picture>
+                </picture>
             <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Eribe</div>
-          </a>
-        </div>
+              </a>
+            </div>
         <div class="swiper-slide">
           <a href="https://leminor.fr/en" target="_blank" rel="noopener" aria-label="Le Minor公式サイトへ">
-            <picture>
+                <picture>
               <source media="(max-width: 768px)" srcset="image/leminor2.webp">
               <img src="image/leminor25AW.webp" alt="Le Minor フランスの老舗マリンブランド" width="889" height="500" loading="lazy">
-            </picture>
+                </picture>
             <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Le Minor</div>
-          </a>
-        </div>
+              </a>
+            </div>
         <div class="swiper-slide">
           <a href="https://www.glenprince.com/" target="_blank" rel="noopener" aria-label="Glen Prince公式サイトへ">
-            <picture>
+                <picture>
               <source media="(max-width: 768px)" srcset="image/glenprince2.webp">
               <img src="image/glenprince25AW.webp" alt="Glen Prince 英国の高級ストールブランド" width="889" height="500" loading="lazy">
-            </picture>
+                </picture>
             <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Glen Prince</div>
-          </a>
-        </div>
+              </a>
+            </div>
         <div class="swiper-slide">
           <a href="https://williamlockie.com/" target="_blank" rel="noopener" aria-label="William Lockie公式サイトへ">
-            <picture>
+                <picture>
               <source media="(max-width: 768px)" srcset="image/william2.webp">
               <img src="image/william2.webp" alt="William Lockie 英国の老舗ニットブランド" width="889" height="500" loading="lazy">
-            </picture>
+                </picture>
             <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">William Lockie</div>
-          </a>
-        </div>
+              </a>
+            </div>
         <div class="swiper-slide">
           <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" aria-label="Kopka公式サイトへ">
-            <picture>
+                <picture>
               <source media="(max-width: 768px)" srcset="image/kopka2.webp">
               <img src="image/kopka2.webp" alt="Kopka ドイツの帽子ブランド" width="889" height="500" loading="lazy">
-            </picture>
+                </picture>
             <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Kopka</div>
-          </a>
-        </div>
+              </a>
+            </div>
           </div>
         </div>
   </section>
@@ -975,18 +976,6 @@
       // アニメーション対象の要素を監視
       document.querySelectorAll('.scroll-fade, .text-block').forEach(el => {
         observer.observe(el);
-      });
-
-      // カルーセルのブランド名更新
-      const carousel = document.getElementById('homeCarousel');
-      const brandNameElement = document.getElementById('brandName');
-
-      carousel.addEventListener('slide.bs.carousel', function(event) {
-        const nextSlide = event.relatedTarget;
-        const brandName = nextSlide.getAttribute('data-brand-name');
-        if (brandName) {
-          brandNameElement.textContent = brandName;
-        }
       });
 
       // Brandsセクションのアクティブ状態管理
