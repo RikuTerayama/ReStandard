@@ -47,6 +47,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.05em;
 }
 
+h1 {
+  font-size: 2.5rem;
+}
+
 /* セクション全体の共通スタイル */
 section {
   padding: 80px 20px;
