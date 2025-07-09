@@ -751,7 +751,7 @@
     </div>
   </section>
 
-  <!-- スマートフォン用カルーセル（SwiperでPCと同じアニメーション、矢印なし） -->
+  <!-- スマートフォン用カルーセル -->
   <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
     <div class="swiper mobile-swiper">
       <div class="swiper-wrapper">
@@ -1044,35 +1044,37 @@
   </script>
 
   <!-- Swiper.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // メインSwiper
-    const mainSwiper = new Swiper('.main-swiper', {
-      loop: true,
-      spaceBetween: 0,
-      effect: 'fade',
-      fadeEffect: { crossFade: true },
-      speed: 1200,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      autoplay: {
-        delay: 3500,
-        disableOnInteraction: false,
-      },
-    });
-    // スマートフォン用Swiper
-    const mobileSwiper = new Swiper('.mobile-swiper', {
-      loop: true,
-      spaceBetween: 0,
-      effect: 'fade',
-      fadeEffect: { crossFade: true },
-      speed: 1200,
-      autoplay: {
-        delay: 3500,
-        disableOnInteraction: false,
-      },
+    window.addEventListener('DOMContentLoaded', function() {
+      // メインSwiper
+      const mainSwiper = new Swiper('.main-swiper', {
+        loop: true,
+        spaceBetween: 0,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        speed: 1200,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+        },
+      });
+      // スマートフォン用Swiper
+      const mobileSwiper = new Swiper('.mobile-swiper', {
+        loop: true,
+        spaceBetween: 0,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        speed: 1200,
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+        },
+      });
     });
   </script>
 </body>
