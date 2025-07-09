@@ -1,4 +1,21 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://restandard.jp/sitemap.xml 
+# サイトマップの場所
+Sitemap: https://restandard-2025.netlify.app/sitemap.xml
+
+# クロール遅延（サーバー負荷軽減）
+Crawl-delay: 1
+
+# 特定のファイルタイプの許可
+Allow: /*.html
+Allow: /*.css
+Allow: /*.js
+Allow: /*.webp
+Allow: /*.jpg
+Allow: /*.png
+
+# 管理ファイルの除外
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /node_modules/ 
