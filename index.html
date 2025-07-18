@@ -824,7 +824,7 @@
   <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
   <div id="splash-video-wrapper">
     <video id="splash-video" src="1.mp4" autoplay playsinline muted></video>
-    <div id="splash-loading">Loading...</div>
+    <!-- <div id="splash-loading">Loading...</div> -->
   </div>
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
@@ -1289,7 +1289,7 @@
       // スプラッシュ動画演出（外部サイトからの遷移・直接アクセス時のみ表示）
       const splash = document.getElementById('splash-video-wrapper');
       const video = document.getElementById('splash-video');
-      const loading = document.getElementById('splash-loading');
+      // const loading = document.getElementById('splash-loading');
       // 自サイト判定
       const isInternal = document.referrer && document.referrer.includes(window.location.hostname);
       if (isInternal) {
@@ -1301,9 +1301,9 @@
       // 外部からの遷移 or 直接アクセス時のみスプラッシュ表示
       document.body.classList.add('splash-active');
       splash.style.display = 'flex';
-      loading.style.display = 'block';
+      // loading.style.display = 'block';
       video.oncanplay = function() {
-        loading.style.display = 'none';
+        // loading.style.display = 'none';
         video.play();
       };
       splash.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); }, true);
