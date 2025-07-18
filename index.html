@@ -771,7 +771,7 @@
       animation-timing-function: linear;
       animation-iteration-count: infinite;
       will-change: transform;
-      min-width: 100%;
+      min-width: 200%;
     }
     .flow-row-top .flow-track {
       animation-name: flow-right;
@@ -782,15 +782,15 @@
       animation-name: flow-left;
       animation-duration: 20s;
       animation-direction: normal;
-      min-width: 100%;
-      transform: translateX(-50%);
+      min-width: 200%;
+      transform: translateX(-66.666%);
     }
     @keyframes flow-right {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
     @keyframes flow-left {
-      0% { transform: translateX(-50%); }
+      0% { transform: translateX(-66.666%); }
       100% { transform: translateX(0); }
     }
     #flowing-images img {
@@ -804,6 +804,7 @@
       height: auto;
       transition: transform 0.2s;
       cursor: zoom-in;
+      flex-shrink: 0;
     }
     .flow-row {
       height: 420px;
@@ -816,7 +817,7 @@
         animation-duration: 8s;
       }
       .flow-row-bottom .flow-track {
-        transform: translateX(-50%);
+        transform: translateX(-66.666%);
       }
     }
   </style>
@@ -1003,8 +1004,18 @@
       </div>
     </div>
     <div class="flow-row flow-row-bottom">
-      <!-- 20.JPG〜11.JPG 左→右（2回連結） -->
+      <!-- 20.JPG〜11.JPG 左→右（3回連結） -->
       <div class="flow-track">
+        <img src="image/20.JPG" alt="20" loading="lazy">
+        <img src="image/19.JPG" alt="19" loading="lazy">
+        <img src="image/18.JPG" alt="18" loading="lazy">
+        <img src="image/17.JPG" alt="17" loading="lazy">
+        <img src="image/16.JPG" alt="16" loading="lazy">
+        <img src="image/15.JPG" alt="15" loading="lazy">
+        <img src="image/14.JPG" alt="14" loading="lazy">
+        <img src="image/13.JPG" alt="13" loading="lazy">
+        <img src="image/12.JPG" alt="12" loading="lazy">
+        <img src="image/11.JPG" alt="11" loading="lazy">
         <img src="image/20.JPG" alt="20" loading="lazy">
         <img src="image/19.JPG" alt="19" loading="lazy">
         <img src="image/18.JPG" alt="18" loading="lazy">
