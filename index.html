@@ -771,23 +771,24 @@
       animation-timing-function: linear;
       animation-iteration-count: infinite;
       will-change: transform;
-      min-width: 200%;
+      min-width: 300%;
     }
     .flow-row-top .flow-track {
       animation-name: flow-right;
       animation-duration: 20s;
       animation-direction: normal;
+      min-width: 300%;
     }
     .flow-row-bottom .flow-track {
       animation-name: flow-left;
       animation-duration: 20s;
       animation-direction: normal;
-      min-width: 200%;
+      min-width: 300%;
       transform: translateX(-66.666%);
     }
     @keyframes flow-right {
       0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      100% { transform: translateX(-66.666%); }
     }
     @keyframes flow-left {
       0% { transform: translateX(-66.666%); }
@@ -815,6 +816,7 @@
       .flow-row-top .flow-track,
       .flow-row-bottom .flow-track {
         animation-duration: 8s;
+        min-width: 300%;
       }
       .flow-row-bottom .flow-track {
         transform: translateX(-66.666%);
@@ -979,8 +981,18 @@
   <!-- ここから流れる画像2行 -->
   <section id="flowing-images" style="margin: 40px 0;">
     <div class="flow-row flow-row-top">
-      <!-- 1.JPG〜10.JPG 左→右（2回連結） -->
+      <!-- 1.JPG〜10.JPG 左→右（3回連結） -->
       <div class="flow-track">
+        <img src="image/1.JPG" alt="1" loading="lazy">
+        <img src="image/2.JPG" alt="2" loading="lazy">
+        <img src="image/3.JPG" alt="3" loading="lazy">
+        <img src="image/4.JPG" alt="4" loading="lazy">
+        <img src="image/5.JPG" alt="5" loading="lazy">
+        <img src="image/6.JPG" alt="6" loading="lazy">
+        <img src="image/7.JPG" alt="7" loading="lazy">
+        <img src="image/8.JPG" alt="8" loading="lazy">
+        <img src="image/9.JPG" alt="9" loading="lazy">
+        <img src="image/10.JPG" alt="10" loading="lazy">
         <img src="image/1.JPG" alt="1" loading="lazy">
         <img src="image/2.JPG" alt="2" loading="lazy">
         <img src="image/3.JPG" alt="3" loading="lazy">
