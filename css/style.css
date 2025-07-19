@@ -1025,8 +1025,15 @@ body {
   font-display: swap;
 }
 
+.flow-row-top .flow-track {
+  animation-name: flow-right;
+  animation-duration: 18s;
+  animation-direction: normal;
+}
 .flow-row-bottom .flow-track {
-  visibility: visible;
+  animation-name: flow-left;
+  animation-duration: 18s;
+  animation-direction: normal;
 }
 @keyframes flow-left {
   0% { transform: translateX(-75%); }
