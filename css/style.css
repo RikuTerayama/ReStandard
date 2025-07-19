@@ -1036,14 +1036,18 @@ body {
   animation-direction: normal;
 }
 @keyframes flow-left {
-  0% { transform: translateX(-75%); }
+  0% { transform: translateX(-80%); }
   100% { transform: translateX(0); }
+}
+@keyframes flow-right {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-80%); }
 }
 @media (max-width: 900px) {
   .flow-row-top .flow-track,
   .flow-row-bottom .flow-track {
     animation-duration: 8s;
-    min-width: 400%;
+    min-width: 500%;
     will-change: auto;
   }
 }
