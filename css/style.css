@@ -1028,3 +1028,15 @@ body {
 .flow-row-bottom .flow-track {
   visibility: visible;
 }
+@keyframes flow-left {
+  0% { transform: translateX(-75%); }
+  100% { transform: translateX(0); }
+}
+@media (max-width: 900px) {
+  .flow-row-top .flow-track,
+  .flow-row-bottom .flow-track {
+    animation-duration: 8s;
+    min-width: 400%;
+    will-change: auto;
+  }
+}
