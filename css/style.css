@@ -1027,12 +1027,12 @@ body {
 
 .flow-row-top .flow-track {
   animation-name: flow-right;
-  animation-duration: 18s;
+  animation-duration: 36s;
   animation-direction: normal;
 }
 .flow-row-bottom .flow-track {
   animation-name: flow-left;
-  animation-duration: 18s;
+  animation-duration: 36s;
   animation-direction: normal;
 }
 @keyframes flow-left {
