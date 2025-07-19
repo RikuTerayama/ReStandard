@@ -775,16 +775,13 @@
     }
     .flow-row-top .flow-track {
       animation-name: flow-right;
-      animation-duration: 20s;
+      animation-duration: 12s;
       animation-direction: normal;
-      min-width: 300%;
     }
     .flow-row-bottom .flow-track {
       animation-name: flow-left;
-      animation-duration: 20s;
+      animation-duration: 12s;
       animation-direction: normal;
-      min-width: 300%;
-      transform: translateX(-66.666%);
     }
     @keyframes flow-right {
       0% { transform: translateX(0); }
@@ -815,11 +812,9 @@
       .flow-row { height: 220px; }
       .flow-row-top .flow-track,
       .flow-row-bottom .flow-track {
-        animation-duration: 8s;
+        animation-duration: 6s;
         min-width: 300%;
-      }
-      .flow-row-bottom .flow-track {
-        transform: translateX(-66.666%);
+        will-change: auto;
       }
     }
   </style>
