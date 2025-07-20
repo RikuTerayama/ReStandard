@@ -1063,6 +1063,10 @@ body {
   }
 }
 
+.flow-row {
+  height: auto;
+}
+
 @media (max-width: 768px) {
   .form-container,
   .map-container {
