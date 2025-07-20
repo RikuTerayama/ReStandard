@@ -1085,3 +1085,23 @@ body {
     box-sizing: border-box;
   }
 }
+
+.form-container {
+  overflow-x: auto;
+}
+.form-container iframe {
+  display: block;
+  margin: 0 auto;
+  transform: scale(1.5);
+  transform-origin: center;
+  width: 640px;
+  height: 1237px;
+  border: none;
+}
+@media (max-width: 900px) {
+  .form-container iframe {
+    transform: scale(1.1);
+    width: 640px;
+    height: 1237px;
+  }
+}
