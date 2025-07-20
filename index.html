@@ -880,7 +880,7 @@
   <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
   <div id="splash-video-wrapper">
     <video id="splash-video" src="1.mp4" autoplay playsinline muted></video>
-    <div id="splash-loading" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#333;font-size:2rem;z-index:2;background:#fff;padding:0.8em 2.2em;border-radius:0.7em;box-shadow:0 4px 24px rgba(0,0,0,0.18);font-family:'Noto Serif JP',serif;letter-spacing:0.08em;">ReStandard</div>
+    <!-- ローディング表示削除 -->
   </div>
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
@@ -1351,7 +1351,6 @@
       // スプラッシュ動画演出（外部サイトからの遷移・直接アクセス時のみ表示）
       const splash = document.getElementById('splash-video-wrapper');
       const video = document.getElementById('splash-video');
-      const loading = document.getElementById('splash-loading');
       // 自サイト判定
       const isInternal = document.referrer && document.referrer.includes(window.location.hostname);
       if (isInternal) {
@@ -1363,7 +1362,6 @@
       // 外部からの遷移 or 直接アクセス時のみスプラッシュ表示
       document.body.classList.add('splash-active');
       splash.style.display = 'flex';
-      loading.style.display = 'block';
       video.oncanplay = function() {
         // loading.style.display = 'none';
         video.play();
