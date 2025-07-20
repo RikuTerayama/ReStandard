@@ -42,6 +42,7 @@ body {
   letter-spacing: 0.02em;
   line-height: 1.7;
   overflow-x: hidden;
+  padding-top: 70px;
 }
 
 * {
@@ -143,10 +144,14 @@ section p {
 
 /* ナビゲーションのスタイル */
 .navbar {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.7);
   backdrop-filter: blur(8px);
-  padding: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  z-index: 1000;
 }
 
 .navbar .container-fluid {
