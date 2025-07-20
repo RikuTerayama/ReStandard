@@ -22,6 +22,8 @@
   --font-size-2xl: 1.5rem;    /* 24px */
   --font-size-3xl: 2rem;      /* 32px */
   --font-size-4xl: 2.5rem;    /* 40px */
+  --main-font-family: 'Noto Serif JP', serif;
+  --heading-font-family: 'Noto Serif JP', serif;
 }
 
 html {
@@ -30,7 +32,7 @@ html {
 
 /* 基本フォント設定 */
 body {
-  font-family: var(--body-font);
+  font-family: var(--main-font-family);
   font-size: var(--font-size-md);
   font-weight: 400;
   color: var(--main-color);
@@ -39,6 +41,14 @@ body {
   font-feature-settings: "palt";
   letter-spacing: 0.02em;
   line-height: 1.7;
+}
+
+* {
+  font-family: inherit !important;
+}
+
+html, body {
+  font-family: var(--main-font-family) !important;
 }
 
 /* 見出し用フォント設定 */
@@ -1049,5 +1059,20 @@ body {
     animation-duration: 8s;
     min-width: 500%;
     will-change: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .form-container iframe {
+    width: 100vw !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    display: block;
+    box-sizing: border-box;
   }
 }
