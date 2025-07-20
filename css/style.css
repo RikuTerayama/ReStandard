@@ -1063,9 +1063,19 @@ body {
 }
 
 @media (max-width: 768px) {
+  .contact-section,
+  .section-content,
+  .container,
   .form-container {
-    padding-left: 0;
-    padding-right: 0;
+    width: 100vw !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: visible !important;
   }
   .form-container iframe {
     width: 100vw !important;
