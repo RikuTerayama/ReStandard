@@ -839,6 +839,14 @@
         will-change: auto;
       }
     }
+    .flow-row-bg {
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      margin: 0 auto 24px auto;
+      padding: 8px 0;
+      max-width: 100vw;
+    }
   </style>
 </head>
 <body>
@@ -924,201 +932,138 @@
     </div>
   </section>
 
-  <!-- スマートフォン用カルーセル -->
-  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
-    <div class="swiper mobile-swiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <a href="https://rockmount.com/" target="_blank" rel="noopener" aria-label="Rockmount公式サイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/rockmount2.webp" fetchpriority="high">
-              <img src="image/rockmount3.webp" alt="Rockmount 25AW 欧米アパレルブランドの定番シャツ" width="889" height="500" fetchpriority="high">
-                </picture>
-            <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Rockmount</div>
-              </a>
-            </div>
-        <div class="swiper-slide">
-          <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" aria-label="Harley of Scotland公式サイトへ">
-                <picture>
-                  <source media="(max-width: 768px)" srcset="image/Harley1.webp" fetchpriority="high">
-              <img src="image/harley 24AW.webp" alt="Harley of Scotland 伝統的ニットブランド" width="889" height="500" fetchpriority="high">
-                </picture>
-            <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Harley of Scotland</div>
-              </a>
-            </div>
-        <div class="swiper-slide">
-          <a href="https://www.eribe.com/" target="_blank" rel="noopener" aria-label="Eribe公式サイトへ">
-                <picture>
-              <source media="(max-width: 768px)" srcset="image/eribe1.webp" fetchpriority="high">
-              <img src="image/eribe.webp" alt="Eribe スコットランドのフェアアイルニット" width="889" height="500" fetchpriority="high">
-                </picture>
-            <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Eribe</div>
-              </a>
-            </div>
-        <div class="swiper-slide">
-          <a href="https://leminor.fr/en" target="_blank" rel="noopener" aria-label="Le Minor公式サイトへ">
-                <picture>
-              <source media="(max-width: 768px)" srcset="image/leminor2.webp" fetchpriority="high">
-              <img src="image/leminor25AW.webp" alt="Le Minor フランスの老舗マリンブランド" width="889" height="500" fetchpriority="high">
-                </picture>
-            <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Le Minor</div>
-              </a>
-            </div>
-        <div class="swiper-slide">
-          <a href="https://www.glenprince.com/" target="_blank" rel="noopener" aria-label="Glen Prince公式サイトへ">
-                <picture>
-              <source media="(max-width: 768px)" srcset="image/glenprince2.webp" fetchpriority="high">
-              <img src="image/glenprince25AW.webp" alt="Glen Prince 英国の高級ストールブランド" width="889" height="500" fetchpriority="high">
-                </picture>
-            <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Glen Prince</div>
-              </a>
-            </div>
-        <div class="swiper-slide">
-          <a href="https://williamlockie.com/" target="_blank" rel="noopener" aria-label="William Lockie公式サイトへ">
-                <picture>
-              <source media="(max-width: 768px)" srcset="image/william2.webp" fetchpriority="high">
-              <img src="image/william2.webp" alt="William Lockie 英国の老舗ニットブランド" width="889" height="500" fetchpriority="high">
-                </picture>
-            <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">William Lockie</div>
-              </a>
-            </div>
-        <div class="swiper-slide">
-          <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" aria-label="Kopka公式サイトへ">
-                <picture>
-              <source media="(max-width: 768px)" srcset="image/kopka2.webp" fetchpriority="high">
-              <img src="image/kopka2.webp" alt="Kopka ドイツの帽子ブランド" width="889" height="500" fetchpriority="high">
-                </picture>
-            <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Kopka</div>
-              </a>
-            </div>
+    <!-- スマートフォン用カルーセル -->
+    <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
+      <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
+      <!-- カルーセルは削除 -->
+    </section>
+
+    <!-- ここから流れる画像2行 -->
+    <section id="flowing-images" style="margin: 40px 0;">
+      <div class="flow-row-bg">
+        <div class="flow-row flow-row-top">
+          <div class="flow-track">
+            <img src="image/1.JPG" alt="1">
+            <img src="image/2.JPG" alt="2">
+            <img src="image/3.JPG" alt="3">
+            <img src="image/4.JPG" alt="4">
+            <img src="image/5.JPG" alt="5">
+            <img src="image/6.JPG" alt="6">
+            <img src="image/7.JPG" alt="7">
+            <img src="image/8.JPG" alt="8">
+            <img src="image/9.JPG" alt="9">
+            <img src="image/10.JPG" alt="10">
+            <img src="image/1.JPG" alt="1">
+            <img src="image/2.JPG" alt="2">
+            <img src="image/3.JPG" alt="3">
+            <img src="image/4.JPG" alt="4">
+            <img src="image/5.JPG" alt="5">
+            <img src="image/6.JPG" alt="6">
+            <img src="image/7.JPG" alt="7">
+            <img src="image/8.JPG" alt="8">
+            <img src="image/9.JPG" alt="9">
+            <img src="image/10.JPG" alt="10">
+            <img src="image/1.JPG" alt="1">
+            <img src="image/2.JPG" alt="2">
+            <img src="image/3.JPG" alt="3">
+            <img src="image/4.JPG" alt="4">
+            <img src="image/5.JPG" alt="5">
+            <img src="image/6.JPG" alt="6">
+            <img src="image/7.JPG" alt="7">
+            <img src="image/8.JPG" alt="8">
+            <img src="image/9.JPG" alt="9">
+            <img src="image/10.JPG" alt="10">
+            <img src="image/1.JPG" alt="1">
+            <img src="image/2.JPG" alt="2">
+            <img src="image/3.JPG" alt="3">
+            <img src="image/4.JPG" alt="4">
+            <img src="image/5.JPG" alt="5">
+            <img src="image/6.JPG" alt="6">
+            <img src="image/7.JPG" alt="7">
+            <img src="image/8.JPG" alt="8">
+            <img src="image/9.JPG" alt="9">
+            <img src="image/10.JPG" alt="10">
+            <img src="image/1.JPG" alt="1">
+            <img src="image/2.JPG" alt="2">
+            <img src="image/3.JPG" alt="3">
+            <img src="image/4.JPG" alt="4">
+            <img src="image/5.JPG" alt="5">
+            <img src="image/6.JPG" alt="6">
+            <img src="image/7.JPG" alt="7">
+            <img src="image/8.JPG" alt="8">
+            <img src="image/9.JPG" alt="9">
+            <img src="image/10.JPG" alt="10">
           </div>
         </div>
-  </section>
-
-  <!-- ここから流れる画像2行 -->
-  <section id="flowing-images" style="margin: 40px 0;">
-    <div class="flow-row flow-row-top">
-      <!-- 1.JPG〜10.JPG 左→右（5回連結） -->
-      <div class="flow-track">
-        <img src="image/1.JPG" alt="1">
-        <img src="image/2.JPG" alt="2">
-        <img src="image/3.JPG" alt="3">
-        <img src="image/4.JPG" alt="4">
-        <img src="image/5.JPG" alt="5">
-        <img src="image/6.JPG" alt="6">
-        <img src="image/7.JPG" alt="7">
-        <img src="image/8.JPG" alt="8">
-        <img src="image/9.JPG" alt="9">
-        <img src="image/10.JPG" alt="10">
-        <img src="image/1.JPG" alt="1">
-        <img src="image/2.JPG" alt="2">
-        <img src="image/3.JPG" alt="3">
-        <img src="image/4.JPG" alt="4">
-        <img src="image/5.JPG" alt="5">
-        <img src="image/6.JPG" alt="6">
-        <img src="image/7.JPG" alt="7">
-        <img src="image/8.JPG" alt="8">
-        <img src="image/9.JPG" alt="9">
-        <img src="image/10.JPG" alt="10">
-        <img src="image/1.JPG" alt="1">
-        <img src="image/2.JPG" alt="2">
-        <img src="image/3.JPG" alt="3">
-        <img src="image/4.JPG" alt="4">
-        <img src="image/5.JPG" alt="5">
-        <img src="image/6.JPG" alt="6">
-        <img src="image/7.JPG" alt="7">
-        <img src="image/8.JPG" alt="8">
-        <img src="image/9.JPG" alt="9">
-        <img src="image/10.JPG" alt="10">
-        <img src="image/1.JPG" alt="1">
-        <img src="image/2.JPG" alt="2">
-        <img src="image/3.JPG" alt="3">
-        <img src="image/4.JPG" alt="4">
-        <img src="image/5.JPG" alt="5">
-        <img src="image/6.JPG" alt="6">
-        <img src="image/7.JPG" alt="7">
-        <img src="image/8.JPG" alt="8">
-        <img src="image/9.JPG" alt="9">
-        <img src="image/10.JPG" alt="10">
-        <img src="image/1.JPG" alt="1">
-        <img src="image/2.JPG" alt="2">
-        <img src="image/3.JPG" alt="3">
-        <img src="image/4.JPG" alt="4">
-        <img src="image/5.JPG" alt="5">
-        <img src="image/6.JPG" alt="6">
-        <img src="image/7.JPG" alt="7">
-        <img src="image/8.JPG" alt="8">
-        <img src="image/9.JPG" alt="9">
-        <img src="image/10.JPG" alt="10">
       </div>
-    </div>
-    <div class="flow-row flow-row-bottom">
-      <!-- 20.JPG〜11.JPG 左→右（5回連結） -->
-      <div class="flow-track">
-        <img src="image/20.JPG" alt="20">
-        <img src="image/19.JPG" alt="19">
-        <img src="image/18.JPG" alt="18">
-        <img src="image/17.JPG" alt="17">
-        <img src="image/16.JPG" alt="16">
-        <img src="image/15.JPG" alt="15">
-        <img src="image/14.JPG" alt="14">
-        <img src="image/13.JPG" alt="13">
-        <img src="image/12.JPG" alt="12">
-        <img src="image/11.JPG" alt="11">
-        <img src="image/20.JPG" alt="20">
-        <img src="image/19.JPG" alt="19">
-        <img src="image/18.JPG" alt="18">
-        <img src="image/17.JPG" alt="17">
-        <img src="image/16.JPG" alt="16">
-        <img src="image/15.JPG" alt="15">
-        <img src="image/14.JPG" alt="14">
-        <img src="image/13.JPG" alt="13">
-        <img src="image/12.JPG" alt="12">
-        <img src="image/11.JPG" alt="11">
-        <img src="image/20.JPG" alt="20">
-        <img src="image/19.JPG" alt="19">
-        <img src="image/18.JPG" alt="18">
-        <img src="image/17.JPG" alt="17">
-        <img src="image/16.JPG" alt="16">
-        <img src="image/15.JPG" alt="15">
-        <img src="image/14.JPG" alt="14">
-        <img src="image/13.JPG" alt="13">
-        <img src="image/12.JPG" alt="12">
-        <img src="image/11.JPG" alt="11">
-        <img src="image/20.JPG" alt="20">
-        <img src="image/19.JPG" alt="19">
-        <img src="image/18.JPG" alt="18">
-        <img src="image/17.JPG" alt="17">
-        <img src="image/16.JPG" alt="16">
-        <img src="image/15.JPG" alt="15">
-        <img src="image/14.JPG" alt="14">
-        <img src="image/13.JPG" alt="13">
-        <img src="image/12.JPG" alt="12">
-        <img src="image/11.JPG" alt="11">
-        <img src="image/20.JPG" alt="20">
-        <img src="image/19.JPG" alt="19">
-        <img src="image/18.JPG" alt="18">
-        <img src="image/17.JPG" alt="17">
-        <img src="image/16.JPG" alt="16">
-        <img src="image/15.JPG" alt="15">
-        <img src="image/14.JPG" alt="14">
-        <img src="image/13.JPG" alt="13">
-        <img src="image/12.JPG" alt="12">
-        <img src="image/11.JPG" alt="11">
-        <img src="image/20.JPG" alt="20">
-        <img src="image/19.JPG" alt="19">
-        <img src="image/18.JPG" alt="18">
-        <img src="image/17.JPG" alt="17">
-        <img src="image/16.JPG" alt="16">
-        <img src="image/15.JPG" alt="15">
-        <img src="image/14.JPG" alt="14">
-        <img src="image/13.JPG" alt="13">
-        <img src="image/12.JPG" alt="12">
-        <img src="image/11.JPG" alt="11">
+      <div class="flow-row-bg">
+        <div class="flow-row flow-row-bottom">
+          <div class="flow-track">
+            <img src="image/20.JPG" alt="20">
+            <img src="image/19.JPG" alt="19">
+            <img src="image/18.JPG" alt="18">
+            <img src="image/17.JPG" alt="17">
+            <img src="image/16.JPG" alt="16">
+            <img src="image/15.JPG" alt="15">
+            <img src="image/14.JPG" alt="14">
+            <img src="image/13.JPG" alt="13">
+            <img src="image/12.JPG" alt="12">
+            <img src="image/11.JPG" alt="11">
+            <img src="image/20.JPG" alt="20">
+            <img src="image/19.JPG" alt="19">
+            <img src="image/18.JPG" alt="18">
+            <img src="image/17.JPG" alt="17">
+            <img src="image/16.JPG" alt="16">
+            <img src="image/15.JPG" alt="15">
+            <img src="image/14.JPG" alt="14">
+            <img src="image/13.JPG" alt="13">
+            <img src="image/12.JPG" alt="12">
+            <img src="image/11.JPG" alt="11">
+            <img src="image/20.JPG" alt="20">
+            <img src="image/19.JPG" alt="19">
+            <img src="image/18.JPG" alt="18">
+            <img src="image/17.JPG" alt="17">
+            <img src="image/16.JPG" alt="16">
+            <img src="image/15.JPG" alt="15">
+            <img src="image/14.JPG" alt="14">
+            <img src="image/13.JPG" alt="13">
+            <img src="image/12.JPG" alt="12">
+            <img src="image/11.JPG" alt="11">
+            <img src="image/20.JPG" alt="20">
+            <img src="image/19.JPG" alt="19">
+            <img src="image/18.JPG" alt="18">
+            <img src="image/17.JPG" alt="17">
+            <img src="image/16.JPG" alt="16">
+            <img src="image/15.JPG" alt="15">
+            <img src="image/14.JPG" alt="14">
+            <img src="image/13.JPG" alt="13">
+            <img src="image/12.JPG" alt="12">
+            <img src="image/11.JPG" alt="11">
+            <img src="image/20.JPG" alt="20">
+            <img src="image/19.JPG" alt="19">
+            <img src="image/18.JPG" alt="18">
+            <img src="image/17.JPG" alt="17">
+            <img src="image/16.JPG" alt="16">
+            <img src="image/15.JPG" alt="15">
+            <img src="image/14.JPG" alt="14">
+            <img src="image/13.JPG" alt="13">
+            <img src="image/12.JPG" alt="12">
+            <img src="image/11.JPG" alt="11">
+            <img src="image/20.JPG" alt="20">
+            <img src="image/19.JPG" alt="19">
+            <img src="image/18.JPG" alt="18">
+            <img src="image/17.JPG" alt="17">
+            <img src="image/16.JPG" alt="16">
+            <img src="image/15.JPG" alt="15">
+            <img src="image/14.JPG" alt="14">
+            <img src="image/13.JPG" alt="13">
+            <img src="image/12.JPG" alt="12">
+            <img src="image/11.JPG" alt="11">
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-  <!-- ここまで流れる画像2行 -->
+    </section>
+    <!-- ここまで流れる画像2行 -->
 
    <!-- About -->
 <section id="brands" class="mb-5">
