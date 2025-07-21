@@ -794,6 +794,11 @@
       animation-iteration-count: infinite;
       will-change: transform;
       min-width: 300%;
+      overflow-x: auto;
+      white-space: nowrap;
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      user-select: none;
     }
     .flow-row-top .flow-track {
       animation-name: flow-right;
@@ -895,6 +900,23 @@
         border-radius: 0 !important;
       }
     }
+    .flow-track img {
+      transition: transform 0.2s;
+    }
+    .flow-track img.active,
+    .flow-track img:active,
+    .flow-track img.dragging {
+      transform: scale(1.12);
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    }
+    @media (max-width: 600px) {
+      .brands-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+        padding: 1rem !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -991,115 +1013,143 @@
       <div class="flow-row-bg" id="flowing-images-bg">
       <div class="flow-row flow-row-top">
         <div class="flow-track">
-          <img src="image/1.JPG" alt="1">
-          <img src="image/2.JPG" alt="2">
-          <img src="image/3.JPG" alt="3">
-          <img src="image/4.JPG" alt="4">
-          <img src="image/5.JPG" alt="5">
-          <img src="image/6.JPG" alt="6">
-          <img src="image/7.JPG" alt="7">
-          <img src="image/8.JPG" alt="8">
-          <img src="image/9.JPG" alt="9">
-          <img src="image/10.JPG" alt="10">
-          <img src="image/1.JPG" alt="1">
-          <img src="image/2.JPG" alt="2">
-          <img src="image/3.JPG" alt="3">
-          <img src="image/4.JPG" alt="4">
-          <img src="image/5.JPG" alt="5">
-          <img src="image/6.JPG" alt="6">
-          <img src="image/7.JPG" alt="7">
-          <img src="image/8.JPG" alt="8">
-          <img src="image/9.JPG" alt="9">
-          <img src="image/10.JPG" alt="10">
-          <img src="image/1.JPG" alt="1">
-          <img src="image/2.JPG" alt="2">
-          <img src="image/3.JPG" alt="3">
-          <img src="image/4.JPG" alt="4">
-          <img src="image/5.JPG" alt="5">
-          <img src="image/6.JPG" alt="6">
-          <img src="image/7.JPG" alt="7">
-          <img src="image/8.JPG" alt="8">
-          <img src="image/9.JPG" alt="9">
-          <img src="image/10.JPG" alt="10">
-          <img src="image/1.JPG" alt="1">
-          <img src="image/2.JPG" alt="2">
-          <img src="image/3.JPG" alt="3">
-          <img src="image/4.JPG" alt="4">
-          <img src="image/5.JPG" alt="5">
-          <img src="image/6.JPG" alt="6">
-          <img src="image/7.JPG" alt="7">
-          <img src="image/8.JPG" alt="8">
-          <img src="image/9.JPG" alt="9">
-          <img src="image/10.JPG" alt="10">
-          <img src="image/1.JPG" alt="1">
-          <img src="image/2.JPG" alt="2">
-          <img src="image/3.JPG" alt="3">
-          <img src="image/4.JPG" alt="4">
-          <img src="image/5.JPG" alt="5">
-          <img src="image/6.JPG" alt="6">
-          <img src="image/7.JPG" alt="7">
-          <img src="image/8.JPG" alt="8">
-          <img src="image/9.JPG" alt="9">
-          <img src="image/10.JPG" alt="10">
-          </div>
-        </div>
-        <div class="flow-row-gap"></div>
-        <div class="flow-row flow-row-bottom">
-          <div class="flow-track">
-          <img src="image/20.JPG" alt="20">
-          <img src="image/19.JPG" alt="19">
-          <img src="image/18.JPG" alt="18">
-          <img src="image/17.JPG" alt="17">
-          <img src="image/16.JPG" alt="16">
-          <img src="image/15.JPG" alt="15">
-          <img src="image/14.JPG" alt="14">
-          <img src="image/13.JPG" alt="13">
-          <img src="image/12.JPG" alt="12">
-          <img src="image/11.JPG" alt="11">
-          <img src="image/20.JPG" alt="20">
-          <img src="image/19.JPG" alt="19">
-          <img src="image/18.JPG" alt="18">
-          <img src="image/17.JPG" alt="17">
-          <img src="image/16.JPG" alt="16">
-          <img src="image/15.JPG" alt="15">
-          <img src="image/14.JPG" alt="14">
-          <img src="image/13.JPG" alt="13">
-          <img src="image/12.JPG" alt="12">
-          <img src="image/11.JPG" alt="11">
-          <img src="image/20.JPG" alt="20">
-          <img src="image/19.JPG" alt="19">
-          <img src="image/18.JPG" alt="18">
-          <img src="image/17.JPG" alt="17">
-          <img src="image/16.JPG" alt="16">
-          <img src="image/15.JPG" alt="15">
-          <img src="image/14.JPG" alt="14">
-          <img src="image/13.JPG" alt="13">
-          <img src="image/12.JPG" alt="12">
-          <img src="image/11.JPG" alt="11">
-          <img src="image/20.JPG" alt="20">
-          <img src="image/19.JPG" alt="19">
-          <img src="image/18.JPG" alt="18">
-          <img src="image/17.JPG" alt="17">
-          <img src="image/16.JPG" alt="16">
-          <img src="image/15.JPG" alt="15">
-          <img src="image/14.JPG" alt="14">
-          <img src="image/13.JPG" alt="13">
-          <img src="image/12.JPG" alt="12">
-          <img src="image/11.JPG" alt="11">
-          <img src="image/20.JPG" alt="20">
-          <img src="image/19.JPG" alt="19">
-          <img src="image/18.JPG" alt="18">
-          <img src="image/17.JPG" alt="17">
-          <img src="image/16.JPG" alt="16">
-          <img src="image/15.JPG" alt="15">
-          <img src="image/14.JPG" alt="14">
-          <img src="image/13.JPG" alt="13">
-          <img src="image/12.JPG" alt="12">
-          <img src="image/11.JPG" alt="11">
-          </div>
+          <!-- 画像リストを3セット分並べる（例：1-20,1-20,1-20） -->
+          <!-- 1セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 2セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 3セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
         </div>
       </div>
-    </section>
+      <div class="flow-row-gap"></div>
+      <div class="flow-row flow-row-bottom">
+        <div class="flow-track">
+          <!-- 画像リストを3セット分並べる（例：1-20,1-20,1-20） -->
+          <!-- 1セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 2セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 3セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+        </div>
+      </div>
+    </div>
+  </section>
     <style>
       .flow-row-top {
         margin-bottom: 0;
@@ -1495,5 +1545,112 @@
     <img id="modal-img" src="" alt="" style="max-width:90vw; max-height:90vh; border-radius:16px; box-shadow:0 8px 32px #000a;">
     <button id="modal-close" style="position:absolute;top:2vw;right:2vw;font-size:2rem;color:#fff;background:none;border:none;cursor:pointer;">&times;</button>
   </div>
+  <script>
+// flowing-images ドラッグ・スワイプ対応
+(function() {
+  const tracks = document.querySelectorAll('.flow-track');
+  tracks.forEach(track => {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let activeImg = null;
+
+    // 画像のドラッグ開始を禁止
+    track.querySelectorAll('img').forEach(img => {
+      img.addEventListener('dragstart', e => e.preventDefault());
+    });
+
+    // 初期表示で中央セットにスクロール
+    function scrollToMiddleSet() {
+      const imgs = track.querySelectorAll('img');
+      const imgWidth = imgs[0].offsetWidth + 24; // gap=24px
+      track.scrollLeft = imgWidth * 20; // 1セット分右へ
+    }
+    window.addEventListener('load', scrollToMiddleSet);
+    // 端に到達したら中央セットにジャンプ
+    track.addEventListener('scroll', function() {
+      const imgs = track.querySelectorAll('img');
+      const imgWidth = imgs[0].offsetWidth + 24;
+      if (track.scrollLeft < imgWidth * 2) {
+        // 左端近く
+        track.scrollLeft += imgWidth * 20;
+      } else if (track.scrollLeft > imgWidth * 38) {
+        // 右端近く
+        track.scrollLeft -= imgWidth * 20;
+      }
+    });
+
+    // PC: マウスドラッグ
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      track.classList.add('dragging');
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+      // 拡大
+      if (e.target.tagName === 'IMG') {
+        activeImg = e.target;
+        activeImg.classList.add('active');
+      }
+    });
+    track.addEventListener('mouseleave', () => {
+      isDown = false;
+      track.classList.remove('dragging');
+      if (activeImg) activeImg.classList.remove('active');
+    });
+    track.addEventListener('mouseup', () => {
+      isDown = false;
+      track.classList.remove('dragging');
+      if (activeImg) activeImg.classList.remove('active');
+    });
+    track.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 1.2; // スクロール速度調整
+      track.scrollLeft = scrollLeft - walk;
+    });
+
+    // スマホ: タッチスワイプ
+    track.addEventListener('touchstart', (e) => {
+      isDown = true;
+      track.classList.add('dragging');
+      startX = e.touches[0].pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+      // 拡大
+      if (e.target.tagName === 'IMG') {
+        activeImg = e.target;
+        activeImg.classList.add('active');
+      }
+    });
+    track.addEventListener('touchend', () => {
+      isDown = false;
+      track.classList.remove('dragging');
+      if (activeImg) activeImg.classList.remove('active');
+    });
+    track.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - track.offsetLeft;
+      const walk = (x - startX) * 1.2;
+      track.scrollLeft = scrollLeft - walk;
+    });
+  });
+})();
+  </script>
+  <script>
+// スマホ背景動画 2.mp4 を常に再生し続ける
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileVideo = document.getElementById('mobile-bg-video');
+  if (mobileVideo) {
+    // ページ表示時
+    mobileVideo.play().catch(()=>{});
+    // タブ復帰時
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) {
+        mobileVideo.play().catch(()=>{});
+      }
+    });
+  }
+});
+</script>
 </body>
 </html>
