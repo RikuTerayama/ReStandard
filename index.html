@@ -790,25 +790,21 @@
     .flow-track {
       display: flex;
       gap: 24px;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      will-change: transform;
-      min-width: 300%;
       overflow-x: auto;
+      min-width: 7000px;
+      width: max-content;
       white-space: nowrap;
-      cursor: grab;
-      -webkit-overflow-scrolling: touch;
       user-select: none;
+      -webkit-overflow-scrolling: touch;
     }
     .flow-row-top .flow-track {
-      animation-name: flow-right;
-      animation-duration: 12s;
-      animation-direction: normal;
+      animation: flow-right 120s linear infinite;
     }
     .flow-row-bottom .flow-track {
-      animation-name: flow-left;
-      animation-duration: 12s;
-      animation-direction: normal;
+      animation: flow-left 120s linear infinite;
+    }
+    .flow-track.dragging {
+      animation-play-state: paused !important;
     }
     @keyframes flow-right {
       0% { transform: translateX(0); }
@@ -845,8 +841,8 @@
       .flow-row { height: 220px; }
       .flow-row-top .flow-track,
       .flow-row-bottom .flow-track {
-        animation-duration: 6s;
-        min-width: 300%;
+        animation-duration: 120s !important;
+        min-width: 500%;
         will-change: auto;
       }
     }
@@ -917,25 +913,8 @@
         padding: 1rem !important;
       }
     }
-    @media (max-width: 900px) {
-      .navbar {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        z-index: 9999;
-      }
-      footer {
-        position: fixed !important;
-        bottom: 0;
-        left: 0;
-        width: 100vw;
-        z-index: 9999;
-      }
-      body {
-        padding-top: 64px !important;
-        padding-bottom: 120px !important;
-      }
+    .flow-row, .flow-row-bg {
+      overflow: visible !important;
     }
   </style>
 </head>
@@ -1033,8 +1012,7 @@
       <div class="flow-row-bg" id="flowing-images-bg">
       <div class="flow-row flow-row-top">
         <div class="flow-track">
-          <!-- 画像リストを3セット分並べる（例：1-20,1-20,1-20） -->
-          <!-- 1セット目 -->
+          <!-- 画像リストを7セット分並べる（例：1-20,1-20,...,1-20） -->
           <img src="image/1.JPG" alt="1" draggable="false">
           <img src="image/2.JPG" alt="2" draggable="false">
           <img src="image/3.JPG" alt="3" draggable="false">
@@ -1077,6 +1055,90 @@
           <img src="image/19.JPG" alt="19" draggable="false">
           <img src="image/20.JPG" alt="20" draggable="false">
           <!-- 3セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 4セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 5セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 6セット目 -->
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <!-- 7セット目 -->
           <img src="image/1.JPG" alt="1" draggable="false">
           <img src="image/2.JPG" alt="2" draggable="false">
           <img src="image/3.JPG" alt="3" draggable="false">
@@ -1102,70 +1164,153 @@
       <div class="flow-row-gap"></div>
       <div class="flow-row flow-row-bottom">
         <div class="flow-track">
-          <!-- 画像リストを3セット分並べる（例：1-20,1-20,1-20） -->
-          <!-- 1セット目 -->
-          <img src="image/1.JPG" alt="1" draggable="false">
-          <img src="image/2.JPG" alt="2" draggable="false">
-          <img src="image/3.JPG" alt="3" draggable="false">
-          <img src="image/4.JPG" alt="4" draggable="false">
-          <img src="image/5.JPG" alt="5" draggable="false">
-          <img src="image/6.JPG" alt="6" draggable="false">
-          <img src="image/7.JPG" alt="7" draggable="false">
-          <img src="image/8.JPG" alt="8" draggable="false">
-          <img src="image/9.JPG" alt="9" draggable="false">
-          <img src="image/10.JPG" alt="10" draggable="false">
-          <img src="image/11.JPG" alt="11" draggable="false">
-          <img src="image/12.JPG" alt="12" draggable="false">
-          <img src="image/13.JPG" alt="13" draggable="false">
-          <img src="image/14.JPG" alt="14" draggable="false">
-          <img src="image/15.JPG" alt="15" draggable="false">
-          <img src="image/16.JPG" alt="16" draggable="false">
-          <img src="image/17.JPG" alt="17" draggable="false">
-          <img src="image/18.JPG" alt="18" draggable="false">
-          <img src="image/19.JPG" alt="19" draggable="false">
+          <!-- 画像リストを7セット分、20→1の逆順で並べる -->
           <img src="image/20.JPG" alt="20" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/1.JPG" alt="1" draggable="false">
           <!-- 2セット目 -->
-          <img src="image/1.JPG" alt="1" draggable="false">
-          <img src="image/2.JPG" alt="2" draggable="false">
-          <img src="image/3.JPG" alt="3" draggable="false">
-          <img src="image/4.JPG" alt="4" draggable="false">
-          <img src="image/5.JPG" alt="5" draggable="false">
-          <img src="image/6.JPG" alt="6" draggable="false">
-          <img src="image/7.JPG" alt="7" draggable="false">
-          <img src="image/8.JPG" alt="8" draggable="false">
-          <img src="image/9.JPG" alt="9" draggable="false">
-          <img src="image/10.JPG" alt="10" draggable="false">
-          <img src="image/11.JPG" alt="11" draggable="false">
-          <img src="image/12.JPG" alt="12" draggable="false">
-          <img src="image/13.JPG" alt="13" draggable="false">
-          <img src="image/14.JPG" alt="14" draggable="false">
-          <img src="image/15.JPG" alt="15" draggable="false">
-          <img src="image/16.JPG" alt="16" draggable="false">
-          <img src="image/17.JPG" alt="17" draggable="false">
-          <img src="image/18.JPG" alt="18" draggable="false">
-          <img src="image/19.JPG" alt="19" draggable="false">
           <img src="image/20.JPG" alt="20" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/1.JPG" alt="1" draggable="false">
           <!-- 3セット目 -->
-          <img src="image/1.JPG" alt="1" draggable="false">
-          <img src="image/2.JPG" alt="2" draggable="false">
-          <img src="image/3.JPG" alt="3" draggable="false">
-          <img src="image/4.JPG" alt="4" draggable="false">
-          <img src="image/5.JPG" alt="5" draggable="false">
-          <img src="image/6.JPG" alt="6" draggable="false">
-          <img src="image/7.JPG" alt="7" draggable="false">
-          <img src="image/8.JPG" alt="8" draggable="false">
-          <img src="image/9.JPG" alt="9" draggable="false">
-          <img src="image/10.JPG" alt="10" draggable="false">
-          <img src="image/11.JPG" alt="11" draggable="false">
-          <img src="image/12.JPG" alt="12" draggable="false">
-          <img src="image/13.JPG" alt="13" draggable="false">
-          <img src="image/14.JPG" alt="14" draggable="false">
-          <img src="image/15.JPG" alt="15" draggable="false">
-          <img src="image/16.JPG" alt="16" draggable="false">
-          <img src="image/17.JPG" alt="17" draggable="false">
-          <img src="image/18.JPG" alt="18" draggable="false">
-          <img src="image/19.JPG" alt="19" draggable="false">
           <img src="image/20.JPG" alt="20" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <!-- 4セット目 -->
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <!-- 5セット目 -->
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <!-- 6セット目 -->
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/1.JPG" alt="1" draggable="false">
+          <!-- 7セット目 -->
+          <img src="image/20.JPG" alt="20" draggable="false">
+          <img src="image/19.JPG" alt="19" draggable="false">
+          <img src="image/18.JPG" alt="18" draggable="false">
+          <img src="image/17.JPG" alt="17" draggable="false">
+          <img src="image/16.JPG" alt="16" draggable="false">
+          <img src="image/15.JPG" alt="15" draggable="false">
+          <img src="image/14.JPG" alt="14" draggable="false">
+          <img src="image/13.JPG" alt="13" draggable="false">
+          <img src="image/12.JPG" alt="12" draggable="false">
+          <img src="image/11.JPG" alt="11" draggable="false">
+          <img src="image/10.JPG" alt="10" draggable="false">
+          <img src="image/9.JPG" alt="9" draggable="false">
+          <img src="image/8.JPG" alt="8" draggable="false">
+          <img src="image/7.JPG" alt="7" draggable="false">
+          <img src="image/6.JPG" alt="6" draggable="false">
+          <img src="image/5.JPG" alt="5" draggable="false">
+          <img src="image/4.JPG" alt="4" draggable="false">
+          <img src="image/3.JPG" alt="3" draggable="false">
+          <img src="image/2.JPG" alt="2" draggable="false">
+          <img src="image/1.JPG" alt="1" draggable="false">
         </div>
       </div>
     </div>
@@ -1578,26 +1723,6 @@
     // 画像のドラッグ開始を禁止
     track.querySelectorAll('img').forEach(img => {
       img.addEventListener('dragstart', e => e.preventDefault());
-    });
-
-    // 初期表示で中央セットにスクロール
-    function scrollToMiddleSet() {
-      const imgs = track.querySelectorAll('img');
-      const imgWidth = imgs[0].offsetWidth + 24; // gap=24px
-      track.scrollLeft = imgWidth * 20; // 1セット分右へ
-    }
-    window.addEventListener('load', scrollToMiddleSet);
-    // 端に到達したら中央セットにジャンプ
-    track.addEventListener('scroll', function() {
-      const imgs = track.querySelectorAll('img');
-      const imgWidth = imgs[0].offsetWidth + 24;
-      if (track.scrollLeft < imgWidth * 2) {
-        // 左端近く
-        track.scrollLeft += imgWidth * 20;
-      } else if (track.scrollLeft > imgWidth * 38) {
-        // 右端近く
-        track.scrollLeft -= imgWidth * 20;
-      }
     });
 
     // PC: マウスドラッグ
