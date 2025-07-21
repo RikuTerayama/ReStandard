@@ -32,7 +32,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
@@ -224,6 +225,32 @@
     a:hover, .internal-link:hover {
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
     }
+    @media (max-width: 768px) {
+      .form-container {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: relative !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+      }
+      .form-container iframe {
+        min-width: 0 !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        display: block;
+      }
+    }
+    @media (max-width: 768px) {
+      .sp-br { display: inline; }
+      .sp-br::after { content: "\A"; white-space: pre; }
+    }
+    @media (min-width: 769px) {
+      .sp-br { display: none; }
+    }
   </style>
   
 </head>
@@ -265,7 +292,9 @@
     <div class="container">
       <div class="text-block delay-1">
         <div class="ja-content">
-          <p class="text-center mb-4">お仕事のご依頼やご相談は、下記フォームよりご連絡ください。</p>
+          <p class="text-center mb-4">
+            お仕事のご依頼やご相談は、<span class="sp-br"></span>下記フォームよりご連絡ください。
+          </p>
         </div>
         <div class="en-content">
           <p class="text-center mb-4">For business inquiries or consultations, please contact us using the form below.</p>
@@ -273,17 +302,20 @@
       </div>
       <div class="text-block delay-2">
         <div class="form-container">
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSciHmSYJyojXLvGL1_MgoaYBGkwgYUJ_wRb_LUpmOqWmAur2w/viewform?embedded=true"
-            width="900" height="1237"
-            style="width:min(100vw,900px);max-width:100vw;min-width:0;margin:0 auto;display:block;"
+          <iframe
+            id="JotFormIFrame-252014412896455"
+            title="お問い合わせフォーム"
+            onload="window.parent.scrollTo(0,0)"
+            allowtransparency="true"
+            allow="geolocation; microphone; camera; fullscreen; payment"
+            src="https://form.jotform.com/252014412896455"
             frameborder="0"
-            marginheight="0"
-            marginwidth="0"
-            title="ReStandardお問い合わせフォーム"
-            role="region"
-            aria-label="ReStandardお問い合わせフォーム">
-            読み込んでいます…
+            style="min-width:100%;max-width:100%;height:539px;border:none;"
+            scrolling="no"
+          >
           </iframe>
+          <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
+          <script>window.jotformEmbedHandler("iframe[id='JotFormIFrame-252014412896455']", "https://form.jotform.com/")</script>
         </div>
       </div>
     </div>
@@ -375,6 +407,16 @@
         margin-bottom: 2rem;
       }
   
+      footer .nav-link {
+        color: var(--main-color) !important;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        position: relative;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+  
       footer .nav-link::after {
         content: '';
         position: absolute;
@@ -428,16 +470,29 @@
   
     <div class="social-links">
       <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
+        <!-- Instagram モノトーンSVG -->
+        <svg width="24" height="24" viewBox="0 0 448 448" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="32" y="32" width="384" height="384" rx="96" fill="#fff"/>
+          <rect x="32" y="32" width="384" height="384" rx="96" stroke="#222" stroke-width="32"/>
+          <circle cx="224" cy="224" r="80" fill="none" stroke="#222" stroke-width="32"/>
+          <circle cx="320" cy="128" r="24" fill="#222"/>
+        </svg>
       </a>
       <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" aria-label="Facebook">
-        <i class="fab fa-facebook-f"></i>
+        <!-- Facebook 公式SVG -->
+        <svg width="24" height="24" viewBox="0 0 320 512" fill="#1877F3" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91V127.91c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h100.2V288z" fill="#1877F3"/><path d="M202.66 512V288h69.56l10.42-92.66h-79.98v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h98.3z" fill="#fff"/></svg>
       </a>
       <a href="https://x.com/restandard_2025" target="_blank" aria-label="X (Twitter)">
-        <i class="fab fa-x-twitter"></i>
+        <!-- X 公式風モノトーンSVG（大きめ中央） -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.5 4H20L14.5 11.5L20.5 20H16L12 14.5L8.1 20H4L10 12.5L4.5 4H9L12.7 9.1L17.5 4ZM15.7 18.5H17.2L9.7 6.7H8.2L15.7 18.5Z" fill="#fff"/>
+        </svg>
       </a>
       <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
-        <i class="fas fa-book-open"></i>
+        <!-- note 白抜きn文字SVG（さらに大きめ・完全中心中央揃え） -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="12" y="12" font-size="26" font-family="Arial Black, Arial, sans-serif" fill="#fff" font-weight="bold" text-anchor="middle" dominant-baseline="middle">n</text>
+        </svg>
       </a>
     </div>
     
