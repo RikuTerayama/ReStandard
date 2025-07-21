@@ -829,6 +829,12 @@
     .flow-row {
       height: 420px;
     }
+    .flow-row-top {
+      margin-bottom: 0;
+    }
+    .flow-row-gap {
+      height: 8px;
+    }
     @media (max-width: 900px) {
       #flowing-images img { max-width: 100%; max-height: 200px; }
       .flow-row { height: 220px; }
@@ -841,7 +847,7 @@
     }
     .flow-row-bg {
       background: rgba(255,255,255,0.9);
-      border-radius: 12px;
+      border-radius: 0;
       box-shadow: 0 4px 24px rgba(0,0,0,0.07);
       margin: 0 auto 24px auto;
       padding: 8px 0;
@@ -995,20 +1001,9 @@
             <img src="image/10.JPG" alt="10">
           </div>
         </div>
-      </div>
-      <div class="flow-row-bg">
+        <div class="flow-row-gap"></div>
         <div class="flow-row flow-row-bottom">
           <div class="flow-track">
-            <img src="image/20.JPG" alt="20">
-            <img src="image/19.JPG" alt="19">
-            <img src="image/18.JPG" alt="18">
-            <img src="image/17.JPG" alt="17">
-            <img src="image/16.JPG" alt="16">
-            <img src="image/15.JPG" alt="15">
-            <img src="image/14.JPG" alt="14">
-            <img src="image/13.JPG" alt="13">
-            <img src="image/12.JPG" alt="12">
-            <img src="image/11.JPG" alt="11">
             <img src="image/20.JPG" alt="20">
             <img src="image/19.JPG" alt="19">
             <img src="image/18.JPG" alt="18">
@@ -1063,7 +1058,14 @@
         </div>
       </div>
     </section>
-    <!-- ここまで流れる画像2行 -->
+    <style>
+      .flow-row-top {
+        margin-bottom: 0;
+      }
+      .flow-row-gap {
+        height: 8px;
+      }
+    </style>
 
    <!-- About -->
 <section id="brands" class="mb-5">
