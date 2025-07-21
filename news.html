@@ -125,17 +125,24 @@
       border-bottom: 1px solid #ccc;
       backdrop-filter: blur(8px);
     }
-
+    .navbar .container-fluid {
+      padding: 0 1.5rem;
+    }
     .navbar-brand {
       font-family: var(--heading-font);
       color: var(--main-color) !important;
       letter-spacing: 0.05em;
       font-weight: 700;
     }
-
-    .nav-link {
+    .navbar-nav {
+      margin-right: 1rem;
+    }
+    .navbar-nav .nav-item {
+      margin: 0 0.5rem;
+    }
+    .navbar-nav .nav-link {
       font-family: var(--heading-font);
-      font-size: var(--font-size-sm);
+      font-size: 0.9rem;
       padding: 0.5rem 1rem;
       font-weight: 500;
       letter-spacing: 0.05em;
@@ -143,13 +150,29 @@
       position: relative;
       transition: all 0.3s var(--transition-timing);
     }
-
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s var(--transition-timing);
+      transform: translateX(-50%);
+    }
+    .nav-link:hover::after {
+      width: 70%;
+    }
     .nav-link:hover {
       color: var(--accent-color) !important;
     }
-
     .nav-link.active {
       font-weight: 700;
+      color: var(--main-color) !important;
+    }
+    .nav-link.active::after {
+      width: 70%;
     }
     
     .brand-name-caption {
@@ -352,8 +375,7 @@
   <div class="container-fluid">
     <div class="d-lg-none" style="width: 40px;"></div>
     <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
