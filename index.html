@@ -827,12 +827,17 @@
       max-height: 400px;
       width: auto;
       height: auto;
-      transition: transform 0.2s;
-      cursor: zoom-in;
+      transition: transform 0.2s, opacity 0.3s;
+      cursor: pointer;
       flex-shrink: 0;
       display: block;
       visibility: visible;
       opacity: 1;
+    }
+    
+    #flowing-images img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .flow-row {
       height: 420px;
@@ -945,9 +950,10 @@
       }
       #flowing-images {
         overflow: visible !important;
-        margin-top: 300px !important;
+        margin-top: 200px !important;
         position: relative !important;
         z-index: 10 !important;
+        display: block !important;
       }
       .flow-row {
         overflow: visible !important;
@@ -1820,6 +1826,47 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navbarCollapse.classList.contains('show')) {
       navbarToggler.click();
     }
+  });
+});
+</script>
+  <script>
+// flowing imagesのタップでアニメーション停止/再開機能
+document.addEventListener('DOMContentLoaded', function() {
+  const flowTracks = document.querySelectorAll('.flow-track');
+  let isPaused = false;
+  
+  flowTracks.forEach(track => {
+    track.addEventListener('click', function(e) {
+      // 画像をクリックした場合のみ処理
+      if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // アニメーションの停止/再開を切り替え
+        isPaused = !isPaused;
+        
+        if (isPaused) {
+          // アニメーションを停止
+          track.style.animationPlayState = 'paused';
+          // 視覚的フィードバック
+          track.style.opacity = '0.7';
+        } else {
+          // アニメーションを再開
+          track.style.animationPlayState = 'running';
+          // 視覚的フィードバックを元に戻す
+          track.style.opacity = '1';
+        }
+        
+        // 3秒後に自動的に再開（オプション）
+        if (isPaused) {
+          setTimeout(() => {
+            track.style.animationPlayState = 'running';
+            track.style.opacity = '1';
+            isPaused = false;
+          }, 3000);
+        }
+      }
+    });
   });
 });
 </script>
