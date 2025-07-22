@@ -821,6 +821,8 @@
       user-select: none;
       -webkit-overflow-scrolling: touch;
       cursor: grab;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     .flow-track:active {
@@ -828,9 +830,13 @@
     }
     .flow-row-top .flow-track {
       animation: flow-right 45s linear infinite;
+      transform: translateX(-50%); /* 初期位置を中央付近に設定 */
+      animation-play-state: paused; /* 初期表示時は一時停止 */
     }
     .flow-row-bottom .flow-track {
       animation: flow-left 45s linear infinite;
+      transform: translateX(-50%); /* 初期位置を中央付近に設定 */
+      animation-play-state: paused; /* 初期表示時は一時停止 */
     }
     .flow-track.dragging {
       animation-play-state: paused !important;
@@ -855,6 +861,9 @@
       transition: transform 0.2s, opacity 0.3s;
       cursor: pointer;
       flex-shrink: 0;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     #flowing-images img:hover {
@@ -1821,6 +1830,65 @@ document.addEventListener('DOMContentLoaded', function() {
   let isDragging = false;
   let startX = 0;
   let scrollLeft = 0;
+  
+  // 初期スクロール位置を設定（中央付近に配置）
+  function setInitialScrollPosition() {
+    flowTracks.forEach(track => {
+      // 画像が完全に読み込まれてから初期位置を設定
+      const images = track.querySelectorAll('img');
+      let allImagesLoaded = true;
+      
+      images.forEach(img => {
+        if (!img.complete || img.naturalWidth === 0) {
+          allImagesLoaded = false;
+        }
+      });
+      
+      if (allImagesLoaded) {
+        // 初期位置を中央付近に設定
+        const trackWidth = track.scrollWidth;
+        const containerWidth = track.clientWidth;
+        const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
+        track.scrollLeft = initialScroll;
+      }
+    });
+  }
+  
+  // 画像の読み込み完了を待ってから初期位置を設定
+  const images = document.querySelectorAll('#flowing-images img');
+  let loadedImages = 0;
+  
+  function checkAllImagesLoaded() {
+    loadedImages++;
+    if (loadedImages === images.length) {
+      // すべての画像が読み込まれたら、少し待ってから初期位置を設定
+      setTimeout(() => {
+        setInitialScrollPosition();
+        // さらに確実にするため、もう一度設定
+        setTimeout(setInitialScrollPosition, 100);
+        // アニメーションを開始
+        setTimeout(() => {
+          flowTracks.forEach(track => {
+            track.style.animationPlayState = 'running';
+          });
+        }, 200);
+      }, 100);
+    }
+  }
+  
+  images.forEach(img => {
+    if (img.complete && img.naturalWidth > 0) {
+      checkAllImagesLoaded();
+    } else {
+      img.addEventListener('load', checkAllImagesLoaded);
+      img.addEventListener('error', checkAllImagesLoaded); // エラー時も処理を続行
+    }
+  });
+  
+  // フォールバック：段階的に初期位置を設定
+  setTimeout(setInitialScrollPosition, 500);
+  setTimeout(setInitialScrollPosition, 1000);
+  setTimeout(setInitialScrollPosition, 2000);
   
   flowTracks.forEach(track => {
     // マウスイベント（PC用）
