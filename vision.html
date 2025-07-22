@@ -776,5 +776,25 @@
     setTimeout(() => announcement.remove(), 1000);
   }
 </script>
+<script>
+// ハンバーガーメニューの外をクリックした時に閉じる機能
+document.addEventListener('DOMContentLoaded', function() {
+  const navbarToggler = document.querySelector('.navbar-toggler');
+  const navbarCollapse = document.querySelector('.navbar-collapse');
+  
+  // メニューの外をクリックした時の処理
+  document.addEventListener('click', function(event) {
+    // ハンバーガーボタンまたはメニュー内をクリックした場合は何もしない
+    if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
+      return;
+    }
+    
+    // メニューが開いている場合のみ閉じる
+    if (navbarCollapse.classList.contains('show')) {
+      navbarToggler.click();
+    }
+  });
+});
+</script>
 </body>
 </html>
