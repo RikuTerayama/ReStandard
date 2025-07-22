@@ -98,6 +98,123 @@
       --font-size-4xl: 2.5rem;
     }
 
+    /* 背景動画の設定 - スマートフォンのみ */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      background: #000;
+      display: none; /* PCでは非表示 */
+    }
+
+    /* スマートフォンでのみ背景動画を表示 */
+    @media (max-width: 768px) {
+      #bg-video {
+        display: block !important;
+      }
+    }
+
+    /* index.htmlの.flow-row-bgと同じ設定を適用 */
+    .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 最高優先度で確実に適用 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 中心揃えのための追加設定 */
+    .about-section-box {
+      display: block !important;
+      text-align: center !important;
+    }
+
+    /* 内側の要素を全て透明に */
+    html body .about-section-box *,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* CSSファイルの競合を完全に排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 最高優先度で競合を排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box * {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* タイトルの色設定 */
+    .section-title {
+      color: #fff !important;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+    }
+
+    /* ナビゲーションバーとフッターの透明度統一 */
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(8px);
+    }
+
+    .language-switcher {
+      background: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(8px);
+    }
+
     html, body {
       font-family: var(--heading-font) !important;
     }
@@ -182,6 +299,76 @@
       max-width: 800px;
     }
 
+    /* フォントサイズの統一設定 */
+    p, .ja-content, .en-content {
+      font-size: 0.8rem !important;
+      line-height: 1.6 !important;
+    }
+
+    h3 {
+      font-size: 1.5rem !important;
+      font-weight: 700 !important;
+      line-height: 1.4 !important;
+    }
+
+    /* PC版でのフォントサイズ調整 */
+    @media (min-width: 769px) {
+      p, .ja-content, .en-content {
+        font-size: 1.1rem !important;
+        line-height: 1.7 !important;
+      }
+    }
+
+    /* PC版とスマートフォン版の表示制御 */
+    .desktop-only {
+      display: block;
+    }
+    .mobile-only {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none !important;
+      }
+      .mobile-only {
+        display: block !important;
+      }
+    }
+    
+    /* 言語切り替えの強化設定 */
+    [lang="ja"] .en-content {
+      display: none !important;
+    }
+    
+    [lang="en"] .ja-content {
+      display: none !important;
+    }
+    
+    /* スマートフォン版でも言語切り替えを確実に適用 */
+    @media (max-width: 768px) {
+      [lang="ja"] .en-content {
+        display: none !important;
+      }
+      
+      [lang="en"] .ja-content {
+        display: none !important;
+      }
+    }
+    
+    /* 最高優先度で言語切り替えを強制 */
+    html[lang="ja"] .en-content,
+    html[lang="ja"] .en-content.desktop-only,
+    html[lang="ja"] .en-content.mobile-only {
+      display: none !important;
+    }
+    
+    html[lang="en"] .ja-content,
+    html[lang="en"] .ja-content.desktop-only,
+    html[lang="en"] .ja-content.mobile-only {
+      display: none !important;
+    }
+
     .vision-highlight {
       font-family: var(--heading-font);
       font-size: var(--font-size-xl);
@@ -213,6 +400,9 @@
   
 </head>
 <body>
+
+<!-- 背景動画 -->
+<video id="bg-video" src="2.mp4" autoplay loop muted playsinline></video>
 
 <!-- ナビゲーションバー -->
 <nav class="sticky-top navbar navbar-expand-lg">
@@ -247,93 +437,156 @@
   </h1>
   <div class="section-content">
     <div class="container">
-      <div class="about-section-box">
-      <div class="text-block delay-1">
+      <div class="about-section-box delay-1">
         <div class="ja-content">
             <h3 class="text-center">私たちのビジョン</h3>
-            <h4 class="text-center">「Standard（定番）を再定義し、再構築する」</h4>
+            <p class="text-center"><strong>「Standard（定番）を再定義し、再構築する」</strong></p>
         </div>
         <div class="en-content">
             <h3>Our Vision</h3>
             <h4>"Redefining and Reconstructing Standards"</h4>
           </div>
-        </div>
       </div>
-      <div class="about-section-box" role="region" aria-label="こだわりのものづくり">
-      <div class="text-block delay-2">
+      <div class="about-section-box delay-2" role="region" aria-label="こだわりのものづくり">
         <div class="ja-content">
             <h3 class="text-center">こだわりのものづくり</h3>
-            <p class="text-center">
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
             私たちは、時代に流されない<strong>シンプルでクラシックなアイテム</strong>だからこそ、<br>
             素材の質感やシルエット、カラーリングなど、細部にまで徹底的にこだわります。
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+            私たちは、時代に流されない<br>
+            <strong>シンプルでクラシックなアイテム</strong>だからこそ、<br>
+            素材の質感やシルエット、カラーリングなど、<br>
+            細部にまで徹底的にこだわります。
+            </p>
         </div>
         <div class="en-content">
             <h3 class="text-center">Commitment to Craftsmanship</h3>
-            <p class="text-center">
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
             Because we deal with <strong>timeless, simple, and classic items</strong>,<br>
             we are meticulous about every detail, from material textures to silhouettes and color combinations.
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+            Because we deal with<br>
+            <strong>timeless, simple, and classic items</strong>,<br>
+            we are meticulous about every detail,<br>
+            from material textures to silhouettes and color combinations.
+            </p>
         </div>
       </div>
-      </div>
-      <div class="about-section-box" role="region" aria-label="新しい基準の提案">
-      <div class="text-block delay-3">
+      <div class="about-section-box delay-3" role="region" aria-label="新しい基準の提案">
         <div class="ja-content">
             <h3 class="text-center">新しい基準の提案</h3>
-            <p class="text-center">
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
             お客様一人ひとりが"本当に良い"と思えるものと出会えるように、<br>
             ブランド選定や商品セレクションには一切の妥協をしません。<br>
             日常に自然と溶け込む中で、<strong>自分らしさを引き立てる「新しい基準」</strong>を提案していきます。
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+            お客様一人ひとりが"本当に良い"と思えるものと<br>
+            出会えるように、<br>
+            ブランド選定や商品セレクションには<br>
+            一切の妥協をしません。<br>
+            日常に自然と溶け込む中で、<br>
+            <strong>自分らしさを引き立てる「新しい基準」</strong>を<br>
+            提案していきます。
+            </p>
         </div>
         <div class="en-content">
             <h3 class="text-center">Proposing New Standards</h3>
-            <p class="text-center">
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
             To ensure each customer finds something they truly appreciate,<br>
             we make no compromises in our brand and product selection.<br>
             We propose <strong>"new standards" that enhance individuality</strong> while naturally blending into daily life.
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+            To ensure each customer finds something<br>
+            they truly appreciate,<br>
+            we make no compromises in our brand and<br>
+            product selection.<br>
+            We propose <strong>"new standards" that enhance individuality</strong><br>
+            while naturally blending into daily life.
+            </p>
         </div>
       </div>
-      </div>
-      <div class="about-section-box" role="region" aria-label="パートナーシップと別注">
-      <div class="text-block delay-4">
+      <div class="about-section-box delay-4" role="region" aria-label="パートナーシップと別注">
         <div class="ja-content">
             <h3 class="text-center">パートナーシップと別注</h3>
-            <p class="text-center">
-              また私たちは、<br>
-              欧米のブランドと直接パートナーシップを築き、<br>
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
+              また私たちは、欧米のブランドと直接パートナーシップを築き、<br>
               <span style="display:block;text-align:center;"><strong>日本の市場に適した別注スタイル</strong>を創り出しています。</span><br>
             長年の信頼関係を活かした取引により、唯一無二の価値を持つアイテムをお届けしてまいります。
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+              また私たちは、<br>
+              欧米のブランドと直接パートナーシップを築き、<br>
+              <strong>日本の市場に適した別注スタイル</strong>を<br>
+              創り出しています。<br>
+              長年の信頼関係を活かした取引により、<br>
+              唯一無二の価値を持つアイテムを<br>
+              お届けしてまいります。
+            </p>
         </div>
         <div class="en-content">
             <h3 class="text-center">Partnership & Exclusives</h3>
-            <p class="text-center">
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
               We build direct partnerships with European and American brands to create <strong>exclusive styles suited for the Japanese market</strong>.<br>
             Through relationships built on years of trust, we deliver items of unique value.
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+              We build direct partnerships with<br>
+              European and American brands to create<br>
+              <strong>exclusive styles suited for the Japanese market</strong>.<br>
+              Through relationships built on years of trust,<br>
+              we deliver items of unique value.
+            </p>
           </div>
-        </div>
       </div>
-      <div class="about-section-box" role="region" aria-label="これからの展望">
-      <div class="text-block delay-5">
+      <div class="about-section-box delay-5" role="region" aria-label="これからの展望">
         <div class="ja-content">
             <h3 class="text-center">これからの展望</h3>
-            <p class="text-center">
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
             これからも、ブランドとお客様の間をつなぐ架け橋として、<br>
             <strong>普遍的で、本質的な価値を持つ「定番」を再定義し続ける存在</strong>でありたいと考えています。
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+            これからも、ブランドとお客様の間を<br>
+            つなぐ架け橋として、<br>
+            <strong>普遍的で、本質的な価値を持つ「定番」を<br>
+            再定義し続ける存在</strong>でありたいと<br>
+            考えています。
+            </p>
         </div>
         <div class="en-content">
             <h3 class="text-center">Looking Ahead</h3>
-            <p class="text-center">
+            <!-- PC版専用の改行 -->
+            <p class="text-center desktop-only">
             As a bridge between brands and customers,<br>
             we aim to continue being an entity that <strong>redefines "standards" with universal and essential value</strong>.
-          </p>
+            </p>
+            <!-- スマートフォン版専用の改行 -->
+            <p class="text-center mobile-only">
+            As a bridge between brands and customers,<br>
+            we aim to continue being an entity that<br>
+            <strong>redefines "standards" with universal and<br>
+            essential value</strong>.
+            </p>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -343,9 +596,9 @@
   <footer class="py-5 text-center">
     <style>
       footer {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 0.9) !important;
         border-top: 1px solid rgba(204, 204, 204, 0.3);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(8px);
       }
   
       footer .nav {
