@@ -304,6 +304,56 @@
         line-height: 1.6 !important;
       }
     }
+    
+    /* PC版とスマートフォン版の表示制御 */
+    .desktop-only {
+      display: block;
+    }
+    .mobile-only {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none !important;
+      }
+      .mobile-only {
+        display: block !important;
+      }
+    }
+    
+    /* 言語切り替えの強化設定 */
+    [lang="ja"] .en-content {
+      display: none !important;
+    }
+    
+    [lang="en"] .ja-content {
+      display: none !important;
+    }
+    
+    /* スマートフォン版でも言語切り替えを確実に適用 */
+    @media (max-width: 768px) {
+      [lang="ja"] .en-content {
+        display: none !important;
+      }
+      
+      [lang="en"] .ja-content {
+        display: none !important;
+      }
+    }
+    
+    /* 最高優先度で言語切り替えを強制 */
+    html[lang="ja"] .en-content,
+    html[lang="ja"] .en-content.desktop-only,
+    html[lang="ja"] .en-content.mobile-only {
+      display: none !important;
+    }
+    
+    html[lang="en"] .ja-content,
+    html[lang="en"] .ja-content.desktop-only,
+    html[lang="en"] .ja-content.mobile-only {
+      display: none !important;
+    }
 
     /* スマートフォン版での改行制御 */
     @media (max-width: 768px) {
@@ -315,7 +365,7 @@
       
       /* 長い文章の改行ポイントを制御 */
       .about-section-box p.text-center br {
-        display: none;
+        display: inline !important;
       }
       
       /* 特定の改行ポイントをスマホで有効にする */
@@ -351,7 +401,13 @@
       
       .about-section-box .ja-content br,
       .about-section-box .en-content br {
-        display: inline;
+        display: inline !important;
+      }
+      
+      /* mobile-onlyとdesktop-only内のbrタグを確実に表示 */
+      .mobile-only br,
+      .desktop-only br {
+        display: inline !important;
       }
     }
 
@@ -396,27 +452,51 @@
       <div class="about-section-box">
         <div class="text-block delay-1">
           <h3 class="text-center">私たちの理念</h3>
-          <p class="text-center">
-        私たちは<strong>「Standard（定番）を再定義し、再構築する」</strong>を理念に、
+          <!-- PC版専用の改行 -->
+          <p class="text-center desktop-only">
+            私たちは<strong>「Standard（定番）を再定義し、再構築する」</strong>を理念に、<br>
             欧米を中心に上質なアパレルブランドを日本へ輸入・ご紹介しています。
+          </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="text-center mobile-only">
+            <strong>「Standard（定番）を再定義し、再構築する」</strong><br>
+            欧米を中心に上質なアパレルブランドを<br>
+            日本へ輸入・ご紹介しています。
           </p>
         </div>
       </div>
       <div class="about-section-box">
         <div class="text-block delay-2">
           <h3 class="text-center">パートナーシップとご提案</h3>
-          <p class="text-center">
-        長年にわたって信頼あるパートナーと築き上げた関係性を基盤に、
-        普遍的な価値を持つアイテムを国内のお客様へご提案しています。
-      </p>
+          <!-- PC版専用の改行 -->
+          <p class="text-center desktop-only">
+            長年にわたって信頼あるパートナーと築き上げた関係性を基盤に、<br>
+            普遍的な価値を持つアイテムを国内のお客様へご提案しています。
+          </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="text-center mobile-only">
+            長年にわたって信頼あるパートナーと<br>
+            築き上げた関係性を基盤に、<br>
+            普遍的な価値を持つアイテムを<br>
+            国内のお客様へご提案しています。
+          </p>
         </div>
       </div>
       <div class="about-section-box">
         <div class="text-block delay-3">
           <h3 class="text-center">実績と信頼</h3>
-          <p class="text-center">
-            RockmountやHarleyをはじめとする欧米の厳選ブランドとの取引を<b>32年間継続しており、</b>
+          <!-- PC版専用の改行 -->
+          <p class="text-center desktop-only">
+            RockmountやHarleyをはじめとする欧米の厳選ブランドとの取引を<b>32年間継続しており、</b><br>
             現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。
+          </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="text-center mobile-only">
+            RockmountやHarleyをはじめとする<br>
+            欧米の厳選ブランドとの取引を<br>
+            <b>32年間継続しており、</b><br>
+            現在までに<b>25社以上のメーカーとの<br>
+            取引実績</b>を有しています。
           </p>
         </div>
       </div>
@@ -425,27 +505,51 @@
       <div class="about-section-box">
         <div class="text-block delay-1">
           <h3 class="text-center">Our Philosophy</h3>
-          <p class="text-center">
-        With our philosophy of <strong>"Redefining and Reconstructing Standards,"</strong>
+          <!-- PC版専用の改行 -->
+          <p class="text-center desktop-only">
+            With our philosophy of <strong>"Redefining and Reconstructing Standards,"</strong><br>
             we import and introduce high-quality apparel brands from Europe and America to Japan.
+          </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="text-center mobile-only">
+            With our philosophy of <strong>"Redefining and<br>
+            Reconstructing Standards,"</strong><br>
+            we import and introduce high-quality<br>
+            apparel brands from Europe and America to Japan.
           </p>
         </div>
       </div>
       <div class="about-section-box">
         <div class="text-block delay-2">
           <h3 class="text-center">Partnership & Proposal</h3>
-          <p class="text-center">
-        Based on long-standing trusted partnerships,
-        we offer timeless, valuable items to our customers in Japan.
-      </p>
-    </div>
+          <!-- PC版専用の改行 -->
+          <p class="text-center desktop-only">
+            Based on long-standing trusted partnerships,<br>
+            we offer timeless, valuable items to our customers in Japan.
+          </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="text-center mobile-only">
+            Based on long-standing trusted partnerships,<br>
+            we offer timeless, valuable items to<br>
+            our customers in Japan.
+          </p>
+        </div>
       </div>
       <div class="about-section-box">
         <div class="text-block delay-3">
           <h3 class="text-center">Achievements & Trust</h3>
-          <p class="text-center">
-            We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, for 32 years,
+          <!-- PC版専用の改行 -->
+          <p class="text-center desktop-only">
+            We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, for 32 years,<br>
             and have established partnerships with <b>more than 25 manufacturers</b> to date.
+          </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="text-center mobile-only">
+            We have maintained business relationships with<br>
+            carefully selected European and American brands,<br>
+            including Rockmount and Harley, for 32 years,<br>
+            and have established partnerships with<br>
+            <b>more than 25 manufacturers</b> to date.
           </p>
         </div>
       </div>
@@ -460,18 +564,38 @@
           <img src="image/rockmount.webp" alt="Rockmount Mfg. Co." width="300" height="300" loading="lazy">
       </a><br>
       <strong>Rockmount Mfg. Co. (USA)</strong><br>
-      <div class="ja-content">
+      <!-- PC版専用の改行 -->
+      <div class="ja-content desktop-only">
         アメリカの老舗ブランド。<br>
         1946年にアメリカ、デンバーで創業。<br>
         ウェスタンシャツに初めてスナップボタンを採用しました。<br>
         顧客にはエリック•クラプトンやロバート•レッドフォードがいます。
       </div>
-      <div class="en-content">
-        A historic American brand.
-        Founded in 1946 in Denver, USA.
-        Pioneered the use of snap buttons in Western shirts.
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="ja-content mobile-only">
+        アメリカの老舗ブランド。<br>
+        1946年にアメリカ、デンバーで創業。<br>
+        ウェスタンシャツに<br>
+        初めてスナップボタンを採用しました。<br>
+        顧客にはエリック•クラプトンや<br>
+        ロバート•レッドフォードがいます。
+      </div>
+      <!-- PC版専用の改行 -->
+      <div class="en-content desktop-only">
+        A historic American brand.<br>
+        Founded in 1946 in Denver, USA.<br>
+        Pioneered the use of snap buttons in Western shirts.<br>
         Customers include Eric Clapton and Robert Redford.
-        </div>
+      </div>
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="en-content mobile-only">
+        A historic American brand.<br>
+        Founded in 1946 in Denver, USA.<br>
+        Pioneered the use of snap buttons in Western shirts.<br>
+        Customers include Eric Clapton and Robert Redford.
+      </div>
       </div>
     </div>
 
@@ -481,15 +605,36 @@
           <img src="image/Harley.webp" alt="Harley" style="max-width: 300px; height: auto; margin-bottom: 1rem;" width="300" height="300" loading="lazy">
       </a><br>
       <strong>Harley of Scotland</strong><br>
-      <div class="ja-content">
+      <!-- PC版専用の改行 -->
+      <div class="ja-content desktop-only">
         スコットランドのファクトリーニットブランドであるHarley of Scotland。<br>
         10年にわたりカラー別注などの当社独自のスタイルを展開しています。<br>
         シームレスなニットは着用にストレスがなく着心地は最上級です。
       </div>
-      <div class="en-content">
-        We have been developing our original styles, including custom colors, with Harley of Scotland, a Scottish factory knitwear brand, for 10 years.
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="ja-content mobile-only">
+        スコットランドのファクトリーニットブランドである<br>
+        Harley of Scotland。<br>
+        10年にわたりカラー別注など<br>
+        当社独自のスタイルを展開しています。<br>
+        シームレスなニットは着用にストレスがなく<br>
+        着心地は最上級です。
+      </div>
+      
+      <!-- PC版専用の改行 -->
+      <div class="en-content desktop-only">
+        We have been developing our original styles, including custom colors, with Harley of Scotland, a Scottish factory knitwear brand, for 10 years.<br>
         Their seamless knits offer supreme comfort with zero stress during wear.
-        </div>
+      </div>
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="en-content mobile-only">
+        We have been developing our original styles,<br>
+        including custom colors, with Harley of Scotland,<br>
+        a Scottish factory knitwear brand, for 10 years.<br>
+        Their seamless knits offer supreme comfort with zero stress during wear.
+      </div>
       </div>
     </div>
 
@@ -499,14 +644,34 @@
           <img src="image/eribe.svg" alt="Eribe" width="300" height="300" loading="lazy">
       </a><br>
       <strong>Eribe Knitwear (Scotland)</strong><br>
-      <div class="ja-content">
+      <!-- PC版専用の改行 -->
+      <div class="ja-content desktop-only">
         スコットランドのニットアルチザンであるEribe knitwear。<br>
         15年以上にわたりカラーコンビネーションがユニークなセーターやマフラー<br>
         手袋などのニット小物類をご紹介しています。
       </div>
-      <div class="en-content">
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="ja-content mobile-only">
+        スコットランドのニットアルチザンである<br>
+        Eribe knitwear。<br>
+        15年以上にわたりユニークな<br>
+        セーターやマフラー手袋など<br>
+        ニット小物類をご紹介しています。
+      </div>
+      
+      <!-- PC版専用の改行 -->
+      <div class="en-content desktop-only">
         For over 15 years, we have been introducing uniquely color-combined sweaters, scarves, gloves, and other knit accessories from Eribe Knitwear, another Scottish knit artisan.
-        </div>
+      </div>
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="en-content mobile-only">
+        For over 15 years, we have been introducing<br>
+        uniquely color-combined sweaters, scarves, gloves,<br>
+        and other knit accessories from Eribe Knitwear,<br>
+        another Scottish knit artisan.
+      </div>
       </div>
     </div>
 
@@ -516,13 +681,32 @@
           <img src="image/leminor.webp" alt="Eribe" style="max-width: 300px; height: auto; margin-bottom: 1rem;" width="300" height="300" loading="lazy">
       </a><br>
       <strong>Le Minor (France/Grammatico)</strong><br>
-      <div class="ja-content">
+      <!-- PC版専用の改行 -->
+      <div class="ja-content desktop-only">
         20ゲージのコットン糸を使用したボーダーニットシャツを企画販売しています。<br>
         ワイドTシャツ、ロングスリーブ、ショートスリーブなど全て別注のスタイルです。
       </div>
-      <div class="en-content">
-        We plan and sell border knit shirts using 20-gauge cotton yarn from Le Minor (Grammatico) in France.
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="ja-content mobile-only">
+        20ゲージのコットン糸を使用した<br>
+        ボーダーニットシャツを企画販売しています。<br>
+        ワイドTシャツ、ロングスリーブ、<br>
+        ショートスリーブなど全て別注のスタイルです。
+      </div>
+      
+      <!-- PC版専用の改行 -->
+      <div class="en-content desktop-only">
+        We plan and sell border knit shirts using 20-gauge cotton yarn from Le Minor (Grammatico) in France.<br>
         All styles, including wide T-shirts, long sleeves, and short sleeves, are custom-made.
+      </div>
+      
+      <!-- スマートフォン版専用の改行 -->
+      <div class="en-content mobile-only">
+        We plan and sell border knit shirts using<br>
+        20-gauge cotton yarn from Le Minor (Grammatico) in France.<br>
+        All styles, including wide T-shirts, long sleeves,<br>
+        and short sleeves, are custom-made.
       </div>
       </div>
     </div>
