@@ -634,69 +634,7 @@
       pointer-events: none;
       z-index: 2;
     }
-    /* カスタム矢印（SVG＋アニメーション） */
-    .swiper-button-next, .swiper-button-prev {
-      color: #333;
-      background: rgba(255,255,255,0.92);
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
-      z-index: 10;
-      border: none;
-    }
-    .swiper-button-next:hover, .swiper-button-prev:hover {
-      background: #333;
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-      transform: translateY(-50%) scale(1.08);
-    }
-    .swiper-button-next svg, .swiper-button-prev svg {
-      width: 28px;
-      height: 28px;
-      display: block;
-      transition: transform 0.2s;
-    }
-    .swiper-button-next:hover svg {
-      transform: translateX(4px) scale(1.1);
-    }
-    .swiper-button-prev:hover svg {
-      transform: translateX(-4px) scale(1.1);
-    }
-    .swiper-button-next:after, .swiper-button-prev:after {
-      display: none;
-    }
-    .swiper-pagination {
-      bottom: 10px !important;
-    }
-    .swiper-pagination-bullet {
-      background: #888;
-      opacity: 0.7;
-      width: 12px;
-      height: 12px;
-      margin: 0 4px !important;
-      transition: background 0.2s;
-    }
-    .swiper-pagination-bullet-active {
-      background: #333;
-      opacity: 1;
-    }
-    .swiper-thumbs {
-      margin: 0 auto 2rem auto;
-      max-width: 900px;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
     .swiper-thumbs .swiper-slide {
-      width: 100px;
-      height: 60px;
       opacity: 0.5;
       border-radius: 8px;
       overflow: hidden;
@@ -755,7 +693,7 @@
       max-height: 100vh;
       border-radius: 0;
       box-shadow: none;
-      background: #000;
+      background: transparent;
     }
     /* スプラッシュ動画用スタイル（洗練・強制再生・スキップ不可） */
     body.splash-active > *:not(#splash-video-wrapper) {
@@ -780,7 +718,7 @@
       max-height: 100vh;
       border-radius: 0;
       box-shadow: none;
-      background: #000;
+      background: transparent;
       object-fit: contain;
       display: block;
     }
@@ -799,7 +737,7 @@
       overflow: visible;
       background: none;
       padding: 0;
-      padding-top: 120px;
+      padding-top: 200px;
     }
     .flow-row {
       width: 100vw;
@@ -1004,11 +942,11 @@
         max-width: 100vw !important;
       }
       .navbar {
-        margin-bottom: 100px !important;
+        margin-bottom: 150px !important;
       }
       #flowing-images {
         margin-top: 0 !important;
-        padding-top: 140px !important;
+        padding-top: 200px !important;
         display: block !important;
         visibility: visible !important;
       }
@@ -1045,6 +983,87 @@
       position: relative !important;
       z-index: 12 !important;
     }
+    
+    /* スマートフォン版flowing imagesの位置を強制的に調整 */
+    html body #flowing-images {
+      margin-top: 0 !important;
+      padding-top: 200px !important;
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    /* 最も強力なセレクターで競合を完全に解決 */
+    html body #flowing-images {
+      margin-top: 0 !important;
+      padding-top: 250px !important;
+      display: block !important;
+      visibility: visible !important;
+      position: relative !important;
+      z-index: 10 !important;
+    }
+    
+    /* flow-row-bgのmarginも上書き */
+    html body .flow-row-bg {
+      margin: 0 !important;
+      padding: 8px 0 !important;
+    }
+    
+    /* PC版用の最も強力なセレクター */
+    @media (min-width: 901px) {
+      html body #flowing-images {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        position: relative !important;
+        top: 450px !important;
+        display: block !important;
+        visibility: visible !important;
+        z-index: 10 !important;
+      }
+      
+      html body .flow-row-bg {
+        margin: 0 !important;
+        padding: 8px 0 !important;
+      }
+      
+      /* PC版で画像サイズを250pxに設定 */
+      html body #flowing-images img {
+        max-height: 250px !important;
+        width: auto !important;
+        height: auto !important;
+      }
+      
+      /* PC版でflow-rowの高さも調整 */
+      html body .flow-row {
+        height: 270px !important;
+      }
+      
+      /* overviewセクション専用のflow-row-bg設定 */
+      html body #overview .flow-row-bg {
+        max-width: 100vw !important;
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 8px 0 !important;
+        text-align: center !important;
+      }
+      
+      /* overviewセクション専用のflow-row-bg設定 */
+      html body #overview .flow-row-bg {
+        max-width: 900px !important;
+        width: 90% !important;
+        margin: 0 auto !important;
+        padding: 8px 0 !important;
+        text-align: center !important;
+      }
+      
+      /* overviewセクション内のコンテナを中央揃えに強制 */
+      html body #overview .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+        padding: 0 15px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1055,7 +1074,7 @@
   </div>
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
-  <nav class="sticky-top navbar navbar-expand-lg">
+  <nav class="fixed-top navbar navbar-expand-lg">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
       <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
@@ -1080,55 +1099,204 @@
     </div>
   </nav>
 
-  <!-- デスクトップ用カルーセル -->
-  <section id="home-desktop" class="mb-5" aria-label="ブランドカルーセル（デスクトップ）">
-    <div class="swiper main-swiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="image/rockmount3.webp" alt="Rockmount 25AW 欧米アパレルブランドの定番シャツ" width="889" height="500" fetchpriority="high">
-          <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Rockmount</div>
-          <a href="https://rockmount.com/" target="_blank" rel="noopener" aria-label="Rockmount公式サイトへ" class="slide-link" tabindex="0"></a>
-            </div>
-        <div class="swiper-slide">
-          <img src="image/harley 24AW.webp" alt="Harley of Scotland 伝統的ニットブランド" width="889" height="500" fetchpriority="high">
-          <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Harley of Scotland</div>
-          <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" aria-label="Harley of Scotland公式サイトへ" class="slide-link" tabindex="0"></a>
-          </div>
-        <div class="swiper-slide">
-          <img src="image/eribe.webp" alt="Eribe スコットランドのフェアアイルニット" width="889" height="500" fetchpriority="high">
-          <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Eribe</div>
-          <a href="https://www.eribe.com/" target="_blank" rel="noopener" aria-label="Eribe公式サイトへ" class="slide-link" tabindex="0"></a>
-            </div>
-        <div class="swiper-slide">
-          <img src="image/leminor25AW.webp" alt="Le Minor フランスの老舗マリンブランド" width="889" height="500" fetchpriority="high">
-          <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Le Minor</div>
-          <a href="https://leminor.fr/en" target="_blank" rel="noopener" aria-label="Le Minor公式サイトへ" class="slide-link" tabindex="0"></a>
-          </div>
-        <div class="swiper-slide">
-          <img src="image/glenprince25AW.webp" alt="Glen Prince 英国の高級ストールブランド" width="889" height="500" fetchpriority="high">
-          <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Glen Prince</div>
-          <a href="https://www.glenprince.com/" target="_blank" rel="noopener" aria-label="Glen Prince公式サイトへ" class="slide-link" tabindex="0"></a>
-            </div>
-        <div class="swiper-slide">
-          <img src="image/kopka2.webp" alt="Kopka ドイツの帽子ブランド" width="889" height="500" fetchpriority="high">
-          <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">Kopka</div>
-          <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" aria-label="Kopka公式サイトへ" class="slide-link" tabindex="0"></a>
-          </div>
-        <div class="swiper-slide">
-          <img src="image/william2.webp" alt="William Lockie 英国の老舗ニットブランド" width="889" height="500" fetchpriority="high">
-          <div class="brand-overlay" style="text-shadow:0 2px 8px #222;">William Lockie</div>
-          <a href="https://williamlockie.com/" target="_blank" rel="noopener" aria-label="William Lockie公式サイトへ" class="slide-link" tabindex="0"></a>
-            </div>
-          </div>
-      <!-- カスタム矢印（SVG） -->
-      <button class="swiper-button-prev" tabindex="0" aria-label="前のスライド">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15" stroke="#888" stroke-width="2"/><path d="M19.5 8L12.5 16L19.5 24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="swiper-button-next" tabindex="0" aria-label="次のスライド">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15" stroke="#888" stroke-width="2"/><path d="M12.5 8L19.5 16L12.5 24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-            </div>
-  </section>
+  <!-- PC版背景動画 -->
+  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+  
+  <style>
+    /* PC版とスマートフォン版で背景動画を切り替え */
+    @media (min-width: 901px) {
+      #desktop-bg-video {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      #mobile-bg-video {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+    }
+    @media (max-width: 900px) {
+      #desktop-bg-video {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      #mobile-bg-video {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+    }
+    
+    /* PC版でもスマートフォン版と同様の透過設定を適用 */
+    @media (min-width: 901px) {
+      body {
+        background: #000 !important;
+      }
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(10px) !important;
+        margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
+      }
+      .flow-row-bg {
+        background: rgba(255,255,255,0.9) !important;
+      }
+      .section-title {
+        color: #fff !important;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+      }
+      #flowing-images {
+        margin-top: 0 !important; /* 既存のmarginをリセット */
+        padding-top: 0 !important; /* 既存のpaddingをリセット */
+        position: relative !important;
+        top: 450px !important; /* flowing imagesをさらに下に配置 */
+      }
+      
+      /* PC版で画像サイズを250pxに設定 */
+      #flowing-images img {
+        max-height: 250px !important;
+        width: auto !important;
+        height: auto !important;
+      }
+      
+      /* PC版でflow-rowの高さも調整 */
+      .flow-row {
+        height: 270px !important;
+      }
+      
+      /* より強力な間隔設定 */
+      html body .navbar {
+        margin-bottom: 500px !important;
+      }
+      
+      /* 最も強力なセレクターでPC版の位置を調整 */
+      html body #flowing-images {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        position: relative !important;
+        top: 450px !important;
+      }
+      
+      /* Brandsセクションも下に移動 */
+      html body #brands {
+        position: relative !important;
+        top: 450px !important;
+        margin-top: 50px !important;
+      }
+      
+      /* overviewセクションも下に移動 */
+      html body #overview {
+        position: relative !important;
+        top: 450px !important;
+        margin-top: 50px !important;
+        text-align: center !important;
+      }
+      
+      /* overviewセクション内のテキストを中央揃えに強制 */
+      html body #overview .container {
+        text-align: center !important;
+      }
+      
+      html body #overview .overview-text {
+        text-align: center !important;
+      }
+      
+      /* overviewセクション内のすべての要素を中央揃えに強制 */
+      html body #overview * {
+        text-align: center !important;
+      }
+      
+      /* overviewセクション専用のflow-row-bg設定 */
+      html body #overview .flow-row-bg {
+        max-width: 100vw !important;
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 8px 0 !important;
+        text-align: center !important;
+      }
+      
+      /* overviewセクション専用のflow-row-bg設定 */
+      html body #overview .flow-row-bg {
+        max-width: 900px !important;
+        width: 90% !important;
+        margin: 0 auto !important;
+        padding: 8px 0 !important;
+        text-align: center !important;
+      }
+      
+      /* overviewセクション内のコンテナを中央揃えに強制 */
+      html body #overview .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+        padding: 0 15px !important;
+      }
+      
+      /* フッターも下に移動 */
+      html body footer {
+        position: relative !important;
+        top: 450px !important;
+        margin-top: 100px !important;
+      }
+      
+      /* ヘッダー固定の強化 */
+      html body .navbar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1030 !important;
+      }
+    }
+  </style>
+
+  <script>
+    // 背景動画の読み込みと再生を確実にする
+    document.addEventListener('DOMContentLoaded', function() {
+      const desktopVideo = document.getElementById('desktop-bg-video');
+      const mobileVideo = document.getElementById('mobile-bg-video');
+      
+      // PC版動画の読み込みと再生
+      if (desktopVideo) {
+        desktopVideo.addEventListener('loadeddata', function() {
+          console.log('PC版背景動画が読み込まれました');
+          desktopVideo.play().catch(function(error) {
+            console.log('PC版動画の自動再生に失敗:', error);
+          });
+        });
+        
+        desktopVideo.addEventListener('error', function(e) {
+          console.error('PC版動画の読み込みエラー:', e);
+        });
+        
+        // 動画が再生されていない場合は再試行
+        setTimeout(function() {
+          if (desktopVideo.paused && window.innerWidth >= 901) {
+            desktopVideo.play().catch(function(error) {
+              console.log('PC版動画の再試行に失敗:', error);
+            });
+          }
+        }, 1000);
+      }
+      
+      // スマートフォン版動画の読み込みと再生
+      if (mobileVideo) {
+        mobileVideo.addEventListener('loadeddata', function() {
+          console.log('スマートフォン版背景動画が読み込まれました');
+          mobileVideo.play().catch(function(error) {
+            console.log('スマートフォン版動画の自動再生に失敗:', error);
+          });
+        });
+        
+        mobileVideo.addEventListener('error', function(e) {
+          console.error('スマートフォン版動画の読み込みエラー:', e);
+        });
+      }
+    });
+  </script>
+
 
   <!-- スマートフォン用カルーセル -->
   <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
@@ -1137,7 +1305,7 @@
   </section>
 
   <!-- ここから流れる画像2行 -->
-  <section id="flowing-images" style="margin: 40px 0;">
+  <section id="flowing-images">
       <div class="flow-row-bg" id="flowing-images-bg">
       <div class="flow-row flow-row-top">
         <div class="flow-track">
@@ -1904,7 +2072,7 @@ document.addEventListener('DOMContentLoaded', function() {
   images.forEach(img => {
     if (img.complete && img.naturalWidth > 0) {
       checkAllImagesLoaded();
-    } else {
+      } else {
       img.addEventListener('load', checkAllImagesLoaded);
       img.addEventListener('error', checkAllImagesLoaded); // エラー時も処理を続行
     }
@@ -1949,7 +2117,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const walk = (x - startX) * 2;
       track.scrollLeft = scrollLeft - walk;
     });
-    
+
     track.addEventListener('mouseup', function() {
       if (isDragging) {
         isDragging = false;
@@ -1973,7 +2141,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (e.target.tagName === 'IMG') {
         isDragging = true;
         startX = e.touches[0].pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
+      scrollLeft = track.scrollLeft;
         // タッチ開始時にアニメーションを一時停止
         track.style.animationPlayState = 'paused';
         e.preventDefault();
