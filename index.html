@@ -833,6 +833,8 @@
       display: block;
       visibility: visible;
       opacity: 1;
+      position: relative;
+      z-index: 15;
     }
     
     #flowing-images img:hover {
@@ -1014,9 +1016,10 @@
       }
       #flowing-images {
         overflow: visible !important;
-        margin-top: 270px !important;
+        margin-top: 180px !important;
         position: relative !important;
         z-index: 10 !important;
+        display: block !important;
       }
       .flow-row {
         overflow: visible !important;
@@ -1032,6 +1035,8 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        position: relative !important;
+        z-index: 15 !important;
       }
       .flow-row-top {
         z-index: 13 !important;
@@ -1042,6 +1047,19 @@
     }
     .flow-row, .flow-row-bg {
       overflow: visible !important;
+    }
+    
+    /* スマートフォン版での表示確実化 */
+    @media (max-width: 768px) {
+      #flowing-images {
+        min-height: 400px !important;
+      }
+      .flow-row {
+        min-height: 200px !important;
+      }
+      .flow-track {
+        min-height: 200px !important;
+      }
     }
   </style>
 </head>
