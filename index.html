@@ -182,6 +182,7 @@
 
     html, body {
       font-family: var(--main-font-family) !important;
+      overflow-x: hidden;
     }
     * {
       font-family: inherit !important;
@@ -889,6 +890,13 @@
         font-size: inherit;
       }
     }
+    @media (max-width: 768px) {
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+      }
+    }
     @media (min-width: 901px) {
       #flowing-images-bg {
         max-width: 100vw !important;
@@ -911,6 +919,11 @@
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 1rem !important;
         padding: 1rem !important;
+      }
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
       }
     }
     .flow-row, .flow-row-bg {
