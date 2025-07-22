@@ -262,7 +262,7 @@
     .nav-link {
       font-family: var(--heading-font);
       font-size: var(--font-size-sm);
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       font-weight: 500;
       letter-spacing: 0.05em;
       color: var(--main-color) !important;
@@ -347,6 +347,10 @@
     
     /* スマートフォン版でも言語切り替えを確実に適用 */
     @media (max-width: 768px) {
+      .nav-link {
+        padding: 0.3rem 0.6rem !important;
+        font-size: 0.85rem !important;
+      }
       [lang="ja"] .en-content {
         display: none !important;
       }
