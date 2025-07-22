@@ -184,6 +184,12 @@
       font-family: var(--main-font-family) !important;
       overflow-x: hidden;
     }
+    
+    /* flowing imagesのための例外設定 */
+    #flowing-images,
+    #flowing-images * {
+      overflow-x: visible !important;
+    }
     * {
       font-family: inherit !important;
     }
@@ -787,11 +793,6 @@
       overflow: visible;
       background: none;
       padding: 0;
-      position: relative;
-      z-index: 100;
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
     }
     .flow-row {
       width: 100vw;
@@ -801,7 +802,6 @@
       align-items: center;
       height: 140px;
       position: relative;
-      z-index: 101;
     }
     .flow-track {
       display: flex;
@@ -812,15 +812,12 @@
       white-space: nowrap;
       user-select: none;
       -webkit-overflow-scrolling: touch;
-      z-index: 2;
     }
     .flow-row-top .flow-track {
       animation: flow-right 120s linear infinite;
-      z-index: 13;
     }
     .flow-row-bottom .flow-track {
       animation: flow-left 120s linear infinite;
-      z-index: 14;
     }
     .flow-track.dragging {
       animation-play-state: paused !important;
@@ -845,11 +842,6 @@
       transition: transform 0.2s, opacity 0.3s;
       cursor: pointer;
       flex-shrink: 0;
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      position: relative;
-      z-index: 105;
     }
     
     #flowing-images img:hover {
@@ -858,18 +850,15 @@
     }
     .flow-row {
       height: 420px;
-      z-index: 1;
       position: relative;
     }
     .flow-row-top {
       margin-bottom: 0;
       position: relative;
-      z-index: 13;
     }
     .flow-row-gap {
       height: 8px;
       position: relative;
-      z-index: 13;
     }
     @media (max-width: 900px) {
       #flowing-images img { max-width: 100%; max-height: 200px; }
@@ -908,40 +897,6 @@
     @media (max-width: 900px) {
       .flow-row-bg {
         max-width: 100vw;
-      }
-      #flowing-images {
-        margin-top: 50px !important;
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 100 !important;
-        display: block !important;
-        min-height: 400px !important;
-        background: transparent !important;
-      }
-      .flow-row {
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 101 !important;
-        min-height: 200px !important;
-      }
-      .flow-track {
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 102 !important;
-        min-height: 200px !important;
-      }
-      .flow-track img {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        position: relative !important;
-        z-index: 105 !important;
-      }
-      .flow-row-top {
-        z-index: 103 !important;
-      }
-      .flow-row-bottom {
-        z-index: 104 !important;
       }
     }
     @media (max-width: 900px) {
@@ -1013,13 +968,20 @@
         width: 100% !important;
         max-width: 100vw !important;
       }
-      #flowing-images {
-        margin-top: 30px !important;
-        z-index: 100 !important;
-      }
     }
     .flow-row, .flow-row-bg {
       overflow: visible !important;
+    }
+    
+    /* flowing imagesの表示確実化 */
+    #flowing-images {
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    #flowing-images img {
+      display: block !important;
+      visibility: visible !important;
     }
   </style>
 </head>
