@@ -99,6 +99,123 @@
       --font-size-xs: 0.8rem;
     }
 
+    /* 背景動画の設定 - スマートフォンのみ */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      background: #000;
+      display: none; /* PCでは非表示 */
+    }
+
+    /* スマートフォンでのみ背景動画を表示 */
+    @media (max-width: 768px) {
+      #bg-video {
+        display: block !important;
+      }
+    }
+
+    /* index.htmlの.flow-row-bgと同じ設定を適用 */
+    .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 最高優先度で確実に適用 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 中心揃えのための追加設定 */
+    .about-section-box {
+      display: block !important;
+      text-align: center !important;
+    }
+
+    /* 内側の要素を全て透明に */
+    html body .about-section-box *,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* CSSファイルの競合を完全に排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 最高優先度で競合を排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box * {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* タイトルの色設定 */
+    .section-title {
+      color: #fff !important;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+    }
+
+    /* ナビゲーションバーとフッターの透明度統一 */
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(8px);
+    }
+
+    .language-switcher {
+      background: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(8px);
+    }
+
     body {
       font-family: var(--body-font);
       background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
@@ -331,7 +448,8 @@
       margin-bottom: -0.5rem;
       letter-spacing: 0.05em;
       display: inline-block;
-      color: var(--main-color);
+      color: #fff !important;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
     }
 
     .section-title span {
@@ -339,7 +457,8 @@
       font-family: var(--heading-font);
       font-weight: 700;
       letter-spacing: 0.05em;
-      color: var(--main-color);
+      color: #fff !important;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
       display: inline-block;
     }
 
@@ -360,6 +479,14 @@
       transition: none;
     }
 
+    /* スマートフォン版でのnote埋め込みの縦幅調整 */
+    @media (max-width: 768px) {
+      .note-embed {
+        height: 225px !important;
+        max-height: 400px !important;
+      }
+    }
+
     a, .internal-link {
       cursor: pointer;
     }
@@ -369,6 +496,9 @@
   </style>
 </head>
 <body>
+
+<!-- 背景動画 -->
+<video id="bg-video" src="2.mp4" autoplay loop muted playsinline></video>
 
 <!-- ナビゲーションバー -->
 <nav class="sticky-top navbar navbar-expand-lg">
@@ -415,9 +545,9 @@
 <footer class="py-5 text-center">
     <style>
       footer {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 0.9) !important;
         border-top: 1px solid rgba(204, 204, 204, 0.3);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(8px);
       }
   
       footer .nav {
