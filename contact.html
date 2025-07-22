@@ -110,6 +110,13 @@
       #bg-video {
         display: block !important;
       }
+      .navbar-nav .nav-link {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.9rem !important;
+      }
+      .navbar-nav .nav-item {
+        margin: 0 0.5rem !important;
+      }
     }
 
     /* index.htmlの.flow-row-bgと同じ設定を適用 */
@@ -259,6 +266,15 @@
       color: var(--main-color) !important;
       position: relative;
       transition: all 0.3s var(--transition-timing);
+    }
+    
+    /* Bootstrapのデフォルト設定を上書き */
+    html body .navbar-nav .nav-link {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.9rem !important;
+    }
+    html body .navbar-nav .nav-item {
+      margin: 0 0.5rem !important;
     }
     .nav-link::after {
       content: '';
