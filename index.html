@@ -828,20 +828,22 @@
     }
     .flow-row-top .flow-track {
       animation: flow-right 45s linear infinite;
+      transform: translateX(-57.14%); /* 4セット目から開始（3セット分左に移動） */
     }
     .flow-row-bottom .flow-track {
       animation: flow-left 45s linear infinite;
+      transform: translateX(-42.86%); /* 4セット目から開始（3セット分左に移動） */
     }
     .flow-track.dragging {
       animation-play-state: paused !important;
     }
     @keyframes flow-right {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+      0% { transform: translateX(-57.14%); }
+      100% { transform: translateX(-157.14%); }
     }
     @keyframes flow-left {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(0); }
+      0% { transform: translateX(-142.86%); }
+      100% { transform: translateX(-42.86%); }
     }
     #flowing-images img {
       border-radius: 10px;
@@ -1821,6 +1823,15 @@ document.addEventListener('DOMContentLoaded', function() {
   let isDragging = false;
   let startX = 0;
   let scrollLeft = 0;
+  
+  // 初期位置を4セット目から開始するように設定
+  flowTracks.forEach((track, index) => {
+    if (index === 0) { // 上段（右に流れる）
+      track.style.transform = 'translateX(-57.14%)';
+    } else if (index === 1) { // 下段（左に流れる）
+      track.style.transform = 'translateX(-42.86%)';
+    }
+  });
   
   flowTracks.forEach(track => {
     // マウスイベント（PC用）
