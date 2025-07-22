@@ -190,6 +190,12 @@
     #flowing-images * {
       overflow-x: visible !important;
     }
+    
+    /* 横スクロール機能のための設定 */
+    .flow-track {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+    }
     * {
       font-family: inherit !important;
     }
@@ -807,7 +813,8 @@
     .flow-track {
       display: flex;
       gap: 24px;
-      overflow: visible;
+      overflow-x: auto;
+      overflow-y: hidden;
       min-width: 7000px;
       width: max-content;
       white-space: nowrap;
@@ -874,7 +881,8 @@
         animation-duration: 45s !important;
         min-width: 500%;
         will-change: auto;
-        overflow: visible !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
         position: relative !important;
         cursor: grab !important;
       }
@@ -1822,6 +1830,8 @@ document.addEventListener('DOMContentLoaded', function() {
         startX = e.pageX - track.offsetLeft;
         scrollLeft = track.scrollLeft;
         track.style.cursor = 'grabbing';
+        // ドラッグ開始時にアニメーションを一時停止
+        track.style.animationPlayState = 'paused';
         e.preventDefault();
       }
     });
@@ -1835,13 +1845,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     track.addEventListener('mouseup', function() {
-      isDragging = false;
-      track.style.cursor = 'grab';
+      if (isDragging) {
+        isDragging = false;
+        track.style.cursor = 'grab';
+        // ドラッグ終了時にアニメーションを再開
+        track.style.animationPlayState = 'running';
+      }
     });
     
     track.addEventListener('mouseleave', function() {
-      isDragging = false;
-      track.style.cursor = 'grab';
+      if (isDragging) {
+        isDragging = false;
+        track.style.cursor = 'grab';
+        // マウスが離れた時にアニメーションを再開
+        track.style.animationPlayState = 'running';
+      }
     });
     
     // タッチイベント（スマートフォン用）
@@ -1850,6 +1868,8 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = true;
         startX = e.touches[0].pageX - track.offsetLeft;
         scrollLeft = track.scrollLeft;
+        // タッチ開始時にアニメーションを一時停止
+        track.style.animationPlayState = 'paused';
         e.preventDefault();
       }
     });
@@ -1863,7 +1883,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     track.addEventListener('touchend', function() {
-      isDragging = false;
+      if (isDragging) {
+        isDragging = false;
+        // タッチ終了時にアニメーションを再開
+        track.style.animationPlayState = 'running';
+      }
     });
     
     // クリックイベント（アニメーション停止/再開）
