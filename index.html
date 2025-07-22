@@ -839,9 +839,9 @@
       transition: transform 0.2s, opacity 0.3s;
       cursor: pointer;
       flex-shrink: 0;
-      display: block;
-      visibility: visible;
-      opacity: 1;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
       position: relative;
       z-index: 15;
     }
@@ -908,16 +908,27 @@
         overflow: visible !important;
         position: relative !important;
         z-index: 10 !important;
+        display: block !important;
+        min-height: 400px !important;
       }
       .flow-row {
         overflow: visible !important;
         position: relative !important;
         z-index: 11 !important;
+        min-height: 200px !important;
       }
       .flow-track {
         overflow: visible !important;
         position: relative !important;
         z-index: 12 !important;
+        min-height: 200px !important;
+      }
+      .flow-track img {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 15 !important;
       }
       .flow-row-top {
         z-index: 13 !important;
@@ -959,34 +970,6 @@
         width: 100% !important;
         max-width: 100vw !important;
       }
-      #flowing-images {
-        overflow: visible !important;
-        margin-top: 200px !important;
-        position: relative !important;
-        z-index: 10 !important;
-        display: block !important;
-      }
-      .flow-row {
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 11 !important;
-      }
-      .flow-track {
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 12 !important;
-      }
-      .flow-track img {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-      .flow-row-top {
-        z-index: 13 !important;
-      }
-      .flow-row-bottom {
-        z-index: 14 !important;
-      }
       .navbar-nav .nav-link {
         padding: 0.5rem 1rem !important;
         font-size: 0.9rem !important;
@@ -1024,51 +1007,11 @@
         max-width: 100vw !important;
       }
       #flowing-images {
-        overflow: visible !important;
         margin-top: 180px !important;
-        position: relative !important;
-        z-index: 10 !important;
-        display: block !important;
-      }
-      .flow-row {
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 11 !important;
-      }
-      .flow-track {
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 12 !important;
-      }
-      .flow-track img {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        position: relative !important;
-        z-index: 15 !important;
-      }
-      .flow-row-top {
-        z-index: 13 !important;
-      }
-      .flow-row-bottom {
-        z-index: 14 !important;
       }
     }
     .flow-row, .flow-row-bg {
       overflow: visible !important;
-    }
-    
-    /* スマートフォン版での表示確実化 */
-    @media (max-width: 768px) {
-      #flowing-images {
-        min-height: 400px !important;
-      }
-      .flow-row {
-        min-height: 200px !important;
-      }
-      .flow-track {
-        min-height: 200px !important;
-      }
     }
   </style>
 </head>
