@@ -801,19 +801,21 @@
     }
     .flow-row-top .flow-track {
       animation: flow-right 120s linear infinite;
+      z-index: 13;
     }
     .flow-row-bottom .flow-track {
       animation: flow-left 120s linear infinite;
+      z-index: 14;
     }
     .flow-track.dragging {
       animation-play-state: paused !important;
     }
     @keyframes flow-right {
       0% { transform: translateX(0); }
-      100% { transform: translateX(-66.666%); }
+      100% { transform: translateX(-50%); }
     }
     @keyframes flow-left {
-      0% { transform: translateX(-66.666%); }
+      0% { transform: translateX(-50%); }
       100% { transform: translateX(0); }
     }
     #flowing-images img {
@@ -835,12 +837,17 @@
     .flow-row {
       height: 420px;
       z-index: 1;
+      position: relative;
     }
     .flow-row-top {
       margin-bottom: 0;
+      position: relative;
+      z-index: 13;
     }
     .flow-row-gap {
       height: 8px;
+      position: relative;
+      z-index: 13;
     }
     @media (max-width: 900px) {
       #flowing-images img { max-width: 100%; max-height: 200px; }
@@ -851,6 +858,13 @@
         min-width: 500%;
         will-change: auto;
         overflow: visible !important;
+        position: relative !important;
+      }
+      .flow-row-top .flow-track {
+        z-index: 13 !important;
+      }
+      .flow-row-bottom .flow-track {
+        z-index: 14 !important;
       }
       #flowing-images {
         overflow: visible !important;
@@ -876,12 +890,24 @@
       #flowing-images {
         margin-top: 200px !important;
         overflow: visible !important;
+        position: relative !important;
+        z-index: 10 !important;
       }
       .flow-row {
         overflow: visible !important;
+        position: relative !important;
+        z-index: 11 !important;
       }
       .flow-track {
         overflow: visible !important;
+        position: relative !important;
+        z-index: 12 !important;
+      }
+      .flow-row-top {
+        z-index: 13 !important;
+      }
+      .flow-row-bottom {
+        z-index: 14 !important;
       }
     }
     @media (max-width: 900px) {
@@ -937,6 +963,12 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+      }
+      .flow-row-top {
+        z-index: 13 !important;
+      }
+      .flow-row-bottom {
+        z-index: 14 !important;
       }
       .navbar-nav .nav-link {
         padding: 0.3rem 0.6rem !important;
@@ -994,6 +1026,12 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+      }
+      .flow-row-top {
+        z-index: 13 !important;
+      }
+      .flow-row-bottom {
+        z-index: 14 !important;
       }
     }
     .flow-row, .flow-row-bg {
