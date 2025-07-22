@@ -108,6 +108,26 @@
       font-family: var(--heading-font) !important;
     }
 
+    /* 背景動画の設定 - スマートフォンのみ */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      background: #000;
+      display: none; /* PCでは非表示 */
+    }
+
+    /* スマートフォンでのみ背景動画を表示 */
+    @media (max-width: 768px) {
+      #bg-video {
+        display: block !important;
+      }
+    }
+
     body {
       font-family: var(--body-font);
       background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
@@ -120,7 +140,7 @@
     }
 
     .navbar, footer {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.9) !important;
       border-bottom: 1px solid #ccc;
       backdrop-filter: blur(8px);
     }
@@ -235,6 +255,297 @@
       display: inline-block;
     }
 
+    /* About Usのタイトルのみ白字に */
+    .section-title {
+      color: #fff !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 取扱いBrandのタイトルを白字に */
+    h3.text-center[style*="margin-top:2.5rem"] {
+      color: #fff !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* index.htmlの.flow-row-bgと同じ設定を適用 */
+    .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 最高優先度で確実に適用 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 中心揃えのための追加設定 */
+    .about-section-box {
+      display: block !important;
+      text-align: center !important;
+    }
+
+    /* テキスト要素のみ背景を透明に */
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .text-block p,
+    html body .text-block h3,
+    html body .text-block .ja-content,
+    html body .text-block .en-content,
+    html body .text-block strong,
+    html body .text-block b {
+      background: transparent !important;
+    }
+
+    /* 画像の背景も透明に */
+    html body .about-section-box img,
+    html body .text-block img {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* ja-contentとen-contentを強制的に透明に */
+    .ja-content,
+    .en-content,
+    html body .ja-content,
+    html body .en-content,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .text-block .ja-content,
+    html body .text-block .en-content {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* さらに強力なセレクタでja-contentとen-contentを透明に */
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .text-block .ja-content,
+    html body .text-block .en-content,
+    html body .ja-content,
+    html body .en-content {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 内側の要素を全て透明に */
+    html body .about-section-box *,
+    html body .text-block *,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img,
+    html body .text-block p,
+    html body .text-block h3,
+    html body .text-block .ja-content,
+    html body .text-block .en-content,
+    html body .text-block strong,
+    html body .text-block b,
+    html body .text-block img {
+      background: transparent !important;
+    }
+
+    /* さらに強力に全ての子要素を透明に */
+    html body .about-section-box *,
+    html body .text-block *,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span,
+    html body .text-block a,
+    html body .text-block div,
+    html body .text-block span {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 特にaタグとdivタグを強制的に透明に */
+    html body .about-section-box a,
+    html body .text-block a,
+    html body .about-section-box div,
+    html body .text-block div {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 最高優先度で全ての白塗りを排除 */
+    html body .about-section-box,
+    html body .text-block {
+      background: rgba(255,255,255,0.9) !important;
+    }
+
+    /* 全ての子要素を強制的に透明に */
+    html body .about-section-box *,
+    html body .text-block *,
+    html body .about-section-box a,
+    html body .text-block a,
+    html body .about-section-box div,
+    html body .text-block div,
+    html body .about-section-box span,
+    html body .text-block span,
+    html body .about-section-box p,
+    html body .text-block p,
+    html body .about-section-box h3,
+    html body .text-block h3,
+    html body .about-section-box .ja-content,
+    html body .text-block .ja-content,
+    html body .about-section-box .en-content,
+    html body .text-block .en-content,
+    html body .about-section-box strong,
+    html body .text-block strong,
+    html body .about-section-box b,
+    html body .text-block b,
+    html body .about-section-box img,
+    html body .text-block img {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* さらに強力に全ての要素を透明に */
+    html body .about-section-box,
+    html body .text-block {
+      background: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .text-block * {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 特に問題のある要素を個別に透明に */
+    html body .about-section-box a,
+    html body .text-block a,
+    html body .about-section-box div,
+    html body .text-block div,
+    html body .about-section-box span,
+    html body .text-block span,
+    html body .about-section-box p,
+    html body .text-block p,
+    html body .about-section-box h3,
+    html body .text-block h3,
+    html body .about-section-box .ja-content,
+    html body .text-block .ja-content,
+    html body .about-section-box .en-content,
+    html body .text-block .en-content,
+    html body .about-section-box strong,
+    html body .text-block strong,
+    html body .about-section-box b,
+    html body .text-block b,
+    html body .about-section-box img,
+    html body .text-block img {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 最終的な強制透明化 */
+    html body .about-section-box,
+    html body .text-block {
+      background: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .text-block * {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 全ての要素を確実に透明に */
+    html body .about-section-box,
+    html body .text-block {
+      background: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .text-block *,
+    html body .about-section-box a,
+    html body .text-block a,
+    html body .about-section-box div,
+    html body .text-block div,
+    html body .about-section-box span,
+    html body .text-block span,
+    html body .about-section-box p,
+    html body .text-block p,
+    html body .about-section-box h3,
+    html body .text-block h3,
+    html body .about-section-box .ja-content,
+    html body .text-block .ja-content,
+    html body .about-section-box .en-content,
+    html body .text-block .en-content,
+    html body .about-section-box strong,
+    html body .text-block strong,
+    html body .about-section-box b,
+    html body .text-block b,
+    html body .about-section-box img,
+    html body .text-block img {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* CSSファイルの競合を完全に排除 */
+    html body .about-section-box,
+    html body .text-block {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .text-block *,
+    html body .about-section-box a,
+    html body .text-block a,
+    html body .about-section-box div,
+    html body .text-block div,
+    html body .about-section-box span,
+    html body .text-block span,
+    html body .about-section-box p,
+    html body .text-block p,
+    html body .about-section-box h3,
+    html body .text-block h3,
+    html body .about-section-box .ja-content,
+    html body .text-block .ja-content,
+    html body .about-section-box .en-content,
+    html body .text-block .en-content,
+    html body .about-section-box strong,
+    html body .text-block strong,
+    html body .about-section-box b,
+    html body .text-block b,
+    html body .about-section-box img,
+    html body .text-block img {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 最高優先度で競合を排除 */
+    html body .about-section-box,
+    html body .text-block {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .text-block * {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
     .about-content {
       font-size: var(--font-size-lg);
       line-height: 1.8;
@@ -263,6 +574,11 @@
       line-height: 1.2 !important;
     }
 
+    /* 取扱いBrandのタイトルは黒字のまま */
+    h3.text-center {
+      color: var(--main-color) !important;
+    }
+
     /* pタグのフォントサイズをja-contentと同じにする */
     .about-section-box p.text-center {
       font-size: 0.8rem !important;
@@ -283,6 +599,15 @@
     body .about-section-box .en-content {
       font-size: 0.8rem !important;
       line-height: 1.6 !important;
+    }
+
+    /* 言語切り替えボタンの背景設定 */
+    .language-switcher {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(51, 51, 51, 0.1);
+      border-radius: 24px;
+      padding: 4px;
+      transition: all 0.3s ease;
     }
     
     /* 最高優先度で上書き */
@@ -416,6 +741,9 @@
 </head>
 <body>
 
+<!-- 背景動画 -->
+<video id="bg-video" src="2.mp4" autoplay loop muted playsinline></video>
+
 <!-- ナビゲーションバー -->
 <nav class="sticky-top navbar navbar-expand-lg">
   <div class="container-fluid">
@@ -449,109 +777,97 @@
   </h1>
   <div class="section-content">
     <div class="ja-content">
-      <div class="about-section-box">
-        <div class="text-block delay-1">
-          <h3 class="text-center">私たちの理念</h3>
-          <!-- PC版専用の改行 -->
-          <p class="text-center desktop-only">
-            私たちは<strong>「Standard（定番）を再定義し、再構築する」</strong>を理念に、<br>
-            欧米を中心に上質なアパレルブランドを日本へ輸入・ご紹介しています。
-          </p>
-          <!-- スマートフォン版専用の改行 -->
-          <p class="text-center mobile-only">
-            <strong>「Standard（定番）を再定義し、再構築する」</strong><br>
-            欧米を中心に上質なアパレルブランドを<br>
-            日本へ輸入・ご紹介しています。
-          </p>
-        </div>
+      <div class="about-section-box delay-1">
+        <h3 class="text-center">私たちの理念</h3>
+        <!-- PC版専用の改行 -->
+        <p class="text-center desktop-only">
+          私たちは<strong>「Standard（定番）を再定義し、再構築する」</strong>を理念に、<br>
+          欧米を中心に上質なアパレルブランドを日本へ輸入・ご紹介しています。
+        </p>
+        <!-- スマートフォン版専用の改行 -->
+        <p class="text-center mobile-only">
+          <strong>「Standard（定番）を再定義し、再構築する」</strong><br>
+          欧米を中心に上質なアパレルブランドを<br>
+          日本へ輸入・ご紹介しています。
+        </p>
       </div>
-      <div class="about-section-box">
-        <div class="text-block delay-2">
-          <h3 class="text-center">パートナーシップとご提案</h3>
-          <!-- PC版専用の改行 -->
-          <p class="text-center desktop-only">
-            長年にわたって信頼あるパートナーと築き上げた関係性を基盤に、<br>
-            普遍的な価値を持つアイテムを国内のお客様へご提案しています。
-          </p>
-          <!-- スマートフォン版専用の改行 -->
-          <p class="text-center mobile-only">
-            長年にわたって信頼あるパートナーと<br>
-            築き上げた関係性を基盤に、<br>
-            普遍的な価値を持つアイテムを<br>
-            国内のお客様へご提案しています。
-          </p>
-        </div>
+      <div class="about-section-box delay-2">
+        <h3 class="text-center">パートナーシップとご提案</h3>
+        <!-- PC版専用の改行 -->
+        <p class="text-center desktop-only">
+          長年にわたって信頼あるパートナーと築き上げた関係性を基盤に、<br>
+          普遍的な価値を持つアイテムを国内のお客様へご提案しています。
+        </p>
+        <!-- スマートフォン版専用の改行 -->
+        <p class="text-center mobile-only">
+          長年にわたって信頼あるパートナーと<br>
+          築き上げた関係性を基盤に、<br>
+          普遍的な価値を持つアイテムを<br>
+          国内のお客様へご提案しています。
+        </p>
       </div>
-      <div class="about-section-box">
-        <div class="text-block delay-3">
-          <h3 class="text-center">実績と信頼</h3>
-          <!-- PC版専用の改行 -->
-          <p class="text-center desktop-only">
-            RockmountやHarleyをはじめとする欧米の厳選ブランドとの取引を<b>32年間継続しており、</b><br>
-            現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。
-          </p>
-          <!-- スマートフォン版専用の改行 -->
-          <p class="text-center mobile-only">
-            RockmountやHarleyをはじめとする<br>
-            欧米の厳選ブランドとの取引を<br>
-            <b>32年間継続しており、</b><br>
-            現在までに<b>25社以上のメーカーとの<br>
-            取引実績</b>を有しています。
-          </p>
-        </div>
+      <div class="about-section-box delay-3">
+        <h3 class="text-center">実績と信頼</h3>
+        <!-- PC版専用の改行 -->
+        <p class="text-center desktop-only">
+          RockmountやHarleyをはじめとする欧米の厳選ブランドとの取引を<b>32年間継続しており、</b><br>
+          現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。
+        </p>
+        <!-- スマートフォン版専用の改行 -->
+        <p class="text-center mobile-only">
+          RockmountやHarleyをはじめとする<br>
+          欧米の厳選ブランドとの取引を<br>
+          <b>32年間継続しており、</b><br>
+          現在までに<b>25社以上のメーカーとの<br>
+          取引実績</b>を有しています。
+        </p>
       </div>
     </div>
     <div class="en-content">
-      <div class="about-section-box">
-        <div class="text-block delay-1">
-          <h3 class="text-center">Our Philosophy</h3>
-          <!-- PC版専用の改行 -->
-          <p class="text-center desktop-only">
-            With our philosophy of <strong>"Redefining and Reconstructing Standards,"</strong><br>
-            we import and introduce high-quality apparel brands from Europe and America to Japan.
-          </p>
-          <!-- スマートフォン版専用の改行 -->
-          <p class="text-center mobile-only">
-            With our philosophy of <strong>"Redefining and<br>
-            Reconstructing Standards,"</strong><br>
-            we import and introduce high-quality<br>
-            apparel brands from Europe and America to Japan.
-          </p>
-        </div>
+      <div class="about-section-box delay-1">
+        <h3 class="text-center">Our Philosophy</h3>
+        <!-- PC版専用の改行 -->
+        <p class="text-center desktop-only">
+          With our philosophy of <strong>"Redefining and Reconstructing Standards,"</strong><br>
+          we import and introduce high-quality apparel brands from Europe and America to Japan.
+        </p>
+        <!-- スマートフォン版専用の改行 -->
+        <p class="text-center mobile-only">
+          With our philosophy of <strong>"Redefining and<br>
+          Reconstructing Standards,"</strong><br>
+          we import and introduce high-quality<br>
+          apparel brands from Europe and America to Japan.
+        </p>
       </div>
-      <div class="about-section-box">
-        <div class="text-block delay-2">
-          <h3 class="text-center">Partnership & Proposal</h3>
-          <!-- PC版専用の改行 -->
-          <p class="text-center desktop-only">
-            Based on long-standing trusted partnerships,<br>
-            we offer timeless, valuable items to our customers in Japan.
-          </p>
-          <!-- スマートフォン版専用の改行 -->
-          <p class="text-center mobile-only">
-            Based on long-standing trusted partnerships,<br>
-            we offer timeless, valuable items to<br>
-            our customers in Japan.
-          </p>
-        </div>
+      <div class="about-section-box delay-2">
+        <h3 class="text-center">Partnership & Proposal</h3>
+        <!-- PC版専用の改行 -->
+        <p class="text-center desktop-only">
+          Based on long-standing trusted partnerships,<br>
+          we offer timeless, valuable items to our customers in Japan.
+        </p>
+        <!-- スマートフォン版専用の改行 -->
+        <p class="text-center mobile-only">
+          Based on long-standing trusted partnerships,<br>
+          we offer timeless, valuable items to<br>
+          our customers in Japan.
+        </p>
       </div>
-      <div class="about-section-box">
-        <div class="text-block delay-3">
-          <h3 class="text-center">Achievements & Trust</h3>
-          <!-- PC版専用の改行 -->
-          <p class="text-center desktop-only">
-            We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, for 32 years,<br>
-            and have established partnerships with <b>more than 25 manufacturers</b> to date.
-          </p>
-          <!-- スマートフォン版専用の改行 -->
-          <p class="text-center mobile-only">
-            We have maintained business relationships with<br>
-            carefully selected European and American brands,<br>
-            including Rockmount and Harley, for 32 years,<br>
-            and have established partnerships with<br>
-            <b>more than 25 manufacturers</b> to date.
-          </p>
-        </div>
+      <div class="about-section-box delay-3">
+        <h3 class="text-center">Achievements & Trust</h3>
+        <!-- PC版専用の改行 -->
+        <p class="text-center desktop-only">
+          We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, for 32 years,<br>
+          and have established partnerships with <b>more than 25 manufacturers</b> to date.
+        </p>
+        <!-- スマートフォン版専用の改行 -->
+        <p class="text-center mobile-only">
+          We have maintained business relationships with<br>
+          carefully selected European and American brands,<br>
+          including Rockmount and Harley, for 32 years,<br>
+          and have established partnerships with<br>
+          <b>more than 25 manufacturers</b> to date.
+        </p>
       </div>
     </div>
     <h3 class="text-center" style="margin-top:2.5rem; font-size: 2.5rem !important; font-weight: 700 !important; line-height: 1.2;">
@@ -599,8 +915,7 @@
       </div>
     </div>
 
-    <div class="about-section-box">
-    <div class="text-block delay-3 text-center">
+    <div class="about-section-box delay-3 text-center">
       <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
           <img src="image/Harley.webp" alt="Harley" style="max-width: 300px; height: auto; margin-bottom: 1rem;" width="300" height="300" loading="lazy">
       </a><br>
@@ -635,11 +950,9 @@
         a Scottish factory knitwear brand, for 10 years.<br>
         Their seamless knits offer supreme comfort with zero stress during wear.
       </div>
-      </div>
     </div>
 
-    <div class="about-section-box">
-    <div class="text-block delay-4 text-center">
+    <div class="about-section-box delay-4 text-center">
       <a href="https://www.eribe.com/" target="_blank" rel="noopener">
           <img src="image/eribe.svg" alt="Eribe" width="300" height="300" loading="lazy">
       </a><br>
@@ -672,11 +985,9 @@
         and other knit accessories from Eribe Knitwear,<br>
         another Scottish knit artisan.
       </div>
-      </div>
     </div>
 
-    <div class="about-section-box">
-    <div class="text-block delay-5 text-center">
+    <div class="about-section-box delay-5 text-center">
       <a href="https://leminor.fr/en" target="_blank" rel="noopener">
           <img src="image/leminor.webp" alt="Eribe" style="max-width: 300px; height: auto; margin-bottom: 1rem;" width="300" height="300" loading="lazy">
       </a><br>
@@ -708,7 +1019,6 @@
         All styles, including wide T-shirts, long sleeves,<br>
         and short sleeves, are custom-made.
       </div>
-      </div>
     </div>
   </div>
 </section>
@@ -717,7 +1027,7 @@
   <footer class="py-5 text-center">
     <style>
       footer {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 0.95) !important;
         border-top: 1px solid rgba(204, 204, 204, 0.3);
         backdrop-filter: blur(10px);
       }
