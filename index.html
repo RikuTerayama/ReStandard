@@ -1274,52 +1274,52 @@
     <span>Brands</span>
   </h1>
   <div class="brands-grid section-content">
-    <a class="brandlogo" href="https://rockmount.com/">
+    <a class="brandlogo" href="https://rockmount.com/" target="_blank" rel="noopener">
       <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.harleyofscotland.com/" loading="lazy">
+    <a class="brandlogo" href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/Harley.webp" alt="Harley" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://williamlockie.com/" loading="lazy">
+    <a class="brandlogo" href="https://williamlockie.com/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.eribe.com/" loading="lazy">
+    <a class="brandlogo" href="https://www.eribe.com/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/eribe.svg" alt="Eribe" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.glenprince.com/" loading="lazy">
+    <a class="brandlogo" href="https://www.glenprince.com/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/glen prince.webp" alt="Glen Prince" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.athenaknitwear.com/" loading="lazy">
+    <a class="brandlogo" href="https://www.athenaknitwear.com/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/athena designs.webp" alt="Athena" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://www.kopka-accessories.com/" loading="lazy">
+    <a class="brandlogo" href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/kopka.webp" alt="Kopka" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://leminor.fr/en" loading="lazy">
+    <a class="brandlogo" href="https://leminor.fr/en" target="_blank" rel="noopener" loading="lazy">
       <img src="image/leminor.webp" alt="Le Minor" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://sans-arcidet.fr/" loading="lazy">
+    <a class="brandlogo" href="https://sans-arcidet.fr/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
 
-    <a class="brandlogo" href="https://hatattack.com/" loading="lazy">
+    <a class="brandlogo" href="https://hatattack.com/" target="_blank" rel="noopener" loading="lazy">
       <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140" loading="lazy">
       <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
     </a>
@@ -1655,72 +1655,13 @@
     <button id="modal-close" style="position:absolute;top:2vw;right:2vw;font-size:2rem;color:#fff;background:none;border:none;cursor:pointer;">&times;</button>
   </div>
   <script>
-// flowing-images ドラッグ・スワイプ対応
+// 画像のドラッグ開始を禁止（固定表示のため）
 (function() {
   const tracks = document.querySelectorAll('.flow-track');
   tracks.forEach(track => {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let activeImg = null;
-
     // 画像のドラッグ開始を禁止
     track.querySelectorAll('img').forEach(img => {
       img.addEventListener('dragstart', e => e.preventDefault());
-    });
-
-    // PC: マウスドラッグ
-    track.addEventListener('mousedown', (e) => {
-      isDown = true;
-      track.classList.add('dragging');
-      startX = e.pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-      // 拡大
-      if (e.target.tagName === 'IMG') {
-        activeImg = e.target;
-        activeImg.classList.add('active');
-      }
-    });
-    track.addEventListener('mouseleave', () => {
-      isDown = false;
-      track.classList.remove('dragging');
-      if (activeImg) activeImg.classList.remove('active');
-    });
-    track.addEventListener('mouseup', () => {
-      isDown = false;
-      track.classList.remove('dragging');
-      if (activeImg) activeImg.classList.remove('active');
-    });
-    track.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.2; // スクロール速度調整
-      track.scrollLeft = scrollLeft - walk;
-    });
-
-    // スマホ: タッチスワイプ
-    track.addEventListener('touchstart', (e) => {
-      isDown = true;
-      track.classList.add('dragging');
-      startX = e.touches[0].pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-      // 拡大
-      if (e.target.tagName === 'IMG') {
-        activeImg = e.target;
-        activeImg.classList.add('active');
-      }
-    });
-    track.addEventListener('touchend', () => {
-      isDown = false;
-      track.classList.remove('dragging');
-      if (activeImg) activeImg.classList.remove('active');
-    });
-    track.addEventListener('touchmove', (e) => {
-      if (!isDown) return;
-      const x = e.touches[0].pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.2;
-      track.scrollLeft = scrollLeft - walk;
     });
   });
 })();
@@ -1739,6 +1680,26 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+});
+</script>
+  <script>
+// ハンバーガーメニューの外をクリックした時に閉じる機能
+document.addEventListener('DOMContentLoaded', function() {
+  const navbarToggler = document.querySelector('.navbar-toggler');
+  const navbarCollapse = document.querySelector('.navbar-collapse');
+  
+  // メニューの外をクリックした時の処理
+  document.addEventListener('click', function(event) {
+    // ハンバーガーボタンまたはメニュー内をクリックした場合は何もしない
+    if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
+      return;
+    }
+    
+    // メニューが開いている場合のみ閉じる
+    if (navbarCollapse.classList.contains('show')) {
+      navbarToggler.click();
+    }
+  });
 });
 </script>
 </body>
