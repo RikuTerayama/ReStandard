@@ -98,6 +98,123 @@
       --font-size-lg: 1.1rem;
     }
 
+    /* 背景動画の設定 - スマートフォンのみ */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      background: #000;
+      display: none; /* PCでは非表示 */
+    }
+
+    /* スマートフォンでのみ背景動画を表示 */
+    @media (max-width: 768px) {
+      #bg-video {
+        display: block !important;
+      }
+    }
+
+    /* index.htmlの.flow-row-bgと同じ設定を適用 */
+    .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 最高優先度で確実に適用 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 中心揃えのための追加設定 */
+    .about-section-box {
+      display: block !important;
+      text-align: center !important;
+    }
+
+    /* 内側の要素を全て透明に */
+    html body .about-section-box *,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* CSSファイルの競合を完全に排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 最高優先度で競合を排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box * {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* タイトルの色設定 */
+    .section-title {
+      color: #fff !important;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+    }
+
+    /* ナビゲーションバーとフッターの透明度統一 */
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(8px);
+    }
+
+    .language-switcher {
+      background: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(8px);
+    }
+
     html, body {
       font-family: var(--heading-font) !important;
     }
@@ -233,16 +350,153 @@
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
     }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.5rem !important;
+    /* スマートフォン版でのsection-titleのフォントサイズ調整 */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: var(--font-size-4xl) !important;
       }
+      .section-title span {
+        font-size: var(--font-size-4xl) !important;
+      }
+    }
+
+    /* about.htmlと同じ透過ボックス設定 */
+    .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 最高優先度で確実に適用 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+      margin: 0 auto 24px auto !important;
+      padding: 8px 0 !important;
+      max-width: 1200px !important;
+      width: 100% !important;
+    }
+
+    /* 中心揃えのための追加設定 */
+    .about-section-box {
+      display: block !important;
+      text-align: center !important;
+    }
+
+    /* 内側の要素を全て透明に */
+    html body .about-section-box *,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* CSSファイルの競合を完全に排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box *,
+    html body .about-section-box a,
+    html body .about-section-box div,
+    html body .about-section-box span,
+    html body .about-section-box p,
+    html body .about-section-box h3,
+    html body .about-section-box h4,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .about-section-box strong,
+    html body .about-section-box b,
+    html body .about-section-box img {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* 最高優先度で競合を排除 */
+    html body .about-section-box {
+      background: rgba(255,255,255,0.9) !important;
+      background-color: rgba(255,255,255,0.9) !important;
+    }
+
+    html body .about-section-box * {
+      background: transparent !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+    }
+
+    /* PC版とスマートフォン版の表示制御 */
+    .desktop-only {
+      display: block;
+    }
+    .mobile-only {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none !important;
+      }
+      .mobile-only {
+        display: block !important;
+      }
+    }
+    
+    /* 言語切り替えの強化設定 */
+    [lang="ja"] .en-content {
+      display: none !important;
+    }
+    
+    [lang="en"] .ja-content {
+      display: none !important;
+    }
+    
+    /* スマートフォン版でも言語切り替えを確実に適用 */
+    @media (max-width: 768px) {
+      [lang="ja"] .en-content {
+        display: none !important;
+      }
+      
+      [lang="en"] .ja-content {
+        display: none !important;
+      }
+    }
+    
+    /* 最高優先度で言語切り替えを強制 */
+    html[lang="ja"] .en-content,
+    html[lang="ja"] .en-content.desktop-only,
+    html[lang="ja"] .en-content.mobile-only {
+      display: none !important;
+    }
+    
+    html[lang="en"] .ja-content,
+    html[lang="en"] .ja-content.desktop-only,
+    html[lang="en"] .ja-content.mobile-only {
+      display: none !important;
     }
 
     </style>
   
 </head>
 <body>
+
+<!-- 背景動画 -->
+<video id="bg-video" src="2.mp4" autoplay loop muted playsinline></video>
 
 <!-- ▼ ナビゲーションバー（共通） -->
 <nav class="sticky-top navbar navbar-expand-lg">
@@ -279,46 +533,77 @@
   </h1>
   <div class="section-content">
     <div class="container">
-      <div class="text-block delay-1">
+      <div class="about-section-box delay-1">
         <div class="ja-content">
-          <p class="mt-4">
+          <!-- PC版専用の改行 -->
+          <p class="desktop-only">
+            オフィス所在地：東京都練馬区北町近辺<br>
+            最寄駅：副都心線・有楽町線「地下鉄赤塚駅」より徒歩約7分
+          </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="mobile-only">
             オフィス所在地：<br>
             東京都練馬区北町近辺<br>
             最寄駅：<br>
-            副都心線・有楽町線「地下鉄赤塚駅」より徒歩約7分
+            副都心線・有楽町線<br>
+            「地下鉄赤塚駅」より徒歩約7分
           </p>
         </div>
         <div class="en-content">
-          <p class="mt-4">
+          <!-- PC版専用の改行 -->
+          <p class="desktop-only">
             Office Location: Near Kitamachi, Nerima-ku, Tokyo<br>
             Access: 7 minutes walk from Chikatetsu-Akatsuka Station (Fukutoshin Line / Yurakucho Line)
           </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="mobile-only">
+            Office Location: Near Kitamachi,<br>
+            Nerima-ku, Tokyo<br>
+            Access: 7 minutes walk from<br>
+            Chikatetsu-Akatsuka Station<br>
+            (Fukutoshin Line / Yurakucho Line)
+          </p>
         </div>
       </div>
-      <div class="text-block delay-2">
+      <div class="about-section-box delay-2">
         <div class="ja-content">
-          <p>
+          <!-- PC版専用の改行 -->
+          <p class="desktop-only">
             お打ち合わせや商品に関するご相談は、事前予約のうえご来訪いただけます。<br>
             詳細なアクセス方法は、お問い合わせフォームよりお気軽にご連絡ください。
           </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="mobile-only">
+            お打ち合わせや商品に関するご相談は、<br>
+            事前予約のうえご来訪いただけます。<br>
+            詳細なアクセス方法は、<br>
+            お問い合わせフォームよりお気軽に<br>
+            ご連絡ください。
+          </p>
         </div>
         <div class="en-content">
-          <p>
+          <!-- PC版専用の改行 -->
+          <p class="desktop-only">
             Visits for meetings and product consultations are welcome by appointment.<br>
             Please feel free to contact us through the inquiry form for detailed access information.
           </p>
+          <!-- スマートフォン版専用の改行 -->
+          <p class="mobile-only">
+            Visits for meetings and product consultations<br>
+            are welcome by appointment.<br>
+            Please feel free to contact us through<br>
+            the inquiry form for detailed access information.
+          </p>
         </div>
       </div>
-      <div class="text-block delay-3">
-        <div class="mt-4 map-container">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.2198323627536!2d139.64144777579176!3d35.769975972558676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ec641fde68af%3A0x3ea75c127955922b!2z5Zyw5LiL6YmE6LWk5aGa6aeF!5e0!3m2!1sja!2sjp!4v1743276776443!5m2!1sja!2sjp"
-            width="900" height="450"
-            style="width:min(100vw,900px);max-width:100vw;min-width:0;margin:0 auto;display:block;"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+      <div class="mt-4 map-container delay-3">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.2198323627536!2d139.64144777579176!3d35.769975972558676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ec641fde68af%3A0x3ea75c127955922b!2z5Zyw5LiL6YmE6LWk5aGa6aeF!5e0!3m2!1sja!2sjp!4v1743276776443!5m2!1sja!2sjp"
+          width="900" height="450"
+          style="width:min(100vw,900px);max-width:100vw;min-width:0;margin:0 auto;display:block;"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </div>
@@ -396,9 +681,9 @@
   <footer class="py-5 text-center">
     <style>
       footer {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 0.9) !important;
         border-top: 1px solid rgba(204, 204, 204, 0.3);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(8px);
       }
   
       footer .nav {
