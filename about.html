@@ -265,8 +265,44 @@
 
     /* pタグのフォントサイズをja-contentと同じにする */
     .about-section-box p.text-center {
-      font-size: 0.7rem !important;
+      font-size: 0.8rem !important;
       line-height: 1.7 !important;
+    }
+    
+    /* PC版でも確実に統一するための強力なルール */
+    .about-section-box p,
+    .about-section-box .ja-content,
+    .about-section-box .en-content {
+      font-size: 0.8rem !important;
+      line-height: 1.6 !important;
+    }
+    
+    /* さらに強力なセレクタで上書き */
+    body .about-section-box p.text-center,
+    body .about-section-box .ja-content,
+    body .about-section-box .en-content {
+      font-size: 0.8rem !important;
+      line-height: 1.6 !important;
+    }
+    
+    /* 最高優先度で上書き */
+    html body .about-section-box p.text-center,
+    html body .about-section-box .ja-content,
+    html body .about-section-box .en-content,
+    html body .vision-section .about-section-box p.text-center {
+      font-size: 0.8rem !important;
+      line-height: 1.6 !important;
+    }
+    
+    /* PC版専用のフォントサイズ設定 */
+    @media (min-width: 769px) {
+      html body .about-section-box p.text-center,
+      html body .about-section-box .ja-content,
+      html body .about-section-box .en-content,
+      html body .vision-section .about-section-box p.text-center {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+      }
     }
 
     /* スマートフォン版での改行制御 */
@@ -294,7 +330,7 @@
         white-space: normal !important;
         word-wrap: break-word !important;
         overflow-wrap: break-word !important;
-        font-size: 0.7rem !important;
+        font-size: 0.8rem !important;
         line-height: 1.6 !important;
         word-break: keep-all !important;
         overflow-wrap: break-word !important;
