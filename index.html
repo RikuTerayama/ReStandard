@@ -828,6 +828,9 @@
       transition: transform 0.2s;
       cursor: zoom-in;
       flex-shrink: 0;
+      display: block;
+      visibility: visible;
+      opacity: 1;
     }
     .flow-row {
       height: 420px;
@@ -916,13 +919,24 @@
       }
       #flowing-images {
         overflow: visible !important;
-        margin-top: 280px !important;
+        margin-top: 250px !important;
+        position: relative !important;
+        z-index: 10 !important;
       }
       .flow-row {
         overflow: visible !important;
+        position: relative !important;
+        z-index: 11 !important;
       }
       .flow-track {
         overflow: visible !important;
+        position: relative !important;
+        z-index: 12 !important;
+      }
+      .flow-track img {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
       }
       .navbar-nav .nav-link {
         padding: 0.3rem 0.6rem !important;
@@ -962,13 +976,24 @@
       }
       #flowing-images {
         overflow: visible !important;
-        margin-top: 190px !important;
+        margin-top: 220px !important;
+        position: relative !important;
+        z-index: 10 !important;
       }
       .flow-row {
         overflow: visible !important;
+        position: relative !important;
+        z-index: 11 !important;
       }
       .flow-track {
         overflow: visible !important;
+        position: relative !important;
+        z-index: 12 !important;
+      }
+      .flow-track img {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
       }
     }
     .flow-row, .flow-row-bg {
