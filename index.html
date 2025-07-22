@@ -813,6 +813,11 @@
       white-space: nowrap;
       user-select: none;
       -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+    
+    .flow-track:active {
+      cursor: grabbing;
     }
     .flow-row-top .flow-track {
       animation: flow-right 45s linear infinite;
@@ -871,6 +876,7 @@
         will-change: auto;
         overflow: visible !important;
         position: relative !important;
+        cursor: grab !important;
       }
       .flow-row-top .flow-track {
         z-index: 13 !important;
@@ -1800,13 +1806,74 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
   <script>
-// flowing imagesのタップでアニメーション停止/再開機能
+// flowing imagesのタップでアニメーション停止/再開機能と横スクロール機能
 document.addEventListener('DOMContentLoaded', function() {
   const flowTracks = document.querySelectorAll('.flow-track');
   let isPaused = false;
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
   
   flowTracks.forEach(track => {
+    // マウスイベント（PC用）
+    track.addEventListener('mousedown', function(e) {
+      if (e.target.tagName === 'IMG') {
+        isDragging = true;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+        track.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+    });
+    
+    track.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 2;
+      track.scrollLeft = scrollLeft - walk;
+    });
+    
+    track.addEventListener('mouseup', function() {
+      isDragging = false;
+      track.style.cursor = 'grab';
+    });
+    
+    track.addEventListener('mouseleave', function() {
+      isDragging = false;
+      track.style.cursor = 'grab';
+    });
+    
+    // タッチイベント（スマートフォン用）
+    track.addEventListener('touchstart', function(e) {
+      if (e.target.tagName === 'IMG') {
+        isDragging = true;
+        startX = e.touches[0].pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+        e.preventDefault();
+      }
+    });
+    
+    track.addEventListener('touchmove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - track.offsetLeft;
+      const walk = (x - startX) * 2;
+      track.scrollLeft = scrollLeft - walk;
+    });
+    
+    track.addEventListener('touchend', function() {
+      isDragging = false;
+    });
+    
+    // クリックイベント（アニメーション停止/再開）
     track.addEventListener('click', function(e) {
+      // ドラッグ中はクリックイベントを無視
+      if (isDragging) {
+        isDragging = false;
+        return;
+      }
+      
       // 画像をクリックした場合のみ処理
       if (e.target.tagName === 'IMG') {
         e.preventDefault();
