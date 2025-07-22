@@ -775,13 +775,13 @@
     /* 流れる画像2行のスタイルとアニメーション */
     #flowing-images {
       width: 100vw;
-      overflow: hidden;
+      overflow: visible;
       background: none;
       padding: 0;
     }
     .flow-row {
       width: 100vw;
-      overflow: hidden;
+      overflow: visible;
       margin: 0 auto 10px auto;
       display: flex;
       align-items: center;
@@ -791,12 +791,13 @@
     .flow-track {
       display: flex;
       gap: 24px;
-      overflow-x: auto;
+      overflow: visible;
       min-width: 7000px;
       width: max-content;
       white-space: nowrap;
       user-select: none;
       -webkit-overflow-scrolling: touch;
+      z-index: 2;
     }
     .flow-row-top .flow-track {
       animation: flow-right 120s linear infinite;
@@ -820,16 +821,18 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       background: #fff;
       object-fit: contain;
-      max-width: 100%;
-      max-height: 400px;
-      width: auto;
-      height: auto;
+      max-width: 120px;
+      max-height: 120px;
+      width: 120px;
+      height: 120px;
       transition: transform 0.2s;
       cursor: zoom-in;
       flex-shrink: 0;
+      display: block;
     }
     .flow-row {
       height: 420px;
+      z-index: 1;
     }
     .flow-row-top {
       margin-bottom: 0;
@@ -838,7 +841,12 @@
       height: 8px;
     }
     @media (max-width: 900px) {
-      #flowing-images img { max-width: 100%; max-height: 200px; }
+      #flowing-images img { 
+        max-width: 100px; 
+        max-height: 100px; 
+        width: 100px;
+        height: 100px;
+      }
       .flow-row { height: 220px; }
       .flow-row-top .flow-track,
       .flow-row-bottom .flow-track {
