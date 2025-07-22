@@ -842,8 +842,8 @@
       animation-play-state: paused !important;
     }
     @keyframes flow-right {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(-150%); }
     }
     @keyframes flow-left {
       0% { transform: translateX(-50%); }
@@ -897,6 +897,7 @@
       }
       .flow-row-top .flow-track {
         z-index: 13 !important;
+        transform: translateX(-50%); /* 上の行も中央付近から開始 */
       }
       .flow-row-bottom .flow-track {
         z-index: 14 !important;
