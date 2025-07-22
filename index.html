@@ -835,7 +835,7 @@
     }
     .flow-row-bottom .flow-track {
       animation: flow-left 45s linear infinite;
-      transform: translateX(-50%); /* 初期位置を中央付近に設定 */
+      transform: translateX(-50%); /* 下の行も中央付近から開始 */
       animation-play-state: paused; /* 初期表示時は一時停止 */
     }
     .flow-track.dragging {
@@ -846,8 +846,8 @@
       100% { transform: translateX(-100%); }
     }
     @keyframes flow-left {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(0); }
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(50%); }
     }
     #flowing-images img {
       border-radius: 10px;
@@ -900,6 +900,7 @@
       }
       .flow-row-bottom .flow-track {
         z-index: 14 !important;
+        transform: translateX(-50%); /* 下の行も中央付近から開始 */
       }
       #flowing-images {
         overflow: visible !important;
@@ -1831,7 +1832,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let startX = 0;
   let scrollLeft = 0;
   
-  // 初期スクロール位置を設定（中央付近に配置）
+  // 初期スクロール位置を設定（行によって異なる位置に設定）
   function setInitialScrollPosition() {
     flowTracks.forEach(track => {
       // 画像が完全に読み込まれてから初期位置を設定
@@ -1845,14 +1846,23 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       
       if (allImagesLoaded) {
-        // 初期位置を中央付近に設定
         const trackWidth = track.scrollWidth;
         const containerWidth = track.clientWidth;
-        const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
-        track.scrollLeft = initialScroll;
+        
+        // 上の行は中央付近、下の行は左端に設定
+        if (track.parentElement.classList.contains('flow-row-top')) {
+          const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
+          track.scrollLeft = initialScroll;
+        } else if (track.parentElement.classList.contains('flow-row-bottom')) {
+          // 下の行も中央付近から開始
+          const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
+          track.scrollLeft = initialScroll;
+        }
       }
     });
   }
+  
+
   
   // 画像の読み込み完了を待ってから初期位置を設定
   const images = document.querySelectorAll('#flowing-images img');
@@ -1861,18 +1871,32 @@ document.addEventListener('DOMContentLoaded', function() {
   function checkAllImagesLoaded() {
     loadedImages++;
     if (loadedImages === images.length) {
-      // すべての画像が読み込まれたら、少し待ってから初期位置を設定
-      setTimeout(() => {
-        setInitialScrollPosition();
-        // さらに確実にするため、もう一度設定
-        setTimeout(setInitialScrollPosition, 100);
-        // アニメーションを開始
+              // すべての画像が読み込まれたら、少し待ってから初期位置を設定
         setTimeout(() => {
-          flowTracks.forEach(track => {
-            track.style.animationPlayState = 'running';
-          });
-        }, 200);
-      }, 100);
+          setInitialScrollPosition();
+          // さらに確実にするため、もう一度設定
+          setTimeout(setInitialScrollPosition, 100);
+          
+          // 下の行の初期化を確実にする
+          setTimeout(() => {
+            const bottomTracks = document.querySelectorAll('.flow-row-bottom .flow-track');
+            bottomTracks.forEach(track => {
+              // アニメーションの初期位置に合わせる
+              track.style.transform = 'translateX(-50%)';
+              const trackWidth = track.scrollWidth;
+              const containerWidth = track.clientWidth;
+              const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
+              track.scrollLeft = initialScroll;
+            });
+          }, 150);
+          
+          // アニメーションを開始
+          setTimeout(() => {
+            flowTracks.forEach(track => {
+              track.style.animationPlayState = 'running';
+            });
+          }, 300);
+        }, 100);
     }
   }
   
@@ -1889,6 +1913,19 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(setInitialScrollPosition, 500);
   setTimeout(setInitialScrollPosition, 1000);
   setTimeout(setInitialScrollPosition, 2000);
+  
+  // 下の行のフォールバック処理
+  setTimeout(() => {
+    const bottomTracks = document.querySelectorAll('.flow-row-bottom .flow-track');
+    bottomTracks.forEach(track => {
+      // アニメーションの初期位置に合わせる
+      track.style.transform = 'translateX(-50%)';
+      const trackWidth = track.scrollWidth;
+      const containerWidth = track.clientWidth;
+      const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
+      track.scrollLeft = initialScroll;
+    });
+  }, 2500);
   
   flowTracks.forEach(track => {
     // マウスイベント（PC用）
