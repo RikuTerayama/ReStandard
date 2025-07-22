@@ -259,22 +259,34 @@
       font-weight: 700;
     }
 
-    .nav-link {
+    .navbar-nav .nav-item {
+      margin: 0 0.5rem;
+    }
+    .navbar-nav .nav-link {
       font-family: var(--heading-font);
-      font-size: var(--font-size-sm);
-      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
       font-weight: 500;
       letter-spacing: 0.05em;
       color: var(--main-color) !important;
       position: relative;
       transition: all 0.3s var(--transition-timing);
     }
+    
+    /* Bootstrapのデフォルト設定を上書き */
+    html body .navbar-nav .nav-link {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.9rem !important;
+    }
+    html body .navbar-nav .nav-item {
+      margin: 0 0.5rem !important;
+    }
 
-    .nav-link:hover {
+    .navbar-nav .nav-link:hover {
       color: var(--accent-color) !important;
     }
 
-    .nav-link.active {
+    .navbar-nav .nav-link.active {
       font-weight: 700;
     }
     
@@ -347,9 +359,12 @@
     
     /* スマートフォン版でも言語切り替えを確実に適用 */
     @media (max-width: 768px) {
-      .nav-link {
-        padding: 0.3rem 0.6rem !important;
-        font-size: 0.85rem !important;
+      .navbar-nav .nav-link {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.9rem !important;
+      }
+      .navbar-nav .nav-item {
+        margin: 0 0.5rem !important;
       }
       [lang="ja"] .en-content {
         display: none !important;
