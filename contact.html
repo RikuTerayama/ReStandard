@@ -194,6 +194,14 @@
       max-width: 850px !important;
     }
 
+    /* PC版でのみ横幅を小さくする */
+    @media (min-width: 901px) {
+      html body .about-section-box {
+        max-width: 700px !important;
+        width: 90% !important;
+      }
+    }
+
     html body .about-section-box * {
       background: transparent !important;
       background-color: transparent !important;
