@@ -815,20 +815,20 @@
       -webkit-overflow-scrolling: touch;
     }
     .flow-row-top .flow-track {
-      animation: flow-right 80s linear infinite;
+      animation: flow-right 60s linear infinite;
     }
     .flow-row-bottom .flow-track {
-      animation: flow-left 80s linear infinite;
+      animation: flow-left 60s linear infinite;
     }
     .flow-track.dragging {
       animation-play-state: paused !important;
     }
     @keyframes flow-right {
       0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      100% { transform: translateX(-100%); }
     }
     @keyframes flow-left {
-      0% { transform: translateX(-50%); }
+      0% { transform: translateX(-100%); }
       100% { transform: translateX(0); }
     }
     #flowing-images img {
@@ -866,7 +866,7 @@
       .flow-row { height: 220px; }
       .flow-row-top .flow-track,
       .flow-row-bottom .flow-track {
-        animation-duration: 80s !important;
+        animation-duration: 60s !important;
         min-width: 500%;
         will-change: auto;
         overflow: visible !important;
