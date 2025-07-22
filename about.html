@@ -1101,10 +1101,31 @@
   <!-- Footer -->
   <footer class="py-5 text-center">
     <style>
+      /* フッターが浮かないようにする設定 */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      
+      main {
+        flex: 1;
+      }
+      
       footer {
         background-color: rgba(255, 255, 255, 0.9) !important;
         border-top: 1px solid rgba(204, 204, 204, 0.3);
         backdrop-filter: blur(8px);
+        margin-top: auto;
+        position: relative;
+        bottom: 0;
+        width: 100%;
       }
   
       footer .nav {
