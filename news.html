@@ -613,6 +613,38 @@
   <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
 </div>
 
+<style>
+  /* note記事の埋め込み部分のスタイル調整 */
+  .note-embeds {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2rem !important;
+    min-height: 120vh !important;
+    padding-bottom: 100px !important;
+    margin-bottom: 50px !important;
+  }
+  
+  /* スマートフォン版でのnote記事調整 */
+  @media (max-width: 768px) {
+    .note-embeds {
+      min-height: 150vh !important;
+      padding-bottom: 150px !important;
+      margin-bottom: 100px !important;
+    }
+  }
+  
+  /* さらに小さい画面でのnote記事調整 */
+  @media (max-width: 480px) {
+    .note-embeds {
+      min-height: 180vh !important;
+      padding-bottom: 200px !important;
+      margin-bottom: 150px !important;
+    }
+  }
+</style>
+
 <!-- Footer -->
 <footer class="py-5 text-center">
     <style>
@@ -627,6 +659,30 @@
         display: flex;
         flex-direction: column;
         min-height: 150vh;
+      }
+      
+      /* スマートフォン版での縦幅調整 */
+      @media (max-width: 768px) {
+        body {
+          min-height: 200vh !important;
+        }
+        
+        .note-embeds {
+          min-height: 150vh !important;
+          padding-bottom: 150px !important;
+        }
+      }
+      
+      /* さらに小さい画面での調整 */
+      @media (max-width: 480px) {
+        body {
+          min-height: 250vh !important;
+        }
+        
+        .note-embeds {
+          min-height: 180vh !important;
+          padding-bottom: 200px !important;
+        }
       }
       
       main {
