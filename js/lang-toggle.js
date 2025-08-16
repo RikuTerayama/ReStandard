@@ -32,6 +32,28 @@
     
     // 初期化完了ログ
     console.log('Language toggle initialized with:', initial);
+    
+    // CSS変更の反映確認
+    checkCSSChanges();
+  }
+  
+  // CSS変更の反映確認
+  function checkCSSChanges() {
+    console.log('Checking CSS changes...');
+    
+    // 現在のCSS設定を確認
+    const brandsSection = document.querySelector('#brands, .section-brands');
+    if (brandsSection) {
+      const computedStyle = window.getComputedStyle(brandsSection);
+      console.log('Brands section current margin-top:', computedStyle.marginTop);
+      console.log('Brands section current margin-bottom:', computedStyle.marginBottom);
+    }
+    
+    // PC版での追加マージン確認
+    if (window.innerWidth >= 768) {
+      const expectedMargin = 'calc(clamp(200px, 20vw, 400px) + 50px)';
+      console.log('PC version - Expected margin-top:', expectedMargin);
+    }
   }
   
   // 言語設定を適用
@@ -96,5 +118,6 @@
   // グローバル関数として公開（必要に応じて）
   window.initLangToggle = initLangToggle;
   window.setLang = setLang;
+  window.checkCSSChanges = checkCSSChanges;
   
 })(); 
