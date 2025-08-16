@@ -358,60 +358,36 @@
   } 
 } 
 
-/* 重複設定を削除 - 下記の強力な設定に統合済み */
-
-/* 重複表示を完全に防ぐための追加設定 */
-.about-inner.only-pc.only-sp {
-  display: none !important; /* 両方のクラスが付いている場合は非表示 */
-}
-
-/* 特定のセクション内でのみ適用 */
-#about .about-inner.only-pc,
-.section-about .about-inner.only-pc {
-  display: block !important;
-}
-
-#about .about-inner.only-sp,
-.section-about .about-inner.only-sp {
-  display: none !important;
-}
-
-@media (max-width: 767px) {
-  #about .about-inner.only-pc,
-  .section-about .about-inner.only-pc {
-    display: none !important;
-  }
-  
-  #about .about-inner.only-sp,
-  .section-about .about-inner.only-sp {
-    display: block !important;
-  }
-}
+/* 重複した設定を削除 - 上記の強力な設定に統合済み */
 
 /* 重複表示を確実に解消するための強力な設定 */
 #flowing-images,
-.section-flowing {
+.section-flowing,
+body #flowing-images,
+body .section-flowing {
   position: relative !important;
   z-index: 1 !important;
   margin-bottom: clamp(200px, 20vw, 400px) !important;  /* flowing-imagesとBrandsの間隔は維持 */
   padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
-  isolation: isolate;
-  contain: layout;
+  isolation: isolate !important;
+  contain: layout !important;
   /* 背景色を透明に */
   background: transparent !important;
 }
 
 #brands,
-.section-brands {
+.section-brands,
+body #brands,
+body .section-brands {
   position: relative !important;
   z-index: 2 !important;
   margin-top: clamp(200px, 20vw, 400px) !important;    /* flowing-imagesとBrandsの間隔は維持 */
   margin-bottom: clamp(80px, 10vw, 160px) !important;  /* BrandsとAboutの間隔を調整 */
   padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
-  isolation: isolate;
-  contain: layout;
+  isolation: isolate !important;
+  contain: layout !important;
   /* 背景色を透明に */
   background: transparent !important;
 }
@@ -419,20 +395,24 @@
 /* PC版でBrandsセクションを下に移動 */
 @media (min-width: 768px) {
   #brands,
-  .section-brands {
+  .section-brands,
+  body #brands,
+  body .section-brands {
     margin-top: calc(clamp(200px, 20vw, 400px) + 50px) !important;  /* PC版で5cmほど下に移動 */
   }
 }
 
 #about,
-.section-about {
+.section-about,
+body #about,
+body .section-about {
   position: relative !important;
   z-index: 2 !important;
   margin-top: clamp(80px, 10vw, 160px) !important;     /* BrandsとAboutの間隔を調整 */
   padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
-  isolation: isolate;
-  contain: layout;
+  isolation: isolate !important;
+  contain: layout !important;
   /* 背景色を透明に */
   background: transparent !important;
 }
@@ -450,9 +430,47 @@
   background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
 } */ 
 
-/* PC版でBrandsセクションを下に移動 */
+/* 重複した設定を削除 - 上記の強力な設定に統合済み */ 
+
+/* 最終的な強制設定 - 確実に反映されるように */
+html body #flowing-images,
+html body .section-flowing {
+  margin-bottom: clamp(200px, 20vw, 400px) !important;
+  padding-bottom: clamp(60px, 8vw, 120px) !important;
+}
+
+html body #brands,
+html body .section-brands {
+  margin-top: clamp(200px, 20vw, 400px) !important;
+  margin-bottom: clamp(80px, 10vw, 160px) !important;
+  padding: clamp(60px, 8vw, 120px) 0 !important;
+}
+
+/* PC版でBrandsセクションを下に移動 - 最終保証 */
 @media (min-width: 768px) {
-  .section-brands {
-    margin-top: calc(var(--section-gap) + 50px);  /* PC版で5cmほど下に移動 */
+  html body #brands,
+  html body .section-brands {
+    margin-top: calc(clamp(200px, 20vw, 400px) + 50px) !important;
   }
-} 
+}
+
+html body #about,
+html body .section-about {
+  margin-top: clamp(80px, 10vw, 160px) !important;
+  padding: clamp(60px, 8vw, 120px) 0 !important;
+}
+
+/* セクション間の視覚的分離を調整 */
+/* 半透明のオブジェクトを削除してディスプレイの邪魔をしないようにする */
+
+/* BrandsとReStandardについての間の透明なオブジェクトを削除 */
+
+/* about::before,
+.section-about::before {
+  content: '';
+  display: block;
+  height: clamp(40px, 5vw, 80px);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
+} */ 
+
+/* 重複した設定を削除 - 上記の強力な設定に統合済み */ 
