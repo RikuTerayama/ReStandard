@@ -1,38 +1,38 @@
 /* ========================================
-   i18n Visibility Control (Basic)
+   i18n Visibility Control (Enhanced)
    ======================================== */
 
 /* 基本的なi18n制御（詳細なスタイルは site-fixes.css で管理） */
 #about .i18n, #brands .i18n { 
-  display: none; 
+  display: none !important; 
 }
 
 /* 端末判定：ブレークポイントは必要に応じて調整（md=768px想定） */
 .only-pc { 
-  display: block; 
+  display: block !important; 
 }
 .only-sp { 
-  display: none; 
+  display: none !important; 
 }
 
 @media (max-width: 767px) {
   .only-pc { 
-    display: none; 
+    display: none !important; 
   }
   .only-sp { 
-    display: block; 
+    display: block !important; 
   }
 }
 
 /* 言語判定（<html lang="ja|en"> の値で切替） */
 html[lang="ja"] #about .only-ja,
 html[lang="ja"] #brands .only-ja { 
-  display: block; 
+  display: block !important; 
 }
 
 html[lang="en"] #about .only-en,
 html[lang="en"] #brands .only-en { 
-  display: block; 
+  display: block !important; 
 }
 
 /* 念のための保険：見えない要素を確実に隠す */
@@ -40,33 +40,49 @@ html[lang="ja"] #about .only-en,
 html[lang="ja"] #brands .only-en,
 html[lang="en"] #about .only-ja,
 html[lang="en"] #brands .only-ja { 
-  display: none; 
+  display: none !important; 
 }
 
 /* 競合CSS対策：より強力なセレクタで確実に制御 */
 html[lang="ja"] #about .i18n.only-ja,
 html[lang="ja"] #brands .i18n.only-ja { 
-  display: block; 
+  display: block !important; 
 }
 
 html[lang="en"] #about .i18n.only-en,
 html[lang="en"] #brands .i18n.only-en { 
-  display: block; 
+  display: block !important; 
 }
 
 /* デフォルト言語設定（lang属性が未設定の場合） */
 html:not([lang]) #about .only-ja,
 html:not([lang]) #brands .only-ja { 
-  display: block; 
+  display: block !important; 
 }
 
 html:not([lang]) #about .only-en,
 html:not([lang]) #brands .only-en { 
-  display: none; 
+  display: none !important; 
 }
 
 /* 強制可視化の上書き（既存のreveal.cssとの競合回避） */
 #about .i18n[style*="display: none"],
 #brands .i18n[style*="display: none"] {
-  display: block;
+  display: block !important;
+}
+
+/* 言語切り替えボタンのスタイル */
+[data-lang-btn] {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+[data-lang-btn].active {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+[data-lang-btn]:not(.active) {
+  background-color: transparent !important;
+  color: #333 !important;
 } 
