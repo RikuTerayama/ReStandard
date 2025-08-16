@@ -753,8 +753,8 @@
     
     /* flowing-images とヘッダーのギャップ（paddingで確実に作る） */
     #flowing-images {
-      /* スマホ〜デスクトップで72〜200pxの範囲で可変（より大きめ） */
-      padding-top: clamp(72px, 8vw, 200px);
+      /* スマホ〜デスクトップで72〜160pxの範囲で可変（PC版を狭めて調整） */
+      padding-top: clamp(72px, 8vw, 160px);
       /* アンカーリンクでのずれ対策（24pxに増加） */
       scroll-margin-top: calc(var(--rs-header-h) + 24px);
       /* margin折りたたみ防止の保険 */
@@ -763,14 +763,14 @@
     
     /* 競合クラスに負けないための最高優先度設定 */
     html body #flowing-images {
-      padding-top: clamp(72px, 8vw, 200px) !important;
+      padding-top: clamp(72px, 8vw, 160px) !important;
       scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
       display: flow-root !important;
     }
     
     /* スペーサー要素のスタイル（最終手段） */
     .rs-header-spacer {
-      height: clamp(72px, 8vw, 200px); /* より大きめに更新 */
+      height: clamp(72px, 8vw, 160px); /* PC版を狭めて調整 */
       width: 100%;
       background: transparent;
       pointer-events: none;
@@ -778,7 +778,7 @@
     
     /* スペーサー要素の最高優先度設定 */
     html body .rs-header-spacer {
-      height: clamp(72px, 8vw, 200px) !important; /* より大きめに更新 */
+      height: clamp(72px, 8vw, 160px) !important; /* PC版を狭めて調整 */
       width: 100% !important;
       background: transparent !important;
       pointer-events: none !important;
@@ -1042,8 +1042,8 @@
     /* スマートフォン版flowing imagesの位置を強制的に調整 */
     html body #flowing-images {
       margin-top: 0 !important;
-      /* 新しい設定で統一（より大きめ） */
-      padding-top: clamp(72px, 8vw, 200px) !important;
+      /* 新しい設定で統一（PC版を狭めて調整） */
+      padding-top: clamp(72px, 8vw, 160px) !important;
       display: block !important;
       visibility: visible !important;
       scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
@@ -1052,8 +1052,8 @@
     /* 最も強力なセレクターで競合を完全に解決 */
     html body #flowing-images {
       margin-top: 0 !important;
-      /* 新しい設定で統一（より大きめ） */
-      padding-top: clamp(72px, 8vw, 200px) !important;
+      /* 新しい設定で統一（PC版を狭めて調整） */
+      padding-top: clamp(72px, 8vw, 160px) !important;
       display: block !important;
       visibility: visible !important;
       position: relative !important;
@@ -1071,8 +1071,8 @@
     @media (min-width: 901px) {
       html body #flowing-images {
         margin-top: 0 !important;
-        /* 新しい設定で統一（より大きめ） */
-        padding-top: clamp(72px, 8vw, 200px) !important;
+        /* 新しい設定で統一（PC版を狭めて調整） */
+        padding-top: clamp(72px, 8vw, 160px) !important;
         position: relative !important;
         /* top: 450pxを除去し、padding-topで統一 */
         display: block !important;
@@ -2196,9 +2196,9 @@ document.addEventListener('DOMContentLoaded', function() {
       var header = document.querySelector('header, .site-header, nav');
       var gap = 0, base = 96; // 追加で空ける見栄え用ギャップ（px）
       var h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
-      // 端末幅でギャップ強化（例：モバイル+96px / デスクトップ+144px）
+      // 端末幅でギャップ強化（PC版は狭めて調整）
       var vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      gap = vw >= 1024 ? 144 : 96;
+      gap = vw >= 1024 ? 72 : 96; // PC版: 144px → 72px に調整
 
       var spacer = document.getElementById('rs-gap-guard');
       if (spacer) {
