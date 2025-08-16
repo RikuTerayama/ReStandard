@@ -6,11 +6,17 @@
   --rs-reveal-shift: 14px;
 }
 
-/* 競合に勝つため、属性＋クラスの複合セレクタ＆!important を要所に使用 */
+/* 初期状態：JavaScriptが読み込まれる前は通常表示 */
 .rs-reveal[data-reveal] {
+  opacity: 1;
+  transform: translateX(0);
+  will-change: opacity, transform, clip-path, mask-position, mask-size;
+}
+
+/* JavaScript適用後の初期状態：不可視 */
+.rs-reveal.rs-reveal[data-reveal] {
   opacity: 0 !important;
   transform: translateX(var(--rs-reveal-shift)) !important;
-  will-change: opacity, transform, clip-path, mask-position, mask-size;
 }
 
 /* "見える"状態 */
