@@ -4,8 +4,8 @@
 
 :root {
   --header-h: 64px;
-  --section-gap: clamp(150px, 15vw, 300px);  /* 間隔をさらに大幅に拡大 */
-  --section-padding: clamp(50px, 6vw, 100px); /* セクション内の余白も拡大 */
+  --section-gap: clamp(200px, 20vw, 400px);  /* 間隔をさらに大幅に拡大 */
+  --section-padding: clamp(60px, 8vw, 120px); /* セクション内の余白も拡大 */
 }
 
 /* 0) リセット（前の演出や競合を抑える保険） */
@@ -89,11 +89,11 @@
   display: flex !important;
   align-items: center !important;      /* 垂直中央揃え */
   justify-content: center !important;  /* 水平中央揃え */
-  padding: clamp(16px, 2.5vw, 24px);  /* 内側の余白を調整 */
+  padding: clamp(20px, 3vw, 32px);    /* 内側の余白を拡大 */
   /* 正方形を強制 */
   aspect-ratio: 1 / 1 !important;     /* 正方形を強制 */
-  width: clamp(80px, 12vw, 120px) !important;   /* 固定幅で正方形を保証 */
-  height: clamp(80px, 12vw, 120px) !important;  /* 固定高さで正方形を保証 */
+  width: clamp(100px, 15vw, 160px) !important;   /* 固定幅を拡大して正方形を保証 */
+  height: clamp(100px, 15vw, 160px) !important;  /* 固定高さを拡大して正方形を保証 */
   overflow: hidden;
   /* グリッド配置を確実に */
   grid-column: span 1 !important;
@@ -114,8 +114,8 @@
 #brands .brand-card img,
 .section-brands .brand-card img,
 .brand-card img {
-  max-width: 70% !important;          /* 画像サイズを調整 */
-  max-height: 70% !important;         /* 画像サイズを調整 */
+  max-width: 80% !important;          /* 画像サイズを拡大 */
+  max-height: 80% !important;         /* 画像サイズを拡大 */
   width: auto !important;             /* 幅を自動調整 */
   height: auto !important;            /* 高さを自動調整 */
   object-fit: contain !important;     /* アスペクト比を保持 */
@@ -360,8 +360,8 @@
 .section-flowing {
   position: relative !important;
   z-index: 1 !important;
-  margin-bottom: clamp(150px, 15vw, 300px) !important;  /* 間隔をさらに大幅に拡大 */
-  padding-bottom: clamp(50px, 6vw, 100px) !important;   /* 余白も拡大 */
+  margin-bottom: clamp(200px, 20vw, 400px) !important;  /* 間隔をさらに大幅に拡大 */
+  padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も拡大 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate;
   contain: layout;
@@ -373,9 +373,9 @@
 .section-brands {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(150px, 15vw, 300px) !important;    /* 間隔をさらに大幅に拡大 */
-  margin-bottom: clamp(150px, 15vw, 300px) !important; /* 間隔をさらに大幅に拡大 */
-  padding: clamp(50px, 6vw, 100px) 0 !important;      /* 余白も拡大 */
+  margin-top: clamp(200px, 20vw, 400px) !important;    /* 間隔をさらに大幅に拡大 */
+  margin-bottom: clamp(200px, 20vw, 400px) !important; /* 間隔をさらに大幅に拡大 */
+  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も拡大 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate;
   contain: layout;
@@ -387,8 +387,8 @@
 .section-about {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(150px, 15vw, 300px) !important;    /* 間隔をさらに大幅に拡大 */
-  padding: clamp(50px, 6vw, 100px) 0 !important;      /* 余白も拡大 */
+  margin-top: clamp(200px, 20vw, 400px) !important;    /* 間隔をさらに大幅に拡大 */
+  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も拡大 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate;
   contain: layout;
@@ -401,30 +401,30 @@
 .section-flowing::after {
   content: '';
   display: block;
-  height: clamp(60px, 7vw, 120px);  /* 分離の高さをさらに拡大 */
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.03));
+  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.04));
 }
 
 #brands::before,
 .section-brands::before {
   content: '';
   display: block;
-  height: clamp(60px, 7vw, 120px);  /* 分離の高さをさらに拡大 */
-  background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
+  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.04), transparent);
 }
 
 #brands::after,
 .section-brands::after {
   content: '';
   display: block;
-  height: clamp(60px, 7vw, 120px);  /* 分離の高さをさらに拡大 */
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.03));
+  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.04));
 }
 
 #about::before,
 .section-about::before {
   content: '';
   display: block;
-  height: clamp(60px, 7vw, 120px);  /* 分離の高さをさらに拡大 */
-  background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
+  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.04), transparent);
 } 
