@@ -4,8 +4,9 @@
 
 :root {
   --header-h: 64px;
-  --section-gap: clamp(200px, 20vw, 400px);  /* 間隔をさらに大幅に拡大 */
-  --section-padding: clamp(60px, 8vw, 120px); /* セクション内の余白も拡大 */
+  --section-gap: clamp(200px, 20vw, 400px);  /* flowing-imagesとBrandsの間隔は維持 */
+  --section-padding: clamp(60px, 8vw, 120px); /* セクション内の余白も維持 */
+  --brands-about-gap: clamp(80px, 10vw, 160px); /* BrandsとAboutの間隔を調整 */
 }
 
 /* 0) リセット（前の演出や競合を抑える保険） */
@@ -24,12 +25,12 @@
   position: relative;
   z-index: 0;               /* 後続（brands/about）が上に来れるように */
   margin-top: calc(var(--header-h) + 12px);
-  padding-bottom: var(--section-padding);  /* 後続との距離をさらに大幅に確保 */
+  padding-bottom: var(--section-padding);  /* 後続との距離を大幅に確保 */
   min-height: 280px;        /* 念のための下限高さ */
   /* 重なりを防ぐための設定 */
   overflow: hidden;
   clear: both;
-  /* セクション終了後の間隔をさらに大幅に確保 */
+  /* セクション終了後の間隔を大幅に確保 */
   margin-bottom: var(--section-gap);
   /* 背景色を透明に */
   background: transparent;
@@ -39,13 +40,13 @@
 .section-brands {
   position: relative;
   z-index: 10;              /* flowing-imagesより確実に上に表示 */
-  margin-top: var(--section-gap);  /* 上部との間隔をさらに大幅に確保 */
+  margin-top: var(--section-gap);  /* 上部との間隔を大幅に確保 */
   padding: var(--section-padding) 0;  /* 内部の余白も拡大 */
   /* 重なりを防ぐための設定 */
   background: transparent;  /* 背景色を透明に */
   clear: both;
-  /* セクション終了後の間隔を確保 */
-  margin-bottom: var(--section-gap);
+  /* セクション終了後の間隔を調整 */
+  margin-bottom: var(--brands-about-gap);
   /* 視覚的分離のための境界線（軽微） */
   border-top: 1px solid rgba(0,0,0,0.05);
   border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -175,7 +176,7 @@
 .section-about {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: var(--section-gap);  /* 上部との間隔を確保 */
+  margin-top: var(--brands-about-gap);  /* 上部との間隔を調整 */
   padding: var(--section-padding) 0;  /* 内部の余白も確保 */
   /* 重なりを防ぐための設定 */
   background: transparent;  /* 背景色を透明に */
@@ -360,8 +361,8 @@
 .section-flowing {
   position: relative !important;
   z-index: 1 !important;
-  margin-bottom: clamp(200px, 20vw, 400px) !important;  /* 間隔をさらに大幅に拡大 */
-  padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も拡大 */
+  margin-bottom: clamp(200px, 20vw, 400px) !important;  /* flowing-imagesとBrandsの間隔は維持 */
+  padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate;
   contain: layout;
@@ -373,9 +374,9 @@
 .section-brands {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(200px, 20vw, 400px) !important;    /* 間隔をさらに大幅に拡大 */
-  margin-bottom: clamp(200px, 20vw, 400px) !important; /* 間隔をさらに大幅に拡大 */
-  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も拡大 */
+  margin-top: clamp(200px, 20vw, 400px) !important;    /* flowing-imagesとBrandsの間隔は維持 */
+  margin-bottom: clamp(80px, 10vw, 160px) !important;  /* BrandsとAboutの間隔を調整 */
+  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate;
   contain: layout;
@@ -387,8 +388,8 @@
 .section-about {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(200px, 20vw, 400px) !important;    /* 間隔をさらに大幅に拡大 */
-  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も拡大 */
+  margin-top: clamp(80px, 10vw, 160px) !important;     /* BrandsとAboutの間隔を調整 */
+  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate;
   contain: layout;
@@ -396,12 +397,12 @@
   background: transparent !important;
 }
 
-/* セクション間の視覚的分離を強化 */
+/* セクション間の視覚的分離を調整 */
 #flowing-images::after,
 .section-flowing::after {
   content: '';
   display: block;
-  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
+  height: clamp(80px, 10vw, 160px);  /* flowing-imagesとBrandsの分離は維持 */
   background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.04));
 }
 
@@ -409,7 +410,7 @@
 .section-brands::before {
   content: '';
   display: block;
-  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
+  height: clamp(80px, 10vw, 160px);  /* flowing-imagesとBrandsの分離は維持 */
   background: linear-gradient(to bottom, rgba(0,0,0,0.04), transparent);
 }
 
@@ -419,6 +420,6 @@
 .section-about::before {
   content: '';
   display: block;
-  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
-  background: linear-gradient(to bottom, rgba(0,0,0,0.04), transparent);
+  height: clamp(40px, 5vw, 80px);  /* BrandsとAboutの分離を調整 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
 } 
