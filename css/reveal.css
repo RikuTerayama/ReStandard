@@ -8,13 +8,13 @@
 
 /* 初期状態：JavaScriptが読み込まれる前は通常表示 */
 .rs-reveal[data-reveal] {
-  opacity: 1;
-  transform: translateX(0);
+  opacity: 1 !important;
+  transform: translateX(0) !important;
   will-change: opacity, transform, clip-path, mask-position, mask-size;
 }
 
-/* JavaScript適用後の初期状態：不可視 */
-.rs-reveal.rs-reveal[data-reveal] {
+/* JavaScript適用後の初期状態：不可視（rs-revealクラスが2回適用された場合のみ） */
+.rs-reveal.rs-reveal.rs-reveal[data-reveal] {
   opacity: 0 !important;
   transform: translateX(var(--rs-reveal-shift)) !important;
 }
