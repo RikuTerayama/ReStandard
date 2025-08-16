@@ -62,13 +62,13 @@
 #brands .brands-grid,
 .section-brands .brands-grid,
 .brands-grid {
-  --gap: clamp(16px, 2vw, 24px);  /* グリッド間の余白を調整 */
+  --gap: clamp(20px, 2.5vw, 32px);  /* グリッド間の余白を調整 */
   display: grid !important;                      /* 旧レイアウトを上書き */
   grid-template-columns: repeat(5, minmax(0, 1fr)) !important;  /* ← 5列固定（PC） */
   gap: var(--gap) !important;
   max-width: 1200px;
   margin: 0 auto;                               /* 水平中央揃え */
-  padding: 0 clamp(16px, 4vw, 32px);           /* 左右の余白も確保 */
+  padding: 0 clamp(20px, 5vw, 40px);           /* 左右の余白も調整 */
   /* グリッド表示を強制するための追加設定 */
   grid-auto-rows: 1fr !important;
   grid-auto-flow: row !important;
@@ -89,11 +89,11 @@
   display: flex !important;
   align-items: center !important;      /* 垂直中央揃え */
   justify-content: center !important;  /* 水平中央揃え */
-  padding: clamp(20px, 3vw, 32px);    /* 内側の余白を拡大 */
+  padding: clamp(24px, 3.5vw, 36px);  /* 内側の余白をさらに拡大 */
   /* 正方形を強制 */
   aspect-ratio: 1 / 1 !important;     /* 正方形を強制 */
-  width: clamp(100px, 15vw, 160px) !important;   /* 固定幅を拡大して正方形を保証 */
-  height: clamp(100px, 15vw, 160px) !important;  /* 固定高さを拡大して正方形を保証 */
+  width: clamp(110px, 16vw, 180px) !important;   /* 固定幅をさらに拡大して正方形を保証 */
+  height: clamp(110px, 16vw, 180px) !important;  /* 固定高さをさらに拡大して正方形を保証 */
   overflow: hidden;
   /* グリッド配置を確実に */
   grid-column: span 1 !important;
@@ -114,8 +114,8 @@
 #brands .brand-card img,
 .section-brands .brand-card img,
 .brand-card img {
-  max-width: 80% !important;          /* 画像サイズを拡大 */
-  max-height: 80% !important;         /* 画像サイズを拡大 */
+  max-width: 90% !important;          /* 画像サイズをさらに拡大 */
+  max-height: 90% !important;         /* 画像サイズをさらに拡大 */
   width: auto !important;             /* 幅を自動調整 */
   height: auto !important;            /* 高さを自動調整 */
   object-fit: contain !important;     /* アスペクト比を保持 */
@@ -413,13 +413,7 @@
   background: linear-gradient(to bottom, rgba(0,0,0,0.04), transparent);
 }
 
-#brands::after,
-.section-brands::after {
-  content: '';
-  display: block;
-  height: clamp(80px, 10vw, 160px);  /* 分離の高さをさらに拡大 */
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.04));
-}
+/* BrandsとReStandardについての間の透明なオブジェクトを削除 */
 
 #about::before,
 .section-about::before {
