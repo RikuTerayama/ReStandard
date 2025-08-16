@@ -178,7 +178,7 @@
       --body-font: 'Noto Sans JP', sans-serif;
       --main-font-family: 'Noto Serif JP', serif;
       --heading-font-family: 'Noto Serif JP', serif;
-      --rs-header-h: 64px;
+      --rs-header-h: 80px; /* 64px → 80px に増加 */
     }
 
     html, body {
@@ -743,34 +743,34 @@
     
     /* ヘッダーとflowing-imagesのギャップ確保（margin折りたたみ回避） */
     :root {
-      --rs-header-h: 64px;
+      --rs-header-h: 80px; /* 64px → 80px に増加 */
     }
     @media (min-width: 1024px) {
       :root { 
-        --rs-header-h: 72px; 
+        --rs-header-h: 96px; /* 72px → 96px に増加 */
       }
     }
     
     /* flowing-images とヘッダーのギャップ（paddingで確実に作る） */
     #flowing-images {
-      /* スマホ〜デスクトップで48〜96pxの範囲で可変 */
-      padding-top: clamp(48px, 5vw, 96px);
-      /* アンカーリンクでのずれ対策 */
-      scroll-margin-top: calc(var(--rs-header-h) + 16px);
+      /* スマホ〜デスクトップで72〜200pxの範囲で可変（より大きめ） */
+      padding-top: clamp(72px, 8vw, 200px);
+      /* アンカーリンクでのずれ対策（24pxに増加） */
+      scroll-margin-top: calc(var(--rs-header-h) + 24px);
       /* margin折りたたみ防止の保険 */
       display: flow-root;
     }
     
     /* 競合クラスに負けないための最高優先度設定 */
     html body #flowing-images {
-      padding-top: clamp(48px, 5vw, 96px) !important;
-      scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
+      padding-top: clamp(72px, 8vw, 200px) !important;
+      scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
       display: flow-root !important;
     }
     
     /* スペーサー要素のスタイル（最終手段） */
     .rs-header-spacer {
-      height: clamp(48px, 5vw, 96px);
+      height: clamp(72px, 8vw, 200px); /* より大きめに更新 */
       width: 100%;
       background: transparent;
       pointer-events: none;
@@ -778,7 +778,7 @@
     
     /* スペーサー要素の最高優先度設定 */
     html body .rs-header-spacer {
-      height: clamp(48px, 5vw, 96px) !important;
+      height: clamp(72px, 8vw, 200px) !important; /* より大きめに更新 */
       width: 100% !important;
       background: transparent !important;
       pointer-events: none !important;
@@ -1042,23 +1042,23 @@
     /* スマートフォン版flowing imagesの位置を強制的に調整 */
     html body #flowing-images {
       margin-top: 0 !important;
-      /* 新しい設定で統一 */
-      padding-top: clamp(48px, 5vw, 96px) !important;
+      /* 新しい設定で統一（より大きめ） */
+      padding-top: clamp(72px, 8vw, 200px) !important;
       display: block !important;
       visibility: visible !important;
-      scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
+      scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
     }
     
     /* 最も強力なセレクターで競合を完全に解決 */
     html body #flowing-images {
       margin-top: 0 !important;
-      /* 新しい設定で統一 */
-      padding-top: clamp(48px, 5vw, 96px) !important;
+      /* 新しい設定で統一（より大きめ） */
+      padding-top: clamp(72px, 8vw, 200px) !important;
       display: block !important;
       visibility: visible !important;
       position: relative !important;
       z-index: 10 !important;
-      scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
+      scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
     }
     
     /* flow-row-bgのmarginも上書き */
@@ -1071,14 +1071,14 @@
     @media (min-width: 901px) {
       html body #flowing-images {
         margin-top: 0 !important;
-        /* 新しい設定で統一 */
-        padding-top: clamp(48px, 5vw, 96px) !important;
+        /* 新しい設定で統一（より大きめ） */
+        padding-top: clamp(72px, 8vw, 200px) !important;
         position: relative !important;
         /* top: 450pxを除去し、padding-topで統一 */
         display: block !important;
         visibility: visible !important;
         z-index: 10 !important;
-        scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
+        scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
       }
       
       html body .flow-row-bg {
@@ -1397,7 +1397,7 @@
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
-  <section id="flowing-images">
+  <section id="flowing-images" class="pt-20 md:pt-28 lg:pt-36 xl:pt-40 scroll-mt-[calc(var(--rs-header-h)+24px)]">
       <div class="flow-row-bg" id="flowing-images-bg">
       <div class="flow-row flow-row-top">
         <div class="flow-track">
