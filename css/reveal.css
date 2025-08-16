@@ -1,79 +1,76 @@
-/* ReStandard テキスト演出 - ミニマル・上品なブランドトーン */
+/* ReStandard テキスト演出 - 競合に勝つ高優先度実装 */
 :root {
   --rs-reveal-duration: 900ms;
-  --rs-reveal-delay: 60ms;      /* 文字/行の遅延間隔 */
-  --rs-reveal-ease: cubic-bezier(.22,.61,.36,1); /* 標準のイージング */
-  --rs-reveal-shift: 12px;      /* 左→右の初期オフセット */
+  --rs-reveal-delay: 60ms;
+  --rs-reveal-ease: cubic-bezier(.22,.61,.36,1);
+  --rs-reveal-shift: 14px;
 }
 
-/* 基底：不可視状態 */
-.rs-reveal {
-  opacity: 0;
-  transform: translateX(var(--rs-reveal-shift));
+/* 競合に勝つため、属性＋クラスの複合セレクタ＆!important を要所に使用 */
+.rs-reveal[data-reveal] {
+  opacity: 0 !important;
+  transform: translateX(var(--rs-reveal-shift)) !important;
   will-change: opacity, transform, clip-path, mask-position, mask-size;
 }
 
-/* 可視化トリガ */
-.rs-reveal.is-visible { 
-  opacity: 1; 
-  transform: translateX(0); 
+/* "見える"状態 */
+.rs-reveal.is-visible[data-reveal] {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
 }
 
-/* 1) 行ごと：左からフェード＆スライド（line） */
-.rs-reveal[data-reveal="line"] > .rs-line {
-  display: block;
-  opacity: 0;
-  transform: translateX(var(--rs-reveal-shift));
-  transition: transform var(--rs-reveal-duration) var(--rs-reveal-ease),
-              opacity var(--rs-reveal-duration) var(--rs-reveal-ease);
-}
-.rs-reveal.is-visible[data-reveal="line"] > .rs-line {
-  opacity: 1; 
-  transform: translateX(0);
-}
-.rs-reveal[data-reveal="line"] > .rs-line {
-  transition-delay: calc(var(--i) * var(--rs-reveal-delay));
-}
-
-/* 2) 文字ごと：スタッガー（char） */
-.rs-reveal[data-reveal="char"] .rs-char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateX(var(--rs-reveal-shift));
-  transition: transform var(--rs-reveal-duration) var(--rs-reveal-ease),
-              opacity var(--rs-reveal-duration) var(--rs-reveal-ease);
-}
-.rs-reveal.is-visible[data-reveal="char"] .rs-char {
-  opacity: 1; 
-  transform: translateX(0);
-}
-.rs-reveal[data-reveal="char"] .rs-char {
-  transition-delay: calc(var(--i) * var(--rs-reveal-delay));
-}
-
-/* 3) ワイプ：左→右のマスク（wipe） */
+/* Wipe（左→右） */
 .rs-reveal[data-reveal="wipe"] {
-  /* Safari対応のため -webkit-mask も併記 */
-  -webkit-mask-image: linear-gradient(#000 0 0);
-          mask-image: linear-gradient(#000 0 0);
-  -webkit-mask-size: 0% 100%;
-          mask-size: 0% 100%;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  -webkit-mask-position: left center;
-          mask-position: left center;
+  -webkit-mask-image: linear-gradient(#000 0 0) !important;
+          mask-image: linear-gradient(#000 0 0) !important;
+  -webkit-mask-size: 0% 100% !important;
+          mask-size: 0% 100% !important;
+  -webkit-mask-repeat: no-repeat !important;
+          mask-repeat: no-repeat !important;
+  -webkit-mask-position: left center !important;
+          mask-position: left center !important;
   transition: -webkit-mask-size var(--rs-reveal-duration) var(--rs-reveal-ease),
               mask-size var(--rs-reveal-duration) var(--rs-reveal-ease),
-              opacity var(--rs-reveal-duration) var(--rs-reveal-ease);
+              opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
 }
 .rs-reveal.is-visible[data-reveal="wipe"] {
-  -webkit-mask-size: 100% 100%;
-          mask-size: 100% 100%;
-  opacity: 1;
-  transform: none;
+  -webkit-mask-size: 100% 100% !important;
+          mask-size: 100% 100% !important;
 }
 
-/* reduced motion：アニメ無効化 */
+/* Char（文字ごと） */
+.rs-reveal[data-reveal="char"] .rs-char {
+  display: inline-block !important;
+  opacity: 0 !important;
+  transform: translateX(var(--rs-reveal-shift)) !important;
+  transition: transform var(--rs-reveal-duration) var(--rs-reveal-ease),
+              opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
+}
+.rs-reveal.is-visible[data-reveal="char"] .rs-char {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+.rs-reveal[data-reveal="char"] .rs-char {
+  transition-delay: calc(var(--i) * var(--rs-reveal-delay)) !important;
+}
+
+/* Line（行ごと） */
+.rs-reveal[data-reveal="line"] > .rs-line {
+  display: block !important;
+  opacity: 0 !important;
+  transform: translateX(var(--rs-reveal-shift)) !important;
+  transition: transform var(--rs-reveal-duration) var(--rs-reveal-ease),
+              opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
+}
+.rs-reveal.is-visible[data-reveal="line"] > .rs-line {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+.rs-reveal.is-visible[data-reveal="line"] > .rs-line {
+  transition-delay: calc(var(--i) * var(--rs-reveal-delay)) !important;
+}
+
+/* reduced motion 対応（アニメ無効化） */
 @media (prefers-reduced-motion: reduce) {
   .rs-reveal, .rs-reveal * {
     transition: none !important;
