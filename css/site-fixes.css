@@ -155,11 +155,21 @@
     grid-template-columns: repeat(2, 1fr) !important; 
   }
   
-  /* スマホではカードの余白を調整 */
+  /* スマホではカードのサイズと余白を拡大 */
   #brands .brand-card,
   .section-brands .brand-card,
   .brand-card {
-    padding: clamp(8px, 1.5vw, 16px);
+    width: clamp(140px, 20vw, 200px) !important;   /* スマホではより大きく */
+    height: clamp(140px, 20vw, 200px) !important;  /* スマホではより大きく */
+    padding: clamp(28px, 4vw, 40px);                /* 内側の余白も拡大 */
+  }
+  
+  /* スマホではロゴマークも大きく */
+  #brands .brand-card img,
+  .section-brands .brand-card img,
+  .brand-card img {
+    max-width: 95% !important;          /* スマホでは95%サイズ */
+    max-height: 95% !important;         /* スマホでは95%サイズ */
   }
 }
 
@@ -168,7 +178,16 @@
   .section-brands .brands-grid,
   .brands-grid { 
     grid-template-columns: repeat(2, 1fr) !important; 
-    gap: clamp(8px, 1.2vw, 16px) !important;
+    gap: clamp(12px, 2vw, 20px) !important;
+  }
+  
+  /* さらに小さい画面ではカードサイズを調整 */
+  #brands .brand-card,
+  .section-brands .brand-card,
+  .brand-card {
+    width: clamp(120px, 18vw, 160px) !important;
+    height: clamp(120px, 18vw, 160px) !important;
+    padding: clamp(24px, 3.5vw, 32px);
   }
 }
 
@@ -398,28 +417,14 @@
 }
 
 /* セクション間の視覚的分離を調整 */
-#flowing-images::after,
-.section-flowing::after {
-  content: '';
-  display: block;
-  height: clamp(80px, 10vw, 160px);  /* flowing-imagesとBrandsの分離は維持 */
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.04));
-}
-
-#brands::before,
-.section-brands::before {
-  content: '';
-  display: block;
-  height: clamp(80px, 10vw, 160px);  /* flowing-imagesとBrandsの分離は維持 */
-  background: linear-gradient(to bottom, rgba(0,0,0,0.04), transparent);
-}
+/* 半透明のオブジェクトを削除してディスプレイの邪魔をしないようにする */
 
 /* BrandsとReStandardについての間の透明なオブジェクトを削除 */
 
-#about::before,
+/* about::before,
 .section-about::before {
   content: '';
   display: block;
-  height: clamp(40px, 5vw, 80px);  /* BrandsとAboutの分離を調整 */
+  height: clamp(40px, 5vw, 80px);
   background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
-} 
+} */ 
