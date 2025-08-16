@@ -178,60 +178,9 @@
       --body-font: 'Noto Sans JP', sans-serif;
       --main-font-family: 'Noto Serif JP', serif;
       --heading-font-family: 'Noto Serif JP', serif;
-      --header-height: 64px;         /* fallback */
-      --header-h: 64px;              /* 動的に更新されるヘッダー高さ */
-      --header-gap: 28px;            /* モバイルの見栄え用ギャップ */
+      --rs-header-h: 64px;
     }
-    
-    @media (min-width: 768px) {
-      :root { 
-        --header-height: 72px;
-        --header-gap: 40px; 
-      }
-    }
-    
-    @media (min-width: 1024px) {
-      :root { 
-        --header-height: 72px;
-        --header-gap: 56px; 
-      }
-    }
-    
-    /* モバイル版でのflowing-imagesとヘッダーの間隔調整 */
-    @media (max-width: 900px) {
-      #flowing-images {
-        margin-top: calc(var(--header-h) + var(--header-gap)) !important;
-        padding-top: 20px !important;
-        scroll-margin-top: calc(var(--header-h) + 16px);
-      }
-    }
-    
-    /* より小さい画面での調整 */
-    @media (max-width: 480px) {
-      #flowing-images {
-        margin-top: calc(var(--header-h) + var(--header-gap)) !important;
-        padding-top: 16px !important;
-      }
-    }
-    
-    /* iOS Safariのsafe-area対応 */
-    @supports (padding-top: env(safe-area-inset-top)) {
-      .navbar {
-        padding-top: calc(env(safe-area-inset-top) + 8px);
-        padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
-      }
-      
-      #flowing-images {
-        margin-top: calc(var(--header-h) + env(safe-area-inset-top) + var(--header-gap)) !important;
-      }
-      
-      @media (min-width: 901px) {
-        #flowing-images {
-          margin-top: calc(var(--header-h) + env(safe-area-inset-top) + var(--header-gap)) !important;
-        }
-      }
-    }
-    
+
     html, body {
       font-family: var(--main-font-family) !important;
       overflow-x: hidden;
@@ -789,8 +738,52 @@
       overflow: visible;
       background: none;
       padding: 0;
-      padding-top: 200px;
+      /* 既存のpadding-topを除去 */
     }
+    
+    /* ヘッダーとflowing-imagesのギャップ確保（margin折りたたみ回避） */
+    :root {
+      --rs-header-h: 64px;
+    }
+    @media (min-width: 1024px) {
+      :root { 
+        --rs-header-h: 72px; 
+      }
+    }
+    
+    /* flowing-images とヘッダーのギャップ（paddingで確実に作る） */
+    #flowing-images {
+      /* スマホ〜デスクトップで48〜96pxの範囲で可変 */
+      padding-top: clamp(48px, 5vw, 96px);
+      /* アンカーリンクでのずれ対策 */
+      scroll-margin-top: calc(var(--rs-header-h) + 16px);
+      /* margin折りたたみ防止の保険 */
+      display: flow-root;
+    }
+    
+    /* 競合クラスに負けないための最高優先度設定 */
+    html body #flowing-images {
+      padding-top: clamp(48px, 5vw, 96px) !important;
+      scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
+      display: flow-root !important;
+    }
+    
+    /* スペーサー要素のスタイル（最終手段） */
+    .rs-header-spacer {
+      height: clamp(48px, 5vw, 96px);
+      width: 100%;
+      background: transparent;
+      pointer-events: none;
+    }
+    
+    /* スペーサー要素の最高優先度設定 */
+    html body .rs-header-spacer {
+      height: clamp(48px, 5vw, 96px) !important;
+      width: 100% !important;
+      background: transparent !important;
+      pointer-events: none !important;
+    }
+    
     .flow-row {
       width: 100vw;
       overflow: visible;
@@ -906,9 +899,8 @@
       #flowing-images {
         overflow: visible !important;
         width: 100vw !important;
-        margin-top: calc(var(--header-height) + 40px) !important;
-        padding-top: 20px !important;
-        scroll-margin-top: calc(var(--header-height) + 16px);
+        margin-top: 0 !important;
+        padding-top: 160px !important;
         display: block !important;
         visibility: visible !important;
         position: relative !important;
@@ -1049,30 +1041,24 @@
     
     /* スマートフォン版flowing imagesの位置を強制的に調整 */
     html body #flowing-images {
-      margin-top: calc(var(--header-h) + var(--header-gap)) !important;
-      padding-top: 20px !important;
+      margin-top: 0 !important;
+      /* 新しい設定で統一 */
+      padding-top: clamp(48px, 5vw, 96px) !important;
       display: block !important;
       visibility: visible !important;
-      scroll-margin-top: calc(var(--header-h) + 16px);
+      scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
     }
     
     /* 最も強力なセレクターで競合を完全に解決 */
     html body #flowing-images {
-      margin-top: calc(var(--header-h) + var(--header-gap)) !important;
-      padding-top: 20px !important;
+      margin-top: 0 !important;
+      /* 新しい設定で統一 */
+      padding-top: clamp(48px, 5vw, 96px) !important;
       display: block !important;
       visibility: visible !important;
       position: relative !important;
       z-index: 10 !important;
-      scroll-margin-top: calc(var(--header-h) + 16px);
-    }
-    
-    /* より小さい画面での調整 */
-    @media (max-width: 480px) {
-      html body #flowing-images {
-        margin-top: calc(var(--header-h) + var(--header-gap)) !important;
-        padding-top: 16px !important;
-      }
+      scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
     }
     
     /* flow-row-bgのmarginも上書き */
@@ -1084,14 +1070,15 @@
     /* PC版用の最も強力なセレクター */
     @media (min-width: 901px) {
       html body #flowing-images {
-        margin-top: calc(var(--header-h) + var(--header-gap)) !important;
-        padding-top: 0 !important;
+        margin-top: 0 !important;
+        /* 新しい設定で統一 */
+        padding-top: clamp(48px, 5vw, 96px) !important;
         position: relative !important;
-        top: 0 !important;
+        /* top: 450pxを除去し、padding-topで統一 */
         display: block !important;
         visibility: visible !important;
         z-index: 10 !important;
-        scroll-margin-top: calc(var(--header-h) + 16px);
+        scroll-margin-top: calc(var(--rs-header-h) + 16px) !important;
       }
       
       html body .flow-row-bg {
@@ -1167,55 +1154,6 @@
       width: 100%;
     }
   </style>
-  <style>
-    /* ヘッダー固定の強化 */
-    html body .navbar {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1030 !important;
-      background-color: rgba(255, 255, 255, 0.95) !important;
-      backdrop-filter: blur(10px) !important;
-      border-bottom: 1px solid rgba(204, 204, 204, 0.3) !important;
-    }
-    
-    /* ヘッダー下のコンテンツが確実に重ならないようにする */
-    body {
-      padding-top: 0 !important;
-    }
-    
-    main, section {
-      position: relative !important;
-      z-index: 1 !important;
-    }
-    
-    /* CSS変数の初期化を確実にする */
-    :root {
-      --header-h: 64px;
-      --header-gap: 28px;
-    }
-    
-    @media (min-width: 768px) {
-      :root { --header-gap: 40px; }
-    }
-    
-    @media (min-width: 1024px) {
-      :root { --header-gap: 56px; }
-    }
-  </style>
-  
-  <script>
-    // 即座にヘッダー高さを設定
-    (function() {
-      const header = document.querySelector('nav.fixed-top, .navbar, header');
-      if (header) {
-        const rect = header.getBoundingClientRect();
-        const height = rect.height || 64;
-        document.documentElement.style.setProperty('--header-h', `${height}px`);
-      }
-    })();
-  </script>
 </head>
 <body>
   <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
@@ -1288,7 +1226,7 @@
       .navbar {
         background-color: rgba(255, 255, 255, 0.9) !important;
         backdrop-filter: blur(10px) !important;
-        margin-bottom: 0 !important; /* 既存の大きなmarginを削除 */
+        margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
       }
       .flow-row-bg {
         background: rgba(255,255,255,0.9) !important;
@@ -1298,11 +1236,10 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
       }
       #flowing-images {
-        margin-top: calc(var(--header-h) + var(--header-gap)) !important; /* 統一された間隔設定 */
-        padding-top: 0 !important;
+        margin-top: 0 !important; /* 既存のmarginをリセット */
+        padding-top: 0 !important; /* 既存のpaddingをリセット */
         position: relative !important;
-        top: 0 !important; /* 既存の大きなtop値を削除 */
-        scroll-margin-top: calc(var(--header-h) + 16px);
+        top: 450px !important; /* flowing imagesをさらに下に配置 */
       }
       
       /* PC版で画像サイズを250pxに設定 */
@@ -1319,29 +1256,28 @@
       
       /* より強力な間隔設定 */
       html body .navbar {
-        margin-bottom: 0 !important; /* 既存の大きなmarginを削除 */
+        margin-bottom: 500px !important;
       }
       
       /* 最も強力なセレクターでPC版の位置を調整 */
       html body #flowing-images {
-        margin-top: calc(var(--header-h) + var(--header-gap)) !important;
+        margin-top: 0 !important;
         padding-top: 0 !important;
         position: relative !important;
-        top: 0 !important;
-        scroll-margin-top: calc(var(--header-h) + 16px);
+        top: 450px !important;
       }
       
-      /* Brandsセクションも統一された間隔で配置 */
+      /* Brandsセクションも下に移動 */
       html body #brands {
         position: relative !important;
-        top: 0 !important;
+        top: 450px !important;
         margin-top: 50px !important;
       }
       
-      /* overviewセクションも統一された間隔で配置 */
+      /* overviewセクションも下に移動 */
       html body #overview {
         position: relative !important;
-        top: 0 !important;
+        top: 450px !important;
         margin-top: 50px !important;
         text-align: center !important;
       }
@@ -1387,10 +1323,10 @@
         padding: 0 15px !important;
       }
       
-      /* フッターも統一された間隔で配置 */
+      /* フッターも下に移動 */
       html body footer {
         position: relative !important;
-        top: 0 !important;
+        top: 450px !important;
         margin-top: 100px !important;
       }
       
@@ -1401,19 +1337,6 @@
         left: 0 !important;
         right: 0 !important;
         z-index: 1030 !important;
-        background-color: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(10px) !important;
-        border-bottom: 1px solid rgba(204, 204, 204, 0.3) !important;
-      }
-      
-      /* ヘッダー下のコンテンツが確実に重ならないようにする */
-      body {
-        padding-top: 0 !important;
-      }
-      
-      main, section {
-        position: relative !important;
-        z-index: 1 !important;
       }
     }
   </style>
@@ -1471,6 +1394,9 @@
   </section>
 
   <!-- ここから流れる画像2行 -->
+  <!-- ヘッダーとのギャップ確保用スペーサー -->
+  <div class="rs-header-spacer" aria-hidden="true"></div>
+  
   <section id="flowing-images">
       <div class="flow-row-bg" id="flowing-images-bg">
       <div class="flow-row flow-row-top">
@@ -2121,7 +2047,7 @@ document.addEventListener('DOMContentLoaded', function() {
   images.forEach(img => {
     if (img.complete && img.naturalWidth > 0) {
       checkAllImagesLoaded();
-    } else {
+      } else {
       img.addEventListener('load', checkAllImagesLoaded);
       img.addEventListener('error', function() {
         // エラー時は画像を非表示にして処理を続行
@@ -2257,39 +2183,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-</script>
-
-  <script>
-    // ヘッダー高さを動的に取得し、CSS変数に反映する関数
-    function setHeaderHeight() {
-      const header = document.querySelector('nav.fixed-top, .navbar, header');
-      if (header) {
-        const rect = header.getBoundingClientRect();
-        const height = rect.height;
-        document.documentElement.style.setProperty('--header-h', `${height}px`);
-        console.log('Header height set to:', height + 'px');
-      }
-    }
-    
-    // ページ読み込み時とリサイズ時にヘッダー高さを更新
-    if (typeof window !== 'undefined') {
-      const onReady = () => { 
-        setHeaderHeight(); 
-        // 少し遅延させて確実に取得
-        setTimeout(setHeaderHeight, 100);
-      };
-      
-      window.addEventListener('load', onReady);
-      window.addEventListener('resize', setHeaderHeight);
-      window.addEventListener('orientationchange', () => {
-        setTimeout(setHeaderHeight, 100);
-      });
-      
-      // DOMContentLoadedでも実行
-      document.addEventListener('DOMContentLoaded', onReady);
-    }
-    
-    // 背景動画の読み込みと再生を確実にする
 </script>
 </body>
 </html>
