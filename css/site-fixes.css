@@ -17,18 +17,17 @@
   transform: none !important; 
 }
 
-/* ▼ flowing-images：重なりの主犯対策。親に高さ/コンテキストを与える */
+/* ▼ flowing-images：親の高さ0/重なりの主因を排除 */
 .section-flowing {
-  display: flow-root;             /* 浮動要素や内部絶対配置を内包 */
+  display: flow-root;       /* 内部がabsolute/floatでも親高を作る */
   position: relative;
-  z-index: 0;                     /* 以降のセクションが上に来られるよう 0 に固定 */
+  z-index: 0;               /* 後続（brands/about）が上に来れるように */
   margin-top: calc(var(--header-h) + 12px);
-  padding-bottom: clamp(24px, 4vw, 56px);  /* 後続との距離を確実に確保 */
-  /* 必要に応じて最小高さ（内部が absolute で親高が 0 の場合の保険）*/
-  min-height: 280px;
+  padding-bottom: clamp(24px, 4vw, 56px);  /* 後続との距離を物理的に作る */
+  min-height: 280px;        /* 念のための下限高さ */
 }
 
-/* ▼ Brands：再表示＆整列 */
+/* ▼ Brands：再表示＆5×2整列 */
 .section-brands {
   position: relative;
   z-index: 1;
@@ -44,8 +43,8 @@
 }
 .brands-grid {
   --gap: clamp(10px, 1.6vw, 16px);
-  display: grid !important;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: grid !important;                      /* 旧レイアウトを上書き */
+  grid-template-columns: repeat(5, minmax(0, 1fr));  /* ← 5列固定（PC） */
   gap: var(--gap);
   max-width: 1200px;
   margin: 0 auto;
@@ -59,7 +58,7 @@
   align-items: center; 
   justify-content: center;
   padding: clamp(8px, 1.4vw, 14px);
-  aspect-ratio: 7 / 3;   /* ロゴが整って見える比率に固定 */
+  aspect-ratio: 7 / 3;       /* ロゴが整って見える横長カード */
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -74,7 +73,7 @@
   display: block;
 }
 
-/* レスポンシブ：SPは2列、タブレットは3～4列 */
+/* レスポンシブ：列数を段階的にダウン */
 @media (max-width: 1199px) { 
   .brands-grid { 
     grid-template-columns: repeat(4, 1fr); 
@@ -91,7 +90,7 @@
   } 
 }
 
-/* ▼ About：中央揃え + 適切な幅。順序上は Brands の後 */
+/* ▼ About：中央揃え + 適切な幅 */
 .section-about {
   position: relative;
   z-index: 1;
@@ -100,7 +99,7 @@
 }
 .about-inner {
   max-width: min(880px, 92vw);
-  margin: 0 auto;                 /* ← 中央配置（③） */
+  margin: 0 auto;                 /* ← 中央配置 */
   text-align: center;
   background: #fff;
   border-radius: 12px;
@@ -134,7 +133,7 @@
   border-bottom-color: #0066cc;
 }
 
-/* ▼ PC/スマホの排他表示（④） */
+/* ▼ PC/スマホの排他表示（同時表示を防止） */
 .only-pc { 
   display: block !important; 
 }
@@ -150,7 +149,7 @@
   }
 }
 
-/* （保険）以前の演出や強制非表示が残っていても可視化できるよう最小限のリセット */
+/* 保険：過去の演出や非表示指定で隠れないよう軽くリセット */
 #brands .rs-reveal, #about .rs-reveal { 
   opacity: 1 !important; 
   transform: none !important; 
