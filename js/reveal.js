@@ -1,70 +1,143 @@
 /**
- * ReStandard テキスト演出 - パフォーマンス重視のテキストアニメーション
- * 3種の演出モード: wipe, char, line
+ * ReStandard テキスト演出 - 競合に勝つ高優先度実装
+ * 診断ログ付きで確実に反映されるテキストアニメーション
  */
 
-export function enhanceReveals(root = document) {
-  const nodes = root.querySelectorAll('.rs-reveal');
+export function initReveal(root = document) {
+  const url = new URL(window.location.href);
+  const debug = url.searchParams.get('reveal-debug') === '1';
+  const force = url.searchParams.get('reveal-force') === '1';
 
-  nodes.forEach((el) => {
-    const mode = el.dataset.reveal; // "line" | "char" | "wipe"
-    if (!mode) return;
+  const log = (...args) =>
+    debug && console.log('%c[reveal]', 'color:#7c3aed;font-weight:bold;', ...args);
 
-    // 文字/行の分割：既に処理済みならスキップ
+  // 最終フォールバック：強制静止表示モード
+  if (force) {
+    log('FORCE MODE: 全要素を即時表示');
+    document.querySelectorAll('.rs-reveal[data-reveal]').forEach(reveal);
+    return;
+  }
+
+  // 競合検知：スタイルが反映されない要因のチェック
+  function probe(el) {
+    const cs = getComputedStyle(el);
+    log('probe:', {
+      opacity: cs.opacity,
+      transform: cs.transform,
+      transition: cs.transitionDuration,
+      maskSize: (cs).webkitMaskSize || cs.maskSize
+    });
+  }
+
+  // テキスト分割（多重適用防止）
+  function splitChars(el) {
+    if (el.dataset.rsSplit === 'char') return;
+    const raw = el.textContent ?? '';
+    el.setAttribute('aria-label', raw.trim());
+    el.setAttribute('role', 'text');
+    el.textContent = '';
+    Array.from(raw).forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'rs-char';
+      span.setAttribute('aria-hidden', 'true');
+      span.style.setProperty('--i', String(i));
+      span.textContent = ch;
+      el.appendChild(span);
+    });
+    el.dataset.rsSplit = 'char';
+  }
+
+  function splitLines(el) {
+    if (el.dataset.rsSplit === 'line') return;
+    const parts = (el.innerHTML).split(/<br\s*\/?>|\n/);
+    el.innerHTML = '';
+    parts.forEach((html, i) => {
+      const line = document.createElement('span');
+      line.className = 'rs-line';
+      line.style.setProperty('--i', String(i));
+      line.innerHTML = html;
+      el.appendChild(line);
+      if (i < parts.length - 1) el.appendChild(document.createElement('br'));
+    });
+    el.dataset.rsSplit = 'line';
+  }
+
+  // 初期適用：インラインstyleで"初期状態"を強制（競合に勝つ）
+  function prime(el) {
+    const mode = el.dataset.reveal;
+    el.classList.add('rs-reveal');
+    el.style.setProperty('opacity', '0', 'important');
+    el.style.setProperty('transform', `translateX(var(--rs-reveal-shift))`, 'important');
+
     if (mode === 'char' && !el.querySelector('.rs-char')) splitChars(el);
     if (mode === 'line' && !el.querySelector('.rs-line')) splitLines(el);
-  });
 
+    probe(el);
+  }
+
+  // 表示化：is-visible と同時にインラインstyleでも最終状態を指示
+  function reveal(el) {
+    const node = el;
+    node.classList.add('is-visible');
+    node.style.setProperty('opacity', '1', 'important');
+    node.style.setProperty('transform', 'translateX(0)', 'important');
+
+    // wipeの場合はmask-sizeをインラインで後押し
+    if (node.dataset.reveal === 'wipe') {
+      (node.style).setProperty('-webkit-mask-size', '100% 100%', 'important');
+      (node.style).setProperty('mask-size', '100% 100%', 'important');
+    }
+  }
+
+  // 監視：IntersectionObserver + MutationObserver
   const io = new IntersectionObserver((ents) => {
     ents.forEach((e) => {
       if (e.isIntersecting) {
-        e.target.classList.add('is-visible');
-        io.unobserve(e.target); // 一度だけ発火
+        reveal(e.target);
+        io.unobserve(e.target);
       }
     });
-  }, { 
-    root: null, 
-    threshold: 0.2, 
-    rootMargin: '0px 0px -10% 0px' 
-  });
+  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
 
-  nodes.forEach((el) => io.observe(el));
-}
+  function boot(ctx) {
+    const targets = ctx.querySelectorAll('.rs-reveal[data-reveal]:not([data-rs-ready])');
+    targets.forEach((el) => {
+      prime(el);
+      el.dataset.rsReady = '1';
+      io.observe(el);
+    });
+    log('boot targets:', targets.length);
+  }
 
-function splitChars(el) {
-  // SR用に元テキストはaria-labelへ退避、表示は装飾用spanで
-  const text = el.textContent ?? '';
-  el.setAttribute('aria-label', text.trim());
-  el.setAttribute('role', 'text');
-  el.textContent = '';
-  
-  Array.from(text).forEach((ch, i) => {
-    const span = document.createElement('span');
-    span.className = 'rs-char';
-    span.setAttribute('aria-hidden', 'true');
-    span.style.setProperty('--i', String(i));
-    span.textContent = ch;
-    el.appendChild(span);
-  });
-}
+  // 初回起動
+  boot(root);
 
-function splitLines(el) {
-  const text = el.innerHTML;
-  // 単純改行での行指定（必要なら計測ベースの高度版に差し替え可）
-  const parts = text.split(/<br\s*\/?>|\n/);
-  el.innerHTML = '';
-  
-  parts.forEach((html, i) => {
-    const line = document.createElement('span');
-    line.className = 'rs-line';
-    line.style.setProperty('--i', String(i));
-    line.innerHTML = html;
-    el.appendChild(line);
-    if (i < parts.length - 1) el.appendChild(document.createElement('br'));
+  // ルーティングや動的描画に対応
+  const mo = new MutationObserver((muts) => {
+    muts.forEach((m) => {
+      m.addedNodes.forEach((n) => {
+        if (n instanceof HTMLElement) boot(n);
+      });
+    });
   });
+  mo.observe(document.body, { childList: true, subtree: true });
+
+  // デバッグ：任意の1要素を強制即時表示（?reveal-debug=1）
+  if (debug) {
+    setTimeout(() => {
+      const sample = document.querySelector('.rs-reveal[data-reveal]');
+      if (sample) {
+        log('force reveal sample');
+        reveal(sample);
+        probe(sample);
+      } else {
+        log('no sample found');
+      }
+    }, 600);
+  }
 }
 
 // グローバル関数としても利用可能（既存コードとの互換性）
 if (typeof window !== 'undefined') {
-  window.enhanceReveals = enhanceReveals;
+  window.initReveal = initReveal;
 } 
