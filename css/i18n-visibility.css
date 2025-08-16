@@ -1,0 +1,100 @@
+/* ========================================
+   i18n Visibility Control
+   ======================================== */
+
+/* まず全バリアントは非表示 */
+#about .i18n, #brands .i18n { 
+  display: none !important; 
+}
+
+/* 端末判定：ブレークポイントは必要に応じて調整（md=768px想定） */
+.only-pc { 
+  display: block !important; 
+}
+.only-sp { 
+  display: none !important; 
+}
+
+@media (max-width: 767px) {
+  .only-pc { 
+    display: none !important; 
+  }
+  .only-sp { 
+    display: block !important; 
+  }
+}
+
+/* 言語判定（<html lang="ja|en"> の値で切替） */
+html[lang="ja"] #about .only-ja,
+html[lang="ja"] #brands .only-ja { 
+  display: block !important; 
+}
+
+html[lang="en"] #about .only-en,
+html[lang="en"] #brands .only-en { 
+  display: block !important; 
+}
+
+/* 念のための保険：見えない要素を確実に隠す */
+html[lang="ja"] #about .only-en,
+html[lang="ja"] #brands .only-en,
+html[lang="en"] #about .only-ja,
+html[lang="en"] #brands .only-ja { 
+  display: none !important; 
+}
+
+/* 競合CSS対策：より強力なセレクタで確実に制御 */
+html[lang="ja"] #about .i18n.only-ja,
+html[lang="ja"] #brands .i18n.only-ja { 
+  display: block !important; 
+}
+
+html[lang="en"] #about .i18n.only-en,
+html[lang="en"] #brands .i18n.only-en { 
+  display: block !important; 
+}
+
+/* デフォルト言語設定（lang属性が未設定の場合） */
+html:not([lang]) #about .only-ja,
+html:not([lang]) #brands .only-ja { 
+  display: block !important; 
+}
+
+html:not([lang]) #about .only-en,
+html:not([lang]) #brands .only-en { 
+  display: none !important; 
+}
+
+/* 強制可視化の上書き（既存のreveal.cssとの競合回避） */
+#about .i18n[style*="display: none"],
+#brands .i18n[style*="display: none"] {
+  display: block !important;
+}
+
+/* レスポンシブ対応の強化 */
+@media (max-width: 480px) {
+  .only-sp { 
+    display: block !important; 
+  }
+  .only-pc { 
+    display: none !important; 
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .only-pc { 
+    display: block !important; 
+  }
+  .only-sp { 
+    display: none !important; 
+  }
+}
+
+@media (min-width: 1024px) {
+  .only-pc { 
+    display: block !important; 
+  }
+  .only-sp { 
+    display: none !important; 
+  }
+} 
