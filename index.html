@@ -114,6 +114,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
   <link rel="preload" href="css/style.css" as="style">
+  <link rel="preload" href="css/reveal.css" as="style">
+  <link rel="preload" href="css/i18n-visibility.css" as="style">
   <!-- LCP画像のプリロード -->
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
   <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
@@ -137,6 +139,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/i18n-visibility.css">
 
   <link rel="canonical" href="https://restandard-2025.netlify.app/">
   <link rel="alternate" href="https://restandard-2025.netlify.app/" hreflang="ja" />
@@ -1182,8 +1185,8 @@
           <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
         </ul>
         <div class="language-switcher">
-          <button onclick="switchLanguage('ja')" class="active">JA</button>
-          <button onclick="switchLanguage('en')">EN</button>
+          <button data-lang-btn="ja" class="active">JA</button>
+          <button data-lang-btn="en">EN</button>
         </div>
       </div>
     </div>
@@ -1540,103 +1543,298 @@
 
    <!-- About -->
 <section id="brands" class="mb-5">
-  <h1 class="section-title text-reveal">
-    <span>Brands</span>
-  </h1>
-  <div class="brands-grid section-content">
-    <a class="brandlogo" href="https://rockmount.com/" target="_blank" rel="noopener">
-      <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+  <!-- 日本語：PC -->
+  <div class="i18n only-ja only-pc">
+    <h1 class="section-title text-reveal">
+      <span>Brands</span>
+    </h1>
+    <div class="brands-grid section-content">
+      <a class="brandlogo" href="https://rockmount.com/" target="_blank" rel="noopener">
+        <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/Harley.webp" alt="Harley" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/Harley.webp" alt="Harley" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://williamlockie.com/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://williamlockie.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://www.eribe.com/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/eribe.svg" alt="Eribe" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://www.eribe.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/eribe.svg" alt="Eribe" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://www.glenprince.com/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/glen prince.webp" alt="Glen Prince" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://www.glenprince.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/glen prince.webp" alt="Glen Prince" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://www.athenaknitwear.com/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/athena designs.webp" alt="Athena" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://www.athenaknitwear.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/athena designs.webp" alt="Athena" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/kopka.webp" alt="Kopka" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/kopka.webp" alt="Kopka" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://leminor.fr/en" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/leminor.webp" alt="Le Minor" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://leminor.fr/en" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/leminor.webp" alt="Le Minor" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://sans-arcidet.fr/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://sans-arcidet.fr/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
 
-    <a class="brandlogo" href="https://hatattack.com/" target="_blank" rel="noopener" loading="lazy">
-      <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140" loading="lazy">
-      <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
-    </a>
+      <a class="brandlogo" href="https://hatattack.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+    </div>
+  </div>
+  
+  <!-- 日本語：SP -->
+  <div class="i18n only-ja only-sp">
+    <h1 class="section-title text-reveal">
+      <span>Brands</span>
+    </h1>
+    <div class="brands-grid section-content">
+      <a class="brandlogo" href="https://rockmount.com/" target="_blank" rel="noopener">
+        <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/Harley.webp" alt="Harley" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://williamlockie.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.eribe.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/eribe.svg" alt="Eribe" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.glenprince.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/glenprince25AW.webp" alt="Glen Prince" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.athenaknitwear.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/athena designs.webp" alt="Athena" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/kopka.webp" alt="Kopka" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://leminor.fr/en" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/leminor.webp" alt="Le Minor" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://sans-arcidet.fr/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://hatattack.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+    </div>
+  </div>
+  
+  <!-- 英語：PC -->
+  <div class="i18n only-en only-pc">
+    <h1 class="section-title text-reveal">
+      <span>Brands</span>
+    </h1>
+    <div class="brands-grid section-content">
+      <a class="brandlogo" href="https://rockmount.com/" target="_blank" rel="noopener">
+        <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/Harley.webp" alt="Harley" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://williamlockie.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.eribe.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/eribe.svg" alt="Eribe" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.glenprince.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/glenprince25AW.webp" alt="Glen Prince" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.athenaknitwear.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/athena designs.webp" alt="Athena" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/kopka.webp" alt="Kopka" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://leminor.fr/en" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/leminor.webp" alt="Le Minor" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://sans-arcidet.fr/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://hatattack.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+    </div>
+  </div>
+  
+  <!-- 英語：SP -->
+  <div class="i18n only-en only-sp">
+    <h1 class="section-title text-reveal">
+      <span>Brands</span>
+    </h1>
+    <div class="brands-grid section-content">
+      <a class="brandlogo" href="https://rockmount.com/" target="_blank" rel="noopener">
+        <img src="image/rockmount.webp" alt="Rockmount" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/rockmount3.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.harleyofscotland.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/Harley.webp" alt="Harley" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/Harley1.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://williamlockie.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/william lockie.webp" alt="William Lockie" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/william2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.eribe.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/eribe.svg" alt="Eribe" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/eribe.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.glenprince.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/glenprince25AW.webp" alt="Glen Prince" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/glenprince25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.athenaknitwear.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/athena designs.webp" alt="Athena" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/athenadesigns.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://www.kopka-accessories.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/kopka.webp" alt="Kopka" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/kopka2.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://leminor.fr/en" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/leminor.webp" alt="Le Minor" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/leminor25AW.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://sans-arcidet.fr/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/san arcident.webp" alt="San Arcidet" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/sansarcident.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+
+      <a class="brandlogo" href="https://hatattack.com/" target="_blank" rel="noopener" loading="lazy">
+        <img src="image/hat attack.webp" alt="Hat Attack" width="140" height="140" loading="lazy">
+        <div class="preview"><img src="image/hatattack.webp" alt="Preview" width="250" height="140" loading="lazy"></div>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- New section for internal links -->
 <section id="about" class="mb-5">
   <div class="flow-row-bg">
-</div>
     <div class="container text-center">
-      <p class="overview-text desktop-only">
-        <span class="ja-content">
-          <b class="overview-title-desktop">ReStandardについて</b><br>
-          欧米の厳選されたアパレルブランドを日本に紹介するBtoB専門パートナー。<br>
-          RockmountやHarleyをはじめとする<b>欧米の厳選ブランドとの取引を32年間継続</b>しており、<br>
-          現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。<br>
-          私たちの<a href="about.html" class="internal-link">理念</a>や<a href="vision.html" class="internal-link">ビジョン</a>については、それぞれのページで詳しくご紹介しています。<br>
-          最新の<a href="news.html" class="internal-link">ニュース</a>や<a href="location.html" class="internal-link">アクセス情報</a>、<br>
-          そして<a href="contact.html" class="internal-link">お問い合わせ</a>については、ぜひ各ページをご覧ください。
-        </span>
-        <span class="en-content">
-          <b class="overview-title-desktop">About ReStandard</b><br>
-          ReStandard is a B2B specialized partner that wholesales carefully selected European and American apparel brands to select shops in Japan.<br>
-          We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, <b>for 32 years</b>,and have established partnerships with <b>more than 25 manufacturers</b> to date.<br>
-          Learn more about our <a href="about.html" class="internal-link">philosophy</a> and <a href="vision.html" class="internal-link">vision</a> on their respective pages.<br>
-          For the latest <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access information</a>, and <a href="contact.html" class="internal-link">inquiries</a>, please visit each page.<br>
-        </span>
-      </p>
-      <p class="overview-text mobile-only">
-        <span class="ja-content">
-          <b class="overview-title-mobile">ReStandardについて</b><br>
-          欧米の厳選されたアパレルブランドを<br>
-          日本のセレクトショップへ卸す<br>
-          BtoB専門パートナー。<br>
-          RockmountやHarleyなど<br>
-          <b>計25メーカーと32年の取引実績</b>。<br>
-          <a href="about.html" class="internal-link">理念</a>・<a href="vision.html" class="internal-link">ビジョン</a>・<a href="news.html" class="internal-link">ニュース</a>・<a href="location.html" class="internal-link"><br>
-            アクセス</a>・<a href="contact.html" class="internal-link">お問い合わせ</a>はこちら。
-        </span>
-        <span class="en-content">
-          <b class="overview-title-mobile">About ReStandard</b><br>
-          B2B partner for select shops in Japan, offering top European & US brands.<br>
-          32 years of experience with Rockmount, Harley, and more.<br>
-          See <a href="about.html" class="internal-link">philosophy</a>, <a href="vision.html" class="internal-link">vision</a>, <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access</a>, <a href="contact.html" class="internal-link">contact</a>.
-        </span>
-      </p>
+      <!-- 日本語：PC -->
+      <div class="i18n only-ja only-pc">
+        <p class="overview-text desktop-only">
+          <span class="ja-content">
+            <b class="overview-title-desktop">ReStandardについて</b><br>
+            欧米の厳選されたアパレルブランドを日本に紹介するBtoB専門パートナー。<br>
+            RockmountやHarleyをはじめとする<b>欧米の厳選ブランドとの取引を32年間継続</b>しており、<br>
+            現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。<br>
+            私たちの<a href="about.html" class="internal-link">理念</a>や<a href="vision.html" class="internal-link">ビジョン</a>については、それぞれのページで詳しくご紹介しています。<br>
+            最新の<a href="news.html" class="internal-link">ニュース</a>や<a href="location.html" class="internal-link">アクセス情報</a>、<br>
+            そして<a href="contact.html" class="internal-link">お問い合わせ</a>については、ぜひ各ページをご覧ください。
+          </span>
+        </p>
+      </div>
+      
+      <!-- 日本語：SP -->
+      <div class="i18n only-ja only-sp">
+        <p class="overview-text mobile-only">
+          <span class="ja-content">
+            <b class="overview-title-mobile">ReStandardについて</b><br>
+            欧米の厳選されたアパレルブランドを<br>
+            日本のセレクトショップへ卸す<br>
+            BtoB専門パートナー。<br>
+            RockmountやHarleyなど<br>
+            <b>計25メーカーと32年の取引実績</b>。<br>
+            <a href="about.html" class="internal-link">理念</a>・<a href="vision.html" class="internal-link">ビジョン</a>・<a href="news.html" class="internal-link">ニュース</a>・<a href="location.html" class="internal-link"><br>
+              アクセス</a>・<a href="contact.html" class="internal-link">お問い合わせ</a>はこちら。
+          </span>
+        </p>
+      </div>
+      
+      <!-- 英語：PC -->
+      <div class="i18n only-en only-pc">
+        <p class="overview-text desktop-only">
+          <span class="en-content">
+            <b class="overview-title-desktop">About ReStandard</b><br>
+            ReStandard is a B2B specialized partner that wholesales carefully selected European and American apparel brands to select shops in Japan.<br>
+            We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, <b>for 32 years</b>,and have established partnerships with <b>more than 25 manufacturers</b> to date.<br>
+            Learn more about our <a href="about.html" class="internal-link">philosophy</a> and <a href="vision.html" class="internal-link">vision</a> on their respective pages.<br>
+            For the latest <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access information</a>, and <a href="contact.html" class="internal-link">inquiries</a>, please visit each page.<br>
+          </span>
+        </p>
+      </div>
+      
+      <!-- 英語：SP -->
+      <div class="i18n only-en only-sp">
+        <p class="overview-text mobile-only">
+          <span class="en-content">
+            <b class="overview-title-mobile">About ReStandard</b><br>
+            B2B partner for select shops in Japan, offering top European & US brands.<br>
+            32 years of experience with Rockmount, Harley, and more.<br>
+            See <a href="about.html" class="internal-link">philosophy</a>, <a href="vision.html" class="internal-link">vision</a>, <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access</a>, <a href="contact.html" class="internal-link">contact</a>.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -1811,42 +2009,7 @@
       }
     });
 
-    // 言語切り替え機能の改善
-    function switchLanguage(lang, animate = true) {
-      // 現在の言語を保存
-      const prevLang = document.documentElement.lang;
-      
-      // 言語を切り替え
-      document.documentElement.lang = lang;
-      
-      // ボタンの状態を更新
-      document.querySelectorAll('.language-switcher button').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang));
-      });
-
-      // コンテンツのアニメーション
-      if (animate && prevLang !== lang) {
-        const contents = document.querySelectorAll(`.${lang}-content`);
-        contents.forEach(content => {
-          content.classList.add('language-transition');
-          content.addEventListener('animationend', () => {
-            content.classList.remove('language-transition');
-          }, { once: true });
-        });
-      }
-      
-      // 言語設定を保存
-      localStorage.setItem('preferred-language', lang);
-
-      // アクセシビリティのための通知
-      const announcement = document.createElement('div');
-      announcement.setAttribute('role', 'status');
-      announcement.setAttribute('aria-live', 'polite');
-      announcement.className = 'visually-hidden';
-      announcement.textContent = lang === 'ja' ? '日本語に切り替えました' : 'Switched to English';
-      document.body.appendChild(announcement);
-      setTimeout(() => announcement.remove(), 1000);
-    }
+    // 言語切り替え機能は lang-toggle.js で管理
   </script>
 
   <!-- Swiper.js CDN -->
@@ -2220,6 +2383,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- テキスト演出スクリプト -->
 <script src="js/reveal.js"></script>
+<script src="js/lang-toggle.js"></script>
 <script>
   // DOM完成後にテキスト演出を有効化
   document.addEventListener('DOMContentLoaded', function() {
