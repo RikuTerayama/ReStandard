@@ -25,14 +25,20 @@
   margin-top: calc(var(--header-h) + 12px);
   padding-bottom: clamp(24px, 4vw, 56px);  /* 後続との距離を物理的に作る */
   min-height: 280px;        /* 念のための下限高さ */
+  /* 重なりを完全に防ぐための追加設定 */
+  overflow: hidden;
+  clear: both;
 }
 
 /* ▼ Brands：再表示＆5×2整列 */
 .section-brands {
   position: relative;
-  z-index: 1;
+  z-index: 10;              /* flowing-imagesより確実に上に表示 */
   margin-top: var(--section-gap);
   padding: clamp(24px, 4vw, 56px) 0;
+  /* 重なりを防ぐための追加設定 */
+  background: #fff;         /* 背景色で確実に覆い隠す */
+  clear: both;
 }
 .section-brands .section-title {
   text-align: center;
@@ -41,26 +47,40 @@
   color: #333;
   font-weight: 700;
 }
+
+/* 既存のCSSとの競合を排除するための強力なセレクタ */
+#brands .brands-grid,
+.section-brands .brands-grid,
 .brands-grid {
   --gap: clamp(10px, 1.6vw, 16px);
   display: grid !important;                      /* 旧レイアウトを上書き */
-  grid-template-columns: repeat(5, minmax(0, 1fr));  /* ← 5列固定（PC） */
-  gap: var(--gap);
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;  /* ← 5列固定（PC） */
+  gap: var(--gap) !important;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 clamp(12px, 3vw, 24px);
+  /* グリッド表示を強制するための追加設定 */
+  grid-auto-rows: 1fr !important;
+  grid-auto-flow: row !important;
 }
+
+/* 既存のCSSとの競合を排除するための強力なセレクタ */
+#brands .brand-card,
+.section-brands .brand-card,
 .brand-card {
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 2px 10px rgba(0,0,0,.06);
-  display: flex; 
+  display: flex !important; 
   align-items: center; 
   justify-content: center;
   padding: clamp(8px, 1.4vw, 14px);
   aspect-ratio: 7 / 3;       /* ロゴが整って見える横長カード */
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* グリッドアイテムとしての表示を強制 */
+  grid-column: span 1 !important;
+  grid-row: span 1 !important;
 }
 .brand-card:hover {
   transform: translateY(-2px);
@@ -140,12 +160,41 @@
 .only-sp { 
   display: none  !important; 
 }
+
 @media (max-width: 767px) {
   .only-pc { 
     display: none  !important; 
   }
   .only-sp { 
     display: block !important; 
+  }
+}
+
+/* 重複表示を完全に防ぐための追加設定 */
+.about-inner.only-pc.only-sp {
+  display: none !important; /* 両方のクラスが付いている場合は非表示 */
+}
+
+/* 特定のセクション内でのみ適用 */
+#about .about-inner.only-pc,
+.section-about .about-inner.only-pc {
+  display: block !important;
+}
+
+#about .about-inner.only-sp,
+.section-about .about-inner.only-sp {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  #about .about-inner.only-pc,
+  .section-about .about-inner.only-pc {
+    display: none !important;
+  }
+  
+  #about .about-inner.only-sp,
+  .section-about .about-inner.only-sp {
+    display: block !important;
   }
 }
 
@@ -156,4 +205,56 @@
 }
 #brands, #about { 
   visibility: visible !important; 
+}
+
+/* 既存のCSSとの競合を完全に排除するための強力なリセット */
+#brands,
+.section-brands {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+#about,
+.section-about {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* グリッド表示を確実にするための最終的な強制設定 */
+#brands .brands-grid,
+.section-brands .brands-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  grid-template-rows: repeat(2, auto) !important;
+  gap: clamp(10px, 1.6vw, 16px) !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 clamp(12px, 3vw, 24px) !important;
+}
+
+/* レスポンシブ対応の最終確認 */
+@media (max-width: 1199px) { 
+  #brands .brands-grid,
+  .section-brands .brands-grid { 
+    grid-template-columns: repeat(4, 1fr) !important; 
+  } 
+}
+@media (max-width: 991px) {  
+  #brands .brands-grid,
+  .section-brands .brands-grid { 
+    grid-template-columns: repeat(3, 1fr) !important; 
+  } 
+}
+@media (max-width: 767px) {  
+  #brands .brands-grid,
+  .section-brands .brands-grid { 
+    grid-template-columns: repeat(2, 1fr) !important; 
+  } 
 } 
