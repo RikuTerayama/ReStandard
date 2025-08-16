@@ -136,6 +136,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/reveal.css">
 
   <link rel="canonical" href="https://restandard-2025.netlify.app/">
   <link rel="alternate" href="https://restandard-2025.netlify.app/" hreflang="ja" />
@@ -1539,7 +1540,7 @@
 
    <!-- About -->
 <section id="brands" class="mb-5">
-  <h1 class="section-title text-reveal">
+  <h1 class="section-title text-reveal rs-reveal" data-reveal="wipe">
     <span>Brands</span>
   </h1>
   <div class="brands-grid section-content">
@@ -1601,7 +1602,7 @@
     <div class="container text-center">
       <p class="overview-text desktop-only">
         <span class="ja-content">
-          <b class="overview-title-desktop">ReStandardについて</b><br>
+          <b class="overview-title-desktop rs-reveal" data-reveal="char">ReStandardについて</b><br>
           欧米の厳選されたアパレルブランドを日本に紹介するBtoB専門パートナー。<br>
           RockmountやHarleyをはじめとする<b>欧米の厳選ブランドとの取引を32年間継続</b>しており、<br>
           現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。<br>
@@ -1610,7 +1611,7 @@
           そして<a href="contact.html" class="internal-link">お問い合わせ</a>については、ぜひ各ページをご覧ください。
         </span>
         <span class="en-content">
-          <b class="overview-title-desktop">About ReStandard</b><br>
+          <b class="overview-title-desktop rs-reveal" data-reveal="char">About ReStandard</b><br>
           ReStandard is a B2B specialized partner that wholesales carefully selected European and American apparel brands to select shops in Japan.<br>
           We have maintained business relationships with carefully selected European and American brands, including Rockmount and Harley, <b>for 32 years</b>,and have established partnerships with <b>more than 25 manufacturers</b> to date.<br>
           Learn more about our <a href="about.html" class="internal-link">philosophy</a> and <a href="vision.html" class="internal-link">vision</a> on their respective pages.<br>
@@ -1619,7 +1620,7 @@
       </p>
       <p class="overview-text mobile-only">
         <span class="ja-content">
-          <b class="overview-title-mobile">ReStandardについて</b><br>
+          <b class="overview-title-mobile rs-reveal" data-reveal="char">ReStandardについて</b><br>
           欧米の厳選されたアパレルブランドを<br>
           日本のセレクトショップへ卸す<br>
           BtoB専門パートナー。<br>
@@ -1629,7 +1630,7 @@
             アクセス</a>・<a href="contact.html" class="internal-link">お問い合わせ</a>はこちら。
         </span>
         <span class="en-content">
-          <b class="overview-title-mobile">About ReStandard</b><br>
+          <b class="overview-title-mobile rs-reveal" data-reveal="char">About ReStandard</b><br>
           B2B partner for select shops in Japan, offering top European & US brands.<br>
           32 years of experience with Rockmount, Harley, and more.<br>
           See <a href="about.html" class="internal-link">philosophy</a>, <a href="vision.html" class="internal-link">vision</a>, <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access</a>, <a href="contact.html" class="internal-link">contact</a>.
@@ -2214,6 +2215,17 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('load', applyGap, { once:true });
     window.addEventListener('resize', applyGap);
   })();
+</script>
+
+<!-- テキスト演出スクリプト -->
+<script src="js/reveal.js"></script>
+<script>
+  // DOM完成後にテキスト演出を有効化
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof enhanceReveals === 'function') {
+      enhanceReveals();
+    }
+  });
 </script>
 </body>
 </html>
