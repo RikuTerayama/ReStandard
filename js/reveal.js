@@ -14,7 +14,12 @@ export function initReveal(root = document) {
   // 最終フォールバック：強制静止表示モード
   if (force) {
     log('FORCE MODE: 全要素を即時表示');
-    document.querySelectorAll('.rs-reveal[data-reveal]').forEach(reveal);
+    // reveal関数が定義される前に呼び出されるため、直接スタイルを適用
+    document.querySelectorAll('.rs-reveal[data-reveal]').forEach((el) => {
+      el.classList.add('is-visible');
+      el.style.setProperty('opacity', '1', 'important');
+      el.style.setProperty('transform', 'translateX(0)', 'important');
+    });
     return;
   }
 
@@ -65,9 +70,17 @@ export function initReveal(root = document) {
   // 初期適用：インラインstyleで"初期状態"を強制（競合に勝つ）
   function prime(el) {
     const mode = el.dataset.reveal;
+    
+    // クラスが既に適用されている場合はスキップ
+    if (el.classList.contains('rs-reveal')) return;
+    
     el.classList.add('rs-reveal');
-    el.style.setProperty('opacity', '0', 'important');
-    el.style.setProperty('transform', `translateX(var(--rs-reveal-shift))`, 'important');
+    
+    // 少し遅延させてから初期状態を適用（視覚的なちらつきを防ぐ）
+    requestAnimationFrame(() => {
+      el.style.setProperty('opacity', '0', 'important');
+      el.style.setProperty('transform', `translateX(var(--rs-reveal-shift))`, 'important');
+    });
 
     if (mode === 'char' && !el.querySelector('.rs-char')) splitChars(el);
     if (mode === 'line' && !el.querySelector('.rs-line')) splitLines(el);
