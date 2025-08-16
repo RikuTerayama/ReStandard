@@ -1397,7 +1397,11 @@
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
-  <section id="flowing-images" class="pt-20 md:pt-28 lg:pt-36 xl:pt-40 scroll-mt-[calc(var(--rs-header-h)+24px)]">
+  <!-- ガード用スペーサー（二段構え） -->
+  <div id="rs-gap-guard" aria-hidden="true"
+       style="display:block !important;height:140px !important;min-height:140px !important;pointer-events:none;"></div>
+  
+  <section id="flowing-images" class="pt-20 md:pt-28 lg:pt-36 xl:pt-40 scroll-mt-[calc(var(--rs-header-h)+24px)]" style="padding-top:96px !important;display:block !important;">
       <div class="flow-row-bg" id="flowing-images-bg">
       <div class="flow-row flow-row-top">
         <div class="flow-track">
@@ -2183,6 +2187,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+</script>
+
+<!-- 動的ギャップ調整スクリプト -->
+<script>
+  (function() {
+    function applyGap() {
+      var header = document.querySelector('header, .site-header, nav');
+      var gap = 0, base = 96; // 追加で空ける見栄え用ギャップ（px）
+      var h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
+      // 端末幅でギャップ強化（例：モバイル+96px / デスクトップ+144px）
+      var vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      gap = vw >= 1024 ? 144 : 96;
+
+      var spacer = document.getElementById('rs-gap-guard');
+      if (spacer) {
+        spacer.style.setProperty('height', (h + gap) + 'px', 'important');
+        spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
+      }
+      var fi = document.getElementById('flowing-images');
+      if (fi) {
+        fi.style.setProperty('padding-top', (base + gap) + 'px', 'important');
+        fi.style.setProperty('display', 'block', 'important');
+      }
+    }
+    window.addEventListener('load', applyGap, { once:true });
+    window.addEventListener('resize', applyGap);
+  })();
 </script>
 </body>
 </html>
