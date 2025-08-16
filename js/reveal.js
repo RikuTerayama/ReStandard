@@ -19,6 +19,12 @@ export function initReveal(root = document) {
       el.classList.add('is-visible');
       el.style.setProperty('opacity', '1', 'important');
       el.style.setProperty('transform', 'translateX(0)', 'important');
+      
+      // wipeの場合はmask-sizeも適用
+      if (el.dataset.reveal === 'wipe') {
+        (el.style).setProperty('-webkit-mask-size', '100% 100%', 'important');
+        (el.style).setProperty('mask-size', '100% 100%', 'important');
+      }
     });
     return;
   }
@@ -76,11 +82,9 @@ export function initReveal(root = document) {
     
     el.classList.add('rs-reveal');
     
-    // 少し遅延させてから初期状態を適用（視覚的なちらつきを防ぐ）
-    requestAnimationFrame(() => {
-      el.style.setProperty('opacity', '0', 'important');
-      el.style.setProperty('transform', `translateX(var(--rs-reveal-shift))`, 'important');
-    });
+    // 初期状態を即座に適用（視覚的なちらつきを防ぐ）
+    el.style.setProperty('opacity', '0', 'important');
+    el.style.setProperty('transform', `translateX(var(--rs-reveal-shift))`, 'important');
 
     if (mode === 'char' && !el.querySelector('.rs-char')) splitChars(el);
     if (mode === 'line' && !el.querySelector('.rs-line')) splitLines(el);
@@ -120,10 +124,25 @@ export function initReveal(root = document) {
       io.observe(el);
     });
     log('boot targets:', targets.length);
+    
+    // デバッグ：要素の状態を確認
+    if (debug && targets.length > 0) {
+      log('First target state:', {
+        element: targets[0],
+        opacity: targets[0].style.opacity,
+        transform: targets[0].style.transform,
+        classes: targets[0].className
+      });
+    }
   }
 
   // 初回起動
   boot(root);
+
+  // 少し遅延させてから初期化を実行（DOMの完全な準備を待つ）
+  setTimeout(() => {
+    boot(root);
+  }, 100);
 
   // ルーティングや動的描画に対応
   const mo = new MutationObserver((muts) => {
