@@ -154,6 +154,35 @@ export function initReveal(root = document) {
   });
   mo.observe(document.body, { childList: true, subtree: true });
 
+  // フェイルセーフ：1.2s後に可視化（特にabout/brandsを確実に）
+  setTimeout(() => {
+    const sections = ['#about', '#brands'];
+    sections.forEach((sel) => {
+      document.querySelectorAll(`${sel} .rs-reveal[data-reveal]`).forEach((el) => {
+        const node = el;
+        if (!node.classList.contains('is-visible')) {
+          node.classList.add('is-visible');
+          node.style.setProperty('opacity', '1', 'important');
+          node.style.setProperty('transform', 'none', 'important');
+          (node.style).setProperty('-webkit-mask-size', '100% 100%', 'important');
+          (node.style).setProperty('mask-size', '100% 100%', 'important');
+        }
+      });
+    });
+    
+    // さらに強力なフェイルセーフ：about/brands内の全要素を強制可視化
+    sections.forEach((sel) => {
+      const section = document.querySelector(sel);
+      if (section) {
+        section.style.setProperty('opacity', '1', 'important');
+        section.style.setProperty('visibility', 'visible', 'important');
+        section.style.setProperty('display', 'block', 'important');
+      }
+    });
+    
+    log('フェイルセーフ実行完了');
+  }, 1200);
+
   // デバッグ：任意の1要素を強制即時表示（?reveal-debug=1）
   if (debug) {
     setTimeout(() => {
