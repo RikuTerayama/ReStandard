@@ -98,11 +98,11 @@
   display: flex !important;
   align-items: center !important;      /* 垂直中央揃え */
   justify-content: center !important;  /* 水平中央揃え */
-  padding: clamp(24px, 3.5vw, 36px);  /* 内側の余白をさらに拡大 */
+  padding: clamp(28px, 4vw, 44px);    /* 内側の余白をさらに拡大 */
   /* 正方形を強制 */
   aspect-ratio: 1 / 1 !important;     /* 正方形を強制 */
-  width: clamp(130px, 18vw, 200px) !important;   /* 固定幅をさらに拡大して正方形を保証 */
-  height: clamp(130px, 18vw, 200px) !important;  /* 固定高さをさらに拡大して正方形を保証 */
+  width: clamp(150px, 20vw, 240px) !important;   /* 固定幅をさらに拡大して正方形を保証（2cm追加） */
+  height: clamp(150px, 20vw, 240px) !important;  /* 固定高さをさらに拡大して正方形を保証（2cm追加） */
   overflow: hidden;
   /* グリッド配置を確実に */
   grid-column: span 1 !important;
@@ -123,8 +123,8 @@
 #brands .brand-card img,
 .section-brands .brand-card img,
 .brand-card img {
-  max-width: 95% !important;          /* 画像サイズをさらに拡大 */
-  max-height: 95% !important;         /* 画像サイズをさらに拡大 */
+  max-width: 70% !important;          /* 画像サイズを小さくして空白を美しく */
+  max-height: 70% !important;         /* 画像サイズを小さくして空白を美しく */
   width: auto !important;             /* 幅を自動調整 */
   height: auto !important;            /* 高さを自動調整 */
   object-fit: contain !important;     /* アスペクト比を保持 */
@@ -167,17 +167,17 @@
   #brands .brand-card,
   .section-brands .brand-card,
   .brand-card {
-    width: clamp(160px, 22vw, 220px) !important;   /* スマホではさらに大きく */
-    height: clamp(160px, 22vw, 220px) !important;  /* スマホではさらに大きく */
-    padding: clamp(32px, 4.5vw, 44px);              /* 内側の余白も拡大 */
+    width: clamp(180px, 24vw, 260px) !important;   /* スマホではさらに大きく（2cm追加） */
+    height: clamp(180px, 24vw, 260px) !important;  /* スマホではさらに大きく（2cm追加） */
+    padding: clamp(36px, 5vw, 48px);                /* 内側の余白も拡大 */
   }
   
-  /* スマホではロゴマークも大きく */
+  /* スマホではロゴマークも小さくして空白を美しく */
   #brands .brand-card img,
   .section-brands .brand-card img,
   .brand-card img {
-    max-width: 98% !important;          /* スマホでは98%サイズ */
-    max-height: 98% !important;         /* スマホでは98%サイズ */
+    max-width: 65% !important;          /* スマホでは65%サイズで空白を美しく */
+    max-height: 65% !important;         /* スマホでは65%サイズで空白を美しく */
   }
 }
 
@@ -193,9 +193,17 @@
   #brands .brand-card,
   .section-brands .brand-card,
   .brand-card {
-    width: clamp(120px, 18vw, 160px) !important;
-    height: clamp(120px, 18vw, 160px) !important;
-    padding: clamp(24px, 3.5vw, 32px);
+    width: clamp(140px, 20vw, 200px) !important;   /* 小さい画面でも適切なサイズ */
+    height: clamp(140px, 20vw, 200px) !important;  /* 小さい画面でも適切なサイズ */
+    padding: clamp(28px, 4vw, 36px);
+  }
+  
+  /* 小さい画面でもロゴマークは小さくして空白を美しく */
+  #brands .brand-card img,
+  .section-brands .brand-card img,
+  .brand-card img {
+    max-width: 60% !important;          /* 小さい画面では60%サイズ */
+    max-height: 60% !important;         /* 小さい画面では60%サイズ */
   }
 }
 
@@ -215,7 +223,7 @@
 .about-inner {
   max-width: min(880px, 92vw);
   margin: 0 auto;
-  text-align: center;  /* 中央揃え */
+  text-align: center !important;  /* 中央揃えを強制 */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,.06);
@@ -398,7 +406,7 @@ body .section-brands {
   .section-brands,
   body #brands,
   body .section-brands {
-    margin-top: calc(clamp(200px, 20vw, 400px) + 50px) !important;  /* PC版で5cmほど下に移動 */
+    margin-top: calc(clamp(200px, 20vw, 400px) + 100px) !important;  /* PC版で10cmほど下に移動（5cm追加） */
   }
 }
 
@@ -450,7 +458,7 @@ html body .section-brands {
 @media (min-width: 768px) {
   html body #brands,
   html body .section-brands {
-    margin-top: calc(clamp(200px, 20vw, 400px) + 50px) !important;
+    margin-top: calc(clamp(200px, 20vw, 400px) + 100px) !important;  /* PC版で10cmほど下に移動（5cm追加） */
   }
 }
 
@@ -474,3 +482,25 @@ html body .section-about {
 } */ 
 
 /* 重複した設定を削除 - 上記の強力な設定に統合済み */ 
+
+/* 強制設定による中心揃えの保証 */
+#about .about-inner,
+.section-about .about-inner,
+body #about .about-inner,
+body .section-about .about-inner {
+  text-align: center !important;
+}
+
+#about .about-title,
+.section-about .about-title,
+body #about .about-title,
+body .section-about .about-title {
+  text-align: center !important;
+}
+
+#about .about-text,
+.section-about .about-text,
+body #about .about-text,
+body .section-about .about-text {
+  text-align: center !important;
+} 
