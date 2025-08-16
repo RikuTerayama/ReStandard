@@ -75,14 +75,48 @@ html:not([lang]) #brands .only-en {
 [data-lang-btn] {
   cursor: pointer;
   transition: all 0.2s ease;
+  border: 1px solid #333;
+  padding: 8px 16px;
+  margin: 0 4px;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 [data-lang-btn].active {
   background-color: #333 !important;
   color: #fff !important;
+  border-color: #333 !important;
 }
 
 [data-lang-btn]:not(.active) {
   background-color: transparent !important;
   color: #333 !important;
+  border-color: #333 !important;
+}
+
+[data-lang-btn]:hover {
+  background-color: #f0f0f0 !important;
+  transform: translateY(-1px);
+}
+
+[data-lang-btn].active:hover {
+  background-color: #222 !important;
+}
+
+/* 最も強力なセレクタによる言語切り替え保証 */
+html body[lang="ja"] #about .only-ja,
+html body[lang="ja"] #brands .only-ja { 
+  display: block !important; 
+}
+
+html body[lang="en"] #about .only-en,
+html body[lang="en"] #brands .only-en { 
+  display: block !important; 
+}
+
+html body[lang="ja"] #about .only-en,
+html body[lang="ja"] #brands .only-en,
+html body[lang="en"] #about .only-ja,
+html body[lang="en"] #brands .only-ja { 
+  display: none !important; 
 } 
