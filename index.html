@@ -178,8 +178,50 @@
       --body-font: 'Noto Sans JP', sans-serif;
       --main-font-family: 'Noto Serif JP', serif;
       --heading-font-family: 'Noto Serif JP', serif;
+      --header-height: 64px;
     }
-
+    
+    @media (min-width: 1024px) {
+      :root {
+        --header-height: 72px;
+      }
+    }
+    
+    /* モバイル版でのflowing-imagesとヘッダーの間隔調整 */
+    @media (max-width: 900px) {
+      #flowing-images {
+        margin-top: calc(var(--header-height) + 40px) !important;
+        padding-top: 20px !important;
+        scroll-margin-top: calc(var(--header-height) + 16px);
+      }
+    }
+    
+    /* より小さい画面での調整 */
+    @media (max-width: 480px) {
+      #flowing-images {
+        margin-top: calc(var(--header-height) + 32px) !important;
+        padding-top: 16px !important;
+      }
+    }
+    
+    /* iOS Safariのsafe-area対応 */
+    @supports (padding-top: env(safe-area-inset-top)) {
+      .navbar {
+        padding-top: calc(env(safe-area-inset-top) + 8px);
+        padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+      }
+      
+      #flowing-images {
+        margin-top: calc(var(--header-height) + env(safe-area-inset-top) + 40px) !important;
+      }
+      
+      @media (min-width: 901px) {
+        #flowing-images {
+          margin-top: calc(var(--header-height) + env(safe-area-inset-top) + 72px) !important;
+        }
+      }
+    }
+    
     html, body {
       font-family: var(--main-font-family) !important;
       overflow-x: hidden;
@@ -854,8 +896,9 @@
       #flowing-images {
         overflow: visible !important;
         width: 100vw !important;
-        margin-top: 0 !important;
-        padding-top: 160px !important;
+        margin-top: calc(var(--header-height) + 40px) !important;
+        padding-top: 20px !important;
+        scroll-margin-top: calc(var(--header-height) + 16px);
         display: block !important;
         visibility: visible !important;
         position: relative !important;
@@ -996,20 +1039,30 @@
     
     /* スマートフォン版flowing imagesの位置を強制的に調整 */
     html body #flowing-images {
-      margin-top: 0 !important;
-      padding-top: 200px !important;
+      margin-top: calc(var(--header-height) + 40px) !important;
+      padding-top: 20px !important;
       display: block !important;
       visibility: visible !important;
+      scroll-margin-top: calc(var(--header-height) + 16px);
     }
     
     /* 最も強力なセレクターで競合を完全に解決 */
     html body #flowing-images {
-      margin-top: 0 !important;
-      padding-top: 250px !important;
+      margin-top: calc(var(--header-height) + 40px) !important;
+      padding-top: 20px !important;
       display: block !important;
       visibility: visible !important;
       position: relative !important;
       z-index: 10 !important;
+      scroll-margin-top: calc(var(--header-height) + 16px);
+    }
+    
+    /* より小さい画面での調整 */
+    @media (max-width: 480px) {
+      html body #flowing-images {
+        margin-top: calc(var(--header-height) + 32px) !important;
+        padding-top: 16px !important;
+      }
     }
     
     /* flow-row-bgのmarginも上書き */
@@ -1021,13 +1074,14 @@
     /* PC版用の最も強力なセレクター */
     @media (min-width: 901px) {
       html body #flowing-images {
-        margin-top: 0 !important;
+        margin-top: calc(var(--header-height) + 72px) !important;
         padding-top: 0 !important;
         position: relative !important;
-        top: 450px !important;
+        top: 0 !important;
         display: block !important;
         visibility: visible !important;
         z-index: 10 !important;
+        scroll-margin-top: calc(var(--header-height) + 16px);
       }
       
       html body .flow-row-bg {
@@ -1175,7 +1229,7 @@
       .navbar {
         background-color: rgba(255, 255, 255, 0.9) !important;
         backdrop-filter: blur(10px) !important;
-        margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
+        margin-bottom: 0 !important; /* 既存の大きなmarginを削除 */
       }
       .flow-row-bg {
         background: rgba(255,255,255,0.9) !important;
@@ -1185,10 +1239,11 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
       }
       #flowing-images {
-        margin-top: 0 !important; /* 既存のmarginをリセット */
-        padding-top: 0 !important; /* 既存のpaddingをリセット */
+        margin-top: calc(var(--header-height) + 72px) !important; /* 統一された間隔設定 */
+        padding-top: 0 !important;
         position: relative !important;
-        top: 450px !important; /* flowing imagesをさらに下に配置 */
+        top: 0 !important; /* 既存の大きなtop値を削除 */
+        scroll-margin-top: calc(var(--header-height) + 16px);
       }
       
       /* PC版で画像サイズを250pxに設定 */
@@ -1205,28 +1260,29 @@
       
       /* より強力な間隔設定 */
       html body .navbar {
-        margin-bottom: 500px !important;
+        margin-bottom: 0 !important; /* 既存の大きなmarginを削除 */
       }
       
       /* 最も強力なセレクターでPC版の位置を調整 */
       html body #flowing-images {
-        margin-top: 0 !important;
+        margin-top: calc(var(--header-height) + 72px) !important;
         padding-top: 0 !important;
         position: relative !important;
-        top: 450px !important;
+        top: 0 !important;
+        scroll-margin-top: calc(var(--header-height) + 16px);
       }
       
-      /* Brandsセクションも下に移動 */
+      /* Brandsセクションも統一された間隔で配置 */
       html body #brands {
         position: relative !important;
-        top: 450px !important;
+        top: 0 !important;
         margin-top: 50px !important;
       }
       
-      /* overviewセクションも下に移動 */
+      /* overviewセクションも統一された間隔で配置 */
       html body #overview {
         position: relative !important;
-        top: 450px !important;
+        top: 0 !important;
         margin-top: 50px !important;
         text-align: center !important;
       }
@@ -1272,10 +1328,10 @@
         padding: 0 15px !important;
       }
       
-      /* フッターも下に移動 */
+      /* フッターも統一された間隔で配置 */
       html body footer {
         position: relative !important;
-        top: 450px !important;
+        top: 0 !important;
         margin-top: 100px !important;
       }
       
