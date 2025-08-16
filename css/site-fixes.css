@@ -53,10 +53,18 @@
 }
 .section-brands .section-title {
   text-align: center;
-  font-size: clamp(24px, 3.2vw, 36px);
+  font-size: clamp(24px, 3.2vw, 36px);  /* タイトル下の余白を拡大 */
   margin: 0 0 clamp(32px, 4vw, 48px);  /* タイトル下の余白を拡大 */
   color: #333;
   font-weight: 700;
+}
+
+/* スマートフォン版でBrandsのフォントサイズを大きく */
+@media (max-width: 767px) {
+  .section-brands .section-title {
+    font-size: clamp(32px, 4.5vw, 48px) !important;  /* スマホでは1-2cmほど大きく */
+    margin: 0 0 clamp(40px, 5vw, 60px) !important;  /* 余白も調整 */
+  }
 }
 
 /* 既存のCSSとの競合を排除するための強力なセレクタ */
@@ -93,8 +101,8 @@
   padding: clamp(24px, 3.5vw, 36px);  /* 内側の余白をさらに拡大 */
   /* 正方形を強制 */
   aspect-ratio: 1 / 1 !important;     /* 正方形を強制 */
-  width: clamp(110px, 16vw, 180px) !important;   /* 固定幅をさらに拡大して正方形を保証 */
-  height: clamp(110px, 16vw, 180px) !important;  /* 固定高さをさらに拡大して正方形を保証 */
+  width: clamp(130px, 18vw, 200px) !important;   /* 固定幅をさらに拡大して正方形を保証 */
+  height: clamp(130px, 18vw, 200px) !important;  /* 固定高さをさらに拡大して正方形を保証 */
   overflow: hidden;
   /* グリッド配置を確実に */
   grid-column: span 1 !important;
@@ -115,8 +123,8 @@
 #brands .brand-card img,
 .section-brands .brand-card img,
 .brand-card img {
-  max-width: 90% !important;          /* 画像サイズをさらに拡大 */
-  max-height: 90% !important;         /* 画像サイズをさらに拡大 */
+  max-width: 95% !important;          /* 画像サイズをさらに拡大 */
+  max-height: 95% !important;         /* 画像サイズをさらに拡大 */
   width: auto !important;             /* 幅を自動調整 */
   height: auto !important;            /* 高さを自動調整 */
   object-fit: contain !important;     /* アスペクト比を保持 */
@@ -159,17 +167,17 @@
   #brands .brand-card,
   .section-brands .brand-card,
   .brand-card {
-    width: clamp(140px, 20vw, 200px) !important;   /* スマホではより大きく */
-    height: clamp(140px, 20vw, 200px) !important;  /* スマホではより大きく */
-    padding: clamp(28px, 4vw, 40px);                /* 内側の余白も拡大 */
+    width: clamp(160px, 22vw, 220px) !important;   /* スマホではさらに大きく */
+    height: clamp(160px, 22vw, 220px) !important;  /* スマホではさらに大きく */
+    padding: clamp(32px, 4.5vw, 44px);              /* 内側の余白も拡大 */
   }
   
   /* スマホではロゴマークも大きく */
   #brands .brand-card img,
   .section-brands .brand-card img,
   .brand-card img {
-    max-width: 95% !important;          /* スマホでは95%サイズ */
-    max-height: 95% !important;         /* スマホでは95%サイズ */
+    max-width: 98% !important;          /* スマホでは98%サイズ */
+    max-height: 98% !important;         /* スマホでは98%サイズ */
   }
 }
 
@@ -203,27 +211,32 @@
   /* 視覚的分離のための境界線（軽微） */
   border-top: 1px solid rgba(0,0,0,0.05);
 }
+
 .about-inner {
   max-width: min(880px, 92vw);
-  margin: 0 auto;                 /* ← 中央配置 */
-  text-align: center;
+  margin: 0 auto;
+  text-align: center;  /* 中央揃え */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,.06);
   padding: clamp(16px, 3vw, 28px) clamp(16px, 4vw, 40px);
 }
+
 .about-title {
   font-size: clamp(20px, 2.8vw, 32px);
   font-weight: 700;
   color: #333;
   margin: 0 0 clamp(24px, 3vw, 36px);  /* タイトル下の余白を拡大 */
   line-height: 1.4;
+  text-align: center !important;  /* タイトルも中央揃え */
 }
+
 .about-text {
   font-size: clamp(14px, 1.8vw, 18px);
   line-height: 1.8;
   color: #555;
   margin: 0 0 clamp(16px, 2vw, 24px);  /* 段落間の余白を追加 */
+  text-align: center !important;  /* テキストも中央揃え */
 }
 .about-text b {
   color: #333;
@@ -403,6 +416,14 @@
   background: transparent !important;
 }
 
+/* PC版でBrandsセクションを下に移動 */
+@media (min-width: 768px) {
+  #brands,
+  .section-brands {
+    margin-top: calc(clamp(200px, 20vw, 400px) + 50px) !important;  /* PC版で5cmほど下に移動 */
+  }
+}
+
 #about,
 .section-about {
   position: relative !important;
@@ -428,3 +449,10 @@
   height: clamp(40px, 5vw, 80px);
   background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
 } */ 
+
+/* PC版でBrandsセクションを下に移動 */
+@media (min-width: 768px) {
+  .section-brands {
+    margin-top: calc(var(--section-gap) + 50px);  /* PC版で5cmほど下に移動 */
+  }
+} 
