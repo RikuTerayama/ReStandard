@@ -90,4 +90,30 @@
     -webkit-mask-size: 100% 100% !important;
             mask-size: 100% 100% !important;
   }
+}
+
+/* --- 強制可視: about / brands 内の reveal を全解除 --- */
+#about .rs-reveal[data-reveal],
+#brands .rs-reveal[data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  -webkit-mask-size: 100% 100% !important;
+          mask-size: 100% 100% !important;
+  transition: none !important; /* 一旦アニメも停止 */
+}
+
+/* 万一 display:none / visibility:hidden が混入しているケースを殺す */
+#about, #about * {
+  display: revert-layer !important;
+  visibility: visible !important;
+}
+#brands, #brands * {
+  display: revert-layer !important;
+  visibility: visible !important;
+}
+
+/* z-index/重なり対策（header等が覆っている場合の保険） */
+#about, #brands { 
+  position: relative; 
+  z-index: 0; 
 } 
