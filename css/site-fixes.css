@@ -2,6 +2,11 @@
    Site Fixes - Brands & About Sections
    ======================================== */
 
+:root {
+  --header-h: 64px;
+  --section-gap: clamp(48px, 6vw, 96px);
+}
+
 /* 0) リセット（前の演出や競合を抑える保険） */
 #brands, #about { 
   position: relative; 
@@ -12,107 +17,124 @@
   transform: none !important; 
 }
 
-/* 1) Brands：見出しは1つ、グリッドは5×2に */
-#brands { 
-  padding: clamp(32px, 4vw, 56px) 0; 
+/* ▼ flowing-images：重なりの主犯対策。親に高さ/コンテキストを与える */
+.section-flowing {
+  display: flow-root;             /* 浮動要素や内部絶対配置を内包 */
+  position: relative;
+  z-index: 0;                     /* 以降のセクションが上に来られるよう 0 に固定 */
+  margin-top: calc(var(--header-h) + 12px);
+  padding-bottom: clamp(24px, 4vw, 56px);  /* 後続との距離を確実に確保 */
+  /* 必要に応じて最小高さ（内部が absolute で親高が 0 の場合の保険）*/
+  min-height: 280px;
 }
-#brands .section-title {
+
+/* ▼ Brands：再表示＆整列 */
+.section-brands {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--section-gap);
+  padding: clamp(24px, 4vw, 56px) 0;
+}
+.section-brands .section-title {
   text-align: center;
   font-size: clamp(24px, 3.2vw, 36px);
-  margin: 0 0 clamp(20px, 3vw, 32px);
+  margin: 0 0 clamp(16px, 3vw, 28px);
   color: #333;
   font-weight: 700;
 }
-#brands .brands-grid {
+.brands-grid {
   --gap: clamp(10px, 1.6vw, 16px);
-  display: grid;
+  display: grid !important;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--gap);
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 clamp(12px, 3vw, 24px);
 }
-#brands .brand-card {
+.brand-card {
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 2px 10px rgba(0,0,0,.06);
   display: flex; 
   align-items: center; 
   justify-content: center;
-  padding: clamp(8px, 1.5vw, 14px);
-  aspect-ratio: 7 / 3;            /* 端正な横長カードに固定 */
+  padding: clamp(8px, 1.4vw, 14px);
+  aspect-ratio: 7 / 3;   /* ロゴが整って見える比率に固定 */
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-#brands .brand-card:hover {
+.brand-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0,0,0,.12);
 }
-#brands .brand-card img {
+.brand-card img {
   max-width: 100%; 
   max-height: 100%;
-  object-fit: contain;
+  object-fit: contain; 
   display: block;
 }
 
-/* 5×2＝10枚で美しく並ぶよう、レスポンシブ列数を調整 */
-@media (max-width: 1199px) { /* タブレット～小さめPC */
-  #brands .brands-grid { 
+/* レスポンシブ：SPは2列、タブレットは3～4列 */
+@media (max-width: 1199px) { 
+  .brands-grid { 
     grid-template-columns: repeat(4, 1fr); 
-  }
+  } 
 }
-@media (max-width: 991px) {   /* タブレット縦 */
-  #brands .brands-grid { 
+@media (max-width: 991px) {  
+  .brands-grid { 
     grid-template-columns: repeat(3, 1fr); 
-  }
+  } 
 }
-@media (max-width: 767px) {   /* スマホ */
-  #brands .brands-grid { 
+@media (max-width: 767px) {  
+  .brands-grid { 
     grid-template-columns: repeat(2, 1fr); 
-  }
+  } 
 }
 
-/* 2) About：中央揃え＆最大幅 */
-#about { 
-  padding: clamp(36px, 5vw, 72px) 0; 
+/* ▼ About：中央揃え + 適切な幅。順序上は Brands の後 */
+.section-about {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--section-gap);
+  padding: clamp(24px, 4vw, 56px) 0;
 }
-#about .about-inner {
+.about-inner {
   max-width: min(880px, 92vw);
-  margin: 0 auto;
-  text-align: center;         /* ← 中央揃え（③の修正） */
+  margin: 0 auto;                 /* ← 中央配置（③） */
+  text-align: center;
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,.06);
   border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
   padding: clamp(16px, 3vw, 28px) clamp(16px, 4vw, 40px);
 }
-#about .about-title {
+.about-title {
   font-size: clamp(20px, 2.8vw, 32px);
   font-weight: 700;
   color: #333;
   margin: 0 0 clamp(16px, 2.5vw, 24px);
   line-height: 1.4;
 }
-#about .about-text {
+.about-text {
   font-size: clamp(14px, 1.8vw, 18px);
   line-height: 1.8;
   color: #555;
   margin: 0;
 }
-#about .about-text b {
+.about-text b {
   color: #333;
   font-weight: 600;
 }
-#about .about-text .internal-link {
+.about-text .internal-link {
   color: #0066cc;
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
 }
-#about .about-text .internal-link:hover {
+.about-text .internal-link:hover {
   border-bottom-color: #0066cc;
 }
 
-/* 3) PC/スマホの出し分け（④の修正：同時表示を防止） */
+/* ▼ PC/スマホの排他表示（④） */
 .only-pc { 
   display: block !important; 
 }
@@ -128,39 +150,11 @@
   }
 }
 
-/* 4) 言語の出し分け（<html lang="ja|en"> を唯一のソースに） */
-#about .i18n, #brands .i18n { 
-  display: none !important; 
+/* （保険）以前の演出や強制非表示が残っていても可視化できるよう最小限のリセット */
+#brands .rs-reveal, #about .rs-reveal { 
+  opacity: 1 !important; 
+  transform: none !important; 
 }
-html[lang="ja"] #about .only-ja,
-html[lang="ja"] #brands .only-ja { 
-  display: block !important; 
-}
-html[lang="en"] #about .only-en,
-html[lang="en"] #brands .only-en { 
-  display: block !important; 
-}
-
-/* 念のため：見えない側を確実に隠す */
-html[lang="ja"] #about .only-en, 
-html[lang="ja"] #brands .only-en,
-html[lang="en"] #about .only-ja, 
-html[lang="en"] #brands .only-ja {
-  display: none !important;
-}
-
-/* デフォルト言語設定（lang属性が未設定の場合） */
-html:not([lang]) #about .only-ja,
-html:not([lang]) #brands .only-ja { 
-  display: block !important; 
-}
-html:not([lang]) #about .only-en,
-html:not([lang]) #brands .only-en { 
-  display: none !important; 
-}
-
-/* 強制可視化の上書き（既存のreveal.cssとの競合回避） */
-#about .i18n[style*="display: none"],
-#brands .i18n[style*="display: none"] {
-  display: block !important;
+#brands, #about { 
+  visibility: visible !important; 
 } 
