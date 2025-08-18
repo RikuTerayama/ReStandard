@@ -1547,6 +1547,86 @@ body .restandard-section .section-title {
      text-align: center !important; /* テキストも中央に */
      max-width: 920px !important; /* 横に広がり過ぎる場合の制限 */
    }
+   
+   /* ========================================
+     9) CSS強制上書き：絶対配置やオーバーレイを無効化、見出しを直上に
+   ======================================== */
+   
+   /* CSS変数で統一セクション間隔を定義 */
+   :root {
+     --sec-gap: 72px;  /* 統一セクション間隔(タイトル上) */
+     --title-gap: 24px; /* タイトルとグリッド/本文の距離 */
+   }
+   
+   /* Collection見出しを文書フローに戻す */
+   .collection-title, 
+   .collection-section .section-title {
+     position: static !important;
+     inset: auto !important;
+     transform: none !important;
+     margin: 0 0 var(--title-gap) 0 !important;
+     text-align: center !important;
+     z-index: 1 !important;
+   }
+   
+   /* ヒーロー上の重複/擬似オーバーレイを無効化 */
+   .hero .collection-title, .kv .collection-title, .mv .collection-title {
+     display: none !important;
+   }
+   
+   .collection-section::before, .collection-section::after,
+   .collection-section .title-overlay, .collection-section .overlay {
+     display: none !important;
+     content: none !important;
+   }
+   
+   /* グリッドは見出し直下から開始（不要な上マージンを殺す） */
+   .collection-section .flowing-images, 
+   .collection-section .collection-grid {
+     margin-top: 0 !important;
+     padding-top: 0 !important;
+     position: relative !important;
+     z-index: 0 !important;
+   }
+   
+   /* ===== セクション間隔を統一（上余白のみ揃える） ===== */
+   .collection-section,
+   .brands-section,
+   .lookbook-section,
+   .restandard-section {
+     padding-top: var(--sec-gap) !important;
+   }
+   
+   /* タイトル下の距離も統一 */
+   .collection-section .section-title,
+   .brands-section .section-title,
+   .lookbook-section .section-title,
+   .restandard-section .section-title {
+     margin-bottom: var(--title-gap) !important;
+   }
+   
+   /* ===== About ReStandard を中央揃え ===== */
+   .restandard-section .restandard-body {
+     max-width: 1024px !important;             /* 適度に読む幅に制限 */
+     margin-left: auto !important;
+     margin-right: auto !important;
+     text-align: center !important;
+     display: block !important;
+   }
+   
+   /* 万一 flex/float で左寄り化している場合に備える */
+   .restandard-section,
+   .restandard-section .restandard-body,
+   .restandard-section .restandard-body * {
+     float: none !important;
+   }
+   
+   .restandard-section .restandard-body img,
+   .restandard-section .restandard-body figure {
+     margin-left: auto !important;
+     margin-right: auto !important;
+     display: block !important;
+   }
 } 
 
 /* ========================================
