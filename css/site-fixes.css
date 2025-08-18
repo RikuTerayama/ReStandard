@@ -447,8 +447,24 @@ body #flowing-images,
 body .section-flowing {
   position: relative !important;
   z-index: 1 !important;
-  margin-bottom: clamp(250px, 25vw, 500px) !important;  /* flowing-imagesとBrandsの間隔をさらに拡大（5cm追加） */
+  margin-bottom: clamp(80px, 10vw, 160px) !important;  /* flowing-imagesとCollectionの間隔を調整 */
   padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も維持 */
+  /* 重なりを防ぐための追加設定 */
+  isolation: isolate !important;
+  contain: layout !important;
+  /* 背景色を透明に */
+  background: transparent !important;
+}
+
+#collection,
+.section-collection,
+body #collection,
+body .section-collection {
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: clamp(80px, 10vw, 160px) !important;     /* flowing-imagesとCollectionの間隔 */
+  margin-bottom: clamp(80px, 10vw, 160px) !important;  /* CollectionとBrandsの間隔 */
+  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -462,8 +478,8 @@ body #brands,
 body .section-brands {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(250px, 25vw, 500px) !important;    /* flowing-imagesとBrandsの間隔をさらに拡大（5cm追加） */
-  margin-bottom: clamp(130px, 15vw, 260px) !important; /* BrandsとAboutの間隔をさらに拡大（5cm追加） */
+  margin-top: clamp(80px, 10vw, 160px) !important;     /* CollectionとBrandsの間隔 */
+  margin-bottom: clamp(80px, 10vw, 160px) !important;  /* BrandsとLookbookの間隔 */
   padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
@@ -537,13 +553,20 @@ body .section-about .about-text {
 /* 最終的な強制設定 - 確実に反映されるように */
 html body #flowing-images,
 html body .section-flowing {
-  margin-bottom: clamp(250px, 25vw, 500px) !important;
+  margin-bottom: clamp(80px, 10vw, 160px) !important;
   padding-bottom: clamp(60px, 8vw, 120px) !important;
+}
+
+html body #collection,
+html body .section-collection {
+  margin-top: clamp(80px, 10vw, 160px) !important;
+  margin-bottom: clamp(80px, 10vw, 160px) !important;
+  padding: clamp(60px, 8vw, 120px) 0 !important;
 }
 
 html body #brands,
 html body .section-brands {
-  margin-top: clamp(250px, 25vw, 500px) !important;
+  margin-top: clamp(80px, 10vw, 160px) !important;
   margin-bottom: clamp(80px, 10vw, 160px) !important;
   padding: clamp(60px, 8vw, 120px) 0 !important;
 }
@@ -721,7 +744,8 @@ html body .section-about {
   text-align: center !important;
   font-size: clamp(24px, 4vw, 36px) !important;
   font-weight: 600 !important;
-  color: var(--main-color) !important;
+  color: #fff !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
   margin-bottom: clamp(32px, 6vw, 48px) !important;
   line-height: 1.2 !important;
 }
@@ -806,4 +830,29 @@ html body .section-about {
     width: clamp(120px, 16vw, 160px);
     height: clamp(168px, 22.4vw, 224px);
   }
+} 
+
+/* Collectionセクションのスタイル - LookbookやBrandsと同じ定義 */
+#collection,
+.section-collection {
+  position: relative;
+  z-index: 10;              /* 他のセクションより確実に上に表示 */
+  margin-top: var(--section-gap);  /* flowing-imagesとの間隔を調整 */
+  padding: var(--section-padding) 0;  /* 内部の余白も確保 */
+  /* 重なりを防ぐための設定 */
+  background: transparent;  /* 背景色を透明に */
+  clear: both;
+  text-align: center;
+}
+
+/* Collectionのタイトル */
+#collection .section-title,
+.section-collection .section-title {
+  text-align: center !important;
+  font-size: clamp(24px, 4vw, 36px) !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+  margin-bottom: clamp(32px, 6vw, 48px) !important;
+  line-height: 1.2 !important;
 } 
