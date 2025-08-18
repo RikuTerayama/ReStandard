@@ -514,24 +514,6 @@ html body .section-about {
   opacity: 0.9;
 }
 
-/* 画像表示の最終保証 - 既存スタイルとの競合を完全解決 */
-#flowing-images .flow-track a img,
-.section-flowing .flow-track a img {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  /* 画像の元のサイズを維持 */
-  width: auto !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: 250px !important;
-  /* 既存の画像スタイルを継承 */
-  object-fit: cover !important;
-  /* 画像の表示を強制 */
-  position: relative !important;
-  z-index: 1 !important;
-}
-
 /* リンク要素の表示最終保証 */
 #flowing-images .flow-track a,
 .section-flowing .flow-track a {
@@ -547,6 +529,11 @@ html body .section-about {
   /* リンクの表示を強制 */
   position: relative !important;
   z-index: 1 !important;
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  /* リンクの範囲を明確化 */
+  outline: none !important;
 }
 
 /* ホバー効果の最終保証 */
@@ -555,7 +542,21 @@ html body .section-about {
   filter: brightness(1.1) !important;
   transform: scale(1.05) !important;
   opacity: 0.9 !important;
-} 
+  /* ホバー時もクリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* リンクのホバー効果も保証 */
+#flowing-images .flow-track a:hover,
+.section-flowing .flow-track a:hover {
+  /* ホバー時もクリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  /* ホバー効果 */
+  transform: scale(1.02) !important;
+  opacity: 0.95 !important;
+}
 
 /* デバッグ用：画像が表示されない場合の強制表示 */
 #flowing-images .flow-track a img[src*="1.JPG"],
@@ -571,6 +572,9 @@ html body .section-about {
   position: relative !important;
   z-index: 999 !important;
   background: rgba(255, 0, 0, 0.1) !important; /* デバッグ用の背景色 */
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }
 
 /* リンク要素のデバッグ表示 */
@@ -584,4 +588,50 @@ html body .section-about {
   position: relative !important;
   z-index: 999 !important;
   background: rgba(0, 255, 0, 0.1) !important; /* デバッグ用の背景色 */
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+} 
+
+/* リンク要素のクリック可能性保証 */
+#flowing-images .flow-track a,
+.section-flowing .flow-track a {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  /* リンクのサイズを画像に合わせる */
+  width: auto !important;
+  height: auto !important;
+  /* 既存の画像スタイルを継承 */
+  vertical-align: top !important;
+  /* リンクの表示を強制 */
+  position: relative !important;
+  z-index: 1 !important;
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  /* リンクの範囲を明確化 */
+  outline: none !important;
+} 
+
+/* 画像のクリック可能性保証 */
+#flowing-images .flow-track a img,
+.section-flowing .flow-track a img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* 画像の元のサイズを維持 */
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: 250px !important;
+  /* 既存の画像スタイルを継承 */
+  object-fit: cover !important;
+  /* 画像の表示を強制 */
+  position: relative !important;
+  z-index: 1 !important;
+  /* 画像のクリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
 } 
