@@ -1396,3 +1396,96 @@ body .restandard-section .section-title {
     padding-top: calc(var(--header-h, 64px) + 40px);
   }
 } 
+
+/* ========================================
+   Desktop Fixes (min-width: 1025px)
+   ======================================== */
+
+@media (min-width: 1025px) {
+  
+  /* ========================================
+     1) ナビゲーションバーとCollectionの間の縦の間隔を増加
+   ======================================== */
+  
+  /* 固定/スティッキーヘッダーの下に適切なクリアランスを作成 */
+  .collection-section {
+    padding-top: calc(var(--rs-header-h, 96px) + 40px) !important; /* +40px buffer */
+  }
+  
+  /* タイトルがグリッドから離れすぎないようにする */
+  .collection-section .section-title {
+    margin-bottom: 16px !important;
+    text-align: center !important; /* 現在の中央揃えを維持 */
+  }
+  
+  /* ========================================
+     2) flowing imagesをCollectionタイトルの直下に配置
+   ======================================== */
+  
+  /* グリッドとその背景ラッパーの予期しない余白をゼロにする */
+  .collection-section .flowing-images,
+  .collection-section .flow-row-bg {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  /* デスクトップで背景が間隔を押し広げている場合は、ここでのみ無効化 */
+  .collection-section .flowing-images,
+  .collection-section .flow-row-bg {
+    background: transparent !important;   /* デスクトップのみ */
+    box-shadow: none !important;
+  }
+  
+  /* 標準グリッド動作（他で設定されている場合は既存値を維持） */
+  .collection-section .flowing-images {
+    display: grid !important;
+    gap: 16px !important;
+  }
+  
+  /* グリッドラッパーがposition/z-indexでタイトルと重なっている場合の対策 */
+  .collection-section .section-title {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  
+  .collection-section .flowing-images {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  
+  /* ========================================
+     3) Lookbookタイトルの中央揃え
+   ======================================== */
+  
+  .lookbook-section .section-title {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* ========================================
+     4) "ReStandardについて"をBrands/Lookbookと同一スタイルに統一
+   ======================================== */
+  
+  /* 他のセクションで使用されているベーススタイルをReStandardにも適用 */
+  .section-title {
+    color: #ffffff !important;                 /* 色を統一 */
+    font-weight: 600 !important;
+    font-size: clamp(24px, 2.2vw, 36px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.02em !important;
+  }
+  
+  .restandard-section .section-title {
+    text-align: center !important;
+    margin-bottom: 16px !important;
+  }
+  
+  /* ========================================
+     5) モバイル専用要素の非表示（デスクトップのみ）
+   ======================================== */
+  
+  .only-mobile {
+    display: none !important;
+  }
+} 
