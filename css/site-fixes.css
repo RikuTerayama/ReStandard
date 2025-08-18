@@ -1151,9 +1151,7 @@ html body .section-about {
     overflow: visible !important;
     /* 表示の根本的な保証 */
     content: "" !important;
-    /* デバッグ用の背景色（問題解決後に削除可能） */
-    background-color: rgba(255, 0, 0, 0.3) !important;
-    border: 2px solid red !important;
+
   }
   
   /* 1.JPGと25.JPGのリンクを最優先で強制表示（根本的な問題解決） */
@@ -1205,9 +1203,7 @@ html body .section-about {
     overflow: visible !important;
     /* 表示の根本的な保証 */
     content: "" !important;
-    /* デバッグ用の背景色（問題解決後に削除可能） */
-    background-color: rgba(0, 255, 0, 0.3) !important;
-    border: 2px solid green !important;
+
   }
   
   /* flowing imagesセクション全体の表示保証（根本的な問題解決） */
@@ -1225,8 +1221,7 @@ html body .section-about {
     overflow: visible !important;
     /* 表示の根本的な保証 */
     content: "" !important;
-    /* デバッグ用の背景色（問題解決後に削除可能） */
-    background-color: rgba(0, 0, 255, 0.1) !important;
+
   }
   
   /* flow-trackの表示保証（根本的な問題解決） */
@@ -1244,8 +1239,7 @@ html body .section-about {
     -webkit-overflow-scrolling: touch !important;
     /* 表示の根本的な保証 */
     content: "" !important;
-    /* デバッグ用の背景色（問題解決後に削除可能） */
-    background-color: rgba(255, 255, 0, 0.1) !important;
+
   }
 } 
 
