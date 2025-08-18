@@ -494,3 +494,31 @@ html body .section-about {
   margin-top: clamp(130px, 15vw, 260px) !important;
   padding: clamp(60px, 8vw, 120px) 0 !important;
 } 
+
+/* flowing imagesのリンクスタイル */
+#flowing-images a,
+.section-flowing a {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#flowing-images a:hover,
+.section-flowing a:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+#flowing-images a img,
+.section-flowing a img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* リンクのホバー効果を強化 */
+#flowing-images a:hover img,
+.section-flowing a:hover img {
+  filter: brightness(1.1);
+} 
