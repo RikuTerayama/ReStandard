@@ -6,7 +6,8 @@
   --header-h: 64px;
   --section-gap: clamp(250px, 25vw, 500px);  /* flowing-imagesとBrandsの間隔をさらに拡大（5cm追加） */
   --section-padding: clamp(60px, 8vw, 120px); /* セクション内の余白も維持 */
-  --brands-about-gap: clamp(130px, 15vw, 260px); /* BrandsとAboutの間隔をさらに拡大（5cm追加） */
+  --brands-lookbook-gap: clamp(80px, 10vw, 160px); /* BrandsとLookbookの間隔 */
+  --lookbook-about-gap: clamp(80px, 10vw, 160px); /* LookbookとAboutの間隔 */
 }
 
 /* 0) リセット（前の演出や競合を抑える保険） */
@@ -487,7 +488,7 @@ body #about,
 body .section-about {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(130px, 15vw, 260px) !important;     /* BrandsとAboutの間隔をさらに拡大（5cm追加） */
+  margin-top: clamp(80px, 10vw, 160px) !important;     /* LookbookとAboutの間隔 */
   padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
@@ -543,7 +544,7 @@ html body .section-flowing {
 html body #brands,
 html body .section-brands {
   margin-top: clamp(250px, 25vw, 500px) !important;
-  margin-bottom: clamp(130px, 15vw, 260px) !important;
+  margin-bottom: clamp(80px, 10vw, 160px) !important;
   padding: clamp(60px, 8vw, 120px) 0 !important;
 }
 
@@ -557,7 +558,7 @@ html body .section-brands {
 
 html body #about,
 html body .section-about {
-  margin-top: clamp(130px, 15vw, 260px) !important;
+  margin-top: clamp(80px, 10vw, 160px) !important;
   padding: clamp(60px, 8vw, 120px) 0 !important;
 } 
 
@@ -700,4 +701,109 @@ html body .section-about {
   /* 画像のクリック可能性を保証 */
   pointer-events: auto !important;
   cursor: pointer !important;
+} 
+
+/* Lookbookセクションのスタイル - Brandsセクションと同じ定義 */
+#lookbook,
+.section-lookbook {
+  position: relative;
+  z-index: 10;              /* 他のセクションより確実に上に表示 */
+  margin-top: var(--brands-lookbook-gap);  /* Brandsとの間隔を調整 */
+  padding: var(--section-padding) 0;  /* 内部の余白も確保 */
+  /* 重なりを防ぐための設定 */
+  background: transparent;  /* 背景色を透明に */
+  clear: both;
+}
+
+/* Lookbookのタイトル */
+#lookbook .section-title,
+.section-lookbook .section-title {
+  text-align: center !important;
+  font-size: clamp(24px, 4vw, 36px) !important;
+  font-weight: 600 !important;
+  color: var(--main-color) !important;
+  margin-bottom: clamp(32px, 6vw, 48px) !important;
+  line-height: 1.2 !important;
+}
+
+/* Lookbookコンテナ */
+#lookbook .lookbook-container,
+.section-lookbook .lookbook-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: clamp(20px, 4vw, 32px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Lookbookトラック */
+#lookbook .lookbook-track,
+.section-lookbook .lookbook-track {
+  display: flex;
+  gap: clamp(16px, 3vw, 24px);
+  animation: lookbook-scroll 30s linear infinite;
+  width: max-content;
+}
+
+/* Lookbook画像 */
+#lookbook .lookbook-track img,
+.section-lookbook .lookbook-track img {
+  width: clamp(200px, 25vw, 300px);
+  height: clamp(280px, 35vw, 420px);
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Lookbook画像のホバー効果 */
+#lookbook .lookbook-track img:hover,
+.section-lookbook .lookbook-track img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 右から左に流れるアニメーション */
+@keyframes lookbook-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ホバー時にアニメーションを一時停止 */
+#lookbook .lookbook-container:hover .lookbook-track,
+.section-lookbook .lookbook-container:hover .lookbook-track {
+  animation-play-state: paused;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 767px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(12px, 2vw, 16px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(150px, 20vw, 200px);
+    height: clamp(210px, 28vw, 280px);
+  }
+}
+
+@media (max-width: 479px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(120px, 16vw, 160px);
+    height: clamp(168px, 22.4vw, 224px);
+  }
 } 
