@@ -6,7 +6,7 @@
   --header-h: 64px;
   --section-gap: clamp(250px, 25vw, 500px);  /* flowing-imagesとBrandsの間隔をさらに拡大（5cm追加） */
   --section-padding: clamp(60px, 8vw, 120px); /* セクション内の余白も維持 */
-  --brands-lookbook-gap: clamp(130px, 15vw, 260px); /* BrandsとLookbookの間隔を拡大 */
+  --brands-lookbook-gap: clamp(80px, 10vw, 160px); /* BrandsとLookbookの間隔を拡大 */
   --lookbook-about-gap: clamp(80px, 10vw, 160px); /* LookbookとAboutの間隔 */
 }
 
@@ -954,4 +954,162 @@ html body .section-about {
 #flowing-images,
 .section-flowing {
   padding-top: clamp(40px, 6vw, 60px) !important; /* 上部の余白を調整 */
+} 
+
+/* スマートフォン表示での画像表示を強制する最終的なCSS */
+@media (max-width: 767px) {
+  /* すべてのflowing images画像を強制表示 */
+  #flowing-images img,
+  .section-flowing img,
+  .flow-track img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+  
+  /* すべてのflowing imagesリンクを強制表示 */
+  #flowing-images a,
+  .section-flowing a,
+  .flow-track a {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  
+  /* 1.JPGと25.JPGの画像を最優先で強制表示 */
+  #flowing-images .flow-track a img[src*="1.JPG"],
+  #flowing-images .flow-track a img[src*="25.JPG"],
+  .section-flowing .flow-track a img[src*="1.JPG"],
+  .section-flowing .flow-track a img[src*="25.JPG"],
+  .flow-track a img[src*="1.JPG"],
+  .flow-track a img[src*="25.JPG"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 999 !important;
+    background: rgba(255, 0, 0, 0.2) !important; /* デバッグ用の背景色を濃く */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* 画像の表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+  }
+  
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示 */
+  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 999 !important;
+    background: rgba(0, 255, 0, 0.2) !important; /* デバッグ用の背景色を濃く */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* リンクの表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+  }
+  
+  /* flowing imagesセクション全体の表示保証 */
+  #flowing-images,
+  .section-flowing {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+  }
+  
+  /* flow-trackの表示保証 */
+  .flow-track {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+  }
+} 
+
+/* さらに小さい画面サイズでの強制表示 */
+@media (max-width: 479px) {
+  /* 1.JPGと25.JPGの画像を最優先で強制表示 */
+  #flowing-images .flow-track a img[src*="1.JPG"],
+  #flowing-images .flow-track a img[src*="25.JPG"],
+  .section-flowing .flow-track a img[src*="1.JPG"],
+  .section-flowing .flow-track a img[src*="25.JPG"],
+  .flow-track a img[src*="1.JPG"],
+  .flow-track a img[src*="25.JPG"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 999 !important;
+    background: rgba(255, 0, 0, 0.3) !important; /* デバッグ用の背景色をさらに濃く */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* 画像の表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+    /* 強制表示のための追加設定 */
+    min-width: 50px !important;
+    min-height: 50px !important;
+    border: 2px solid red !important; /* デバッグ用の境界線 */
+  }
+  
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示 */
+  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 999 !important;
+    background: rgba(0, 255, 0, 0.3) !important; /* デバッグ用の背景色をさらに濃く */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* リンクの表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+    /* 強制表示のための追加設定 */
+    min-width: 50px !important;
+    min-height: 50px !important;
+    border: 2px solid green !important; /* デバッグ用の境界線 */
+  }
 } 
