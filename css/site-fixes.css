@@ -463,9 +463,9 @@ body #collection,
 body .section-collection {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(40px, 6vw, 60px) !important;       /* 上部との間隔を調整 */
-  margin-bottom: clamp(20px, 3vw, 32px) !important;    /* Collectionとflowing imagesの間隔 */
-  padding: clamp(20px, 3vw, 32px) 0 !important;        /* 内部の余白を調整 */
+  margin-top: clamp(20px, 3vw, 40px) !important;       /* flowing imagesとの間隔を狭める */
+  margin-bottom: clamp(10px, 2vw, 20px) !important;    /* Collectionとflowing imagesの間隔を狭める */
+  padding: clamp(15px, 2vw, 25px) 0 !important;        /* 内部の余白を調整 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -561,9 +561,9 @@ html body .section-flowing {
 
 html body #collection,
 html body .section-collection {
-  margin-top: clamp(40px, 6vw, 60px) !important; /* 上部との間隔を調整 */
-  margin-bottom: clamp(20px, 3vw, 32px) !important; /* flowing imagesとの間隔 */
-  padding: clamp(20px, 3vw, 32px) 0 !important; /* 内部の余白を調整 */
+  margin-top: clamp(20px, 3vw, 40px) !important; /* flowing imagesとの間隔を狭める */
+  margin-bottom: clamp(10px, 2vw, 20px) !important; /* flowing imagesとの間隔を狭める */
+  padding: clamp(15px, 2vw, 25px) 0 !important; /* 内部の余白を調整 */
 }
 
 html body #brands,
@@ -987,7 +987,7 @@ html body .section-about {
     z-index: 1 !important;
   }
   
-  /* 1.JPGと25.JPGの画像を最優先で強制表示 */
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（サイズは正常に） */
   #flowing-images .flow-track a img[src*="1.JPG"],
   #flowing-images .flow-track a img[src*="25.JPG"],
   .section-flowing .flow-track a img[src*="1.JPG"],
@@ -1001,8 +1001,7 @@ html body .section-about {
     height: auto !important;
     max-height: 250px !important;
     position: relative !important;
-    z-index: 999 !important;
-    background: rgba(255, 0, 0, 0.2) !important; /* デバッグ用の背景色を濃く */
+    z-index: 1 !important;
     pointer-events: auto !important;
     cursor: pointer !important;
     /* 画像の表示を最優先 */
@@ -1012,7 +1011,7 @@ html body .section-about {
     clip-path: none !important;
   }
   
-  /* 1.JPGと25.JPGのリンクを最優先で強制表示 */
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（サイズは正常に） */
   #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
   #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
   .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
@@ -1023,8 +1022,7 @@ html body .section-about {
     visibility: visible !important;
     opacity: 1 !important;
     position: relative !important;
-    z-index: 999 !important;
-    background: rgba(0, 255, 0, 0.2) !important; /* デバッグ用の背景色を濃く */
+    z-index: 1 !important;
     pointer-events: auto !important;
     cursor: pointer !important;
     /* リンクの表示を最優先 */
@@ -1045,7 +1043,7 @@ html body .section-about {
     overflow: visible !important;
   }
   
-  /* flow-trackの表示保証 */
+  /* flow-trackの表示保証（スクロール機能を維持） */
   .flow-track {
     display: flex !important;
     visibility: visible !important;
@@ -1053,12 +1051,15 @@ html body .section-about {
     position: relative !important;
     z-index: 1 !important;
     overflow: visible !important;
+    /* スクロール機能を維持 */
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 } 
 
 /* さらに小さい画面サイズでの強制表示 */
 @media (max-width: 479px) {
-  /* 1.JPGと25.JPGの画像を最優先で強制表示 */
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（サイズは正常に） */
   #flowing-images .flow-track a img[src*="1.JPG"],
   #flowing-images .flow-track a img[src*="25.JPG"],
   .section-flowing .flow-track a img[src*="1.JPG"],
@@ -1072,8 +1073,7 @@ html body .section-about {
     height: auto !important;
     max-height: 250px !important;
     position: relative !important;
-    z-index: 999 !important;
-    background: rgba(255, 0, 0, 0.3) !important; /* デバッグ用の背景色をさらに濃く */
+    z-index: 1 !important;
     pointer-events: auto !important;
     cursor: pointer !important;
     /* 画像の表示を最優先 */
@@ -1081,13 +1081,9 @@ html body .section-about {
     filter: none !important;
     clip: auto !important;
     clip-path: none !important;
-    /* 強制表示のための追加設定 */
-    min-width: 50px !important;
-    min-height: 50px !important;
-    border: 2px solid red !important; /* デバッグ用の境界線 */
   }
   
-  /* 1.JPGと25.JPGのリンクを最優先で強制表示 */
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（サイズは正常に） */
   #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
   #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
   .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
@@ -1098,8 +1094,7 @@ html body .section-about {
     visibility: visible !important;
     opacity: 1 !important;
     position: relative !important;
-    z-index: 999 !important;
-    background: rgba(0, 255, 0, 0.3) !important; /* デバッグ用の背景色をさらに濃く */
+    z-index: 1 !important;
     pointer-events: auto !important;
     cursor: pointer !important;
     /* リンクの表示を最優先 */
@@ -1107,9 +1102,32 @@ html body .section-about {
     filter: none !important;
     clip: auto !important;
     clip-path: none !important;
-    /* 強制表示のための追加設定 */
-    min-width: 50px !important;
-    min-height: 50px !important;
-    border: 2px solid green !important; /* デバッグ用の境界線 */
   }
+} 
+
+/* Collectionセクションの位置調整（flowing imagesとセットとして表示） */
+#collection,
+.section-collection {
+  position: relative !important;
+  z-index: 10 !important;
+  margin-top: clamp(20px, 3vw, 40px) !important; /* flowing imagesとの間隔を狭める */
+  margin-bottom: clamp(10px, 2vw, 20px) !important; /* flowing imagesとの間隔を狭める */
+  padding: clamp(15px, 2vw, 25px) 0 !important; /* 内部の余白を調整 */
+  /* 重なりを防ぐための設定 */
+  isolation: isolate !important;
+  background: transparent !important;
+  clear: both !important;
+  text-align: center !important;
+}
+
+/* Collectionセクションのタイトル調整 */
+#collection .section-title,
+.section-collection .section-title {
+  font-size: clamp(20px, 3vw, 28px) !important;
+  margin-bottom: 0 !important;
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+  font-weight: bold !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
 } 
