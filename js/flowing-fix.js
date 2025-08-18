@@ -108,7 +108,7 @@ function ensureMobileImageDisplay() {
     specialImages.forEach((img, index) => {
       console.log(`Processing image ${index + 1}:`, img.src);
       
-      // 画像の表示を最優先で強制
+      // 画像の表示を最優先で強制（サイズは正常に）
       img.style.setProperty('display', 'block', 'important');
       img.style.setProperty('visibility', 'visible', 'important');
       img.style.setProperty('opacity', '1', 'important');
@@ -116,44 +116,36 @@ function ensureMobileImageDisplay() {
       img.style.setProperty('height', 'auto', 'important');
       img.style.setProperty('max-height', '250px', 'important');
       img.style.setProperty('position', 'relative', 'important');
-      img.style.setProperty('z-index', '999', 'important');
-      img.style.setProperty('background', 'rgba(255, 0, 0, 0.3)', 'important');
+      img.style.setProperty('z-index', '1', 'important');
       img.style.setProperty('pointer-events', 'auto', 'important');
       img.style.setProperty('cursor', 'pointer', 'important');
       img.style.setProperty('transform', 'none', 'important');
       img.style.setProperty('filter', 'none', 'important');
       img.style.setProperty('clip', 'auto', 'important');
       img.style.setProperty('clip-path', 'none', 'important');
-      img.style.setProperty('min-width', '50px', 'important');
-      img.style.setProperty('min-height', '50px', 'important');
-      img.style.setProperty('border', '2px solid red', 'important');
       
       console.log(`Image ${index + 1} styles applied:`, img.style.cssText);
     });
     
-    // 1.JPGと25.JPGのリンクを最優先で強制表示
+    // 1.JPGと25.JPGのリンクを最優先で強制表示（サイズは正常に）
     const specialLinks = document.querySelectorAll('a[href*="68a3416c225fded5de0dfb82"], a[href*="68a346549b5b820cfb8b08f5"]');
     console.log('Found special links:', specialLinks.length);
     
     specialLinks.forEach((link, index) => {
       console.log(`Processing link ${index + 1}:`, link.href);
       
-      // リンクの表示を最優先で強制
+      // リンクの表示を最優先で強制（サイズは正常に）
       link.style.setProperty('display', 'inline-block', 'important');
       link.style.setProperty('visibility', 'visible', 'important');
       link.style.setProperty('opacity', '1', 'important');
       link.style.setProperty('position', 'relative', 'important');
-      link.style.setProperty('z-index', '999', 'important');
-      link.style.setProperty('background', 'rgba(0, 255, 0, 0.3)', 'important');
+      link.style.setProperty('z-index', '1', 'important');
       link.style.setProperty('pointer-events', 'auto', 'important');
       link.style.setProperty('cursor', 'pointer', 'important');
       link.style.setProperty('transform', 'none', 'important');
       link.style.setProperty('filter', 'none', 'important');
       link.style.setProperty('clip', 'auto', 'important');
       link.style.setProperty('clip-path', 'none', 'important');
-      link.style.setProperty('min-width', '50px', 'important');
-      link.style.setProperty('min-height', '50px', 'important');
-      link.style.setProperty('border', '2px solid green', 'important');
       
       console.log(`Link ${index + 1} styles applied:`, link.style.cssText);
     });
@@ -168,13 +160,16 @@ function ensureMobileImageDisplay() {
       console.log('Flowing section styles applied');
     }
     
-    // flow-trackの表示保証
+    // flow-trackの表示保証（スクロール機能を維持）
     const flowTracks = document.querySelectorAll('.flow-track');
     flowTracks.forEach((track, index) => {
       track.style.setProperty('display', 'flex', 'important');
       track.style.setProperty('visibility', 'visible', 'important');
       track.style.setProperty('opacity', '1', 'important');
       track.style.setProperty('overflow', 'visible', 'important');
+      // スクロール機能を維持
+      track.style.setProperty('touch-action', 'pan-x', 'important');
+      track.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
       console.log(`Flow track ${index + 1} styles applied`);
     });
     
