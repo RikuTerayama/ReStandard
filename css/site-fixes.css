@@ -1489,3 +1489,175 @@ body .restandard-section .section-title {
     display: none !important;
   }
 } 
+
+/* ========================================
+   Mobile Layout Fixes (≤768px) - HIGH PRIORITY OVERRIDES
+   ======================================== */
+
+@media (max-width: 768px) {
+  
+  /* ========================================
+     1) Collectionタイトルとflowing imagesの間の紫の半透明ボックスを削除
+   ======================================== */
+  
+  /* Collection下のオーバーレイ/スペーサーを非表示 */
+  .collection-section .overlay,
+  .collection-section .purple-box,
+  .collection-section .section-overlay,
+  .collection-section .title-overlay,
+  .collection-section > .gradient,
+  .collection-section > .spacer {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+  
+  /* 疑似要素も非表示 */
+  .collection-section::before,
+  .collection-section::after,
+  .collection-section .section-title::before,
+  .collection-section .section-title::after {
+    content: none !important;
+    display: none !important;
+  }
+  
+  /* 縦のリズムを調整：タイトルがグリッドの直上に来る */
+  .collection-section .section-title {
+    margin-bottom: 12px !important;
+  }
+  
+  .collection-section .flowing-images {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  /* デスクトップ専用要素を非表示 */
+  .only-desktop {
+    display: none !important;
+  }
+} 
+
+  /* ========================================
+     2) flowing images: 1.JPGと25.JPGの赤/緑ボックスを除去し、他と同一表示に
+   ======================================== */
+   
+   /* ファイル名ベースまたはnth-childのデバッグスタイルを削除 */
+   img[src*="/1.JPG"], img[src*="/1.jpg"],
+   img[src*="/25.JPG"], img[src*="/25.jpg"] {
+     border: none !important;
+     outline: none !important;
+     box-shadow: none !important;
+     background: transparent !important;
+   }
+   
+   .flowing-images > *:nth-child(1),
+   .flowing-images > *:nth-child(25) {
+     border: none !important;
+     outline: none !important;
+     box-shadow: none !important;
+     background: none !important;
+   }
+   
+   /* すべてのカード/画像を正規化 */
+   .flowing-images {
+     display: grid !important;
+     grid-template-columns: repeat(3, 1fr) !important;
+     gap: 12px !important;
+   }
+   
+   .flowing-images > .item,
+   .flowing-images > .card,
+   .flowing-images > div {
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 12px !important;
+     padding: 8px !important;
+     overflow: hidden !important;
+   }
+   
+   .flowing-images img {
+     display: block !important;
+     width: 100% !important;
+     height: 100% !important;
+     max-height: 220px !important;
+     object-fit: cover !important;
+     border-radius: 8px !important;
+   }
+   
+   /* ========================================
+     3) flowing imagesの背景を画面横幅いっぱい（full-bleed）に
+   ======================================== */
+   
+   /* 背景が.flowing-imagesそのものの場合 */
+   .collection-section {
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+   }
+   
+   .collection-section .flowing-images {
+     background: rgba(250, 250, 235, 0.9) !important;
+     width: 100vw !important;
+     box-sizing: border-box !important;
+     padding: 12px !important;
+   }
+   
+   /* 背景用ラッパー.flow-row-bgが存在する場合 */
+   .collection-section .flow-row-bg {
+     background: rgba(250, 250, 235, 0.9) !important;
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     width: 100vw !important;
+   }
+   
+   .collection-section .flow-row-bg .flowing-images {
+     padding: 12px !important;
+   }
+   
+   /* 親にoverflow:hiddenがあってfull-bleedが切れる場合の対策 */
+   .collection-section {
+     overflow: visible !important;
+   }
+   
+   /* ========================================
+     4) Lookbookの画像サイズと背景をflowing imagesと統一
+   ======================================== */
+   
+   .lookbook-section .section-title {
+     margin-bottom: 12px !important;
+   }
+   
+   .lookbook-container {
+     display: grid !important;
+     grid-template-columns: repeat(3, 1fr) !important;
+     gap: 12px !important;
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     width: 100vw !important;
+     box-sizing: border-box !important;
+     background: rgba(250, 250, 235, 0.9) !important; /* 同背景 */
+     padding: 12px !important;
+   }
+   
+   .lookbook-container > .item,
+   .lookbook-container > .card,
+   .lookbook-container > div {
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 12px !important;
+     padding: 8px !important;
+     overflow: hidden !important;
+   }
+   
+   .lookbook-container img {
+     display: block !important;
+     width: 100% !important;
+     height: 100% !important;
+     max-height: 220px !important;  /* flowing imagesと同値 */
+     object-fit: cover !important;
+     border-radius: 8px !important;
+   }
+   
+   /* Lookbookセクションもoverflow制御 */
+   .lookbook-section {
+     overflow: visible !important;
+   }
