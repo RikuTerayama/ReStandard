@@ -1645,7 +1645,8 @@ body .restandard-section .section-title {
   .collection-section .section-overlay,
   .collection-section .title-overlay,
   .collection-section > .gradient,
-  .collection-section > .spacer {
+  .collection-section > .spacer,
+  .collection-section .flowing-bg {
     display: none !important;
     height: 0 !important;
     margin: 0 !important;
@@ -1676,8 +1677,7 @@ body .restandard-section .section-title {
   .only-desktop {
     display: none !important;
   }
-} 
-
+  
   /* ========================================
      2) flowing images: 1.JPGと25.JPGの赤/緑ボックスを除去し、他と同一表示に
    ======================================== */
@@ -1701,18 +1701,25 @@ body .restandard-section .section-title {
    
    /* すべてのカード/画像を正規化 */
    .flowing-images {
-     display: grid !important;
-     grid-template-columns: repeat(3, 1fr) !important;
+     display: flex !important;
+     overflow-x: auto !important;
+     scroll-snap-type: x mandatory !important;
+     -webkit-overflow-scrolling: touch !important;
      gap: 12px !important;
+     padding: 12px !important;
    }
    
    .flowing-images > .item,
    .flowing-images > .card,
-   .flowing-images > div {
+   .flowing-images > div,
+   .flowing-images > a {
+     flex: 0 0 auto !important;
+     scroll-snap-align: start !important;
      background: rgba(250, 250, 235, 0.9) !important;
      border-radius: 12px !important;
      padding: 8px !important;
      overflow: hidden !important;
+     min-width: 120px !important;
    }
    
    .flowing-images img {
@@ -1732,6 +1739,7 @@ body .restandard-section .section-title {
    .collection-section {
      margin-left: calc(50% - 50vw) !important;
      margin-right: calc(50% - 50vw) !important;
+     overflow: visible !important;
    }
    
    .collection-section .flowing-images {
@@ -1766,9 +1774,11 @@ body .restandard-section .section-title {
      margin-bottom: 12px !important;
    }
    
-   .lookbook-container {
-     display: grid !important;
-     grid-template-columns: repeat(3, 1fr) !important;
+   .lookbook-grid {
+     display: flex !important;
+     overflow-x: auto !important;
+     scroll-snap-type: x mandatory !important;
+     -webkit-overflow-scrolling: touch !important;
      gap: 12px !important;
      margin-left: calc(50% - 50vw) !important;
      margin-right: calc(50% - 50vw) !important;
@@ -1778,16 +1788,19 @@ body .restandard-section .section-title {
      padding: 12px !important;
    }
    
-   .lookbook-container > .item,
-   .lookbook-container > .card,
-   .lookbook-container > div {
+   .lookbook-grid > .item,
+   .lookbook-grid > .card,
+   .lookbook-grid > div {
+     flex: 0 0 auto !important;
+     scroll-snap-align: start !important;
      background: rgba(250, 250, 235, 0.9) !important;
      border-radius: 12px !important;
      padding: 8px !important;
      overflow: hidden !important;
+     min-width: 120px !important;
    }
    
-   .lookbook-container img {
+   .lookbook-grid img {
      display: block !important;
      width: 100% !important;
      height: 100% !important;
@@ -1800,6 +1813,33 @@ body .restandard-section .section-title {
    .lookbook-section {
      overflow: visible !important;
    }
+   
+   /* ========================================
+     5) 見出しフォント統一（Brands基準）
+   ======================================== */
+   
+   .section-title {
+     color: #ffffff !important;
+     font-size: 24px !important;
+     font-weight: 600 !important;
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 16px !important;
+   }
+   
+   /* 各セクションの見出しを統一 */
+   .collection-section .section-title,
+   .brands-section .section-title,
+   .lookbook-section .section-title,
+   .restandard-section .section-title {
+     color: #ffffff !important;
+     font-size: 24px !important;
+     font-weight: 600 !important;
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 16px !important;
+   }
+} 
 
 /* ========================================
    HIGH-SPECIFICITY DESKTOP OVERRIDES (min-width: 1025px)
