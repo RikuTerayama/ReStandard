@@ -495,30 +495,93 @@ html body .section-about {
   padding: clamp(60px, 8vw, 120px) 0 !important;
 } 
 
-/* flowing imagesのリンクスタイル */
-#flowing-images a,
-.section-flowing a {
+/* flowing imagesのリンクスタイル - 既存スタイルとの競合を解決 */
+#flowing-images .flow-track a,
+.section-flowing .flow-track a {
   display: inline-block;
   text-decoration: none;
   transition: transform 0.2s ease, opacity 0.2s ease;
+  /* リンクのサイズを画像に合わせる */
+  width: auto;
+  height: auto;
+  /* 既存の画像スタイルを継承 */
+  vertical-align: top;
 }
 
-#flowing-images a:hover,
-.section-flowing a:hover {
+#flowing-images .flow-track a:hover,
+.section-flowing .flow-track a:hover {
   transform: scale(1.05);
   opacity: 0.9;
 }
 
-#flowing-images a img,
-.section-flowing a img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* 画像表示の最終保証 - 既存スタイルとの競合を完全解決 */
+#flowing-images .flow-track a img,
+.section-flowing .flow-track a img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* 画像の元のサイズを維持 */
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: 250px !important;
+  /* 既存の画像スタイルを継承 */
+  object-fit: cover !important;
+  /* 画像の表示を強制 */
+  position: relative !important;
+  z-index: 1 !important;
 }
 
-/* リンクのホバー効果を強化 */
-#flowing-images a:hover img,
-.section-flowing a:hover img {
-  filter: brightness(1.1);
+/* リンク要素の表示最終保証 */
+#flowing-images .flow-track a,
+.section-flowing .flow-track a {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  /* リンクのサイズを画像に合わせる */
+  width: auto !important;
+  height: auto !important;
+  /* 既存の画像スタイルを継承 */
+  vertical-align: top !important;
+  /* リンクの表示を強制 */
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* ホバー効果の最終保証 */
+#flowing-images .flow-track a:hover img,
+.section-flowing .flow-track a:hover img {
+  filter: brightness(1.1) !important;
+  transform: scale(1.05) !important;
+  opacity: 0.9 !important;
+} 
+
+/* デバッグ用：画像が表示されない場合の強制表示 */
+#flowing-images .flow-track a img[src*="1.JPG"],
+#flowing-images .flow-track a img[src*="25.JPG"],
+.section-flowing .flow-track a img[src*="1.JPG"],
+.section-flowing .flow-track a img[src*="25.JPG"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  max-height: 250px !important;
+  position: relative !important;
+  z-index: 999 !important;
+  background: rgba(255, 0, 0, 0.1) !important; /* デバッグ用の背景色 */
+}
+
+/* リンク要素のデバッグ表示 */
+#flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+#flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+.section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+.section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 999 !important;
+  background: rgba(0, 255, 0, 0.1) !important; /* デバッグ用の背景色 */
 } 
