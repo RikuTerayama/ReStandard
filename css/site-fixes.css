@@ -463,9 +463,9 @@ body #collection,
 body .section-collection {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(20px, 3vw, 40px) !important;       /* flowing imagesとの適切な間隔 */
-  margin-bottom: clamp(10px, 2vw, 20px) !important;    /* Collectionとflowing imagesの密接性を向上 */
-  padding: clamp(15px, 2vw, 25px) 0 !important;        /* 内部の余白を調整 */
+  margin-top: clamp(200px, 25vw, 400px) !important;       /* 上部からの距離を大幅に増加して下に配置 */
+  margin-bottom: clamp(5px, 1vw, 10px) !important;    /* Collectionとflowing imagesの密接性を向上 */
+  padding: clamp(10px, 2vw, 20px) 0 !important;        /* 内部の余白を調整 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -561,9 +561,9 @@ html body .section-flowing {
 
 html body #collection,
 html body .section-collection {
-  margin-top: clamp(20px, 3vw, 40px) !important; /* flowing imagesとの適切な間隔 */
-  margin-bottom: clamp(10px, 2vw, 20px) !important; /* flowing imagesとの密接性を向上 */
-  padding: clamp(15px, 2vw, 25px) 0 !important; /* 内部の余白を調整 */
+  margin-top: clamp(200px, 25vw, 400px) !important; /* 上部からの距離を大幅に増加して下に配置 */
+  margin-bottom: clamp(5px, 1vw, 10px) !important; /* flowing imagesとの密接性を向上 */
+  padding: clamp(10px, 2vw, 20px) 0 !important; /* 内部の余白を調整 */
 }
 
 html body #brands,
@@ -811,34 +811,7 @@ html body .section-about {
 @media (max-width: 767px) {
   #lookbook .lookbook-track,
   .section-lookbook .lookbook-track {
-    gap: clamp(12px, 2vw, 16px);
-  }
-  
-  #lookbook .lookbook-track img,
-  .section-lookbook .lookbook-track img {
-    width: clamp(120px, 16vw, 160px);
-    height: clamp(168px, 22.4vw, 224px);
-  }
-}
-
-@media (max-width: 479px) {
-  #lookbook .lookbook-track,
-  .section-lookbook .lookbook-track {
     gap: clamp(8px, 1.5vw, 12px);
-  }
-  
-  #lookbook .lookbook-track img,
-  .section-lookbook .lookbook-track img {
-    width: clamp(100px, 14vw, 140px);
-    height: clamp(140px, 19.6vw, 196px);
-  }
-} 
-
-/* さらに小さい画面サイズでの調整 */
-@media (max-width: 375px) {
-  #lookbook .lookbook-track,
-  .section-lookbook .lookbook-track {
-    gap: clamp(6px, 1vw, 10px);
   }
   
   #lookbook .lookbook-track img,
@@ -848,7 +821,21 @@ html body .section-about {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 479px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(6px, 1vw, 10px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(60px, 10vw, 80px);
+    height: clamp(84px, 14vw, 112px);
+  }
+} 
+
+/* さらに小さい画面サイズでの調整 */
+@media (max-width: 375px) {
   #lookbook .lookbook-track,
   .section-lookbook .lookbook-track {
     gap: clamp(4px, 0.8vw, 8px);
@@ -856,8 +843,21 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    width: clamp(70px, 10vw, 100px);
-    height: clamp(98px, 14vw, 140px);
+    width: clamp(50px, 8vw, 70px);
+    height: clamp(70px, 11.2vw, 98px);
+  }
+}
+
+@media (max-width: 320px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(3px, 0.6vw, 6px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(40px, 6vw, 60px);
+    height: clamp(56px, 8.4vw, 84px);
   }
 }
 
@@ -866,9 +866,9 @@ html body .section-about {
 .section-collection {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: clamp(20px, 3vw, 40px);   /* flowing imagesとの適切な間隔 */
-  margin-bottom: clamp(10px, 2vw, 20px); /* flowing imagesとの密接性を向上 */
-  padding: clamp(15px, 2vw, 25px) 0;    /* 内部の余白を調整 */
+  margin-top: clamp(200px, 25vw, 400px);   /* 上部からの距離を大幅に増加して下に配置 */
+  margin-bottom: clamp(5px, 1vw, 10px); /* flowing imagesとの密接性を向上 */
+  padding: clamp(10px, 2vw, 20px) 0;    /* 内部の余白を調整 */
   /* 重なりを防ぐための設定 */
   background: transparent;  /* 背景色を透明に */
   clear: both;
@@ -1176,8 +1176,8 @@ body .section-collection,
   /* 位置制御の最強化 */
   position: relative !important;
   z-index: 999 !important; /* 最前面に表示 */
-  /* 上部からの距離を最小限に */
-  margin-top: clamp(10px, 2vw, 20px) !important;
+  /* 上部からの距離を大幅に増加して下に配置 */
+  margin-top: clamp(200px, 25vw, 400px) !important;
   margin-bottom: clamp(5px, 1vw, 10px) !important;
   padding: clamp(10px, 2vw, 20px) 0 !important;
   /* 重なりを防ぐための設定 */
