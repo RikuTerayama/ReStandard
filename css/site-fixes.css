@@ -1498,13 +1498,55 @@ body .restandard-section .section-title {
     margin-bottom: 16px !important;
   }
   
-  /* ========================================
+    /* ========================================
      5) モバイル専用要素の非表示（デスクトップのみ）
    ======================================== */
-  
-  .only-mobile {
-    display: none !important;
-  }
+   
+   .only-mobile {
+     display: none !important;
+   }
+   
+   /* ========================================
+     6) flowing imagesの背景を復活（デスクトップのみ）
+   ======================================== */
+   
+   /* 背景が.flow-row-bgにある場合（推奨） */
+   .collection-section .flow-row-bg {
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 16px !important;
+     padding: 16px 20px !important;
+   }
+   
+   /* ========================================
+     7) Brands見出しとロゴグリッドの間隔をLookbookと同じに
+   ======================================== */
+   
+   /* Lookbookの実距離を前提として、Brandsを同距離に合わせる */
+   .brands-section .section-title {
+     margin-bottom: 24px !important;
+   }
+   
+   .brands-section .brands-grid {
+     margin-top: 0 !important; /* タイトル側で制御 */
+   }
+   
+   /* ========================================
+     8) ReStandard見出しと内容を中央揃え
+   ======================================== */
+   
+   .restandard-section .section-title {
+     text-align: center !important;
+     margin-left: auto !important;
+     margin-right: auto !important;
+     margin-bottom: 16px !important;
+   }
+   
+   .restandard-section .restandard-body {
+     margin-left: auto !important;
+     margin-right: auto !important;
+     text-align: center !important; /* テキストも中央に */
+     max-width: 920px !important; /* 横に広がり過ぎる場合の制限 */
+   }
 } 
 
 /* ========================================
