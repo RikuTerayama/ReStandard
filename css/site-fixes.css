@@ -463,9 +463,9 @@ body #collection,
 body .section-collection {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(20px, 3vw, 40px) !important;       /* flowing imagesとの間隔を狭める */
-  margin-bottom: clamp(10px, 2vw, 20px) !important;    /* Collectionとflowing imagesの間隔を狭める */
-  padding: clamp(15px, 2vw, 25px) 0 !important;        /* 内部の余白を調整 */
+  margin-top: clamp(80px, 10vw, 120px) !important;       /* 上部との間隔を広げて下に配置 */
+  margin-bottom: clamp(20px, 3vw, 32px) !important;    /* Collectionとflowing imagesの間隔 */
+  padding: clamp(20px, 3vw, 32px) 0 !important;        /* 内部の余白を調整 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -561,9 +561,9 @@ html body .section-flowing {
 
 html body #collection,
 html body .section-collection {
-  margin-top: clamp(20px, 3vw, 40px) !important; /* flowing imagesとの間隔を狭める */
-  margin-bottom: clamp(10px, 2vw, 20px) !important; /* flowing imagesとの間隔を狭める */
-  padding: clamp(15px, 2vw, 25px) 0 !important; /* 内部の余白を調整 */
+  margin-top: clamp(80px, 10vw, 120px) !important; /* 上部との間隔を広げて下に配置 */
+  margin-bottom: clamp(20px, 3vw, 32px) !important; /* flowing imagesとの間隔 */
+  padding: clamp(20px, 3vw, 32px) 0 !important; /* 内部の余白を調整 */
 }
 
 html body #brands,
@@ -866,7 +866,7 @@ html body .section-about {
 .section-collection {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: clamp(40px, 6vw, 60px);   /* 上部との間隔を少し広げる */
+  margin-top: clamp(80px, 10vw, 120px);   /* 上部との間隔を広げて下に配置 */
   margin-bottom: clamp(20px, 3vw, 32px); /* flowing imagesとの適切な間隔 */
   padding: clamp(20px, 3vw, 32px) 0;    /* 内部の余白を調整 */
   /* 重なりを防ぐための設定 */
@@ -887,68 +887,7 @@ html body .section-about {
   line-height: 1.2 !important;
 } 
 
-/* スマートフォン表示での画像表示保証 */
-@media (max-width: 767px) {
-  /* flowing imagesの画像表示保証 */
-  #flowing-images .flow-track a img,
-  .section-flowing .flow-track a img {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: auto !important;
-    height: auto !important;
-    max-height: 250px !important;
-    position: relative !important;
-    z-index: 1 !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-  
-  /* flowing imagesのリンク表示保証 */
-  #flowing-images .flow-track a,
-  .section-flowing .flow-track a {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    position: relative !important;
-    z-index: 1 !important;
-  }
-  
-  /* 1.JPGと25.JPGの強制表示 */
-  #flowing-images .flow-track a img[src*="1.JPG"],
-  #flowing-images .flow-track a img[src*="25.JPG"],
-  .section-flowing .flow-track a img[src*="1.JPG"],
-  .section-flowing .flow-track a img[src*="25.JPG"] {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: auto !important;
-    height: auto !important;
-    max-height: 250px !important;
-    position: relative !important;
-    z-index: 999 !important;
-    background: rgba(255, 0, 0, 0.1) !important; /* デバッグ用の背景色 */
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-  
-  /* 1.JPGと25.JPGのリンク強制表示 */
-  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
-  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
-  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
-  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 999 !important;
-    background: rgba(0, 255, 0, 0.1) !important; /* デバッグ用の背景色 */
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-} 
+/* 重複した古いCSSルールを削除 - 上記の新しいルールに統合済み */ 
 
 /* flowing imagesの位置調整 */
 #flowing-images,
@@ -958,7 +897,31 @@ html body .section-about {
 
 /* スマートフォン表示での画像表示を強制する最終的なCSS */
 @media (max-width: 767px) {
-  /* すべてのflowing images画像を強制表示 */
+  /* flowing imagesセクション全体の表示保証 */
+  #flowing-images,
+  .section-flowing {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+  }
+  
+  /* flow-trackの表示保証（スクロール機能を維持） */
+  .flow-track {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    /* スクロール機能を維持 */
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* すべてのflowing images画像を強制表示（PC版と同様の設定） */
   #flowing-images img,
   .section-flowing img,
   .flow-track img {
@@ -974,7 +937,7 @@ html body .section-about {
     cursor: pointer !important;
   }
   
-  /* すべてのflowing imagesリンクを強制表示 */
+  /* すべてのflowing imagesリンクを強制表示（PC版と同様の設定） */
   #flowing-images a,
   .section-flowing a,
   .flow-track a {
@@ -987,7 +950,7 @@ html body .section-about {
     z-index: 1 !important;
   }
   
-  /* 1.JPGと25.JPGの画像を最優先で強制表示（サイズは正常に） */
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（PC版と完全に同じ設定） */
   #flowing-images .flow-track a img[src*="1.JPG"],
   #flowing-images .flow-track a img[src*="25.JPG"],
   .section-flowing .flow-track a img[src*="1.JPG"],
@@ -1011,7 +974,7 @@ html body .section-about {
     clip-path: none !important;
   }
   
-  /* 1.JPGと25.JPGのリンクを最優先で強制表示（サイズは正常に） */
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（PC版と完全に同じ設定） */
   #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
   #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
   .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
@@ -1030,30 +993,6 @@ html body .section-about {
     filter: none !important;
     clip: auto !important;
     clip-path: none !important;
-  }
-  
-  /* flowing imagesセクション全体の表示保証 */
-  #flowing-images,
-  .section-flowing {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 1 !important;
-    overflow: visible !important;
-  }
-  
-  /* flow-trackの表示保証（スクロール機能を維持） */
-  .flow-track {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 1 !important;
-    overflow: visible !important;
-    /* スクロール機能を維持 */
-    touch-action: pan-x !important;
-    -webkit-overflow-scrolling: touch !important;
   }
 } 
 
@@ -1130,4 +1069,74 @@ html body .section-about {
   font-weight: bold !important;
   line-height: 1.2 !important;
   text-align: center !important;
+} 
+
+/* より強力なスマートフォン表示の強制表示（競合を完全に排除） */
+@media (max-width: 767px) {
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（競合を完全に排除） */
+  html body #flowing-images .flow-track a img[src*="1.JPG"],
+  html body #flowing-images .flow-track a img[src*="25.JPG"],
+  html body .section-flowing .flow-track a img[src*="1.JPG"],
+  html body .section-flowing .flow-track a img[src*="25.JPG"],
+  html body .flow-track a img[src*="1.JPG"],
+  html body .flow-track a img[src*="25.JPG"],
+  body #flowing-images .flow-track a img[src*="1.JPG"],
+  body #flowing-images .flow-track a img[src*="25.JPG"],
+  body .section-flowing .flow-track a img[src*="1.JPG"],
+  body .section-flowing .flow-track a img[src*="25.JPG"],
+  body .flow-track a img[src*="1.JPG"],
+  body .flow-track a img[src*="25.JPG"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* 画像の表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+    /* 競合を完全に排除 */
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（競合を完全に排除） */
+  html body #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  html body #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  html body .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  html body .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  html body .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  html body .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  body #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  body #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  body .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  body .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  body .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  body .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* リンクの表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+    /* 競合を完全に排除 */
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
 } 
