@@ -449,6 +449,7 @@ body .section-flowing {
   z-index: 1 !important;
   margin-bottom: clamp(80px, 10vw, 160px) !important;  /* flowing-imagesとCollectionの間隔を調整 */
   padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も維持 */
+  padding-top: clamp(40px, 6vw, 60px) !important;      /* 上部の余白を調整 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -462,9 +463,9 @@ body #collection,
 body .section-collection {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(80px, 10vw, 160px) !important;     /* flowing-imagesとCollectionの間隔 */
-  margin-bottom: clamp(80px, 10vw, 160px) !important;  /* CollectionとBrandsの間隔 */
-  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
+  margin-top: clamp(40px, 6vw, 60px) !important;       /* 上部との間隔を調整 */
+  margin-bottom: clamp(20px, 3vw, 32px) !important;    /* Collectionとflowing imagesの間隔 */
+  padding: clamp(20px, 3vw, 32px) 0 !important;        /* 内部の余白を調整 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -555,13 +556,14 @@ html body #flowing-images,
 html body .section-flowing {
   margin-bottom: clamp(80px, 10vw, 160px) !important;
   padding-bottom: clamp(60px, 8vw, 120px) !important;
+  padding-top: clamp(40px, 6vw, 60px) !important; /* 上部の余白を調整 */
 }
 
 html body #collection,
 html body .section-collection {
-  margin-top: clamp(80px, 10vw, 160px) !important;
-  margin-bottom: clamp(80px, 10vw, 160px) !important;
-  padding: clamp(60px, 8vw, 120px) 0 !important;
+  margin-top: clamp(40px, 6vw, 60px) !important; /* 上部との間隔を調整 */
+  margin-bottom: clamp(20px, 3vw, 32px) !important; /* flowing imagesとの間隔 */
+  padding: clamp(20px, 3vw, 32px) 0 !important; /* 内部の余白を調整 */
 }
 
 html body #brands,
@@ -864,7 +866,7 @@ html body .section-about {
 .section-collection {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: 0;             /* flowing imagesの1行目のすぐ上に配置 */
+  margin-top: clamp(40px, 6vw, 60px);   /* 上部との間隔を少し広げる */
   margin-bottom: clamp(20px, 3vw, 32px); /* flowing imagesとの適切な間隔 */
   padding: clamp(20px, 3vw, 32px) 0;    /* 内部の余白を調整 */
   /* 重なりを防ぐための設定 */
@@ -946,4 +948,10 @@ html body .section-about {
     pointer-events: auto !important;
     cursor: pointer !important;
   }
+} 
+
+/* flowing imagesの位置調整 */
+#flowing-images,
+.section-flowing {
+  padding-top: clamp(40px, 6vw, 60px) !important; /* 上部の余白を調整 */
 } 
