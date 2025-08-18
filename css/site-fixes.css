@@ -463,7 +463,7 @@ body #collection,
 body .section-collection {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(300px, 35vw, 500px) !important;       /* 上部からの距離をさらに大幅に増加してflowing imagesの直上に配置 */
+  margin-top: clamp(100px, 15vw, 200px) !important;       /* 上部からの距離をさらに大幅に増加してflowing imagesの直上に配置 */
   margin-bottom: clamp(5px, 1vw, 10px) !important;    /* Collectionとflowing imagesの密接性を向上 */
   padding: clamp(10px, 2vw, 20px) 0 !important;        /* 内部の余白を調整 */
   /* 重なりを防ぐための追加設定 */
@@ -561,7 +561,7 @@ html body .section-flowing {
 
 html body #collection,
 html body .section-collection {
-  margin-top: clamp(300px, 35vw, 500px) !important; /* 上部からの距離を調整してflowing imagesの直上に配置 */
+  margin-top: clamp(100px, 15vw, 200px) !important; /* 上部からの距離を調整してflowing imagesの直上に配置 */
   margin-bottom: clamp(0px, 0vw, 5px) !important; /* flowing imagesとの密接性をさらに向上 */
   padding: clamp(10px, 2vw, 20px) 0 !important; /* 内部の余白を調整 */
 }
@@ -816,8 +816,20 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    width: clamp(80px, 12vw, 120px);
-    height: clamp(112px, 16.8vw, 168px);
+    width: clamp(120px, 16vw, 160px);
+    height: clamp(168px, 22.4vw, 224px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
+  }
+  
+  /* Lookbookコンテナのオーバーフロー制御 */
+  #lookbook .lookbook-container,
+  .section-lookbook .lookbook-container {
+    overflow: hidden !important;
+    max-width: 100vw !important;
+    padding: 0 clamp(10px, 2vw, 20px) !important;
   }
 }
 
@@ -829,8 +841,12 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    width: clamp(60px, 10vw, 80px);
-    height: clamp(84px, 14vw, 112px);
+    width: clamp(100px, 14vw, 140px);
+    height: clamp(140px, 19.6vw, 196px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
   }
 } 
 
@@ -843,8 +859,12 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    width: clamp(50px, 8vw, 70px);
-    height: clamp(70px, 11.2vw, 98px);
+    width: clamp(80px, 12vw, 120px);
+    height: clamp(112px, 16.8vw, 168px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
   }
 }
 
@@ -856,8 +876,12 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    width: clamp(40px, 6vw, 60px);
-    height: clamp(56px, 8.4vw, 84px);
+    width: clamp(70px, 10vw, 100px);
+    height: clamp(98px, 14vw, 140px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
   }
 }
 
@@ -866,7 +890,7 @@ html body .section-about {
 .section-collection {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: clamp(300px, 35vw, 500px);   /* 上部からの距離を調整してflowing imagesの直上に配置 */
+  margin-top: clamp(100px, 15vw, 200px);   /* 上部からの距離を調整してflowing imagesの直上に配置 */
   margin-bottom: clamp(0px, 0vw, 5px); /* flowing imagesとの密接性をさらに向上 */
   padding: clamp(10px, 2vw, 20px) 0;    /* 内部の余白を調整 */
   /* 重なりを防ぐための設定 */
@@ -1186,6 +1210,44 @@ html body .section-about {
     background-color: rgba(0, 255, 0, 0.3) !important;
     border: 2px solid green !important;
   }
+  
+  /* flowing imagesセクション全体の表示保証（根本的な問題解決） */
+  html body #flowing-images,
+  html body .section-flowing,
+  body #flowing-images,
+  body .section-flowing,
+  #flowing-images,
+  .section-flowing {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+    /* デバッグ用の背景色（問題解決後に削除可能） */
+    background-color: rgba(0, 0, 255, 0.1) !important;
+  }
+  
+  /* flow-trackの表示保証（根本的な問題解決） */
+  html body .flow-track,
+  body .flow-track,
+  .flow-track {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    /* スクロール機能を維持 */
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+    /* デバッグ用の背景色（問題解決後に削除可能） */
+    background-color: rgba(255, 255, 0, 0.1) !important;
+  }
 } 
 
 /* Collectionセクションの位置制御を強化（flowing imagesの1行目のすぐ上に確実に配置） */
@@ -1224,7 +1286,7 @@ body .section-collection,
   position: relative !important;
   z-index: 999 !important; /* 最前面に表示 */
   /* 上部からの距離を調整してflowing imagesの直上に配置 */
-  margin-top: clamp(300px, 35vw, 500px) !important;
+  margin-top: clamp(100px, 15vw, 200px) !important;
   margin-bottom: clamp(0px, 0vw, 5px) !important;
   padding: clamp(10px, 2vw, 20px) 0 !important;
   /* 重なりを防ぐための設定 */
