@@ -125,9 +125,69 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
-#brands .brand-card img,
-.section-brands .brand-card img,
-.brand-card img {
+/* ブランドロゴの基本スタイル */
+#brands .brand-card .brand-logo,
+.section-brands .brand-card .brand-logo,
+.brand-card .brand-logo {
+  max-width: 70% !important;          /* 画像サイズを小さくして空白を美しく */
+  max-height: 70% !important;         /* 画像サイズを小さくして空白を美しく */
+  width: auto !important;             /* 幅を自動調整 */
+  height: auto !important;            /* 高さを自動調整 */
+  object-fit: contain !important;     /* アスペクト比を保持 */
+  display: block !important;
+  /* 完全な中心中央揃えのための設定 */
+  position: absolute !important;      /* 絶対位置で中央揃え */
+  top: 50% !important;               /* 上から50% */
+  left: 50% !important;              /* 左から50% */
+  transform: translate(-50%, -50%) !important; /* 完全な中心中央揃え */
+  /* 画像の品質を保つ */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  /* ホバー効果のための設定 */
+  opacity: 1 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* ホバー用画像のスタイル */
+#brands .brand-card .brand-hover,
+.section-brands .brand-card .brand-hover,
+.brand-card .brand-hover {
+  max-width: 70% !important;
+  max-height: 70% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  /* 完全な中心中央揃えのための設定 */
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  /* 画像の品質を保つ */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  /* ホバー効果のための設定 */
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* ホバー時の画像切り替え */
+#brands .brand-card:hover .brand-logo,
+.section-brands .brand-card:hover .brand-logo,
+.brand-card:hover .brand-logo {
+  opacity: 0 !important;
+}
+
+#brands .brand-card:hover .brand-hover,
+.section-brands .brand-card:hover .brand-hover,
+.brand-card:hover .brand-hover {
+  opacity: 1 !important;
+}
+
+/* 既存の画像スタイルとの競合を解決 - 古いスタイルを更新 */
+#brands .brand-card img:not(.brand-logo):not(.brand-hover),
+.section-brands .brand-card img:not(.brand-logo):not(.brand-hover),
+.brand-card img:not(.brand-logo):not(.brand-hover) {
   max-width: 70% !important;          /* 画像サイズを小さくして空白を美しく */
   max-height: 70% !important;         /* 画像サイズを小さくして空白を美しく */
   width: auto !important;             /* 幅を自動調整 */
@@ -178,9 +238,12 @@
   }
   
   /* スマホではロゴマークも小さくして空白を美しく */
-  #brands .brand-card img,
-  .section-brands .brand-card img,
-  .brand-card img {
+  #brands .brand-card .brand-logo,
+  .section-brands .brand-card .brand-logo,
+  .brand-card .brand-logo,
+  #brands .brand-card .brand-hover,
+  .section-brands .brand-card .brand-hover,
+  .brand-card .brand-hover {
     max-width: 65% !important;          /* スマホでは65%サイズで空白を美しく */
     max-height: 65% !important;         /* スマホでは65%サイズで空白を美しく */
   }
@@ -204,9 +267,12 @@
   }
   
   /* 小さい画面でもロゴマークは小さくして空白を美しく */
-  #brands .brand-card img,
-  .section-brands .brand-card img,
-  .brand-card img {
+  #brands .brand-card .brand-logo,
+  .section-brands .brand-card .brand-logo,
+  .brand-card .brand-logo,
+  #brands .brand-card .brand-hover,
+  .section-brands .brand-card .brand-hover,
+  .brand-card .brand-hover {
     max-width: 60% !important;          /* 小さい画面では60%サイズ */
     max-height: 60% !important;         /* 小さい画面では60%サイズ */
   }
