@@ -6,7 +6,7 @@
   --header-h: 64px;
   --section-gap: clamp(250px, 25vw, 500px);  /* flowing-imagesとBrandsの間隔をさらに拡大（5cm追加） */
   --section-padding: clamp(60px, 8vw, 120px); /* セクション内の余白も維持 */
-  --brands-lookbook-gap: clamp(80px, 10vw, 160px); /* BrandsとLookbookの間隔 */
+  --brands-lookbook-gap: clamp(130px, 15vw, 260px); /* BrandsとLookbookの間隔を拡大 */
   --lookbook-about-gap: clamp(80px, 10vw, 160px); /* LookbookとAboutの間隔 */
 }
 
@@ -832,13 +832,14 @@ html body .section-about {
   }
 } 
 
-/* Collectionセクションのスタイル - LookbookやBrandsと同じ定義 */
+/* Collectionセクションのスタイル - flowing imagesの1行目のすぐ上に配置 */
 #collection,
 .section-collection {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: var(--section-gap);  /* flowing-imagesとの間隔を調整 */
-  padding: var(--section-padding) 0;  /* 内部の余白も確保 */
+  margin-top: 0;             /* flowing imagesの1行目のすぐ上に配置 */
+  margin-bottom: clamp(20px, 3vw, 32px); /* flowing imagesとの適切な間隔 */
+  padding: clamp(20px, 3vw, 32px) 0;    /* 内部の余白を調整 */
   /* 重なりを防ぐための設定 */
   background: transparent;  /* 背景色を透明に */
   clear: both;
