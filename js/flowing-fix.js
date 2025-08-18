@@ -48,16 +48,42 @@ function ensureLinkFunctionality() {
   });
 }
 
+// ブランドカードのホバー効果を保証
+function ensureBrandHoverEffect() {
+  const brandCards = document.querySelectorAll('#brands .brand-card, .section-brands .brand-card');
+  
+  brandCards.forEach(card => {
+    const logo = card.querySelector('.brand-logo');
+    const hover = card.querySelector('.brand-hover');
+    
+    if (logo && hover) {
+      // マウスオーバー時の効果
+      card.addEventListener('mouseenter', function() {
+        if (logo) logo.style.opacity = '0';
+        if (hover) hover.style.opacity = '1';
+      });
+      
+      // マウスアウト時の効果
+      card.addEventListener('mouseleave', function() {
+        if (logo) logo.style.opacity = '1';
+        if (hover) hover.style.opacity = '0';
+      });
+    }
+  });
+}
+
 // 初期化
 document.addEventListener('DOMContentLoaded', function() {
   ensureFlowingHeight();
   ensureLinkFunctionality();
+  ensureBrandHoverEffect();
 });
 
 // 画像読み込み完了後にも実行
 window.addEventListener('load', function() {
   ensureFlowingHeight();
   ensureLinkFunctionality();
+  ensureBrandHoverEffect();
 });
 
 // リサイズ時にも実行
