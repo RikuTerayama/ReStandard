@@ -449,7 +449,7 @@ body .section-flowing {
   z-index: 1 !important;
   margin-bottom: clamp(80px, 10vw, 160px) !important;  /* flowing-imagesとCollectionの間隔を調整 */
   padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も維持 */
-  padding-top: clamp(5px, 1vw, 10px) !important;      /* Collectionのすぐ下に配置するための最小限の余白 */
+  padding-top: clamp(0px, 0vw, 5px) !important;      /* Collectionのすぐ下に配置するための最小限の余白 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -556,13 +556,13 @@ html body #flowing-images,
 html body .section-flowing {
   margin-bottom: clamp(80px, 10vw, 160px) !important;
   padding-bottom: clamp(60px, 8vw, 120px) !important;
-  padding-top: clamp(5px, 1vw, 10px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
+  padding-top: clamp(0px, 0vw, 5px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
 }
 
 html body #collection,
 html body .section-collection {
   margin-top: clamp(500px, 50vw, 700px) !important; /* 上部からの距離をさらに大幅に増加してflowing imagesの直上に配置 */
-  margin-bottom: clamp(5px, 1vw, 10px) !important; /* flowing imagesとの密接性を向上 */
+  margin-bottom: clamp(0px, 0vw, 5px) !important; /* flowing imagesとの密接性をさらに向上 */
   padding: clamp(10px, 2vw, 20px) 0 !important; /* 内部の余白を調整 */
 }
 
@@ -867,7 +867,7 @@ html body .section-about {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
   margin-top: clamp(500px, 50vw, 700px);   /* 上部からの距離をさらに大幅に増加してflowing imagesの直上に配置 */
-  margin-bottom: clamp(5px, 1vw, 10px); /* flowing imagesとの密接性を向上 */
+  margin-bottom: clamp(0px, 0vw, 5px); /* flowing imagesとの密接性をさらに向上 */
   padding: clamp(10px, 2vw, 20px) 0;    /* 内部の余白を調整 */
   /* 重なりを防ぐための設定 */
   background: transparent;  /* 背景色を透明に */
@@ -892,7 +892,7 @@ html body .section-about {
 /* flowing imagesの位置調整 */
 #flowing-images,
 .section-flowing {
-  padding-top: clamp(5px, 1vw, 10px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
+  padding-top: clamp(0px, 0vw, 5px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
 } 
 
 /* スマートフォン表示での画像表示を強制する最終的なCSS */
