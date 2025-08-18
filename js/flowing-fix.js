@@ -72,11 +72,34 @@ function ensureBrandHoverEffect() {
   });
 }
 
+// Lookbook機能の保証
+function ensureLookbookFunctionality() {
+  const lookbookTrack = document.querySelector('#lookbook .lookbook-track, .section-lookbook .lookbook-track');
+  
+  if (lookbookTrack) {
+    // アニメーションが正しく動作するように保証
+    lookbookTrack.style.animation = 'lookbook-scroll 30s linear infinite';
+    
+    // ホバー時の一時停止機能を保証
+    const container = lookbookTrack.closest('.lookbook-container');
+    if (container) {
+      container.addEventListener('mouseenter', function() {
+        lookbookTrack.style.animationPlayState = 'paused';
+      });
+      
+      container.addEventListener('mouseleave', function() {
+        lookbookTrack.style.animationPlayState = 'running';
+      });
+    }
+  }
+}
+
 // 初期化
 document.addEventListener('DOMContentLoaded', function() {
   ensureFlowingHeight();
   ensureLinkFunctionality();
   ensureBrandHoverEffect();
+  ensureLookbookFunctionality();
 });
 
 // 画像読み込み完了後にも実行
@@ -84,6 +107,7 @@ window.addEventListener('load', function() {
   ensureFlowingHeight();
   ensureLinkFunctionality();
   ensureBrandHoverEffect();
+  ensureLookbookFunctionality();
 });
 
 // リサイズ時にも実行
