@@ -1302,3 +1302,97 @@ body .section-collection,
   visibility: visible !important;
   opacity: 1 !important;
 } 
+
+/* ========================================
+   Unified Section Title Styles & Spacing
+   ======================================== */
+
+/* Base section title style (applies to PC & mobile) */
+.section-title {
+  /* font family inherits existing site font */
+  color: #ffffff !important;                  /* unify color */
+  font-weight: 600 !important;
+  font-size: clamp(20px, 2.4vw, 32px) !important; /* same size across sections with responsive clamp */
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+  margin: 0 !important;                       /* spacing is controlled by section containers */
+  text-align: center !important;              /* keep current centered look */
+  z-index: 1 !important;
+  position: relative !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important; /* maintain existing shadow */
+}
+
+/* Specific section title overrides to ensure consistency */
+.collection-section .section-title,
+.brands-section .section-title,
+.lookbook-section .section-title,
+.restandard-section .section-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: clamp(20px, 2.4vw, 32px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+  text-align: center !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* Force override existing conflicting styles */
+html body .collection-section .section-title,
+html body .brands-section .section-title,
+html body .lookbook-section .section-title,
+html body .restandard-section .section-title,
+body .collection-section .section-title,
+body .brands-section .section-title,
+body .lookbook-section .section-title,
+body .restandard-section .section-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: clamp(20px, 2.4vw, 32px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+  text-align: center !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* ========================================
+   ReStandard Section: Heading outside white box
+   ======================================== */
+
+.restandard-section .section-title {
+  /* keep consistent style; place above the white box */
+  margin-bottom: 12px;
+}
+
+.restandard-section .restandard-body {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* ========================================
+   Desktop Spacing: Collection & Flowing Images
+   ======================================== */
+
+/* Desktop spacing tweaks */
+@media (min-width: 1025px) {
+  /* Add top space from navbar to Collection title */
+  .collection-section {
+    padding-top: 64px; /* increase; adjust if a global offset already exists */
+  }
+
+  /* Title and grid vertical rhythm */
+  .collection-section .section-title {
+    margin-bottom: 16px; /* closer to grid than before */
+  }
+
+  /* Tighten any excessive top margin on the grid itself */
+  .collection-section .flowing-images {
+    margin-top: 0 !important;   /* ensure grid begins right under the title */
+  }
+  
+  /* If navbar is sticky/fixed, ensure proper clearance */
+  .collection-section {
+    padding-top: calc(var(--header-h, 64px) + 40px);
+  }
+} 
