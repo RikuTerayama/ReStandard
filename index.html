@@ -1410,11 +1410,12 @@
        style="display:block !important;height:140px !important;min-height:140px !important;pointer-events:none;"></div>
   
   <!-- Collection -->
-  <section id="collection" class="section-collection collection-section">
-    <h2 class="section-title">Collection</h2>
+  <section id="collection" class="section-collection collection-section" data-role="collection">
+    <h2 id="collection-title" class="section-title collection-title">Collection</h2>
     
-    <div id="flowing-images" class="section-flowing flowing-images pt-20 md:pt-28 lg:pt-36 xl:pt-40 scroll-mt-[calc(var(--rs-header-h)+24px)]" style="padding-top:60px !important;display:block !important;">
-      <div class="flow-row-bg" id="flowing-images-bg">
+    <div class="flowing-bg">
+      <div id="flowing-images" class="section-flowing flowing-images pt-20 md:pt-28 lg:pt-36 xl:pt-40 scroll-mt-[calc(var(--rs-header-h)+24px)]" style="padding-top:60px !important;display:block !important;">
+        <div class="flow-row-bg" id="flowing-images-bg">
       <div class="flow-row flow-row-top">
         <div class="flow-track">
           <!-- 画像リストを3セット分並べる（例：1-20,1-20,1-20） -->
@@ -1552,6 +1553,7 @@
 
         </div>
       </div>
+      </div>
     </div>
   </section>
     <style>
@@ -1564,7 +1566,7 @@
     </style>
 
   <!-- Brands -->
-  <section id="brands" class="section-brands brands-section">
+  <section id="brands" class="section-brands brands-section" data-role="brands">
     <h2 class="section-title">Brands</h2>
     <div class="brands-grid">
       <figure class="brand-card" data-hover="image/rockmount-hover.webp">
@@ -1640,9 +1642,9 @@
 </section>
 
   <!-- Lookbook -->
-  <section id="lookbook" class="section-lookbook lookbook-section">
+  <section id="lookbook" class="section-lookbook lookbook-section" data-role="lookbook">
     <h2 class="section-title">Lookbook</h2>
-    <div class="lookbook-container">
+    <div class="lookbook-grid">
       <div class="lookbook-track">
         <!-- 画像リストを2セット分並べる（例：1-8,1-8） -->
         <img src="image/look1.webp" alt="Look 1" loading="lazy">
@@ -1667,7 +1669,7 @@
   </section>
 
   <!-- ReStandard -->
-  <section id="about" class="section-about restandard-section">
+  <section id="about-restandard" class="section-about restandard-section" data-role="about-restandard">
     <h2 class="section-title">About ReStandard</h2>
     <!-- PC用（md以上） -->
     <div class="about-inner only-pc restandard-body">
@@ -2296,43 +2298,180 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
   
   <script>
-    // Collection見出しを必ずグリッド直上に移動するDOM強制修正
-    (function () {
-      function moveCollectionHeading(){
-        var collectionSection = document.querySelector('.collection-section');
-        if(!collectionSection) return;
+    // 診断・自動修正スクリプト（デスクトップ専用）
+    (function(){
+      function log(msg){ console.info("[FIX-COLLECTION]", msg); }
 
-        var grid = collectionSection.querySelector('.flowing-images, .collection-grid');
-        if(!grid) return;
+      function sel(q){ return document.querySelector(q); }
+      function all(q){ return Array.from(document.querySelectorAll(q)); }
 
-        // find an H2 that says "Collection"
-        var allHeads = Array.from(document.querySelectorAll('h1, h2, h3, .collection-title, .section-title'));
-        var head = allHeads.find(function(el){
-          var t = (el.textContent || '').trim().toLowerCase();
-          return t === 'collection';
-        });
+      function isInside(el, container){ try {return container && el && container.contains(el);} catch(e){return false;} }
 
-        // if heading exists and is NOT already the previous sibling of the grid, move it
-        if(head && head.parentElement !== collectionSection){
-          head.classList.add('collection-title'); // normalize class
-          collectionSection.insertBefore(head, grid);
-        } else if (!head) {
-          // if no heading exists, create one
-          var h2 = document.createElement('h2');
-          h2.className = 'collection-title section-title';
-          h2.textContent = 'Collection';
-          collectionSection.insertBefore(h2, grid);
+      function killPseudoAndOverlays(scope){
+        // hide common overlay classes and neutralize pseudo via data-flag
+        const suspects = [
+          '.overlay','.title-overlay','.section-overlay','.gradient','.spacer',
+          '.kv-overlay','.mv-overlay'
+        ];
+        suspects.forEach(s => all(scope + " " + s).forEach(n => {
+          n.dataset._killed = "1";
+          n.style.setProperty('display','none','important');
+          n.style.setProperty('background','transparent','important');
+          n.style.setProperty('height','0','important');
+          n.style.setProperty('margin','0','important');
+          n.style.setProperty('padding','0','important');
+        }));
+      }
+
+      function rmInlineStyles(el){
+        if(!el) return;
+        el.removeAttribute('style');
+        // also clear style on ancestors that might force absolute
+        let p = el.parentElement;
+        while(p && !p.hasAttribute('data-role')){
+          ['position','top','left','right','bottom','transform'].forEach(k=>{
+            if(p.style && p.style[k]) p.style[k] = '';
+          });
+          p = p.parentElement;
+        }
+      }
+
+      function ensureCollectionHeading(){
+        const section = sel('[data-role="collection"]') || sel('.collection-section');
+        const grid    = section && (section.querySelector('.flowing-images, .collection-grid') || section.querySelector('[class*="flowing"]'));
+        let   title   = section && section.querySelector('#collection-title, .collection-title, h2.section-title');
+
+        // If there is a hero/mv title that says "Collection", remove it and rely on section title
+        all('.hero h2, .kv h2, .mv h2, .hero .section-title, .kv .section-title, .mv .section-title')
+          .filter(el => (el.textContent || '').trim().toLowerCase() === 'collection')
+          .forEach(el => { log("Removed hero/mv duplicate title"); el.remove(); });
+
+        if(!title){
+          // find any "Collection" heading globally
+          title = all('h1, h2, h3, .section-title, .collection-title').find(el => (el.textContent||'').trim().toLowerCase()==='collection');
+        }
+        if(!section || !grid){
+          console.warn("[FIX-COLLECTION] Missing section or grid. Aborting.");
+          return;
         }
 
-        // remove any duplicate "Collection" headings left in hero/mv
-        document.querySelectorAll('.hero .collection-title, .kv .collection-title, .mv .collection-title')
-          .forEach(function(el){ el.remove(); });
+        // If title exists but is outside the section, move it
+        if(title && !isInside(title, section)){
+          log("Moving title into collection section above grid.");
+          title.classList.add('collection-title','section-title');
+          section.insertBefore(title, grid);
+        }
+        // If still no title, create one
+        if(!title){
+          log("Creating missing title.");
+          title = document.createElement('h2');
+          title.id = 'collection-title';
+          title.className = 'collection-title section-title';
+          title.textContent = 'Collection';
+          section.insertBefore(title, grid);
+        }
+
+        // Kill absolute/fixed transforms on the title and ancestors
+        [title].forEach(el=>{
+          const cs = getComputedStyle(el);
+          log("Title computed position=" + cs.position + ", top=" + cs.top + ", transform=" + cs.transform);
+          rmInlineStyles(el);
+          el.style.setProperty('position','static','important');
+          el.style.setProperty('transform','none','important');
+          ['top','left','right','bottom'].forEach(k => el.style.setProperty(k,'auto','important'));
+          el.style.setProperty('margin','0 0 var(--title-gap,24px) 0','important');
+          el.style.setProperty('text-align','center','important');
+          el.classList.add('collection-anchor');
+        });
+
+        // ensure there is nothing between title and grid that occupies height
+        const immediate = title.nextElementSibling;
+        if(immediate && immediate !== grid){
+          log("Found an element between title and grid; hiding it on desktop.");
+          immediate.setAttribute('data-between','1');
+          immediate.style.setProperty('display','none','important');
+          immediate.style.setProperty('height','0','important');
+          immediate.style.setProperty('margin','0','important');
+          immediate.style.setProperty('padding','0','important');
+        }
+
+        // Neutralize overlays in the section
+        killPseudoAndOverlays('[data-role="collection"], .collection-section');
+
+        // Normalize grid top spacing
+        grid.style.setProperty('margin-top','0','important');
+        grid.style.setProperty('padding-top','0','important');
+        grid.style.setProperty('position','relative','important');
+        grid.style.setProperty('z-index','0','important');
+
+        log("Collection title should now be immediately above the grid.");
+      }
+
+      function unifySectionSpacing(){
+        const SEC_GAP = '72px';  // section top spacing
+        const TTL_GAP = '24px';  // title to content spacing
+
+        document.documentElement.style.setProperty('--sec-gap', SEC_GAP);
+        document.documentElement.style.setProperty('--title-gap', TTL_GAP);
+
+        [
+          '[data-role="collection"]',
+          '[data-role="brands"]',
+          '[data-role="lookbook"]',
+          '[data-role="about-restandard"]'
+        ].forEach(s => {
+          const sec = sel(s) || sel(s.replace(/\[data-role="|"\]/g,''));
+          if(!sec) return;
+          sec.style.setProperty('padding-top','var(--sec-gap)','important');
+          const h2 = sec.querySelector('.section-title');
+          if(h2) h2.style.setProperty('margin-bottom','var(--title-gap)','important');
+        });
+      }
+
+      function centerAbout(){
+        const body = sel('[data-role="about-restandard"] .restandard-body') || sel('.restandard-section .restandard-body');
+        if(!body) return;
+        body.style.setProperty('max-width','1024px','important');
+        body.style.setProperty('margin-left','auto','important');
+        body.style.setProperty('margin-right','auto','important');
+        body.style.setProperty('text-align','center','important');
+        // neutralize floats/flex left biases
+        body.style.setProperty('float','none','important');
+        const cs = getComputedStyle(body);
+        console.info("[FIX-COLLECTION] About body display=" + cs.display);
+        if(cs.display.includes('flex')){
+          body.style.setProperty('justify-content','center','important');
+          body.style.setProperty('align-items','center','important');
+        }
+        all('[data-role="about-restandard"] .restandard-body img, .restandard-section .restandard-body img')
+          .forEach(img => { img.style.setProperty('margin','0 auto','important'); img.style.setProperty('display','block','important'); });
+      }
+
+      function bustCSSCache(){
+        // Add a version query to linked stylesheets for hard cache-bust during dev
+        all('link[rel="stylesheet"]').forEach(link=>{
+          if(!link.href) return;
+          const url = new URL(link.href, location.href);
+          url.searchParams.set('v', String(Date.now()));
+          link.href = url.toString();
+        });
+      }
+
+      function run(){
+        if (window.matchMedia('(min-width: 1025px)').matches) {
+          ensureCollectionHeading();
+          unifySectionSpacing();
+          centerAbout();
+          bustCSSCache();
+        } else {
+          console.info("[FIX-COLLECTION] Skipped: mobile viewport.");
+        }
       }
 
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', moveCollectionHeading);
+        document.addEventListener('DOMContentLoaded', run);
       } else {
-        moveCollectionHeading();
+        run();
       }
     })();
   </script>
