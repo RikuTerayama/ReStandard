@@ -449,7 +449,7 @@ body .section-flowing {
   z-index: 1 !important;
   margin-bottom: clamp(80px, 10vw, 160px) !important;  /* flowing-imagesとCollectionの間隔を調整 */
   padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も維持 */
-  padding-top: clamp(10px, 2vw, 20px) !important;      /* Collectionのすぐ下に配置するための最小限の余白 */
+  padding-top: clamp(5px, 1vw, 10px) !important;      /* Collectionのすぐ下に配置するための最小限の余白 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
@@ -556,7 +556,7 @@ html body #flowing-images,
 html body .section-flowing {
   margin-bottom: clamp(80px, 10vw, 160px) !important;
   padding-bottom: clamp(60px, 8vw, 120px) !important;
-  padding-top: clamp(10px, 2vw, 20px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
+  padding-top: clamp(5px, 1vw, 10px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
 }
 
 html body #collection,
@@ -892,7 +892,7 @@ html body .section-about {
 /* flowing imagesの位置調整 */
 #flowing-images,
 .section-flowing {
-  padding-top: clamp(10px, 2vw, 20px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
+  padding-top: clamp(5px, 1vw, 10px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
 } 
 
 /* スマートフォン表示での画像表示を強制する最終的なCSS */
@@ -1073,7 +1073,7 @@ html body .section-about {
 
 /* より強力なスマートフォン表示の強制表示（競合を完全に排除） */
 @media (max-width: 767px) {
-  /* 1.JPGと25.JPGの画像を最優先で強制表示（競合を完全に排除） */
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（根本的な問題解決） */
   html body #flowing-images .flow-track a img[src*="1.JPG"],
   html body #flowing-images .flow-track a img[src*="25.JPG"],
   html body .section-flowing .flow-track a img[src*="1.JPG"],
@@ -1085,18 +1085,31 @@ html body .section-about {
   body .section-flowing .flow-track a img[src*="1.JPG"],
   body .section-flowing .flow-track a img[src*="25.JPG"],
   body .flow-track a img[src*="1.JPG"],
-  body .flow-track a img[src*="25.JPG"] {
+  body .flow-track a img[src*="25.JPG"],
+  #flowing-images .flow-track a img[src*="1.JPG"],
+  #flowing-images .flow-track a img[src*="25.JPG"],
+  .section-flowing .flow-track a img[src*="1.JPG"],
+  .section-flowing .flow-track a img[src*="25.JPG"],
+  .flow-track a img[src*="1.JPG"],
+  .flow-track a img[src*="25.JPG"] {
+    /* 表示の根本的な強制 */
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    /* サイズの根本的な強制 */
     width: auto !important;
     height: auto !important;
     max-height: 250px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    /* 位置の根本的な強制 */
     position: relative !important;
-    z-index: 1 !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    /* 画像の表示を最優先 */
+    z-index: 999 !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    /* 表示の根本的な強制 */
     transform: none !important;
     filter: none !important;
     clip: auto !important;
@@ -1106,29 +1119,51 @@ html body .section-about {
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
+    /* インタラクションの根本的な強制 */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* フロートの根本的な強制解除 */
+    float: none !important;
+    /* オーバーフローの根本的な強制解除 */
+    overflow: visible !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+    /* デバッグ用の背景色（問題解決後に削除可能） */
+    background-color: rgba(255, 0, 0, 0.3) !important;
+    border: 2px solid red !important;
   }
   
-  /* 1.JPGと25.JPGのリンクを最優先で強制表示（競合を完全に排除） */
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（根本的な問題解決） */
   html body #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
   html body #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
   html body .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
   html body .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
   html body .flow-track a[href*="68a3416c225fded5de0dfb82"],
-  html body .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  html body .flow-track a[href*="68a346549b5b820cfb08f5"],
   body #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
   body #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
   body .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
   body .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
   body .flow-track a[href*="68a3416c225fded5de0dfb82"],
-  body .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+  body .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    /* 表示の根本的な強制 */
     display: inline-block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    /* 位置の根本的な強制 */
     position: relative !important;
-    z-index: 1 !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    /* リンクの表示を最優先 */
+    z-index: 999 !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    /* 表示の根本的な強制 */
     transform: none !important;
     filter: none !important;
     clip: auto !important;
@@ -1138,6 +1173,18 @@ html body .section-about {
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
+    /* インタラクションの根本的な強制 */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* フロートの根本的な強制解除 */
+    float: none !important;
+    /* オーバーフローの根本的な強制解除 */
+    overflow: visible !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+    /* デバッグ用の背景色（問題解決後に削除可能） */
+    background-color: rgba(0, 255, 0, 0.3) !important;
+    border: 2px solid green !important;
   }
 } 
 
