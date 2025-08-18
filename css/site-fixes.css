@@ -814,8 +814,8 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    width: clamp(150px, 20vw, 200px);
-    height: clamp(210px, 28vw, 280px);
+    width: clamp(120px, 16vw, 160px);
+    height: clamp(168px, 22.4vw, 224px);
   }
 }
 
@@ -827,10 +827,37 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    width: clamp(120px, 16vw, 160px);
-    height: clamp(168px, 22.4vw, 224px);
+    width: clamp(100px, 14vw, 140px);
+    height: clamp(140px, 19.6vw, 196px);
   }
 } 
+
+/* さらに小さい画面サイズでの調整 */
+@media (max-width: 375px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(6px, 1vw, 10px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(80px, 12vw, 120px);
+    height: clamp(112px, 16.8vw, 168px);
+  }
+}
+
+@media (max-width: 320px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(4px, 0.8vw, 8px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(70px, 10vw, 100px);
+    height: clamp(98px, 14vw, 140px);
+  }
+}
 
 /* Collectionセクションのスタイル - flowing imagesの1行目のすぐ上に配置 */
 #collection,
@@ -856,4 +883,67 @@ html body .section-about {
   text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
   margin-bottom: clamp(32px, 6vw, 48px) !important;
   line-height: 1.2 !important;
+} 
+
+/* スマートフォン表示での画像表示保証 */
+@media (max-width: 767px) {
+  /* flowing imagesの画像表示保証 */
+  #flowing-images .flow-track a img,
+  .section-flowing .flow-track a img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+  
+  /* flowing imagesのリンク表示保証 */
+  #flowing-images .flow-track a,
+  .section-flowing .flow-track a {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  
+  /* 1.JPGと25.JPGの強制表示 */
+  #flowing-images .flow-track a img[src*="1.JPG"],
+  #flowing-images .flow-track a img[src*="25.JPG"],
+  .section-flowing .flow-track a img[src*="1.JPG"],
+  .section-flowing .flow-track a img[src*="25.JPG"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 999 !important;
+    background: rgba(255, 0, 0, 0.1) !important; /* デバッグ用の背景色 */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+  
+  /* 1.JPGと25.JPGのリンク強制表示 */
+  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 999 !important;
+    background: rgba(0, 255, 0, 0.1) !important; /* デバッグ用の背景色 */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
 } 
