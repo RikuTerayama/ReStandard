@@ -2283,5 +2283,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+  <script>
+    // モバイルレイアウト修正のためのJavaScriptガード
+    // 1.JPGと25.JPGのインラインスタイルを削除
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('img[src$="/1.JPG"], img[src$="/1.jpg"], img[src$="/25.JPG"], img[src$="/25.jpg"]').forEach(el => {
+        el.removeAttribute('style');
+        const card = el.closest('.item, .card, div');
+        if (card) card.removeAttribute('style');
+      });
+    });
+  </script>
 </body>
 </html>
