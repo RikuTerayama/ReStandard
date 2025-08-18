@@ -26,49 +26,112 @@
 
 /* 言語判定（<html lang="ja|en"> の値で切替） */
 html[lang="ja"] #about .only-ja,
-html[lang="ja"] #brands .only-ja { 
+html[lang="ja"] #brands .only-ja,
+html[lang="ja"] #about-restandard .only-ja { 
   display: block !important; 
 }
 
 html[lang="en"] #about .only-en,
-html[lang="en"] #brands .only-en { 
+html[lang="en"] #brands .only-en,
+html[lang="en"] #about-restandard .only-en { 
   display: block !important; 
 }
 
 /* 念のための保険：見えない要素を確実に隠す */
 html[lang="ja"] #about .only-en,
 html[lang="ja"] #brands .only-en,
+html[lang="ja"] #about-restandard .only-en,
 html[lang="en"] #about .only-ja,
-html[lang="en"] #brands .only-ja { 
+html[lang="en"] #brands .only-ja,
+html[lang="en"] #about-restandard .only-ja { 
   display: none !important; 
 }
 
 /* 競合CSS対策：より強力なセレクタで確実に制御 */
 html[lang="ja"] #about .i18n.only-ja,
-html[lang="ja"] #brands .i18n.only-ja { 
+html[lang="ja"] #brands .i18n.only-ja,
+html[lang="ja"] #about-restandard .i18n.only-ja { 
   display: block !important; 
 }
 
 html[lang="en"] #about .i18n.only-en,
-html[lang="en"] #brands .i18n.only-en { 
+html[lang="en"] #brands .i18n.only-en,
+html[lang="en"] #about-restandard .i18n.only-en { 
   display: block !important; 
 }
 
 /* デフォルト言語設定（lang属性が未設定の場合） */
 html:not([lang]) #about .only-ja,
-html:not([lang]) #brands .only-ja { 
+html:not([lang]) #brands .only-ja,
+html:not([lang]) #about-restandard .only-ja { 
   display: block !important; 
 }
 
 html:not([lang]) #about .only-en,
-html:not([lang]) #brands .only-en { 
+html:not([lang]) #brands .only-en,
+html:not([lang]) #about-restandard .only-en { 
   display: none !important; 
 }
 
 /* 強制可視化の上書き（既存のreveal.cssとの競合回避） */
 #about .i18n[style*="display: none"],
-#brands .i18n[style*="display: none"] {
+#brands .i18n[style*="display: none"],
+#about-restandard .i18n[style*="display: none"] {
   display: block !important;
+}
+
+/* About ReStandardの中央揃え */
+.restandard-section .restandard-body {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1024px !important;
+}
+
+.restandard-section .restandard-body img,
+.restandard-section .restandard-body figure {
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* PC表示でのCollectionセクション表示問題解決 */
+@media (min-width: 1025px) {
+  .collection-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .collection-section .flowing-images {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .collection-section .flowing-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .collection-section .flow-row-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* 背景の復活 */
+  .collection-section .flowing-bg {
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
+  
+  .collection-section .flow-row-bg {
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
 }
 
 /* 言語切り替えボタンのスタイル */
