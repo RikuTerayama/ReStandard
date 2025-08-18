@@ -302,14 +302,7 @@
   padding: clamp(16px, 3vw, 28px) clamp(16px, 4vw, 40px);
 }
 
-.about-title {
-  font-size: clamp(20px, 2.8vw, 32px);
-  font-weight: 700;
-  color: #333;
-  margin: 0 0 clamp(24px, 3vw, 36px);  /* タイトル下の余白を拡大 */
-  line-height: 1.4;
-  text-align: center !important;  /* タイトルも中央揃え */
-}
+
 
 .about-text {
   font-size: clamp(14px, 1.8vw, 18px);
@@ -479,8 +472,8 @@ body #brands,
 body .section-brands {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(80px, 10vw, 160px) !important;     /* CollectionとBrandsの間隔 */
-  margin-bottom: clamp(80px, 10vw, 160px) !important;  /* BrandsとLookbookの間隔 */
+  margin-top: clamp(60px, 8vw, 120px) !important;     /* CollectionとBrandsの間隔を適切に調整 */
+  margin-bottom: clamp(60px, 8vw, 120px) !important;  /* BrandsとLookbookの間隔を適切に調整 */
   padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
@@ -489,13 +482,14 @@ body .section-brands {
   background: transparent !important;
 }
 
-/* PC版でBrandsセクションを下に移動 */
+/* PC版でBrandsセクションの間隔を調整 */
 @media (min-width: 768px) {
   #brands,
   .section-brands,
   body #brands,
   body .section-brands {
-    margin-top: calc(clamp(250px, 25vw, 500px) + 100px) !important;  /* PC版でさらに下に移動 */
+    margin-top: clamp(80px, 10vw, 160px) !important;  /* PC版で適切な間隔に調整 */
+    margin-bottom: clamp(80px, 10vw, 160px) !important; /* PC版で適切な間隔に調整 */
   }
 }
 
@@ -505,13 +499,23 @@ body #about,
 body .section-about {
   position: relative !important;
   z-index: 2 !important;
-  margin-top: clamp(80px, 10vw, 160px) !important;     /* LookbookとAboutの間隔 */
+  margin-top: clamp(60px, 8vw, 120px) !important;     /* LookbookとAboutの間隔を適切に調整 */
   padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
   /* 重なりを防ぐための追加設定 */
   isolation: isolate !important;
   contain: layout !important;
   /* 背景色を透明に */
   background: transparent !important;
+}
+
+/* PC版でAboutセクションの間隔を調整 */
+@media (min-width: 768px) {
+  #about,
+  .section-about,
+  body #about,
+  body .section-about {
+    margin-top: clamp(80px, 10vw, 160px) !important;  /* PC版で適切な間隔に調整 */
+  }
 }
 
 /* セクション間の視覚的分離を調整 */
@@ -537,12 +541,7 @@ body .section-about .about-inner {
   text-align: center !important;
 }
 
-#about .about-title,
-.section-about .about-title,
-body #about .about-title,
-body .section-about .about-title {
-  text-align: center !important;
-}
+
 
 #about .about-text,
 .section-about .about-text,
@@ -554,14 +553,14 @@ body .section-about .about-text {
 /* 最終的な強制設定 - 確実に反映されるように */
 html body #flowing-images,
 html body .section-flowing {
-  margin-bottom: clamp(80px, 10vw, 160px) !important;
+  margin-bottom: clamp(60px, 8vw, 120px) !important; /* CollectionとBrandsの間隔を適切に調整 */
   padding-bottom: clamp(60px, 8vw, 120px) !important;
   padding-top: clamp(0px, 0vw, 5px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
 }
 
 html body #collection,
 html body .section-collection {
-  margin-top: clamp(100px, 15vw, 200px) !important; /* 上部からの距離を調整してflowing imagesの直上に配置 */
+  margin-top: clamp(60px, 8vw, 120px) !important; /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
   margin-bottom: clamp(0px, 0vw, 5px) !important; /* flowing imagesとの密接性をさらに向上 */
   padding: clamp(10px, 2vw, 20px) 0 !important; /* 内部の余白を調整 */
 }
@@ -890,7 +889,7 @@ html body .section-about {
 .section-collection {
   position: relative;
   z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: clamp(100px, 15vw, 200px);   /* 上部からの距離を調整してflowing imagesの直上に配置 */
+  margin-top: clamp(60px, 8vw, 120px);   /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
   margin-bottom: clamp(0px, 0vw, 5px); /* flowing imagesとの密接性をさらに向上 */
   padding: clamp(10px, 2vw, 20px) 0;    /* 内部の余白を調整 */
   /* 重なりを防ぐための設定 */
@@ -1285,8 +1284,8 @@ body .section-collection,
   /* 位置制御の最強化 */
   position: relative !important;
   z-index: 999 !important; /* 最前面に表示 */
-  /* 上部からの距離を調整してflowing imagesの直上に配置 */
-  margin-top: clamp(100px, 15vw, 200px) !important;
+  /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
+  margin-top: clamp(60px, 8vw, 120px) !important;
   margin-bottom: clamp(0px, 0vw, 5px) !important;
   padding: clamp(10px, 2vw, 20px) 0 !important;
   /* 重なりを防ぐための設定 */
