@@ -1800,3 +1800,72 @@ body .restandard-section .section-title {
    .lookbook-section {
      overflow: visible !important;
    }
+
+/* ========================================
+   HIGH-SPECIFICITY DESKTOP OVERRIDES (min-width: 1025px)
+   ======================================== */
+
+:root{
+  --sec-gap:72px;
+  --title-gap:24px;
+}
+
+@media (min-width:1025px){
+  /* Kill hero/mv duplicates + overlays */
+  .hero .section-title,
+  .kv .section-title,
+  .mv .section-title { display:none !important; }
+
+  .collection-section::before,
+  .collection-section::after,
+  .collection-section .overlay,
+  .collection-section .title-overlay,
+  .collection-section .section-overlay { display:none !important; content:none !important; }
+
+  /* Force title to participate in normal flow right above the grid */
+  .collection-section > h2.collection-title.section-title.collection-anchor {
+    position: static !important;
+    transform: none !important;
+    inset: auto !important;
+    margin: 0 0 var(--title-gap) 0 !important;
+    text-align: center !important;
+    z-index: 1 !important;
+  }
+
+  /* Remove any gap before the grid */
+  .collection-section .flowing-images,
+  .collection-section .collection-grid {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+  /* Uniform section spacing */
+  .collection-section,
+  .brands-section,
+  .lookbook-section,
+  .restandard-section {
+    padding-top: var(--sec-gap) !important;
+  }
+  .collection-section .section-title,
+  .brands-section .section-title,
+  .lookbook-section .section-title,
+  .restandard-section .section-title {
+    margin-bottom: var(--title-gap) !important;
+  }
+
+  /* About ReStandard centered */
+  .restandard-section .restandard-body{
+    max-width:1024px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    text-align:center !important;
+    float:none !important;
+  }
+  .restandard-section .restandard-body img,
+  .restandard-section .restandard-body figure{
+    display:block !important;
+    margin:0 auto !important;
+  }
+}
