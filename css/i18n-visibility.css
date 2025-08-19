@@ -7,14 +7,21 @@
   display: none !important; 
 }
 
-/* 端末判定：ブレークポイントは必要に応じて調整（md=768px想定） */
+/* ========================================
+  PCとスマートフォン用のコンテンツ制御（重複表示防止）
+  ======================================== */
+
+/* PC用コンテンツ（デフォルト表示） */
 .only-pc { 
   display: block !important; 
 }
+
+/* スマートフォン用コンテンツ（デフォルト非表示） */
 .only-sp { 
   display: none !important; 
 }
 
+/* スマートフォン表示時の制御 */
 @media (max-width: 767px) {
   .only-pc { 
     display: none !important; 
@@ -24,7 +31,7 @@
   }
 }
 
-/* PCとスマートフォン用のコンテンツ制御（重複表示防止） */
+/* overview-titleクラスの制御（HTML内の重複表示防止） */
 .overview-title-desktop { 
   display: block !important; 
 }
@@ -41,7 +48,10 @@
   }
 }
 
-/* 言語判定（<html lang="ja|en"> の値で切替） */
+/* ========================================
+  言語判定（<html lang="ja|en"> の値で切替）
+  ======================================== */
+
 html[lang="ja"] #about .only-ja,
 html[lang="ja"] #brands .only-ja,
 html[lang="ja"] #about-restandard .only-ja { 
@@ -97,7 +107,10 @@ html:not([lang]) #about-restandard .only-en {
   display: block !important;
 }
 
-/* About ReStandardの中央揃え */
+/* ========================================
+  About ReStandardの中央揃え
+  ======================================== */
+
 .restandard-section .restandard-body {
   text-align: center !important;
   margin-left: auto !important;
@@ -111,7 +124,10 @@ html:not([lang]) #about-restandard .only-en {
   margin: 0 auto !important;
 }
 
-/* PC表示でのCollectionセクション表示問題解決 */
+/* ========================================
+  PC表示でのCollectionセクション表示問題解決
+  ======================================== */
+
 @media (min-width: 1025px) {
   .collection-section {
     display: block !important;
@@ -151,7 +167,10 @@ html:not([lang]) #about-restandard .only-en {
   }
 }
 
-/* 言語切り替えボタンのスタイル */
+/* ========================================
+  言語切り替えボタンのスタイル
+  ======================================== */
+
 [data-lang-btn] {
   cursor: pointer;
   transition: all 0.2s ease;
@@ -183,7 +202,10 @@ html:not([lang]) #about-restandard .only-en {
   background-color: #222 !important;
 }
 
-/* 最も強力なセレクタによる言語切り替え保証 */
+/* ========================================
+  最も強力なセレクタによる言語切り替え保証
+  ======================================== */
+
 html body[lang="ja"] #about .only-ja,
 html body[lang="ja"] #brands .only-ja { 
   display: block !important; 
