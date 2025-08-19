@@ -2428,7 +2428,7 @@ html body .flow-track img {
 /* 4. PC表示でのLookbook背景と配置調整 - 最高優先度 */
 @media (min-width: 1025px) {
   
-  /* Lookbook見出しを背景の外に配置 */
+  /* Lookbook見出しの表示確保と中央揃え - 白い透明ボックスの外に配置 */
   html body .lookbook-section .section-title,
   html body .section-lookbook .section-title,
   html body #lookbook .section-title {
@@ -2443,30 +2443,36 @@ html body .flow-track img {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    /* 背景の外に配置 */
-    background: transparent !important;
-    padding: 0 !important;
-    border: none !important;
+    /* 白い透明ボックスの外に配置 */
+    position: relative !important;
+    z-index: 10 !important;
   }
   
-  /* Lookbook画像コンテナの最適化 - 画面横幅いっぱいに表示 */
-  html body .lookbook-section .lookbook-grid,
-  html body .lookbook-section .lookbook-container,
-  html body .section-lookbook .lookbook-grid,
-  html body .section-lookbook .lookbook-container,
-  html body #lookbook .lookbook-grid,
-  html body #lookbook .lookbook-container {
-    display: flex !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 16px !important;
-    padding: 16px 20px !important;
-    width: 100% !important; /* 画面横幅いっぱいに表示 */
-    max-width: 100vw !important;
-    background: rgba(255, 255, 255, 0.9) !important; /* 白い半透明背景 */
+  /* Lookbook背景の最適化 - imagesを少し囲うサイズに調整 */
+  html body .lookbook-section,
+  html body .section-lookbook,
+  html body #lookbook {
+    background: rgba(255, 255, 255, 0.9) !important; /* 白背景 */
     border-radius: 16px !important;
-    margin: 0 auto !important;
+    padding: 8px 12px !important; /* imagesを少し囲う程度 */
+    margin: 200px 0 !important; /* 配置を下に移動 */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: fit-content !important; /* コンテンツに合わせたサイズ */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    /* 白い透明ボックスは画像にのみ適用 */
+    position: relative !important;
+    z-index: 5 !important;
+  }
+  
+  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間 */
+  html body .lookbook-section,
+  html body .section-lookbook,
+  html body #lookbook {
+    margin-top: calc(var(--sec-gap, 72px) + 200px) !important; /* 下に配置 */
+    margin-bottom: calc(var(--sec-gap, 72px) + 200px) !important;
   }
   
   /* Lookbook画像サイズの最適化 - Brandsセクションのロゴマークと同じサイズ */
@@ -2482,14 +2488,13 @@ html body .flow-track img {
     display: block !important;
     width: auto !important;
     height: auto !important;
-    max-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
-    max-height: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
-    object-fit: cover !important;
+    max-width: 70% !important; /* Brandsセクションのロゴマークと同じサイズ */
+    max-height: 70% !important; /* Brandsセクションのロゴマークと同じサイズ */
+    object-fit: contain !important; /* アスペクト比を保持 */
     border-radius: 8px !important;
-    flex-shrink: 0 !important; /* 画像サイズを固定 */
   }
   
-  /* Lookbook画像コンテナの最適化 - 横長を防ぐ */
+  /* Lookbook画像コンテナの最適化 - flowするように画面横幅いっぱいに表示 */
   html body .lookbook-section .lookbook-grid > *,
   html body .lookbook-section .lookbook-container > *,
   html body .lookbook-section .lookbook-track > *,
@@ -2499,20 +2504,29 @@ html body .flow-track img {
   html body #lookbook .lookbook-grid > *,
   html body #lookbook .lookbook-container > *,
   html body #lookbook .lookbook-track > * {
-    min-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
-    max-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
+    min-width: 200px !important; /* 適切なサイズ */
+    max-width: 200px !important; /* 適切なサイズ */
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
   }
   
-  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間 */
-  html body .lookbook-section,
-  html body .section-lookbook,
-  html body #lookbook {
-    margin-top: calc(var(--sec-gap, 72px) + 200px) !important; /* 下に配置 */
-    margin-bottom: calc(var(--sec-gap, 72px) + 200px) !important;
+  /* Lookbookコンテナをflowするように画面横幅いっぱいに表示 */
+  html body .lookbook-section .lookbook-grid,
+  html body .lookbook-section .lookbook-container,
+  html body .lookbook-section .lookbook-track,
+  html body .section-lookbook .lookbook-grid,
+  html body .section-lookbook .lookbook-container,
+  html body .section-lookbook .lookbook-track,
+  html body #lookbook .lookbook-grid,
+  html body #lookbook .lookbook-container,
+  html body #lookbook .lookbook-track {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 16px !important;
+    padding: 16px !important;
     width: 100% !important; /* 画面横幅いっぱいに表示 */
-    max-width: 100vw !important;
+    max-width: 100vw !important; /* 画面横幅いっぱいに表示 */
   }
   
   /* Collectionセクションの背景復活 */
@@ -2616,7 +2630,7 @@ html body .flow-track img {
     border-radius: 8px !important;
   }
   
-  /* Lookbook見出しを背景の外に配置 */
+  /* Lookbook見出しの表示確保と中央揃え - 白い透明ボックスの外に配置 */
   html body .lookbook-section .section-title,
   html body .section-lookbook .section-title,
   html body #lookbook .section-title {
@@ -2631,34 +2645,46 @@ html body .flow-track img {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    /* 背景の外に配置 */
-    background: transparent !important;
-    padding: 0 !important;
-    border: none !important;
+    /* 白い透明ボックスの外に配置 */
+    position: relative !important;
+    z-index: 10 !important;
   }
   
-  /* Lookbook画像コンテナの最適化 - 画面横幅いっぱいに表示 */
+  /* Lookbook背景の最適化 - 白い半透明のボックス（黄色は不要） */
+  html body .lookbook-section,
+  html body .section-lookbook,
+  html body #lookbook {
+    background: rgba(255, 255, 255, 0.9) !important; /* 白い半透明のボックス */
+    border-radius: 12px !important;
+    padding: 6px 10px !important;
+    margin: 16px 0 !important;
+    width: fit-content !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    /* 白い透明ボックスは画像にのみ適用 */
+    position: relative !important;
+    z-index: 5 !important;
+  }
+  
+  /* Lookbook画像サイズの調整 - Brandsセクションのロゴマークと同じサイズ */
   html body .lookbook-grid,
   html body .lookbook-container {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
-    gap: 16px !important;
-    padding: 16px 20px !important;
+    gap: 12px !important;
+    padding: 12px !important;
     width: 100% !important; /* 画面横幅いっぱいに表示 */
-    max-width: 100vw !important;
-    background: rgba(255, 255, 255, 0.9) !important; /* 白い半透明背景（黄色を白に変更） */
-    border-radius: 16px !important;
-    margin: 0 auto !important;
+    max-width: 100vw !important; /* 画面横幅いっぱいに表示 */
   }
   
   html body .lookbook-grid > *,
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 200px !important; /* Brandsセクションのロゴマークと同じサイズ */
-    max-width: 200px !important; /* Brandsセクションのロゴマークと同じサイズ */
+    min-width: 120px !important; /* Collectionセクションと同じサイズ */
+    max-width: 120px !important; /* 横長を防ぐ */
   }
   
   html body .lookbook-grid img,
@@ -2666,11 +2692,10 @@ html body .flow-track img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 200px !important; /* Brandsセクションのロゴマークと同じサイズ */
-    max-width: 200px !important; /* Brandsセクションのロゴマークと同じサイズ */
+    max-height: 160px !important; /* Collectionセクションと同じサイズ */
+    max-width: 120px !important; /* 横長を防ぐ */
     object-fit: cover !important;
     border-radius: 8px !important;
-    flex-shrink: 0 !important; /* 画像サイズを固定 */
   }
   
   /* About ReStandardの中央揃え強化 */
@@ -2747,11 +2772,10 @@ html body #lookbook .lookbook-track img {
   display: block !important;
   width: 100% !important;
   height: auto !important;
-  max-height: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
-  max-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
+  max-height: 160px !important; /* Collectionセクションと同じサイズ */
+  max-width: 120px !important; /* 横長を防ぐ */
   object-fit: cover !important;
   border-radius: 8px !important;
-  flex-shrink: 0 !important; /* 画像サイズを固定 */
 }
 
 html body .lookbook-section .lookbook-grid > *,
@@ -2763,28 +2787,28 @@ html body .section-lookbook .lookbook-track > *,
 html body #lookbook .lookbook-grid > *,
 html body #lookbook .lookbook-container > *,
 html body #lookbook .lookbook-track > * {
-  min-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
-  max-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
+  min-width: 120px !important; /* Collectionセクションと同じサイズ */
+  max-width: 120px !important; /* 横長を防ぐ */
   flex: 0 0 auto !important;
   scroll-snap-align: start !important;
 }
 
-/* Lookbook画像コンテナの最終強制設定 - 画面横幅いっぱいに表示 */
+/* Lookbookコンテナをflowするように画面横幅いっぱいに表示 - 最高特異性 */
 html body .lookbook-section .lookbook-grid,
 html body .lookbook-section .lookbook-container,
+html body .lookbook-section .lookbook-track,
 html body .section-lookbook .lookbook-grid,
 html body .section-lookbook .lookbook-container,
+html body .section-lookbook .lookbook-track,
 html body #lookbook .lookbook-grid,
-html body #lookbook .lookbook-container {
+html body #lookbook .lookbook-container,
+html body #lookbook .lookbook-track {
   display: flex !important;
   overflow-x: auto !important;
   scroll-snap-type: x mandatory !important;
   -webkit-overflow-scrolling: touch !important;
-  gap: 16px !important;
-  padding: 16px 20px !important;
+  gap: 12px !important;
+  padding: 12px !important;
   width: 100% !important; /* 画面横幅いっぱいに表示 */
-  max-width: 100vw !important;
-  background: rgba(255, 255, 255, 0.9) !important; /* 白い半透明背景 */
-  border-radius: 16px !important;
-  margin: 0 auto !important;
+  max-width: 100vw !important; /* 画面横幅いっぱいに表示 */
 }
