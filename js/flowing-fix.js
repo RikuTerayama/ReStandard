@@ -183,6 +183,11 @@ function ensureLookbookFunctionality() {
         
         // 初期表示位置を2セット目の開始位置に調整
         lookbookContainer.style.transform = 'translateX(0)';
+        
+        // 自動スクロールを確実に動作させるための設定
+        lookbookContainer.style.overflow = 'hidden';
+        lookbookContainer.style.animation = 'lookbook-scroll-mobile 15s linear infinite';
+        lookbookContainer.style.willChange = 'transform';
       }
     }, 200); // タイミングをさらに遅らせて確実に動作するように
     
