@@ -837,17 +837,17 @@ html body .section-about {
     /* 初期表示位置を調整 */
     scroll-snap-type: none;
   }
-  #lookbook .lookbook-track img,
-  .section-lookbook .lookbook-track img {
-    max-width: 400px; /* 画像サイズをBrandsセクションのロゴマークより大きく */
-    max-height: 500px; /* 画像サイズをBrandsセクションのロゴマークより大きく */
-    /* スクロール時の画像追従を防ぐ */
-    pointer-events: auto;
-    /* 画像の直接操作を可能にする */
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-  }
+                    #lookbook .lookbook-track img,
+                  .section-lookbook .lookbook-track img {
+                    max-width: 280px; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+                    max-height: 350px; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+                    /* スクロール時の画像追従を防ぐ */
+                    pointer-events: auto;
+                    /* 画像の直接操作を可能にする */
+                    cursor: grab;
+                    user-select: none;
+                    -webkit-user-select: none;
+                  }
   /* ホバー時に一時停止 */
   #lookbook .lookbook-container:hover .lookbook-track,
   .section-lookbook .lookbook-container:hover .lookbook-track {
@@ -2987,4 +2987,16 @@ html body #lookbook .lookbook-grid {
   /* 白い半透明の背景を画像にのみ適用 */
   background: rgba(255, 255, 255, 0.9) !important;
   border-radius: 12px !important;
+}
+
+#lookbook .lookbook-track img,
+.section-lookbook .lookbook-track img {
+  max-width: 280px; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+  max-height: 350px; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+  /* スクロール時の画像追従を防ぐ */
+  pointer-events: auto;
+  /* 画像の直接操作を可能にする */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
