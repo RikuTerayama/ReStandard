@@ -85,6 +85,10 @@ function ensureLookbookFunctionality() {
     // 画像が画面全体で表示されるように初期位置を調整
     lookbookTrack.style.transform = 'translateX(0)';
     
+    // 左から右へのスクロールを可能にする
+    lookbookTrack.style.minWidth = '100%';
+    lookbookTrack.style.justifyContent = 'flex-start';
+    
     // ホバー時の一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
     if (container) {
@@ -105,6 +109,10 @@ function ensureLookbookFunctionality() {
     
     // 画像が画面全体で表示されるように初期位置を調整
     lookbookContainer.scrollLeft = 0;
+    
+    // 左から右へのスクロールを可能にする
+    lookbookContainer.style.minWidth = '100%';
+    lookbookContainer.style.justifyContent = 'flex-start';
     
     // スワイプ機能の実装
     let isDragging = false;
@@ -161,6 +169,14 @@ function ensureLookbookFunctionality() {
       if (isDragging) {
         isDragging = false;
         lookbookContainer.style.cursor = 'grab';
+      }
+    });
+    
+    // スクロール範囲の調整
+    lookbookContainer.addEventListener('scroll', function() {
+      // スクロール位置を制限して左から右へのスクロールを可能にする
+      if (lookbookContainer.scrollLeft < 0) {
+        lookbookContainer.scrollLeft = 0;
       }
     });
   }
