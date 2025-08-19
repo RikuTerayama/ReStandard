@@ -150,8 +150,8 @@ function ensureLookbookFunctionality() {
   
   // スマホ用のLookbookスワイプ機能とスクロール機能
   if (lookbookContainer) {
-    // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
-    lookbookContainer.style.animation = 'none';
+    // 自動スクロールアニメーションを有効化
+    lookbookContainer.style.animation = 'lookbook-scroll-mobile 15s linear infinite';
     
     // 初期表示時に2セット目の最初の画像が一番左に表示されるように配置 - PC以外の全デバイス対応
     setTimeout(() => {
@@ -185,9 +185,16 @@ function ensureLookbookFunctionality() {
         lookbookContainer.style.transform = 'translateX(0)';
         
         // 自動スクロールを確実に動作させるための設定
-        lookbookContainer.style.overflow = 'hidden';
+        lookbookContainer.style.overflow = 'visible';
         lookbookContainer.style.animation = 'lookbook-scroll-mobile 15s linear infinite';
         lookbookContainer.style.willChange = 'transform';
+        
+        // アニメーションを強制的に開始
+        lookbookContainer.style.animationPlayState = 'running';
+        
+        // アニメーションが確実に動作するように追加設定
+        lookbookContainer.style.position = 'relative';
+        lookbookContainer.style.zIndex = '1';
       }
     }, 200); // タイミングをさらに遅らせて確実に動作するように
     
