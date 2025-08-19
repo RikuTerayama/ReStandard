@@ -215,8 +215,18 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(-50%); /* 右から左への流れを実現 */
     }
+  }
+  
+  /* 初期表示位置を調整して2セット目の最初の画像が一番左に表示されるように */
+  html body .lookbook-container {
+    /* 初期位置を調整 */
+    transform: translateX(0) !important;
+    /* 自動スクロールアニメーションを有効化 */
+    animation: lookbook-scroll-mobile 15s linear infinite !important;
+    /* 初期表示位置を調整 */
+    scroll-behavior: auto !important;
   }
   
   /* ホバー時に一時停止 */
