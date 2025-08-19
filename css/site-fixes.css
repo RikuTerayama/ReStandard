@@ -1,13 +1,2587 @@
 /* ========================================
-   ReStandard Site Fixes - CLEAN VERSION
+   Site Fixes - Brands & About Sections
    ======================================== */
 
-/* ========================================
-  1. 見出しフォントサイズの統一（全ページ共通）
-  ======================================== */
+:root {
+  --header-h: 64px;
+  --section-gap: clamp(250px, 25vw, 500px);  /* flowing-imagesとBrandsの間隔をさらに拡大（5cm追加） */
+  --section-padding: clamp(60px, 8vw, 120px); /* セクション内の余白も維持 */
+  --brands-lookbook-gap: clamp(80px, 10vw, 160px); /* BrandsとLookbookの間隔を拡大 */
+  --lookbook-about-gap: clamp(80px, 10vw, 160px); /* LookbookとAboutの間隔 */
+}
 
+/* 0) リセット（前の演出や競合を抑える保険） */
+#brands, #about { 
+  position: relative; 
+  z-index: 0; 
+}
+#brands .rs-reveal, #about .rs-reveal { 
+  opacity: 1 !important; 
+  transform: none !important; 
+}
+
+/* ▼ flowing-images：親の高さ0/重なりの主因を排除 */
+.section-flowing {
+  display: flow-root;       /* 内部がabsolute/floatでも親高を作る */
+  position: relative;
+  z-index: 0;               /* 後続（brands/about）が上に来れるように */
+  margin-top: calc(var(--header-h) + 12px);
+  padding-bottom: var(--section-padding);  /* 後続との距離を大幅に確保 */
+  min-height: 280px;        /* 念のための下限高さ */
+  /* 重なりを防ぐための設定 */
+  overflow: hidden;
+  clear: both;
+  /* セクション終了後の間隔を大幅に確保 */
+  margin-bottom: var(--section-gap);
+  /* 背景色を透明に */
+  background: transparent;
+}
+
+/* ▼ Brands：再表示＆正方形グリッド */
+.section-brands {
+  position: relative;
+  z-index: 10;              /* flowing-imagesより確実に上に表示 */
+  margin-top: var(--section-gap);  /* 上部との間隔を大幅に確保 */
+  padding: var(--section-padding) 0;  /* 内部の余白も拡大 */
+  /* 重なりを防ぐための設定 */
+  background: transparent;  /* 背景色を透明に */
+  clear: both;
+  /* セクション終了後の間隔を調整 */
+  margin-bottom: var(--brands-about-gap);
+  /* 半透明な横線を削除 */
+  /* border-top: 1px solid rgba(0,0,0,0.05); */
+  /* border-bottom: 1px solid rgba(0,0,0,0.05); */
+}
+.section-brands .section-title {
+  text-align: center;
+  font-size: clamp(24px, 3.2vw, 36px);  /* タイトル下の余白を拡大 */
+  margin: 0 0 clamp(32px, 4vw, 48px);  /* タイトル下の余白を拡大 */
+  color: #333;
+  font-weight: 700;
+}
+
+/* スマートフォン版でBrandsのフォントサイズを大きく */
+@media (max-width: 767px) {
+  .section-brands .section-title {
+    font-size: clamp(32px, 4.5vw, 48px) !important;  /* スマホでは1-2cmほど大きく */
+    margin: 0 0 clamp(40px, 5vw, 60px) !important;  /* 余白も調整 */
+  }
+}
+
+/* 既存のCSSとの競合を排除するための強力なセレクタ */
+#brands .brands-grid,
+.section-brands .brands-grid,
+.brands-grid {
+  --gap: clamp(20px, 2.5vw, 32px);  /* グリッド間の余白を調整 */
+  display: grid !important;                      /* 旧レイアウトを上書き */
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;  /* ← 5列固定（PC） */
+  gap: var(--gap) !important;
+  max-width: 1200px;
+  margin: 0 auto !important;                               /* 水平中央揃えを強制 */
+  padding: 0 clamp(20px, 5vw, 40px) !important;           /* 左右の余白も調整 */
+  /* グリッド表示を強制するための追加設定 */
+  grid-auto-rows: 1fr !important;
+  grid-auto-flow: row !important;
+  /* 完全な中央揃えのための設定 */
+  justify-items: center !important;             /* グリッドアイテムを中央揃え */
+  align-items: center !important;               /* 垂直方向も中央揃え */
+  /* グリッド全体の中央配置を確実にする */
+  place-items: center !important;               /* 両方向の中央揃え */
+  /* グリッド全体の中央配置を強制 */
+  justify-content: center !important;           /* グリッド全体を中央揃え */
+  align-content: center !important;             /* グリッド全体を垂直中央揃え */
+}
+
+/* ブランドカードを正方形に近い形で表示 */
+#brands .brand-card,
+.section-brands .brand-card,
+.brand-card {
+  background: #fff;         /* カード背景は白 */
+  border-radius: 12px;      /* 角丸 */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* 軽微な影 */
+  display: flex !important;
+  align-items: center !important;      /* 垂直中央揃え */
+  justify-content: center !important;  /* 水平中央揃え */
+  padding: clamp(28px, 4vw, 44px);    /* 内側の余白をさらに拡大 */
+  /* 正方形を強制 */
+  aspect-ratio: 1 / 1 !important;     /* 正方形を強制 */
+  width: clamp(150px, 20vw, 240px) !important;   /* 固定幅をさらに拡大して正方形を保証（2cm追加） */
+  height: clamp(150px, 20vw, 240px) !important;  /* 固定高さをさらに拡大して正方形を保証（2cm追加） */
+  overflow: hidden;
+  /* グリッド配置を確実に */
+  grid-column: span 1 !important;
+  grid-row: span 1 !important;
+  /* 完全な中央揃えのための設定 */
+  position: relative !important;       /* 位置を相対に */
+  /* ホバー効果 */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* カード自体の中央配置を強制 */
+  margin: 0 auto !important;          /* カードを中央配置 */
+}
+
+#brands .brand-card:hover,
+.section-brands .brand-card:hover,
+.brand-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* ブランドロゴの基本スタイル */
+#brands .brand-card .brand-logo,
+.section-brands .brand-card .brand-logo,
+.brand-card .brand-logo {
+  max-width: 70% !important;          /* 画像サイズを小さくして空白を美しく */
+  max-height: 70% !important;         /* 画像サイズを小さくして空白を美しく */
+  width: auto !important;             /* 幅を自動調整 */
+  height: auto !important;            /* 高さを自動調整 */
+  object-fit: contain !important;     /* アスペクト比を保持 */
+  display: block !important;
+  /* 完全な中心中央揃えのための設定 */
+  position: absolute !important;      /* 絶対位置で中央揃え */
+  top: 50% !important;               /* 上から50% */
+  left: 50% !important;              /* 左から50% */
+  transform: translate(-50%, -50%) !important; /* 完全な中心中央揃え */
+  /* 画像の品質を保つ */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  /* ホバー効果のための設定 */
+  opacity: 1 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* ホバー用画像のスタイル */
+#brands .brand-card .brand-hover,
+.section-brands .brand-card .brand-hover,
+.brand-card .brand-hover {
+  max-width: 70% !important;
+  max-height: 70% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  /* 完全な中心中央揃えのための設定 */
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  /* 画像の品質を保つ */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  /* ホバー効果のための設定 */
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* ホバー時の画像切り替え */
+#brands .brand-card:hover .brand-logo,
+.section-brands .brand-card:hover .brand-logo,
+.brand-card:hover .brand-logo {
+  opacity: 0 !important;
+}
+
+#brands .brand-card:hover .brand-hover,
+.section-brands .brand-card:hover .brand-hover,
+.brand-card:hover .brand-hover {
+  opacity: 1 !important;
+}
+
+/* 既存の画像スタイルとの競合を解決 - 古いスタイルを更新 */
+#brands .brand-card img:not(.brand-logo):not(.brand-hover),
+.section-brands .brand-card img:not(.brand-logo):not(.brand-hover),
+.brand-card img:not(.brand-logo):not(.brand-hover) {
+  max-width: 70% !important;          /* 画像サイズを小さくして空白を美しく */
+  max-height: 70% !important;         /* 画像サイズを小さくして空白を美しく */
+  width: auto !important;             /* 幅を自動調整 */
+  height: auto !important;            /* 高さを自動調整 */
+  object-fit: contain !important;     /* アスペクト比を保持 */
+  display: block !important;
+  /* 完全な中心中央揃えのための設定 */
+  position: absolute !important;      /* 絶対位置で中央揃え */
+  top: 50% !important;               /* 上から50% */
+  left: 50% !important;              /* 左から50% */
+  transform: translate(-50%, -50%) !important; /* 完全な中心中央揃え */
+  /* 画像の品質を保つ */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+}
+
+/* レスポンシブ：PCは5列、タブレットは4列、SPは2列 */
+@media (max-width: 1199px) {
+  #brands .brands-grid, 
+  .section-brands .brands-grid,
+  .brands-grid { 
+    grid-template-columns: repeat(4, 1fr) !important; 
+  }
+}
+
+@media (max-width: 991px) {
+  #brands .brands-grid, 
+  .section-brands .brands-grid,
+  .brands-grid { 
+    grid-template-columns: repeat(3, 1fr) !important; 
+  }
+}
+
+@media (max-width: 767px) {
+  #brands .brands-grid, 
+  .section-brands .brands-grid,
+  .brands-grid { 
+    grid-template-columns: repeat(2, 1fr) !important; 
+  }
+  
+  /* スマホではカードのサイズと余白を拡大 */
+  #brands .brand-card,
+  .section-brands .brand-card,
+  .brand-card {
+    width: clamp(180px, 24vw, 260px) !important;   /* スマホではさらに大きく（2cm追加） */
+    height: clamp(180px, 24vw, 260px) !important;  /* スマホではさらに大きく（2cm追加） */
+    padding: clamp(36px, 5vw, 48px);                /* 内側の余白も拡大 */
+  }
+  
+  /* スマホではロゴマークも小さくして空白を美しく */
+  #brands .brand-card .brand-logo,
+  .section-brands .brand-card .brand-logo,
+  .brand-card .brand-logo,
+  #brands .brand-card .brand-hover,
+  .section-brands .brand-card .brand-hover,
+  .brand-card .brand-hover {
+    max-width: 65% !important;          /* スマホでは65%サイズで空白を美しく */
+    max-height: 65% !important;         /* スマホでは65%サイズで空白を美しく */
+  }
+}
+
+@media (max-width: 479px) {
+  #brands .brands-grid, 
+  .section-brands .brands-grid,
+  .brands-grid { 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: clamp(12px, 2vw, 20px) !important;
+  }
+  
+  /* さらに小さい画面ではカードサイズを調整 */
+  #brands .brand-card,
+  .section-brands .brand-card,
+  .brand-card {
+    width: clamp(140px, 20vw, 200px) !important;   /* 小さい画面でも適切なサイズ */
+    height: clamp(140px, 20vw, 200px) !important;  /* 小さい画面でも適切なサイズ */
+    padding: clamp(28px, 4vw, 36px);
+  }
+  
+  /* 小さい画面でもロゴマークは小さくして空白を美しく */
+  #brands .brand-card .brand-logo,
+  .section-brands .brand-card .brand-logo,
+  .brand-card .brand-logo,
+  #brands .brand-card .brand-hover,
+  .section-brands .brand-card .brand-hover,
+  .brand-card .brand-hover {
+    max-width: 60% !important;          /* 小さい画面では60%サイズ */
+    max-height: 60% !important;         /* 小さい画面では60%サイズ */
+  }
+}
+
+/* ▼ About：中央揃え + 適切な幅 */
+.section-about {
+  position: relative;
+  z-index: 10;              /* 他のセクションより確実に上に表示 */
+  margin-top: var(--brands-about-gap);  /* 上部との間隔を調整 */
+  padding: var(--section-padding) 0;  /* 内部の余白も確保 */
+  /* 重なりを防ぐための設定 */
+  background: transparent;  /* 背景色を透明に */
+  clear: both;
+  /* 半透明な横線を削除 */
+  /* border-top: 1px solid rgba(0,0,0,0.05); */
+}
+
+.about-inner {
+  max-width: min(880px, 92vw);
+  margin: 0 auto;
+  text-align: center !important;  /* 中央揃えを強制 */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  padding: clamp(16px, 3vw, 28px) clamp(16px, 4vw, 40px);
+}
+
+
+
+.about-text {
+  font-size: clamp(14px, 1.8vw, 18px);
+  line-height: 1.8;
+  color: #555;
+  margin: 0 0 clamp(16px, 2vw, 24px);  /* 段落間の余白を追加 */
+  text-align: center !important;  /* テキストも中央揃え */
+}
+.about-text b {
+  color: #333;
+  font-weight: 600;
+}
+.about-text .internal-link {
+  color: #0066cc;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.about-text .internal-link:hover {
+  border-bottom-color: #0066cc;
+}
+
+/* ▼ PC/スマホの排他表示（同時表示を防止） */
+.only-pc { 
+  display: block !important; 
+}
+.only-sp { 
+  display: none  !important; 
+}
+
+@media (max-width: 767px) {
+  .only-pc { 
+    display: none  !important; 
+  }
+  .only-sp { 
+    display: block !important; 
+  }
+}
+
+/* 重複表示を完全に防ぐための追加設定 */
+.about-inner.only-pc.only-sp {
+  display: none !important; /* 両方のクラスが付いている場合は非表示 */
+}
+
+/* 特定のセクション内でのみ適用 */
+#about .about-inner.only-pc,
+.section-about .about-inner.only-pc {
+  display: block !important;
+}
+
+#about .about-inner.only-sp,
+.section-about .about-inner.only-sp {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  #about .about-inner.only-pc,
+  .section-about .about-inner.only-pc {
+    display: none !important;
+  }
+  
+  #about .about-inner.only-sp,
+  .section-about .about-inner.only-sp {
+    display: block !important;
+  }
+}
+
+/* 保険：過去の演出や非表示指定で隠れないよう軽くリセット */
+#brands .rs-reveal, #about .rs-reveal { 
+  opacity: 1 !important; 
+  transform: none !important; 
+}
+#brands, #about { 
+  visibility: visible !important; 
+}
+
+/* 既存のCSSとの競合を完全に排除するための強力なリセット */
+#brands,
+.section-brands {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+#about,
+.section-about {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* グリッド表示を確実にするための最終的な強制設定 */
+#brands .brands-grid,
+.section-brands .brands-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  grid-template-rows: repeat(2, auto) !important;
+  gap: clamp(10px, 1.6vw, 16px) !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 clamp(12px, 3vw, 24px) !important;
+}
+
+/* レスポンシブ対応の最終確認 */
+@media (max-width: 1199px) { 
+  #brands .brands-grid,
+  .section-brands .brands-grid { 
+    grid-template-columns: repeat(4, 1fr) !important; 
+  } 
+}
+@media (max-width: 991px) {  
+  #brands .brands-grid,
+  .section-brands .brands-grid { 
+    grid-template-columns: repeat(3, 1fr) !important; 
+  } 
+}
+@media (max-width: 767px) {  
+  #brands .brands-grid,
+  .section-brands .brands-grid { 
+    grid-template-columns: repeat(2, 1fr) !important; 
+  } 
+} 
+
+/* 重複した設定を削除 - 上記の強力な設定に統合済み */
+
+/* 重複表示を確実に解消するための最終的な強制設定 */
+#flowing-images,
+.section-flowing,
+body #flowing-images,
+body .section-flowing {
+  position: relative !important;
+  z-index: 1 !important;
+  margin-bottom: clamp(80px, 10vw, 160px) !important;  /* flowing-imagesとCollectionの間隔を調整 */
+  padding-bottom: clamp(60px, 8vw, 120px) !important;   /* 余白も維持 */
+  padding-top: clamp(0px, 0vw, 5px) !important;      /* Collectionのすぐ下に配置するための最小限の余白 */
+  /* 重なりを防ぐための追加設定 */
+  isolation: isolate !important;
+  contain: layout !important;
+  /* 背景色を透明に */
+  background: transparent !important;
+}
+
+#collection,
+.section-collection,
+body #collection,
+body .section-collection {
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: clamp(100px, 15vw, 200px) !important;       /* 上部からの距離をさらに大幅に増加してflowing imagesの直上に配置 */
+  margin-bottom: clamp(5px, 1vw, 10px) !important;    /* Collectionとflowing imagesの密接性を向上 */
+  padding: clamp(10px, 2vw, 20px) 0 !important;        /* 内部の余白を調整 */
+  /* 重なりを防ぐための追加設定 */
+  isolation: isolate !important;
+  contain: layout !important;
+  /* 背景色を透明に */
+  background: transparent !important;
+}
+
+#brands,
+.section-brands,
+body #brands,
+body .section-brands {
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: clamp(60px, 8vw, 120px) !important;     /* CollectionとBrandsの間隔を適切に調整 */
+  margin-bottom: clamp(60px, 8vw, 120px) !important;  /* BrandsとLookbookの間隔を適切に調整 */
+  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
+  /* 重なりを防ぐための追加設定 */
+  isolation: isolate !important;
+  contain: layout !important;
+  /* 背景色を透明に */
+  background: transparent !important;
+}
+
+/* PC版でBrandsセクションの間隔を調整 */
+@media (min-width: 768px) {
+  #brands,
+  .section-brands,
+  body #brands,
+  body .section-brands {
+    margin-top: clamp(80px, 10vw, 160px) !important;  /* PC版で適切な間隔に調整 */
+    margin-bottom: clamp(80px, 10vw, 160px) !important; /* PC版で適切な間隔に調整 */
+  }
+}
+
+#about,
+.section-about,
+body #about,
+body .section-about {
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: clamp(60px, 8vw, 120px) !important;     /* LookbookとAboutの間隔を適切に調整 */
+  padding: clamp(60px, 8vw, 120px) 0 !important;      /* 余白も維持 */
+  /* 重なりを防ぐための追加設定 */
+  isolation: isolate !important;
+  contain: layout !important;
+  /* 背景色を透明に */
+  background: transparent !important;
+}
+
+/* PC版でAboutセクションの間隔を調整 */
+@media (min-width: 768px) {
+  #about,
+  .section-about,
+  body #about,
+  body .section-about {
+    margin-top: clamp(80px, 10vw, 160px) !important;  /* PC版で適切な間隔に調整 */
+  }
+}
+
+/* セクション間の視覚的分離を調整 */
+/* 半透明のオブジェクトを削除してディスプレイの邪魔をしないようにする */
+
+/* BrandsとReStandardについての間の透明なオブジェクトを削除 */
+
+/* about::before,
+.section-about::before {
+  content: '';
+  display: block;
+  height: clamp(40px, 5vw, 80px);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
+} */ 
+
+/* 重複した設定を削除 - 上記の強力な設定に統合済み */ 
+
+/* 強制設定による中心揃えの保証 */
+#about .about-inner,
+.section-about .about-inner,
+body #about .about-inner,
+body .section-about .about-inner {
+  text-align: center !important;
+}
+
+
+
+#about .about-text,
+.section-about .about-text,
+body #about .about-text,
+body .section-about .about-text {
+  text-align: center !important;
+} 
+
+/* 最終的な強制設定 - 確実に反映されるように */
+html body #flowing-images,
+html body .section-flowing {
+  margin-bottom: clamp(60px, 8vw, 120px) !important; /* CollectionとBrandsの間隔を適切に調整 */
+  padding-bottom: clamp(60px, 8vw, 120px) !important;
+  padding-top: clamp(0px, 0vw, 5px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
+}
+
+html body #collection,
+html body .section-collection {
+  margin-top: clamp(60px, 8vw, 120px) !important; /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
+  margin-bottom: clamp(0px, 0vw, 5px) !important; /* flowing imagesとの密接性をさらに向上 */
+  padding: clamp(10px, 2vw, 20px) 0 !important; /* 内部の余白を調整 */
+}
+
+html body #brands,
+html body .section-brands {
+  margin-top: clamp(80px, 10vw, 160px) !important;
+  margin-bottom: clamp(80px, 10vw, 160px) !important;
+  padding: clamp(60px, 8vw, 120px) 0 !important;
+}
+
+/* PC版でBrandsセクションを下に移動 - 最終保証 */
+@media (min-width: 768px) {
+  html body #brands,
+  html body .section-brands {
+    margin-top: calc(clamp(250px, 25vw, 500px) + 100px) !important;
+  }
+}
+
+html body #about,
+html body .section-about {
+  margin-top: clamp(80px, 10vw, 160px) !important;
+  padding: clamp(60px, 8vw, 120px) 0 !important;
+} 
+
+/* flowing imagesのリンクスタイル - 既存スタイルとの競合を解決 */
+#flowing-images .flow-track a,
+.section-flowing .flow-track a {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  /* リンクのサイズを画像に合わせる */
+  width: auto;
+  height: auto;
+  /* 既存の画像スタイルを継承 */
+  vertical-align: top;
+}
+
+#flowing-images .flow-track a:hover,
+.section-flowing .flow-track a:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* リンク要素の表示最終保証 */
+#flowing-images .flow-track a,
+.section-flowing .flow-track a {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  /* リンクのサイズを画像に合わせる */
+  width: auto !important;
+  height: auto !important;
+  /* 既存の画像スタイルを継承 */
+  vertical-align: top !important;
+  /* リンクの表示を強制 */
+  position: relative !important;
+  z-index: 1 !important;
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  /* リンクの範囲を明確化 */
+  outline: none !important;
+}
+
+/* ホバー効果の最終保証 */
+#flowing-images .flow-track a:hover img,
+.section-flowing .flow-track a:hover img {
+  filter: brightness(1.1) !important;
+  transform: scale(1.05) !important;
+  opacity: 0.9 !important;
+  /* ホバー時もクリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* リンクのホバー効果も保証 */
+#flowing-images .flow-track a:hover,
+.section-flowing .flow-track a:hover {
+  /* ホバー時もクリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  /* ホバー効果 */
+  transform: scale(1.02) !important;
+  opacity: 0.95 !important;
+}
+
+/* デバッグ用：画像が表示されない場合の強制表示 */
+#flowing-images .flow-track a img[src*="1.JPG"],
+#flowing-images .flow-track a img[src*="25.JPG"],
+.section-flowing .flow-track a img[src*="1.JPG"],
+.section-flowing .flow-track a img[src*="25.JPG"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  max-height: 250px !important;
+  position: relative !important;
+  z-index: 999 !important;
+  background: rgba(255, 0, 0, 0.1) !important; /* デバッグ用の背景色 */
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* リンク要素のデバッグ表示 */
+#flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+#flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+.section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+.section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 999 !important;
+  background: rgba(0, 255, 0, 0.1) !important; /* デバッグ用の背景色 */
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+} 
+
+/* リンク要素のクリック可能性保証 */
+#flowing-images .flow-track a,
+.section-flowing .flow-track a {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  /* リンクのサイズを画像に合わせる */
+  width: auto !important;
+  height: auto !important;
+  /* 既存の画像スタイルを継承 */
+  vertical-align: top !important;
+  /* リンクの表示を強制 */
+  position: relative !important;
+  z-index: 1 !important;
+  /* クリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  /* リンクの範囲を明確化 */
+  outline: none !important;
+} 
+
+/* 画像のクリック可能性保証 */
+#flowing-images .flow-track a img,
+.section-flowing .flow-track a img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* 画像の元のサイズを維持 */
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: 250px !important;
+  /* 既存の画像スタイルを継承 */
+  object-fit: cover !important;
+  /* 画像の表示を強制 */
+  position: relative !important;
+  z-index: 1 !important;
+  /* 画像のクリック可能性を保証 */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+} 
+
+/* Lookbookセクションのスタイル - Brandsセクションと同じ定義 */
+#lookbook,
+.section-lookbook {
+  position: relative;
+  z-index: 10;              /* 他のセクションより確実に上に表示 */
+  margin-top: var(--brands-lookbook-gap);  /* Brandsとの間隔を調整 */
+  padding: var(--section-padding) 0;  /* 内部の余白も確保 */
+  /* 重なりを防ぐための設定 */
+  background: transparent;  /* 背景色を透明に */
+  clear: both;
+}
+
+/* Lookbookのタイトル */
+#lookbook .section-title,
+.section-lookbook .section-title {
+  text-align: center !important;
+  font-size: clamp(24px, 4vw, 36px) !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+  margin-bottom: clamp(32px, 6vw, 48px) !important;
+  line-height: 1.2 !important;
+}
+
+/* Lookbookコンテナ */
+#lookbook .lookbook-container,
+.section-lookbook .lookbook-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: clamp(20px, 4vw, 32px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Lookbookトラック */
+#lookbook .lookbook-track,
+.section-lookbook .lookbook-track {
+  display: flex;
+  gap: clamp(16px, 3vw, 24px);
+  animation: lookbook-scroll 30s linear infinite;
+  width: max-content;
+}
+
+/* Lookbook画像 */
+#lookbook .lookbook-track img,
+.section-lookbook .lookbook-track img {
+  width: clamp(200px, 25vw, 300px);
+  height: clamp(280px, 35vw, 420px);
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Lookbook画像のホバー効果 */
+#lookbook .lookbook-track img:hover,
+.section-lookbook .lookbook-track img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 右から左に流れるアニメーション */
+@keyframes lookbook-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ホバー時にアニメーションを一時停止 */
+#lookbook .lookbook-container:hover .lookbook-track,
+.section-lookbook .lookbook-container:hover .lookbook-track {
+  animation-play-state: paused;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 767px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(8px, 1.5vw, 12px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(120px, 16vw, 160px);
+    height: clamp(168px, 22.4vw, 224px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
+  }
+  
+  /* Lookbookコンテナのオーバーフロー制御 */
+  #lookbook .lookbook-container,
+  .section-lookbook .lookbook-container {
+    overflow: hidden !important;
+    max-width: 100vw !important;
+    padding: 0 clamp(10px, 2vw, 20px) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(6px, 1vw, 10px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(100px, 14vw, 140px);
+    height: clamp(140px, 19.6vw, 196px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
+  }
+} 
+
+/* さらに小さい画面サイズでの調整 */
+@media (max-width: 375px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(4px, 0.8vw, 8px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(80px, 12vw, 120px);
+    height: clamp(112px, 16.8vw, 168px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
+  }
+}
+
+@media (max-width: 320px) {
+  #lookbook .lookbook-track,
+  .section-lookbook .lookbook-track {
+    gap: clamp(3px, 0.6vw, 6px);
+  }
+  
+  #lookbook .lookbook-track img,
+  .section-lookbook .lookbook-track img {
+    width: clamp(70px, 10vw, 100px);
+    height: clamp(98px, 14vw, 140px);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Collectionセクションのスタイル - flowing imagesの1行目のすぐ上に配置 */
+#collection,
+.section-collection {
+  position: relative;
+  z-index: 10;              /* 他のセクションより確実に上に表示 */
+  margin-top: clamp(60px, 8vw, 120px);   /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
+  margin-bottom: clamp(0px, 0vw, 5px); /* flowing imagesとの密接性をさらに向上 */
+  padding: clamp(10px, 2vw, 20px) 0;    /* 内部の余白を調整 */
+  /* 重なりを防ぐための設定 */
+  background: transparent;  /* 背景色を透明に */
+  clear: both;
+  text-align: center;
+}
+
+/* Collectionのタイトル */
+#collection .section-title,
+.section-collection .section-title {
+  text-align: center !important;
+  font-size: clamp(24px, 4vw, 36px) !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+  margin-bottom: clamp(32px, 6vw, 48px) !important;
+  line-height: 1.2 !important;
+} 
+
+/* 重複した古いCSSルールを削除 - 上記の新しいルールに統合済み */ 
+
+/* flowing imagesの位置調整 */
+#flowing-images,
+.section-flowing {
+  padding-top: clamp(0px, 0vw, 5px) !important; /* Collectionのすぐ下に配置するための最小限の余白 */
+} 
+
+/* スマートフォン表示での画像表示を強制する最終的なCSS */
+@media (max-width: 767px) {
+  /* flowing imagesセクション全体の表示保証 */
+  #flowing-images,
+  .section-flowing {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+  }
+  
+  /* flow-trackの表示保証（スクロール機能を維持） */
+  .flow-track {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    /* スクロール機能を維持 */
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* すべてのflowing images画像を強制表示（PC版と同様の設定） */
+  #flowing-images img,
+  .section-flowing img,
+  .flow-track img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+  
+  /* すべてのflowing imagesリンクを強制表示（PC版と同様の設定） */
+  #flowing-images a,
+  .section-flowing a,
+  .flow-track a {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（PC版と完全に同じ設定） */
+  #flowing-images .flow-track a img[src*="1.JPG"],
+  #flowing-images .flow-track a img[src*="25.JPG"],
+  .section-flowing .flow-track a img[src*="1.JPG"],
+  .section-flowing .flow-track a img[src*="25.JPG"],
+  .flow-track a img[src*="1.JPG"],
+  .flow-track a img[src*="25.JPG"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* 画像の表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+  }
+  
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（PC版と完全に同じ設定） */
+  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* リンクの表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+  }
+} 
+
+/* さらに小さい画面サイズでの強制表示 */
+@media (max-width: 479px) {
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（サイズは正常に） */
+  #flowing-images .flow-track a img[src*="1.JPG"],
+  #flowing-images .flow-track a img[src*="25.JPG"],
+  .section-flowing .flow-track a img[src*="1.JPG"],
+  .section-flowing .flow-track a img[src*="25.JPG"],
+  .flow-track a img[src*="1.JPG"],
+  .flow-track a img[src*="25.JPG"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* 画像の表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+  }
+  
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（サイズは正常に） */
+  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* リンクの表示を最優先 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+  }
+} 
+
+/* Collectionセクションの位置調整（flowing imagesとセットとして表示） */
+#collection,
+.section-collection {
+  position: relative !important;
+  z-index: 10 !important;
+  margin-top: clamp(20px, 3vw, 40px) !important; /* flowing imagesとの間隔を狭める */
+  margin-bottom: clamp(10px, 2vw, 20px) !important; /* flowing imagesとの間隔を狭める */
+  padding: clamp(15px, 2vw, 25px) 0 !important; /* 内部の余白を調整 */
+  /* 重なりを防ぐための設定 */
+  isolation: isolate !important;
+  background: transparent !important;
+  clear: both !important;
+  text-align: center !important;
+}
+
+/* Collectionセクションのタイトル調整 */
+#collection .section-title,
+.section-collection .section-title {
+  font-size: clamp(20px, 3vw, 28px) !important;
+  margin-bottom: 0 !important;
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+  font-weight: bold !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+} 
+
+/* より強力なスマートフォン表示の強制表示（競合を完全に排除） */
+@media (max-width: 767px) {
+  /* 1.JPGと25.JPGの画像を最優先で強制表示（根本的な問題解決） */
+  html body #flowing-images .flow-track a img[src*="1.JPG"],
+  html body #flowing-images .flow-track a img[src*="25.JPG"],
+  html body .section-flowing .flow-track a img[src*="1.JPG"],
+  html body .section-flowing .flow-track a img[src*="25.JPG"],
+  html body .flow-track a img[src*="1.JPG"],
+  html body .flow-track a img[src*="25.JPG"],
+  body #flowing-images .flow-track a img[src*="1.JPG"],
+  body #flowing-images .flow-track a img[src*="25.JPG"],
+  body .section-flowing .flow-track a img[src*="1.JPG"],
+  body .section-flowing .flow-track a img[src*="25.JPG"],
+  body .flow-track a img[src*="1.JPG"],
+  body .flow-track a img[src*="25.JPG"],
+  #flowing-images .flow-track a img[src*="1.JPG"],
+  #flowing-images .flow-track a img[src*="25.JPG"],
+  .section-flowing .flow-track a img[src*="1.JPG"],
+  .section-flowing .flow-track a img[src*="25.JPG"],
+  .flow-track a img[src*="1.JPG"],
+  .flow-track a img[src*="25.JPG"] {
+    /* 表示の根本的な強制 */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    /* サイズの根本的な強制 */
+    width: auto !important;
+    height: auto !important;
+    max-height: 250px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    /* 位置の根本的な強制 */
+    position: relative !important;
+    z-index: 999 !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    /* 表示の根本的な強制 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+    /* 競合を完全に排除 */
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    /* インタラクションの根本的な強制 */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* フロートの根本的な強制解除 */
+    float: none !important;
+    /* オーバーフローの根本的な強制解除 */
+    overflow: visible !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+
+  }
+  
+  /* 1.JPGと25.JPGのリンクを最優先で強制表示（根本的な問題解決） */
+  html body #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  html body #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  html body .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  html body .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  html body .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  html body .flow-track a[href*="68a346549b5b820cfb08f5"],
+  body #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  body #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  body .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  body .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  body .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  body .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  #flowing-images .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  #flowing-images .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .section-flowing .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .section-flowing .flow-track a[href*="68a346549b5b820cfb8b08f5"],
+  .flow-track a[href*="68a3416c225fded5de0dfb82"],
+  .flow-track a[href*="68a346549b5b820cfb8b08f5"] {
+    /* 表示の根本的な強制 */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    /* 位置の根本的な強制 */
+    position: relative !important;
+    z-index: 999 !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    /* 表示の根本的な強制 */
+    transform: none !important;
+    filter: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+    /* 競合を完全に排除 */
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    /* インタラクションの根本的な強制 */
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* フロートの根本的な強制解除 */
+    float: none !important;
+    /* オーバーフローの根本的な強制解除 */
+    overflow: visible !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+
+  }
+  
+  /* flowing imagesセクション全体の表示保証（根本的な問題解決） */
+  html body #flowing-images,
+  html body .section-flowing,
+  body #flowing-images,
+  body .section-flowing,
+  #flowing-images,
+  .section-flowing {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+
+  }
+  
+  /* flow-trackの表示保証（根本的な問題解決） */
+  html body .flow-track,
+  body .flow-track,
+  .flow-track {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+    /* スクロール機能を維持 */
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
+    /* 表示の根本的な保証 */
+    content: "" !important;
+
+  }
+} 
+
+/* Collectionセクションの位置制御を強化（flowing imagesの1行目のすぐ上に確実に配置） */
+html body #collection,
+html body .section-collection,
+body #collection,
+body .section-collection {
+  position: relative !important;
+  z-index: 10 !important;
+  margin-top: clamp(20px, 3vw, 40px) !important;       /* flowing imagesとの適切な間隔 */
+  margin-bottom: clamp(10px, 2vw, 20px) !important;    /* flowing imagesとの密接性を向上 */
+  padding: clamp(15px, 2vw, 25px) 0 !important;        /* 内部の余白を調整 */
+  /* 重なりを防ぐための設定 */
+  background: transparent !important;
+  clear: both !important;
+  text-align: center !important;
+  /* 位置制御の強化 */
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  /* 上部からの距離を強制制御 */
+  margin-left: auto !important;
+  margin-right: auto !important;
+} 
+
+/* Collectionセクションの最強位置制御（flowing imagesの1行目のすぐ上に絶対配置） */
+html body #collection,
+html body .section-collection,
+body #collection,
+body .section-collection,
+#collection,
+.section-collection {
+  /* 位置制御の最強化 */
+  position: relative !important;
+  z-index: 999 !important; /* 最前面に表示 */
+  /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
+  margin-top: clamp(60px, 8vw, 120px) !important;
+  margin-bottom: clamp(0px, 0vw, 5px) !important;
+  padding: clamp(10px, 2vw, 20px) 0 !important;
+  /* 重なりを防ぐための設定 */
+  background: transparent !important;
+  clear: both !important;
+  text-align: center !important;
+  /* 位置制御の最強化 */
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  /* 水平中央配置の強制 */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  /* フロートの強制解除 */
+  float: none !important;
+  /* 表示の強制 */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+} 
+
+/* ========================================
+   Unified Section Title Styles & Spacing
+   ======================================== */
+
+/* Base section title style (applies to PC & mobile) */
+.section-title {
+  /* font family inherits existing site font */
+  color: #ffffff !important;                  /* unify color */
+  font-weight: 600 !important;
+  font-size: clamp(20px, 2.4vw, 32px) !important; /* same size across sections with responsive clamp */
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+  margin: 0 !important;                       /* spacing is controlled by section containers */
+  text-align: center !important;              /* keep current centered look */
+  z-index: 1 !important;
+  position: relative !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important; /* maintain existing shadow */
+}
+
+/* Specific section title overrides to ensure consistency */
+.collection-section .section-title,
+.brands-section .section-title,
+.lookbook-section .section-title,
+.restandard-section .section-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: clamp(20px, 2.4vw, 32px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+  text-align: center !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* Force override existing conflicting styles */
+html body .collection-section .section-title,
+html body .brands-section .section-title,
+html body .lookbook-section .section-title,
+html body .restandard-section .section-title,
+body .collection-section .section-title,
+body .brands-section .section-title,
+body .lookbook-section .section-title,
+body .restandard-section .section-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: clamp(20px, 2.4vw, 32px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+  text-align: center !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* ========================================
+   ReStandard Section: Heading outside white box
+   ======================================== */
+
+.restandard-section .section-title {
+  /* keep consistent style; place above the white box */
+  margin-bottom: 12px;
+}
+
+.restandard-section .restandard-body {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* ========================================
+   Desktop Spacing: Collection & Flowing Images
+   ======================================== */
+
+/* Desktop spacing tweaks */
+@media (min-width: 1025px) {
+  /* Add top space from navbar to Collection title */
+  .collection-section {
+    padding-top: 64px; /* increase; adjust if a global offset already exists */
+  }
+
+  /* Title and grid vertical rhythm */
+  .collection-section .section-title {
+    margin-bottom: 16px; /* closer to grid than before */
+  }
+
+  /* Tighten any excessive top margin on the grid itself */
+  .collection-section .flowing-images {
+    margin-top: 0 !important;   /* ensure grid begins right under the title */
+  }
+  
+  /* If navbar is sticky/fixed, ensure proper clearance */
+  .collection-section {
+    padding-top: calc(var(--header-h, 64px) + 40px);
+  }
+} 
+
+/* ========================================
+   Desktop Fixes (min-width: 1025px)
+   ======================================== */
+
+@media (min-width: 1025px) {
+  
+  /* ========================================
+     1) ナビゲーションバーとCollectionの間の縦の間隔を増加
+   ======================================== */
+  
+  /* 固定/スティッキーヘッダーの下に適切なクリアランスを作成 */
+  .collection-section {
+    padding-top: calc(var(--rs-header-h, 96px) + 40px) !important; /* +40px buffer */
+  }
+  
+  /* タイトルがグリッドから離れすぎないようにする */
+  .collection-section .section-title {
+    margin-bottom: 16px !important;
+    text-align: center !important; /* 現在の中央揃えを維持 */
+  }
+  
+    /* ========================================
+     2) flowing imagesをCollectionタイトルの直下に配置
+   ======================================== */
+   
+   /* Collection見出しが通常のフローに参加するようにする */
+   .collection-section .section-title {
+     position: static !important;
+     transform: none !important;
+     top: auto !important;
+     left: auto !important;
+     right: auto !important;
+     bottom: auto !important;
+     margin: 0 0 16px 0 !important;   /* グリッドの直上 */
+     text-align: center !important;    /* 現在の視覚的スタイルを維持 */
+     z-index: 1 !important;
+   }
+   
+   /* グリッドとその背景ラッパーの予期しない余白をゼロにする */
+   .collection-section .flowing-images,
+   .collection-section .flow-row-bg {
+     margin-top: 0 !important;
+     padding-top: 0 !important;
+   }
+   
+   /* デスクトップで背景が間隔を押し広げている場合は、ここでのみ無効化 */
+   .collection-section .flowing-images,
+   .collection-section .flow-row-bg {
+     background: transparent !important;   /* デスクトップのみ */
+     box-shadow: none !important;
+   }
+   
+   /* 標準グリッド動作（他で設定されている場合は既存値を維持） */
+   .collection-section .flowing-images {
+     display: grid !important;
+     gap: 16px !important;
+   }
+   
+   /* グリッドラッパーがposition/z-indexでタイトルと重なっている場合の対策 */
+   .collection-section .flowing-images {
+     position: relative !important;
+     z-index: 1 !important;
+   }
+   
+   /* 装飾的なオーバーレイを削除（タイトルとグリッドの間に配置されている場合） */
+   .collection-section .overlay,
+   .collection-section .title-overlay,
+   .collection-section::before,
+   .collection-section::after {
+     display: none !important;
+     content: none !important;
+   }
+  
+  /* ========================================
+     3) Lookbookタイトルの中央揃え
+   ======================================== */
+  
+  .lookbook-section .section-title {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* ========================================
+     4) "ReStandardについて"をBrands/Lookbookと同一スタイルに統一
+   ======================================== */
+  
+  /* 他のセクションで使用されているベーススタイルをReStandardにも適用 */
+  .section-title {
+    color: #ffffff !important;                 /* 色を統一 */
+    font-weight: 600 !important;
+    font-size: clamp(24px, 2.2vw, 36px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.02em !important;
+  }
+  
+  .restandard-section .section-title {
+    text-align: center !important;
+    margin-bottom: 16px !important;
+  }
+  
+    /* ========================================
+     5) モバイル専用要素の非表示（デスクトップのみ）
+   ======================================== */
+   
+   .only-mobile {
+     display: none !important;
+   }
+   
+   /* ========================================
+     6) flowing imagesの背景を復活（デスクトップのみ）
+   ======================================== */
+   
+   /* 背景が.flow-row-bgにある場合（推奨） */
+   .collection-section .flow-row-bg {
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 16px !important;
+     padding: 16px 20px !important;
+   }
+   
+   /* ========================================
+     7) Brands見出しとロゴグリッドの間隔をLookbookと同じに
+   ======================================== */
+   
+   /* Lookbookの実距離を前提として、Brandsを同距離に合わせる */
+   .brands-section .section-title {
+     margin-bottom: 24px !important;
+   }
+   
+   .brands-section .brands-grid {
+     margin-top: 0 !important; /* タイトル側で制御 */
+   }
+   
+   /* ========================================
+     8) ReStandard見出しと内容を中央揃え
+   ======================================== */
+   
+   .restandard-section .section-title {
+     text-align: center !important;
+     margin-left: auto !important;
+     margin-right: auto !important;
+     margin-bottom: 16px !important;
+   }
+   
+   .restandard-section .restandard-body {
+     margin-left: auto !important;
+     margin-right: auto !important;
+     text-align: center !important; /* テキストも中央に */
+     max-width: 920px !important; /* 横に広がり過ぎる場合の制限 */
+   }
+   
+   /* ========================================
+     9) CSS強制上書き：絶対配置やオーバーレイを無効化、見出しを直上に
+   ======================================== */
+   
+   /* CSS変数で統一セクション間隔を定義 */
+   :root {
+     --sec-gap: 72px;  /* 統一セクション間隔(タイトル上) */
+     --title-gap: 24px; /* タイトルとグリッド/本文の距離 */
+   }
+   
+   /* Collection見出しを文書フローに戻す */
+   .collection-title, 
+   .collection-section .section-title {
+     position: static !important;
+     inset: auto !important;
+     transform: none !important;
+     margin: 0 0 var(--title-gap) 0 !important;
+     text-align: center !important;
+     z-index: 1 !important;
+   }
+   
+   /* ヒーロー上の重複/擬似オーバーレイを無効化 */
+   .hero .collection-title, .kv .collection-title, .mv .collection-title {
+     display: none !important;
+   }
+   
+   .collection-section::before, .collection-section::after,
+   .collection-section .title-overlay, .collection-section .overlay {
+     display: none !important;
+     content: none !important;
+   }
+   
+   /* グリッドは見出し直下から開始（不要な上マージンを殺す） */
+   .collection-section .flowing-images, 
+   .collection-section .collection-grid {
+     margin-top: 0 !important;
+     padding-top: 0 !important;
+     position: relative !important;
+     z-index: 0 !important;
+   }
+   
+   /* ===== セクション間隔を統一（上余白のみ揃える） ===== */
+   .collection-section,
+   .brands-section,
+   .lookbook-section,
+   .restandard-section {
+     padding-top: var(--sec-gap) !important;
+   }
+   
+   /* タイトル下の距離も統一 */
+   .collection-section .section-title,
+   .brands-section .section-title,
+   .lookbook-section .section-title,
+   .restandard-section .section-title {
+     margin-bottom: var(--title-gap) !important;
+   }
+   
+   /* ===== About ReStandard を中央揃え ===== */
+   .restandard-section .restandard-body {
+     max-width: 1024px !important;             /* 適度に読む幅に制限 */
+     margin-left: auto !important;
+     margin-right: auto !important;
+     text-align: center !important;
+     display: block !important;
+   }
+   
+   /* 万一 flex/float で左寄り化している場合に備える */
+   .restandard-section,
+   .restandard-section .restandard-body,
+   .restandard-section .restandard-body * {
+     float: none !important;
+   }
+   
+   .restandard-section .restandard-body img,
+   .restandard-section .restandard-body figure {
+     margin-left: auto !important;
+     margin-right: auto !important;
+     display: block !important;
+   }
+} 
+
+/* ========================================
+   Mobile Layout Fixes (≤768px) - HIGH PRIORITY OVERRIDES
+   ======================================== */
+
+@media (max-width: 768px) {
+  
+  /* ========================================
+     1) Collectionタイトルとflowing imagesの間の紫の半透明ボックスを削除
+   ======================================== */
+  
+  /* Collection下のオーバーレイ/スペーサーを非表示 */
+  .collection-section .overlay,
+  .collection-section .purple-box,
+  .collection-section .section-overlay,
+  .collection-section .title-overlay,
+  .collection-section > .gradient,
+  .collection-section > .spacer,
+  .collection-section .flowing-bg {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+  
+  /* 疑似要素も非表示 */
+  .collection-section::before,
+  .collection-section::after,
+  .collection-section .section-title::before,
+  .collection-section .section-title::after {
+    content: none !important;
+    display: none !important;
+  }
+  
+  /* 縦のリズムを調整：タイトルがグリッドの直上に来る */
+  .collection-section .section-title {
+    margin-bottom: 12px !important;
+  }
+  
+  .collection-section .flowing-images {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  /* デスクトップ専用要素を非表示 */
+  .only-desktop {
+    display: none !important;
+  }
+  
+  /* ========================================
+     2) flowing images: 1.JPGと25.JPGの赤/緑ボックスを除去し、他と同一表示に
+   ======================================== */
+   
+   /* ファイル名ベースまたはnth-childのデバッグスタイルを削除 */
+   img[src*="/1.JPG"], img[src*="/1.jpg"],
+   img[src*="/25.JPG"], img[src*="/25.jpg"] {
+     border: none !important;
+     outline: none !important;
+     box-shadow: none !important;
+     background: transparent !important;
+   }
+   
+   .flowing-images > *:nth-child(1),
+   .flowing-images > *:nth-child(25) {
+     border: none !important;
+     outline: none !important;
+     box-shadow: none !important;
+     background: none !important;
+   }
+   
+   /* すべてのカード/画像を正規化 */
+   .flowing-images {
+     display: flex !important;
+     overflow-x: auto !important;
+     scroll-snap-type: x mandatory !important;
+     -webkit-overflow-scrolling: touch !important;
+     gap: 12px !important;
+     padding: 12px !important;
+   }
+   
+   .flowing-images > .item,
+   .flowing-images > .card,
+   .flowing-images > div,
+   .flowing-images > a {
+     flex: 0 0 auto !important;
+     scroll-snap-align: start !important;
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 12px !important;
+     padding: 8px !important;
+     overflow: hidden !important;
+     min-width: 120px !important;
+   }
+   
+   .flowing-images img {
+     display: block !important;
+     width: 100% !important;
+     height: 100% !important;
+     max-height: 220px !important;
+     object-fit: cover !important;
+     border-radius: 8px !important;
+   }
+   
+   /* ========================================
+     3) flowing imagesの背景を画面横幅いっぱい（full-bleed）に
+   ======================================== */
+   
+   /* 背景が.flowing-imagesそのものの場合 */
+   .collection-section {
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     overflow: visible !important;
+   }
+   
+   .collection-section .flowing-images {
+     background: rgba(250, 250, 235, 0.9) !important;
+     width: 100vw !important;
+     box-sizing: border-box !important;
+     padding: 12px !important;
+   }
+   
+   /* 背景用ラッパー.flow-row-bgが存在する場合 */
+   .collection-section .flow-row-bg {
+     background: rgba(250, 250, 235, 0.9) !important;
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     width: 100vw !important;
+   }
+   
+   .collection-section .flow-row-bg .flowing-images {
+     padding: 12px !important;
+   }
+   
+   /* 親にoverflow:hiddenがあってfull-bleedが切れる場合の対策 */
+   .collection-section {
+     overflow: visible !important;
+   }
+   
+   /* ========================================
+     4) Lookbookの画像サイズと背景をflowing imagesと統一
+   ======================================== */
+   
+   .lookbook-section .section-title {
+     margin-bottom: 12px !important;
+   }
+   
+   .lookbook-grid {
+     display: flex !important;
+     overflow-x: auto !important;
+     scroll-snap-type: x mandatory !important;
+     -webkit-overflow-scrolling: touch !important;
+     gap: 12px !important;
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     width: 100vw !important;
+     box-sizing: border-box !important;
+     background: rgba(250, 250, 235, 0.9) !important; /* 同背景 */
+     padding: 12px !important;
+   }
+   
+   .lookbook-grid > .item,
+   .lookbook-grid > .card,
+   .lookbook-grid > div {
+     flex: 0 0 auto !important;
+     scroll-snap-align: start !important;
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 12px !important;
+     padding: 8px !important;
+     overflow: hidden !important;
+     min-width: 120px !important;
+   }
+   
+   .lookbook-grid img {
+     display: block !important;
+     width: 100% !important;
+     height: 100% !important;
+     max-height: 220px !important;  /* flowing imagesと同値 */
+     object-fit: cover !important;
+     border-radius: 8px !important;
+   }
+   
+   /* Lookbookセクションもoverflow制御 */
+   .lookbook-section {
+     overflow: visible !important;
+   }
+   
+   /* ========================================
+     5) 見出しフォント統一（Brands基準）
+   ======================================== */
+   
+   .section-title {
+     color: #ffffff !important;
+     font-size: 24px !important;
+     font-weight: 600 !important;
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 16px !important;
+   }
+   
+   /* 各セクションの見出しを統一 */
+   .collection-section .section-title,
+   .brands-section .section-title,
+   .lookbook-section .section-title,
+   .restandard-section .section-title {
+     color: #ffffff !important;
+     font-size: 24px !important;
+     font-weight: 600 !important;
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 16px !important;
+   }
+} 
+
+/* ========================================
+   HIGH-SPECIFICITY DESKTOP OVERRIDES (min-width: 1025px)
+   ======================================== */
+
+:root{
+  --sec-gap:72px;
+  --title-gap:24px;
+}
+
+@media (min-width:1025px){
+  /* Kill hero/mv duplicates + overlays */
+  .hero .section-title,
+  .kv .section-title,
+  .mv .section-title { display:none !important; }
+
+  .collection-section::before,
+  .collection-section::after,
+  .collection-section .overlay,
+  .collection-section .title-overlay,
+  .collection-section .section-overlay { display:none !important; content:none !important; }
+
+  /* Force title to participate in normal flow right above the grid */
+  .collection-section > h2.collection-title.section-title.collection-anchor {
+    position: static !important;
+    transform: none !important;
+    inset: auto !important;
+    margin: 0 0 var(--title-gap) 0 !important;
+    text-align: center !important;
+    z-index: 1 !important;
+  }
+
+  /* Remove any gap before the grid */
+  .collection-section .flowing-images,
+  .collection-section .collection-grid {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+  /* Uniform section spacing */
+  .collection-section,
+  .brands-section,
+  .lookbook-section,
+  .restandard-section {
+    padding-top: var(--sec-gap) !important;
+  }
+  .collection-section .section-title,
+  .brands-section .section-title,
+  .lookbook-section .section-title,
+  .restandard-section .section-title {
+    margin-bottom: var(--title-gap) !important;
+  }
+
+  /* About ReStandard centered */
+  .restandard-section .restandard-body{
+    max-width:1024px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    text-align:center !important;
+    float:none !important;
+  }
+  .restandard-section .restandard-body img,
+  .restandard-section .restandard-body figure{
+    display:block !important;
+    margin:0 auto !important;
+  }
+  
+  /* PC表示でのCollectionセクション表示問題解決 */
+  .collection-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .collection-section .flowing-images {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .collection-section .flowing-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
+  
+  .collection-section .flow-row-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
+  
+  /* Collection見出しの表示確保 */
+  .collection-section .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ========================================
+   MOBILE LAYOUT FIXES - WIDE BREAKPOINTS & HIGH SPECIFICITY
+   ======================================== */
+
+/* 広いブレークポイントでモバイル修正を適用 */
+@media (max-width: 991px) {
+  
+  /* ========================================
+     1) Collectionタイトルとflowing imagesの間の紫の半透明ボックスを削除
+   ======================================== */
+  
+  /* Collection下のオーバーレイ/スペーサーを非表示 - 高特異性 */
+  html body .collection-section .overlay,
+  html body .collection-section .purple-box,
+  html body .collection-section .section-overlay,
+  html body .collection-section .title-overlay,
+  html body .collection-section > .gradient,
+  html body .collection-section > .spacer,
+  html body .collection-section .flowing-bg,
+  html body .collection-section .flow-row-bg {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    content: none !important;
+  }
+  
+  /* 疑似要素も非表示 - 高特異性 */
+  html body .collection-section::before,
+  html body .collection-section::after,
+  html body .collection-section .section-title::before,
+  html body .collection-section .section-title::after {
+    content: none !important;
+    display: none !important;
+  }
+  
+  /* 縦のリズムを調整：タイトルがグリッドの直上に来る */
+  html body .collection-section .section-title {
+    margin-bottom: 12px !important;
+  }
+  
+  html body .collection-section .flowing-images {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  /* デスクトップ専用要素を非表示 */
+  html body .only-desktop {
+    display: none !important;
+  }
+  
+  /* ========================================
+     2) flowing images: 1.JPGと25.JPGの赤/緑ボックスを除去し、他と同一表示に
+   ======================================== */
+   
+   /* ファイル名ベースまたはnth-childのデバッグスタイルを削除 - 高特異性 */
+   html body img[src*="/1.JPG"], 
+   html body img[src*="/1.jpg"],
+   html body img[src*="/25.JPG"], 
+   html body img[src*="/25.jpg"] {
+     border: none !important;
+     outline: none !important;
+     box-shadow: none !important;
+     background: transparent !important;
+   }
+   
+   html body .flowing-images > *:nth-child(1),
+   html body .flowing-images > *:nth-child(25) {
+     border: none !important;
+     outline: none !important;
+     box-shadow: none !important;
+     background: none !important;
+   }
+   
+   /* すべてのカード/画像を正規化 - 高特異性 */
+   html body .flowing-images {
+     display: flex !important;
+     overflow-x: auto !important;
+     scroll-snap-type: x mandatory !important;
+     -webkit-overflow-scrolling: touch !important;
+     gap: 12px !important;
+     padding: 12px !important;
+   }
+   
+   html body .flowing-images > .item,
+   html body .flowing-images > .card,
+   html body .flowing-images > div,
+   html body .flowing-images > a {
+     flex: 0 0 auto !important;
+     scroll-snap-align: start !important;
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 12px !important;
+     padding: 8px !important;
+     overflow: hidden !important;
+     min-width: 120px !important;
+   }
+   
+   html body .flowing-images img {
+     display: block !important;
+     width: 100% !important;
+     height: 100% !important;
+     max-height: 220px !important;
+     object-fit: cover !important;
+     border-radius: 8px !important;
+   }
+   
+   /* ========================================
+     3) flowing imagesの背景を画面横幅いっぱい（full-bleed）に
+   ======================================== */
+   
+   /* 背景が.flowing-imagesそのものの場合 - 高特異性 */
+   html body .collection-section {
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     overflow: visible !important;
+   }
+   
+   html body .collection-section .flowing-images {
+     background: rgba(250, 250, 235, 0.9) !important;
+     width: 100vw !important;
+     box-sizing: border-box !important;
+     padding: 12px !important;
+   }
+   
+   /* 背景用ラッパー.flow-row-bgが存在する場合 - 高特異性 */
+   html body .collection-section .flow-row-bg {
+     background: rgba(250, 250, 235, 0.9) !important;
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     width: 100vw !important;
+   }
+   
+   html body .collection-section .flow-row-bg .flowing-images {
+     padding: 12px !important;
+   }
+   
+   /* 親にoverflow:hiddenがあってfull-bleedが切れる場合の対策 */
+   html body .collection-section {
+     overflow: visible !important;
+   }
+   
+   /* ========================================
+     4) Lookbookの画像サイズと背景をflowing imagesと統一
+   ======================================== */
+   
+   html body .lookbook-section .section-title {
+     margin-bottom: 12px !important;
+   }
+   
+   html body .lookbook-grid {
+     display: flex !important;
+     overflow-x: auto !important;
+     scroll-snap-type: x mandatory !important;
+     -webkit-overflow-scrolling: touch !important;
+     gap: 12px !important;
+     margin-left: calc(50% - 50vw) !important;
+     margin-right: calc(50% - 50vw) !important;
+     width: 100vw !important;
+     box-sizing: border-box !important;
+     background: rgba(250, 250, 235, 0.9) !important; /* 同背景 */
+     padding: 12px !important;
+   }
+   
+   html body .lookbook-grid > .item,
+   html body .lookbook-grid > .card,
+   html body .lookbook-grid > div {
+     flex: 0 0 auto !important;
+     scroll-snap-align: start !important;
+     background: rgba(250, 250, 235, 0.9) !important;
+     border-radius: 12px !important;
+     padding: 8px !important;
+     overflow: hidden !important;
+     min-width: 120px !important;
+   }
+   
+   html body .lookbook-grid img {
+     display: block !important;
+     width: 100% !important;
+     height: 100% !important;
+     max-height: 220px !important;  /* flowing imagesと同値 */
+     object-fit: cover !important;
+     border-radius: 8px !important;
+   }
+   
+   /* Lookbookセクションもoverflow制御 */
+   html body .lookbook-section {
+     overflow: visible !important;
+   }
+   
+   /* ========================================
+     5) 見出しフォント統一（Brands基準）
+   ======================================== */
+   
+   html body .section-title {
+     color: #ffffff !important;
+     font-size: 24px !important;
+     font-weight: 600 !important;
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 16px !important;
+   }
+   
+   /* 各セクションの見出しを統一 - 高特異性 */
+   html body .collection-section .section-title,
+   html body .brands-section .section-title,
+   html body .lookbook-section .section-title,
+   html body .restandard-section .section-title {
+     color: #ffffff !important;
+     font-size: 24px !important;
+     font-weight: 600 !important;
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 16px !important;
+   }
+}
+
+/* さらに広いブレークポイントでも適用 */
+@media (max-width: 1199px) {
+  
+  /* Collection下のオーバーレイ/スペーサーを非表示 - 高特異性 */
+  html body .collection-section .overlay,
+  html body .collection-section .purple-box,
+  html body .collection-section .section-overlay,
+  html body .collection-section .title-overlay,
+  html body .collection-section > .gradient,
+  html body .collection-section > .spacer,
+  html body .collection-section .flowing-bg,
+  html body .collection-section .flow-row-bg {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    content: none !important;
+  }
+  
+  /* 疑似要素も非表示 - 高特異性 */
+  html body .collection-section::before,
+  html body .collection-section::after,
+  html body .collection-section .section-title::before,
+  html body .collection-section .section-title::after {
+    content: none !important;
+    display: none !important;
+  }
+  
+  /* 1.JPGと25.JPGのデバッグスタイルを削除 - 高特異性 */
+  html body img[src*="/1.JPG"], 
+  html body img[src*="/1.jpg"],
+  html body img[src*="/25.JPG"], 
+  html body img[src*="/25.jpg"] {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  
+  /* flowing imagesの横スクロール機能復活 - 高特異性 */
+  html body .flowing-images {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  html body .flowing-images > .item,
+  html body .flowing-images > .card,
+  html body .flowing-images > div,
+  html body .flowing-images > a {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+  }
+  
+  /* Lookbookの統一 - 高特異性 */
+  html body .lookbook-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  html body .lookbook-grid > .item,
+  html body .lookbook-grid > .card,
+  html body .lookbook-grid > div {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+  }
+}
+
+/* 最大限の範囲で適用（デスクトップ以外すべて） */
+@media (max-width: 1439px) {
+  
+  /* Collection下のオーバーレイ/スペーサーを非表示 - 最高特異性 */
+  html body .collection-section .overlay,
+  html body .collection-section .purple-box,
+  html body .collection-section .section-overlay,
+  html body .collection-section .title-overlay,
+  html body .collection-section > .gradient,
+  html body .collection-section > .spacer,
+  html body .collection-section .flowing-bg,
+  html body .collection-section .flow-row-bg {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    content: none !important;
+  }
+  
+  /* 疑似要素も非表示 - 最高特異性 */
+  html body .collection-section::before,
+  html body .collection-section::after,
+  html body .collection-section .section-title::before,
+  html body .collection-section .section-title::after {
+    content: none !important;
+    display: none !important;
+  }
+  
+  /* 1.JPGと25.JPGのデバッグスタイルを削除 - 最高特異性 */
+  html body img[src*="/1.JPG"], 
+  html body img[src*="/1.jpg"],
+  html body img[src*="/25.JPG"], 
+  html body img[src*="/25.jpg"] {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
+/* ========================================
+   COMPREHENSIVE FIXES - ALL REQUIREMENTS
+   ======================================== */
+
+/* 1. 見出しフォントサイズの統一（全ページ共通） */
+.section-title {
+  font-size: clamp(28px, 3vw, 42px) !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* 2. About ReStandardの完全中央揃え（スマホ・PC共通） */
+.restandard-section .restandard-body {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1024px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.restandard-section .restandard-body img,
+.restandard-section .restandard-body figure {
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* 3. Collectionセクションの表示確保（スマホ・PC共通） */
+.collection-section {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.collection-section .flowing-images {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.collection-section .flowing-bg {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.collection-section .flow-row-bg {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 4. PC表示でのLookbook背景と配置調整 */
+@media (min-width: 1025px) {
+  
+  /* Lookbook背景の復活 */
+  .lookbook-section {
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    margin: 48px 0 !important;
+  }
+  
+  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間 */
+  .lookbook-section {
+    margin-top: calc(var(--sec-gap, 72px) + 48px) !important;
+    margin-bottom: calc(var(--sec-gap, 72px) + 48px) !important;
+  }
+  
+  /* Collectionセクションの背景復活 */
+  .collection-section .flowing-bg {
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
+  
+  .collection-section .flow-row-bg {
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
+  
+  /* Collection見出しの表示確保 */
+  .collection-section .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* About ReStandardの中央揃え強化 */
+  .restandard-section .restandard-body {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 1024px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* 5. スマートフォン表示でのLookbook画像サイズ調整 */
+@media (max-width: 991px) {
+  
+  /* Collectionセクションの表示確保 */
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .section-title,
+  html body .section-collection .section-title,
+  html body #collection .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: clamp(36px, 5vw, 56px) !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+  }
+  
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+  
+  html body .collection-section .flowing-images > *,
+  html body .section-collection .flowing-images > *,
+  html body #collection .flowing-images > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+    min-width: 120px !important;
+  }
+  
+  html body .collection-section .flowing-images img,
+  html body .section-collection .flowing-images img,
+  html body #collection .flowing-images img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 160px !important; /* サイズ調整 */
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Lookbook画像サイズの調整 - さらに小さく */
+  html body .lookbook-grid,
+  html body .lookbook-container {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+  
+  html body .lookbook-grid > *,
+  html body .lookbook-container > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+    min-width: 60px !important; /* サイズ調整：80px → 60px */
+  }
+  
+  html body .lookbook-grid img,
+  html body .lookbook-container img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 80px !important; /* サイズ調整：120px → 80px */
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+  
+  /* About ReStandardの中央揃え強化 */
+  html body .restandard-section .restandard-body,
+  html body .section-about .restandard-body,
+  html body #about-restandard .restandard-body {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  html body .restandard-section .restandard-body .about-text,
+  html body .section-about .restandard-body .about-text,
+  html body #about-restandard .restandard-body .about-text {
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* 6. さらに広い範囲での修正適用 */
+@media (max-width: 1199px) {
+  
+  /* Collectionセクションの表示確保 */
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  html body .collection-section .flowing-images > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+  }
+  
+  /* Lookbookの統一 */
+  html body .lookbook-grid,
+  html body .lookbook-container {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  html body .lookbook-grid > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+  }
+}
+
+/* 7. 最大限の範囲で適用（デスクトップ以外すべて） */
+@media (max-width: 1439px) {
+  
+  /* Collectionセクションの表示確保 */
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flowing-bg,
+  html body .section-collection .flowing-bg,
+  html body #collection .flowing-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flow-row-bg,
+  html body .section-collection .flow-row-bg,
+  html body #collection .flow-row-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ========================================
+   ULTIMATE FIXES - MAXIMUM PRIORITY
+   ======================================== */
+
+/* 1. 見出しフォントサイズの統一（全ページ共通） - 最高優先度 */
 html body .section-title,
 html body h2.section-title,
+html body .collection-section .section-title,
+html body .brands-section .section-title,
+html body .lookbook-section .section-title,
+html body .restandard-section .section-title,
+html body .section-collection .section-title,
+html body .section-brands .section-title,
+html body .section-lookbook .section-title,
+html body .section-about .section-title,
 html body .collection-title {
   font-size: clamp(36px, 5vw, 56px) !important;
   font-weight: 700 !important;
@@ -21,10 +2595,7 @@ html body .collection-title {
   opacity: 1 !important;
 }
 
-/* ========================================
-  2. About ReStandardの完全中央揃え（スマホ・PC共通）
-  ======================================== */
-
+/* 2. About ReStandardの完全中央揃え（スマホ・PC共通） - 最高優先度 */
 html body .restandard-section .restandard-body,
 html body .section-about .restandard-body,
 html body #about-restandard .restandard-body,
@@ -40,6 +2611,18 @@ html body .about-inner {
   width: 100% !important;
 }
 
+html body .restandard-section .restandard-body img,
+html body .restandard-section .restandard-body figure,
+html body .section-about .restandard-body img,
+html body .section-about .restandard-body figure,
+html body #about-restandard .restandard-body img,
+html body #about-restandard .restandard-body figure,
+html body .about-inner img,
+html body .about-inner figure {
+  display: block !important;
+  margin: 0 auto !important;
+}
+
 html body .restandard-section .restandard-body .about-text,
 html body .section-about .restandard-body .about-text,
 html body #about-restandard .restandard-body .about-text,
@@ -49,10 +2632,7 @@ html body .about-inner .about-text {
   width: 100% !important;
 }
 
-/* ========================================
-  3. Collectionセクションの強制表示確保（スマホ・PC共通）
-  ======================================== */
-
+/* 3. Collectionセクションの強制表示確保（スマホ・PC共通） - 最高優先度 */
 html body .collection-section,
 html body .section-collection,
 html body #collection {
@@ -77,11 +2657,10 @@ html body .collection-title {
   margin-bottom: 24px !important;
 }
 
-html body #flowing-images,
-html body .flowing-images,
-html body .flowing-bg,
-html body .flow-row-bg,
-html body .flow-track {
+html body .collection-section .flowing-images,
+html body .section-collection .flowing-images,
+html body #collection .flowing-images,
+html body #flowing-images {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -89,38 +2668,135 @@ html body .flow-track {
   z-index: 1 !important;
 }
 
+html body .collection-section .flowing-bg,
+html body .section-collection .flowing-bg,
+html body #collection .flowing-bg,
+html body .flowing-bg {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html body .collection-section .flow-row-bg,
+html body .section-collection .flow-row-bg,
+html body #collection .flow-row-bg,
+html body .flow-row-bg {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html body .collection-section .flow-track,
+html body .section-collection .flow-track,
+html body #collection .flow-track,
+html body .flow-track {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html body .collection-section .flow-track img,
+html body .section-collection .flow-track img,
+html body #collection .flow-track img,
 html body .flow-track img {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
-/* ========================================
-  4. PC表示専用設定
-  ======================================== */
-
+/* 4. PC表示でのLookbook背景と配置調整 - 最高優先度 */
 @media (min-width: 1025px) {
   
   /* Lookbook背景の復活 - imagesを少し囲うサイズに調整 */
   html body .lookbook-section,
   html body .section-lookbook,
   html body #lookbook {
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important; /* 白背景 */
     border-radius: 16px !important;
-    padding: 8px 12px !important;
-    margin: 200px 0 !important;
+    padding: 8px 12px !important; /* imagesを少し囲う程度 */
+    margin: 200px 0 !important; /* 配置をさらに下に移動 */
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: fit-content !important;
+    width: fit-content !important; /* コンテンツに合わせたサイズ */
     margin-left: auto !important;
     margin-right: auto !important;
   }
   
-  /* Lookbookタイトルの表示確保 */
-  html body .lookbook-section .section-title,
-  html body .section-lookbook .section-title,
-  html body #lookbook .section-title {
+  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間、さらに下に */
+  html body .lookbook-section,
+  html body .section-lookbook,
+  html body #lookbook {
+    margin-top: calc(var(--sec-gap, 72px) + 200px) !important; /* さらに下に配置 */
+    margin-bottom: calc(var(--sec-gap, 72px) + 200px) !important;
+  }
+  
+  /* Collectionセクションの背景復活 */
+  html body .collection-section .flowing-bg,
+  html body .section-collection .flowing-bg,
+  html body #collection .flowing-bg,
+  html body .flowing-bg {
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
+  
+  html body .collection-section .flow-row-bg,
+  html body .section-collection .flow-row-bg,
+  html body #collection .flow-row-bg,
+  html body .flow-row-bg {
+    background: rgba(250, 250, 235, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+  }
+  
+  /* Collection見出しの表示確保 */
+  html body .collection-section .section-title,
+  html body .section-collection .section-title,
+  html body #collection .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* About ReStandardの中央揃え強化 */
+  html body .restandard-section .restandard-body,
+  html body .section-about .restandard-body,
+  html body #about-restandard .restandard-body {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 1024px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* 5. スマートフォン表示でのLookbook画像サイズ調整 - 最高優先度 */
+@media (max-width: 991px) {
+  
+  /* Collectionセクションの表示確保 */
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .section-title,
+  html body .section-collection .section-title,
+  html body #collection .section-title {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -131,50 +2807,9 @@ html body .flow-track img {
     margin-bottom: 24px !important;
   }
   
-  /* Collectionセクションの背景復活 */
-  html body .flowing-bg,
-  html body .flow-row-bg {
-    background: rgba(250, 250, 235, 0.9) !important;
-    border-radius: 16px !important;
-    padding: 16px 20px !important;
-  }
-}
-
-/* ========================================
-  5. スマートフォン表示専用設定
-  ======================================== */
-
-@media (max-width: 991px) {
-  
-  /* Lookbook画像サイズの調整 - かなり小さく */
-  html body .lookbook-grid,
-  html body .lookbook-container {
-    display: flex !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 8px !important;
-    padding: 8px !important;
-  }
-  
-  html body .lookbook-grid > *,
-  html body .lookbook-container > * {
-    flex: 0 0 auto !important;
-    scroll-snap-align: start !important;
-    min-width: 40px !important;
-  }
-  
-  html body .lookbook-grid img,
-  html body .lookbook-container img {
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: 50px !important;
-    object-fit: cover !important;
-    border-radius: 8px !important;
-  }
-  
-  /* Collectionセクションの表示確保 */
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images,
   html body #flowing-images {
     display: flex !important;
     overflow-x: auto !important;
@@ -184,11 +2819,18 @@ html body .flow-track img {
     padding: 12px !important;
   }
   
-  html body #flowing-images .flow-track {
-    display: flex !important;
-    gap: 12px !important;
+  html body .collection-section .flowing-images > *,
+  html body .section-collection .flowing-images > *,
+  html body #collection .flowing-images > *,
+  html body #flowing-images > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+    min-width: 120px !important;
   }
   
+  html body .collection-section .flowing-images img,
+  html body .section-collection .flowing-images img,
+  html body #collection .flowing-images img,
   html body #flowing-images img {
     display: block !important;
     width: 100% !important;
@@ -197,4 +2839,171 @@ html body .flow-track img {
     object-fit: cover !important;
     border-radius: 8px !important;
   }
-} 
+  
+  /* Lookbook画像サイズの調整 - かなり小さく */
+  html body .lookbook-grid,
+  html body .lookbook-container {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+  
+  html body .lookbook-grid > *,
+  html body .lookbook-container > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+    min-width: 40px !important; /* サイズ調整：50px → 40px */
+  }
+  
+  html body .lookbook-grid img,
+  html body .lookbook-container img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 50px !important; /* サイズ調整：60px → 50px */
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+  
+  /* About ReStandardの中央揃え強化 */
+  html body .restandard-section .restandard-body,
+  html body .section-about .restandard-body,
+  html body #about-restandard .restandard-body {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  html body .restandard-section .restandard-body .about-text,
+  html body .section-about .restandard-body .about-text,
+  html body #about-restandard .restandard-body .about-text {
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* 6. さらに広い範囲での修正適用 - 最高優先度 */
+@media (max-width: 1199px) {
+  
+  /* Collectionセクションの表示確保 */
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images,
+  html body #flowing-images {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  html body .collection-section .flowing-images > *,
+  html body .section-collection .flowing-images > *,
+  html body #collection .flowing-images > *,
+  html body #flowing-images > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+  }
+  
+  /* Lookbookの統一 */
+  html body .lookbook-grid,
+  html body .lookbook-container {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  html body .lookbook-grid > *,
+  html body .lookbook-container > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+  }
+}
+
+/* 7. 最大限の範囲で適用（デスクトップ以外すべて） - 最高優先度 */
+@media (max-width: 1439px) {
+  
+  /* Collectionセクションの表示確保 */
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images,
+  html body #flowing-images {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flowing-bg,
+  html body .section-collection .flowing-bg,
+  html body #collection .flowing-bg,
+  html body .flowing-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  html body .collection-section .flow-row-bg,
+  html body .section-collection .flow-row-bg,
+  html body #collection .flow-row-bg,
+  html body .flow-row-bg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* 8. 強制表示の最終手段 - 最高優先度 */
+html body .collection-section,
+html body .section-collection,
+html body #collection,
+html body .collection-section *,
+html body .section-collection *,
+html body #collection *,
+html body #flowing-images,
+html body #flowing-images *,
+html body .flowing-bg,
+html body .flowing-bg *,
+html body .flow-row-bg,
+html body .flow-row-bg *,
+html body .flow-track,
+html body .flow-track * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+html body .restandard-section .restandard-body,
+html body .section-about .restandard-body,
+html body #about-restandard .restandard-body,
+html body .restandard-section .restandard-body *,
+html body .section-about .restandard-body *,
+html body #about-restandard .restandard-body * {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
