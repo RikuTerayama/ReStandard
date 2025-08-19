@@ -758,7 +758,7 @@ html body .section-about {
   overflow: hidden;
   position: relative;
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
+  border-radius: 0; /* 角を丸くなくして角に */
   padding: clamp(20px, 4vw, 32px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   /* 画面全体で表示されるように調整 */
@@ -795,10 +795,10 @@ html body .section-about {
 .section-lookbook .lookbook-track img {
   width: auto;
   height: auto;
-  max-width: 350px;
-  max-height: 450px;
+  max-width: 280px; /* 画像サイズを小さく */
+  max-height: 380px; /* 画像サイズを小さく */
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 0; /* 画像の角も丸くなくして角に */
   flex-shrink: 0;
 }
 
@@ -812,8 +812,8 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    max-width: 450px;
-    max-height: 550px;
+    max-width: 350px; /* 画像サイズを小さく */
+    max-height: 450px; /* 画像サイズを小さく */
   }
   
   /* ホバー時に一時停止 */
@@ -855,7 +855,7 @@ html body .section-about {
   #lookbook .lookbook-container::-webkit-scrollbar-thumb,
   .section-lookbook .lookbook-container::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
+    border-radius: 0; /* スクロールバーの角も丸くなくして角に */
   }
 }
 
