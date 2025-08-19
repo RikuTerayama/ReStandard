@@ -781,6 +781,8 @@ html body .section-about {
   /* 左から右へのスクロールを可能にする */
   min-width: 100%;
   justify-content: flex-start;
+  /* スクロール挙動を改善 */
+  transform: translateX(0);
 }
 
 /* Lookbook自動スクロールアニメーション */
@@ -814,6 +816,8 @@ html body .section-about {
     /* 左から右へのスクロールを可能にする */
     min-width: 100%;
     justify-content: flex-start;
+    /* スクロール挙動を改善 */
+    transform: translateX(0);
   }
   
   #lookbook .lookbook-track img,
@@ -841,6 +845,8 @@ html body .section-about {
     /* スクロール範囲を調整 */
     scroll-padding-left: 0;
     scroll-padding-right: 0;
+    /* スクロール挙動を改善 */
+    position: relative;
   }
   
   /* 画像トラックの幅を調整して画面全体で表示 */
@@ -853,6 +859,8 @@ html body .section-about {
     /* 左から右へのスクロールを可能にする */
     min-width: 100%;
     justify-content: flex-start;
+    /* スクロール挙動を改善 */
+    position: relative;
   }
   
   /* スクロールバーを非表示 */
