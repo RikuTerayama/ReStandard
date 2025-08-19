@@ -845,6 +845,10 @@ html body .section-about {
     /* スクロール範囲を拡張して左から右へのスクロールを可能に */
     width: max-content;
     min-width: max-content;
+    /* 左から右への移動を確実に可能にするための追加設定 */
+    position: relative;
+    left: 0;
+    right: auto;
   }
                     #lookbook .lookbook-track img,
                   .section-lookbook .lookbook-track img {
@@ -895,6 +899,11 @@ html body .section-about {
     scroll-padding-right: 0;
     /* スクロール動作を最適化 */
     -webkit-overflow-scrolling: auto;
+    /* 左から右への移動を確実に可能にするための追加設定 */
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+    /* スクロール範囲を制限しない */
+    scroll-padding: 0;
   }
   /* スクロールバーを非表示 */
   #lookbook .lookbook-container::-webkit-scrollbar,
