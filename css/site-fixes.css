@@ -838,6 +838,10 @@ html body .section-about {
     scroll-snap-type: none;
     /* 左右どちらにもスクロール可能にする */
     overflow-x: visible;
+    /* 左から右へのスクロールを確実に可能にするための追加設定 */
+    direction: ltr;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
                     #lookbook .lookbook-track img,
                   .section-lookbook .lookbook-track img {
@@ -877,6 +881,9 @@ html body .section-about {
     -webkit-user-select: none;
     /* スクロールスナップを無効化して左右どちらにもスクロール可能に */
     scroll-snap-type: none;
+    /* 左右どちらにもスクロール可能にするための追加設定 */
+    direction: ltr;
+    text-align: left;
   }
   /* スクロールバーを非表示 */
   #lookbook .lookbook-container::-webkit-scrollbar,
