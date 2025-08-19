@@ -91,6 +91,7 @@ function ensureLookbookFunctionality() {
     
     // スクロール挙動を改善
     lookbookTrack.style.position = 'relative';
+    lookbookTrack.style.willChange = 'transform';
     
     // ホバー時に一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
@@ -128,6 +129,7 @@ function ensureLookbookFunctionality() {
     
     // スクロール挙動を改善
     lookbookContainer.style.position = 'relative';
+    lookbookContainer.style.willChange = 'scroll-position';
     
     // スワイプ機能の実装
     let isDragging = false;
@@ -146,7 +148,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 2;
+      const walk = (x - startX) * 1; // スクロール感度を調整（2から1に変更）
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
@@ -169,7 +171,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 2;
+      const walk = (x - startX) * 1; // スクロール感度を調整（2から1に変更）
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
