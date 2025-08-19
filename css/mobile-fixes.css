@@ -186,16 +186,17 @@
   
   /* Lookbook画像をflowing imagesと同じスタイルに */
   html body .lookbook-grid img {
+    display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 220px !important;
+    max-height: 150px !important;  /* サイズ調整：180px → 150px */
     object-fit: cover !important;
-    display: block !important;
     border-radius: 8px !important;
-    background: rgba(250, 250, 235, 0.9) !important;
-    padding: 8px !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
+  }
+  
+  /* Lookbookセクションもoverflow制御 */
+  html body .lookbook-section {
+    overflow: visible !important;
   }
   
   /* Lookbook見出しの下部余白を調整 */
@@ -211,8 +212,8 @@
   
   html body .section-title {
     color: #ffffff !important;
-    font-size: 24px !important;
-    font-weight: 600 !important;
+    font-size: clamp(28px, 3vw, 42px) !important; /* サイズ調整 */
+    font-weight: 700 !important; /* 太さ調整 */
     line-height: 1.2 !important;
     text-align: center !important;
     margin-bottom: 16px !important;
@@ -224,12 +225,39 @@
   html body .lookbook-section .section-title,
   html body .restandard-section .section-title {
     color: #ffffff !important;
-    font-size: 24px !important;
-    font-weight: 600 !important;
+    font-size: clamp(28px, 3vw, 42px) !important; /* サイズ調整 */
+    font-weight: 700 !important; /* 太さ調整 */
     line-height: 1.2 !important;
     text-align: center !important;
     margin-bottom: 16px !important;
   }
+  
+  /* ========================================
+     6) About ReStandardの完全中央揃え強化
+   ======================================== */
+   
+   html body .restandard-section .restandard-body {
+     text-align: center !important;
+     margin-left: auto !important;
+     margin-right: auto !important;
+     max-width: 100% !important;
+     padding: 0 16px !important;
+     display: flex !important;
+     flex-direction: column !important;
+     align-items: center !important;
+     justify-content: center !important;
+   }
+   
+   html body .restandard-section .restandard-body .about-text {
+     text-align: center !important;
+     margin: 0 auto !important;
+   }
+   
+   html body .restandard-section .restandard-body img,
+   html body .restandard-section .restandard-body figure {
+     display: block !important;
+     margin: 0 auto !important;
+   }
   
   /* ========================================
      5) 全体的なレイアウト調整
