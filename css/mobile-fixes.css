@@ -191,7 +191,7 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 100px !important;  /* サイズ調整：120px → 100px */
+    max-height: 80px !important;  /* サイズ調整：100px → 80px */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
@@ -207,18 +207,18 @@
   html body #lookbook {
     background: rgba(255, 255, 255, 0.9) !important;
     border-radius: 12px !important;
-    padding: 8px 12px !important;
+    padding: 6px 10px !important; /* さらに小さく */
     margin: 16px 0 !important;
     width: fit-content !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
   
-  /* Lookbook見出しの下部余白を調整 */
-  html body .lookbook-section .section-title,
-  html body .section-lookbook h2.section-title,
-  html body #lookbook h2.section-title {
-    margin-bottom: 12px !important;
+  /* Lookbookの画像サイズをさらに小さく */
+  html body .lookbook-grid > *,
+  html body .lookbook-container > *,
+  html body .lookbook-track > * {
+    min-width: 60px !important; /* サイズ調整：80px → 60px */
   }
   
   /* ========================================
