@@ -940,28 +940,7 @@
         margin-bottom: 120px !important;
       }
     }
-    /* スマホ版 overviewタイトル大きく */
-    @media (max-width: 900px) {
-      .overview-title-mobile {
-        font-size: 1.5rem;
-        display: inline-block;
-      }
-    }
-    @media (min-width: 901px) {
-      .overview-title-mobile {
-        font-size: inherit;
-      }
-    }
-    .overview-title-desktop {
-      font-size: 1.5rem;
-      display: inline-block;
-      margin-bottom: 0.5em;
-    }
-    @media (max-width: 900px) {
-      .overview-title-desktop {
-        font-size: inherit;
-      }
-    }
+    /* スマホ版 overviewタイトル大きく - 外部CSSで管理 */
     @media (max-width: 768px) {
       html, body {
         overflow-x: hidden !important;
