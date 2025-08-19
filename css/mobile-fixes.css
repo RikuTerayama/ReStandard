@@ -164,19 +164,19 @@
     overflow: visible !important;
   }
   
-  /* Lookbookコンテナ（スマホ用） - 画面全体で表示、重複設定を完全に削除 */
+  /* Lookbookコンテナ（スマホ用） - 全デバイス対応、重複設定を完全に削除 */
   html body .lookbook-container {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
-    gap: 64px !important; /* 画像間の間隔を大幅に広げる */
+    gap: 72px !important; /* 画像間の間隔を大幅に広げる */
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
     width: 100vw !important;
     box-sizing: border-box !important;
     background: rgba(250, 250, 235, 0.9) !important;
-    padding: 72px !important; /* パディングを大幅に広げる */
+    padding: 80px !important; /* パディングを大幅に広げる */
     /* 自動スクロールアニメーションを無効化 - 背景が流れるのを防ぐ */
     animation: none !important;
     position: relative !important;
@@ -193,26 +193,36 @@
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
     /* 初期表示位置を調整 */
     scroll-snap-type: none !important;
+    /* iPhone 15 Proを含む全デバイス対応 */
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
   }
   
-  /* 画像コンテナのサイズ設定 - 重複を排除 */
+  /* 画像コンテナのサイズ設定 - 重複を排除、全デバイス対応 */
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 560px !important; /* 画像サイズを大幅に拡大 */
-    max-width: 560px !important; /* 画像サイズを大幅に拡大 */
+    min-width: 640px !important; /* 画像サイズを大幅に拡大 */
+    max-width: 640px !important; /* 画像サイズを大幅に拡大 */
+    /* iPhone 15 Proを含む全デバイス対応 */
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
   }
   
-  /* Lookbook画像のスタイル - 重複を排除 */
+  /* Lookbook画像のスタイル - 重複を排除、全デバイス対応 */
   html body .lookbook-container img,
   html body .lookbook-track img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 800px !important;  /* 画像サイズを大幅に拡大 */
-    max-width: 560px !important;  /* 画像サイズを大幅に拡大 */
+    max-height: 900px !important;  /* 画像サイズを大幅に拡大 */
+    max-width: 640px !important;  /* 画像サイズを大幅に拡大 */
     object-fit: cover !important;
     border-radius: 0 !important; /* 画像の角も丸くなくして角に */
     /* スクロール時の画像追従を防ぐ */
@@ -221,6 +231,13 @@
     cursor: grab !important;
     user-select: none !important;
     -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    /* iPhone 15 Proを含む全デバイス対応 */
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
   }
   
   /* Lookbookセクションもoverflow制御 */
@@ -244,7 +261,7 @@
     z-index: 5 !important;
   }
   
-  /* スワイプ操作の改善 */
+  /* スワイプ操作の改善 - 全デバイス対応 */
   html body .lookbook-container {
     cursor: grab !important;
     /* スクロール機能を有効化 */
@@ -255,9 +272,18 @@
     cursor: grabbing !important;
   }
   
-  /* スクロールバーを非表示 */
+  /* スクロールバーを非表示 - 全デバイス対応 */
   html body .lookbook-container::-webkit-scrollbar {
     display: none !important;
+  }
+  
+  /* iPhone 15 Proを含む全デバイスでの追加対応 */
+  @supports (-webkit-touch-callout: none) {
+    html body .lookbook-container {
+      -webkit-overflow-scrolling: touch !important;
+      -webkit-transform: translate3d(0, 0, 0) !important;
+      transform: translate3d(0, 0, 0) !important;
+    }
   }
   
   /* ========================================
