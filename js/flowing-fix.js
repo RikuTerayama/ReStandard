@@ -123,6 +123,14 @@ function ensureLookbookFunctionality() {
           // 左から右へのスクロールを可能にするための追加設定
           container.style.direction = 'ltr';
           container.style.textAlign = 'left';
+          
+          // 左から右への移動を確実に可能にするための追加設定
+          container.style.scrollPadding = '0';
+          container.style.scrollSnapType = 'none';
+          
+          // スクロール範囲を制限しない
+          container.style.overflowX = 'auto';
+          container.style.overflowY = 'hidden';
         }
       }
     }, 100);
