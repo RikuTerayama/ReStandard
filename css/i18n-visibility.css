@@ -82,6 +82,57 @@ html body .about-inner.only-sp {
   }
 }
 
+/* 最終手段：最高特異性セレクタ */
+html body .restandard-section .about-inner.only-pc { 
+  display: block !important; 
+}
+html body .restandard-section .about-inner.only-sp { 
+  display: none !important; 
+}
+
+@media (max-width: 767px) {
+  html body .restandard-section .about-inner.only-pc { 
+    display: none !important; 
+  }
+  html body .restandard-section .about-inner.only-sp { 
+    display: block !important; 
+  }
+}
+
+/* さらに強力な制御（最高特異性） */
+html body .section-about .about-inner.only-pc { 
+  display: block !important; 
+}
+html body .section-about .about-inner.only-sp { 
+  display: none !important; 
+}
+
+@media (max-width: 767px) {
+  html body .section-about .about-inner.only-pc { 
+    display: none !important; 
+  }
+  html body .section-about .about-inner.only-sp { 
+    display: block !important; 
+  }
+}
+
+/* 最終手段：最高特異性セレクタ */
+html body #about-restandard .about-inner.only-pc { 
+  display: block !important; 
+}
+html body #about-restandard .about-inner.only-sp { 
+  display: none !important; 
+}
+
+@media (max-width: 767px) {
+  html body #about-restandard .about-inner.only-pc { 
+    display: none !important; 
+  }
+  html body #about-restandard .about-inner.only-sp { 
+    display: block !important; 
+  }
+}
+
 /* ========================================
   言語判定（<html lang="ja|en"> の値で切替）
   ======================================== */
