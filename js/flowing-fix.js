@@ -75,7 +75,7 @@ function ensureBrandHoverEffect() {
 // Lookbook機能の保証
 function ensureLookbookFunctionality() {
   const lookbookTrack = document.querySelector('#lookbook .lookbook-track, .section-lookbook .lookbook-track');
-  const lookbookGrid = document.querySelector('#lookbook .lookbook-grid, .section-lookbook .lookbook-grid');
+  const lookbookContainer = document.querySelector('#lookbook .lookbook-container, .section-lookbook .lookbook-container');
   
   // PC用のLookbook自動スクロール
   if (lookbookTrack) {
@@ -98,13 +98,13 @@ function ensureLookbookFunctionality() {
     }
   }
   
-  // スマホ用のLookbook自動スクロールとスワイプ機能
-  if (lookbookGrid) {
+  // スマホ用のLookbookスワイプ機能とスクロール機能
+  if (lookbookContainer) {
     // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
-    lookbookGrid.style.animation = 'none';
+    lookbookContainer.style.animation = 'none';
     
     // 画像が画面全体で表示されるように初期位置を調整
-    lookbookGrid.scrollLeft = 0;
+    lookbookContainer.scrollLeft = 0;
     
     // スワイプ機能の実装
     let isDragging = false;
@@ -112,55 +112,55 @@ function ensureLookbookFunctionality() {
     let scrollLeft = 0;
     
     // タッチイベント（スマートフォン用）
-    lookbookGrid.addEventListener('touchstart', function(e) {
+    lookbookContainer.addEventListener('touchstart', function(e) {
       isDragging = true;
-      startX = e.touches[0].pageX - lookbookGrid.offsetLeft;
-      scrollLeft = lookbookGrid.scrollLeft;
+      startX = e.touches[0].pageX - lookbookContainer.offsetLeft;
+      scrollLeft = lookbookContainer.scrollLeft;
       e.preventDefault();
     });
     
-    lookbookGrid.addEventListener('touchmove', function(e) {
+    lookbookContainer.addEventListener('touchmove', function(e) {
       if (!isDragging) return;
       e.preventDefault();
-      const x = e.touches[0].pageX - lookbookGrid.offsetLeft;
+      const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
       const walk = (x - startX) * 2;
-      lookbookGrid.scrollLeft = scrollLeft - walk;
+      lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
-    lookbookGrid.addEventListener('touchend', function() {
+    lookbookContainer.addEventListener('touchend', function() {
       if (isDragging) {
         isDragging = false;
       }
     });
     
     // マウスイベント（PC用）
-    lookbookGrid.addEventListener('mousedown', function(e) {
+    lookbookContainer.addEventListener('mousedown', function(e) {
       isDragging = true;
-      startX = e.pageX - lookbookGrid.offsetLeft;
-      scrollLeft = lookbookGrid.scrollLeft;
-      lookbookGrid.style.cursor = 'grabbing';
+      startX = e.pageX - lookbookContainer.offsetLeft;
+      scrollLeft = lookbookContainer.scrollLeft;
+      lookbookContainer.style.cursor = 'grabbing';
       e.preventDefault();
     });
     
-    lookbookGrid.addEventListener('mousemove', function(e) {
+    lookbookContainer.addEventListener('mousemove', function(e) {
       if (!isDragging) return;
       e.preventDefault();
-      const x = e.pageX - lookbookGrid.offsetLeft;
+      const x = e.pageX - lookbookContainer.offsetLeft;
       const walk = (x - startX) * 2;
-      lookbookGrid.scrollLeft = scrollLeft - walk;
+      lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
-    lookbookGrid.addEventListener('mouseup', function() {
+    lookbookContainer.addEventListener('mouseup', function() {
       if (isDragging) {
         isDragging = false;
-        lookbookGrid.style.cursor = 'grab';
+        lookbookContainer.style.cursor = 'grab';
       }
     });
     
-    lookbookGrid.addEventListener('mouseleave', function() {
+    lookbookContainer.addEventListener('mouseleave', function() {
       if (isDragging) {
         isDragging = false;
-        lookbookGrid.style.cursor = 'grab';
+        lookbookContainer.style.cursor = 'grab';
       }
     });
   }
