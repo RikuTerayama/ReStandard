@@ -183,6 +183,9 @@
     /* 画像が画面全体で表示されるように調整 */
     scroll-behavior: smooth !important;
     border-radius: 0 !important; /* 角を丸くなくして角に */
+    /* 左から右へのスクロールを可能にする */
+    scroll-padding-left: 0 !important;
+    scroll-padding-right: 0 !important;
   }
   
   html body .lookbook-container > * {
@@ -246,6 +249,9 @@
     background: rgba(255, 255, 255, 0.9) !important; /* 画像にのみ白い半透明の背景 */
     border-radius: 0 !important; /* 角を丸くなくして角に */
     padding: 24px !important; /* パディングを広げる */
+    /* 左から右へのスクロールを可能にする */
+    min-width: 100% !important;
+    justify-content: flex-start !important;
   }
   
   /* スワイプ操作の改善 */
