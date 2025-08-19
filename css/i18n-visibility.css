@@ -24,6 +24,23 @@
   }
 }
 
+/* PCとスマートフォン用のコンテンツ制御（重複表示防止） */
+.overview-title-desktop { 
+  display: block !important; 
+}
+.overview-title-mobile { 
+  display: none !important; 
+}
+
+@media (max-width: 767px) {
+  .overview-title-desktop { 
+    display: none !important; 
+  }
+  .overview-title-mobile { 
+    display: block !important; 
+  }
+}
+
 /* 言語判定（<html lang="ja|en"> の値で切替） */
 html[lang="ja"] #about .only-ja,
 html[lang="ja"] #brands .only-ja,
