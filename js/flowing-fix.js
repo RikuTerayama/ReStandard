@@ -171,6 +171,12 @@ function ensureLookbookFunctionality() {
         if (lookbookContainer.style.transform !== undefined) {
           lookbookContainer.style.transform = 'translate3d(0, 0, 0)';
         }
+        
+        // 左から右へのスクロールを確実に可能にするための追加設定
+        lookbookContainer.style.direction = 'ltr';
+        lookbookContainer.style.textAlign = 'left';
+        lookbookContainer.style.scrollBehavior = 'auto';
+        lookbookContainer.style.scrollSnapType = 'none';
       }
     }, 200); // タイミングをさらに遅らせて確実に動作するように
     
@@ -216,7 +222,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 1.2; // スマホ表示でのスクロール感度をPC形式と同じに調整
+      const walk = (x - startX) * 1.0; // スマホ表示でのスクロール感度をPC形式と同じに調整
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
