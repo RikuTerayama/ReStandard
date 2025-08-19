@@ -106,7 +106,7 @@ function ensureLookbookFunctionality() {
         
         if (maxScrollLeft > 0) {
           // 2セット目の最後の画像が左端に表示されるように配置
-          const targetScrollLeft = maxScrollLeft * 0.9; // 90%の位置に配置
+          const targetScrollLeft = maxScrollLeft * 0.95; // 95%の位置に配置
           container.scrollLeft = targetScrollLeft;
         }
       }
