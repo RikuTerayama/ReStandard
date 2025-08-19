@@ -2747,10 +2747,11 @@ html body #lookbook .lookbook-track img {
   display: block !important;
   width: 100% !important;
   height: auto !important;
-  max-height: 160px !important; /* Collectionセクションと同じサイズ */
-  max-width: 120px !important; /* 横長を防ぐ */
+  max-height: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
+  max-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
   object-fit: cover !important;
   border-radius: 8px !important;
+  flex-shrink: 0 !important; /* 画像サイズを固定 */
 }
 
 html body .lookbook-section .lookbook-grid > *,
@@ -2762,36 +2763,28 @@ html body .section-lookbook .lookbook-track > *,
 html body #lookbook .lookbook-grid > *,
 html body #lookbook .lookbook-container > *,
 html body #lookbook .lookbook-track > * {
-  min-width: 120px !important; /* Collectionセクションと同じサイズ */
-  max-width: 120px !important; /* 横長を防ぐ */
+  min-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
+  max-width: 300px !important; /* Brandsセクションのロゴマークと同じサイズ */
   flex: 0 0 auto !important;
   scroll-snap-align: start !important;
 }
 
-/* Lookbook画像サイズの調整 - Collectionセクションと同じサイズに統一 */
-html body .lookbook-grid,
-html body .lookbook-container {
+/* Lookbook画像コンテナの最終強制設定 - 画面横幅いっぱいに表示 */
+html body .lookbook-section .lookbook-grid,
+html body .lookbook-section .lookbook-container,
+html body .section-lookbook .lookbook-grid,
+html body .section-lookbook .lookbook-container,
+html body #lookbook .lookbook-grid,
+html body #lookbook .lookbook-container {
   display: flex !important;
   overflow-x: auto !important;
   scroll-snap-type: x mandatory !important;
   -webkit-overflow-scrolling: touch !important;
-  gap: 12px !important;
-  padding: 12px !important;
-}
-
-html body .lookbook-grid > *,
-html body .lookbook-container > * {
-  flex: 0 0 auto !important;
-  scroll-snap-align: start !important;
-  min-width: 120px !important; /* Collectionセクションと同じサイズ */
-}
-
-html body .lookbook-grid img,
-html body .lookbook-container img {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  max-height: 160px !important; /* Collectionセクションと同じサイズ */
-  object-fit: cover !important;
-  border-radius: 8px !important;
+  gap: 16px !important;
+  padding: 16px 20px !important;
+  width: 100% !important; /* 画面横幅いっぱいに表示 */
+  max-width: 100vw !important;
+  background: rgba(255, 255, 255, 0.9) !important; /* 白い半透明背景 */
+  border-radius: 16px !important;
+  margin: 0 auto !important;
 }
