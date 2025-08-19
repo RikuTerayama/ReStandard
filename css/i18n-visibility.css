@@ -65,6 +65,23 @@ html body .only-sp {
   }
 }
 
+/* さらに強力な制御（最高特異性） */
+html body .about-inner.only-pc { 
+  display: block !important; 
+}
+html body .about-inner.only-sp { 
+  display: none !important; 
+}
+
+@media (max-width: 767px) {
+  html body .about-inner.only-pc { 
+    display: none !important; 
+  }
+  html body .about-inner.only-sp { 
+    display: block !important; 
+  }
+}
+
 /* ========================================
   言語判定（<html lang="ja|en"> の値で切替）
   ======================================== */
