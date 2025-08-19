@@ -175,10 +175,10 @@
     margin-right: calc(50% - 50vw) !important;
     width: 100vw !important;
     box-sizing: border-box !important;
-    background: rgba(250, 250, 235, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
     padding: 48px !important; /* パディングを画像サイズに合わせて調整 */
-    /* 自動スクロールアニメーションを無効化 - 背景が流れるのを防ぐ */
-    animation: none !important;
+    /* 自動スクロールアニメーションを有効化 */
+    animation: lookbook-scroll-mobile 15s linear infinite !important; /* 自動スクロールを有効化 */
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
     scroll-behavior: auto !important; /* スクロール速度をPC形式と同じに調整 */
@@ -189,7 +189,7 @@
     /* スクロールバーを非表示 */
     scrollbar-width: none !important;
     /* スクロール時の画像追従を防ぐ */
-    will-change: scroll-position !important;
+    will-change: transform !important; /* アニメーション用に変更 */
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -207,6 +207,26 @@
     /* 左から右へのスクロールを確実に可能にするための追加設定 */
     direction: ltr !important;
     text-align: left !important;
+  }
+  
+  /* スマホ用の自動スクロールアニメーション定義 */
+  @keyframes lookbook-scroll-mobile {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* ホバー時に一時停止 */
+  html body .lookbook-container:hover {
+    animation-play-state: paused !important;
+  }
+  
+  /* タッチ操作時に一時停止 */
+  html body .lookbook-container:active {
+    animation-play-state: paused !important;
   }
   
   /* 画像コンテナのサイズ設定 - 重複を排除、PC以外の全デバイス対応 */
