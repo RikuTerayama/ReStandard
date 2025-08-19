@@ -182,14 +182,14 @@
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
     scroll-behavior: smooth !important;
-    border-radius: 12px !important;
+    border-radius: 0 !important; /* 角を丸くなくして角に */
   }
   
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 220px !important; /* さらに大きく */
-    max-width: 220px !important; /* さらに大きく */
+    min-width: 180px !important; /* 画像サイズを小さく */
+    max-width: 180px !important; /* 画像サイズを小さく */
   }
   
   /* Lookbook画像をflowing imagesと同じスタイルに */
@@ -198,10 +198,10 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 320px !important;  /* さらに大きく */
-    max-width: 220px !important;  /* さらに大きく */
+    max-height: 260px !important;  /* 画像サイズを小さく */
+    max-width: 180px !important;  /* 画像サイズを小さく */
     object-fit: cover !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important; /* 画像の角も丸くなくして角に */
   }
   
   /* Lookbookセクションもoverflow制御 */
@@ -214,7 +214,7 @@
   html body .section-lookbook,
   html body #lookbook {
     background: transparent !important; /* セクション全体の背景は透明 */
-    border-radius: 12px !important;
+    border-radius: 0 !important; /* 角を丸くなくして角に */
     padding: 0 !important; /* パディングを削除 */
     margin: 16px 0 !important;
     width: 100% !important; /* 画面横幅いっぱいに表示 */
@@ -225,26 +225,26 @@
     z-index: 5 !important;
   }
   
-  /* Lookbookの画像サイズを大きく */
+  /* Lookbookの画像サイズを小さく */
   html body .lookbook-container > *,
   html body .lookbook-track > * {
-    min-width: 220px !important; /* さらに大きく */
-    max-width: 220px !important; /* さらに大きく */
+    min-width: 180px !important; /* 画像サイズを小さく */
+    max-width: 180px !important; /* 画像サイズを小さく */
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
   }
   
-  /* Lookbook画像のサイズを大きく */
+  /* Lookbook画像のサイズを小さく */
   html body .lookbook-container img,
   html body .lookbook-track img {
-    max-height: 320px !important; /* さらに大きく */
-    max-width: 220px !important; /* さらに大きく */
+    max-height: 260px !important; /* 画像サイズを小さく */
+    max-width: 180px !important; /* 画像サイズを小さく */
   }
   
   /* Lookbookコンテナをflowするように画面横幅いっぱいに表示 */
   html body .lookbook-container {
     background: rgba(255, 255, 255, 0.9) !important; /* 画像にのみ白い半透明の背景 */
-    border-radius: 12px !important;
+    border-radius: 0 !important; /* 角を丸くなくして角に */
     padding: 20px !important;
   }
   
@@ -274,7 +274,7 @@
   
   html body .lookbook-container::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.3) !important;
-    border-radius: 3px !important;
+    border-radius: 0 !important; /* スクロールバーの角も丸くなくして角に */
   }
   
   /* ========================================
