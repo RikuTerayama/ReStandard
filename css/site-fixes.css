@@ -783,6 +783,8 @@ html body .section-about {
   justify-content: flex-start;
   /* スクロール挙動を改善 */
   transform: translateX(0);
+  /* スクロール時の画像追従を防ぐ */
+  will-change: transform;
 }
 
 /* Lookbook自動スクロールアニメーション */
@@ -805,6 +807,8 @@ html body .section-about {
   object-fit: cover;
   border-radius: 0; /* 画像の角も丸くなくして角に */
   flex-shrink: 0;
+  /* スクロール時の画像追従を防ぐ */
+  pointer-events: auto;
 }
 
 /* PC用のLookbook自動スクロール */
@@ -818,6 +822,8 @@ html body .section-about {
     justify-content: flex-start;
     /* スクロール挙動を改善 */
     transform: translateX(0);
+    /* スクロール時の画像追従を防ぐ */
+    will-change: transform;
   }
   
   #lookbook .lookbook-track img,
@@ -847,6 +853,8 @@ html body .section-about {
     scroll-padding-right: 0;
     /* スクロール挙動を改善 */
     position: relative;
+    /* スクロール時の画像追従を防ぐ */
+    will-change: scroll-position;
   }
   
   /* 画像トラックの幅を調整して画面全体で表示 */
@@ -861,6 +869,8 @@ html body .section-about {
     justify-content: flex-start;
     /* スクロール挙動を改善 */
     position: relative;
+    /* スクロール時の画像追従を防ぐ */
+    will-change: transform;
   }
   
   /* スクロールバーを非表示 */
