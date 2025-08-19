@@ -105,8 +105,8 @@ function ensureLookbookFunctionality() {
         const maxScrollLeft = scrollWidth - containerWidth;
         
         if (maxScrollLeft > 0) {
-          // 2セット目の最初の画像が一番左に表示されるように配置
-          const targetScrollLeft = maxScrollLeft * 0.5; // 50%の位置に配置（2セット目の開始位置）
+          // スクロール可能な範囲の中央に配置して左右どちらにもスクロール可能にする
+          const targetScrollLeft = maxScrollLeft / 2;
           container.scrollLeft = targetScrollLeft;
         }
       }
