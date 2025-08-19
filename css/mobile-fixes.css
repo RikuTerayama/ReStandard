@@ -185,11 +185,13 @@
   }
   
   /* Lookbook画像をflowing imagesと同じスタイルに */
-  html body .lookbook-grid img {
+  html body .lookbook-grid img,
+  html body .lookbook-container img,
+  html body .lookbook-track img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 150px !important;  /* サイズ調整：180px → 150px */
+    max-height: 120px !important;  /* サイズ調整：150px → 120px */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
@@ -231,33 +233,6 @@
     text-align: center !important;
     margin-bottom: 16px !important;
   }
-  
-  /* ========================================
-     6) About ReStandardの完全中央揃え強化
-   ======================================== */
-   
-   html body .restandard-section .restandard-body {
-     text-align: center !important;
-     margin-left: auto !important;
-     margin-right: auto !important;
-     max-width: 100% !important;
-     padding: 0 16px !important;
-     display: flex !important;
-     flex-direction: column !important;
-     align-items: center !important;
-     justify-content: center !important;
-   }
-   
-   html body .restandard-section .restandard-body .about-text {
-     text-align: center !important;
-     margin: 0 auto !important;
-   }
-   
-   html body .restandard-section .restandard-body img,
-   html body .restandard-section .restandard-body figure {
-     display: block !important;
-     margin: 0 auto !important;
-   }
   
   /* ========================================
      5) 全体的なレイアウト調整
@@ -407,3 +382,136 @@
 @media (min-width: 1440px) {
   /* 既存のデスクトップスタイルを維持 */
 } 
+
+/* ========================================
+     5) 見出しフォントサイズの統一（Brands基準）
+   ======================================== */
+   
+   html body .section-title,
+   html body h2.section-title {
+     color: #ffffff !important;
+     font-size: clamp(32px, 4vw, 48px) !important; /* サイズ調整 */
+     font-weight: 700 !important; /* 太さ調整 */
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 24px !important;
+   }
+   
+   /* 各セクションの見出しを統一 - 最高特異性 */
+   html body .collection-section .section-title,
+   html body .brands-section .section-title,
+   html body .lookbook-section .section-title,
+   html body .restandard-section .section-title,
+   html body .section-collection .section-title,
+   html body .section-brands .section-title,
+   html body .section-lookbook .section-title,
+   html body .section-about .section-title {
+     color: #ffffff !important;
+     font-size: clamp(32px, 4vw, 48px) !important; /* サイズ調整 */
+     font-weight: 700 !important; /* 太さ調整 */
+     line-height: 1.2 !important;
+     text-align: center !important;
+     margin-bottom: 24px !important;
+   }
+   
+   /* ========================================
+     6) About ReStandardの完全中央揃え強化
+   ======================================== */
+   
+   html body .restandard-section .restandard-body,
+   html body .section-about .restandard-body,
+   html body #about-restandard .restandard-body {
+     text-align: center !important;
+     margin-left: auto !important;
+     margin-right: auto !important;
+     max-width: 100% !important;
+     padding: 0 16px !important;
+     display: flex !important;
+     flex-direction: column !important;
+     align-items: center !important;
+     justify-content: center !important;
+     width: 100% !important;
+   }
+   
+   html body .restandard-section .restandard-body .about-text,
+   html body .section-about .restandard-body .about-text,
+   html body #about-restandard .restandard-body .about-text {
+     text-align: center !important;
+     margin: 0 auto !important;
+     width: 100% !important;
+   }
+   
+   html body .restandard-section .restandard-body img,
+   html body .restandard-section .restandard-body figure,
+   html body .section-about .restandard-body img,
+   html body .section-about .restandard-body figure,
+   html body #about-restandard .restandard-body img,
+   html body #about-restandard .restandard-body figure {
+     display: block !important;
+     margin: 0 auto !important;
+   }
+   
+   /* ========================================
+     7) Collectionセクションの強制表示確保
+   ======================================== */
+   
+   html body .collection-section,
+   html body .section-collection,
+   html body #collection {
+     display: block !important;
+     visibility: visible !important;
+     opacity: 1 !important;
+     position: relative !important;
+     z-index: 1 !important;
+   }
+   
+   html body .collection-section .flowing-images,
+   html body .section-collection .flowing-images,
+   html body #collection .flowing-images {
+     display: flex !important;
+     overflow-x: auto !important;
+     scroll-snap-type: x mandatory !important;
+     -webkit-overflow-scrolling: touch !important;
+     gap: 12px !important;
+     padding: 12px !important;
+     visibility: visible !important;
+     opacity: 1 !important;
+   }
+   
+   html body .collection-section .flowing-bg,
+   html body .section-collection .flowing-bg,
+   html body #collection .flowing-bg {
+     display: block !important;
+     visibility: visible !important;
+     opacity: 1 !important;
+   }
+   
+   html body .collection-section .flow-row-bg,
+   html body .section-collection .flow-row-bg,
+   html body #collection .flow-row-bg {
+     display: block !important;
+     visibility: visible !important;
+     opacity: 1 !important;
+   }
+   
+   /* ========================================
+     8) 最終手段：強制表示の適用
+   ======================================== */
+   
+   /* Collectionセクションの強制表示 */
+   html body .collection-section *,
+   html body .section-collection *,
+   html body #collection * {
+     display: block !important;
+     visibility: visible !important;
+     opacity: 1 !important;
+   }
+   
+   /* About ReStandardの強制中央揃え */
+   html body .restandard-section .restandard-body *,
+   html body .section-about .restandard-body *,
+   html body #about-restandard .restandard-body * {
+     text-align: center !important;
+     margin-left: auto !important;
+     margin-right: auto !important;
+   } 
