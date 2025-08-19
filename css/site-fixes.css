@@ -3000,3 +3000,51 @@ html body #lookbook .lookbook-grid {
   user-select: none;
   -webkit-user-select: none;
 }
+
+/* About ReStandardセクションの改善 */
+#about-restandard,
+.section-about,
+.restandard-section {
+  padding: 64px 0 !important; /* 縦のパディングをさらに増やして背景の長さを大きく */
+  margin: 32px 0 !important; /* セクション間のマージンを調整 */
+}
+
+/* PC用のAbout ReStandard内側の調整 */
+@media (min-width: 1025px) {
+  #about-restandard .about-inner.only-pc,
+  .section-about .about-inner.only-pc,
+  .restandard-section .about-inner.only-pc {
+    max-width: 1200px !important; /* 最大幅を設定 */
+    margin: 0 auto !important; /* 中央揃え */
+    padding: 48px 32px !important; /* 内側の縦パディングを増やして背景の長さを大きく */
+  }
+  
+  #about-restandard .about-text,
+  .section-about .about-text,
+  .restandard-section .about-text {
+    line-height: 1.8 !important; /* 行間を調整 */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* LookbookとAbout ReStandardの縦の配置バランスを調整 */
+  #lookbook,
+  .section-lookbook,
+  .lookbook-section {
+    margin-bottom: 48px !important; /* Lookbookセクションの下マージンを調整 */
+  }
+  
+  #about-restandard,
+  .section-about,
+  .restandard-section {
+    margin-top: 48px !important; /* About ReStandardセクションの上マージンを調整 */
+    margin-bottom: 32px !important; /* フッターとの間隔を調整 */
+  }
+  
+  /* フッターの位置を調整して縦の長さバランスを改善 */
+  footer,
+  .footer,
+  #footer {
+    margin-top: 32px !important; /* フッターの上マージンを調整 */
+  }
+}
