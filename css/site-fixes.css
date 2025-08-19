@@ -785,6 +785,9 @@ html body .section-about {
   transform: translateX(0);
   /* スクロール時の画像追従を防ぐ */
   will-change: transform;
+  /* 画像の直接操作を可能にする */
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Lookbook自動スクロールアニメーション */
@@ -809,6 +812,10 @@ html body .section-about {
   flex-shrink: 0;
   /* スクロール時の画像追従を防ぐ */
   pointer-events: auto;
+  /* 画像の直接操作を可能にする */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* PC用のLookbook自動スクロール */
@@ -824,6 +831,9 @@ html body .section-about {
     transform: translateX(0);
     /* スクロール時の画像追従を防ぐ */
     will-change: transform;
+    /* 画像の直接操作を可能にする */
+    user-select: none;
+    -webkit-user-select: none;
   }
   
   #lookbook .lookbook-track img,
@@ -855,6 +865,9 @@ html body .section-about {
     position: relative;
     /* スクロール時の画像追従を防ぐ */
     will-change: scroll-position;
+    /* 画像の直接操作を可能にする */
+    user-select: none;
+    -webkit-user-select: none;
   }
   
   /* 画像トラックの幅を調整して画面全体で表示 */
@@ -871,6 +884,9 @@ html body .section-about {
     position: relative;
     /* スクロール時の画像追従を防ぐ */
     will-change: transform;
+    /* 画像の直接操作を可能にする */
+    user-select: none;
+    -webkit-user-select: none;
   }
   
   /* スクロールバーを非表示 */
