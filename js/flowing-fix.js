@@ -75,12 +75,67 @@ function ensureBrandHoverEffect() {
 // Lookbook機能の保証
 function ensureLookbookFunctionality() {
   const lookbookTrack = document.querySelector('#lookbook .lookbook-track, .section-lookbook .lookbook-track');
+  const lookbookContainer = document.querySelector('#lookbook .lookbook-container, .section-lookbook .lookbook-container');
   
+  // PC用のLookbook自動スクロール
   if (lookbookTrack) {
     // アニメーションが正しく動作するように保証
-    lookbookTrack.style.animation = 'lookbook-scroll 30s linear infinite';
+    lookbookTrack.style.animation = 'lookbook-scroll 25s linear infinite';
     
-    // ホバー時の一時停止機能を保証
+    // 画像が画面全体で表示されるように初期位置を調整
+    lookbookTrack.style.transform = 'translateX(0)';
+    
+    // 左から右へのスクロールを可能にする
+    lookbookTrack.style.minWidth = '100%';
+    lookbookTrack.style.justifyContent = 'flex-start';
+    
+    // スクロール挙動を改善
+    lookbookTrack.style.position = 'relative';
+    lookbookTrack.style.willChange = 'transform';
+    lookbookTrack.style.userSelect = 'none';
+    lookbookTrack.style.webkitUserSelect = 'none';
+    lookbookTrack.style.scrollSnapType = 'none';
+    
+    // 初期表示位置を調整して2セット目の最初の画像が一番左に表示されるように
+    setTimeout(() => {
+      const container = lookbookTrack.closest('.lookbook-container');
+      if (container) {
+        const containerWidth = container.clientWidth;
+        const scrollWidth = container.scrollWidth;
+        const maxScrollLeft = scrollWidth - containerWidth;
+        
+        if (maxScrollLeft > 0) {
+          // 2セット目の最初の画像が一番左に表示されるように配置
+          const targetScrollLeft = maxScrollLeft * 0.5; // 50%の位置に配置（2セット目の開始位置）
+          container.scrollLeft = targetScrollLeft;
+          
+          // 左から右へのスクロールを確実に可能にするための追加設定
+          container.style.overflowX = 'auto';
+          container.style.scrollBehavior = 'auto';
+          container.style.scrollSnapType = 'none';
+          container.style.minWidth = 'max-content';
+          container.style.width = 'max-content';
+          
+          // スクロール範囲を拡張
+          container.style.scrollPaddingLeft = '0';
+          container.style.scrollPaddingRight = '0';
+          
+          // 左から右へのスクロールを可能にするための追加設定
+          container.style.direction = 'ltr';
+          container.style.textAlign = 'left';
+          
+          // 左から右への移動を確実に可能にするための追加設定
+          container.style.scrollPadding = '0';
+          container.style.scrollSnapType = 'none';
+          
+          // スクロール範囲を制限しない
+          container.style.overflowX = 'auto';
+          container.style.overflowY = 'hidden';
+        }
+      }
+    }, 100);
+    
+    // ホバー時に一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
     if (container) {
       container.addEventListener('mouseenter', function() {
@@ -91,6 +146,141 @@ function ensureLookbookFunctionality() {
         lookbookTrack.style.animationPlayState = 'running';
       });
     }
+  }
+  
+  // スマホ用のLookbookスワイプ機能とスクロール機能
+  if (lookbookContainer) {
+    // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
+    lookbookContainer.style.animation = 'none';
+    
+    // 初期表示時に2セット目の最初の画像が一番左に表示されるように配置 - PC以外の全デバイス対応
+    setTimeout(() => {
+      const containerWidth = lookbookContainer.clientWidth;
+      const scrollWidth = lookbookContainer.scrollWidth;
+      const maxScrollLeft = scrollWidth - containerWidth;
+      
+      if (maxScrollLeft > 0) {
+        // 2セット目の最初の画像が一番左に表示されるように配置
+        const targetScrollLeft = maxScrollLeft * 0.5; // 50%の位置に配置（2セット目の開始位置）
+        lookbookContainer.scrollLeft = targetScrollLeft;
+        
+        // PC以外の全デバイスでの追加対応
+        if (lookbookContainer.style.webkitTransform !== undefined) {
+          lookbookContainer.style.webkitTransform = 'translate3d(0, 0, 0)';
+        }
+        if (lookbookContainer.style.transform !== undefined) {
+          lookbookContainer.style.transform = 'translate3d(0, 0, 0)';
+        }
+        
+        // 左から右へのスクロールを確実に可能にするための追加設定
+        lookbookContainer.style.direction = 'ltr';
+        lookbookContainer.style.textAlign = 'left';
+        lookbookContainer.style.scrollBehavior = 'auto';
+        lookbookContainer.style.scrollSnapType = 'none';
+        
+        // 自動スクロールのスピードを早める
+        lookbookContainer.style.animationDuration = '15s'; // 25sから15sに短縮
+        
+        // 初期表示位置を2セット目の開始位置に調整
+        lookbookContainer.style.transform = 'translateX(0)';
+        
+        // 自動スクロールを確実に動作させるための設定
+        lookbookContainer.style.overflow = 'hidden';
+        lookbookContainer.style.animation = 'lookbook-scroll-mobile-smartphone 15s linear infinite';
+        lookbookContainer.style.willChange = 'transform';
+      }
+    }, 200); // タイミングをさらに遅らせて確実に動作するように
+    
+    // 左から右へのスクロールを可能にする
+    lookbookContainer.style.minWidth = '100%';
+    lookbookContainer.style.justifyContent = 'flex-start';
+    
+    // スクロール挙動を改善
+    lookbookContainer.style.position = 'relative';
+    lookbookContainer.style.willChange = 'scroll-position';
+    lookbookContainer.style.userSelect = 'none';
+    lookbookContainer.style.webkitUserSelect = 'none';
+    lookbookContainer.style.mozUserSelect = 'none';
+    lookbookContainer.style.msUserSelect = 'none';
+    lookbookContainer.style.scrollSnapType = 'none';
+    
+    // PC以外の全デバイス対応
+    lookbookContainer.style.webkitTransform = 'translateZ(0)';
+    lookbookContainer.style.transform = 'translateZ(0)';
+    lookbookContainer.style.webkitBackfaceVisibility = 'hidden';
+    lookbookContainer.style.backfaceVisibility = 'hidden';
+    
+    // タッチデバイス専用の設定
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      lookbookContainer.style.webkitOverflowScrolling = 'touch';
+      lookbookContainer.style.touchAction = 'pan-x';
+    }
+    
+    // スワイプ機能の実装
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    
+    // タッチイベント（スマートフォン用）
+    lookbookContainer.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      startX = e.touches[0].pageX - lookbookContainer.offsetLeft;
+      scrollLeft = lookbookContainer.scrollLeft;
+      e.preventDefault();
+    });
+    
+    lookbookContainer.addEventListener('touchmove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
+      const walk = (x - startX) * 1.0; // スマホ表示でのスクロール感度をPC形式と同じに調整
+      lookbookContainer.scrollLeft = scrollLeft - walk;
+    });
+    
+    lookbookContainer.addEventListener('touchend', function() {
+      if (isDragging) {
+        isDragging = false;
+      }
+    });
+    
+    // マウスイベント（PC用）
+    lookbookContainer.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      startX = e.pageX - lookbookContainer.offsetLeft;
+      scrollLeft = lookbookContainer.scrollLeft;
+      lookbookContainer.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+    
+    lookbookContainer.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - lookbookContainer.offsetLeft;
+      const walk = (x - startX) * 1.0; // PC用のスクロール感度を維持
+      lookbookContainer.scrollLeft = scrollLeft - walk;
+    });
+    
+    lookbookContainer.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        lookbookContainer.style.cursor = 'grab';
+      }
+    });
+    
+    lookbookContainer.addEventListener('mouseleave', function() {
+      if (isDragging) {
+        isDragging = false;
+        lookbookContainer.style.cursor = 'grab';
+      }
+    });
+    
+    // スクロール範囲の調整
+    lookbookContainer.addEventListener('scroll', function() {
+      // スクロール位置を制限して左から右へのスクロールを可能にする
+      if (lookbookContainer.scrollLeft < 0) {
+        lookbookContainer.scrollLeft = 0;
+      }
+    });
   }
 }
 
