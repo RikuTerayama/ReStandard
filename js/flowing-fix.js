@@ -94,6 +94,7 @@ function ensureLookbookFunctionality() {
     lookbookTrack.style.willChange = 'transform';
     lookbookTrack.style.userSelect = 'none';
     lookbookTrack.style.webkitUserSelect = 'none';
+    lookbookTrack.style.scrollSnapType = 'none';
     
     // ホバー時に一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
@@ -120,8 +121,8 @@ function ensureLookbookFunctionality() {
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // 2セット目の最後の画像が中央に来るように配置
-        const targetScrollLeft = maxScrollLeft * 0.75; // 75%の位置に配置
+        // 2セット目の最後の画像が左端に表示されるように配置
+        const targetScrollLeft = maxScrollLeft * 0.85; // 85%の位置に配置
         lookbookContainer.scrollLeft = targetScrollLeft;
       }
     }, 100);
@@ -135,6 +136,7 @@ function ensureLookbookFunctionality() {
     lookbookContainer.style.willChange = 'scroll-position';
     lookbookContainer.style.userSelect = 'none';
     lookbookContainer.style.webkitUserSelect = 'none';
+    lookbookContainer.style.scrollSnapType = 'none';
     
     // スワイプ機能の実装
     let isDragging = false;
@@ -153,7 +155,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 0.8; // スクロール感度をさらに調整（1から0.8に変更）
+      const walk = (x - startX) * 0.6; // スクロール感度をさらに調整（0.8から0.6に変更）
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
@@ -176,7 +178,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 0.8; // スクロール感度をさらに調整（1から0.8に変更）
+      const walk = (x - startX) * 0.6; // スクロール感度をさらに調整（0.8から0.6に変更）
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
