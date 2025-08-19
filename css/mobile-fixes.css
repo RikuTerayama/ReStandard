@@ -191,7 +191,7 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 120px !important;  /* サイズ調整：150px → 120px */
+    max-height: 100px !important;  /* サイズ調整：120px → 100px */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
@@ -199,6 +199,19 @@
   /* Lookbookセクションもoverflow制御 */
   html body .lookbook-section {
     overflow: visible !important;
+  }
+  
+  /* Lookbookの背景サイズ調整（スマートフォン用） */
+  html body .lookbook-section,
+  html body .section-lookbook,
+  html body #lookbook {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 12px !important;
+    padding: 8px 12px !important;
+    margin: 16px 0 !important;
+    width: fit-content !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   
   /* Lookbook見出しの下部余白を調整 */
