@@ -48,6 +48,23 @@
   }
 }
 
+/* 強制制御（競合回避） */
+html body .only-pc { 
+  display: block !important; 
+}
+html body .only-sp { 
+  display: none !important; 
+}
+
+@media (max-width: 767px) {
+  html body .only-pc { 
+    display: none !important; 
+  }
+  html body .only-sp { 
+    display: block !important; 
+  }
+}
+
 /* ========================================
   言語判定（<html lang="ja|en"> の値で切替）
   ======================================== */
