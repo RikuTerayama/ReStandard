@@ -137,8 +137,8 @@ function ensureLookbookFunctionality() {
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // スクロール可能な範囲の中央に配置して左右どちらにもスクロール可能にする
-        const targetScrollLeft = maxScrollLeft / 2;
+        // 2セット目の最初の画像が一番左に表示されるように配置
+        const targetScrollLeft = maxScrollLeft * 0.5; // 50%の位置に配置（2セット目の開始位置）
         lookbookContainer.scrollLeft = targetScrollLeft;
         
         // PC以外の全デバイスでの追加対応
@@ -193,7 +193,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 1.0; // スクロール感度をPC形式と同じに調整
+      const walk = (x - startX) * 1.2; // スマホ表示でのスクロール感度をPC形式と同じに調整
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
@@ -216,7 +216,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 1.0; // スクロール感度をPC形式と同じに調整
+      const walk = (x - startX) * 1.0; // PC用のスクロール感度を維持
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
