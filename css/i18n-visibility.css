@@ -1,54 +1,36 @@
 /* ========================================
-   i18n Visibility Control (Enhanced)
+   i18n Visibility Control - CLEAN VERSION
    ======================================== */
-
-/* 基本的なi18n制御（詳細なスタイルは site-fixes.css で管理） */
-#about .i18n, #brands .i18n { 
-  display: none !important; 
-}
 
 /* ========================================
   PCとスマートフォン用のコンテンツ制御（重複表示防止）
   ======================================== */
 
-/* PC用コンテンツ（デフォルト表示） */
-.only-pc { 
+/* 最高特異性での制御 */
+html body .about-inner.only-pc,
+html body .restandard-body.only-pc { 
   display: block !important; 
 }
 
-/* スマートフォン用コンテンツ（デフォルト非表示） */
-.only-sp { 
+html body .about-inner.only-sp,
+html body .restandard-body.only-sp { 
   display: none !important; 
 }
 
 /* スマートフォン表示時の制御 */
 @media (max-width: 767px) {
-  .only-pc { 
+  html body .about-inner.only-pc,
+  html body .restandard-body.only-pc { 
     display: none !important; 
   }
-  .only-sp { 
+  
+  html body .about-inner.only-sp,
+  html body .restandard-body.only-sp { 
     display: block !important; 
   }
 }
 
-/* overview-titleクラスの制御（HTML内の重複表示防止） */
-.overview-title-desktop { 
-  display: block !important; 
-}
-.overview-title-mobile { 
-  display: none !important; 
-}
-
-@media (max-width: 767px) {
-  .overview-title-desktop { 
-    display: none !important; 
-  }
-  .overview-title-mobile { 
-    display: block !important; 
-  }
-}
-
-/* 強制制御（競合回避） */
+/* 一般的なonly-pc/only-spクラスの制御 */
 html body .only-pc { 
   display: block !important; 
 }
@@ -61,23 +43,6 @@ html body .only-sp {
     display: none !important; 
   }
   html body .only-sp { 
-    display: block !important; 
-  }
-}
-
-/* さらに強力な制御（最高特異性） */
-html body .about-inner.only-pc { 
-  display: block !important; 
-}
-html body .about-inner.only-sp { 
-  display: none !important; 
-}
-
-@media (max-width: 767px) {
-  html body .about-inner.only-pc { 
-    display: none !important; 
-  }
-  html body .about-inner.only-sp { 
     display: block !important; 
   }
 }
@@ -98,7 +63,6 @@ html[lang="en"] #about-restandard .only-en {
   display: block !important; 
 }
 
-/* 念のための保険：見えない要素を確実に隠す */
 html[lang="ja"] #about .only-en,
 html[lang="ja"] #brands .only-en,
 html[lang="ja"] #about-restandard .only-en,
@@ -106,19 +70,6 @@ html[lang="en"] #about .only-ja,
 html[lang="en"] #brands .only-ja,
 html[lang="en"] #about-restandard .only-ja { 
   display: none !important; 
-}
-
-/* 競合CSS対策：より強力なセレクタで確実に制御 */
-html[lang="ja"] #about .i18n.only-ja,
-html[lang="ja"] #brands .i18n.only-ja,
-html[lang="ja"] #about-restandard .i18n.only-ja { 
-  display: block !important; 
-}
-
-html[lang="en"] #about .i18n.only-en,
-html[lang="en"] #brands .i18n.only-en,
-html[lang="en"] #about-restandard .i18n.only-en { 
-  display: block !important; 
 }
 
 /* デフォルト言語設定（lang属性が未設定の場合） */
@@ -134,26 +85,24 @@ html:not([lang]) #about-restandard .only-en {
   display: none !important; 
 }
 
-/* 強制可視化の上書き（既存のreveal.cssとの競合回避） */
-#about .i18n[style*="display: none"],
-#brands .i18n[style*="display: none"],
-#about-restandard .i18n[style*="display: none"] {
-  display: block !important;
-}
-
 /* ========================================
   About ReStandardの中央揃え
   ======================================== */
 
-.restandard-section .restandard-body {
+html body .restandard-section .restandard-body,
+html body .section-about .restandard-body,
+html body #about-restandard .restandard-body,
+html body .about-inner {
   text-align: center !important;
   margin-left: auto !important;
   margin-right: auto !important;
   max-width: 1024px !important;
 }
 
-.restandard-section .restandard-body img,
-.restandard-section .restandard-body figure {
+html body .restandard-section .restandard-body img,
+html body .section-about .restandard-body img,
+html body #about-restandard .restandard-body img,
+html body .about-inner img {
   display: block !important;
   margin: 0 auto !important;
 }
@@ -163,38 +112,25 @@ html:not([lang]) #about-restandard .only-en {
   ======================================== */
 
 @media (min-width: 1025px) {
-  .collection-section {
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
   
-  .collection-section .flowing-images {
+  html body #flowing-images,
+  html body .flowing-images,
+  html body .flowing-bg,
+  html body .flow-row-bg {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
   
-  .collection-section .flowing-bg {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .collection-section .flow-row-bg {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  /* 背景の復活 */
-  .collection-section .flowing-bg {
-    background: rgba(250, 250, 235, 0.9) !important;
-    border-radius: 16px !important;
-    padding: 16px 20px !important;
-  }
-  
-  .collection-section .flow-row-bg {
+  html body .flowing-bg,
+  html body .flow-row-bg {
     background: rgba(250, 250, 235, 0.9) !important;
     border-radius: 16px !important;
     padding: 16px 20px !important;
