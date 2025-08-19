@@ -2335,7 +2335,7 @@ body .restandard-section .section-title {
     border-radius: 8px !important;
   }
   
-  /* Lookbook画像サイズの調整 - さらに小さく */
+  /* Lookbook画像サイズの調整 - Collectionセクションと同じサイズに統一 */
   html body .lookbook-grid,
   html body .lookbook-container {
     display: flex !important;
@@ -2350,7 +2350,7 @@ body .restandard-section .section-title {
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 60px !important; /* サイズ調整：80px → 60px */
+    min-width: 120px !important; /* Collectionセクションと同じサイズ */
   }
   
   html body .lookbook-grid img,
@@ -2358,7 +2358,7 @@ body .restandard-section .section-title {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 80px !important; /* サイズ調整：120px → 80px */
+    max-height: 160px !important; /* Collectionセクションと同じサイズ */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
@@ -2536,14 +2536,14 @@ html body .flow-track img {
 /* 4. PC表示でのLookbook背景と配置調整 - 最高優先度 */
 @media (min-width: 1025px) {
   
-  /* Lookbook背景の復活 - imagesを少し囲うサイズに調整 */
+  /* Lookbook背景の最適化 - imagesを少し囲うサイズに調整 */
   html body .lookbook-section,
   html body .section-lookbook,
   html body #lookbook {
     background: rgba(255, 255, 255, 0.9) !important; /* 白背景 */
     border-radius: 16px !important;
     padding: 8px 12px !important; /* imagesを少し囲う程度 */
-    margin: 300px 0 !important; /* 配置をさらに下に移動 */
+    margin: 200px 0 !important; /* 配置を下に移動 */
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -2552,12 +2552,26 @@ html body .flow-track img {
     margin-right: auto !important;
   }
   
-  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間、さらに下に */
+  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間 */
   html body .lookbook-section,
   html body .section-lookbook,
   html body #lookbook {
-    margin-top: calc(var(--sec-gap, 72px) + 300px) !important; /* さらに下に配置 */
-    margin-bottom: calc(var(--sec-gap, 72px) + 300px) !important;
+    margin-top: calc(var(--sec-gap, 72px) + 200px) !important; /* 下に配置 */
+    margin-bottom: calc(var(--sec-gap, 72px) + 200px) !important;
+  }
+  
+  /* Lookbook見出しの表示確保 */
+  html body .lookbook-section .section-title,
+  html body .section-lookbook .section-title,
+  html body #lookbook .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: clamp(36px, 5vw, 56px) !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
   }
   
   /* Collectionセクションの背景復活 */
@@ -2763,7 +2777,7 @@ html body #lookbook .lookbook-track img {
   display: block !important;
   width: 100% !important;
   height: auto !important;
-  max-height: 35px !important; /* 最終サイズ：35px */
+  max-height: 160px !important; /* Collectionセクションと同じサイズ */
   object-fit: cover !important;
   border-radius: 8px !important;
 }
@@ -2777,7 +2791,35 @@ html body .section-lookbook .lookbook-track > *,
 html body #lookbook .lookbook-grid > *,
 html body #lookbook .lookbook-container > *,
 html body #lookbook .lookbook-track > * {
-  min-width: 25px !important; /* 最終サイズ：25px */
+  min-width: 120px !important; /* Collectionセクションと同じサイズ */
   flex: 0 0 auto !important;
   scroll-snap-align: start !important;
+}
+
+/* Lookbook画像サイズの調整 - Collectionセクションと同じサイズに統一 */
+html body .lookbook-grid,
+html body .lookbook-container {
+  display: flex !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  gap: 12px !important;
+  padding: 12px !important;
+}
+
+html body .lookbook-grid > *,
+html body .lookbook-container > * {
+  flex: 0 0 auto !important;
+  scroll-snap-align: start !important;
+  min-width: 120px !important; /* Collectionセクションと同じサイズ */
+}
+
+html body .lookbook-grid img,
+html body .lookbook-container img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 160px !important; /* Collectionセクションと同じサイズ */
+  object-fit: cover !important;
+  border-radius: 8px !important;
 }
