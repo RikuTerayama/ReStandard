@@ -3031,20 +3031,29 @@ html body #lookbook .lookbook-grid {
   #lookbook,
   .section-lookbook,
   .lookbook-section {
-    margin-bottom: 48px !important; /* Lookbookセクションの下マージンを調整 */
+    margin-bottom: clamp(80px, 10vw, 160px) !important; /* LookbookとAboutの間隔を統一 */
   }
   
   #about-restandard,
   .section-about,
   .restandard-section {
-    margin-top: 48px !important; /* About ReStandardセクションの上マージンを調整 */
-    margin-bottom: 32px !important; /* フッターとの間隔を調整 */
+    margin-top: clamp(80px, 10vw, 160px) !important; /* About ReStandardセクションの上マージンを調整 */
+    margin-bottom: clamp(80px, 10vw, 160px) !important; /* Aboutとフッターの間隔を統一 */
   }
   
-  /* フッターの位置を調整して縦の長さバランスを改善 */
+  /* フッターの位置を調整して縦の長さバランスを統一 */
   footer,
   .footer,
   #footer {
-    margin-top: 32px !important; /* フッターの上マージンを調整 */
+    margin-top: clamp(40px, 5vw, 80px) !important; /* フッターの上マージンを短縮して位置を上に上げる */
+    padding-top: clamp(40px, 5vw, 80px) !important; /* フッター内部の上パディングを調整 */
+  }
+  
+  /* フッター内部の上部余白を調整 */
+  footer > *:first-child,
+  .footer > *:first-child,
+  #footer > *:first-child {
+    margin-top: 0 !important; /* フッター内の最初の要素の上マージンをリセット */
+    padding-top: clamp(20px, 3vw, 40px) !important; /* フッター内の上部パディングを調整 */
   }
 }
