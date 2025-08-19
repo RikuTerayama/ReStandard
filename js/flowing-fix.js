@@ -92,6 +92,8 @@ function ensureLookbookFunctionality() {
     // スクロール挙動を改善
     lookbookTrack.style.position = 'relative';
     lookbookTrack.style.willChange = 'transform';
+    lookbookTrack.style.userSelect = 'none';
+    lookbookTrack.style.webkitUserSelect = 'none';
     
     // ホバー時に一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
@@ -111,15 +113,16 @@ function ensureLookbookFunctionality() {
     // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
     lookbookContainer.style.animation = 'none';
     
-    // 初期表示時に1セット目の最初の画像が表示されるように位置調整
+    // 初期表示時に2セット目の最後の画像に続く形で1セット目の最初の画像が表示されるように位置調整
     setTimeout(() => {
       const containerWidth = lookbookContainer.clientWidth;
       const scrollWidth = lookbookContainer.scrollWidth;
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // 1セット目の最初の画像が表示されるように左端に配置
-        lookbookContainer.scrollLeft = 0;
+        // 2セット目の最後の画像が中央に来るように配置
+        const targetScrollLeft = maxScrollLeft * 0.75; // 75%の位置に配置
+        lookbookContainer.scrollLeft = targetScrollLeft;
       }
     }, 100);
     
@@ -130,6 +133,8 @@ function ensureLookbookFunctionality() {
     // スクロール挙動を改善
     lookbookContainer.style.position = 'relative';
     lookbookContainer.style.willChange = 'scroll-position';
+    lookbookContainer.style.userSelect = 'none';
+    lookbookContainer.style.webkitUserSelect = 'none';
     
     // スワイプ機能の実装
     let isDragging = false;
@@ -148,7 +153,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 1; // スクロール感度を調整（2から1に変更）
+      const walk = (x - startX) * 0.8; // スクロール感度をさらに調整（1から0.8に変更）
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
@@ -171,7 +176,7 @@ function ensureLookbookFunctionality() {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 1; // スクロール感度を調整（2から1に変更）
+      const walk = (x - startX) * 0.8; // スクロール感度をさらに調整（1から0.8に変更）
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
