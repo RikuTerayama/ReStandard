@@ -2387,13 +2387,30 @@ body .restandard-section .section-title {
 @media (max-width: 991px) {
   
   /* Collectionセクションの表示確保 */
-  .collection-section {
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
   
-  .collection-section .flowing-images {
+  html body .collection-section .section-title,
+  html body .section-collection .section-title,
+  html body #collection .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: clamp(36px, 5vw, 56px) !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+  }
+  
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
@@ -2402,23 +2419,28 @@ body .restandard-section .section-title {
     padding: 12px !important;
   }
   
-  .collection-section .flowing-images > * {
+  html body .collection-section .flowing-images > *,
+  html body .section-collection .flowing-images > *,
+  html body #collection .flowing-images > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
     min-width: 120px !important;
   }
   
-  .collection-section .flowing-images img {
+  html body .collection-section .flowing-images img,
+  html body .section-collection .flowing-images img,
+  html body #collection .flowing-images img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 180px !important; /* サイズ調整 */
+    max-height: 160px !important; /* サイズ調整 */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
   
-  /* Lookbook画像サイズの調整 */
-  .lookbook-grid {
+  /* Lookbook画像サイズの調整 - さらに小さく */
+  html body .lookbook-grid,
+  html body .lookbook-container {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
@@ -2427,23 +2449,27 @@ body .restandard-section .section-title {
     padding: 12px !important;
   }
   
-  .lookbook-grid > * {
+  html body .lookbook-grid > *,
+  html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 100px !important; /* サイズ調整 */
+    min-width: 60px !important; /* サイズ調整：80px → 60px */
   }
   
-  .lookbook-grid img {
+  html body .lookbook-grid img,
+  html body .lookbook-container img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 150px !important; /* サイズ調整 */
+    max-height: 80px !important; /* サイズ調整：120px → 80px */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
   
   /* About ReStandardの中央揃え強化 */
-  .restandard-section .restandard-body {
+  html body .restandard-section .restandard-body,
+  html body .section-about .restandard-body,
+  html body #about-restandard .restandard-body {
     text-align: center !important;
     margin-left: auto !important;
     margin-right: auto !important;
@@ -2455,7 +2481,9 @@ body .restandard-section .section-title {
     justify-content: center !important;
   }
   
-  .restandard-section .restandard-body .about-text {
+  html body .restandard-section .restandard-body .about-text,
+  html body .section-about .restandard-body .about-text,
+  html body #about-restandard .restandard-body .about-text {
     text-align: center !important;
     margin: 0 auto !important;
   }
@@ -2465,33 +2493,38 @@ body .restandard-section .section-title {
 @media (max-width: 1199px) {
   
   /* Collectionセクションの表示確保 */
-  .collection-section {
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
   
-  .collection-section .flowing-images {
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
   }
   
-  .collection-section .flowing-images > * {
+  html body .collection-section .flowing-images > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
   }
   
   /* Lookbookの統一 */
-  .lookbook-grid {
+  html body .lookbook-grid,
+  html body .lookbook-container {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
   }
   
-  .lookbook-grid > * {
+  html body .lookbook-grid > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
   }
@@ -2501,25 +2534,33 @@ body .restandard-section .section-title {
 @media (max-width: 1439px) {
   
   /* Collectionセクションの表示確保 */
-  .collection-section {
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
   
-  .collection-section .flowing-images {
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
   
-  .collection-section .flowing-bg {
+  html body .collection-section .flowing-bg,
+  html body .section-collection .flowing-bg,
+  html body #collection .flowing-bg {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
   
-  .collection-section .flow-row-bg {
+  html body .collection-section .flow-row-bg,
+  html body .section-collection .flow-row-bg,
+  html body #collection .flow-row-bg {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -2590,6 +2631,19 @@ html body #collection {
   z-index: 1 !important;
 }
 
+html body .collection-section .section-title,
+html body .section-collection .section-title,
+html body #collection .section-title {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-size: clamp(36px, 5vw, 56px) !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin-bottom: 24px !important;
+}
+
 html body .collection-section .flowing-images,
 html body .section-collection .flowing-images,
 html body #collection .flowing-images {
@@ -2629,8 +2683,8 @@ html body #collection .flow-row-bg {
   html body #lookbook {
     background: rgba(255, 255, 255, 0.9) !important; /* 白背景 */
     border-radius: 16px !important;
-    padding: 12px 16px !important; /* flowing imagesより少し小さく */
-    margin: 80px 0 !important; /* 配置を下に移動 */
+    padding: 8px 12px !important; /* imagesを少し囲う程度 */
+    margin: 120px 0 !important; /* 配置をさらに下に移動 */
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -2639,12 +2693,12 @@ html body #collection .flow-row-bg {
     margin-right: auto !important;
   }
   
-  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間、より下に */
+  /* Lookbookの配置調整：BrandsとAbout ReStandardの中間、さらに下に */
   html body .lookbook-section,
   html body .section-lookbook,
   html body #lookbook {
-    margin-top: calc(var(--sec-gap, 72px) + 80px) !important; /* より下に配置 */
-    margin-bottom: calc(var(--sec-gap, 72px) + 80px) !important;
+    margin-top: calc(var(--sec-gap, 72px) + 120px) !important; /* さらに下に配置 */
+    margin-bottom: calc(var(--sec-gap, 72px) + 120px) !important;
   }
   
   /* Collectionセクションの背景復活 */
@@ -2700,6 +2754,19 @@ html body #collection .flow-row-bg {
     opacity: 1 !important;
   }
   
+  html body .collection-section .section-title,
+  html body .section-collection .section-title,
+  html body #collection .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: clamp(36px, 5vw, 56px) !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+  }
+  
   html body .collection-section .flowing-images,
   html body .section-collection .flowing-images,
   html body #collection .flowing-images {
@@ -2730,7 +2797,7 @@ html body #collection .flow-row-bg {
     border-radius: 8px !important;
   }
   
-  /* Lookbook画像サイズの調整 */
+  /* Lookbook画像サイズの調整 - さらに小さく */
   html body .lookbook-grid,
   html body .lookbook-container {
     display: flex !important;
@@ -2745,7 +2812,7 @@ html body #collection .flow-row-bg {
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 80px !important; /* サイズ調整 */
+    min-width: 60px !important; /* サイズ調整：80px → 60px */
   }
   
   html body .lookbook-grid img,
@@ -2753,7 +2820,7 @@ html body #collection .flow-row-bg {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 120px !important; /* サイズ調整 */
+    max-height: 80px !important; /* サイズ調整：120px → 80px */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
