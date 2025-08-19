@@ -778,6 +778,9 @@ html body .section-about {
   /* 画像が画面全体で表示されるように調整 */
   padding: 0;
   margin: 0;
+  /* 左から右へのスクロールを可能にする */
+  min-width: 100%;
+  justify-content: flex-start;
 }
 
 /* Lookbook自動スクロールアニメーション */
@@ -808,6 +811,9 @@ html body .section-about {
   .section-lookbook .lookbook-track {
     animation: lookbook-scroll 25s linear infinite;
     gap: 32px;
+    /* 左から右へのスクロールを可能にする */
+    min-width: 100%;
+    justify-content: flex-start;
   }
   
   #lookbook .lookbook-track img,
@@ -831,6 +837,11 @@ html body .section-about {
     scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
     /* 画像が画面全体で表示されるように調整 */
     padding: clamp(24px, 4vw, 40px);
+    /* 左から右へのスクロールを可能にする */
+    scroll-behavior: smooth;
+    /* スクロール範囲を調整 */
+    scroll-padding-left: 0;
+    scroll-padding-right: 0;
   }
   
   /* 画像トラックの幅を調整して画面全体で表示 */
@@ -840,6 +851,9 @@ html body .section-about {
     padding: 0 20px;
     /* アニメーションの開始位置を調整 */
     transform: translateX(0);
+    /* 左から右へのスクロールを可能にする */
+    min-width: 100%;
+    justify-content: flex-start;
   }
   
   #lookbook .lookbook-container::-webkit-scrollbar,
