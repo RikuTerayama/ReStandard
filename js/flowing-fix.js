@@ -177,6 +177,9 @@ function ensureLookbookFunctionality() {
         lookbookContainer.style.textAlign = 'left';
         lookbookContainer.style.scrollBehavior = 'auto';
         lookbookContainer.style.scrollSnapType = 'none';
+        
+        // 自動スクロールのスピードを早める
+        lookbookContainer.style.animationDuration = '15s'; // 25sから15sに短縮
       }
     }, 200); // タイミングをさらに遅らせて確実に動作するように
     
