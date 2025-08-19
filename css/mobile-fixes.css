@@ -170,13 +170,13 @@
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
-    gap: 20px !important; /* 画像間の間隔を広げる */
+    gap: 24px !important; /* 画像間の間隔を広げる */
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
     width: 100vw !important;
     box-sizing: border-box !important;
     background: rgba(250, 250, 235, 0.9) !important;
-    padding: 20px !important; /* パディングを広げる */
+    padding: 24px !important; /* パディングを広げる */
     /* 自動スクロールアニメーションを無効化 - 背景が流れるのを防ぐ */
     animation: none !important;
     position: relative !important;
@@ -188,8 +188,8 @@
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 180px !important; /* 画像サイズを小さく */
-    max-width: 180px !important; /* 画像サイズを小さく */
+    min-width: 240px !important; /* 画像サイズを大きく */
+    max-width: 240px !important; /* 画像サイズを大きく */
   }
   
   /* Lookbook画像をflowing imagesと同じスタイルに */
@@ -198,8 +198,8 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 260px !important;  /* 画像サイズを小さく */
-    max-width: 180px !important;  /* 画像サイズを小さく */
+    max-height: 340px !important;  /* 画像サイズを大きく */
+    max-width: 240px !important;  /* 画像サイズを大きく */
     object-fit: cover !important;
     border-radius: 0 !important; /* 画像の角も丸くなくして角に */
   }
@@ -225,27 +225,27 @@
     z-index: 5 !important;
   }
   
-  /* Lookbookの画像サイズを小さく */
+  /* Lookbookの画像サイズを大きく */
   html body .lookbook-container > *,
   html body .lookbook-track > * {
-    min-width: 180px !important; /* 画像サイズを小さく */
-    max-width: 180px !important; /* 画像サイズを小さく */
+    min-width: 240px !important; /* 画像サイズを大きく */
+    max-width: 240px !important; /* 画像サイズを大きく */
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
   }
   
-  /* Lookbook画像のサイズを小さく */
+  /* Lookbook画像のサイズを大きく */
   html body .lookbook-container img,
   html body .lookbook-track img {
-    max-height: 260px !important; /* 画像サイズを小さく */
-    max-width: 180px !important; /* 画像サイズを小さく */
+    max-height: 340px !important; /* 画像サイズを大きく */
+    max-width: 240px !important; /* 画像サイズを大きく */
   }
   
   /* Lookbookコンテナをflowするように画面横幅いっぱいに表示 */
   html body .lookbook-container {
     background: rgba(255, 255, 255, 0.9) !important; /* 画像にのみ白い半透明の背景 */
     border-radius: 0 !important; /* 角を丸くなくして角に */
-    padding: 20px !important;
+    padding: 24px !important; /* パディングを広げる */
   }
   
   /* スワイプ操作の改善 */
