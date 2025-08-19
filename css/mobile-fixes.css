@@ -300,8 +300,9 @@
   @media (max-width: 1024px) {
     html body .lookbook-container {
       -webkit-overflow-scrolling: touch !important;
-      -webkit-transform: translate3d(0, 0, 0) !important;
-      transform: translate3d(0, 0, 0) !important;
+      /* スマホ表示専用の設定が優先されるように、ここでの設定を無効化 */
+      -webkit-transform: none !important;
+      transform: none !important;
     }
   }
   
@@ -309,8 +310,9 @@
   @media (hover: none) and (pointer: coarse) {
     html body .lookbook-container {
       -webkit-overflow-scrolling: touch !important;
-      -webkit-transform: translate3d(0, 0, 0) !important;
-      transform: translate3d(0, 0, 0) !important;
+      /* スマホ表示専用の設定が優先されるように、ここでの設定を無効化 */
+      -webkit-transform: none !important;
+      transform: none !important;
       touch-action: pan-x !important;
     }
   }
@@ -416,6 +418,9 @@
     /* 左から右へのスクロールを確実に可能にするための追加設定 */
     direction: ltr !important;
     text-align: left !important;
+    /* アニメーションを妨げない設定 */
+    -webkit-transform: none !important;
+    transform: none !important;
   }
   
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
@@ -436,6 +441,47 @@
   /* タッチ操作時に一時停止 */
   html body .lookbook-container:active {
     animation-play-state: paused !important;
+  }
+  
+  /* 画像コンテナのサイズ設定 - 重複を排除、PC以外の全デバイス対応 */
+  html body .lookbook-container > * {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start !important;
+    min-width: 280px !important; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+    max-width: 280px !important; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+    /* PC以外の全デバイス対応 */
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+  }
+  
+  /* Lookbook画像のスタイル - 重複を排除、PC以外の全デバイス対応 */
+  html body .lookbook-container img,
+  html body .lookbook-track img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 350px !important;  /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+    max-width: 280px !important;  /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+    object-fit: cover !important;
+    border-radius: 0 !important; /* 画像の角も丸くなくして角に */
+    /* スクロール時の画像追従を防ぐ */
+    pointer-events: auto !important;
+    /* 画像の直接操作を可能にする */
+    cursor: grab !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    /* PC以外の全デバイス対応 */
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+  
+  /* スクロールバーを非表示 - PC以外の全デバイス対応 */
+  html body .lookbook-container::-webkit-scrollbar {
+    display: none !important;
   }
 }
 
