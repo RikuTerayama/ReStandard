@@ -798,8 +798,8 @@ html body .section-about {
 .section-lookbook .lookbook-track img {
   width: auto;
   height: auto;
-  max-width: 280px; /* 画像サイズを小さく */
-  max-height: 380px; /* 画像サイズを小さく */
+  max-width: 260px; /* 画像サイズを少し小さく */
+  max-height: 360px; /* 画像サイズを少し小さく */
   object-fit: cover;
   border-radius: 0; /* 画像の角も丸くなくして角に */
   flex-shrink: 0;
@@ -818,8 +818,8 @@ html body .section-about {
   
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    max-width: 350px; /* 画像サイズを小さく */
-    max-height: 450px; /* 画像サイズを小さく */
+    max-width: 320px; /* 画像サイズを少し小さく */
+    max-height: 420px; /* 画像サイズを少し小さく */
   }
   
   /* ホバー時に一時停止 */
@@ -833,8 +833,7 @@ html body .section-about {
   .section-lookbook .lookbook-container {
     overflow-x: auto;
     cursor: grab;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    scrollbar-width: none; /* スクロールバーを非表示 */
     /* 画像が画面全体で表示されるように調整 */
     padding: clamp(24px, 4vw, 40px);
     /* 左から右へのスクロールを可能にする */
@@ -856,20 +855,10 @@ html body .section-about {
     justify-content: flex-start;
   }
   
+  /* スクロールバーを非表示 */
   #lookbook .lookbook-container::-webkit-scrollbar,
   .section-lookbook .lookbook-container::-webkit-scrollbar {
-    height: 8px;
-  }
-  
-  #lookbook .lookbook-container::-webkit-scrollbar-track,
-  .section-lookbook .lookbook-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  #lookbook .lookbook-container::-webkit-scrollbar-thumb,
-  .section-lookbook .lookbook-container::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 0; /* スクロールバーの角も丸くなくして角に */
+    display: none;
   }
 }
 
