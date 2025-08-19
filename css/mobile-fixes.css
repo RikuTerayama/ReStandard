@@ -167,7 +167,7 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 重複設定を完全に削除 */
   html body .lookbook-container {
     display: flex !important;
-    overflow: hidden !important; /* アニメーションのためにhiddenに変更 */
+    overflow: visible !important; /* アニメーションのためにvisibleに変更 */
     scroll-snap-type: none !important; /* スクロールスナップを無効化 */
     -webkit-overflow-scrolling: touch !important;
     gap: 40px !important; /* 画像間の間隔を画像サイズに合わせて調整 */
@@ -229,9 +229,9 @@
     scroll-snap-align: start !important;
     min-width: 280px !important; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
     max-width: 280px !important; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
-    /* PC以外の全デバイス対応 */
-    -webkit-transform: translateZ(0) !important;
-    transform: translateZ(0) !important;
+    /* PC以外の全デバイス対応 - transformの競合を解消 */
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
   }
   
   /* Lookbook画像のスタイル - 重複を排除、PC以外の全デバイス対応 */
@@ -252,9 +252,7 @@
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
     -ms-user-select: none !important;
-    /* PC以外の全デバイス対応 */
-    -webkit-transform: translateZ(0) !important;
-    transform: translateZ(0) !important;
+    /* PC以外の全デバイス対応 - transformの競合を解消 */
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
   }
