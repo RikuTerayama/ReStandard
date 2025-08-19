@@ -823,7 +823,7 @@ html body .section-about {
   #lookbook .lookbook-track,
   .section-lookbook .lookbook-track {
     animation: lookbook-scroll 25s linear infinite;
-    gap: 32px;
+    gap: 40px;
     /* 左から右へのスクロールを可能にする */
     min-width: 100%;
     justify-content: flex-start;
@@ -834,20 +834,25 @@ html body .section-about {
     /* 画像の直接操作を可能にする */
     user-select: none;
     -webkit-user-select: none;
+    /* 初期表示位置を調整 */
+    scroll-snap-type: none;
   }
-  
   #lookbook .lookbook-track img,
   .section-lookbook .lookbook-track img {
-    max-width: 320px; /* 画像サイズを少し小さく */
-    max-height: 420px; /* 画像サイズを少し小さく */
+    max-width: 400px; /* 画像サイズをBrandsセクションのロゴマークより大きく */
+    max-height: 500px; /* 画像サイズをBrandsセクションのロゴマークより大きく */
+    /* スクロール時の画像追従を防ぐ */
+    pointer-events: auto;
+    /* 画像の直接操作を可能にする */
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
   }
-  
   /* ホバー時に一時停止 */
   #lookbook .lookbook-container:hover .lookbook-track,
   .section-lookbook .lookbook-container:hover .lookbook-track {
     animation-play-state: paused;
   }
-  
   /* PC用のスクロール機能 */
   #lookbook .lookbook-container,
   .section-lookbook .lookbook-container {
@@ -855,7 +860,7 @@ html body .section-about {
     cursor: grab;
     scrollbar-width: none; /* スクロールバーを非表示 */
     /* 画像が画面全体で表示されるように調整 */
-    padding: clamp(24px, 4vw, 40px);
+    padding: clamp(32px, 5vw, 48px);
     /* 左から右へのスクロールを可能にする */
     scroll-behavior: smooth;
     /* スクロール範囲を調整 */
@@ -868,31 +873,7 @@ html body .section-about {
     /* 画像の直接操作を可能にする */
     user-select: none;
     -webkit-user-select: none;
-    /* 初期表示位置を調整 */
-    scroll-snap-type: none;
   }
-  
-  /* 画像トラックの幅を調整して画面全体で表示 */
-  #lookbook .lookbook-track,
-  .section-lookbook .lookbook-track {
-    gap: 32px;
-    padding: 0 20px;
-    /* アニメーションの開始位置を調整 */
-    transform: translateX(0);
-    /* 左から右へのスクロールを可能にする */
-    min-width: 100%;
-    justify-content: flex-start;
-    /* スクロール挙動を改善 */
-    position: relative;
-    /* スクロール時の画像追従を防ぐ */
-    will-change: transform;
-    /* 画像の直接操作を可能にする */
-    user-select: none;
-    -webkit-user-select: none;
-    /* 初期表示位置を調整 */
-    scroll-snap-type: none;
-  }
-  
   /* スクロールバーを非表示 */
   #lookbook .lookbook-container::-webkit-scrollbar,
   .section-lookbook .lookbook-container::-webkit-scrollbar {
