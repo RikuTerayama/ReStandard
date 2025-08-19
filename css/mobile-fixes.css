@@ -624,3 +624,53 @@
      margin-left: auto !important;
      margin-right: auto !important;
    } 
+
+  /* About ReStandardセクションの改善（スマホ用） */
+  html body #about-restandard,
+  html body .section-about,
+  html body .restandard-section {
+    padding: 32px 16px !important; /* 縦のパディングを調整し、左右のパディングを狭める */
+    margin: 24px 0 !important; /* セクション間のマージンを調整 */
+  }
+  
+  /* スマホ用のAbout ReStandard内側の調整 */
+  html body #about-restandard .about-inner.only-sp,
+  html body .section-about .about-inner.only-sp,
+  html body .restandard-section .about-inner.only-sp {
+    max-width: 80% !important; /* 背景の横幅をさらに狭める */
+    margin: 0 auto !important; /* 中央揃え */
+    padding: 24px 20px !important; /* 内側のパディングを調整 */
+    background: rgba(255, 255, 255, 0.9) !important; /* 背景色を設定 */
+    border-radius: 8px !important; /* 角を少し丸く */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important; /* 軽い影を追加 */
+  }
+  
+  html body #about-restandard .about-text,
+  html body .section-about .about-text,
+  html body .restandard-section .about-text {
+    line-height: 1.6 !important; /* 行間を調整 */
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important; /* テキストを中央揃え */
+  }
+  
+  /* LookbookとAbout ReStandardの縦の配置バランスを調整（スマホ用） */
+  html body #lookbook,
+  html body .section-lookbook,
+  html body .lookbook-section {
+    margin-bottom: 32px !important; /* Lookbookセクションの下マージンを調整 */
+  }
+  
+  html body #about-restandard,
+  html body .section-about,
+  html body .restandard-section {
+    margin-top: 32px !important; /* About ReStandardセクションの上マージンを調整 */
+    margin-bottom: 24px !important; /* フッターとの間隔を調整 */
+  } 
+
+  /* フッターの位置を調整して縦の長さバランスを改善（スマホ用） */
+  html body footer,
+  html body .footer,
+  html body #footer {
+    margin-top: 24px !important; /* フッターの上マージンを調整 */
+  } 
