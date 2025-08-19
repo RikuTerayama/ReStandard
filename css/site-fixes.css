@@ -842,6 +842,9 @@ html body .section-about {
     direction: ltr;
     flex-direction: row;
     flex-wrap: nowrap;
+    /* スクロール範囲を拡張して左から右へのスクロールを可能に */
+    width: max-content;
+    min-width: max-content;
   }
                     #lookbook .lookbook-track img,
                   .section-lookbook .lookbook-track img {
@@ -884,6 +887,14 @@ html body .section-about {
     /* 左右どちらにもスクロール可能にするための追加設定 */
     direction: ltr;
     text-align: left;
+    /* 左から右へのスクロールを確実に可能にするための追加設定 */
+    min-width: max-content;
+    justify-content: flex-start;
+    /* スクロール範囲を拡張して左から右へのスクロールを可能に */
+    scroll-padding-left: 0;
+    scroll-padding-right: 0;
+    /* スクロール動作を最適化 */
+    -webkit-overflow-scrolling: auto;
   }
   /* スクロールバーを非表示 */
   #lookbook .lookbook-container::-webkit-scrollbar,
