@@ -181,7 +181,7 @@
     animation: none !important;
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
-    scroll-behavior: smooth !important;
+    scroll-behavior: auto !important; /* スクロール速度をPC形式と同じに調整 */
     border-radius: 0 !important; /* 角を丸くなくして角に */
     /* 左から右へのスクロールを可能にする */
     scroll-padding-left: 0 !important;
@@ -202,8 +202,6 @@
     transform: translateZ(0) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
-    /* スクロール速度をPC形式と同じに調整 */
-    scroll-behavior: auto !important;
   }
   
   /* 画像コンテナのサイズ設定 - 重複を排除、PC以外の全デバイス対応 */
