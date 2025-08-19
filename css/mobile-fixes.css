@@ -184,27 +184,6 @@
     min-width: 120px !important;
   }
   
-  /* Lookbook見出しを背景の外に配置 */
-  html body .lookbook-section .section-title,
-  html body .section-lookbook .section-title,
-  html body #lookbook .section-title {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #ffffff !important;
-    font-size: clamp(36px, 5vw, 56px) !important; /* 他のh2と同じサイズ */
-    font-weight: 700 !important;
-    text-align: center !important;
-    margin-bottom: 24px !important;
-    text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    /* 背景の外に配置 */
-    background: transparent !important;
-    padding: 0 !important;
-    border: none !important;
-  }
-  
   /* Lookbook画像をflowing imagesと同じスタイルに */
   html body .lookbook-grid img,
   html body .lookbook-container img,
@@ -212,11 +191,10 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 200px !important;  /* Brandsセクションのロゴマークと同じサイズ */
-    max-width: 200px !important;  /* Brandsセクションのロゴマークと同じサイズ */
+    max-height: 160px !important;  /* Collectionセクションと同じサイズ */
+    max-width: 120px !important;  /* 横長を防ぐ */
     object-fit: cover !important;
     border-radius: 8px !important;
-    flex-shrink: 0 !important; /* 画像サイズを固定 */
   }
   
   /* Lookbookセクションもoverflow制御 */
@@ -224,39 +202,39 @@
     overflow: visible !important;
   }
   
-  /* Lookbookの背景サイズ調整（スマートフォン用） - 画面横幅いっぱいに表示 */
+  /* Lookbookの背景サイズ調整（スマートフォン用） */
   html body .lookbook-section,
   html body .section-lookbook,
   html body #lookbook {
-    width: 100% !important; /* 画面横幅いっぱいに表示 */
-    max-width: 100vw !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 12px !important;
+    padding: 6px 10px !important;
     margin: 16px 0 !important;
+    width: fit-content !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   
-  /* Lookbook画像コンテナの最適化 - 画面横幅いっぱいに表示 */
+  /* Lookbookの画像サイズをCollectionセクションと同じに */
+  html body .lookbook-grid > *,
+  html body .lookbook-container > *,
+  html body .lookbook-track > * {
+    min-width: 120px !important; /* Collectionセクションと同じサイズ */
+    max-width: 120px !important; /* 横長を防ぐ */
+  }
+  
+  /* Lookbookコンテナをflowするように画面横幅いっぱいに表示 */
   html body .lookbook-grid,
-  html body .lookbook-container {
+  html body .lookbook-container,
+  html body .lookbook-track {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
-    gap: 16px !important;
-    padding: 16px 20px !important;
+    gap: 12px !important;
+    padding: 12px !important;
     width: 100% !important; /* 画面横幅いっぱいに表示 */
-    max-width: 100vw !important;
-    background: rgba(255, 255, 255, 0.9) !important; /* 白い半透明背景（黄色を白に変更） */
-    border-radius: 16px !important;
-    margin: 0 auto !important;
-  }
-  
-  /* Lookbookの画像サイズをBrandsセクションと同じに */
-  html body .lookbook-grid > *,
-  html body .lookbook-container > *,
-  html body .lookbook-track > * {
-    min-width: 200px !important; /* Brandsセクションのロゴマークと同じサイズ */
-    max-width: 200px !important; /* Brandsセクションのロゴマークと同じサイズ */
-    flex: 0 0 auto !important;
-    scroll-snap-align: start !important;
+    max-width: 100vw !important; /* 画面横幅いっぱいに表示 */
   }
   
   /* ========================================
