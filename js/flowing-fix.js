@@ -180,6 +180,9 @@ function ensureLookbookFunctionality() {
         
         // 自動スクロールのスピードを早める
         lookbookContainer.style.animationDuration = '15s'; // 25sから15sに短縮
+        
+        // 初期表示位置を2セット目の開始位置に調整
+        lookbookContainer.style.transform = 'translateX(0)';
       }
     }, 200); // タイミングをさらに遅らせて確実に動作するように
     
