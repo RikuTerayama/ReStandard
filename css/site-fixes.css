@@ -1800,14 +1800,7 @@ body .restandard-section .section-title {
      min-width: 120px !important;
    }
    
-   .lookbook-grid img {
-     display: block !important;
-     width: 100% !important;
-     height: 100% !important;
-     max-height: 220px !important;  /* flowing imagesと同値 */
-     object-fit: cover !important;
-     border-radius: 8px !important;
-   }
+   /* 重複設定を削除 - 下記の最高優先度セクションで統合管理 */
    
    /* Lookbookセクションもoverflow制御 */
    .lookbook-section {
@@ -2124,14 +2117,7 @@ body .restandard-section .section-title {
      min-width: 120px !important;
    }
    
-   html body .lookbook-grid img {
-     display: block !important;
-     width: 100% !important;
-     height: 100% !important;
-     max-height: 220px !important;  /* flowing imagesと同値 */
-     object-fit: cover !important;
-     border-radius: 8px !important;
-   }
+   /* 重複設定を削除 - 下記の最高優先度セクションで統合管理 */
    
    /* Lookbookセクションもoverflow制御 */
    html body .lookbook-section {
@@ -2690,7 +2676,7 @@ html body .flow-track img {
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 30px !important; /* サイズ調整：35px → 30px */
+    min-width: 25px !important; /* サイズ調整：30px → 25px */
   }
   
   html body .lookbook-grid img,
@@ -2698,7 +2684,7 @@ html body .flow-track img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 40px !important; /* サイズ調整：45px → 40px */
+    max-height: 35px !important; /* サイズ調整：40px → 35px */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
@@ -2758,4 +2744,40 @@ html body #about-restandard .restandard-body * {
   text-align: center !important;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+html body .lookbook-grid img {
+  /* 重複設定を削除 - 下記の最高優先度セクションで統合管理 */
+}
+
+/* 9. Lookbook画像サイズの最終強制設定 - 最高特異性 */
+html body .lookbook-section .lookbook-grid img,
+html body .lookbook-section .lookbook-container img,
+html body .lookbook-section .lookbook-track img,
+html body .section-lookbook .lookbook-grid img,
+html body .section-lookbook .lookbook-container img,
+html body .section-lookbook .lookbook-track img,
+html body #lookbook .lookbook-grid img,
+html body #lookbook .lookbook-container img,
+html body #lookbook .lookbook-track img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 35px !important; /* 最終サイズ：35px */
+  object-fit: cover !important;
+  border-radius: 8px !important;
+}
+
+html body .lookbook-section .lookbook-grid > *,
+html body .lookbook-section .lookbook-container > *,
+html body .lookbook-section .lookbook-track > *,
+html body .section-lookbook .lookbook-grid > *,
+html body .section-lookbook .lookbook-container > *,
+html body .section-lookbook .lookbook-track > *,
+html body #lookbook .lookbook-grid > *,
+html body #lookbook .lookbook-container > *,
+html body #lookbook .lookbook-track > * {
+  min-width: 25px !important; /* 最終サイズ：25px */
+  flex: 0 0 auto !important;
+  scroll-snap-align: start !important;
 }
