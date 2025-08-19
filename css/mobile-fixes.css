@@ -637,7 +637,7 @@
   html body #about-restandard .about-inner.only-sp,
   html body .section-about .about-inner.only-sp,
   html body .restandard-section .about-inner.only-sp {
-    max-width: 80% !important; /* 背景の横幅をさらに狭める */
+    max-width: 95% !important; /* 背景の横幅を広げてAbout ReStandardと同じ横幅に */
     margin: 0 auto !important; /* 中央揃え */
     padding: 24px 20px !important; /* 内側のパディングを調整 */
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色を設定 */
