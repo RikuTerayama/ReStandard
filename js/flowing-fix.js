@@ -106,7 +106,7 @@ function ensureLookbookFunctionality() {
         
         if (maxScrollLeft > 0) {
           // 2セット目の最後の画像が左端に表示されるように配置
-          const targetScrollLeft = maxScrollLeft * 0.95; // 95%の位置に配置
+          const targetScrollLeft = maxScrollLeft * 0.98; // 98%の位置に配置
           container.scrollLeft = targetScrollLeft;
         }
       }
@@ -130,7 +130,7 @@ function ensureLookbookFunctionality() {
     // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
     lookbookContainer.style.animation = 'none';
     
-    // 初期表示時にスクロールバーを中央に配置 - 全デバイス対応
+    // 初期表示時にスクロールバーを中央に配置 - PC以外の全デバイス対応
     setTimeout(() => {
       const containerWidth = lookbookContainer.clientWidth;
       const scrollWidth = lookbookContainer.scrollWidth;
@@ -141,7 +141,7 @@ function ensureLookbookFunctionality() {
         const targetScrollLeft = maxScrollLeft / 2;
         lookbookContainer.scrollLeft = targetScrollLeft;
         
-        // iPhone 15 Proを含む全デバイスでの追加対応
+        // PC以外の全デバイスでの追加対応
         if (lookbookContainer.style.webkitTransform !== undefined) {
           lookbookContainer.style.webkitTransform = 'translate3d(0, 0, 0)';
         }
@@ -149,7 +149,7 @@ function ensureLookbookFunctionality() {
           lookbookContainer.style.transform = 'translate3d(0, 0, 0)';
         }
       }
-    }, 150); // タイミングを少し遅らせて確実に動作するように
+    }, 200); // タイミングをさらに遅らせて確実に動作するように
     
     // 左から右へのスクロールを可能にする
     lookbookContainer.style.minWidth = '100%';
@@ -164,11 +164,17 @@ function ensureLookbookFunctionality() {
     lookbookContainer.style.msUserSelect = 'none';
     lookbookContainer.style.scrollSnapType = 'none';
     
-    // iPhone 15 Proを含む全デバイス対応
+    // PC以外の全デバイス対応
     lookbookContainer.style.webkitTransform = 'translateZ(0)';
     lookbookContainer.style.transform = 'translateZ(0)';
     lookbookContainer.style.webkitBackfaceVisibility = 'hidden';
     lookbookContainer.style.backfaceVisibility = 'hidden';
+    
+    // タッチデバイス専用の設定
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      lookbookContainer.style.webkitOverflowScrolling = 'touch';
+      lookbookContainer.style.touchAction = 'pan-x';
+    }
     
     // スワイプ機能の実装
     let isDragging = false;
