@@ -75,10 +75,15 @@ function ensureBrandHoverEffect() {
 // Lookbook機能の保証
 function ensureLookbookFunctionality() {
   const lookbookTrack = document.querySelector('#lookbook .lookbook-track, .section-lookbook .lookbook-track');
+  const lookbookGrid = document.querySelector('#lookbook .lookbook-grid, .section-lookbook .lookbook-grid');
   
+  // PC用のLookbook自動スクロール
   if (lookbookTrack) {
     // アニメーションが正しく動作するように保証
-    lookbookTrack.style.animation = 'lookbook-scroll 30s linear infinite';
+    lookbookTrack.style.animation = 'lookbook-scroll 25s linear infinite';
+    
+    // 画像が画面全体で表示されるように初期位置を調整
+    lookbookTrack.style.transform = 'translateX(0)';
     
     // ホバー時の一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
@@ -91,6 +96,73 @@ function ensureLookbookFunctionality() {
         lookbookTrack.style.animationPlayState = 'running';
       });
     }
+  }
+  
+  // スマホ用のLookbook自動スクロールとスワイプ機能
+  if (lookbookGrid) {
+    // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
+    lookbookGrid.style.animation = 'none';
+    
+    // 画像が画面全体で表示されるように初期位置を調整
+    lookbookGrid.scrollLeft = 0;
+    
+    // スワイプ機能の実装
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    
+    // タッチイベント（スマートフォン用）
+    lookbookGrid.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      startX = e.touches[0].pageX - lookbookGrid.offsetLeft;
+      scrollLeft = lookbookGrid.scrollLeft;
+      e.preventDefault();
+    });
+    
+    lookbookGrid.addEventListener('touchmove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - lookbookGrid.offsetLeft;
+      const walk = (x - startX) * 2;
+      lookbookGrid.scrollLeft = scrollLeft - walk;
+    });
+    
+    lookbookGrid.addEventListener('touchend', function() {
+      if (isDragging) {
+        isDragging = false;
+      }
+    });
+    
+    // マウスイベント（PC用）
+    lookbookGrid.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      startX = e.pageX - lookbookGrid.offsetLeft;
+      scrollLeft = lookbookGrid.scrollLeft;
+      lookbookGrid.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+    
+    lookbookGrid.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - lookbookGrid.offsetLeft;
+      const walk = (x - startX) * 2;
+      lookbookGrid.scrollLeft = scrollLeft - walk;
+    });
+    
+    lookbookGrid.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        lookbookGrid.style.cursor = 'grab';
+      }
+    });
+    
+    lookbookGrid.addEventListener('mouseleave', function() {
+      if (isDragging) {
+        isDragging = false;
+        lookbookGrid.style.cursor = 'grab';
+      }
+    });
   }
 }
 
