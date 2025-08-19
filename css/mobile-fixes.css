@@ -191,7 +191,7 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 50px !important;  /* サイズ調整：60px → 50px */
+    max-height: 40px !important;  /* サイズ調整：45px → 40px */
     object-fit: cover !important;
     border-radius: 8px !important;
   }
@@ -218,7 +218,7 @@
   html body .lookbook-grid > *,
   html body .lookbook-container > *,
   html body .lookbook-track > * {
-    min-width: 40px !important; /* サイズ調整：50px → 40px */
+    min-width: 30px !important; /* サイズ調整：35px → 30px */
   }
   
   /* ========================================
