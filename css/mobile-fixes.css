@@ -164,7 +164,8 @@
     overflow: visible !important;
   }
   
-  html body .lookbook-grid {
+  /* Lookbookコンテナ（スマホ用） - 画面全体で表示 */
+  html body .lookbook-container {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
@@ -181,9 +182,10 @@
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
     scroll-behavior: smooth !important;
+    border-radius: 12px !important;
   }
   
-  html body .lookbook-grid > * {
+  html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
     min-width: 220px !important; /* さらに大きく */
@@ -191,7 +193,6 @@
   }
   
   /* Lookbook画像をflowing imagesと同じスタイルに */
-  html body .lookbook-grid img,
   html body .lookbook-container img,
   html body .lookbook-track img {
     display: block !important;
@@ -225,7 +226,6 @@
   }
   
   /* Lookbookの画像サイズを大きく */
-  html body .lookbook-grid > *,
   html body .lookbook-container > *,
   html body .lookbook-track > * {
     min-width: 220px !important; /* さらに大きく */
@@ -235,7 +235,6 @@
   }
   
   /* Lookbook画像のサイズを大きく */
-  html body .lookbook-grid img,
   html body .lookbook-container img,
   html body .lookbook-track img {
     max-height: 320px !important; /* さらに大きく */
@@ -243,16 +242,14 @@
   }
   
   /* Lookbookコンテナをflowするように画面横幅いっぱいに表示 */
-  html body .lookbook-grid,
-  html body .lookbook-container,
-  html body .lookbook-track {
+  html body .lookbook-container {
     background: rgba(255, 255, 255, 0.9) !important; /* 画像にのみ白い半透明の背景 */
     border-radius: 12px !important;
-    padding: 16px !important;
+    padding: 20px !important;
   }
   
   /* スワイプ操作の改善 */
-  html body .lookbook-grid {
+  html body .lookbook-container {
     cursor: grab !important;
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -262,20 +259,20 @@
     scroll-behavior: smooth !important;
   }
   
-  html body .lookbook-grid:active {
+  html body .lookbook-container:active {
     cursor: grabbing !important;
   }
   
   /* スクロールバーのスタイリング */
-  html body .lookbook-grid::-webkit-scrollbar {
+  html body .lookbook-container::-webkit-scrollbar {
     height: 6px !important;
   }
   
-  html body .lookbook-grid::-webkit-scrollbar-track {
+  html body .lookbook-container::-webkit-scrollbar-track {
     background: transparent !important;
   }
   
-  html body .lookbook-grid::-webkit-scrollbar-thumb {
+  html body .lookbook-container::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.3) !important;
     border-radius: 3px !important;
   }
