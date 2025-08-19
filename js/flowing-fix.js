@@ -113,6 +113,16 @@ function ensureLookbookFunctionality() {
           container.style.overflowX = 'auto';
           container.style.scrollBehavior = 'auto';
           container.style.scrollSnapType = 'none';
+          container.style.minWidth = 'max-content';
+          container.style.width = 'max-content';
+          
+          // スクロール範囲を拡張
+          container.style.scrollPaddingLeft = '0';
+          container.style.scrollPaddingRight = '0';
+          
+          // 左から右へのスクロールを可能にするための追加設定
+          container.style.direction = 'ltr';
+          container.style.textAlign = 'left';
         }
       }
     }, 100);
