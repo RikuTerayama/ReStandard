@@ -202,6 +202,11 @@
     transform: translateZ(0) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    /* スクロール速度をPC形式と同じに調整 */
+    scroll-behavior: auto !important;
+    /* 左から右へのスクロールを確実に可能にするための追加設定 */
+    direction: ltr !important;
+    text-align: left !important;
   }
   
   /* 画像コンテナのサイズ設定 - 重複を排除、PC以外の全デバイス対応 */
