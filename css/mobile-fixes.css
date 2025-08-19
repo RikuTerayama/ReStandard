@@ -167,8 +167,8 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 重複設定を完全に削除 */
   html body .lookbook-container {
     display: flex !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
+    overflow: hidden !important; /* アニメーションのためにhiddenに変更 */
+    scroll-snap-type: none !important; /* スクロールスナップを無効化 */
     -webkit-overflow-scrolling: touch !important;
     gap: 40px !important; /* 画像間の間隔を画像サイズに合わせて調整 */
     margin-left: calc(50% - 50vw) !important;
@@ -195,15 +195,9 @@
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
     -ms-user-select: none !important;
-    /* 初期表示位置を調整 */
-    scroll-snap-type: none !important;
     /* PC以外の全デバイス対応 */
-    -webkit-transform: translateZ(0) !important;
-    transform: translateZ(0) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
-    /* スクロール速度をPC形式と同じに調整 */
-    scroll-behavior: auto !important;
     /* 左から右へのスクロールを確実に可能にするための追加設定 */
     direction: ltr !important;
     text-align: left !important;
@@ -217,16 +211,6 @@
     100% {
       transform: translateX(-50%); /* 右から左への流れを実現 */
     }
-  }
-  
-  /* 初期表示位置を調整して2セット目の最初の画像が一番左に表示されるように */
-  html body .lookbook-container {
-    /* 初期位置を調整 */
-    transform: translateX(0) !important;
-    /* 自動スクロールアニメーションを有効化 */
-    animation: lookbook-scroll-mobile 15s linear infinite !important;
-    /* 初期表示位置を調整 */
-    scroll-behavior: auto !important;
   }
   
   /* ホバー時に一時停止 */
