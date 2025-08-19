@@ -420,7 +420,7 @@
    html body .section-lookbook .section-title,
    html body .section-about .section-title {
      color: #ffffff !important;
-     font-size: clamp(32px, 4vw, 48px) !important; /* サイズ調整 */
+     font-size: clamp(36px, 5vw, 56px) !important; /* サイズをさらに大きく */
      font-weight: 700 !important; /* 太さ調整 */
      line-height: 1.2 !important;
      text-align: center !important;
