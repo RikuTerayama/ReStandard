@@ -89,6 +89,9 @@ function ensureLookbookFunctionality() {
     lookbookTrack.style.minWidth = '100%';
     lookbookTrack.style.justifyContent = 'flex-start';
     
+    // スクロール挙動を改善
+    lookbookTrack.style.position = 'relative';
+    
     // ホバー時に一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
     if (container) {
@@ -107,21 +110,24 @@ function ensureLookbookFunctionality() {
     // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
     lookbookContainer.style.animation = 'none';
     
-    // 初期表示時にスクロールバーを中央に配置
+    // 初期表示時に1セット目の最初の画像が表示されるように位置調整
     setTimeout(() => {
       const containerWidth = lookbookContainer.clientWidth;
       const scrollWidth = lookbookContainer.scrollWidth;
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // スクロール可能な範囲の中央に配置
-        lookbookContainer.scrollLeft = maxScrollLeft / 2;
+        // 1セット目の最初の画像が表示されるように左端に配置
+        lookbookContainer.scrollLeft = 0;
       }
     }, 100);
     
     // 左から右へのスクロールを可能にする
     lookbookContainer.style.minWidth = '100%';
     lookbookContainer.style.justifyContent = 'flex-start';
+    
+    // スクロール挙動を改善
+    lookbookContainer.style.position = 'relative';
     
     // スワイプ機能の実装
     let isDragging = false;
