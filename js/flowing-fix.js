@@ -106,7 +106,7 @@ function ensureLookbookFunctionality() {
         
         if (maxScrollLeft > 0) {
           // 2セット目の最後の画像が左端に表示されるように配置
-          const targetScrollLeft = maxScrollLeft * 0.98; // 98%の位置に配置
+          const targetScrollLeft = maxScrollLeft * 0.99; // 99%の位置に配置
           container.scrollLeft = targetScrollLeft;
         }
       }
@@ -137,8 +137,8 @@ function ensureLookbookFunctionality() {
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // スクロール可能な範囲の中央に配置
-        const targetScrollLeft = maxScrollLeft / 2;
+        // 2セット目の最後の画像が左端に表示されるように配置
+        const targetScrollLeft = maxScrollLeft * 0.99; // 99%の位置に配置
         lookbookContainer.scrollLeft = targetScrollLeft;
         
         // PC以外の全デバイスでの追加対応
