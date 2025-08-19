@@ -96,6 +96,22 @@ function ensureLookbookFunctionality() {
     lookbookTrack.style.webkitUserSelect = 'none';
     lookbookTrack.style.scrollSnapType = 'none';
     
+    // 初期表示位置を調整して2セット目の最後の画像に続く形で表示
+    setTimeout(() => {
+      const container = lookbookTrack.closest('.lookbook-container');
+      if (container) {
+        const containerWidth = container.clientWidth;
+        const scrollWidth = container.scrollWidth;
+        const maxScrollLeft = scrollWidth - containerWidth;
+        
+        if (maxScrollLeft > 0) {
+          // 2セット目の最後の画像が左端に表示されるように配置
+          const targetScrollLeft = maxScrollLeft * 0.9; // 90%の位置に配置
+          container.scrollLeft = targetScrollLeft;
+        }
+      }
+    }, 100);
+    
     // ホバー時に一時停止機能を保証
     const container = lookbookTrack.closest('.lookbook-container');
     if (container) {
@@ -114,15 +130,15 @@ function ensureLookbookFunctionality() {
     // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
     lookbookContainer.style.animation = 'none';
     
-    // 初期表示時に2セット目の最後の画像に続く形で1セット目の最初の画像が表示されるように位置調整
+    // 初期表示時にスクロールバーを中央に配置
     setTimeout(() => {
       const containerWidth = lookbookContainer.clientWidth;
       const scrollWidth = lookbookContainer.scrollWidth;
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // 2セット目の最後の画像が左端に表示されるように配置
-        const targetScrollLeft = maxScrollLeft * 0.85; // 85%の位置に配置
+        // スクロール可能な範囲の中央に配置
+        const targetScrollLeft = maxScrollLeft / 2;
         lookbookContainer.scrollLeft = targetScrollLeft;
       }
     }, 100);
