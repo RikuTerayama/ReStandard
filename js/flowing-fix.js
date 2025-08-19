@@ -96,7 +96,7 @@ function ensureLookbookFunctionality() {
     lookbookTrack.style.webkitUserSelect = 'none';
     lookbookTrack.style.scrollSnapType = 'none';
     
-    // 初期表示位置を調整して2セット目の最後の画像に続く形で表示
+    // 初期表示位置を調整して2セット目の最初の画像が一番左に表示されるように
     setTimeout(() => {
       const container = lookbookTrack.closest('.lookbook-container');
       if (container) {
@@ -105,8 +105,8 @@ function ensureLookbookFunctionality() {
         const maxScrollLeft = scrollWidth - containerWidth;
         
         if (maxScrollLeft > 0) {
-          // 2セット目の最後の画像が左端に表示されるように配置
-          const targetScrollLeft = maxScrollLeft * 0.99; // 99%の位置に配置
+          // 2セット目の最初の画像が一番左に表示されるように配置
+          const targetScrollLeft = maxScrollLeft * 0.5; // 50%の位置に配置（2セット目の開始位置）
           container.scrollLeft = targetScrollLeft;
         }
       }
@@ -130,15 +130,15 @@ function ensureLookbookFunctionality() {
     // 自動スクロールアニメーションを無効化（背景が流れるのを防ぐ）
     lookbookContainer.style.animation = 'none';
     
-    // 初期表示時にスクロールバーを中央に配置 - PC以外の全デバイス対応
+    // 初期表示時に2セット目の最初の画像が一番左に表示されるように配置 - PC以外の全デバイス対応
     setTimeout(() => {
       const containerWidth = lookbookContainer.clientWidth;
       const scrollWidth = lookbookContainer.scrollWidth;
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // 2セット目の最後の画像が左端に表示されるように配置
-        const targetScrollLeft = maxScrollLeft * 0.99; // 99%の位置に配置
+        // 2セット目の最初の画像が一番左に表示されるように配置
+        const targetScrollLeft = maxScrollLeft * 0.5; // 50%の位置に配置（2セット目の開始位置）
         lookbookContainer.scrollLeft = targetScrollLeft;
         
         // PC以外の全デバイスでの追加対応
