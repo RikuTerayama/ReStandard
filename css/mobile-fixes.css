@@ -164,7 +164,7 @@
     overflow: visible !important;
   }
   
-  /* Lookbookコンテナ（PC以外の全デバイス対応） - 重複設定を完全に削除 */
+  /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
     display: flex !important;
     overflow: hidden !important; /* アニメーションのためにhiddenに変更 */
@@ -177,8 +177,7 @@
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
     padding: 48px !important; /* パディングを画像サイズに合わせて調整 */
-    /* 自動スクロールアニメーションを有効化 */
-    animation: lookbook-scroll-mobile-smartphone 15s linear infinite !important; /* スマホ専用のアニメーション名に変更 */
+    /* 背景は固定、アニメーションは適用しない */
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
     scroll-behavior: auto !important; /* スクロール速度をPC形式と同じに調整 */
@@ -188,8 +187,6 @@
     scroll-padding-right: 0 !important;
     /* スクロールバーを非表示 */
     scrollbar-width: none !important;
-    /* スクロール時の画像追従を防ぐ */
-    will-change: transform !important; /* アニメーション用に変更 */
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -203,6 +200,23 @@
     text-align: left !important;
   }
   
+  /* Lookbookトラック（画像のみを流す） */
+  html body .lookbook-track {
+    display: flex !important;
+    gap: 40px !important;
+    /* 画像のみを流すアニメーション */
+    animation: lookbook-scroll-mobile-smartphone 8s linear infinite !important; /* スピードを早く（15s→8s） */
+    will-change: transform !important;
+    /* 画像の直接操作を可能にする */
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    /* PC以外の全デバイス対応 */
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+  
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
   @keyframes lookbook-scroll-mobile-smartphone {
     0% {
@@ -214,12 +228,12 @@
   }
   
   /* ホバー時に一時停止 */
-  html body .lookbook-container:hover {
+  html body .lookbook-track:hover {
     animation-play-state: paused !important;
   }
   
   /* タッチ操作時に一時停止 */
-  html body .lookbook-container:active {
+  html body .lookbook-track:active {
     animation-play-state: paused !important;
   }
   
@@ -379,7 +393,7 @@
 
 /* スマホ表示専用のLookbook設定（PCには一切干渉しない） */
 @media (max-width: 991px) {
-  /* Lookbookコンテナ（PC以外の全デバイス対応） - 重複設定を完全に削除 */
+  /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
     display: flex !important;
     overflow: hidden !important; /* アニメーションのためにhiddenに変更 */
@@ -392,8 +406,7 @@
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
     padding: 48px !important; /* パディングを画像サイズに合わせて調整 */
-    /* 自動スクロールアニメーションを有効化 */
-    animation: lookbook-scroll-mobile-smartphone 15s linear infinite !important; /* スマホ専用のアニメーション名に変更 */
+    /* 背景は固定、アニメーションは適用しない */
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
     scroll-behavior: auto !important; /* スクロール速度をPC形式と同じに調整 */
@@ -403,8 +416,6 @@
     scroll-padding-right: 0 !important;
     /* スクロールバーを非表示 */
     scrollbar-width: none !important;
-    /* スクロール時の画像追従を防ぐ */
-    will-change: transform !important; /* アニメーション用に変更 */
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -418,6 +429,23 @@
     text-align: left !important;
   }
   
+  /* Lookbookトラック（画像のみを流す） */
+  html body .lookbook-track {
+    display: flex !important;
+    gap: 40px !important;
+    /* 画像のみを流すアニメーション */
+    animation: lookbook-scroll-mobile-smartphone 8s linear infinite !important; /* スピードを早く（15s→8s） */
+    will-change: transform !important;
+    /* 画像の直接操作を可能にする */
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    /* PC以外の全デバイス対応 */
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+  
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
   @keyframes lookbook-scroll-mobile-smartphone {
     0% {
@@ -429,12 +457,12 @@
   }
   
   /* ホバー時に一時停止 */
-  html body .lookbook-container:hover {
+  html body .lookbook-track:hover {
     animation-play-state: paused !important;
   }
   
   /* タッチ操作時に一時停止 */
-  html body .lookbook-container:active {
+  html body .lookbook-track:active {
     animation-play-state: paused !important;
   }
 }
