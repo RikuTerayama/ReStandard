@@ -226,6 +226,9 @@
     }
 
     body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       font-family: var(--body-font);
       background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
       color: var(--main-color);
@@ -234,6 +237,10 @@
       font-feature-settings: "palt";
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
+
+    main {
+      flex: 1;
     }
 
     h1, h2, h3, h4, h5, h6 {
