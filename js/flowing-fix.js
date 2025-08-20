@@ -186,8 +186,12 @@ function ensureLookbookFunctionality() {
         
         // 自動スクロールを確実に動作させるための設定
         lookbookContainer.style.overflow = 'hidden';
-        lookbookContainer.style.animation = 'lookbook-scroll-mobile-smartphone 15s linear infinite';
-        lookbookContainer.style.willChange = 'transform';
+        // lookbook-trackに対してアニメーションを適用（背景は固定）
+        const lookbookTrack = lookbookContainer.querySelector('.lookbook-track');
+        if (lookbookTrack) {
+          lookbookTrack.style.animation = 'lookbook-scroll-mobile-smartphone 8s linear infinite';
+          lookbookTrack.style.willChange = 'transform';
+        }
       }
     }, 200); // タイミングをさらに遅らせて確実に動作するように
     
