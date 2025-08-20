@@ -205,7 +205,7 @@
     display: flex !important;
     gap: 40px !important;
     /* 画像のみを流すアニメーション */
-    animation: lookbook-scroll-mobile-smartphone 8s linear infinite !important; /* スピードを早く（15s→8s） */
+    animation: lookbook-scroll-mobile-smartphone 5s linear infinite !important; /* スピードをさらに早く（8s→5s） */
     will-change: transform !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
@@ -215,6 +215,9 @@
     /* PC以外の全デバイス対応 */
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    /* 画像の順序を正しく設定 */
+    flex-wrap: nowrap !important;
+    min-width: max-content !important;
   }
   
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
@@ -223,7 +226,7 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%); /* 右から左への流れを実現 */
+      transform: translateX(-50%); /* 右から左への流れを実現（1セット分移動） */
     }
   }
   
@@ -434,7 +437,7 @@
     display: flex !important;
     gap: 40px !important;
     /* 画像のみを流すアニメーション */
-    animation: lookbook-scroll-mobile-smartphone 8s linear infinite !important; /* スピードを早く（15s→8s） */
+    animation: lookbook-scroll-mobile-smartphone 5s linear infinite !important; /* スピードをさらに早く（8s→5s） */
     will-change: transform !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
@@ -444,6 +447,9 @@
     /* PC以外の全デバイス対応 */
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    /* 画像の順序を正しく設定 */
+    flex-wrap: nowrap !important;
+    min-width: max-content !important;
   }
   
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
@@ -452,7 +458,7 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%); /* 右から左への流れを実現 */
+      transform: translateX(-50%); /* 右から左への流れを実現（1セット分移動） */
     }
   }
   
