@@ -160,9 +160,8 @@ function ensureLookbookFunctionality() {
       const maxScrollLeft = scrollWidth - containerWidth;
       
       if (maxScrollLeft > 0) {
-        // 2セット目の最初の画像が一番左に表示されるように配置
-        const targetScrollLeft = maxScrollLeft * 0.5; // 50%の位置に配置（2セット目の開始位置）
-        lookbookContainer.scrollLeft = targetScrollLeft;
+        // 1セット目の最初の画像が一番左に表示されるように配置（1,2,3,4,5,6,7,8→1...の順序）
+        lookbookContainer.scrollLeft = 0;
         
         // PC以外の全デバイスでの追加対応
         if (lookbookContainer.style.webkitTransform !== undefined) {
@@ -189,8 +188,11 @@ function ensureLookbookFunctionality() {
         // lookbook-trackに対してアニメーションを適用（背景は固定）
         const lookbookTrack = lookbookContainer.querySelector('.lookbook-track');
         if (lookbookTrack) {
-          lookbookTrack.style.animation = 'lookbook-scroll-mobile-smartphone 8s linear infinite';
+          lookbookTrack.style.animation = 'lookbook-scroll-mobile-smartphone 5s linear infinite'; // スピードをさらに早く（8s→5s）
           lookbookTrack.style.willChange = 'transform';
+          // 画像の順序を正しく設定
+          lookbookTrack.style.flexWrap = 'nowrap';
+          lookbookTrack.style.minWidth = 'max-content';
         }
       }
     }, 200); // タイミングをさらに遅らせて確実に動作するように
