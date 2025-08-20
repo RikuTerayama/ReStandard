@@ -226,7 +226,7 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%); /* 右から左への流れを実現（1セット分移動） */
+      transform: translateX(-50%); /* 1セット分移動して3セット分の画像でシームレスなループを実現 */
     }
   }
   
@@ -458,7 +458,7 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%); /* 右から左への流れを実現（1セット分移動） */
+      transform: translateX(-50%); /* 1セット分移動して3セット分の画像でシームレスなループを実現 */
     }
   }
   
