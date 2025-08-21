@@ -18,6 +18,10 @@
   /* 追加の強制表示設定 */
   max-height: none !important;
   height: auto !important;
+  /* 背景と余白の設定 */
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 20px 0 !important;
 }
 
 /* Collection見出しの表示を確実にする */
@@ -52,6 +56,27 @@
 
 .flowing-images {
   display: flex !important;
+}
+
+/* 全てのメディアクエリで強制表示 */
+@media (max-width: 1439px) {
+  .collection-section,
+  .section-collection,
+  #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .collection-section,
+  .section-collection,
+  #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
 }
 
 /* PC版では画像下の番号とナビゲーションバーを完全に削除 */
