@@ -488,33 +488,33 @@
 /* さらに広い範囲でも適用（1199px以下） */
 @media (max-width: 1199px) {
   
-  /* Collection下のオーバーレイ/スペーサーを非表示 - 高特異性 */
-  html body .collection-section .overlay,
-  html body .collection-section .purple-box,
-  html body .collection-section .section-overlay,
-  html body .collection-section .title-overlay,
-  html body .collection-section > .gradient,
-  html body .collection-section > .spacer,
-  html body .collection-section .flowing-bg,
-  html body .collection-section .flow-row-bg {
-    display: none !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    content: none !important;
+
+  
+  /* Collectionセクションの表示を確実にする */
+  html body .collection-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
   }
   
-  /* 疑似要素も非表示 - 高特異性 */
-  html body .collection-section::before,
-  html body .collection-section::after,
-  html body .collection-section .section-title::before,
-  html body .collection-section .section-title::after {
-    content: none !important;
-    display: none !important;
+  /* Collection見出しの表示を確実にする */
+  html body .collection-section .section-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
-  /* 1.JPGと25.JPGのデバッグスタイルを削除 - 高特異性 */
+  /* flowing imagesの表示を確実にする */
+  html body .section-flowing,
+  html body .flowing-images {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+  }
+    
+    /* 1.JPGと25.JPGのデバッグスタイルを削除 - 高特異性 */
   html body img[src*="/1.JPG"], 
   html body img[src*="/1.jpg"],
   html body img[src*="/25.JPG"], 
@@ -531,6 +531,11 @@
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
+    /* 表示を確実にする */
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 5 !important;
   }
   
   html body .flowing-images > * {
