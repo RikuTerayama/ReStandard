@@ -227,65 +227,81 @@ function ensureLookbookFunctionality() {
     let startX = 0;
     let scrollLeft = 0;
     
-    // タッチイベント（スマートフォン用）
-    lookbookContainer.addEventListener('touchstart', function(e) {
-      isDragging = true;
+    // タッチイベント
+    lookbookContainer.addEventListener('touchstart', (e) => {
       startX = e.touches[0].pageX - lookbookContainer.offsetLeft;
       scrollLeft = lookbookContainer.scrollLeft;
-      e.preventDefault();
     });
     
-    lookbookContainer.addEventListener('touchmove', function(e) {
-      if (!isDragging) return;
+    lookbookContainer.addEventListener('touchmove', (e) => {
       e.preventDefault();
+      if (!startX) return;
       const x = e.touches[0].pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 1.0; // スマホ表示でのスクロール感度をPC形式と同じに調整
+      const walk = (x - startX) * 2;
       lookbookContainer.scrollLeft = scrollLeft - walk;
     });
     
-    lookbookContainer.addEventListener('touchend', function() {
-      if (isDragging) {
-        isDragging = false;
-      }
+    lookbookContainer.addEventListener('touchend', () => {
+      startX = 0;
     });
     
-    // マウスイベント（PC用）
-    lookbookContainer.addEventListener('mousedown', function(e) {
-      isDragging = true;
-      startX = e.pageX - lookbookContainer.offsetLeft;
-      scrollLeft = lookbookContainer.scrollLeft;
-      lookbookContainer.style.cursor = 'grabbing';
-      e.preventDefault();
+    // 画像ナンバーの更新と矢印の機能
+    updateImageCounter();
+    setupNavigationArrows();
+  }
+  
+  // 画像カウンターの更新
+  function updateImageCounter() {
+    const lookbookContainer = document.querySelector('.lookbook-container');
+    const imageCounter = document.querySelector('.image-counter');
+    
+    if (!lookbookContainer || !imageCounter) return;
+    
+    // スクロール位置に基づいて現在の画像番号を計算
+    const updateCounter = () => {
+      const scrollLeft = lookbookContainer.scrollLeft;
+      const itemWidth = 200 + 16; // 画像幅 + gap
+      const currentIndex = Math.round(scrollLeft / itemWidth) % 8;
+      const imageNumber = currentIndex + 1;
+      imageCounter.textContent = `${imageNumber}/8`;
+    };
+    
+    // スクロール時にカウンターを更新
+    lookbookContainer.addEventListener('scroll', updateCounter);
+    
+    // 初期値を設定
+    updateCounter();
+  }
+  
+  // 矢印ナビゲーションの設定
+  function setupNavigationArrows() {
+    const leftArrow = document.querySelector('.nav-arrow.left-arrow');
+    const rightArrow = document.querySelector('.nav-arrow.right-arrow');
+    const lookbookContainer = document.querySelector('.lookbook-container');
+    
+    if (!leftArrow || !rightArrow || !lookbookContainer) return;
+    
+    const itemWidth = 200 + 16; // 画像幅 + gap
+    
+    // 左矢印クリック
+    leftArrow.addEventListener('click', () => {
+      const currentScroll = lookbookContainer.scrollLeft;
+      const newScroll = Math.max(0, currentScroll - itemWidth);
+      lookbookContainer.scrollTo({
+        left: newScroll,
+        behavior: 'smooth'
+      });
     });
     
-    lookbookContainer.addEventListener('mousemove', function(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - lookbookContainer.offsetLeft;
-      const walk = (x - startX) * 1.0; // PC用のスクロール感度を維持
-      lookbookContainer.scrollLeft = scrollLeft - walk;
-    });
-    
-    lookbookContainer.addEventListener('mouseup', function() {
-      if (isDragging) {
-        isDragging = false;
-        lookbookContainer.style.cursor = 'grab';
-      }
-    });
-    
-    lookbookContainer.addEventListener('mouseleave', function() {
-      if (isDragging) {
-        isDragging = false;
-        lookbookContainer.style.cursor = 'grab';
-      }
-    });
-    
-    // スクロール範囲の調整
-    lookbookContainer.addEventListener('scroll', function() {
-      // スクロール位置を制限して左から右へのスクロールを可能にする
-      if (lookbookContainer.scrollLeft < 0) {
-        lookbookContainer.scrollLeft = 0;
-      }
+    // 右矢印クリック
+    rightArrow.addEventListener('click', () => {
+      const currentScroll = lookbookContainer.scrollLeft;
+      const maxScroll = lookbookContainer.scrollWidth - lookbookContainer.clientWidth;
+      const newScroll = Math.min(maxScroll, currentScroll + itemWidth);
+      lookbookContainer.scrollTo({
+        left: newScroll,
+        behavior: 'smooth'
+      });
     });
   }
 }
