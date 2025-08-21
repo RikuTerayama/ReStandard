@@ -2,10 +2,13 @@
    Collection Section Display Fixes
    ======================================== */
 
-/* Collectionセクション全体の表示を確実にする */
-.collection-section,
-.section-collection,
-#collection {
+/* Collectionセクション全体の表示を確実にする - 最高特異性で上書き */
+html body .collection-section,
+html body .section-collection,
+html body #collection,
+body .collection-section,
+body .section-collection,
+body #collection {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -25,10 +28,16 @@
 }
 
 /* Collection見出しの表示を確実にする */
-.collection-section .section-title,
-.section-collection .section-title,
-#collection .section-title,
-.collection-title {
+html body .collection-section .section-title,
+html body .section-collection .section-title,
+html body #collection .section-title,
+html body .collection-title,
+html body #collection-title,
+body .collection-section .section-title,
+body .section-collection .section-title,
+body #collection .section-title,
+body .collection-title,
+body #collection-title {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -43,8 +52,12 @@
 }
 
 /* flowing imagesの表示を確実にする */
-.section-flowing,
-.flowing-images {
+html body .section-flowing,
+html body .flowing-images,
+html body #flowing-images,
+body .section-flowing,
+body .flowing-images,
+body #flowing-images {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -54,15 +67,45 @@
   width: 100% !important;
 }
 
-.flowing-images {
-  display: flex !important;
+html body .flowing-images,
+html body #flowing-images,
+body .flowing-images,
+body #flowing-images {
+  display: block !important;
+}
+
+/* flowing imagesの背景要素も確実に表示 */
+html body .flowing-bg,
+html body .flow-row-bg,
+html body .flow-row,
+html body .flow-track,
+body .flowing-bg,
+body .flow-row-bg,
+body .flow-row,
+body .flow-track {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
 }
 
 /* 全てのメディアクエリで強制表示 */
 @media (max-width: 1439px) {
-  .collection-section,
-  .section-collection,
-  #collection {
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection,
+  html body .flowing-images,
+  html body #flowing-images,
+  html body .flowing-bg,
+  html body .flow-row-bg,
+  body .collection-section,
+  body .section-collection,
+  body #collection,
+  body .flowing-images,
+  body #flowing-images,
+  body .flowing-bg,
+  body .flow-row-bg {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -70,9 +113,20 @@
 }
 
 @media (max-width: 1199px) {
-  .collection-section,
-  .section-collection,
-  #collection {
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection,
+  html body .flowing-images,
+  html body #flowing-images,
+  html body .flowing-bg,
+  html body .flow-row-bg,
+  body .collection-section,
+  body .section-collection,
+  body #collection,
+  body .flowing-images,
+  body #flowing-images,
+  body .flowing-bg,
+  body .flow-row-bg {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
