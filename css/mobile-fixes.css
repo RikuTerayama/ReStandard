@@ -795,40 +795,40 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 16px !important;
+    gap: 20px !important; /* 矢印間の間隔を調整 */
     margin-bottom: 16px !important;
-    padding: 12px !important;
-    background: rgba(0, 0, 0, 0.1) !important;
-    border-radius: 20px !important;
+    padding: 8px 16px !important; /* パディングを調整 */
+    background: rgba(0, 0, 0, 0.08) !important; /* 背景を薄く */
+    border-radius: 25px !important; /* 角を丸く */
     color: #666 !important;
     font-size: 14px !important;
     font-weight: 500 !important;
   }
 
   html body .swipe-arrow {
-    font-size: 18px !important;
+    font-size: 20px !important; /* 矢印のサイズを大きく */
     font-weight: bold !important;
-    color: #333 !important;
+    color: #555 !important; /* 矢印の色を調整 */
     animation: swipe-pulse 2s ease-in-out infinite !important;
-  }
-
-  html body .swipe-text {
-    white-space: nowrap !important;
   }
 
   /* 矢印のパルスアニメーション */
   @keyframes swipe-pulse {
     0%, 100% {
-      opacity: 0.6;
+      opacity: 0.7;
       transform: scale(1);
     }
     50% {
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1.2);
     }
   }
 
-  /* PC版では矢印ガイドを非表示 */
-  .desktop-only .swipe-guide {
+  /* PC版では矢印ガイドを完全に非表示 */
+  .desktop-only .swipe-guide,
+  html body .desktop-only .swipe-guide,
+  html body .lookbook-section .desktop-only .swipe-guide,
+  html body .section-lookbook .desktop-only .swipe-guide,
+  html body #lookbook .desktop-only .swipe-guide {
     display: none !important;
   } 
