@@ -962,6 +962,30 @@
     position: relative !important;
     z-index: 5 !important;
   }
+
+  /* 古い設定との競合を排除 */
+  html body .lookbook-grid {
+    animation: none !important;
+    display: none !important;
+  }
+
+  /* 追加の強制設定 - 確実にアニメーションを動作させる */
+  html body .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    animation: lookbook-scroll-mobile 15s linear infinite !important;
+    animation-play-state: running !important;
+    animation-fill-mode: both !important;
+    animation-direction: normal !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: infinite !important;
+    animation-timing-function: linear !important;
+    animation-duration: 15s !important;
+  }
+
+  /* アニメーションの強制適用 */
+  html body .lookbook-track * {
+    animation: none !important;
+  }
 } 
 
  
