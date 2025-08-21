@@ -164,11 +164,11 @@
     overflow: visible !important;
   }
   
-  /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
+  /* Lookbookコンテナ（PC以外の全デバイス対応） - スワイプ表示に変更 */
   html body .lookbook-container {
     display: flex !important;
-    overflow: visible !important; /* 画像表示のためvisibleに変更 */
-    scroll-snap-type: none !important; /* スクロールスナップを無効化 */
+    overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
+    scroll-snap-type: x mandatory !important; /* スワイプ時のスナップを有効化 */
     -webkit-overflow-scrolling: touch !important;
     gap: 20px !important; /* 画像間の間隔を調整 */
     margin-left: calc(50% - 50vw) !important;
@@ -177,16 +177,16 @@
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
     padding: 24px !important; /* パディングを調整 */
-    /* 背景は固定、アニメーションは適用しない */
+    /* 背景は固定、スワイプ表示に変更 */
     position: relative !important;
-    /* 画像が画面全体で表示されるように調整 */
-    scroll-behavior: auto !important; /* スクロール速度をPC形式と同じに調整 */
+    /* スワイプ表示のための設定 */
+    scroll-behavior: smooth !important; /* スムーズなスクロール */
     border-radius: 0 !important; /* 角を丸くなくして角に */
-    /* 左から右へのスクロールを可能にする */
+    /* スワイプを誘導するための設定 */
     scroll-padding-left: 0 !important;
     scroll-padding-right: 0 !important;
-    /* スクロールバーを非表示 */
-    scrollbar-width: none !important;
+    /* スクロールバーを表示してスワイプを誘導 */
+    scrollbar-width: thin !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -195,7 +195,7 @@
     /* PC以外の全デバイス対応 */
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
-    /* 左から右へのスクロールを確実に可能にするための追加設定 */
+    /* スワイプ表示のための設定 */
     direction: ltr !important;
     text-align: left !important;
   }
@@ -204,9 +204,9 @@
   html body .lookbook-track {
     display: flex !important;
     gap: 20px !important; /* 画像間の間隔を調整 */
-    /* 画像のみを流すアニメーション */
-    animation: lookbook-scroll-mobile-smartphone 5s linear infinite !important; /* スピードをさらに早く（8s→5s） */
-    will-change: transform !important;
+    /* アニメーションを無効化してスワイプ表示に変更 */
+    animation: none !important; /* フロー表示を無効化 */
+    will-change: auto !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -399,8 +399,8 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
     display: flex !important;
-    overflow: visible !important; /* 画像表示のためvisibleに変更 */
-    scroll-snap-type: none !important; /* スクロールスナップを無効化 */
+    overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
+    scroll-snap-type: x mandatory !important; /* スワイプ時のスナップを有効化 */
     -webkit-overflow-scrolling: touch !important;
     gap: 20px !important; /* 画像間の間隔を調整 */
     margin-left: calc(50% - 50vw) !important;
@@ -409,16 +409,16 @@
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
     padding: 24px !important; /* パディングを調整 */
-    /* 背景は固定、アニメーションは適用しない */
+    /* 背景は固定、スワイプ表示に変更 */
     position: relative !important;
-    /* 画像が画面全体で表示されるように調整 */
-    scroll-behavior: auto !important; /* スクロール速度をPC形式と同じに調整 */
+    /* スワイプ表示のための設定 */
+    scroll-behavior: smooth !important; /* スムーズなスクロール */
     border-radius: 0 !important; /* 角を丸くなくして角に */
-    /* 左から右へのスクロールを可能にする */
+    /* スワイプを誘導するための設定 */
     scroll-padding-left: 0 !important;
     scroll-padding-right: 0 !important;
-    /* スクロールバーを非表示 */
-    scrollbar-width: none !important;
+    /* スクロールバーを表示してスワイプを誘導 */
+    scrollbar-width: thin !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -427,7 +427,7 @@
     /* PC以外の全デバイス対応 */
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
-    /* 左から右へのスクロールを確実に可能にするための追加設定 */
+    /* スワイプ表示のための設定 */
     direction: ltr !important;
     text-align: left !important;
   }
@@ -436,9 +436,9 @@
   html body .lookbook-track {
     display: flex !important;
     gap: 20px !important; /* 画像間の間隔を調整 */
-    /* 画像のみを流すアニメーション */
-    animation: lookbook-scroll-mobile-smartphone 5s linear infinite !important; /* スピードをさらに早く（8s→5s） */
-    will-change: transform !important;
+    /* アニメーションを無効化してスワイプ表示に変更 */
+    animation: none !important; /* フロー表示を無効化 */
+    will-change: auto !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -788,4 +788,47 @@
   html body .footer,
   html body #footer {
     margin-top: 24px !important; /* フッターの上マージンを調整 */
+  } 
+
+  /* スマホ版用の矢印ガイド - スワイプを誘導 */
+  html body .swipe-guide {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
+    margin-bottom: 16px !important;
+    padding: 12px !important;
+    background: rgba(0, 0, 0, 0.1) !important;
+    border-radius: 20px !important;
+    color: #666 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+  }
+
+  html body .swipe-arrow {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    animation: swipe-pulse 2s ease-in-out infinite !important;
+  }
+
+  html body .swipe-text {
+    white-space: nowrap !important;
+  }
+
+  /* 矢印のパルスアニメーション */
+  @keyframes swipe-pulse {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  /* PC版では矢印ガイドを非表示 */
+  .desktop-only .swipe-guide {
+    display: none !important;
   } 
