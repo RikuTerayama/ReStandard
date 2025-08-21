@@ -167,16 +167,16 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - スワイプ表示に変更 */
   html body .lookbook-container {
     display: flex !important;
-    overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
-    scroll-snap-type: x mandatory !important; /* スワイプ時のスナップを有効化 */
+    overflow-x: scroll !important; /* スワイプ表示のためscrollに変更 */
+    scroll-snap-type: x proximity !important; /* スワイプ時のスナップを緩和 */
     -webkit-overflow-scrolling: touch !important;
-    gap: 20px !important; /* 画像間の間隔を調整 */
+    gap: 16px !important; /* 画像間の間隔を調整 */
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
     width: 100vw !important;
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
-    padding: 24px !important; /* パディングを調整 */
+    padding: 20px !important; /* パディングを調整 */
     /* 背景は固定、スワイプ表示に変更 */
     position: relative !important;
     /* スワイプ表示のための設定 */
@@ -244,8 +244,8 @@
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 200px !important; /* 画像サイズを調整 */
-    max-width: 200px !important; /* 画像サイズを調整 */
+    min-width: 180px !important; /* 画像サイズを調整 */
+    max-width: 180px !important; /* 画像サイズを調整 */
     /* PC以外の全デバイス対応 */
     -webkit-transform: translateZ(0) !important;
     transform: translateZ(0) !important;
@@ -257,8 +257,8 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 250px !important;  /* 画像サイズを調整 */
-    max-width: 200px !important;  /* 画像サイズを調整 */
+    max-height: 220px !important;  /* 画像サイズを調整 */
+    max-width: 180px !important;  /* 画像サイズを調整 */
     object-fit: cover !important;
     border-radius: 0 !important; /* 画像の角も丸くなくして角に */
     /* スクロール時の画像追従を防ぐ */
@@ -399,16 +399,16 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
     display: flex !important;
-    overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
-    scroll-snap-type: x mandatory !important; /* スワイプ時のスナップを有効化 */
+    overflow-x: scroll !important; /* スワイプ表示のためscrollに変更 */
+    scroll-snap-type: x proximity !important; /* スワイプ時のスナップを緩和 */
     -webkit-overflow-scrolling: touch !important;
-    gap: 20px !important; /* 画像間の間隔を調整 */
+    gap: 16px !important; /* 画像間の間隔を調整 */
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
     width: 100vw !important;
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
-    padding: 24px !important; /* パディングを調整 */
+    padding: 20px !important; /* パディングを調整 */
     /* 背景は固定、スワイプ表示に変更 */
     position: relative !important;
     /* スワイプ表示のための設定 */
@@ -435,7 +435,7 @@
   /* Lookbookトラック（画像のみを流す） */
   html body .lookbook-track {
     display: flex !important;
-    gap: 20px !important; /* 画像間の間隔を調整 */
+    gap: 16px !important; /* 画像間の間隔を調整 */
     /* アニメーションを無効化してスワイプ表示に変更 */
     animation: none !important; /* フロー表示を無効化 */
     will-change: auto !important;
@@ -790,45 +790,4 @@
     margin-top: 24px !important; /* フッターの上マージンを調整 */
   } 
 
-  /* スマホ版用の矢印ガイド - スワイプを誘導 */
-  html body .swipe-guide {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 20px !important; /* 矢印間の間隔を調整 */
-    margin-bottom: 16px !important;
-    padding: 8px 16px !important; /* パディングを調整 */
-    background: rgba(0, 0, 0, 0.08) !important; /* 背景を薄く */
-    border-radius: 25px !important; /* 角を丸く */
-    color: #666 !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-  }
-
-  html body .swipe-arrow {
-    font-size: 20px !important; /* 矢印のサイズを大きく */
-    font-weight: bold !important;
-    color: #555 !important; /* 矢印の色を調整 */
-    animation: swipe-pulse 2s ease-in-out infinite !important;
-  }
-
-  /* 矢印のパルスアニメーション */
-  @keyframes swipe-pulse {
-    0%, 100% {
-      opacity: 0.7;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.2);
-    }
-  }
-
-  /* PC版では矢印ガイドを完全に非表示 */
-  .desktop-only .swipe-guide,
-  html body .desktop-only .swipe-guide,
-  html body .lookbook-section .desktop-only .swipe-guide,
-  html body .section-lookbook .desktop-only .swipe-guide,
-  html body #lookbook .desktop-only .swipe-guide {
-    display: none !important;
-  } 
+ 
