@@ -194,14 +194,23 @@ function ensureLookbookFunctionality() {
         if (lookbookTrack) {
           // PC以外ではアニメーションを確実に有効化
           if (window.innerWidth < 1440) {
-            lookbookTrack.style.animation = 'lookbook-scroll-mobile 15s linear infinite';
-            lookbookTrack.style.willChange = 'transform';
-            lookbookTrack.style.transform = 'translateX(0)';
-            // 古い設定との競合を排除
-            lookbookTrack.style.animationPlayState = 'running';
-            lookbookTrack.style.animationDuration = '15s';
-            lookbookTrack.style.animationTimingFunction = 'linear';
-            lookbookTrack.style.animationIterationCount = 'infinite';
+            // 強制的にアニメーションを設定
+            lookbookTrack.style.setProperty('animation', 'lookbook-scroll-mobile 15s linear infinite', 'important');
+            lookbookTrack.style.setProperty('animation-play-state', 'running', 'important');
+            lookbookTrack.style.setProperty('animation-duration', '15s', 'important');
+            lookbookTrack.style.setProperty('animation-timing-function', 'linear', 'important');
+            lookbookTrack.style.setProperty('animation-iteration-count', 'infinite', 'important');
+            lookbookTrack.style.setProperty('animation-direction', 'normal', 'important');
+            lookbookTrack.style.setProperty('animation-delay', '0s', 'important');
+            lookbookTrack.style.setProperty('animation-fill-mode', 'both', 'important');
+            lookbookTrack.style.setProperty('will-change', 'transform', 'important');
+            lookbookTrack.style.setProperty('transform', 'translateX(0)', 'important');
+            
+            // コンテナの設定も強制適用
+            lookbookContainer.style.setProperty('overflow', 'hidden', 'important');
+            lookbookContainer.style.setProperty('position', 'relative', 'important');
+            
+            console.log('PC未満の画面サイズでLookbookアニメーションを適用しました');
           }
           // 画像の順序を正しく設定
           lookbookTrack.style.flexWrap = 'nowrap';
@@ -405,6 +414,19 @@ function ensureMobileImageDisplay() {
 // 初期化
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOMContentLoaded event fired');
+  console.log('画面幅:', window.innerWidth);
+  console.log('PC未満判定:', window.innerWidth < 1440 ? 'はい' : 'いいえ');
+  
+  // Lookbook要素の存在確認
+  const lookbookContainer = document.querySelector('.lookbook-container');
+  const lookbookTrack = document.querySelector('.lookbook-track');
+  console.log('lookbook-container見つかった:', !!lookbookContainer);
+  console.log('lookbook-track見つかった:', !!lookbookTrack);
+  
+  if (lookbookTrack && window.innerWidth < 1440) {
+    console.log('lookbook-trackのアニメーション状態:', getComputedStyle(lookbookTrack).animation);
+  }
+  
   ensureFlowingHeight();
   ensureLinkFunctionality();
   ensureBrandHoverEffect();
