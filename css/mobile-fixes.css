@@ -886,8 +886,8 @@
   }
 } 
 
-/* Lookbookセクション - スマホ版で右から左に動くアニメーション */
-@media (max-width: 1024px) {
+/* Lookbookセクション - PC以外で右から左に動くアニメーション */
+@media (max-width: 1439px) {
   html body .lookbook-container {
     background: rgba(255, 255, 255, 0.9) !important;
     overflow: hidden !important; /* アニメーション用にhiddenに変更 */
@@ -924,7 +924,7 @@
     transform: translateX(0) !important;
   }
 
-  /* スマホ版専用アニメーション - 右から左へ */
+  /* PC以外専用アニメーション - 右から左へ */
   @keyframes lookbook-scroll-mobile {
     0% {
       transform: translateX(0) !important;
@@ -934,7 +934,7 @@
     }
   }
 
-  /* スマホ版の画像サイズ調整 */
+  /* PC以外の画像サイズ調整 */
   html body .lookbook-track img {
     min-width: 180px !important;
     max-width: 200px !important;
@@ -950,6 +950,17 @@
   /* ホバー時もアニメーション継続 */
   html body .lookbook-container:hover .lookbook-track {
     animation-play-state: running !important;
+  }
+
+  /* PC以外でのLookbookセクション全体の設定 */
+  html body .lookbook-section,
+  html body #lookbook,
+  html body .section-lookbook {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 5 !important;
   }
 } 
 
