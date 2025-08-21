@@ -208,9 +208,14 @@ function ensureLookbookFunctionality() {
             
             // コンテナの設定も強制適用
             lookbookContainer.style.setProperty('overflow', 'hidden', 'important');
+            lookbookContainer.style.setProperty('overflow-x', 'hidden', 'important');
+            lookbookContainer.style.setProperty('overflow-y', 'hidden', 'important');
             lookbookContainer.style.setProperty('position', 'relative', 'important');
             
             console.log('PC未満の画面サイズでLookbookアニメーションを適用しました');
+            console.log('overflow設定:', lookbookContainer.style.overflow);
+            console.log('overflow-x設定:', lookbookContainer.style.overflowX);
+            console.log('overflow-y設定:', lookbookContainer.style.overflowY);
           }
           // 画像の順序を正しく設定
           lookbookTrack.style.flexWrap = 'nowrap';
