@@ -192,9 +192,10 @@ function ensureLookbookFunctionality() {
         // lookbook-trackに対してアニメーションを適用（背景は固定）
         const lookbookTrack = lookbookContainer.querySelector('.lookbook-track');
         if (lookbookTrack) {
-          // スマホ版ではアニメーションを有効化
-          lookbookTrack.style.animation = 'lookbook-scroll-mobile 8s linear infinite';
+          // スマホ版ではアニメーションを確実に有効化
+          lookbookTrack.style.animation = 'lookbook-scroll-mobile 15s linear infinite';
           lookbookTrack.style.willChange = 'transform';
+          lookbookTrack.style.transform = 'translateX(0)';
           // 画像の順序を正しく設定
           lookbookTrack.style.flexWrap = 'nowrap';
           lookbookTrack.style.minWidth = 'max-content';
