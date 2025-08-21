@@ -22,19 +22,64 @@
 
 /* ▼ flowing-images：親の高さ0/重なりの主因を排除 */
 .section-flowing {
-  display: flow-root;       /* 内部がabsolute/floatでも親高を作る */
-  position: relative;
-  z-index: 0;               /* 後続（brands/about）が上に来れるように */
-  margin-top: calc(var(--header-h) + 12px);
-  padding-bottom: var(--section-padding);  /* 後続との距離を大幅に確保 */
-  min-height: 280px;        /* 念のための下限高さ */
+  display: flow-root !important;       /* 内部がabsolute/floatでも親高を作る */
+  position: relative !important;
+  z-index: 0 !important;               /* 後続（brands/about）が上に来れるように */
+  margin-top: calc(var(--header-h) + 12px) !important;
+  padding-bottom: var(--section-padding) !important;  /* 後続との距離を大幅に確保 */
+  min-height: 280px !important;        /* 念のための下限高さ */
   /* 重なりを防ぐための設定 */
-  overflow: hidden;
-  clear: both;
+  overflow: hidden !important;
+  clear: both !important;
   /* セクション終了後の間隔を大幅に確保 */
-  margin-bottom: var(--section-gap);
+  margin-bottom: var(--section-gap) !important;
   /* 背景色を透明に */
-  background: transparent;
+  background: transparent !important;
+  /* 表示を確実にする */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* flowing imagesの表示を確実にする */
+.flowing-images {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+}
+
+/* Collection見出しの表示を確実にする（PC表示） */
+.collection-section .section-title,
+.section-collection .section-title,
+#collection .section-title {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-size: clamp(28px, 3vw, 42px) !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin-bottom: 16px !important;
+}
+
+/* ▼ Collection：確実に表示 */
+.collection-section,
+.section-collection,
+#collection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* Collection見出しの表示を確実にする */
+.collection-section .section-title,
+.section-collection .section-title,
+#collection .section-title {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* ▼ Brands：再表示＆正方形グリッド */
