@@ -181,7 +181,11 @@ function ensureLookbookFunctionality() {
         lookbookContainer.style.animationDuration = '15s'; // 25sから15sに短縮
         
         // 初期表示位置を2セット目の開始位置に調整
-        lookbookContainer.style.transform = 'translateX(0)';
+        const itemWidth = 200 + 16; // 画像幅 + gap
+        const imagesPerSet = 8;
+        setTimeout(() => {
+          lookbookContainer.scrollLeft = itemWidth * imagesPerSet; // 2セット目の最初の画像から表示
+        }, 100);
         
         // 自動スクロールを確実に動作させるための設定
         lookbookContainer.style.overflow = 'visible';
