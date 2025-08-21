@@ -184,7 +184,7 @@ function ensureLookbookFunctionality() {
         lookbookContainer.style.transform = 'translateX(0)';
         
         // 自動スクロールを確実に動作させるための設定
-        lookbookContainer.style.overflow = 'hidden';
+        lookbookContainer.style.overflow = 'visible';
         // lookbook-trackに対してアニメーションを適用（背景は固定）
         const lookbookTrack = lookbookContainer.querySelector('.lookbook-track');
         if (lookbookTrack) {
