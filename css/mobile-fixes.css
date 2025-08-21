@@ -167,16 +167,16 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
     display: flex !important;
-    overflow: hidden !important; /* アニメーションのためにhiddenに変更 */
+    overflow: visible !important; /* 画像表示のためvisibleに変更 */
     scroll-snap-type: none !important; /* スクロールスナップを無効化 */
     -webkit-overflow-scrolling: touch !important;
-    gap: 40px !important; /* 画像間の間隔を画像サイズに合わせて調整 */
+    gap: 20px !important; /* 画像間の間隔を調整 */
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
     width: 100vw !important;
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
-    padding: 48px !important; /* パディングを画像サイズに合わせて調整 */
+    padding: 24px !important; /* パディングを調整 */
     /* 背景は固定、アニメーションは適用しない */
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
@@ -203,7 +203,7 @@
   /* Lookbookトラック（画像のみを流す） */
   html body .lookbook-track {
     display: flex !important;
-    gap: 40px !important;
+    gap: 20px !important; /* 画像間の間隔を調整 */
     /* 画像のみを流すアニメーション */
     animation: lookbook-scroll-mobile-smartphone 5s linear infinite !important; /* スピードをさらに早く（8s→5s） */
     will-change: transform !important;
@@ -244,8 +244,8 @@
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 280px !important; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
-    max-width: 280px !important; /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+    min-width: 200px !important; /* 画像サイズを調整 */
+    max-width: 200px !important; /* 画像サイズを調整 */
     /* PC以外の全デバイス対応 */
     -webkit-transform: translateZ(0) !important;
     transform: translateZ(0) !important;
@@ -257,8 +257,8 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 350px !important;  /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
-    max-width: 280px !important;  /* 画像サイズをBrandsセクションのロゴマークと同じサイズに調整 */
+    max-height: 250px !important;  /* 画像サイズを調整 */
+    max-width: 200px !important;  /* 画像サイズを調整 */
     object-fit: cover !important;
     border-radius: 0 !important; /* 画像の角も丸くなくして角に */
     /* スクロール時の画像追従を防ぐ */
@@ -399,16 +399,16 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
     display: flex !important;
-    overflow: hidden !important; /* アニメーションのためにhiddenに変更 */
+    overflow: visible !important; /* 画像表示のためvisibleに変更 */
     scroll-snap-type: none !important; /* スクロールスナップを無効化 */
     -webkit-overflow-scrolling: touch !important;
-    gap: 40px !important; /* 画像間の間隔を画像サイズに合わせて調整 */
+    gap: 20px !important; /* 画像間の間隔を調整 */
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
     width: 100vw !important;
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
-    padding: 48px !important; /* パディングを画像サイズに合わせて調整 */
+    padding: 24px !important; /* パディングを調整 */
     /* 背景は固定、アニメーションは適用しない */
     position: relative !important;
     /* 画像が画面全体で表示されるように調整 */
@@ -435,7 +435,7 @@
   /* Lookbookトラック（画像のみを流す） */
   html body .lookbook-track {
     display: flex !important;
-    gap: 40px !important;
+    gap: 20px !important; /* 画像間の間隔を調整 */
     /* 画像のみを流すアニメーション */
     animation: lookbook-scroll-mobile-smartphone 5s linear infinite !important; /* スピードをさらに早く（8s→5s） */
     will-change: transform !important;
