@@ -878,4 +878,12 @@
     border: 1px solid rgba(0, 0, 0, 0.1) !important;
   } 
 
+/* PC版では画像下の番号とナビゲーションバーを非表示 */
+@media (min-width: 1025px) {
+  .image-number,
+  .lookbook-navigation {
+    display: none !important;
+  }
+} 
+
  
