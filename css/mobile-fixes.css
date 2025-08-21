@@ -1107,13 +1107,13 @@
     /* アニメーション関連の競合を排除 */
     animation: none !important;
     animation-name: none !important;
-    animation-duration: none !important;
-    animation-timing-function: none !important;
-    animation-delay: none !important;
-    animation-iteration-count: none !important;
-    animation-direction: none !important;
-    animation-fill-mode: none !important;
-    animation-play-state: none !important;
+    animation-duration: 5s !important;
+    animation-timing-function: linear !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: infinite !important;
+    animation-direction: normal !important;
+    animation-fill-mode: both !important;
+    animation-play-state: running !important;
     
     /* スクロール関連の競合を排除 */
     scroll-behavior: auto !important;
