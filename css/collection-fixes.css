@@ -54,13 +54,7 @@
   display: flex !important;
 }
 
-/* PC版では画像下の番号とナビゲーションバーを非表示 */
-@media (min-width: 1025px) {
-  .image-number,
-  .lookbook-navigation {
-    display: none !important;
-  }
-}
+
 
 /* 疑似要素の制御 */
 .collection-section::before,
