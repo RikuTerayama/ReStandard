@@ -61,6 +61,9 @@
   min-height: 300px !important;
   width: 100% !important;
   overflow: visible !important;
+  /* 追加の強制表示設定 */
+  max-height: none !important;
+  height: auto !important;
 }
 
 /* Collection見出しの表示を確実にする（PC表示） */
