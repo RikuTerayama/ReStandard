@@ -1297,6 +1297,103 @@
     -webkit-will-change: transform !important;
     -moz-will-change: transform !important;
     -o-will-change: transform !important;
+  }
+
+  /* さらに強力な設定 - 確実に動作させる */
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    /* アニメーションの完全保証 */
+    animation: lookbook-test 5s linear infinite both !important;
+    -webkit-animation: lookbook-test 5s linear infinite both !important;
+    -moz-animation: lookbook-test 5s linear infinite both !important;
+    -o-animation: lookbook-test 5s linear infinite both !important;
+    
+    /* 状態の完全保証 */
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+    -moz-animation-play-state: running !important;
+    -o-animation-play-state: running !important;
+    
+    /* 初期位置の完全保証 */
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+    -moz-transform: translateX(0) !important;
+    -o-transform: translateX(0) !important;
+    -ms-transform: translateX(0) !important;
+  }
+
+  /* インラインスタイルレベルの強制設定 */
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    /* すべてのアニメーションプロパティを個別に強制設定 */
+    animation-name: lookbook-test !important;
+    animation-duration: 5s !important;
+    animation-timing-function: linear !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: infinite !important;
+    animation-direction: normal !important;
+    animation-fill-mode: both !important;
+    animation-play-state: running !important;
+    
+    /* ベンダープレフィックス版も個別に設定 */
+    -webkit-animation-name: lookbook-test !important;
+    -webkit-animation-duration: 5s !important;
+    -webkit-animation-timing-function: linear !important;
+    -webkit-animation-delay: 0s !important;
+    -webkit-animation-iteration-count: infinite !important;
+    -webkit-animation-direction: normal !important;
+    -webkit-animation-fill-mode: both !important;
+    -webkit-animation-play-state: running !important;
+    
+    /* 初期位置の個別設定 */
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+    -moz-transform: translateX(0) !important;
+    -o-transform: translateX(0) !important;
+    -ms-transform: translateX(0) !important;
+  }
+
+  /* 最終的な強制設定 - インラインスタイルレベル */
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    /* アニメーションの最終保証 - すべてのプロパティを個別に設定 */
+    animation-name: lookbook-test !important;
+    animation-duration: 5s !important;
+    animation-timing-function: linear !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: infinite !important;
+    animation-direction: normal !important;
+    animation-fill-mode: both !important;
+    animation-play-state: running !important;
+    
+    /* ベンダープレフィックス版も最終保証 */
+    -webkit-animation-name: lookbook-test !important;
+    -webkit-animation-duration: 5s !important;
+    -webkit-animation-timing-function: linear !important;
+    -webkit-animation-delay: 0s !important;
+    -webkit-animation-iteration-count: infinite !important;
+    -webkit-animation-direction: normal !important;
+    -webkit-animation-fill-mode: both !important;
+    -webkit-animation-play-state: running !important;
+    
+    /* 初期位置の最終保証 */
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+    -moz-transform: translateX(0) !important;
+    -o-transform: translateX(0) !important;
+    -ms-transform: translateX(0) !important;
+    
+    /* パフォーマンス最適化の最終保証 */
+    will-change: transform !important;
+    -webkit-will-change: transform !important;
+    -moz-will-change: transform !important;
+    -o-will-change: transform !important;
   } 
 
  
