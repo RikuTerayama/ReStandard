@@ -198,6 +198,9 @@
     /* スワイプ表示のための設定 */
     direction: ltr !important;
     text-align: left !important;
+    /* 画像が常に表示されるように */
+    min-height: 300px !important;
+    overflow: visible !important;
   }
   
   /* Lookbookトラック（画像のみを流す） */
@@ -218,6 +221,9 @@
     /* 画像の順序を正しく設定 */
     flex-wrap: nowrap !important;
     min-width: max-content !important;
+    /* 画像が常に表示されるように */
+    min-height: 250px !important;
+    overflow: visible !important;
   }
   
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
@@ -462,6 +468,9 @@
     /* 画像の順序を正しく設定 */
     flex-wrap: nowrap !important;
     min-width: max-content !important;
+    /* 画像が常に表示されるように */
+    min-height: 250px !important;
+    overflow: visible !important;
   }
   
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
@@ -536,11 +545,18 @@
     opacity: 1 !important;
     position: relative !important;
     z-index: 5 !important;
+    /* 強制的に表示 */
+    min-height: 200px !important;
+    width: 100% !important;
   }
   
   html body .flowing-images > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
+    /* 表示を確実にする */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* Lookbookの統一 - 高特異性 */
