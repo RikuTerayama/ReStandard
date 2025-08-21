@@ -48,10 +48,26 @@
   position: relative !important;
 }
 
+/* Collectionセクション全体の表示を確実にする */
+#collection,
+.section-collection,
+.collection-section {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
+  /* 強制的に表示 */
+  min-height: 300px !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+
 /* Collection見出しの表示を確実にする（PC表示） */
 .collection-section .section-title,
 .section-collection .section-title,
-#collection .section-title {
+#collection .section-title,
+.collection-title {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -60,6 +76,9 @@
   font-weight: 700 !important;
   text-align: center !important;
   margin-bottom: 16px !important;
+  /* 強制的に表示 */
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 /* ▼ Collection：確実に表示 */
@@ -71,6 +90,9 @@
   opacity: 1 !important;
   position: relative !important;
   z-index: 5 !important;
+  /* 強制的に表示 */
+  min-height: 200px !important;
+  width: 100% !important;
 }
 
 /* Collection見出しの表示を確実にする */
