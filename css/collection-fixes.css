@@ -54,7 +54,22 @@
   display: flex !important;
 }
 
-
+/* PC版では画像下の番号とナビゲーションバーを完全に削除 */
+@media (min-width: 1025px) {
+  .image-number,
+  .lookbook-navigation,
+  .lookbook-item .image-number,
+  .lookbook-container .lookbook-navigation,
+  .nav-arrow,
+  .image-counter {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+  }
+}
 
 /* 疑似要素の制御 */
 .collection-section::before,
