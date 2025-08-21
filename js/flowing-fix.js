@@ -195,9 +195,9 @@ function ensureLookbookFunctionality() {
           // PC以外ではアニメーションを確実に有効化
           if (window.innerWidth < 1440) {
             // 強制的にアニメーションを設定
-            lookbookTrack.style.setProperty('animation', 'lookbook-scroll-mobile 15s linear infinite', 'important');
+            lookbookTrack.style.setProperty('animation', 'lookbook-test 5s linear infinite', 'important');
             lookbookTrack.style.setProperty('animation-play-state', 'running', 'important');
-            lookbookTrack.style.setProperty('animation-duration', '15s', 'important');
+            lookbookTrack.style.setProperty('animation-duration', '5s', 'important');
             lookbookTrack.style.setProperty('animation-timing-function', 'linear', 'important');
             lookbookTrack.style.setProperty('animation-iteration-count', 'infinite', 'important');
             lookbookTrack.style.setProperty('animation-direction', 'normal', 'important');
@@ -206,13 +206,63 @@ function ensureLookbookFunctionality() {
             lookbookTrack.style.setProperty('will-change', 'transform', 'important');
             lookbookTrack.style.setProperty('transform', 'translateX(0)', 'important');
             
+            // 個別プロパティも強制設定
+            lookbookTrack.style.setProperty('animation-name', 'lookbook-test', 'important');
+            lookbookTrack.style.setProperty('animation-duration', '5s', 'important');
+            lookbookTrack.style.setProperty('animation-timing-function', 'linear', 'important');
+            lookbookTrack.style.setProperty('animation-delay', '0s', 'important');
+            lookbookTrack.style.setProperty('animation-iteration-count', 'infinite', 'important');
+            lookbookTrack.style.setProperty('animation-direction', 'normal', 'important');
+            lookbookTrack.style.setProperty('animation-fill-mode', 'both', 'important');
+            lookbookTrack.style.setProperty('animation-play-state', 'running', 'important');
+            
             // コンテナの設定も強制適用
             lookbookContainer.style.setProperty('overflow', 'hidden', 'important');
             lookbookContainer.style.setProperty('overflow-x', 'hidden', 'important');
             lookbookContainer.style.setProperty('overflow-y', 'hidden', 'important');
             lookbookContainer.style.setProperty('position', 'relative', 'important');
             
-            console.log('PC未満の画面サイズでLookbookアニメーションを適用しました');
+            // アニメーションの動作確認
+            setTimeout(() => {
+              const computedStyle = getComputedStyle(lookbookTrack);
+              console.log('アニメーション設定後の状態:');
+              console.log('- animation:', computedStyle.animation);
+              console.log('- transform:', computedStyle.transform);
+              console.log('- will-change:', computedStyle.willChange);
+              console.log('- overflow:', getComputedStyle(lookbookContainer).overflow);
+              console.log('- animation-fill-mode:', computedStyle.animationFillMode);
+              console.log('- animation-name:', computedStyle.animationName);
+              console.log('- animation-duration:', computedStyle.animationDuration);
+              
+              // アニメーションが実際に動作しているかテスト
+              if (computedStyle.animation.includes('lookbook-test')) {
+                console.log('✅ テストアニメーションが正しく設定されました');
+                console.log('✅ animation-fill-mode:', computedStyle.animationFillMode);
+                console.log('✅ animation-name:', computedStyle.animationName);
+                
+                // アニメーションの動作テスト
+                console.log('アニメーション開始位置:', computedStyle.transform);
+                
+                // 5秒後に位置を確認
+                setTimeout(() => {
+                  const newStyle = getComputedStyle(lookbookTrack);
+                  console.log('5秒後の位置:', newStyle.transform);
+                  console.log('位置が変わったか:', computedStyle.transform !== newStyle.transform);
+                  
+                  if (computedStyle.transform !== newStyle.transform) {
+                    console.log('🎉 アニメーションが動作しています！');
+                  } else {
+                    console.log('❌ アニメーションが動作していません');
+                    console.log('現在のアニメーション設定:', newStyle.animation);
+                    console.log('現在のanimation-fill-mode:', newStyle.animationFillMode);
+                  }
+                }, 5000);
+              } else {
+                console.log('❌ テストアニメーションが設定されていません');
+              }
+            }, 100);
+            
+            console.log('PC未満の画面サイズでLookbookテストアニメーションを適用しました');
             console.log('overflow設定:', lookbookContainer.style.overflow);
             console.log('overflow-x設定:', lookbookContainer.style.overflowX);
             console.log('overflow-y設定:', lookbookContainer.style.overflowY);
