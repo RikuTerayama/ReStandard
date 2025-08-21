@@ -197,6 +197,11 @@ function ensureLookbookFunctionality() {
             lookbookTrack.style.animation = 'lookbook-scroll-mobile 15s linear infinite';
             lookbookTrack.style.willChange = 'transform';
             lookbookTrack.style.transform = 'translateX(0)';
+            // 古い設定との競合を排除
+            lookbookTrack.style.animationPlayState = 'running';
+            lookbookTrack.style.animationDuration = '15s';
+            lookbookTrack.style.animationTimingFunction = 'linear';
+            lookbookTrack.style.animationIterationCount = 'infinite';
           }
           // 画像の順序を正しく設定
           lookbookTrack.style.flexWrap = 'nowrap';
