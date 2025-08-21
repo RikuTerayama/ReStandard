@@ -888,7 +888,10 @@
 
 /* Lookbookセクション - PC以外で右から左に動くアニメーション */
 @media (max-width: 1439px) {
-  html body .lookbook-container {
+  /* site-fixes.cssの設定を完全に上書き */
+  html body #lookbook .lookbook-container,
+  html body .section-lookbook .lookbook-container,
+  html body .lookbook-section .lookbook-container {
     background: rgba(255, 255, 255, 0.9) !important;
     overflow: hidden !important; /* アニメーション用にhiddenに変更 */
     scroll-snap-type: none !important; /* スワイプ機能を無効化 */
@@ -898,17 +901,26 @@
     min-height: 300px !important;
     position: relative !important;
     z-index: 5 !important;
+    width: 100% !important;
+    padding: 16px !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  html body .lookbook-track {
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track {
     /* アニメーションを確実に有効化 */
     animation: lookbook-scroll-mobile 15s linear infinite !important;
     animation-play-state: running !important;
     will-change: transform !important;
     display: flex !important;
     gap: 16px !important;
-    padding: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
     min-width: max-content !important;
+    width: max-content !important;
     flex-wrap: nowrap !important;
     min-height: 250px !important;
     position: relative !important;
@@ -922,6 +934,7 @@
     -ms-user-select: none !important;
     /* アニメーション用の設定 */
     transform: translateX(0) !important;
+    justify-content: flex-start !important;
   }
 
   /* PC以外専用アニメーション - 右から左へ */
@@ -935,9 +948,12 @@
   }
 
   /* PC以外の画像サイズ調整 */
-  html body .lookbook-track img {
+  html body #lookbook .lookbook-track img,
+  html body .section-lookbook .lookbook-track img,
+  html body .lookbook-section .lookbook-track img {
     min-width: 180px !important;
     max-width: 200px !important;
+    width: 200px !important;
     max-height: 280px !important;
     height: auto !important;
     object-fit: cover !important;
@@ -945,17 +961,23 @@
     flex-shrink: 0 !important;
     position: relative !important;
     z-index: 5 !important;
+    pointer-events: none !important; /* アニメーション中はクリック無効 */
+    cursor: default !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
   }
 
   /* ホバー時もアニメーション継続 */
-  html body .lookbook-container:hover .lookbook-track {
+  html body #lookbook .lookbook-container:hover .lookbook-track,
+  html body .section-lookbook .lookbook-container:hover .lookbook-track,
+  html body .lookbook-section .lookbook-container:hover .lookbook-track {
     animation-play-state: running !important;
   }
 
   /* PC以外でのLookbookセクション全体の設定 */
-  html body .lookbook-section,
   html body #lookbook,
-  html body .section-lookbook {
+  html body .section-lookbook,
+  html body .lookbook-section {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -970,7 +992,9 @@
   }
 
   /* 追加の強制設定 - 確実にアニメーションを動作させる */
-  html body .lookbook-track,
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
   html body .lookbook-container .lookbook-track {
     animation: lookbook-scroll-mobile 15s linear infinite !important;
     animation-play-state: running !important;
@@ -985,6 +1009,14 @@
   /* アニメーションの強制適用 */
   html body .lookbook-track * {
     animation: none !important;
+  }
+
+  /* lookbook-itemの設定 */
+  html body .lookbook-item {
+    flex: 0 0 auto !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+    position: relative !important;
   }
 } 
 
