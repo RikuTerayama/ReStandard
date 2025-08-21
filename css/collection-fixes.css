@@ -1,0 +1,78 @@
+/* ========================================
+   Collection Section Display Fixes
+   ======================================== */
+
+/* Collectionセクション全体の表示を確実にする */
+.collection-section,
+.section-collection,
+#collection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
+  /* 強制的に表示 */
+  min-height: 300px !important;
+  width: 100% !important;
+  overflow: visible !important;
+  /* 追加の強制表示設定 */
+  max-height: none !important;
+  height: auto !important;
+}
+
+/* Collection見出しの表示を確実にする */
+.collection-section .section-title,
+.section-collection .section-title,
+#collection .section-title,
+.collection-title {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-size: clamp(28px, 3vw, 42px) !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin-bottom: 16px !important;
+  /* 強制的に表示 */
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* flowing imagesの表示を確実にする */
+.section-flowing,
+.flowing-images {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
+  min-height: 200px !important;
+  width: 100% !important;
+}
+
+.flowing-images {
+  display: flex !important;
+}
+
+/* PC版では画像下の番号とナビゲーションバーを非表示 */
+@media (min-width: 1025px) {
+  .image-number,
+  .lookbook-navigation {
+    display: none !important;
+  }
+}
+
+/* 疑似要素の制御 */
+.collection-section::before,
+.collection-section::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* 問題のあるオーバーレイ要素を非表示 */
+.collection-section .overlay,
+.collection-section .title-overlay,
+.collection-section .section-overlay {
+  display: none !important;
+  content: none !important;
+} 
