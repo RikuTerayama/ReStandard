@@ -890,20 +890,19 @@
 @media (max-width: 1024px) {
   html body .lookbook-container {
     background: rgba(255, 255, 255, 0.9) !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
+    overflow: hidden !important; /* アニメーション用にhiddenに変更 */
+    scroll-snap-type: none !important; /* スワイプ機能を無効化 */
+    -webkit-overflow-scrolling: auto !important;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
     min-height: 300px !important;
-    overflow: visible !important;
     position: relative !important;
     z-index: 5 !important;
   }
 
   html body .lookbook-track {
-    /* アニメーションを有効にして右から左に動かす */
-    animation: lookbook-scroll-mobile 8s linear infinite !important;
+    /* アニメーションを確実に有効化 */
+    animation: lookbook-scroll-mobile 15s linear infinite !important;
     animation-play-state: running !important;
     will-change: transform !important;
     display: flex !important;
@@ -912,7 +911,6 @@
     min-width: max-content !important;
     flex-wrap: nowrap !important;
     min-height: 250px !important;
-    overflow: visible !important;
     position: relative !important;
     z-index: 5 !important;
     /* ハードウェアアクセラレーション */
@@ -922,6 +920,8 @@
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
     -ms-user-select: none !important;
+    /* アニメーション用の設定 */
+    transform: translateX(0) !important;
   }
 
   /* スマホ版専用アニメーション - 右から左へ */
@@ -930,7 +930,7 @@
       transform: translateX(0) !important;
     }
     100% {
-      transform: translateX(-50%) !important;
+      transform: translateX(-66.666%) !important; /* 3セット分の画像を移動 */
     }
   }
 
@@ -943,14 +943,13 @@
     object-fit: cover !important;
     border-radius: 0 !important;
     flex-shrink: 0 !important;
-    scroll-snap-align: start !important;
     position: relative !important;
     z-index: 5 !important;
   }
 
-  /* スワイプ機能も併用可能にする */
+  /* ホバー時もアニメーション継続 */
   html body .lookbook-container:hover .lookbook-track {
-    animation-play-state: paused !important;
+    animation-play-state: running !important;
   }
 } 
 
