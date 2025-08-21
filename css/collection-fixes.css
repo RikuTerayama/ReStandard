@@ -13,7 +13,7 @@ body #collection {
   visibility: visible !important;
   opacity: 1 !important;
   position: relative !important;
-  z-index: 5 !important;
+  z-index: 999 !important; /* Brandsセクション（z-index: 10）より確実に上に表示 */
   /* 強制的に表示 */
   min-height: 300px !important;
   width: 100% !important;
@@ -48,7 +48,7 @@ body #collection-title {
   margin-bottom: 16px !important;
   /* 強制的に表示 */
   position: relative !important;
-  z-index: 10 !important;
+  z-index: 1000 !important; /* Collectionセクションよりさらに上に表示 */
 }
 
 /* flowing imagesの表示を確実にする */
@@ -62,7 +62,7 @@ body #flowing-images {
   visibility: visible !important;
   opacity: 1 !important;
   position: relative !important;
-  z-index: 5 !important;
+  z-index: 998 !important; /* Collectionセクションの下、Brandsセクションより上に表示 */
   min-height: 200px !important;
   width: 100% !important;
 }
@@ -87,7 +87,7 @@ body .flow-track {
   visibility: visible !important;
   opacity: 1 !important;
   position: relative !important;
-  z-index: 5 !important;
+  z-index: 998 !important; /* flowing imagesと同じz-index */
 }
 
 /* 全てのメディアクエリで強制表示 */
