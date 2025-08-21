@@ -1,0 +1,89 @@
+/* ========================================
+   Lookbook Section Fixes
+   ======================================== */
+
+/* Lookbookアイテム（画像+ナンバー）のスタイル - スマホ版のみ */
+@media (max-width: 1024px) {
+  html body .lookbook-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    position: relative !important;
+  }
+  
+  /* 画像ナンバーのスタイル */
+  html body .image-number {
+    font-size: 12px !important;
+    color: #666 !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    padding: 4px 8px !important;
+    border-radius: 12px !important;
+    position: absolute !important;
+    bottom: -8px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 15 !important;
+  }
+  
+  /* ナビゲーション（矢印+カウンター）のスタイル */
+  html body .lookbook-navigation {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    margin-top: 20px !important;
+    padding: 12px 16px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 20px !important;
+  }
+  
+  /* 矢印のスタイル */
+  html body .nav-arrow {
+    font-size: 18px !important;
+    color: #555 !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    padding: 8px !important;
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.2s ease !important;
+  }
+  
+  html body .nav-arrow:hover {
+    background: rgba(0, 0, 0, 0.2) !important;
+    transform: scale(1.1) !important;
+  }
+  
+  /* カウンターのスタイル */
+  html body .image-counter {
+    font-size: 14px !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    padding: 6px 12px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* PC版では画像下の番号とナビゲーションバーを非表示 */
+@media (min-width: 1025px) {
+  .image-number,
+  .lookbook-navigation {
+    display: none !important;
+  }
+}
+
+/* Lookbookコンテナのスタイル調整 */
+.lookbook-container {
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+.lookbook-track {
+  position: relative !important;
+  z-index: 5 !important;
+} 
