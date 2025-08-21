@@ -894,6 +894,8 @@
   html body .lookbook-section .lookbook-container {
     background: rgba(255, 255, 255, 0.9) !important;
     overflow: hidden !important; /* アニメーション用にhiddenに変更 */
+    overflow-x: hidden !important; /* 横方向も確実にhidden */
+    overflow-y: hidden !important; /* 縦方向も確実にhidden */
     scroll-snap-type: none !important; /* スワイプ機能を無効化 */
     -webkit-overflow-scrolling: auto !important;
     scrollbar-width: none !important;
@@ -1017,6 +1019,31 @@
     min-width: 200px !important;
     max-width: 200px !important;
     position: relative !important;
+  }
+
+  /* site-fixes.cssの競合設定を完全に無効化 */
+  html body #lookbook .lookbook-container,
+  html body .section-lookbook .lookbook-container,
+  html body .lookbook-section .lookbook-container {
+    /* アニメーション関連の競合を排除 */
+    animation: none !important;
+    animation-name: none !important;
+    animation-duration: none !important;
+    animation-timing-function: none !important;
+    animation-delay: none !important;
+    animation-iteration-count: none !important;
+    animation-direction: none !important;
+    animation-fill-mode: none !important;
+    animation-play-state: none !important;
+    
+    /* スクロール関連の競合を排除 */
+    scroll-behavior: auto !important;
+    scroll-snap-type: none !important;
+    -webkit-overflow-scrolling: auto !important;
+    
+    /* その他の競合を排除 */
+    transform: none !important;
+    will-change: auto !important;
   }
 } 
 
