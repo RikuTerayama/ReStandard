@@ -167,7 +167,7 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - スワイプ表示に変更 */
   html body .lookbook-container {
     display: flex !important;
-    overflow-x: scroll !important; /* スワイプ表示のためscrollに変更 */
+    overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
     scroll-snap-type: x proximity !important; /* スワイプ時のスナップを緩和 */
     -webkit-overflow-scrolling: touch !important;
     gap: 16px !important; /* 画像間の間隔を調整 */
@@ -203,7 +203,7 @@
   /* Lookbookトラック（画像のみを流す） */
   html body .lookbook-track {
     display: flex !important;
-    gap: 20px !important; /* 画像間の間隔を調整 */
+    gap: 16px !important; /* 画像間の間隔を調整 */
     /* アニメーションを無効化してスワイプ表示に変更 */
     animation: none !important; /* フロー表示を無効化 */
     will-change: auto !important;
@@ -244,21 +244,27 @@
   html body .lookbook-container > * {
     flex: 0 0 auto !important;
     scroll-snap-align: start !important;
-    min-width: 180px !important; /* 画像サイズを調整 */
-    max-width: 180px !important; /* 画像サイズを調整 */
+    min-width: 200px !important; /* 画像サイズを調整 */
+    max-width: 200px !important; /* 画像サイズを調整 */
     /* PC以外の全デバイス対応 */
     -webkit-transform: translateZ(0) !important;
     transform: translateZ(0) !important;
+    /* 画像の表示を確実にする */
+    position: relative !important;
+    z-index: 5 !important;
   }
   
   /* Lookbook画像のスタイル - 重複を排除、PC以外の全デバイス対応 */
   html body .lookbook-container img,
-  html body .lookbook-track img {
+  html body .lookbook-track img,
+  html body .lookbook-section img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-height: 220px !important;  /* 画像サイズを調整 */
-    max-width: 180px !important;  /* 画像サイズを調整 */
+    min-height: 200px !important; /* 最小高さを設定 */
+    min-width: 200px !important; /* 最小幅を設定 */
+    max-height: 250px !important;  /* 画像サイズを調整 */
+    max-width: 200px !important;  /* 画像サイズを調整 */
     object-fit: cover !important;
     border-radius: 0 !important; /* 画像の角も丸くなくして角に */
     /* スクロール時の画像追従を防ぐ */
@@ -274,6 +280,12 @@
     transform: translateZ(0) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    /* 画像の表示を確実にする */
+    position: relative !important;
+    z-index: 10 !important;
+    /* 強制的に表示 */
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* Lookbookセクションもoverflow制御 */
@@ -399,7 +411,7 @@
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
     display: flex !important;
-    overflow-x: scroll !important; /* スワイプ表示のためscrollに変更 */
+    overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
     scroll-snap-type: x proximity !important; /* スワイプ時のスナップを緩和 */
     -webkit-overflow-scrolling: touch !important;
     gap: 16px !important; /* 画像間の間隔を調整 */
