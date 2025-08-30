@@ -1299,4 +1299,114 @@
     -o-will-change: transform !important;
   } 
 
+/* ========================================
+   最終的な強制設定 - すべての競合を排除
+   ======================================== */
+
+/* 最強のアニメーション設定 - 確実に動作させる */
+html body .lookbook-track,
+html body #lookbook .lookbook-track,
+html body .section-lookbook .lookbook-track,
+html body .lookbook-section .lookbook-track,
+html body .lookbook-container .lookbook-track,
+.lookbook-track,
+#lookbook .lookbook-track,
+.section-lookbook .lookbook-track,
+.lookbook-section .lookbook-track,
+.lookbook-container .lookbook-track {
+  /* アニメーションの最強保証 */
+  animation: lookbook-test 5s linear infinite both !important;
+  -webkit-animation: lookbook-test 5s linear infinite both !important;
+  -moz-animation: lookbook-test 5s linear infinite both !important;
+  -o-animation: lookbook-test 5s linear infinite both !important;
+  
+  /* 個別プロパティの最強保証 */
+  animation-name: lookbook-test !important;
+  animation-duration: 5s !important;
+  animation-timing-function: linear !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: infinite !important;
+  animation-direction: normal !important;
+  animation-fill-mode: both !important;
+  animation-play-state: running !important;
+  
+  /* ベンダープレフィックス版の最強保証 */
+  -webkit-animation-name: lookbook-test !important;
+  -webkit-animation-duration: 5s !important;
+  -webkit-animation-timing-function: linear !important;
+  -webkit-animation-delay: 0s !important;
+  -webkit-animation-iteration-count: infinite !important;
+  -webkit-animation-direction: normal !important;
+  -webkit-animation-fill-mode: both !important;
+  -webkit-animation-play-state: running !important;
+  
+  /* 初期位置の最強保証 */
+  transform: translateX(0) !important;
+  -webkit-transform: translateX(0) !important;
+  -moz-transform: translateX(0) !important;
+  -o-transform: translateX(0) !important;
+  -ms-transform: translateX(0) !important;
+  
+  /* パフォーマンス最適化の最強保証 */
+  will-change: transform !important;
+  -webkit-will-change: transform !important;
+  -moz-will-change: transform !important;
+  -o-will-change: transform !important;
+  
+  /* 表示の最強保証 */
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* インラインスタイルレベルでの最強保証 */
+html body .lookbook-track *,
+html body #lookbook .lookbook-track *,
+html body .section-lookbook .lookbook-track *,
+html body .lookbook-section .lookbook-track *,
+html body .lookbook-container .lookbook-track * {
+  /* 子要素のアニメーション継承を保証 */
+  animation-fill-mode: inherit !important;
+  -webkit-animation-fill-mode: inherit !important;
+  -moz-animation-fill-mode: inherit !important;
+  -o-animation-fill-mode: inherit !important;
+}
+
+/* メディアクエリ内での最強保証 */
+@media (max-width: 1439px) {
+  html body .lookbook-track,
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    /* アニメーションの最終保証 - メディアクエリ内 */
+    animation: lookbook-test 5s linear infinite both !important;
+    -webkit-animation: lookbook-test 5s linear infinite both !important;
+    -moz-animation: lookbook-test 5s linear infinite both !important;
+    -o-animation: lookbook-test 5s linear infinite both !important;
+    
+    /* 個別プロパティの最終保証 */
+    animation-name: lookbook-test !important;
+    animation-duration: 5s !important;
+    animation-timing-function: linear !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: infinite !important;
+    animation-direction: normal !important;
+    animation-fill-mode: both !important;
+    animation-play-state: running !important;
+    
+    /* ベンダープレフィックス版の最終保証 */
+    -webkit-animation-name: lookbook-test !important;
+    -webkit-animation-duration: 5s !important;
+    -webkit-animation-timing-function: linear !important;
+    -webkit-animation-delay: 0s !important;
+    -webkit-animation-iteration-count: infinite !important;
+    -webkit-animation-direction: normal !important;
+    -webkit-animation-fill-mode: both !important;
+    -webkit-animation-play-state: running !important;
+  }
+} 
+
  
