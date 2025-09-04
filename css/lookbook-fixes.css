@@ -12,11 +12,15 @@ html body .section-lookbook.lookbook-section {
   visibility: visible !important;
   opacity: 1 !important;
   position: relative !important;
-  z-index: 9999 !important;
+  z-index: 2 !important;
   width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  margin-top: clamp(80px, 10vw, 160px) !important;
+  margin-bottom: clamp(60px, 8vw, 120px) !important;
+  padding: clamp(60px, 8vw, 120px) 0 !important;
   background: transparent !important;
+  /* 重なりを防ぐための追加設定 */
+  isolation: isolate !important;
+  contain: layout !important;
 }
 
 /* Lookbookコンテナ - 最高特異性 */
@@ -277,5 +281,37 @@ html body .lookbook-track:hover {
   
   html body .lookbook-track {
     gap: 25px !important;
+  }
+} 
+
+/* レスポンシブ対応 - 画面サイズに応じた間隔調整 */
+@media (max-width: 768px) {
+  html body #lookbook,
+  html body .section-lookbook,
+  html body .lookbook-section {
+    margin-top: clamp(60px, 8vw, 120px) !important;
+    margin-bottom: clamp(40px, 6vw, 80px) !important;
+    padding: clamp(40px, 6vw, 80px) 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  html body #lookbook,
+  html body .section-lookbook,
+  html body .lookbook-section {
+    margin-top: clamp(40px, 6vw, 80px) !important;
+    margin-bottom: clamp(30px, 4vw, 60px) !important;
+    padding: clamp(30px, 4vw, 60px) 0 !important;
+  }
+}
+
+/* PC版での調整 */
+@media (min-width: 1025px) {
+  html body #lookbook,
+  html body .section-lookbook,
+  html body .lookbook-section {
+    margin-top: clamp(100px, 12vw, 200px) !important;
+    margin-bottom: clamp(80px, 10vw, 160px) !important;
+    padding: clamp(80px, 10vw, 160px) 0 !important;
   }
 } 
