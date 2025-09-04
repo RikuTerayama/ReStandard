@@ -164,12 +164,10 @@
     overflow: visible !important;
   }
   
-  /* Lookbookコンテナ（PC以外の全デバイス対応） - スワイプ表示に変更 */
+  /* Lookbookコンテナ（PC以外の全デバイス対応） - アニメーション表示に変更 */
   html body .lookbook-container {
-    display: flex !important;
-    overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
-    scroll-snap-type: x proximity !important; /* スワイプ時のスナップを緩和 */
-    -webkit-overflow-scrolling: touch !important;
+    display: block !important;
+    overflow: hidden !important; /* アニメーション表示のためhiddenに変更 */
     gap: 16px !important; /* 画像間の間隔を調整 */
     margin-left: calc(50% - 50vw) !important;
     margin-right: calc(50% - 50vw) !important;
@@ -177,16 +175,10 @@
     box-sizing: border-box !important;
     background: rgba(255, 255, 255, 0.9) !important; /* 背景色をAbout ReStandardと同じに変更 */
     padding: 20px !important; /* パディングを調整 */
-    /* 背景は固定、スワイプ表示に変更 */
+    /* 背景は固定、アニメーション表示に変更 */
     position: relative !important;
-    /* スワイプ表示のための設定 */
-    scroll-behavior: smooth !important; /* スムーズなスクロール */
+    /* アニメーション表示のための設定 */
     border-radius: 0 !important; /* 角を丸くなくして角に */
-    /* スワイプを誘導するための設定 */
-    scroll-padding-left: 0 !important;
-    scroll-padding-right: 0 !important;
-    /* スクロールバーを表示してスワイプを誘導 */
-    scrollbar-width: thin !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -195,21 +187,19 @@
     /* PC以外の全デバイス対応 */
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
-    /* スワイプ表示のための設定 */
-    direction: ltr !important;
-    text-align: left !important;
     /* 画像が常に表示されるように */
     min-height: 300px !important;
-    overflow: visible !important;
   }
   
   /* Lookbookトラック（画像のみを流す） */
   html body .lookbook-track {
     display: flex !important;
     gap: 16px !important; /* 画像間の間隔を調整 */
-    /* アニメーションを無効化してスワイプ表示に変更 */
-    animation: none !important; /* フロー表示を無効化 */
-    will-change: auto !important;
+    /* アニメーションを有効化して右から左への遷移を実現 */
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    animation-play-state: running !important;
+    animation-fill-mode: both !important;
+    will-change: transform !important;
     /* 画像の直接操作を可能にする */
     user-select: none !important;
     -webkit-user-select: none !important;
@@ -221,18 +211,23 @@
     /* 画像の順序を正しく設定 */
     flex-wrap: nowrap !important;
     min-width: max-content !important;
+    width: max-content !important;
     /* 画像が常に表示されるように */
     min-height: 250px !important;
-    overflow: visible !important;
+    position: relative !important;
+    z-index: 5 !important;
+    /* 初期位置設定 */
+    transform: translateX(100%) !important;
+    justify-content: flex-start !important;
   }
   
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
   @keyframes lookbook-scroll-mobile-smartphone {
     0% {
-      transform: translateX(0);
+      transform: translateX(100%);
     }
     100% {
-      transform: translateX(-50%); /* 1セット分移動して3セット分の画像でシームレスなループを実現 */
+      transform: translateX(-100%); /* 完全な移動でシームレスなループを実現 */
     }
   }
   
@@ -939,38 +934,7 @@
     justify-content: flex-start !important;
   }
 
-  /* PC以外専用アニメーション - 右から左へ（より確実に動作） */
-  @keyframes lookbook-scroll-mobile {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-66.666%);
-    }
-  }
 
-  /* フォールバック用のアニメーション - より確実に動作 */
-  @keyframes lookbook-scroll-mobile-fallback {
-    0% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(-33.333%);
-    }
-    100% {
-      transform: translateX(-66.666%);
-    }
-  }
-
-  /* テスト用のシンプルなアニメーション */
-  @keyframes lookbook-test {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-200px);
-    }
-  }
 
   /* アニメーションの強制適用 - より確実に動作させる */
   html body #lookbook .lookbook-track,
@@ -989,15 +953,15 @@
     position: relative !important;
     z-index: 5 !important;
     
-    /* アニメーション設定 - シンプルで確実 */
-    animation: lookbook-test 5s linear infinite !important;
+    /* アニメーション設定 - 統一されたアニメーション */
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
     animation-play-state: running !important;
     animation-fill-mode: both !important;
     animation-direction: normal !important;
     animation-delay: 0s !important;
     animation-iteration-count: infinite !important;
     animation-timing-function: linear !important;
-    animation-duration: 5s !important;
+    animation-duration: 20s !important;
     
     /* ハードウェアアクセラレーション */
     will-change: transform !important;
@@ -1006,8 +970,8 @@
     -webkit-backface-visibility: hidden !important;
     
     /* 初期位置設定 */
-    transform: translateX(0) !important;
-    -webkit-transform: translateX(0) translateZ(0) !important;
+    transform: translateX(100%) !important;
+    -webkit-transform: translateX(100%) translateZ(0) !important;
     
     /* その他の設定 */
     user-select: none !important;
@@ -1132,9 +1096,9 @@
   html body .lookbook-section .lookbook-track,
   html body .lookbook-container .lookbook-track {
     /* ベンダープレフィックス対応 */
-    -webkit-animation: lookbook-test 5s linear infinite !important;
-    -moz-animation: lookbook-test 5s linear infinite !important;
-    -o-animation: lookbook-test 5s linear infinite !important;
+    -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
     
     /* アニメーション状態の強制 */
     -webkit-animation-play-state: running !important;
@@ -1142,10 +1106,10 @@
     -o-animation-play-state: running !important;
     
     /* 初期状態の強制 */
-    -webkit-transform: translateX(0) !important;
-    -moz-transform: translateX(0) !important;
-    -o-transform: translateX(0) !important;
-    -ms-transform: translateX(0) !important;
+    -webkit-transform: translateX(100%) !important;
+    -moz-transform: translateX(100%) !important;
+    -o-transform: translateX(100%) !important;
+    -ms-transform: translateX(100%) !important;
     
     /* パフォーマンス最適化 */
     -webkit-perspective: 1000px !important;
@@ -1165,10 +1129,10 @@
   html body .lookbook-section .lookbook-track:not(:hover),
   html body .lookbook-container .lookbook-track:not(:hover) {
     /* 強制的にアニメーションを有効化 */
-    animation: lookbook-test 5s linear infinite !important;
-    -webkit-animation: lookbook-test 5s linear infinite !important;
-    -moz-animation: lookbook-test 5s linear infinite !important;
-    -o-animation: lookbook-test 5s linear infinite !important;
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
   } 
 
   /* 最終的なフォールバック - インラインスタイルで強制 */
@@ -1177,10 +1141,10 @@
   html body .lookbook-section .lookbook-track,
   html body .lookbook-container .lookbook-track {
     /* アニメーションの最終保証 */
-    animation: lookbook-test 5s linear infinite !important;
-    -webkit-animation: lookbook-test 5s linear infinite !important;
-    -moz-animation: lookbook-test 5s linear infinite !important;
-    -o-animation: lookbook-test 5s linear infinite !important;
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
     
     /* アニメーション状態の最終保証 */
     animation-play-state: running !important;
@@ -1208,10 +1172,10 @@
   html body .lookbook-section .lookbook-track,
   html body .lookbook-container .lookbook-track {
     /* アニメーションの完全保証 */
-    animation: lookbook-test 5s linear infinite both !important;
-    -webkit-animation: lookbook-test 5s linear infinite both !important;
-    -moz-animation: lookbook-test 5s linear infinite both !important;
-    -o-animation: lookbook-test 5s linear infinite both !important;
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
     
     /* 状態の完全保証 */
     animation-play-state: running !important;
@@ -1233,8 +1197,8 @@
   html body .lookbook-section .lookbook-track,
   html body .lookbook-container .lookbook-track {
     /* すべてのアニメーションプロパティを個別に強制設定 */
-    animation-name: lookbook-test !important;
-    animation-duration: 5s !important;
+    animation-name: lookbook-scroll-right-to-left !important;
+    animation-duration: 20s !important;
     animation-timing-function: linear !important;
     animation-delay: 0s !important;
     animation-iteration-count: infinite !important;
@@ -1243,8 +1207,8 @@
     animation-play-state: running !important;
     
     /* ベンダープレフィックス版も個別に設定 */
-    -webkit-animation-name: lookbook-test !important;
-    -webkit-animation-duration: 5s !important;
+    -webkit-animation-name: lookbook-scroll-right-to-left !important;
+    -webkit-animation-duration: 20s !important;
     -webkit-animation-timing-function: linear !important;
     -webkit-animation-delay: 0s !important;
     -webkit-animation-iteration-count: infinite !important;
@@ -1253,11 +1217,11 @@
     -webkit-animation-play-state: running !important;
     
     /* 初期位置の個別設定 */
-    transform: translateX(0) !important;
-    -webkit-transform: translateX(0) !important;
-    -moz-transform: translateX(0) !important;
-    -o-transform: translateX(0) !important;
-    -ms-transform: translateX(0) !important;
+    transform: translateX(100%) !important;
+    -webkit-transform: translateX(100%) !important;
+    -moz-transform: translateX(100%) !important;
+    -o-transform: translateX(100%) !important;
+    -ms-transform: translateX(100%) !important;
   }
 
   /* 最終的な強制設定 - インラインスタイルレベル */
@@ -1266,8 +1230,8 @@
   html body .lookbook-section .lookbook-track,
   html body .lookbook-container .lookbook-track {
     /* アニメーションの最終保証 - すべてのプロパティを個別に設定 */
-    animation-name: lookbook-test !important;
-    animation-duration: 5s !important;
+    animation-name: lookbook-scroll-right-to-left !important;
+    animation-duration: 20s !important;
     animation-timing-function: linear !important;
     animation-delay: 0s !important;
     animation-iteration-count: infinite !important;
@@ -1276,8 +1240,8 @@
     animation-play-state: running !important;
     
     /* ベンダープレフィックス版も最終保証 */
-    -webkit-animation-name: lookbook-test !important;
-    -webkit-animation-duration: 5s !important;
+    -webkit-animation-name: lookbook-scroll-right-to-left !important;
+    -webkit-animation-duration: 20s !important;
     -webkit-animation-timing-function: linear !important;
     -webkit-animation-delay: 0s !important;
     -webkit-animation-iteration-count: infinite !important;
@@ -1286,11 +1250,11 @@
     -webkit-animation-play-state: running !important;
     
     /* 初期位置の最終保証 */
-    transform: translateX(0) !important;
-    -webkit-transform: translateX(0) !important;
-    -moz-transform: translateX(0) !important;
-    -o-transform: translateX(0) !important;
-    -ms-transform: translateX(0) !important;
+    transform: translateX(100%) !important;
+    -webkit-transform: translateX(100%) !important;
+    -moz-transform: translateX(100%) !important;
+    -o-transform: translateX(100%) !important;
+    -ms-transform: translateX(100%) !important;
     
     /* パフォーマンス最適化の最終保証 */
     will-change: transform !important;
@@ -1300,29 +1264,34 @@
   } 
 
 /* ========================================
-   最終的な強制設定 - すべての競合を排除
+   統一された右から左へのアニメーション
    ======================================== */
 
-/* 最強のアニメーション設定 - 確実に動作させる */
+/* 統一された右から左へのアニメーション */
+@keyframes lookbook-scroll-right-to-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 最終的な強制設定 - すべての競合を排除 */
 html body .lookbook-track,
 html body #lookbook .lookbook-track,
 html body .section-lookbook .lookbook-track,
 html body .lookbook-section .lookbook-track,
-html body .lookbook-container .lookbook-track,
-.lookbook-track,
-#lookbook .lookbook-track,
-.section-lookbook .lookbook-track,
-.lookbook-section .lookbook-track,
-.lookbook-container .lookbook-track {
-  /* アニメーションの最強保証 */
-  animation: lookbook-test 5s linear infinite both !important;
-  -webkit-animation: lookbook-test 5s linear infinite both !important;
-  -moz-animation: lookbook-test 5s linear infinite both !important;
-  -o-animation: lookbook-test 5s linear infinite both !important;
+html body .lookbook-container .lookbook-track {
+  /* 統一されたアニメーションを適用 */
+  animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
   
   /* 個別プロパティの最強保証 */
-  animation-name: lookbook-test !important;
-  animation-duration: 5s !important;
+  animation-name: lookbook-scroll-right-to-left !important;
+  animation-duration: 20s !important;
   animation-timing-function: linear !important;
   animation-delay: 0s !important;
   animation-iteration-count: infinite !important;
@@ -1331,8 +1300,8 @@ html body .lookbook-container .lookbook-track,
   animation-play-state: running !important;
   
   /* ベンダープレフィックス版の最強保証 */
-  -webkit-animation-name: lookbook-test !important;
-  -webkit-animation-duration: 5s !important;
+  -webkit-animation-name: lookbook-scroll-right-to-left !important;
+  -webkit-animation-duration: 20s !important;
   -webkit-animation-timing-function: linear !important;
   -webkit-animation-delay: 0s !important;
   -webkit-animation-iteration-count: infinite !important;
@@ -1341,11 +1310,11 @@ html body .lookbook-container .lookbook-track,
   -webkit-animation-play-state: running !important;
   
   /* 初期位置の最強保証 */
-  transform: translateX(0) !important;
-  -webkit-transform: translateX(0) !important;
-  -moz-transform: translateX(0) !important;
-  -o-transform: translateX(0) !important;
-  -ms-transform: translateX(0) !important;
+  transform: translateX(100%) !important;
+  -webkit-transform: translateX(100%) !important;
+  -moz-transform: translateX(100%) !important;
+  -o-transform: translateX(100%) !important;
+  -ms-transform: translateX(100%) !important;
   
   /* パフォーマンス最適化の最強保証 */
   will-change: transform !important;
@@ -1359,54 +1328,8 @@ html body .lookbook-container .lookbook-track,
   opacity: 1 !important;
   position: relative !important;
   z-index: 10 !important;
-}
-
-/* インラインスタイルレベルでの最強保証 */
-html body .lookbook-track *,
-html body #lookbook .lookbook-track *,
-html body .section-lookbook .lookbook-track *,
-html body .lookbook-section .lookbook-track *,
-html body .lookbook-container .lookbook-track * {
-  /* 子要素のアニメーション継承を保証 */
-  animation-fill-mode: inherit !important;
-  -webkit-animation-fill-mode: inherit !important;
-  -moz-animation-fill-mode: inherit !important;
-  -o-animation-fill-mode: inherit !important;
-}
-
-/* メディアクエリ内での最強保証 */
-@media (max-width: 1439px) {
-  html body .lookbook-track,
-  html body #lookbook .lookbook-track,
-  html body .section-lookbook .lookbook-track,
-  html body .lookbook-section .lookbook-track,
-  html body .lookbook-container .lookbook-track {
-    /* アニメーションの最終保証 - メディアクエリ内 */
-    animation: lookbook-test 5s linear infinite both !important;
-    -webkit-animation: lookbook-test 5s linear infinite both !important;
-    -moz-animation: lookbook-test 5s linear infinite both !important;
-    -o-animation: lookbook-test 5s linear infinite both !important;
-    
-    /* 個別プロパティの最終保証 */
-    animation-name: lookbook-test !important;
-    animation-duration: 5s !important;
-    animation-timing-function: linear !important;
-    animation-delay: 0s !important;
-    animation-iteration-count: infinite !important;
-    animation-direction: normal !important;
-    animation-fill-mode: both !important;
-    animation-play-state: running !important;
-    
-    /* ベンダープレフィックス版の最終保証 */
-    -webkit-animation-name: lookbook-test !important;
-    -webkit-animation-duration: 5s !important;
-    -webkit-animation-timing-function: linear !important;
-    -webkit-animation-delay: 0s !important;
-    -webkit-animation-iteration-count: infinite !important;
-    -webkit-animation-direction: normal !important;
-    -webkit-animation-fill-mode: both !important;
-    -webkit-animation-play-state: running !important;
-  }
 } 
+
+ 
 
  
