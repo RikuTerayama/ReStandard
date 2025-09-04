@@ -1,89 +1,281 @@
 /* ========================================
-   Lookbook Section Fixes
+   Lookbook Section - ULTIMATE PRIORITY
    ======================================== */
 
-/* Lookbookアイテム（画像+ナンバー）のスタイル - スマホ版のみ */
-@media (max-width: 1024px) {
+/* 最高特異性で確実に適用 - 他のすべてのCSSを上書き */
+html body #lookbook,
+html body .section-lookbook,
+html body .lookbook-section,
+html body #lookbook.lookbook-section,
+html body .section-lookbook.lookbook-section {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 9999 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Lookbookコンテナ - 最高特異性 */
+html body #lookbook .lookbook-container,
+html body .section-lookbook .lookbook-container,
+html body .lookbook-section .lookbook-container,
+html body #lookbook.lookbook-section .lookbook-container,
+html body .section-lookbook.lookbook-section .lookbook-container {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  margin: 20px auto !important;
+  max-width: 1200px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Lookbookトラック - 最高特異性で確実に表示 */
+html body #lookbook .lookbook-track,
+html body .section-lookbook .lookbook-track,
+html body .lookbook-section .lookbook-track,
+html body .lookbook-container .lookbook-track,
+html body #lookbook.lookbook-section .lookbook-track,
+html body .section-lookbook.lookbook-section .lookbook-track,
+html body .lookbook-container .lookbook-track {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  width: max-content !important;
+  min-width: max-content !important;
+  gap: 20px !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  /* 右から左へのアニメーション */
+  animation: lookbook-scroll-right-to-left 30s linear infinite !important;
+  animation-play-state: running !important;
+  will-change: transform !important;
+  /* パフォーマンス最適化 */
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+}
+
+/* アニメーション定義 - 右から左への遷移 */
+@keyframes lookbook-scroll-right-to-left {
+  0% {
+    transform: translateX(100%) !important;
+  }
+  100% {
+    transform: translateX(-100%) !important;
+  }
+}
+
+/* Lookbookアイテム - 最高特異性 */
+html body .lookbook-item,
+html body #lookbook .lookbook-item,
+html body .section-lookbook .lookbook-item,
+html body .lookbook-section .lookbook-item,
+html body .lookbook-track .lookbook-item {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important;
+  /* レスポンシブ対応 */
+  min-width: 200px !important;
+  max-width: 200px !important;
+}
+
+/* 画像のスタイル - 最高特異性で確実に表示 */
+html body .lookbook-item img,
+html body #lookbook .lookbook-item img,
+html body .section-lookbook .lookbook-item img,
+html body .lookbook-section .lookbook-item img,
+html body .lookbook-track .lookbook-item img,
+html body .lookbook-container img,
+html body .lookbook-track img,
+html body .lookbook-section img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 200px !important;
+  max-height: 300px !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* 画像ホバー効果 */
+html body .lookbook-item img:hover {
+  transform: scale(1.05) !important;
+}
+
+/* 画像ナンバー - 最高特異性 */
+html body .image-number,
+html body .lookbook-item .image-number,
+html body #lookbook .image-number,
+html body .section-lookbook .image-number,
+html body .lookbook-section .image-number {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: absolute !important;
+  bottom: 10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 4px 8px !important;
+  border-radius: 12px !important;
+  z-index: 15 !important;
+}
+
+/* ナビゲーション - 最高特異性 */
+html body .lookbook-navigation,
+html body #lookbook .lookbook-navigation,
+html body .section-lookbook .lookbook-navigation,
+html body .lookbook-section .lookbook-navigation,
+html body .lookbook-container .lookbook-navigation {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  margin-top: 20px !important;
+  padding: 12px 20px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 矢印ボタン - 最高特異性 */
+html body .nav-arrow,
+html body .lookbook-navigation .nav-arrow,
+html body #lookbook .nav-arrow,
+html body .section-lookbook .nav-arrow,
+html body .lookbook-section .nav-arrow {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-size: 18px !important;
+  color: #555 !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  padding: 8px 12px !important;
+  border-radius: 50% !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease !important;
+  user-select: none !important;
+}
+
+html body .nav-arrow:hover {
+  background: rgba(0, 0, 0, 0.2) !important;
+  transform: scale(1.1) !important;
+}
+
+/* カウンター - 最高特異性 */
+html body .image-counter,
+html body .lookbook-navigation .image-counter,
+html body #lookbook .image-counter,
+html body .section-lookbook .image-counter,
+html body .lookbook-section .image-counter {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+  color: #333 !important;
+  font-weight: 600 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  padding: 6px 12px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ホバー時の一時停止 */
+html body .lookbook-track:hover {
+  animation-play-state: paused !important;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
   html body .lookbook-item {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
-    position: relative !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
   }
   
-  /* 画像ナンバーのスタイル */
-  html body .image-number {
-    font-size: 12px !important;
-    color: #666 !important;
-    font-weight: 500 !important;
-    text-align: center !important;
-    background: rgba(255, 255, 255, 0.8) !important;
-    padding: 4px 8px !important;
-    border-radius: 12px !important;
-    position: absolute !important;
-    bottom: -8px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    z-index: 15 !important;
+  html body .lookbook-item img {
+    min-height: 150px !important;
+    max-height: 200px !important;
   }
   
-  /* ナビゲーション（矢印+カウンター）のスタイル */
-  html body .lookbook-navigation {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 20px !important;
-    margin-top: 20px !important;
-    padding: 12px 16px !important;
-    background: rgba(255, 255, 255, 0.9) !important;
-    border-radius: 20px !important;
+  html body .lookbook-container {
+    padding: 15px !important;
+    margin: 15px auto !important;
   }
   
-  /* 矢印のスタイル */
-  html body .nav-arrow {
-    font-size: 18px !important;
-    color: #555 !important;
-    font-weight: bold !important;
-    cursor: pointer !important;
-    padding: 8px !important;
-    border-radius: 50% !important;
-    background: rgba(0, 0, 0, 0.1) !important;
-    transition: all 0.2s ease !important;
-  }
-  
-  html body .nav-arrow:hover {
-    background: rgba(0, 0, 0, 0.2) !important;
-    transform: scale(1.1) !important;
-  }
-  
-  /* カウンターのスタイル */
-  html body .image-counter {
-    font-size: 14px !important;
-    color: #333 !important;
-    font-weight: 600 !important;
-    background: rgba(255, 255, 255, 0.9) !important;
-    padding: 6px 12px !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  html body .lookbook-track {
+    gap: 15px !important;
   }
 }
 
-/* PC版では画像下の番号とナビゲーションバーを非表示 */
+@media (max-width: 480px) {
+  html body .lookbook-item {
+    min-width: 120px !important;
+    max-width: 120px !important;
+  }
+  
+  html body .lookbook-item img {
+    min-height: 120px !important;
+    max-height: 150px !important;
+  }
+  
+  html body .lookbook-container {
+    padding: 10px !important;
+    margin: 10px auto !important;
+  }
+  
+  html body .lookbook-track {
+    gap: 10px !important;
+  }
+}
+
+/* PC版での調整 */
 @media (min-width: 1025px) {
-  .image-number,
-  .lookbook-navigation {
-    display: none !important;
+  html body .lookbook-item {
+    min-width: 250px !important;
+    max-width: 250px !important;
   }
-}
-
-/* Lookbookコンテナのスタイル調整 */
-.lookbook-container {
-  position: relative !important;
-  z-index: 5 !important;
-}
-
-.lookbook-track {
-  position: relative !important;
-  z-index: 5 !important;
+  
+  html body .lookbook-item img {
+    min-height: 250px !important;
+    max-height: 350px !important;
+  }
+  
+  html body .lookbook-container {
+    padding: 30px !important;
+    margin: 30px auto !important;
+  }
+  
+  html body .lookbook-track {
+    gap: 25px !important;
+  }
 } 
