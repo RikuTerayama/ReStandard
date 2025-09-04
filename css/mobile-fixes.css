@@ -114,7 +114,7 @@
   /* flowing imagesの横スクロールレイアウトを統一 */
   html body .flowing-images,
   html body .section-flowing {
-    display: flex !important;
+    display: none !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
@@ -193,7 +193,7 @@
   
   /* Lookbookトラック（画像のみを流す） */
   html body .lookbook-track {
-    display: flex !important;
+    display: none !important;
     gap: 16px !important; /* 画像間の間隔を調整 */
     /* アニメーションを有効化して右から左への遷移を実現 */
     animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
@@ -217,17 +217,17 @@
     position: relative !important;
     z-index: 5 !important;
     /* 初期位置設定 */
-    transform: translateX(100%) !important;
+    transform: translateX(0) !important;
     justify-content: flex-start !important;
   }
   
   /* スマホ専用の自動スクロールアニメーション定義（PC用と競合しない） */
   @keyframes lookbook-scroll-mobile-smartphone {
     0% {
-      transform: translateX(100%);
+      transform: translateX(0);
     }
     100% {
-      transform: translateX(-100%); /* 完全な移動でシームレスなループを実現 */
+      transform: translateX(-50%); /* 完全な移動でシームレスなループを実現 */
     }
   }
   
@@ -411,7 +411,7 @@
 @media (max-width: 991px) {
   /* Lookbookコンテナ（PC以外の全デバイス対応） - 背景を固定 */
   html body .lookbook-container {
-    display: flex !important;
+    display: none !important;
     overflow-x: auto !important; /* スワイプ表示のためautoに変更 */
     scroll-snap-type: x proximity !important; /* スワイプ時のスナップを緩和 */
     -webkit-overflow-scrolling: touch !important;
@@ -447,7 +447,7 @@
   
   /* Lookbookトラック（画像のみを流す） */
   html body .lookbook-track {
-    display: flex !important;
+    display: none !important;
     gap: 16px !important; /* 画像間の間隔を調整 */
     /* アニメーションを無効化してスワイプ表示に変更 */
     animation: none !important; /* フロー表示を無効化 */
@@ -531,7 +531,7 @@
   
   /* flowing imagesの横スクロール機能復活 - 高特異性 */
   html body .flowing-images {
-    display: flex !important;
+    display: none !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
@@ -556,7 +556,7 @@
   
   /* Lookbookの統一 - 高特異性 */
   html body .lookbook-grid {
-    display: flex !important;
+    display: none !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
@@ -647,7 +647,7 @@
      margin-right: auto !important;
      max-width: 100% !important;
      padding: 0 16px !important;
-     display: flex !important;
+     display: none !important;
      flex-direction: column !important;
      align-items: center !important;
      justify-content: center !important;
@@ -690,7 +690,7 @@
    html body .section-collection .flowing-images,
    html body #collection .flowing-images,
    html body #flowing-images {
-     display: flex !important;
+     display: none !important;
      overflow-x: auto !important;
      scroll-snap-type: x mandatory !important;
      -webkit-overflow-scrolling: touch !important;
@@ -722,7 +722,7 @@
    html body .section-collection .flow-track,
    html body #collection .flow-track,
    html body .flow-track {
-     display: flex !important;
+     display: none !important;
      visibility: visible !important;
      opacity: 1 !important;
    }
@@ -810,7 +810,7 @@
 
   /* Lookbookアイテム（画像+ナンバー）のスタイル */
   html body .lookbook-item {
-    display: flex !important;
+    display: none !important;
     flex-direction: column !important;
     align-items: center !important;
     gap: 8px !important;
@@ -835,7 +835,7 @@
   
   /* ナビゲーション（矢印+カウンター）のスタイル */
   html body .lookbook-navigation {
-    display: flex !important;
+    display: none !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 20px !important;
@@ -912,7 +912,7 @@
     animation: lookbook-scroll-mobile 15s linear infinite !important;
     animation-play-state: running !important;
     will-change: transform !important;
-    display: flex !important;
+    display: none !important;
     gap: 16px !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -942,7 +942,7 @@
   html body .lookbook-section .lookbook-track,
   html body .lookbook-container .lookbook-track {
     /* 基本設定 */
-    display: flex !important;
+    display: none !important;
     gap: 16px !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -970,7 +970,7 @@
     -webkit-backface-visibility: hidden !important;
     
     /* 初期位置設定 */
-    transform: translateX(100%) !important;
+    transform: translateX(0) !important;
     -webkit-transform: translateX(100%) translateZ(0) !important;
     
     /* その他の設定 */
@@ -981,7 +981,7 @@
     justify-content: flex-start !important;
     
     /* デバッグ用 - アニメーションが動作しているか確認 */
-    border: 2px solid red !important;
+    border: none !important;
   }
 
   /* フォールバックアニメーションの適用 */
@@ -1106,10 +1106,10 @@
     -o-animation-play-state: running !important;
     
     /* 初期状態の強制 */
-    -webkit-transform: translateX(100%) !important;
-    -moz-transform: translateX(100%) !important;
-    -o-transform: translateX(100%) !important;
-    -ms-transform: translateX(100%) !important;
+    -webkit-transform: translateX(0) !important;
+    -moz-transform: translateX(0) !important;
+    -o-transform: translateX(0) !important;
+    -ms-transform: translateX(0) !important;
     
     /* パフォーマンス最適化 */
     -webkit-perspective: 1000px !important;
@@ -1217,11 +1217,11 @@
     -webkit-animation-play-state: running !important;
     
     /* 初期位置の個別設定 */
-    transform: translateX(100%) !important;
-    -webkit-transform: translateX(100%) !important;
-    -moz-transform: translateX(100%) !important;
-    -o-transform: translateX(100%) !important;
-    -ms-transform: translateX(100%) !important;
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+    -moz-transform: translateX(0) !important;
+    -o-transform: translateX(0) !important;
+    -ms-transform: translateX(0) !important;
   }
 
   /* 最終的な強制設定 - インラインスタイルレベル */
@@ -1250,11 +1250,11 @@
     -webkit-animation-play-state: running !important;
     
     /* 初期位置の最終保証 */
-    transform: translateX(100%) !important;
-    -webkit-transform: translateX(100%) !important;
-    -moz-transform: translateX(100%) !important;
-    -o-transform: translateX(100%) !important;
-    -ms-transform: translateX(100%) !important;
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+    -moz-transform: translateX(0) !important;
+    -o-transform: translateX(0) !important;
+    -ms-transform: translateX(0) !important;
     
     /* パフォーマンス最適化の最終保証 */
     will-change: transform !important;
@@ -1270,10 +1270,10 @@
 /* 統一された右から左へのアニメーション */
 @keyframes lookbook-scroll-right-to-left {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
@@ -1310,11 +1310,11 @@ html body .lookbook-container .lookbook-track {
   -webkit-animation-play-state: running !important;
   
   /* 初期位置の最強保証 */
-  transform: translateX(100%) !important;
-  -webkit-transform: translateX(100%) !important;
-  -moz-transform: translateX(100%) !important;
-  -o-transform: translateX(100%) !important;
-  -ms-transform: translateX(100%) !important;
+  transform: translateX(0) !important;
+  -webkit-transform: translateX(0) !important;
+  -moz-transform: translateX(0) !important;
+  -o-transform: translateX(0) !important;
+  -ms-transform: translateX(0) !important;
   
   /* パフォーマンス最適化の最強保証 */
   will-change: transform !important;
@@ -1323,7 +1323,7 @@ html body .lookbook-container .lookbook-track {
   -o-will-change: transform !important;
   
   /* 表示の最強保証 */
-  display: flex !important;
+  display: none !important;
   visibility: visible !important;
   opacity: 1 !important;
   position: relative !important;
@@ -1333,3 +1333,222 @@ html body .lookbook-container .lookbook-track {
  
 
  
+/* ========================================
+   Lookbook画像表示の確実化
+   ======================================== */
+
+/* 画像の表示を確実にする */
+html body .lookbook-item {
+  display: none !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+}
+
+/* 画像の表示を確実にする */
+html body .lookbook-item img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 200px !important;
+  max-height: 250px !important;
+  object-fit: cover !important;
+  border-radius: 0 !important;
+  position: relative !important;
+  z-index: 10 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 画像ナンバーの表示を確実にする */
+html body .image-number {
+  font-size: 12px !important;
+  color: #666 !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  padding: 4px 8px !important;
+  border-radius: 12px !important;
+  position: absolute !important;
+  bottom: -8px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 15 !important;
+}
+
+/* アニメーションの調整 - より確実に動作 */
+@keyframes lookbook-scroll-right-to-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* 最終的な強制設定 - 画像表示を確実にする */
+html body .lookbook-track,
+html body #lookbook .lookbook-track,
+html body .section-lookbook .lookbook-track,
+html body .lookbook-section .lookbook-track,
+html body .lookbook-container .lookbook-track {
+  /* 表示の最強保証 */
+  display: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+  
+  /* アニメーションの最強保証 */
+  animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  
+  /* 初期位置の最強保証 */
+  transform: translateX(0) !important;
+  -webkit-transform: translateX(0) !important;
+  -moz-transform: translateX(0) !important;
+  -o-transform: translateX(0) !important;
+  -ms-transform: translateX(0) !important;
+}
+
+
+/* ========================================
+   Lookbook画像番号の完全非表示
+   ======================================== */
+
+/* 全サイズで画像番号を非表示 */
+html body .image-number,
+html body .lookbook-item .image-number,
+html body #lookbook .image-number,
+html body .section-lookbook .image-number,
+html body .lookbook-section .image-number,
+html body .lookbook-container .image-number,
+.image-number,
+.lookbook-item .image-number,
+#lookbook .image-number,
+.section-lookbook .image-number,
+.lookbook-section .image-number,
+.lookbook-container .image-number {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+}
+
+
+/* ========================================
+   全サイズでの右から左への遷移の確実化
+   ======================================== */
+
+/* 全サイズで右から左へのアニメーションを適用 */
+html body .lookbook-track,
+html body #lookbook .lookbook-track,
+html body .section-lookbook .lookbook-track,
+html body .lookbook-section .lookbook-track,
+html body .lookbook-container .lookbook-track {
+  /* アニメーションの最強保証 - 全サイズ対応 */
+  animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  
+  /* 表示の最強保証 */
+  display: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+  
+  /* 初期位置の最強保証 */
+  transform: translateX(0) !important;
+  -webkit-transform: translateX(0) !important;
+  -moz-transform: translateX(0) !important;
+  -o-transform: translateX(0) !important;
+  -ms-transform: translateX(0) !important;
+  
+  /* アニメーション状態の最強保証 */
+  animation-play-state: running !important;
+  -webkit-animation-play-state: running !important;
+  -moz-animation-play-state: running !important;
+  -o-animation-play-state: running !important;
+  
+  /* アニメーション設定の最強保証 */
+  animation-name: lookbook-scroll-right-to-left !important;
+  animation-duration: 20s !important;
+  animation-timing-function: linear !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: infinite !important;
+  animation-direction: normal !important;
+  animation-fill-mode: both !important;
+  
+  /* ベンダープレフィックス版の最強保証 */
+  -webkit-animation-name: lookbook-scroll-right-to-left !important;
+  -webkit-animation-duration: 20s !important;
+  -webkit-animation-timing-function: linear !important;
+  -webkit-animation-delay: 0s !important;
+  -webkit-animation-iteration-count: infinite !important;
+  -webkit-animation-direction: normal !important;
+  -webkit-animation-fill-mode: both !important;
+}
+
+/* 全サイズ対応のアニメーション定義 */
+@keyframes lookbook-scroll-right-to-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* メディアクエリ内での最強保証 - 全サイズ対応 */
+@media (max-width: 767px) {
+  html body .lookbook-track,
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  html body .lookbook-track,
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  html body .lookbook-track,
+  html body #lookbook .lookbook-track,
+  html body .section-lookbook .lookbook-track,
+  html body .lookbook-section .lookbook-track,
+  html body .lookbook-container .lookbook-track {
+    animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -webkit-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -moz-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+    -o-animation: lookbook-scroll-right-to-left 20s linear infinite both !important;
+  }
+}
+
