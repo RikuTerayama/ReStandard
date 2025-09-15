@@ -766,7 +766,7 @@
     .collection-scroll-bottom {
       will-change: transform !important;
       animation-fill-mode: none !important;
-      border: none !important;
+      border: 3px solid green !important;
       outline: none !important;
       box-shadow: none !important;
       display: flex !important;
@@ -787,9 +787,26 @@
       flex-basis: auto !important;
       flex-grow: 0 !important;
       /* デバッグ用の強制設定 */
-      background: rgba(255, 0, 0, 0.1) !important;
+      background: rgba(255, 0, 0, 0.3) !important;
       position: relative !important;
       z-index: 9999 !important;
+      /* 強制的に表示 */
+      visibility: visible !important;
+      opacity: 1 !important;
+      /* 他のスタイルを無効化 */
+      float: none !important;
+      clear: none !important;
+      vertical-align: top !important;
+      /* 競合するスタイルを無効化 */
+      column-count: 1 !important;
+      column-gap: 0 !important;
+      column-rule: none !important;
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+      /* 強制的に横並び */
+      writing-mode: horizontal-tb !important;
+      direction: ltr !important;
+      text-align: left !important;
     }
     
     html body .collection-row-top,
@@ -1191,7 +1208,7 @@
     
     <!-- 上段：右→左スクロール -->
     <div class="collection-row-top" style="width: 100%; height: 250px; overflow: hidden; margin-bottom: 20px; position: relative; background: transparent; border: 2px solid blue !important;">
-      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 20px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 30s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; border: 2px solid green !important;">
+      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 20px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 30s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; border: 3px solid green !important; background: rgba(0, 255, 0, 0.2) !important; visibility: visible !important; opacity: 1 !important;">
         <!-- 1周目 -->
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 200px !important; height: 200px !important;">
           <img src="image/1.JPG" alt="Collection Item 1" style="height: 200px !important; width: 200px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
@@ -1241,7 +1258,7 @@
     
     <!-- 下段：左→右スクロール -->
     <div class="collection-row-bottom" style="width: 100%; height: 250px; overflow: hidden; position: relative; background: transparent; border: 2px solid orange !important;">
-      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 20px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 30s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; border: 2px solid purple !important;">
+      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 20px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 30s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; border: 3px solid purple !important; background: rgba(128, 0, 128, 0.2) !important; visibility: visible !important; opacity: 1 !important;">
         <!-- 1周目（逆順） -->
         <img src="image/32.JPG" alt="Collection Item 32" style="height: 200px !important; width: 200px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/31.JPG" alt="Collection Item 31" style="height: 200px !important; width: 200px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
