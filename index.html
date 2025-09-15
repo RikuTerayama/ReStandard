@@ -786,7 +786,7 @@
       flex-basis: auto !important;
       flex-grow: 0 !important;
       /* デバッグ用の強制設定 */
-      background: rgba(255, 0, 0, 0.3) !important;
+      background: transparent !important;
       position: relative !important;
       z-index: 9999 !important;
       /* 強制的に表示 */
@@ -822,18 +822,18 @@
       /* デバッグ用のボーダーと背景色を削除 */
     }
     
-    /* Collection画像の半透明ボックススタイル */
+    /* Collection画像のスタイル - 個別ボックスを削除 */
     html body .collection-scroll-top a,
     html body .collection-scroll-bottom a,
     body .collection-scroll-top a,
     body .collection-scroll-bottom a,
     .collection-scroll-top a,
     .collection-scroll-bottom a {
-      background: rgba(255, 255, 255, 0.9) !important;
-      border-radius: 12px !important;
-      padding: 8px !important;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
-      transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+      background: transparent !important;
+      border-radius: 8px !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      transition: transform 0.3s ease !important;
     }
     
     html body .collection-scroll-top a:hover,
@@ -843,7 +843,6 @@
     .collection-scroll-top a:hover,
     .collection-scroll-bottom a:hover {
       transform: translateY(-4px) !important;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
     }
     
     /* Collection画像のスタイル調整 */
@@ -853,8 +852,8 @@
     body .collection-scroll-bottom img,
     .collection-scroll-top img,
     .collection-scroll-bottom img {
-      height: 234px !important;
-      width: 234px !important;
+      height: 250px !important;
+      width: 250px !important;
       object-fit: cover !important;
       border-radius: 8px !important;
       display: block !important;
@@ -1268,8 +1267,8 @@
     <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
     
     <!-- 上段：右→左スクロール -->
-    <div class="collection-row-top" style="width: 100%; height: 300px; overflow: hidden; margin-bottom: 20px; position: relative; background: transparent;">
-      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 10px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 30s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
+    <div class="collection-row-top" style="width: 100%; height: 300px; overflow: hidden; margin-bottom: 20px; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 10px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 15s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
         <!-- 1周目 -->
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
           <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
@@ -1318,8 +1317,8 @@
       </div>
     
     <!-- 下段：左→右スクロール -->
-    <div class="collection-row-bottom" style="width: 100%; height: 300px; overflow: hidden; position: relative; background: transparent;">
-      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 10px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 30s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
+    <div class="collection-row-bottom" style="width: 100%; height: 300px; overflow: hidden; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 10px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 15s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
         <!-- 1周目（逆順） -->
         <img src="image/32.JPG" alt="Collection Item 32" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/31.JPG" alt="Collection Item 31" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
