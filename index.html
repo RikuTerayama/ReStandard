@@ -779,6 +779,8 @@
       white-space: nowrap !important;
       overflow: visible !important;
       justify-content: flex-start !important;
+      flex-shrink: 0 !important;
+      min-width: max-content !important;
     }
     
     html body .collection-row-top,
@@ -792,10 +794,13 @@
       box-shadow: none !important;
       background: transparent !important;
       overflow: hidden !important;
-        position: relative !important;
-        width: 100% !important;
+      position: relative !important;
+      width: 100% !important;
       height: 250px !important;
       margin-bottom: 20px !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     html body .collection-scroll-top img,
@@ -816,6 +821,8 @@
       margin: 0 !important;
       padding: 0 !important;
       vertical-align: middle !important;
+      float: none !important;
+      clear: none !important;
     }
     
     html body .collection-scroll-top a,
