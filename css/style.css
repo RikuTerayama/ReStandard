@@ -68,6 +68,184 @@ section {
   margin-bottom: 30px;
 }
 
+/* セクション間の縦間隔を統一 */
+.section-spacing {
+  margin-top: clamp(80px, 10vw, 120px);
+}
+
+/* Collection セクションのスタイル */
+.collection-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.collection-track {
+  width: 100%;
+  overflow: hidden;
+  height: 250px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.collection-track-bottom {
+  margin-bottom: 0;
+}
+
+.collection-items {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  width: max-content;
+  align-items: center;
+}
+
+.collection-items img {
+  height: 200px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.collection-items img:hover {
+  transform: scale(1.05);
+}
+
+/* Collection アニメーション */
+.collection-track-top .collection-items {
+  animation: collection-scroll-right 30s linear infinite;
+}
+
+.collection-track-bottom .collection-items {
+  animation: collection-scroll-left 30s linear infinite;
+}
+
+@keyframes collection-scroll-right {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes collection-scroll-left {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ホバー時の一時停止 */
+.collection-track:hover .collection-items {
+  animation-play-state: paused;
+}
+
+/* prefers-reduced-motion 対応 */
+@media (prefers-reduced-motion: reduce) {
+  .collection-track-top .collection-items,
+  .collection-track-bottom .collection-items {
+    animation: none;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .collection-track {
+    height: 180px;
+  }
+  
+  .collection-items img {
+    height: 150px;
+  }
+  
+  .collection-track-top .collection-items {
+    animation-duration: 20s;
+  }
+  
+  .collection-track-bottom .collection-items {
+    animation-duration: 20s;
+  }
+}
+
+/* Lookbook セクションのスタイル */
+.lookbook-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 450px;
+}
+
+.lookbook-track {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+  width: max-content;
+  align-items: center;
+  animation: lookbook-scroll 25s linear infinite;
+}
+
+.lookbook-item {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lookbook-item img {
+  height: 400px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.lookbook-item img:hover {
+  transform: scale(1.03);
+}
+
+.image-number {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Lookbook アニメーション */
+@keyframes lookbook-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ホバー時の一時停止 */
+.lookbook-container:hover .lookbook-track {
+  animation-play-state: paused;
+}
+
+/* prefers-reduced-motion 対応 */
+@media (prefers-reduced-motion: reduce) {
+  .lookbook-track {
+    animation: none;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .lookbook-container {
+    height: 300px;
+  }
+  
+  .lookbook-item img {
+    height: 250px;
+  }
+  
+  .lookbook-track {
+    gap: 16px;
+    animation-duration: 20s;
+  }
+}
+
 /* セクション見出しのスタイル */
 section h2 {
   font-size: 2.5rem;
