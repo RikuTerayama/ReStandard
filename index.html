@@ -197,17 +197,7 @@
       overflow-x: hidden;
     }
     
-    /* flowing imagesのための例外設定 */
-    #flowing-images,
-    #flowing-images * {
-      overflow-x: visible !important;
-    }
-    
-    /* 横スクロール機能のための設定 */
-    .flow-track {
-      overflow-x: auto !important;
-      overflow-y: hidden !important;
-    }
+    /* 新しいCollectionセクション用の設定 */
     * {
       font-family: inherit !important;
     }
@@ -743,376 +733,13 @@
       z-index: 2;
       display: none;
     }
-    /* 流れる画像2行のスタイルとアニメーション */
-    #flowing-images {
-      width: 100vw;
-      overflow: visible;
-      background: none;
-      padding: 0;
-      /* 既存のpadding-topを除去 */
-    }
-    
-    /* ヘッダーとflowing-imagesのギャップ確保（margin折りたたみ回避） */
+    /* Collection セクション用の基本設定 */
     :root {
-      --rs-header-h: 80px; /* 64px → 80px に増加 */
+      --rs-header-h: 80px;
     }
     @media (min-width: 1024px) {
       :root { 
-        --rs-header-h: 96px; /* 72px → 96px に増加 */
-      }
-    }
-    
-    /* flowing-images とヘッダーのギャップ（paddingで確実に作る） */
-    #flowing-images {
-      /* スマホ〜デスクトップで72〜160pxの範囲で可変（PC版を狭めて調整） */
-      padding-top: clamp(72px, 8vw, 160px);
-      /* アンカーリンクでのずれ対策（24pxに増加） */
-      scroll-margin-top: calc(var(--rs-header-h) + 24px);
-      /* margin折りたたみ防止の保険 */
-      display: flow-root;
-    }
-    
-    /* 競合クラスに負けないための最高優先度設定 */
-    html body #flowing-images {
-      padding-top: clamp(72px, 8vw, 160px) !important;
-      scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
-      display: flow-root !important;
-    }
-    
-    /* スペーサー要素のスタイル（最終手段） */
-    .rs-header-spacer {
-      height: clamp(72px, 8vw, 160px); /* PC版を狭めて調整 */
-      width: 100%;
-      background: transparent;
-      pointer-events: none;
-    }
-    
-    /* スペーサー要素の最高優先度設定 */
-    html body .rs-header-spacer {
-      height: clamp(72px, 8vw, 160px) !important; /* PC版を狭めて調整 */
-      width: 100% !important;
-      background: transparent !important;
-      pointer-events: none !important;
-    }
-    
-    .flow-row {
-      width: 100vw;
-      overflow: visible;
-      margin: 0 auto 10px auto;
-      display: flex;
-      align-items: center;
-      height: 140px;
-      position: relative;
-    }
-    .flow-track {
-      display: flex;
-      gap: 24px;
-      overflow-x: visible;
-      overflow-y: hidden;
-      min-width: 7000px;
-      width: max-content;
-      white-space: nowrap;
-      user-select: none;
-      -webkit-overflow-scrolling: touch;
-      cursor: grab;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    .flow-track:active {
-      cursor: grabbing;
-    }
-    .flow-row-top .flow-track {
-      animation: flow-right 45s linear infinite;
-      transform: translateX(0%); /* 初期位置を左端に設定 */
-      animation-play-state: paused; /* 初期表示時は一時停止 */
-    }
-    .flow-row-bottom .flow-track {
-      animation: flow-left 45s linear infinite;
-      transform: translateX(-66.67%); /* 下の行は右端から開始 */
-      animation-play-state: paused; /* 初期表示時は一時停止 */
-    }
-    .flow-track.dragging {
-      animation-play-state: paused !important;
-    }
-    @keyframes flow-right {
-      0% { transform: translateX(0%); }
-      100% { transform: translateX(-66.67%); }
-    }
-    @keyframes flow-left {
-      0% { transform: translateX(-66.67%); }
-      100% { transform: translateX(0%); }
-    }
-    #flowing-images img {
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      background: #fff;
-      object-fit: contain;
-      max-width: 100%;
-      max-height: 400px;
-      width: auto;
-      height: auto;
-      transition: transform 0.2s, opacity 0.3s;
-      cursor: pointer;
-      flex-shrink: 0;
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      position: relative !important;
-      z-index: 1 !important;
-    }
-    
-    /* 読み込みエラー時の画像を非表示 */
-    #flowing-images img[src*="error"],
-    #flowing-images img:not([src]) {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-    }
-    
-    #flowing-images img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .flow-row {
-      height: 420px;
-      position: relative;
-    }
-    .flow-row-top {
-      margin-bottom: 0;
-      position: relative;
-    }
-    .flow-row-gap {
-      height: 8px;
-      position: relative;
-    }
-    @media (max-width: 900px) {
-      #flowing-images img { max-width: 100%; max-height: 200px; }
-      .flow-row { height: 220px; }
-      .flow-row-top .flow-track,
-      .flow-row-bottom .flow-track {
-        animation-duration: 45s !important;
-        min-width: 500%;
-        will-change: auto;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        position: relative !important;
-        cursor: grab !important;
-      }
-      .flow-row-top .flow-track {
-        z-index: 13 !important;
-        transform: translateX(0%); /* 上の行は左端から開始 */
-      }
-      .flow-row-bottom .flow-track {
-        z-index: 14 !important;
-        transform: translateX(-66.67%); /* 下の行は右端から開始 */
-      }
-      #flowing-images {
-        overflow: visible !important;
-        width: 100vw !important;
-        margin-top: 0 !important;
-        padding-top: 160px !important;
-        display: block !important;
-        visibility: visible !important;
-        position: relative !important;
-        z-index: 10 !important;
-      }
-      .flow-row {
-        overflow: visible !important;
-        width: 100vw !important;
-      }
-    }
-    .flow-row-bg {
-      background: rgba(255,255,255,0.9);
-      border-radius: 0;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-      margin: 0 auto 24px auto;
-      padding: 8px 0;
-      max-width: 800px; /* 700px→800pxに変更 */
-    }
-    @media (max-width: 900px) {
-      .flow-row-bg {
-        max-width: 100vw;
-      }
-    }
-    @media (max-width: 900px) {
-      .section-title {
-        color: #fff !important;
-      }
-      .navbar {
-        margin-bottom: 120px !important;
-      }
-    }
-    /* スマホ版 overviewタイトル大きく - 外部CSSで管理 */
-    @media (max-width: 768px) {
-      html, body {
-        overflow-x: hidden !important;
-        width: 100% !important;
-        max-width: 100vw !important;
-      }
-      .navbar-nav .nav-link {
-        padding: 0.5rem 1rem !important;
-        font-size: 0.9rem !important;
-      }
-      .navbar-nav .nav-item {
-        margin: 0 0.5rem !important;
-      }
-    }
-    @media (min-width: 901px) {
-      #flowing-images-bg {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        border-radius: 0 !important;
-      }
-    }
-    .flow-track img {
-      transition: transform 0.2s;
-    }
-    .flow-track img.active,
-    .flow-track img:active,
-    .flow-track img.dragging {
-      transform: scale(1.12);
-      z-index: 2;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    }
-    @media (max-width: 600px) {
-      .brands-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 1rem !important;
-        padding: 1rem !important;
-      }
-      html, body {
-        overflow-x: hidden !important;
-        width: 100% !important;
-        max-width: 100vw !important;
-      }
-      .navbar {
-        margin-bottom: 150px !important;
-      }
-      #flowing-images {
-        margin-top: 0 !important;
-        padding-top: 200px !important;
-        display: block !important;
-        visibility: visible !important;
-      }
-    }
-    .flow-row, .flow-row-bg {
-      overflow: visible !important;
-    }
-    
-    /* flowing imagesの表示確実化 */
-    #flowing-images {
-      display: block !important;
-      visibility: visible !important;
-      position: relative !important;
-      z-index: 10 !important;
-    }
-    
-    #flowing-images img {
-      display: block !important;
-      visibility: visible !important;
-      position: relative !important;
-      z-index: 15 !important;
-    }
-    
-    .flow-row {
-      display: flex !important;
-      visibility: visible !important;
-      position: relative !important;
-      z-index: 11 !important;
-    }
-    
-    .flow-track {
-      display: flex !important;
-      visibility: visible !important;
-      position: relative !important;
-      z-index: 12 !important;
-    }
-    
-    /* スマートフォン版flowing imagesの位置を強制的に調整 */
-    html body #flowing-images {
-      margin-top: 0 !important;
-      /* 新しい設定で統一（PC版を狭めて調整） */
-      padding-top: clamp(72px, 8vw, 160px) !important;
-      display: block !important;
-      visibility: visible !important;
-      scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
-    }
-    
-    /* 最も強力なセレクターで競合を完全に解決 */
-    html body #flowing-images {
-      margin-top: 0 !important;
-      /* 新しい設定で統一（PC版を狭めて調整） */
-      padding-top: clamp(72px, 8vw, 160px) !important;
-      display: block !important;
-      visibility: visible !important;
-      position: relative !important;
-      z-index: 10 !important;
-      scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
-    }
-    
-    /* flow-row-bgのmarginも上書き */
-    html body .flow-row-bg {
-      margin: 0 !important;
-      padding: 8px 0 !important;
-    }
-    
-    /* PC版用の最も強力なセレクター */
-    @media (min-width: 901px) {
-      html body #flowing-images {
-        margin-top: 0 !important;
-        /* 新しい設定で統一（PC版を狭めて調整） */
-        padding-top: clamp(72px, 8vw, 160px) !important;
-        position: relative !important;
-        /* top: 450pxを除去し、padding-topで統一 */
-        display: block !important;
-        visibility: visible !important;
-        z-index: 10 !important;
-        scroll-margin-top: calc(var(--rs-header-h) + 24px) !important;
-      }
-      
-      html body .flow-row-bg {
-        margin: 0 !important;
-        padding: 8px 0 !important;
-      }
-      
-      /* PC版で画像サイズを250pxに設定 */
-      html body #flowing-images img {
-        max-height: 250px !important;
-        width: auto !important;
-        height: auto !important;
-      }
-      
-      /* PC版でflow-rowの高さも調整 */
-      html body .flow-row {
-        height: 270px !important;
-      }
-      
-      /* overviewセクション専用のflow-row-bg設定 */
-      html body #overview .flow-row-bg {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        margin: 0 !important;
-        padding: 8px 0 !important;
-        text-align: center !important;
-      }
-      
-      /* overviewセクション専用のflow-row-bg設定 */
-      html body #overview .flow-row-bg {
-        max-width: 900px !important;
-        width: 90% !important;
-        margin: 0 auto !important;
-        padding: 8px 0 !important;
-        text-align: center !important;
-      }
-      
-      /* overviewセクション内のコンテナを中央揃えに強制 */
-      html body #overview .container {
-        max-width: 100% !important;
-        width: 100% !important;
-        text-align: center !important;
-        margin: 0 auto !important;
-        padding: 0 15px !important;
+        --rs-header-h: 96px;
       }
     }
   </style>
@@ -1383,13 +1010,8 @@
       <!-- カルーセルは削除 -->
   </section>
 
-  <!-- ここから流れる画像2行 -->
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
-  
-  <!-- ガード用スペーサー（二段構え） -->
-  <div id="rs-gap-guard" aria-hidden="true"
-       style="display:block !important;height:140px !important;min-height:140px !important;pointer-events:none;"></div>
   
   <!-- Collection Section -->
   <section id="collection" class="section-collection collection-section" data-role="collection">
@@ -1942,17 +1564,16 @@
       };
     });
   </script>
-  <!-- flow-track画像クリックで拡大モーダル表示 -->
+  <!-- Collection画像クリックで拡大モーダル表示 -->
   <div id="image-modal" style="display:none; position:fixed; z-index:10000; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
     <img id="modal-img" src="" alt="" style="max-width:90vw; max-height:90vh; border-radius:16px; box-shadow:0 8px 32px #000a;">
     <button id="modal-close" style="position:absolute;top:2vw;right:2vw;font-size:2rem;color:#fff;background:none;border:none;cursor:pointer;">&times;</button>
   </div>
   <script>
-// 画像のドラッグ開始を禁止（固定表示のため）
+// Collection画像のドラッグ開始を禁止
 (function() {
-  const tracks = document.querySelectorAll('.flow-track');
+  const tracks = document.querySelectorAll('.collection-items');
   tracks.forEach(track => {
-    // 画像のドラッグ開始を禁止
     track.querySelectorAll('img').forEach(img => {
       img.addEventListener('dragstart', e => e.preventDefault());
     });
@@ -1996,243 +1617,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
   <script>
-// flowing imagesのタップでアニメーション停止/再開機能と横スクロール機能
-document.addEventListener('DOMContentLoaded', function() {
-  const flowTracks = document.querySelectorAll('.flow-track');
-  let isPaused = false;
-  let isDragging = false;
-  let startX = 0;
-  let scrollLeft = 0;
-  
-  // 初期スクロール位置を設定（行によって異なる位置に設定）
-  function setInitialScrollPosition() {
-    flowTracks.forEach(track => {
-      // 画像が完全に読み込まれてから初期位置を設定
-      const images = track.querySelectorAll('img');
-      let allImagesLoaded = true;
-      
-      images.forEach(img => {
-        if (!img.complete || img.naturalWidth === 0) {
-          allImagesLoaded = false;
-        }
-      });
-      
-      if (allImagesLoaded) {
-        const trackWidth = track.scrollWidth;
-        const containerWidth = track.clientWidth;
-        
-        // 上の行は中央付近、下の行は左端に設定
-        if (track.parentElement.classList.contains('flow-row-top')) {
-          const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
-          track.scrollLeft = initialScroll;
-        } else if (track.parentElement.classList.contains('flow-row-bottom')) {
-          // 下の行も中央付近から開始
-          const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
-          track.scrollLeft = initialScroll;
-        }
-      }
-    });
-  }
-  
-
-  
-  // 画像の読み込み完了を待ってから初期位置を設定
-  const images = document.querySelectorAll('#flowing-images img');
-  let loadedImages = 0;
-  
-  function checkAllImagesLoaded() {
-    loadedImages++;
-    if (loadedImages === images.length) {
-              // すべての画像が読み込まれたら、少し待ってから初期位置を設定
-        setTimeout(() => {
-          setInitialScrollPosition();
-          // さらに確実にするため、もう一度設定
-          setTimeout(setInitialScrollPosition, 100);
-          
-          // 下の行の初期化を確実にする
-          setTimeout(() => {
-            const bottomTracks = document.querySelectorAll('.flow-row-bottom .flow-track');
-            bottomTracks.forEach(track => {
-              // アニメーションの初期位置に合わせる
-              track.style.transform = 'translateX(-66.67%)';
-              const trackWidth = track.scrollWidth;
-              const containerWidth = track.clientWidth;
-              const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
-              track.scrollLeft = initialScroll;
-            });
-          }, 150);
-          
-          // アニメーションを開始
-          setTimeout(() => {
-            flowTracks.forEach(track => {
-              track.style.animationPlayState = 'running';
-            });
-          }, 300);
-        }, 100);
-    }
-  }
-  
-  images.forEach(img => {
-    if (img.complete && img.naturalWidth > 0) {
-      checkAllImagesLoaded();
-      } else {
-      img.addEventListener('load', checkAllImagesLoaded);
-      img.addEventListener('error', function() {
-        // エラー時は画像を非表示にして処理を続行
-        img.style.display = 'none';
-        checkAllImagesLoaded();
-      });
-    }
-  });
-  
-  // フォールバック：段階的に初期位置を設定
-  setTimeout(setInitialScrollPosition, 500);
-  setTimeout(setInitialScrollPosition, 1000);
-  setTimeout(setInitialScrollPosition, 2000);
-  
-  // 下の行のフォールバック処理
-  setTimeout(() => {
-    const bottomTracks = document.querySelectorAll('.flow-row-bottom .flow-track');
-    bottomTracks.forEach(track => {
-      // アニメーションの初期位置に合わせる
-      track.style.transform = 'translateX(-66.67%)';
-      const trackWidth = track.scrollWidth;
-      const containerWidth = track.clientWidth;
-      const initialScroll = Math.max(0, (trackWidth - containerWidth) / 2);
-      track.scrollLeft = initialScroll;
-    });
-  }, 2500);
-  
-  flowTracks.forEach(track => {
-    // マウスイベント（PC用）
-    track.addEventListener('mousedown', function(e) {
-      if (e.target.tagName === 'IMG') {
-        isDragging = true;
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-        track.style.cursor = 'grabbing';
-        // ドラッグ開始時にアニメーションを一時停止
-        track.style.animationPlayState = 'paused';
-        e.preventDefault();
-      }
-    });
-    
-    track.addEventListener('mousemove', function(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 2;
-      track.scrollLeft = scrollLeft - walk;
-    });
-
-    track.addEventListener('mouseup', function() {
-      if (isDragging) {
-        isDragging = false;
-        track.style.cursor = 'grab';
-        // ドラッグ終了時にアニメーションを再開
-        track.style.animationPlayState = 'running';
-      }
-    });
-    
-    track.addEventListener('mouseleave', function() {
-      if (isDragging) {
-        isDragging = false;
-        track.style.cursor = 'grab';
-        // マウスが離れた時にアニメーションを再開
-        track.style.animationPlayState = 'running';
-      }
-    });
-    
-    // タッチイベント（スマートフォン用）
-    track.addEventListener('touchstart', function(e) {
-      if (e.target.tagName === 'IMG') {
-        isDragging = true;
-        startX = e.touches[0].pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-        // タッチ開始時にアニメーションを一時停止
-        track.style.animationPlayState = 'paused';
-        e.preventDefault();
-      }
-    });
-    
-    track.addEventListener('touchmove', function(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.touches[0].pageX - track.offsetLeft;
-      const walk = (x - startX) * 2;
-      track.scrollLeft = scrollLeft - walk;
-    });
-    
-    track.addEventListener('touchend', function() {
-      if (isDragging) {
-        isDragging = false;
-        // タッチ終了時にアニメーションを再開
-        track.style.animationPlayState = 'running';
-      }
-    });
-    
-    // クリックイベント（アニメーション停止/再開）
-    track.addEventListener('click', function(e) {
-      // ドラッグ中はクリックイベントを無視
-      if (isDragging) {
-        isDragging = false;
-        return;
-      }
-      
-      // 画像をクリックした場合のみ処理
-      if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // アニメーションの停止/再開を切り替え
-        isPaused = !isPaused;
-        
-        if (isPaused) {
-          // アニメーションを停止
-          track.style.animationPlayState = 'paused';
-          // 視覚的フィードバック
-          track.style.opacity = '0.7';
-        } else {
-          // アニメーションを再開
-          track.style.animationPlayState = 'running';
-          // 視覚的フィードバックを元に戻す
-          track.style.opacity = '1';
-        }
-        
-        // 3秒後に自動的に再開（オプション）
-        if (isPaused) {
-          setTimeout(() => {
-            track.style.animationPlayState = 'running';
-            track.style.opacity = '1';
-            isPaused = false;
-          }, 3000);
-        }
-      }
-    });
-  });
-});
+// 新しいCollectionセクション用のJavaScript（簡略化）
 </script>
 
-<!-- 動的ギャップ調整スクリプト -->
+<!-- Collection セクション用のギャップ調整スクリプト -->
 <script>
   (function() {
     function applyGap() {
       var header = document.querySelector('header, .site-header, nav');
-      var gap = 0, base = 96; // 追加で空ける見栄え用ギャップ（px）
+      var gap = 0, base = 96;
       var h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
-      // 端末幅でギャップ強化（PC版は狭めて調整）
       var vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      gap = vw >= 1024 ? 72 : 96; // PC版: 144px → 72px に調整
+      gap = vw >= 1024 ? 72 : 96;
 
-      var spacer = document.getElementById('rs-gap-guard');
+      var spacer = document.querySelector('.rs-header-spacer');
       if (spacer) {
         spacer.style.setProperty('height', (h + gap) + 'px', 'important');
         spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
-      }
-      var fi = document.getElementById('flowing-images');
-      if (fi) {
-        fi.style.setProperty('padding-top', (base + gap) + 'px', 'important');
-        fi.style.setProperty('display', 'block', 'important');
       }
     }
     window.addEventListener('load', applyGap, { once:true });
@@ -2265,174 +1666,32 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
   
   <script>
-    // 診断・自動修正スクリプト（デスクトップ専用）
+    // 新しいCollectionセクション用の診断スクリプト（簡略化）
     (function(){
-      function log(msg){ console.info("[FIX-COLLECTION]", msg); }
+      function log(msg){ console.info("[NEW-COLLECTION]", msg); }
 
-      function sel(q){ return document.querySelector(q); }
-      function all(q){ return Array.from(document.querySelectorAll(q)); }
-
-      function isInside(el, container){ try {return container && el && container.contains(el);} catch(e){return false;} }
-
-      function killPseudoAndOverlays(scope){
-        // hide common overlay classes and neutralize pseudo via data-flag
-        const suspects = [
-          '.overlay','.title-overlay','.section-overlay','.gradient','.spacer',
-          '.kv-overlay','.mv-overlay'
-        ];
-        suspects.forEach(s => all(scope + " " + s).forEach(n => {
-          n.dataset._killed = "1";
-          n.style.setProperty('display','none','important');
-          n.style.setProperty('background','transparent','important');
-          n.style.setProperty('height','0','important');
-          n.style.setProperty('margin','0','important');
-          n.style.setProperty('padding','0','important');
-        }));
-      }
-
-      function rmInlineStyles(el){
-        if(!el) return;
-        el.removeAttribute('style');
-        // also clear style on ancestors that might force absolute
-        let p = el.parentElement;
-        while(p && !p.hasAttribute('data-role')){
-          ['position','top','left','right','bottom','transform'].forEach(k=>{
-            if(p.style && p.style[k]) p.style[k] = '';
-          });
-          p = p.parentElement;
+      function ensureCollectionDisplay(){
+        const section = document.querySelector('[data-role="collection"]');
+        const container = section && section.querySelector('.collection-container');
+        
+        if (section && container) {
+          log("Collection section found and properly structured");
+          
+          // セクション間隔の統一
+          section.style.setProperty('padding-top','clamp(80px, 10vw, 120px)','important');
+          
+          const title = section.querySelector('.section-title');
+          if (title) {
+            title.style.setProperty('margin-bottom','40px','important');
+            title.style.setProperty('text-align','center','important');
+          }
+        } else {
+          console.warn("[NEW-COLLECTION] Collection section or container not found");
         }
-      }
-
-      function ensureCollectionHeading(){
-        const section = sel('[data-role="collection"]') || sel('.collection-section');
-        const grid    = section && (section.querySelector('.flowing-images, .collection-grid') || section.querySelector('[class*="flowing"]'));
-        let   title   = section && section.querySelector('#collection-title, .collection-title, h2.section-title');
-
-        // If there is a hero/mv title that says "Collection", remove it and rely on section title
-        all('.hero h2, .kv h2, .mv h2, .hero .section-title, .kv .section-title, .mv .section-title')
-          .filter(el => (el.textContent || '').trim().toLowerCase() === 'collection')
-          .forEach(el => { log("Removed hero/mv duplicate title"); el.remove(); });
-
-        if(!title){
-          // find any "Collection" heading globally
-          title = all('h1, h2, h3, .section-title, .collection-title').find(el => (el.textContent||'').trim().toLowerCase()==='collection');
-        }
-        if(!section || !grid){
-          console.warn("[FIX-COLLECTION] Missing section or grid. Aborting.");
-          return;
-        }
-
-        // If title exists but is outside the section, move it
-        if(title && !isInside(title, section)){
-          log("Moving title into collection section above grid.");
-          title.classList.add('collection-title','section-title');
-          section.insertBefore(title, grid);
-        }
-        // If still no title, create one
-        if(!title){
-          log("Creating missing title.");
-          title = document.createElement('h2');
-          title.id = 'collection-title';
-          title.className = 'collection-title section-title';
-          title.textContent = 'Collection';
-          section.insertBefore(title, grid);
-        }
-
-        // Kill absolute/fixed transforms on the title and ancestors
-        [title].forEach(el=>{
-          const cs = getComputedStyle(el);
-          log("Title computed position=" + cs.position + ", top=" + cs.top + ", transform=" + cs.transform);
-          rmInlineStyles(el);
-          el.style.setProperty('position','static','important');
-          el.style.setProperty('transform','none','important');
-          ['top','left','right','bottom'].forEach(k => el.style.setProperty(k,'auto','important'));
-          el.style.setProperty('margin','0 0 var(--title-gap,24px) 0','important');
-          el.style.setProperty('text-align','center','important');
-          el.classList.add('collection-anchor');
-        });
-
-        // ensure there is nothing between title and grid that occupies height
-        const immediate = title.nextElementSibling;
-        if(immediate && immediate !== grid){
-          log("Found an element between title and grid; hiding it on desktop.");
-          immediate.setAttribute('data-between','1');
-          immediate.style.setProperty('display','none','important');
-          immediate.style.setProperty('height','0','important');
-          immediate.style.setProperty('margin','0','important');
-          immediate.style.setProperty('padding','0','important');
-        }
-
-        // Neutralize overlays in the section
-        killPseudoAndOverlays('[data-role="collection"], .collection-section');
-
-        // Normalize grid top spacing
-        grid.style.setProperty('margin-top','0','important');
-        grid.style.setProperty('padding-top','0','important');
-        grid.style.setProperty('position','relative','important');
-        grid.style.setProperty('z-index','0','important');
-
-        log("Collection title should now be immediately above the grid.");
-      }
-
-      function unifySectionSpacing(){
-        const SEC_GAP = '72px';  // section top spacing
-        const TTL_GAP = '24px';  // title to content spacing
-
-        document.documentElement.style.setProperty('--sec-gap', SEC_GAP);
-        document.documentElement.style.setProperty('--title-gap', TTL_GAP);
-
-        [
-          '[data-role="collection"]',
-          '[data-role="brands"]',
-          '[data-role="lookbook"]',
-          '[data-role="about-restandard"]'
-        ].forEach(s => {
-          const sec = sel(s) || sel(s.replace(/\[data-role="|"\]/g,''));
-          if(!sec) return;
-          sec.style.setProperty('padding-top','var(--sec-gap)','important');
-          const h2 = sec.querySelector('.section-title');
-          if(h2) h2.style.setProperty('margin-bottom','var(--title-gap)','important');
-        });
-      }
-
-      function centerAbout(){
-        const body = sel('[data-role="about-restandard"] .restandard-body') || sel('.restandard-section .restandard-body');
-        if(!body) return;
-        body.style.setProperty('max-width','1024px','important');
-        body.style.setProperty('margin-left','auto','important');
-        body.style.setProperty('margin-right','auto','important');
-        body.style.setProperty('text-align','center','important');
-        // neutralize floats/flex left biases
-        body.style.setProperty('float','none','important');
-        const cs = getComputedStyle(body);
-        console.info("[FIX-COLLECTION] About body display=" + cs.display);
-        if(cs.display.includes('flex')){
-          body.style.setProperty('justify-content','center','important');
-          body.style.setProperty('align-items','center','important');
-        }
-        all('[data-role="about-restandard"] .restandard-body img, .restandard-section .restandard-body img')
-          .forEach(img => { img.style.setProperty('margin','0 auto','important'); img.style.setProperty('display','block','important'); });
-      }
-
-      function bustCSSCache(){
-        // Add a version query to linked stylesheets for hard cache-bust during dev
-        all('link[rel="stylesheet"]').forEach(link=>{
-          if(!link.href) return;
-          const url = new URL(link.href, location.href);
-          url.searchParams.set('v', String(Date.now()));
-          link.href = url.toString();
-        });
       }
 
       function run(){
-        if (window.matchMedia('(min-width: 1025px)').matches) {
-          ensureCollectionHeading();
-          unifySectionSpacing();
-          centerAbout();
-          bustCSSCache();
-        } else {
-          console.info("[FIX-COLLECTION] Skipped: mobile viewport.");
-        }
+        ensureCollectionDisplay();
       }
 
       if (document.readyState === 'loading') {
