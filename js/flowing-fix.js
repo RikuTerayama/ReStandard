@@ -2,28 +2,14 @@
    Flowing Images Height Fix
    ======================================== */
 
-// Collection セクションの高さ確保
+// 新しいCollectionセクション用の高さ確保（簡略化）
 function ensureCollectionHeight() {
-  const container = document.querySelector('.collection-container');
-  if (!container) return;
-  
-  const tracks = container.querySelectorAll('.collection-track');
-  let maxHeight = 0;
-  
-  tracks.forEach(track => {
-    if (track.offsetHeight > maxHeight) {
-      maxHeight = track.offsetHeight;
-    }
-  });
-  
-  if (maxHeight > 0) {
-    container.style.minHeight = (maxHeight * 2 + 30) + 'px'; // 2行 + ギャップ
-  }
+  // 新しいHTML構造では不要 - インラインスタイルで管理
 }
 
-// Collection セクションのリンク機能を保証
+// 新しいCollectionセクションのリンク機能を保証
 function ensureLinkFunctionality() {
-  const links = document.querySelectorAll('.collection-items a');
+  const links = document.querySelectorAll('.collection-scroll-top a, .collection-scroll-bottom a');
   
   links.forEach(link => {
     // リンクのクリック可能性を保証
@@ -383,15 +369,15 @@ function ensureLookbookFunctionality() {
   }
 }
 
-// Collection セクションのモバイル表示を保証
+// Collection セクションのモバイル表示を保証（簡略化）
 function ensureMobileImageDisplay() {
   const isMobile = window.innerWidth <= 767;
   
   if (isMobile) {
     console.log('Mobile device detected, applying Collection display rules...');
     
-    // Collection セクションの表示保証
-    const collectionSection = document.querySelector('.collection-container');
+    // 新しいCollectionセクションの表示保証
+    const collectionSection = document.querySelector('.collection-section');
     if (collectionSection) {
       collectionSection.style.setProperty('display', 'block', 'important');
       collectionSection.style.setProperty('visibility', 'visible', 'important');
@@ -399,85 +385,15 @@ function ensureMobileImageDisplay() {
       console.log('Collection section styles applied');
     }
     
-    // Collection トラックの表示保証
-    const collectionTracks = document.querySelectorAll('.collection-track');
-    collectionTracks.forEach((track, index) => {
-      track.style.setProperty('display', 'block', 'important');
-      track.style.setProperty('visibility', 'visible', 'important');
-      track.style.setProperty('opacity', '1', 'important');
-      console.log(`Collection track ${index + 1} styles applied`);
-    });
-    
     console.log('Mobile Collection display rules applied successfully');
   }
 }
 
-// 新しいセクション構造の初期化 - 強化版
+// 新しいセクション構造の初期化（簡略化）
 function initializeNewSections() {
   console.log('Initializing new sections...');
   
-  // Collection セクションの強制初期化
-  const collectionTracks = document.querySelectorAll('.collection-track');
-  console.log('Found collection tracks:', collectionTracks.length);
-  
-  collectionTracks.forEach((track, index) => {
-    console.log(`Initializing track ${index + 1}`);
-    
-    const items = track.querySelector('.collection-items');
-    if (items) {
-      // 強制的にflexレイアウトを適用
-      items.style.display = 'flex';
-      items.style.flexDirection = 'row';
-      items.style.alignItems = 'center';
-      items.style.gap = '20px';
-      items.style.width = 'max-content';
-      items.style.height = '100%';
-      
-      // 画像の強制的なスタイル適用
-      const images = items.querySelectorAll('img');
-      images.forEach(img => {
-        img.style.display = 'inline-block';
-        img.style.height = '200px';
-        img.style.width = 'auto';
-        img.style.minWidth = '200px';
-        img.style.maxWidth = '200px';
-        img.style.flexShrink = '0';
-        img.style.objectFit = 'cover';
-      });
-      
-      // リンクの強制的なスタイル適用
-      const links = items.querySelectorAll('a');
-      links.forEach(link => {
-        link.style.display = 'inline-block';
-        link.style.flexShrink = '0';
-        link.style.textDecoration = 'none';
-      });
-      
-      // 初期位置とアニメーション設定
-      if (track.classList.contains('collection-track-top')) {
-        items.style.transform = 'translateX(0)';
-        items.style.animation = 'collection-scroll-right 30s linear infinite';
-        items.style.animationPlayState = 'running';
-      } else if (track.classList.contains('collection-track-bottom')) {
-        items.style.transform = 'translateX(-50%)';
-        items.style.animation = 'collection-scroll-left 30s linear infinite';
-        items.style.animationPlayState = 'running';
-      }
-      
-      // ホバー時の一時停止機能
-      track.addEventListener('mouseenter', function() {
-        items.style.animationPlayState = 'paused';
-      });
-      
-      track.addEventListener('mouseleave', function() {
-        items.style.animationPlayState = 'running';
-      });
-      
-      console.log(`Track ${index + 1} initialized successfully`);
-    }
-  });
-  
-  // Lookbook セクションの初期化
+  // Lookbook セクションの初期化のみ
   const lookbookTrack = document.querySelector('.lookbook-track');
   const lookbookContainer = document.querySelector('.lookbook-container');
   
