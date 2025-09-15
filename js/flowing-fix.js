@@ -466,11 +466,60 @@ function ensureMobileImageDisplay() {
   }
 }
 
+// 新しいセクション構造の初期化
+function initializeNewSections() {
+  // Collection セクションの初期化
+  const collectionTracks = document.querySelectorAll('.collection-track');
+  collectionTracks.forEach(track => {
+    // アニメーションが正しく動作するように保証
+    const items = track.querySelector('.collection-items');
+    if (items) {
+      // 初期位置を設定
+      if (track.classList.contains('collection-track-top')) {
+        items.style.transform = 'translateX(0)';
+      } else if (track.classList.contains('collection-track-bottom')) {
+        items.style.transform = 'translateX(-50%)';
+      }
+      
+      // ホバー時の一時停止機能
+      track.addEventListener('mouseenter', function() {
+        items.style.animationPlayState = 'paused';
+      });
+      
+      track.addEventListener('mouseleave', function() {
+        items.style.animationPlayState = 'running';
+      });
+    }
+  });
+  
+  // Lookbook セクションの初期化
+  const lookbookTrack = document.querySelector('.lookbook-track');
+  const lookbookContainer = document.querySelector('.lookbook-container');
+  
+  if (lookbookTrack && lookbookContainer) {
+    // アニメーションが正しく動作するように保証
+    lookbookTrack.style.animation = 'lookbook-scroll 25s linear infinite';
+    lookbookTrack.style.transform = 'translateX(0)';
+    
+    // ホバー時の一時停止機能
+    lookbookContainer.addEventListener('mouseenter', function() {
+      lookbookTrack.style.animationPlayState = 'paused';
+    });
+    
+    lookbookContainer.addEventListener('mouseleave', function() {
+      lookbookTrack.style.animationPlayState = 'running';
+    });
+  }
+}
+
 // 初期化
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOMContentLoaded event fired');
   console.log('画面幅:', window.innerWidth);
   console.log('PC未満判定:', window.innerWidth < 1440 ? 'はい' : 'いいえ');
+  
+  // 新しいセクション構造の初期化
+  initializeNewSections();
   
   // Lookbook要素の存在確認
   const lookbookContainer = document.querySelector('.lookbook-container');
