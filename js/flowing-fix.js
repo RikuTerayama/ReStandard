@@ -412,19 +412,56 @@ function ensureMobileImageDisplay() {
   }
 }
 
-// 新しいセクション構造の初期化
+// 新しいセクション構造の初期化 - 強化版
 function initializeNewSections() {
-  // Collection セクションの初期化
+  console.log('Initializing new sections...');
+  
+  // Collection セクションの強制初期化
   const collectionTracks = document.querySelectorAll('.collection-track');
-  collectionTracks.forEach(track => {
-    // アニメーションが正しく動作するように保証
+  console.log('Found collection tracks:', collectionTracks.length);
+  
+  collectionTracks.forEach((track, index) => {
+    console.log(`Initializing track ${index + 1}`);
+    
     const items = track.querySelector('.collection-items');
     if (items) {
-      // 初期位置を設定
+      // 強制的にflexレイアウトを適用
+      items.style.display = 'flex';
+      items.style.flexDirection = 'row';
+      items.style.alignItems = 'center';
+      items.style.gap = '20px';
+      items.style.width = 'max-content';
+      items.style.height = '100%';
+      
+      // 画像の強制的なスタイル適用
+      const images = items.querySelectorAll('img');
+      images.forEach(img => {
+        img.style.display = 'inline-block';
+        img.style.height = '200px';
+        img.style.width = 'auto';
+        img.style.minWidth = '200px';
+        img.style.maxWidth = '200px';
+        img.style.flexShrink = '0';
+        img.style.objectFit = 'cover';
+      });
+      
+      // リンクの強制的なスタイル適用
+      const links = items.querySelectorAll('a');
+      links.forEach(link => {
+        link.style.display = 'inline-block';
+        link.style.flexShrink = '0';
+        link.style.textDecoration = 'none';
+      });
+      
+      // 初期位置とアニメーション設定
       if (track.classList.contains('collection-track-top')) {
         items.style.transform = 'translateX(0)';
+        items.style.animation = 'collection-scroll-right 30s linear infinite';
+        items.style.animationPlayState = 'running';
       } else if (track.classList.contains('collection-track-bottom')) {
         items.style.transform = 'translateX(-50%)';
+        items.style.animation = 'collection-scroll-left 30s linear infinite';
+        items.style.animationPlayState = 'running';
       }
       
       // ホバー時の一時停止機能
@@ -435,6 +472,8 @@ function initializeNewSections() {
       track.addEventListener('mouseleave', function() {
         items.style.animationPlayState = 'running';
       });
+      
+      console.log(`Track ${index + 1} initialized successfully`);
     }
   });
   
@@ -456,6 +495,8 @@ function initializeNewSections() {
       lookbookTrack.style.animationPlayState = 'running';
     });
   }
+  
+  console.log('New sections initialization completed');
 }
 
 // 初期化
@@ -482,6 +523,15 @@ document.addEventListener('DOMContentLoaded', function() {
   ensureBrandHoverEffect();
   ensureLookbookFunctionality();
   ensureMobileImageDisplay();
+  
+  // 少し遅れて再初期化
+  setTimeout(function() {
+    initializeNewSections();
+  }, 100);
+  
+  setTimeout(function() {
+    initializeNewSections();
+  }, 500);
 });
 
 // 画像読み込み完了後にも実行
@@ -492,6 +542,15 @@ window.addEventListener('load', function() {
   ensureBrandHoverEffect();
   ensureLookbookFunctionality();
   ensureMobileImageDisplay();
+  
+  // 少し遅れて再初期化
+  setTimeout(function() {
+    initializeNewSections();
+  }, 100);
+  
+  setTimeout(function() {
+    initializeNewSections();
+  }, 500);
 });
 
 // リサイズ時にも実行
