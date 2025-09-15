@@ -676,16 +676,28 @@
      7) Collectionセクションの強制表示確保
    ======================================== */
    
-  html body .collection-section,
-  html body .section-collection,
-  html body #collection {
-    /* 古いCollectionスタイルを無効化 */
+  /* 古いflowing imagesのみ無効化 */
+  html body .collection-section .flowing-images,
+  html body .section-collection .flowing-images,
+  html body #collection .flowing-images,
+  html body #flowing-images {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     height: 0 !important;
     width: 0 !important;
     overflow: hidden !important;
+  }
+  
+  /* 新しいCollectionセクションは表示 */
+  html body .collection-section,
+  html body .section-collection,
+  html body #collection {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
   }
    
    html body .collection-section .flowing-images,
