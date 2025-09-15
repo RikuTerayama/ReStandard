@@ -1391,164 +1391,101 @@
   <div id="rs-gap-guard" aria-hidden="true"
        style="display:block !important;height:140px !important;min-height:140px !important;pointer-events:none;"></div>
   
-  <!-- Collection -->
+  <!-- Collection Section -->
   <section id="collection" class="section-collection collection-section" data-role="collection">
     <h2 id="collection-title" class="section-title collection-title">Collection</h2>
     
-    <div class="flowing-bg">
-      <div id="flowing-images" class="section-flowing flowing-images pt-20 md:pt-28 lg:pt-36 xl:pt-40 scroll-mt-[calc(var(--rs-header-h)+24px)]" style="padding-top:60px !important;display:block !important;">
-      <div class="flow-row-bg" id="flowing-images-bg">
-      <div class="flow-row flow-row-top">
-        <div class="flow-track">
-          <!-- 画像リストを3セット分並べる（例：1-20,1-20,1-20） -->
+    <div class="collection-container">
+      <!-- 上段トラック（右→左スクロール） -->
+      <div class="collection-track collection-track-top">
+        <div class="collection-items">
+          <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
           <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
-          <img src="image/1.JPG" alt="1" draggable="false">
+            <img src="image/1.JPG" alt="Collection Item 1" loading="lazy" width="200" height="200">
           </a>
-          <img src="image/2.JPG" alt="2" draggable="false">
-          <img src="image/3.JPG" alt="3" draggable="false">
-          <img src="image/4.JPG" alt="4" draggable="false">
-          <img src="image/5.JPG" alt="5" draggable="false">
-          <img src="image/6.JPG" alt="6" draggable="false">
-          <img src="image/7.JPG" alt="7" draggable="false">
-          <img src="image/8.JPG" alt="8" draggable="false">
-          <img src="image/9.JPG" alt="9" draggable="false">
-          <img src="image/10.JPG" alt="10" draggable="false">
-          <img src="image/12.JPG" alt="12" draggable="false">
-          <img src="image/13.JPG" alt="13" draggable="false">
-          <img src="image/14.JPG" alt="14" draggable="false">
-          <img src="image/15.JPG" alt="15" draggable="false">
-          <img src="image/16.JPG" alt="16" draggable="false">
-          <img src="image/17.JPG" alt="17" draggable="false">
-          <img src="image/18.JPG" alt="18" draggable="false">
-          <img src="image/19.JPG" alt="19" draggable="false">
-          <img src="image/20.JPG" alt="20" draggable="false">
-          <!-- 2セット目 -->
+          <img src="image/2.JPG" alt="Collection Item 2" loading="lazy" width="200" height="200">
+          <img src="image/3.JPG" alt="Collection Item 3" loading="lazy" width="200" height="200">
+          <img src="image/4.JPG" alt="Collection Item 4" loading="lazy" width="200" height="200">
+          <img src="image/5.JPG" alt="Collection Item 5" loading="lazy" width="200" height="200">
+          <img src="image/6.JPG" alt="Collection Item 6" loading="lazy" width="200" height="200">
+          <img src="image/7.JPG" alt="Collection Item 7" loading="lazy" width="200" height="200">
+          <img src="image/8.JPG" alt="Collection Item 8" loading="lazy" width="200" height="200">
+          <img src="image/9.JPG" alt="Collection Item 9" loading="lazy" width="200" height="200">
+          <img src="image/10.JPG" alt="Collection Item 10" loading="lazy" width="200" height="200">
+          <img src="image/12.JPG" alt="Collection Item 12" loading="lazy" width="200" height="200">
+          <img src="image/13.JPG" alt="Collection Item 13" loading="lazy" width="200" height="200">
+          <img src="image/14.JPG" alt="Collection Item 14" loading="lazy" width="200" height="200">
+          <img src="image/15.JPG" alt="Collection Item 15" loading="lazy" width="200" height="200">
+          <img src="image/16.JPG" alt="Collection Item 16" loading="lazy" width="200" height="200">
+          <img src="image/17.JPG" alt="Collection Item 17" loading="lazy" width="200" height="200">
+          <img src="image/18.JPG" alt="Collection Item 18" loading="lazy" width="200" height="200">
+          <img src="image/19.JPG" alt="Collection Item 19" loading="lazy" width="200" height="200">
+          <img src="image/20.JPG" alt="Collection Item 20" loading="lazy" width="200" height="200">
+          <!-- 2周目 -->
           <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
-          <img src="image/1.JPG" alt="1" draggable="false">
+            <img src="image/1.JPG" alt="Collection Item 1" loading="lazy" width="200" height="200">
           </a>
-          <img src="image/2.JPG" alt="2" draggable="false">
-          <img src="image/3.JPG" alt="3" draggable="false">
-          <img src="image/4.JPG" alt="4" draggable="false">
-          <img src="image/5.JPG" alt="5" draggable="false">
-          <img src="image/6.JPG" alt="6" draggable="false">
-          <img src="image/7.JPG" alt="7" draggable="false">
-          <img src="image/8.JPG" alt="8" draggable="false">
-          <img src="image/9.JPG" alt="9" draggable="false">
-          <img src="image/10.JPG" alt="10" draggable="false">
-          <img src="image/12.JPG" alt="12" draggable="false">
-          <img src="image/13.JPG" alt="13" draggable="false">
-          <img src="image/14.JPG" alt="14" draggable="false">
-          <img src="image/15.JPG" alt="15" draggable="false">
-          <img src="image/16.JPG" alt="16" draggable="false">
-          <img src="image/17.JPG" alt="17" draggable="false">
-          <img src="image/18.JPG" alt="18" draggable="false">
-          <img src="image/19.JPG" alt="19" draggable="false">
-          <img src="image/20.JPG" alt="20" draggable="false">
-          <!-- 3セット目 -->
-          <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
-          <img src="image/1.JPG" alt="1" draggable="false">
-          </a>
-          <img src="image/2.JPG" alt="2" draggable="false">
-          <img src="image/3.JPG" alt="3" draggable="false">
-          <img src="image/4.JPG" alt="4" draggable="false">
-          <img src="image/5.JPG" alt="5" draggable="false">
-          <img src="image/6.JPG" alt="6" draggable="false">
-          <img src="image/7.JPG" alt="7" draggable="false">
-          <img src="image/8.JPG" alt="8" draggable="false">
-          <img src="image/9.JPG" alt="9" draggable="false">
-          <img src="image/10.JPG" alt="10" draggable="false">
-          <img src="image/12.JPG" alt="12" draggable="false">
-          <img src="image/13.JPG" alt="13" draggable="false">
-          <img src="image/14.JPG" alt="14" draggable="false">
-          <img src="image/15.JPG" alt="15" draggable="false">
-          <img src="image/16.JPG" alt="16" draggable="false">
-          <img src="image/17.JPG" alt="17" draggable="false">
-          <img src="image/18.JPG" alt="18" draggable="false">
-          <img src="image/19.JPG" alt="19" draggable="false">
-          <img src="image/20.JPG" alt="20" draggable="false">
-
+          <img src="image/2.JPG" alt="Collection Item 2" loading="lazy" width="200" height="200">
+          <img src="image/3.JPG" alt="Collection Item 3" loading="lazy" width="200" height="200">
+          <img src="image/4.JPG" alt="Collection Item 4" loading="lazy" width="200" height="200">
+          <img src="image/5.JPG" alt="Collection Item 5" loading="lazy" width="200" height="200">
+          <img src="image/6.JPG" alt="Collection Item 6" loading="lazy" width="200" height="200">
+          <img src="image/7.JPG" alt="Collection Item 7" loading="lazy" width="200" height="200">
+          <img src="image/8.JPG" alt="Collection Item 8" loading="lazy" width="200" height="200">
+          <img src="image/9.JPG" alt="Collection Item 9" loading="lazy" width="200" height="200">
+          <img src="image/10.JPG" alt="Collection Item 10" loading="lazy" width="200" height="200">
+          <img src="image/12.JPG" alt="Collection Item 12" loading="lazy" width="200" height="200">
+          <img src="image/13.JPG" alt="Collection Item 13" loading="lazy" width="200" height="200">
+          <img src="image/14.JPG" alt="Collection Item 14" loading="lazy" width="200" height="200">
+          <img src="image/15.JPG" alt="Collection Item 15" loading="lazy" width="200" height="200">
+          <img src="image/16.JPG" alt="Collection Item 16" loading="lazy" width="200" height="200">
+          <img src="image/17.JPG" alt="Collection Item 17" loading="lazy" width="200" height="200">
+          <img src="image/18.JPG" alt="Collection Item 18" loading="lazy" width="200" height="200">
+          <img src="image/19.JPG" alt="Collection Item 19" loading="lazy" width="200" height="200">
+          <img src="image/20.JPG" alt="Collection Item 20" loading="lazy" width="200" height="200">
         </div>
       </div>
-      <div class="flow-row-gap"></div>
-      <div class="flow-row flow-row-bottom">
-        <div class="flow-track">
-          <!-- 画像リストを3セット分、20→1の逆順で並べる -->
-          <img src="image/32.JPG" alt="32" draggable="false">
-          <img src="image/31.JPG" alt="31" draggable="false">
-          <img src="image/30.JPG" alt="30" draggable="false">
-          <img src="image/29.JPG" alt="29" draggable="false">
-          <img src="image/28.JPG" alt="28" draggable="false">
-          <img src="image/27.JPG" alt="27" draggable="false">
-          <img src="image/26.JPG" alt="26" draggable="false">
+      
+      <!-- 下段トラック（左→右スクロール） -->
+      <div class="collection-track collection-track-bottom">
+        <div class="collection-items">
+          <!-- 画像リストを2周分、逆順で並べる -->
+          <img src="image/32.JPG" alt="Collection Item 32" loading="lazy" width="200" height="200">
+          <img src="image/31.JPG" alt="Collection Item 31" loading="lazy" width="200" height="200">
+          <img src="image/30.JPG" alt="Collection Item 30" loading="lazy" width="200" height="200">
+          <img src="image/29.JPG" alt="Collection Item 29" loading="lazy" width="200" height="200">
+          <img src="image/28.JPG" alt="Collection Item 28" loading="lazy" width="200" height="200">
+          <img src="image/27.JPG" alt="Collection Item 27" loading="lazy" width="200" height="200">
+          <img src="image/26.JPG" alt="Collection Item 26" loading="lazy" width="200" height="200">
           <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
-            <img src="image/25.JPG" alt="25" draggable="false">
+            <img src="image/25.JPG" alt="Collection Item 25" loading="lazy" width="200" height="200">
           </a>
-          <img src="image/24.JPG" alt="24" draggable="false">
-          <img src="image/23.JPG" alt="23" draggable="false">
-          <img src="image/22.JPG" alt="22" draggable="false">
-          <img src="image/21.JPG" alt="21" draggable="false">
-          <!-- 2セット目 -->
-          <img src="image/32.JPG" alt="32" draggable="false">
-          <img src="image/31.JPG" alt="31" draggable="false">
-          <img src="image/30.JPG" alt="30" draggable="false">
-          <img src="image/29.JPG" alt="29" draggable="false">
-          <img src="image/28.JPG" alt="28" draggable="false">
-          <img src="image/27.JPG" alt="27" draggable="false">
-          <img src="image/26.JPG" alt="26" draggable="false">
+          <img src="image/24.JPG" alt="Collection Item 24" loading="lazy" width="200" height="200">
+          <img src="image/23.JPG" alt="Collection Item 23" loading="lazy" width="200" height="200">
+          <img src="image/22.JPG" alt="Collection Item 22" loading="lazy" width="200" height="200">
+          <img src="image/21.JPG" alt="Collection Item 21" loading="lazy" width="200" height="200">
+          <!-- 2周目 -->
+          <img src="image/32.JPG" alt="Collection Item 32" loading="lazy" width="200" height="200">
+          <img src="image/31.JPG" alt="Collection Item 31" loading="lazy" width="200" height="200">
+          <img src="image/30.JPG" alt="Collection Item 30" loading="lazy" width="200" height="200">
+          <img src="image/29.JPG" alt="Collection Item 29" loading="lazy" width="200" height="200">
+          <img src="image/28.JPG" alt="Collection Item 28" loading="lazy" width="200" height="200">
+          <img src="image/27.JPG" alt="Collection Item 27" loading="lazy" width="200" height="200">
+          <img src="image/26.JPG" alt="Collection Item 26" loading="lazy" width="200" height="200">
           <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
-            <img src="image/25.JPG" alt="25" draggable="false">
+            <img src="image/25.JPG" alt="Collection Item 25" loading="lazy" width="200" height="200">
           </a>
-          <img src="image/24.JPG" alt="24" draggable="false">
-          <img src="image/23.JPG" alt="23" draggable="false">
-          <img src="image/22.JPG" alt="22" draggable="false">
-          <img src="image/21.JPG" alt="21" draggable="false">
-          <!-- 3セット目 -->
-          <img src="image/32.JPG" alt="32" draggable="false">
-          <img src="image/31.JPG" alt="31" draggable="false">
-          <img src="image/30.JPG" alt="30" draggable="false">
-          <img src="image/29.JPG" alt="29" draggable="false">
-          <img src="image/28.JPG" alt="28" draggable="false">
-          <img src="image/27.JPG" alt="27" draggable="false">
-          <img src="image/26.JPG" alt="26" draggable="false">
-          <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
-            <img src="image/25.JPG" alt="25" draggable="false">
-          </a>
-          <img src="image/24.JPG" alt="24" draggable="false">
-          <img src="image/23.JPG" alt="23" draggable="false">
-          <img src="image/22.JPG" alt="22" draggable="false">
-          <img src="image/21.JPG" alt="21" draggable="false">
-          <!-- 4セット目 -->
-          <img src="image/32.JPG" alt="32" draggable="false">
-          <img src="image/31.JPG" alt="31" draggable="false">
-          <img src="image/30.JPG" alt="30" draggable="false">
-          <img src="image/29.JPG" alt="29" draggable="false">
-          <img src="image/28.JPG" alt="28" draggable="false">
-          <img src="image/27.JPG" alt="27" draggable="false">
-          <img src="image/26.JPG" alt="26" draggable="false">
-          <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
-            <img src="image/25.JPG" alt="25" draggable="false">
-          </a>
-          <img src="image/24.JPG" alt="24" draggable="false">
-          <img src="image/23.JPG" alt="23" draggable="false">
-          <img src="image/22.JPG" alt="22" draggable="false">
-          <img src="image/21.JPG" alt="21" draggable="false">
-
-        </div>
+          <img src="image/24.JPG" alt="Collection Item 24" loading="lazy" width="200" height="200">
+          <img src="image/23.JPG" alt="Collection Item 23" loading="lazy" width="200" height="200">
+          <img src="image/22.JPG" alt="Collection Item 22" loading="lazy" width="200" height="200">
+          <img src="image/21.JPG" alt="Collection Item 21" loading="lazy" width="200" height="200">
         </div>
       </div>
     </div>
   </section>
-    <style>
-      .flow-row-top {
-        margin-bottom: 0;
-      }
-      .flow-row-gap {
-        height: 8px;
-      }
-    </style>
 
-  <!-- Brands -->
-  <section id="brands" class="section-brands brands-section" data-role="brands">
+  <!-- Brands Section -->
+  <section id="brands" class="section-brands brands-section section-spacing" data-role="brands">
     <h2 class="section-title">Brands</h2>
     <div class="brands-grid">
       <figure class="brand-card" data-hover="image/rockmount-hover.webp">
@@ -1623,126 +1560,83 @@
   </div>
 </section>
 
-  <!-- Lookbook -->
-  <section id="lookbook" class="section-lookbook lookbook-section" data-role="lookbook">
+  <!-- Lookbook Section -->
+  <section id="lookbook" class="section-lookbook lookbook-section section-spacing" data-role="lookbook">
     <h2 class="section-title">Lookbook</h2>
     <div class="lookbook-container">
-
-              <div class="lookbook-track">
-          <!-- 画像リストを3セット分並べる（例：1-8,1-8,1-8）で無限ループを実現 -->
-          <div class="lookbook-item">
-            <img src="image/look1.webp" alt="Look 1" loading="lazy">
-            <div class="image-number">1/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look2.webp" alt="Look 2" loading="lazy">
-            <div class="image-number">2/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look3.webp" alt="Look 3" loading="lazy">
-            <div class="image-number">3/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look4.webp" alt="Look 4" loading="lazy">
-            <div class="image-number">4/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look5.webp" alt="Look 5" loading="lazy">
-            <div class="image-number">5/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look6.webp" alt="Look 6" loading="lazy">
-            <div class="image-number">6/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look7.webp" alt="Look 7" loading="lazy">
-            <div class="image-number">7/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look8.webp" alt="Look 8" loading="lazy">
-            <div class="image-number">8/8</div>
-          </div>
-          <!-- 2セット目 -->
-          <div class="lookbook-item">
-            <img src="image/look1.webp" alt="Look 1" loading="lazy">
-            <div class="image-number">1/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look2.webp" alt="Look 2" loading="lazy">
-            <div class="image-number">2/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look3.webp" alt="Look 3" loading="lazy">
-            <div class="image-number">3/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look4.webp" alt="Look 4" loading="lazy">
-            <div class="image-number">4/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look5.webp" alt="Look 5" loading="lazy">
-            <div class="image-number">5/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look6.webp" alt="Look 6" loading="lazy">
-            <div class="image-number">6/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look7.webp" alt="Look 7" loading="lazy">
-            <div class="image-number">7/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look8.webp" alt="Look 8" loading="lazy">
-            <div class="image-number">8/8</div>
-          </div>
-          <!-- 3セット目（無限ループ用） -->
-          <div class="lookbook-item">
-            <img src="image/look1.webp" alt="Look 1" loading="lazy">
-            <div class="image-number">1/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look2.webp" alt="Look 2" loading="lazy">
-            <div class="image-number">2/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look3.webp" alt="Look 3" loading="lazy">
-            <div class="image-number">3/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look4.webp" alt="Look 4" loading="lazy">
-            <div class="image-number">4/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look5.webp" alt="Look 5" loading="lazy">
-            <div class="image-number">5/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look6.webp" alt="Look 6" loading="lazy">
-            <div class="image-number">6/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look7.webp" alt="Look 7" loading="lazy">
-            <div class="image-number">7/8</div>
-          </div>
-          <div class="lookbook-item">
-            <img src="image/look8.webp" alt="Look 8" loading="lazy">
-            <div class="image-number">8/8</div>
-          </div>
+      <div class="lookbook-track">
+        <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
+        <div class="lookbook-item">
+          <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
+          <div class="image-number">1/8</div>
         </div>
-        
-        <!-- 画像ナンバーと矢印の表示 -->
-        <div class="lookbook-navigation">
-          <div class="nav-arrow left-arrow">←</div>
-          <div class="current-image-info">
-            <span class="image-counter">1/8</span>
-          </div>
-          <div class="nav-arrow right-arrow">→</div>
+        <div class="lookbook-item">
+          <img src="image/look2.webp" alt="Lookbook Item 2" loading="lazy" width="300" height="400">
+          <div class="image-number">2/8</div>
         </div>
+        <div class="lookbook-item">
+          <img src="image/look3.webp" alt="Lookbook Item 3" loading="lazy" width="300" height="400">
+          <div class="image-number">3/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look4.webp" alt="Lookbook Item 4" loading="lazy" width="300" height="400">
+          <div class="image-number">4/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look5.webp" alt="Lookbook Item 5" loading="lazy" width="300" height="400">
+          <div class="image-number">5/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look6.webp" alt="Lookbook Item 6" loading="lazy" width="300" height="400">
+          <div class="image-number">6/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look7.webp" alt="Lookbook Item 7" loading="lazy" width="300" height="400">
+          <div class="image-number">7/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look8.webp" alt="Lookbook Item 8" loading="lazy" width="300" height="400">
+          <div class="image-number">8/8</div>
+        </div>
+        <!-- 2周目 -->
+        <div class="lookbook-item">
+          <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
+          <div class="image-number">1/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look2.webp" alt="Lookbook Item 2" loading="lazy" width="300" height="400">
+          <div class="image-number">2/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look3.webp" alt="Lookbook Item 3" loading="lazy" width="300" height="400">
+          <div class="image-number">3/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look4.webp" alt="Lookbook Item 4" loading="lazy" width="300" height="400">
+          <div class="image-number">4/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look5.webp" alt="Lookbook Item 5" loading="lazy" width="300" height="400">
+          <div class="image-number">5/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look6.webp" alt="Lookbook Item 6" loading="lazy" width="300" height="400">
+          <div class="image-number">6/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look7.webp" alt="Lookbook Item 7" loading="lazy" width="300" height="400">
+          <div class="image-number">7/8</div>
+        </div>
+        <div class="lookbook-item">
+          <img src="image/look8.webp" alt="Lookbook Item 8" loading="lazy" width="300" height="400">
+          <div class="image-number">8/8</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ReStandard -->
-  <section id="about-restandard" class="section-about restandard-section" data-role="about-restandard">
+  <!-- About ReStandard Section -->
+  <section id="about-restandard" class="section-about restandard-section section-spacing" data-role="about-restandard">
     <h2 class="section-title">About ReStandard</h2>
     <!-- PC用（md以上） -->
     <div class="about-inner only-pc restandard-body">
