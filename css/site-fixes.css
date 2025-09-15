@@ -1009,18 +1009,16 @@ html body .section-about {
   }
 }
 
-/* Collectionセクションのスタイル - flowing imagesの1行目のすぐ上に配置 */
+/* Collectionセクションのスタイル - 無効化（新しいCollectionセクションに置き換え） */
 #collection,
 .section-collection {
-  position: relative;
-  z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: clamp(60px, 8vw, 120px);   /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
-  margin-bottom: clamp(0px, 0vw, 5px); /* flowing imagesとの密接性をさらに向上 */
-  padding: clamp(10px, 2vw, 20px) 0;    /* 内部の余白を調整 */
-  /* 重なりを防ぐための設定 */
-  background: transparent;  /* 背景色を透明に */
-  clear: both;
-  text-align: center;
+  /* 古いスタイルを無効化 */
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Collectionのタイトル */
@@ -4186,18 +4184,16 @@ html body .section-about {
   }
 }
 
-/* Collectionセクションのスタイル - flowing imagesの1行目のすぐ上に配置 */
+/* Collectionセクションのスタイル - 無効化（新しいCollectionセクションに置き換え） */
 #collection,
 .section-collection {
-  position: relative;
-  z-index: 10;              /* 他のセクションより確実に上に表示 */
-  margin-top: clamp(60px, 8vw, 120px);   /* 上部からの距離を調整してflowing imagesの直上に配置（PC版で"少し上"に調整） */
-  margin-bottom: clamp(0px, 0vw, 5px); /* flowing imagesとの密接性をさらに向上 */
-  padding: clamp(10px, 2vw, 20px) 0;    /* 内部の余白を調整 */
-  /* 重なりを防ぐための設定 */
-  background: transparent;  /* 背景色を透明に */
-  clear: both;
-  text-align: center;
+  /* 古いスタイルを無効化 */
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Collectionのタイトル */
