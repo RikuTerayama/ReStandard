@@ -2862,7 +2862,7 @@ html body .flow-track img {
   html body .section-collection .flowing-images,
   html body #collection .flowing-images,
   html body #flowing-images {
-    display: flex !important;
+    display: none !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
@@ -6032,7 +6032,7 @@ html body .flow-track img {
   html body .section-collection .flowing-images,
   html body #collection .flowing-images,
   html body #flowing-images {
-    display: flex !important;
+    display: none !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
