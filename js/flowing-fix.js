@@ -2,28 +2,28 @@
    Flowing Images Height Fix
    ======================================== */
 
-// flowing imagesの高さ確保とリンク機能保証
-function ensureFlowingHeight() {
-  const sec = document.getElementById('flowing-images');
-  if (!sec) return;
+// Collection セクションの高さ確保
+function ensureCollectionHeight() {
+  const container = document.querySelector('.collection-container');
+  if (!container) return;
   
-  const kids = Array.from(sec.children);
+  const tracks = container.querySelectorAll('.collection-track');
   let maxHeight = 0;
   
-  kids.forEach(kid => {
-    if (kid.offsetHeight > maxHeight) {
-      maxHeight = kid.offsetHeight;
+  tracks.forEach(track => {
+    if (track.offsetHeight > maxHeight) {
+      maxHeight = track.offsetHeight;
     }
   });
   
   if (maxHeight > 0) {
-    sec.style.minHeight = maxHeight + 'px';
+    container.style.minHeight = (maxHeight * 2 + 30) + 'px'; // 2行 + ギャップ
   }
 }
 
-// リンクのクリック機能を保証
+// Collection セクションのリンク機能を保証
 function ensureLinkFunctionality() {
-  const links = document.querySelectorAll('#flowing-images .flow-track a, .section-flowing .flow-track a');
+  const links = document.querySelectorAll('.collection-items a');
   
   links.forEach(link => {
     // リンクのクリック可能性を保証
@@ -383,86 +383,32 @@ function ensureLookbookFunctionality() {
   }
 }
 
-// スマートフォン表示での画像表示を最優先で保証
+// Collection セクションのモバイル表示を保証
 function ensureMobileImageDisplay() {
   const isMobile = window.innerWidth <= 767;
   
   if (isMobile) {
-    console.log('Mobile device detected, applying forced display rules...');
+    console.log('Mobile device detected, applying Collection display rules...');
     
-    // 1.JPGと25.JPGの画像を最優先で強制表示
-    const specialImages = document.querySelectorAll('img[src*="1.JPG"], img[src*="25.JPG"]');
-    console.log('Found special images:', specialImages.length);
-    
-    specialImages.forEach((img, index) => {
-      console.log(`Processing image ${index + 1}:`, img.src);
-      
-      // 画像の表示を最優先で強制（サイズは正常に）
-      img.style.setProperty('display', 'block', 'important');
-      img.style.setProperty('visibility', 'visible', 'important');
-      img.style.setProperty('opacity', '1', 'important');
-      img.style.setProperty('width', 'auto', 'important');
-      img.style.setProperty('height', 'auto', 'important');
-      img.style.setProperty('max-height', '250px', 'important');
-      img.style.setProperty('position', 'relative', 'important');
-      img.style.setProperty('z-index', '1', 'important');
-      img.style.setProperty('pointer-events', 'auto', 'important');
-      img.style.setProperty('cursor', 'pointer', 'important');
-      img.style.setProperty('transform', 'none', 'important');
-      img.style.setProperty('filter', 'none', 'important');
-      img.style.setProperty('clip', 'auto', 'important');
-      img.style.setProperty('clip-path', 'none', 'important');
-      
-      console.log(`Image ${index + 1} styles applied:`, img.style.cssText);
-    });
-    
-    // 1.JPGと25.JPGのリンクを最優先で強制表示（サイズは正常に）
-    const specialLinks = document.querySelectorAll('a[href*="68a3416c225fded5de0dfb82"], a[href*="68a346549b5b820cfb8b08f5"]');
-    console.log('Found special links:', specialLinks.length);
-    
-    specialLinks.forEach((link, index) => {
-      console.log(`Processing link ${index + 1}:`, link.href);
-      
-      // リンクの表示を最優先で強制（サイズは正常に）
-      link.style.setProperty('display', 'inline-block', 'important');
-      link.style.setProperty('visibility', 'visible', 'important');
-      link.style.setProperty('opacity', '1', 'important');
-      link.style.setProperty('position', 'relative', 'important');
-      link.style.setProperty('z-index', '1', 'important');
-      link.style.setProperty('pointer-events', 'auto', 'important');
-      link.style.setProperty('cursor', 'pointer', 'important');
-      link.style.setProperty('transform', 'none', 'important');
-      link.style.setProperty('filter', 'none', 'important');
-      link.style.setProperty('clip', 'auto', 'important');
-      link.style.setProperty('clip-path', 'none', 'important');
-      
-      console.log(`Link ${index + 1} styles applied:`, link.style.cssText);
-    });
-    
-    // flowing imagesセクション全体の表示保証
-    const flowingSection = document.getElementById('flowing-images') || document.querySelector('.section-flowing');
-    if (flowingSection) {
-      flowingSection.style.setProperty('display', 'block', 'important');
-      flowingSection.style.setProperty('visibility', 'visible', 'important');
-      flowingSection.style.setProperty('opacity', '1', 'important');
-      flowingSection.style.setProperty('overflow', 'visible', 'important');
-      console.log('Flowing section styles applied');
+    // Collection セクションの表示保証
+    const collectionSection = document.querySelector('.collection-container');
+    if (collectionSection) {
+      collectionSection.style.setProperty('display', 'block', 'important');
+      collectionSection.style.setProperty('visibility', 'visible', 'important');
+      collectionSection.style.setProperty('opacity', '1', 'important');
+      console.log('Collection section styles applied');
     }
     
-    // flow-trackの表示保証（スクロール機能を維持）
-    const flowTracks = document.querySelectorAll('.flow-track');
-    flowTracks.forEach((track, index) => {
-      track.style.setProperty('display', 'flex', 'important');
+    // Collection トラックの表示保証
+    const collectionTracks = document.querySelectorAll('.collection-track');
+    collectionTracks.forEach((track, index) => {
+      track.style.setProperty('display', 'block', 'important');
       track.style.setProperty('visibility', 'visible', 'important');
       track.style.setProperty('opacity', '1', 'important');
-      track.style.setProperty('overflow', 'visible', 'important');
-      // スクロール機能を維持
-      track.style.setProperty('touch-action', 'pan-x', 'important');
-      track.style.setProperty('-webkit-overflow-scrolling', 'touch', 'important');
-      console.log(`Flow track ${index + 1} styles applied`);
+      console.log(`Collection track ${index + 1} styles applied`);
     });
     
-    console.log('Mobile image display rules applied successfully');
+    console.log('Mobile Collection display rules applied successfully');
   }
 }
 
@@ -531,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('lookbook-trackのアニメーション状態:', getComputedStyle(lookbookTrack).animation);
   }
   
-  ensureFlowingHeight();
+  ensureCollectionHeight();
   ensureLinkFunctionality();
   ensureBrandHoverEffect();
   ensureLookbookFunctionality();
@@ -541,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // 画像読み込み完了後にも実行
 window.addEventListener('load', function() {
   console.log('Load event fired');
-  ensureFlowingHeight();
+  ensureCollectionHeight();
   ensureLinkFunctionality();
   ensureBrandHoverEffect();
   ensureLookbookFunctionality();
@@ -551,7 +497,7 @@ window.addEventListener('load', function() {
 // リサイズ時にも実行
 window.addEventListener('resize', function() {
   console.log('Resize event fired');
-  ensureFlowingHeight();
+  ensureCollectionHeight();
   ensureMobileImageDisplay();
 });
 
