@@ -1009,16 +1009,25 @@ html body .section-about {
   }
 }
 
-/* Collectionセクションのスタイル - 無効化（新しいCollectionセクションに置き換え） */
-#collection,
-.section-collection {
-  /* 古いスタイルを無効化 */
+/* Collectionセクションのスタイル - 古いflowing imagesのみ無効化 */
+#collection .flowing-images,
+.section-collection .flowing-images,
+#flowing-images {
+  /* 古いflowing imagesのみ無効化 */
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   height: 0 !important;
   width: 0 !important;
   overflow: hidden !important;
+}
+
+/* 新しいCollectionセクションは表示 */
+#collection,
+.section-collection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Collectionのタイトル */
@@ -4184,16 +4193,25 @@ html body .section-about {
   }
 }
 
-/* Collectionセクションのスタイル - 無効化（新しいCollectionセクションに置き換え） */
-#collection,
-.section-collection {
-  /* 古いスタイルを無効化 */
+/* Collectionセクションのスタイル - 古いflowing imagesのみ無効化 */
+#collection .flowing-images,
+.section-collection .flowing-images,
+#flowing-images {
+  /* 古いflowing imagesのみ無効化 */
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   height: 0 !important;
   width: 0 !important;
   overflow: hidden !important;
+}
+
+/* 新しいCollectionセクションは表示 */
+#collection,
+.section-collection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Collectionのタイトル */
