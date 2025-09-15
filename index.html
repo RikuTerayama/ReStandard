@@ -788,38 +788,38 @@
       100% { transform: translateX(0); }
     }
     
-    /* 新しいCollection用アニメーション - 修正版 */
-    @keyframes scroll-right {
+    /* 新しいCollection用アニメーション - シンプル版 */
+    @keyframes move-right {
       0% { transform: translateX(0%); }
       100% { transform: translateX(-50%); }
     }
     
-    @keyframes scroll-left {
+    @keyframes move-left {
       0% { transform: translateX(-50%); }
       100% { transform: translateX(0%); }
     }
     
-    /* アニメーション強制適用 */
-    .collection-scroll {
+    /* 新しいCollection用スタイル */
+    .collection-scroll-top,
+    .collection-scroll-bottom {
       will-change: transform !important;
       animation-fill-mode: none !important;
-    }
-    
-    /* グレー線の削除 */
-    .collection-row {
       border: none !important;
       outline: none !important;
       box-shadow: none !important;
     }
     
-    .collection-scroll {
+    .collection-row-top,
+    .collection-row-bottom {
       border: none !important;
       outline: none !important;
       box-shadow: none !important;
+      background: transparent !important;
     }
     
     /* ホバー時の一時停止 */
-    .collection-row:hover .collection-scroll {
+    .collection-row-top:hover .collection-scroll-top,
+    .collection-row-bottom:hover .collection-scroll-bottom {
       animation-play-state: paused !important;
     }
     
@@ -834,31 +834,37 @@
         margin-bottom: 30px !important;
       }
       
-      .collection-row {
+      .collection-row-top,
+      .collection-row-bottom {
         height: 180px !important;
         margin-bottom: 15px !important;
       }
       
-      .collection-scroll img {
+      .collection-scroll-top img,
+      .collection-scroll-bottom img {
         height: 150px !important;
       }
       
-      .collection-scroll {
+      .collection-scroll-top,
+      .collection-scroll-bottom {
         gap: 15px !important;
         animation-duration: 20s !important;
       }
     }
     
     @media (max-width: 480px) {
-      .collection-row {
+      .collection-row-top,
+      .collection-row-bottom {
         height: 160px !important;
       }
       
-      .collection-scroll img {
+      .collection-scroll-top img,
+      .collection-scroll-bottom img {
         height: 120px !important;
       }
       
-      .collection-scroll {
+      .collection-scroll-top,
+      .collection-scroll-bottom {
         gap: 12px !important;
         animation-duration: 18s !important;
       }
@@ -1134,13 +1140,13 @@
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
-  <!-- Collection Section - 完全書き直し -->
+  <!-- Collection Section - シンプル版 -->
   <section id="collection" class="collection-section" style="width: 100vw; margin-left: calc(-50vw + 50%); padding: 60px 0; background: transparent; position: relative; overflow: hidden;">
     <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
     
     <!-- 上段：右→左スクロール -->
-    <div class="collection-row collection-row-top" style="width: 100%; height: 250px; overflow: hidden; margin-bottom: 20px; position: relative; border: none; outline: none; box-shadow: none;">
-      <div class="collection-scroll" style="display: flex; gap: 20px; height: 100%; width: max-content; align-items: center; animation: scroll-right 25s linear infinite; will-change: transform; border: none; outline: none; box-shadow: none; animation-fill-mode: none;">
+    <div class="collection-row-top" style="width: 100%; height: 250px; overflow: hidden; margin-bottom: 20px; position: relative; background: transparent;">
+      <div class="collection-scroll-top" style="display: flex; gap: 20px; height: 100%; width: max-content; align-items: center; animation: move-right 30s linear infinite; transform: translateX(0);">
         <!-- 1周目 -->
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: inline-block; flex-shrink: 0;">
           <img src="image/1.JPG" alt="Collection Item 1" style="height: 200px; width: auto; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
@@ -1189,8 +1195,8 @@
     </div>
     
     <!-- 下段：左→右スクロール -->
-    <div class="collection-row collection-row-bottom" style="width: 100%; height: 250px; overflow: hidden; position: relative; border: none; outline: none; box-shadow: none;">
-      <div class="collection-scroll" style="display: flex; gap: 20px; height: 100%; width: max-content; align-items: center; animation: scroll-left 25s linear infinite; will-change: transform; border: none; outline: none; box-shadow: none; animation-fill-mode: none;">
+    <div class="collection-row-bottom" style="width: 100%; height: 250px; overflow: hidden; position: relative; background: transparent;">
+      <div class="collection-scroll-bottom" style="display: flex; gap: 20px; height: 100%; width: max-content; align-items: center; animation: move-left 30s linear infinite; transform: translateX(-50%);">
         <!-- 1周目（逆順） -->
         <img src="image/32.JPG" alt="Collection Item 32" style="height: 200px; width: auto; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0;">
         <img src="image/31.JPG" alt="Collection Item 31" style="height: 200px; width: auto; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); flex-shrink: 0;">
@@ -1822,25 +1828,25 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-  // Collection アニメーション強制開始
+  // Collection アニメーション強制開始 - シンプル版
   document.addEventListener('DOMContentLoaded', function() {
     console.log('Collection animation initialization started');
     
     // 上段のアニメーション強制開始
-    const topScroll = document.querySelector('.collection-row-top .collection-scroll');
+    const topScroll = document.querySelector('.collection-scroll-top');
     if (topScroll) {
       console.log('Top scroll element found');
-      topScroll.style.animation = 'scroll-right 25s linear infinite';
+      topScroll.style.animation = 'move-right 30s linear infinite';
       topScroll.style.animationPlayState = 'running';
       topScroll.style.transform = 'translateX(0)';
       console.log('Top scroll animation applied');
     }
     
     // 下段のアニメーション強制開始
-    const bottomScroll = document.querySelector('.collection-row-bottom .collection-scroll');
+    const bottomScroll = document.querySelector('.collection-scroll-bottom');
     if (bottomScroll) {
       console.log('Bottom scroll element found');
-      bottomScroll.style.animation = 'scroll-left 25s linear infinite';
+      bottomScroll.style.animation = 'move-left 30s linear infinite';
       bottomScroll.style.animationPlayState = 'running';
       bottomScroll.style.transform = 'translateX(-50%)';
       console.log('Bottom scroll animation applied');
@@ -1849,11 +1855,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 少し遅れて再実行
     setTimeout(function() {
       if (topScroll) {
-        topScroll.style.animation = 'scroll-right 25s linear infinite';
+        topScroll.style.animation = 'move-right 30s linear infinite';
         topScroll.style.animationPlayState = 'running';
       }
       if (bottomScroll) {
-        bottomScroll.style.animation = 'scroll-left 25s linear infinite';
+        bottomScroll.style.animation = 'move-left 30s linear infinite';
         bottomScroll.style.animationPlayState = 'running';
       }
       console.log('Collection animations re-applied');
@@ -1864,16 +1870,16 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('load', function() {
     console.log('Window load - applying Collection animations');
     
-    const topScroll = document.querySelector('.collection-row-top .collection-scroll');
-    const bottomScroll = document.querySelector('.collection-row-bottom .collection-scroll');
+    const topScroll = document.querySelector('.collection-scroll-top');
+    const bottomScroll = document.querySelector('.collection-scroll-bottom');
     
     if (topScroll) {
-      topScroll.style.animation = 'scroll-right 25s linear infinite';
+      topScroll.style.animation = 'move-right 30s linear infinite';
       topScroll.style.animationPlayState = 'running';
     }
     
     if (bottomScroll) {
-      bottomScroll.style.animation = 'scroll-left 25s linear infinite';
+      bottomScroll.style.animation = 'move-left 30s linear infinite';
       bottomScroll.style.animationPlayState = 'running';
     }
   });
