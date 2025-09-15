@@ -1263,12 +1263,22 @@
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
   <!-- Collection Section - シンプル版 -->
-  <section id="collection" class="collection-section" style="width: 100vw; margin-left: calc(-50vw + 50%); padding: 60px 0; background: transparent; position: relative; overflow: hidden;">
+  <section id="collection" class="collection-section" style="width: 100vw; margin-left: calc(-50vw + 50%); padding: 60px 0; background: transparent; position: relative; overflow: hidden; border: 3px solid red !important;">
     <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
     
+    <!-- デバッグ情報表示 -->
+    <div style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; z-index: 10000; font-family: monospace; font-size: 12px;">
+      <div>Collection Debug Info:</div>
+      <div>Animation Duration: <span id="debug-duration">15s</span></div>
+      <div>Image Gap: <span id="debug-gap">10px</span></div>
+      <div>Row Background: <span id="debug-bg">rgba(255,255,255,0.1)</span></div>
+      <div>Image Count Top: <span id="debug-count-top">0</span></div>
+      <div>Image Count Bottom: <span id="debug-count-bottom">0</span></div>
+    </div>
+    
     <!-- 上段：右→左スクロール -->
-    <div class="collection-row-top" style="width: 100%; height: 300px; overflow: hidden; margin-bottom: 20px; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
-      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 10px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 15s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
+    <div class="collection-row-top" style="width: 100%; height: 300px; overflow: hidden; margin-bottom: 20px; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border: 2px solid blue !important;">
+      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 5px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 15s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid green !important;">
         <!-- 1周目 -->
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
           <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
@@ -1313,12 +1323,36 @@
         <img src="image/18.JPG" alt="Collection Item 18" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/19.JPG" alt="Collection Item 19" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/20.JPG" alt="Collection Item 20" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        
+        <!-- 2周目（ループ用） -->
+        <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
+          <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
+        </a>
+        <img src="image/2.JPG" alt="Collection Item 2" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/3.JPG" alt="Collection Item 3" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/4.JPG" alt="Collection Item 4" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/5.JPG" alt="Collection Item 5" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/6.JPG" alt="Collection Item 6" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/7.JPG" alt="Collection Item 7" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/8.JPG" alt="Collection Item 8" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/9.JPG" alt="Collection Item 9" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/10.JPG" alt="Collection Item 10" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/11.JPG" alt="Collection Item 11" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/12.JPG" alt="Collection Item 12" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/13.JPG" alt="Collection Item 13" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/14.JPG" alt="Collection Item 14" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/15.JPG" alt="Collection Item 15" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/16.JPG" alt="Collection Item 16" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/17.JPG" alt="Collection Item 17" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/18.JPG" alt="Collection Item 18" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/19.JPG" alt="Collection Item 19" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/20.JPG" alt="Collection Item 20" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         </div>
       </div>
     
     <!-- 下段：左→右スクロール -->
-    <div class="collection-row-bottom" style="width: 100%; height: 300px; overflow: hidden; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
-      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 10px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 15s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
+    <div class="collection-row-bottom" style="width: 100%; height: 300px; overflow: hidden; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border: 2px solid orange !important;">
+      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 5px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 15s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid purple !important;">
         <!-- 1周目（逆順） -->
         <img src="image/32.JPG" alt="Collection Item 32" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/31.JPG" alt="Collection Item 31" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
@@ -1349,9 +1383,65 @@
         <img src="image/23.JPG" alt="Collection Item 23" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/22.JPG" alt="Collection Item 22" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/21.JPG" alt="Collection Item 21" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        
+        <!-- 2周目（ループ用） -->
+        <img src="image/32.JPG" alt="Collection Item 32" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/31.JPG" alt="Collection Item 31" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/30.JPG" alt="Collection Item 30" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/29.JPG" alt="Collection Item 29" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/28.JPG" alt="Collection Item 28" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/27.JPG" alt="Collection Item 27" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/26.JPG" alt="Collection Item 26" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/25.JPG" alt="Collection Item 25" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/24.JPG" alt="Collection Item 24" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/23.JPG" alt="Collection Item 23" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/22.JPG" alt="Collection Item 22" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
+        <img src="image/21.JPG" alt="Collection Item 21" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
       </div>
     </div>
   </section>
+
+  <!-- デバッグ用JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 画像数をカウント
+      const topImages = document.querySelectorAll('.collection-scroll-top img').length;
+      const bottomImages = document.querySelectorAll('.collection-scroll-bottom img').length;
+      
+      document.getElementById('debug-count-top').textContent = topImages;
+      document.getElementById('debug-count-bottom').textContent = bottomImages;
+      
+      // アニメーション状況を監視
+      const topScroll = document.querySelector('.collection-scroll-top');
+      const bottomScroll = document.querySelector('.collection-scroll-bottom');
+      
+      if (topScroll) {
+        topScroll.addEventListener('animationstart', function() {
+          console.log('上段アニメーション開始');
+        });
+        topScroll.addEventListener('animationiteration', function() {
+          console.log('上段アニメーション繰り返し');
+        });
+      }
+      
+      if (bottomScroll) {
+        bottomScroll.addEventListener('animationstart', function() {
+          console.log('下段アニメーション開始');
+        });
+        bottomScroll.addEventListener('animationiteration', function() {
+          console.log('下段アニメーション繰り返し');
+        });
+      }
+      
+      // デバッグ情報を更新
+      console.log('Collection Debug Info:');
+      console.log('- Top images:', topImages);
+      console.log('- Bottom images:', bottomImages);
+      console.log('- Animation duration: 15s');
+      console.log('- Image gap: 5px');
+      console.log('- Row background: rgba(255,255,255,0.1)');
+    });
+  </script>
 
   <!-- Brands Section -->
   <section id="brands" class="section-brands brands-section section-spacing" data-role="brands">
