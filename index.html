@@ -742,6 +742,51 @@
         --rs-header-h: 96px;
       }
     }
+    
+    /* Collection セクション強制スタイル */
+    .collection-items {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 20px !important;
+      width: max-content !important;
+      height: 100% !important;
+      white-space: nowrap !important;
+    }
+    
+    .collection-items img {
+      display: inline-block !important;
+      height: 200px !important;
+      width: auto !important;
+      min-width: 200px !important;
+      max-width: 200px !important;
+      flex-shrink: 0 !important;
+      object-fit: cover !important;
+    }
+    
+    .collection-items a {
+      display: inline-block !important;
+      flex-shrink: 0 !important;
+      text-decoration: none !important;
+    }
+    
+    .collection-track-top .collection-items {
+      animation: collection-scroll-right 30s linear infinite !important;
+    }
+    
+    .collection-track-bottom .collection-items {
+      animation: collection-scroll-left 30s linear infinite !important;
+    }
+    
+    @keyframes collection-scroll-right {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    @keyframes collection-scroll-left {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
   </style>
   <style>
     /* フッターが浮かないようにする設定 */
