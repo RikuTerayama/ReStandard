@@ -51,30 +51,32 @@ body #collection-title {
   z-index: 1000 !important; /* Collectionセクションよりさらに上に表示 */
 }
 
-/* flowing imagesの表示を確実にする */
+/* flowing imagesの表示を無効化（新しいCollectionセクションを使用） */
 html body .section-flowing,
 html body .flowing-images,
 html body #flowing-images,
 body .section-flowing,
 body .flowing-images,
 body #flowing-images {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
   position: relative !important;
-  z-index: 998 !important; /* Collectionセクションの下、Brandsセクションより上に表示 */
-  min-height: 200px !important;
-  width: 100% !important;
+  z-index: -1 !important;
+  min-height: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
 html body .flowing-images,
 html body #flowing-images,
 body .flowing-images,
 body #flowing-images {
-  display: block !important;
+  display: none !important;
 }
 
-/* flowing imagesの背景要素も確実に表示 */
+/* flowing imagesの背景要素も無効化（新しいCollectionセクションを使用） */
 html body .flowing-bg,
 html body .flow-row-bg,
 html body .flow-row,
@@ -83,11 +85,14 @@ body .flowing-bg,
 body .flow-row-bg,
 body .flow-row,
 body .flow-track {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
   position: relative !important;
-  z-index: 998 !important; /* flowing imagesと同じz-index */
+  z-index: -1 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
 }
 
 /* 全てのメディアクエリで強制表示 */
