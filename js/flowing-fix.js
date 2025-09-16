@@ -4,7 +4,60 @@
 
 // 新しいCollectionセクション用の高さ確保（簡略化）
 function ensureCollectionHeight() {
-  // 新しいHTML構造では不要 - インラインスタイルで管理
+  // Collectionセクションの表示を強制
+  const collectionSection = document.querySelector('#collection, .collection-section');
+  if (collectionSection) {
+    collectionSection.style.setProperty('display', 'block', 'important');
+    collectionSection.style.setProperty('visibility', 'visible', 'important');
+    collectionSection.style.setProperty('opacity', '1', 'important');
+    collectionSection.style.setProperty('position', 'relative', 'important');
+    collectionSection.style.setProperty('z-index', '999', 'important');
+    console.log('Collection section display enforced');
+  }
+  
+  // 上段の行の表示を強制
+  const topRow = document.querySelector('.collection-row-top');
+  if (topRow) {
+    topRow.style.setProperty('display', 'flex', 'important');
+    topRow.style.setProperty('visibility', 'visible', 'important');
+    topRow.style.setProperty('opacity', '1', 'important');
+    topRow.style.setProperty('height', '600px', 'important');
+    topRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
+    console.log('Top row display enforced');
+  }
+  
+  // 下段の行の表示を強制
+  const bottomRow = document.querySelector('.collection-row-bottom');
+  if (bottomRow) {
+    bottomRow.style.setProperty('display', 'flex', 'important');
+    bottomRow.style.setProperty('visibility', 'visible', 'important');
+    bottomRow.style.setProperty('opacity', '1', 'important');
+    bottomRow.style.setProperty('height', '600px', 'important');
+    bottomRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
+    console.log('Bottom row display enforced');
+  }
+  
+  // 下段のスクロールコンテナの表示を強制
+  const bottomScroll = document.querySelector('.collection-scroll-bottom');
+  if (bottomScroll) {
+    bottomScroll.style.setProperty('display', 'flex', 'important');
+    bottomScroll.style.setProperty('visibility', 'visible', 'important');
+    bottomScroll.style.setProperty('opacity', '1', 'important');
+    bottomScroll.style.setProperty('position', 'relative', 'important');
+    bottomScroll.style.setProperty('z-index', '9999', 'important');
+    console.log('Bottom scroll container display enforced');
+  }
+  
+  // 下段の画像の表示を強制
+  const bottomImages = document.querySelectorAll('.collection-scroll-bottom img');
+  bottomImages.forEach((img, index) => {
+    img.style.setProperty('display', 'block', 'important');
+    img.style.setProperty('visibility', 'visible', 'important');
+    img.style.setProperty('opacity', '1', 'important');
+    img.style.setProperty('position', 'relative', 'important');
+    img.style.setProperty('z-index', '10000', 'important');
+  });
+  console.log(`Bottom images display enforced: ${bottomImages.length} images`);
 }
 
 // 新しいCollectionセクションのリンク機能を保証
