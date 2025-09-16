@@ -706,6 +706,35 @@
     position: relative !important;
     z-index: 10 !important;
   }
+  
+  /* Collection下段の強制表示 */
+  html body .collection-row-bottom,
+  html body .collection-scroll-bottom,
+  html body .collection-scroll-bottom img {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 9999 !important;
+  }
+  
+  html body .collection-scroll-bottom {
+    animation: move-left 60s linear infinite !important;
+    gap: 1px !important;
+    flex-direction: row !important;
+    height: 100% !important;
+    width: max-content !important;
+    align-items: center !important;
+  }
+  
+  html body .collection-scroll-bottom img {
+    display: block !important;
+    height: 250px !important;
+    width: 250px !important;
+    flex-shrink: 0 !important;
+    object-fit: cover !important;
+    z-index: 10000 !important;
+  }
    
    html body .collection-section .flowing-images,
    html body .section-collection .flowing-images,
