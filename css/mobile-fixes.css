@@ -697,7 +697,7 @@
     visibility: visible !important;
     opacity: 1 !important;
     position: relative !important;
-    z-index: 1 !important;
+    z-index: 10 !important;
   }
    
    html body .collection-section .flowing-images,
