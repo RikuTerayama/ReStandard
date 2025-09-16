@@ -1024,10 +1024,13 @@ html body .section-about {
 
 /* 新しいCollectionセクションは表示 */
 #collection,
-.section-collection {
+.section-collection,
+.collection-section {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 /* Collectionのタイトル */
@@ -4208,10 +4211,13 @@ html body .section-about {
 
 /* 新しいCollectionセクションは表示 */
 #collection,
-.section-collection {
+.section-collection,
+.collection-section {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 /* Collectionのタイトル */
