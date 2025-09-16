@@ -2,6 +2,25 @@
    Collection Section Display Fixes
    ======================================== */
 
+/* アニメーション定義 */
+@keyframes move-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes move-left {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 /* Collectionセクション全体の表示を確実にする - 最高特異性で上書き */
 html body .collection-section,
 html body .section-collection,
@@ -168,4 +187,102 @@ body .flow-track {
 .collection-section .section-overlay {
   display: none !important;
   content: none !important;
+}
+
+/* 下段の画像表示を強制 */
+html body #collection .collection-row-bottom,
+html body .collection-section .collection-row-bottom,
+body #collection .collection-row-bottom,
+body .collection-section .collection-row-bottom {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 450px !important;
+  min-height: 450px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+html body #collection .collection-scroll-bottom,
+html body .collection-section .collection-scroll-bottom,
+body #collection .collection-scroll-bottom,
+body .collection-section .collection-scroll-bottom {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: move-left 60s linear infinite !important;
+  gap: 1px !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  height: 100% !important;
+  width: max-content !important;
+  align-items: center !important;
+}
+
+html body #collection .collection-scroll-bottom img,
+html body .collection-section .collection-scroll-bottom img,
+body #collection .collection-scroll-bottom img,
+body .collection-section .collection-scroll-bottom img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 250px !important;
+  width: 250px !important;
+  flex-shrink: 0 !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+/* 上段の画像表示も強制 */
+html body #collection .collection-row-top,
+html body .collection-section .collection-row-top,
+body #collection .collection-row-top,
+body .collection-section .collection-row-top {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 450px !important;
+  min-height: 450px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+html body #collection .collection-scroll-top,
+html body .collection-section .collection-scroll-top,
+body #collection .collection-scroll-top,
+body .collection-section .collection-scroll-top {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: move-right 60s linear infinite !important;
+  gap: 1px !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  height: 100% !important;
+  width: max-content !important;
+  align-items: center !important;
+}
+
+html body #collection .collection-scroll-top img,
+html body .collection-section .collection-scroll-top img,
+html body #collection .collection-scroll-top a,
+html body .collection-section .collection-scroll-top a,
+body #collection .collection-scroll-top img,
+body .collection-section .collection-scroll-top img,
+body #collection .collection-scroll-top a,
+body .collection-section .collection-scroll-top a {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 250px !important;
+  width: 250px !important;
+  flex-shrink: 0 !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
 } 
