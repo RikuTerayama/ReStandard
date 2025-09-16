@@ -23,8 +23,40 @@ function ensureCollectionHeight() {
     topRow.style.setProperty('opacity', '1', 'important');
     topRow.style.setProperty('height', '600px', 'important');
     topRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
+    topRow.style.setProperty('align-items', 'center', 'important');
     console.log('Top row display enforced');
   }
+  
+  // 上段のスクロールコンテナの表示を強制
+  const topScroll = document.querySelector('.collection-scroll-top');
+  if (topScroll) {
+    topScroll.style.setProperty('display', 'flex', 'important');
+    topScroll.style.setProperty('visibility', 'visible', 'important');
+    topScroll.style.setProperty('opacity', '1', 'important');
+    topScroll.style.setProperty('position', 'relative', 'important');
+    topScroll.style.setProperty('z-index', '9999', 'important');
+    topScroll.style.setProperty('flex-direction', 'row', 'important');
+    topScroll.style.setProperty('gap', '1px', 'important');
+    topScroll.style.setProperty('height', '100%', 'important');
+    topScroll.style.setProperty('width', 'max-content', 'important');
+    topScroll.style.setProperty('align-items', 'center', 'important');
+    console.log('Top scroll container display enforced');
+  }
+  
+  // 上段の画像の表示を強制
+  const topImages = document.querySelectorAll('.collection-scroll-top img');
+  topImages.forEach((img, index) => {
+    img.style.setProperty('display', 'block', 'important');
+    img.style.setProperty('visibility', 'visible', 'important');
+    img.style.setProperty('opacity', '1', 'important');
+    img.style.setProperty('position', 'relative', 'important');
+    img.style.setProperty('z-index', '10000', 'important');
+    img.style.setProperty('height', '250px', 'important');
+    img.style.setProperty('width', '250px', 'important');
+    img.style.setProperty('flex-shrink', '0', 'important');
+    img.style.setProperty('object-fit', 'cover', 'important');
+  });
+  console.log(`Top images display enforced: ${topImages.length} images`);
   
   // 下段の行の表示を強制
   const bottomRow = document.querySelector('.collection-row-bottom');
@@ -34,6 +66,7 @@ function ensureCollectionHeight() {
     bottomRow.style.setProperty('opacity', '1', 'important');
     bottomRow.style.setProperty('height', '600px', 'important');
     bottomRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
+    bottomRow.style.setProperty('align-items', 'center', 'important');
     console.log('Bottom row display enforced');
   }
   
@@ -45,6 +78,11 @@ function ensureCollectionHeight() {
     bottomScroll.style.setProperty('opacity', '1', 'important');
     bottomScroll.style.setProperty('position', 'relative', 'important');
     bottomScroll.style.setProperty('z-index', '9999', 'important');
+    bottomScroll.style.setProperty('flex-direction', 'row', 'important');
+    bottomScroll.style.setProperty('gap', '1px', 'important');
+    bottomScroll.style.setProperty('height', '100%', 'important');
+    bottomScroll.style.setProperty('width', 'max-content', 'important');
+    bottomScroll.style.setProperty('align-items', 'center', 'important');
     console.log('Bottom scroll container display enforced');
   }
   
@@ -56,6 +94,10 @@ function ensureCollectionHeight() {
     img.style.setProperty('opacity', '1', 'important');
     img.style.setProperty('position', 'relative', 'important');
     img.style.setProperty('z-index', '10000', 'important');
+    img.style.setProperty('height', '250px', 'important');
+    img.style.setProperty('width', '250px', 'important');
+    img.style.setProperty('flex-shrink', '0', 'important');
+    img.style.setProperty('object-fit', 'cover', 'important');
   });
   console.log(`Bottom images display enforced: ${bottomImages.length} images`);
 }
