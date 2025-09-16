@@ -197,8 +197,8 @@ body .collection-section .collection-row-bottom {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-  height: 450px !important;
-  min-height: 450px !important;
+  height: 600px !important;
+  min-height: 600px !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   padding: 20px !important;
@@ -244,12 +244,65 @@ body .collection-section .collection-row-top {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-  height: 450px !important;
-  min-height: 450px !important;
+  height: 600px !important;
+  min-height: 600px !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   padding: 20px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 最強ルール - すべてのCollection要素を強制表示 */
+* #collection,
+* .collection-section,
+* #collection *,
+* .collection-section * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: auto !important;
+}
+
+* .collection-row-top,
+* .collection-row-bottom {
+  display: flex !important;
+  height: 600px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+* .collection-scroll-top,
+* .collection-scroll-bottom {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 1px !important;
+  height: 100% !important;
+  width: max-content !important;
+  align-items: center !important;
+}
+
+* .collection-scroll-bottom {
+  animation: move-left 60s linear infinite !important;
+}
+
+* .collection-scroll-top {
+  animation: move-right 60s linear infinite !important;
+}
+
+* .collection-scroll-top img,
+* .collection-scroll-bottom img,
+* .collection-scroll-top a,
+* .collection-scroll-bottom a {
+  display: block !important;
+  height: 250px !important;
+  width: 250px !important;
+  flex-shrink: 0 !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
 }
 
 html body #collection .collection-scroll-top,
