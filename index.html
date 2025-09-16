@@ -768,12 +768,48 @@
       visibility: visible !important;
       opacity: 1 !important;
       position: relative !important;
-      z-index: 10 !important;
+      z-index: 999 !important;
       width: 100vw !important;
       margin-left: calc(-50vw + 50%) !important;
       padding: 60px 0 !important;
       background: transparent !important;
       overflow: hidden !important;
+      min-height: 400px !important;
+    }
+    
+    /* Collectionセクション内の要素を強制表示 */
+    html body #collection *,
+    html body .collection-section *,
+    body #collection *,
+    body .collection-section *,
+    #collection *,
+    .collection-section * {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    /* 画像とリンクは特別に処理 */
+    html body #collection img,
+    html body .collection-section img,
+    body #collection img,
+    body .collection-section img,
+    #collection img,
+    .collection-section img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    html body #collection a,
+    html body .collection-section a,
+    body #collection a,
+    body .collection-section a,
+    #collection a,
+    .collection-section a {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     /* 新しいCollection用スタイル - 最強特異性 */
@@ -1360,7 +1396,7 @@
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
   <!-- Collection Section - シンプル版 -->
-  <section id="collection" class="collection-section" style="width: 100vw; margin-left: calc(-50vw + 50%); padding: 60px 0; background: transparent; position: relative; overflow: hidden; border: 3px solid red !important; display: block !important; visibility: visible !important; opacity: 1 !important; z-index: 10 !important;">
+  <section id="collection" class="collection-section" style="width: 100vw !important; margin-left: calc(-50vw + 50%) !important; padding: 60px 0 !important; background: transparent !important; position: relative !important; overflow: hidden !important; display: block !important; visibility: visible !important; opacity: 1 !important; z-index: 999 !important; min-height: 400px !important;">
     <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
     
     <!-- デバッグ情報表示 -->
