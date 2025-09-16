@@ -826,10 +826,43 @@
       direction: ltr !important;
       text-align: left !important;
       /* アニメーション強制上書き */
-      animation-duration: 5s !important;
+      animation-duration: 3s !important;
       animation-timing-function: linear !important;
       animation-iteration-count: infinite !important;
       animation-play-state: running !important;
+    }
+    
+    /* 上段専用のアニメーション強制 */
+    html body .collection-scroll-top,
+    body .collection-scroll-top,
+    .collection-scroll-top {
+      animation: move-right 3s linear infinite !important;
+      gap: 1px !important;
+    }
+    
+    /* 下段専用のアニメーション強制 */
+    html body .collection-scroll-bottom,
+    body .collection-scroll-bottom,
+    .collection-scroll-bottom {
+      animation: move-left 3s linear infinite !important;
+      gap: 1px !important;
+    }
+    
+    /* 最強特異性でアニメーションを強制 */
+    html body #collection .collection-scroll-top {
+      animation: move-right 3s linear infinite !important;
+      gap: 1px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+    }
+    
+    html body #collection .collection-scroll-bottom {
+      animation: move-left 3s linear infinite !important;
+      gap: 1px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
     }
     
     /* 上段専用スタイル */
@@ -1293,7 +1326,7 @@
     <!-- デバッグ情報表示 -->
     <div style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; z-index: 10000; font-family: monospace; font-size: 12px; display: block !important; visibility: visible !important; opacity: 1 !important;">
       <div>Collection Debug Info:</div>
-      <div>Animation Duration: <span id="debug-duration">5s</span></div>
+      <div>Animation Duration: <span id="debug-duration">3s</span></div>
       <div>Image Gap: <span id="debug-gap">1px</span></div>
       <div>Row Background: <span id="debug-bg">rgba(255,255,255,0.1)</span></div>
       <div>Image Count Top: <span id="debug-count-top">0</span></div>
@@ -1302,7 +1335,7 @@
     
     <!-- 上段：右→左スクロール -->
     <div class="collection-row-top" style="width: 100%; height: 350px; overflow: hidden; margin-bottom: 20px; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border: 2px solid blue !important; display: flex !important; align-items: center !important;">
-      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 5s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid green !important;">
+      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 3s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid green !important;">
         <!-- 1周目 -->
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
           <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
@@ -1400,7 +1433,7 @@
     
     <!-- 下段：左→右スクロール -->
     <div class="collection-row-bottom" style="width: 100%; height: 350px; overflow: hidden; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border: 2px solid orange !important; display: flex !important; align-items: center !important;">
-      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 5s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid purple !important;">
+      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 3s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid purple !important;">
         <!-- 1周目（逆順） -->
         <img src="image/32.JPG" alt="Collection Item 32" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/31.JPG" alt="Collection Item 31" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
@@ -1499,7 +1532,7 @@
       console.log('Collection Debug Info:');
       console.log('- Top images:', topImages);
       console.log('- Bottom images:', bottomImages);
-      console.log('- Animation duration: 5s');
+      console.log('- Animation duration: 3s');
       console.log('- Image gap: 1px');
       console.log('- Row background: rgba(255,255,255,0.1)');
     });
