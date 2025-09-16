@@ -509,13 +509,17 @@
     opacity: 1 !important;
   }
   
-  /* flowing imagesの表示を確実にする */
+  /* flowing imagesの表示を無効化（新しいCollectionセクションを使用） */
   html body .section-flowing,
   html body .flowing-images {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
     position: relative !important;
+    z-index: -1 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
   }
   
   /* 1.JPGと25.JPGのデバッグスタイルを削除 - 高特異性 */
@@ -588,14 +592,17 @@
     color: #ffffff !important;
   }
   
-  /* flowing imagesの表示を確実にする */
+  /* flowing imagesの表示を無効化（新しいCollectionセクションを使用） */
   html body .section-flowing,
   html body .flowing-images {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
     position: relative !important;
-    z-index: 5 !important;
+    z-index: -1 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
   }
 }
 
