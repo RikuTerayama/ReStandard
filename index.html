@@ -935,7 +935,7 @@
     /* 行の高さを強制 */
     html body #collection .collection-row-top,
     html body #collection .collection-row-bottom {
-      height: 400px !important;
+      height: 450px !important;
       display: flex !important;
       align-items: center !important;
       overflow: hidden !important;
@@ -946,8 +946,8 @@
       display: flex !important;
       visibility: visible !important;
       opacity: 1 !important;
-      height: 400px !important;
-      min-height: 400px !important;
+      height: 450px !important;
+      min-height: 450px !important;
     }
     
     html body #collection .collection-scroll-bottom {
@@ -970,7 +970,7 @@
       display: flex !important;
       visibility: visible !important;
       opacity: 1 !important;
-      height: 400px !important;
+      height: 450px !important;
     }
     
     .collection-scroll-bottom {
@@ -996,8 +996,8 @@
       display: flex !important;
       visibility: visible !important;
       opacity: 1 !important;
-      height: 400px !important;
-      min-height: 400px !important;
+      height: 450px !important;
+      min-height: 450px !important;
       background: rgba(255, 255, 255, 0.1) !important;
     }
     
@@ -1022,6 +1022,46 @@
       height: 250px !important;
       width: 250px !important;
       flex-shrink: 0 !important;
+    }
+    
+    /* 下段の表示を最強で強制 - さらに具体的なセレクター */
+    .collection-section .collection-row-bottom,
+    .collection-section .collection-scroll-bottom,
+    .collection-section .collection-scroll-bottom img {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    .collection-section .collection-scroll-bottom {
+      animation: move-left 60s linear infinite !important;
+      gap: 1px !important;
+    }
+    
+    .collection-section .collection-scroll-bottom img {
+      display: block !important;
+      height: 250px !important;
+      width: 250px !important;
+      flex-shrink: 0 !important;
+    }
+    
+    /* 半透明背景の強制表示 */
+    .collection-row-top,
+    .collection-row-bottom {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important;
+      padding: 20px !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    html body #collection .collection-row-top,
+    html body #collection .collection-row-bottom,
+    html body .collection-section .collection-row-top,
+    html body .collection-section .collection-row-bottom {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important;
+      padding: 20px !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
     }
     
     /* 上段専用スタイル */
@@ -1493,11 +1533,11 @@
     </div>
     
     <!-- 上段：右→左スクロール -->
-    <div class="collection-row-top" style="width: 100%; height: 400px; overflow: hidden; margin-bottom: 20px; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border: 2px solid blue !important; display: flex !important; align-items: center !important;">
-      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 60s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid green !important;">
+    <div class="collection-row-top" style="width: 100%; height: 450px; overflow: hidden; margin-bottom: 20px; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); display: flex !important; align-items: center !important;">
+      <div class="collection-scroll-top" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-right 60s linear infinite !important; transform: translateX(0) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
         <!-- 1周目 -->
-        <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
-          <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
+        <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important; margin: 0 !important;">
+          <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important; margin: 0 !important;">
         </a>
         <img src="image/2.JPG" alt="Collection Item 2" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/3.JPG" alt="Collection Item 3" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
@@ -1591,8 +1631,8 @@
       </div>
     
     <!-- 下段：左→右スクロール -->
-    <div class="collection-row-bottom" style="width: 100%; height: 400px; overflow: hidden; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border: 2px solid orange !important; display: flex !important; align-items: center !important;">
-      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 60s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important; border: 2px solid purple !important;">
+    <div class="collection-row-bottom" style="width: 100%; height: 450px; overflow: hidden; position: relative; background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); display: flex !important; align-items: center !important;">
+      <div class="collection-scroll-bottom" style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: 1px !important; height: 100% !important; width: max-content !important; align-items: center !important; animation: move-left 60s linear infinite !important; transform: translateX(-50%) !important; justify-content: flex-start !important; visibility: visible !important; opacity: 1 !important;">
         <!-- 1周目（逆順） -->
         <img src="image/32.JPG" alt="Collection Item 32" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
         <img src="image/31.JPG" alt="Collection Item 31" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; flex-shrink: 0 !important; display: block !important;">
