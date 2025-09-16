@@ -254,9 +254,7 @@ body .collection-section .collection-row-top {
 
 /* 最強ルール - すべてのCollection要素を強制表示 */
 * #collection,
-* .collection-section,
-* #collection *,
-* .collection-section * {
+* .collection-section {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
