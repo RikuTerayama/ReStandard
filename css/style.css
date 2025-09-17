@@ -1,3 +1,5 @@
+/* キルスイッチ確認完了 - style.css反映確認済み */
+
 /* ルート変数の定義 */
 :root {
   --main-color: #333333;
@@ -15,6 +17,8 @@
   /* 新しい共通トークン */
   --nav-frost-bg: rgba(255, 255, 255, 0.9);
   --collection-gap-sm: 8px;
+  --track-gap: 8px;
+  --track-speed: 90s;
   
   /* ベースとなるフォントサイズの設定 */
   --font-size-base: 16px;
@@ -180,10 +184,22 @@ section {
   --row-gap: 5px;
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --track-speed: 70s;
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --track-row-height: 300px;
     --track-item-size: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --track-speed: 55s;
   }
 }
 
@@ -245,15 +261,16 @@ section {
 
 /* Collection 行のスタイル - オーバーレイ廃止、余白最小化 */
 /* Collection 二段マルキー実装 */
-/* Collection 行設定 - 高さ自動調整 */
+/* Collection 行設定 - 切れなし・横幅いっぱい */
 .collection-row-top,
 .collection-row-bottom {
   display: flex !important;
   width: 100% !important;
   height: var(--track-row-height) !important;
-  overflow: hidden !important;
+  overflow: visible !important;
   position: relative !important;
   background: transparent !important;
+  padding: 0 !important;
 }
 
 .collection-row-top {
@@ -264,12 +281,13 @@ section {
 .collection-scroll-bottom {
   display: flex !important;
   align-items: center !important;
-  gap: 15px !important;
+  gap: var(--track-gap) !important;
   position: absolute !important;
   white-space: nowrap !important;
   will-change: transform !important;
   cursor: grab !important;
   user-select: none !important;
+  width: max-content !important;
 }
 
 .collection-scroll-top:active,
@@ -277,14 +295,14 @@ section {
   cursor: grabbing !important;
 }
 
-/* 上段：右→左（緩やかな速度） */
+/* 上段：右→左（共通速度） */
 .collection-scroll-top {
-  animation: scroll-right-to-left 45s linear infinite !important;
+  animation: scroll-right-to-left var(--track-speed) linear infinite !important;
 }
 
-/* 下段：左→右（緩やかな速度） */
+/* 下段：左→右（共通速度） */
 .collection-scroll-bottom {
-  animation: scroll-left-to-right 45s linear infinite !important;
+  animation: scroll-left-to-right var(--track-speed) linear infinite !important;
 }
 
 /* アニメーション定義 */
@@ -375,13 +393,11 @@ section {
   }
 }
 
-/* Brands 縦1列化完全防止 - 最強グリッド実装 */
+/* Brands 縦1列化完全防止 - auto-fit最強グリッド */
 .brands-grid {
   display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
   gap: 16px !important;
-  align-items: center !important;
-  justify-items: center !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 2rem !important;
@@ -389,29 +405,19 @@ section {
   box-sizing: border-box !important;
   /* 縦1列化防止の最強設定 */
   grid-auto-flow: row !important;
-  grid-auto-rows: auto !important;
   place-content: center !important;
 }
 
-/* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
-@media (max-width: 1200px) {
-  .brands-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: auto !important;
-  }
-}
-
+/* レスポンシブ対応 - 厳密な列数制御 */
 @media (max-width: 900px) {
   .brands-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    grid-template-rows: auto !important;
   }
 }
 
 @media (max-width: 600px) {
   .brands-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    grid-template-rows: auto !important;
   }
 }
 
@@ -1653,8 +1659,8 @@ body {
 
 /* 見た目定義最優先実装完了 - Collection=1ラッパー背景・8px gap、Brands=正方形ボックス・レスポンシブグリッド */
 
-/* BUILD-STAMP: 2025-01-18-COLLECTION-BRANDS-COMPLETE */
-/* Collection画像フル表示・余白5px・スワイプ対応、Brands正方形グリッド・縦1列化防止完了 */
+/* BUILD_STAMP: 2025-01-18_CollectionBrands_Sync */
+/* Collection1背景・切れなし・余白8px・速度同一・スワイプ対応、Brands正方形グリッド・縦1列解消完了 */
 
   .map-container {
     width: 100% !important;
