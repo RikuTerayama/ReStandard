@@ -93,9 +93,9 @@ function enableSwipe({containerSelector}) {
   });
 }
 
-// セクション初期化
+// Collection / Brands セクション初期化 - Single Source of Truth
 document.addEventListener('DOMContentLoaded', function() {
-  // Collection セクションの表示確認
+  // Collection セクションの表示確認と複製処理
   function ensureCollectionDisplay() {
     const collectionSection = document.getElementById('collection');
     const topRow = document.querySelector('.collection-row-top');
@@ -103,14 +103,30 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (collectionSection && topRow && bottomRow) {
       console.info("[COLLECTION] Section properly structured");
+      
+      // 画像複製処理（無限ループのため）
+      duplicateImages('.collection-scroll-top');
+      duplicateImages('.collection-scroll-bottom');
     } else {
       console.warn("[COLLECTION] Section structure issue detected");
     }
   }
   
+  // 画像複製関数（無限ループ用）
+  function duplicateImages(selector) {
+    const track = document.querySelector(selector);
+    if (!track) return;
+    
+    const images = track.querySelectorAll('img, a');
+    images.forEach(item => {
+      const clone = item.cloneNode(true);
+      track.appendChild(clone);
+    });
+  }
+  
   ensureCollectionDisplay();
   
-  // marquee初期化
+  // marquee初期化 - Collection上下・Lookbookを統一関数で制御
   initMarquee({
     trackSelector: '.collection-scroll-top',
     direction: 'move-right',
