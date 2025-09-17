@@ -75,36 +75,38 @@ section {
 }
 
 /* Collection セクションの特別な間隔設定 */
+/* Collection セクション間隔 - 統合済み */
 #collection {
-  margin-top: 0;
-  margin-bottom: clamp(100px, 12vw, 150px);
+  /* .section-spacing クラスで管理 */
 }
 
-/* Brands セクションの間隔設定 */
-#brands {
-  margin-top: clamp(100px, 12vw, 150px);
-  margin-bottom: clamp(50px, 6vw, 80px);
-}
-
-/* Lookbook セクションの間隔設定 */
-#lookbook {
-  margin-top: clamp(100px, 12vw, 150px);
-  margin-bottom: clamp(50px, 6vw, 80px);
-}
-
-/* About セクションの間隔設定 */
+/* セクション間隔設定 - 統合済み */
+/* Duplicate removed: 個別のmargin設定を.section-spacingに統合 */
+#brands,
+#lookbook,
 #about-restandard {
-  margin-top: clamp(100px, 12vw, 150px);
-  margin-bottom: clamp(50px, 6vw, 80px);
+  /* .section-spacing クラスで管理 */
 }
 
 /* About セクションの半透明ボックス - 統合済み */
 .about-inner {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 16px;
-  padding: 20px;
+  padding: 30px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  color: white;
+}
+
+.about-inner h2 {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+}
+
+.about-inner p {
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* ========================================
@@ -114,7 +116,7 @@ section {
 /* Duplicate removed: 競合を避けるため、ここでのみ管理 */
 
 /* セクション共通の縦間隔 - トークン化 */
-.section-spacing-lg {
+.section-spacing {
   margin-top: clamp(100px, 12vw, 150px);
   margin-bottom: clamp(50px, 6vw, 80px);
 }
@@ -122,11 +124,12 @@ section {
 /* セクション共通のオーバーレイ - 共通コンポーネント */
 .section-overlay {
   position: relative;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  color: white;
 }
 
 .section-overlay h2 {
@@ -135,6 +138,11 @@ section {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 20px;
+}
+
+.section-overlay p {
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* 画像高さの統一管理 - CSSカスタムプロパティ */
@@ -203,8 +211,8 @@ section {
   display: flex;
   visibility: visible;
   opacity: 1;
-  height: var(--track-item-h);
-  min-height: var(--track-item-h);
+  height: 300px;
+  min-height: 300px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 20px;
@@ -245,10 +253,10 @@ section {
   display: block;
   visibility: visible;
   opacity: 1;
-  height: var(--track-item-h);
-  width: var(--track-item-h);
+  height: 250px;
+  width: 250px;
   flex-shrink: 0;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   position: relative;
@@ -276,8 +284,8 @@ section {
   width: 100%;
   overflow: hidden;
   position: relative;
-  height: var(--track-item-h);
-  background: rgba(255, 255, 255, 0.1);
+  height: 400px;
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -299,9 +307,9 @@ section {
 }
 
 .lookbook-item img {
-  height: var(--track-item-h);
-  width: var(--track-item-h);
-  object-fit: cover;
+  height: 350px;
+  width: auto;
+  object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
@@ -787,13 +795,32 @@ section p {
 /* ブランドセクションのスタイル - 統合済み */
 .brands-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
   justify-items: center;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+/* レスポンシブ対応 - 画面サイズに応じて列数を調整 */
+@media (max-width: 1200px) {
+  .brands-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .brands-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .brands-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .brand-card {
@@ -803,9 +830,10 @@ section p {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background: white;
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
-  min-height: 200px;
+  width: 100%;
+  height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -813,7 +841,7 @@ section p {
 }
 
 .brand-card:hover {
-  transform: translateY(-4px);
+  transform: scale(1.05);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
@@ -821,6 +849,11 @@ section p {
 .brand-logo {
   opacity: 1;
   transition: opacity 0.3s ease;
+  max-width: 100%;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .brand-hover {
@@ -830,6 +863,11 @@ section p {
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
+  max-width: 100%;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .brand-card:hover .brand-logo {
