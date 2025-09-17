@@ -88,9 +88,10 @@ section {
   /* .section-spacing クラスで管理 */
 }
 
-/* About セクションの半透明ボックス - 統合済み */
+/* About セクション - 統合済み */
+/* Duplicate removed: 個別のAbout設定をここに統合 */
 .about-inner {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -110,7 +111,7 @@ section {
 }
 
 /* ========================================
-   SECTION KIT - Single Source of Truth
+   SECTIONS - Single Source of Truth
    ======================================== */
 /* 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を統合 */
 /* Duplicate removed: 競合を避けるため、ここでのみ管理 */
@@ -121,10 +122,10 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* セクション共通のオーバーレイ - 共通コンポーネント */
-.section-overlay {
+/* セクション共通の半透明オーバーレイ - ナビバーと同じ色/透明度 */
+.section-overlay--frost {
   position: relative;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -132,7 +133,7 @@ section {
   color: white;
 }
 
-.section-overlay h2 {
+.section-overlay--frost h2 {
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
@@ -140,9 +141,18 @@ section {
   margin-bottom: 20px;
 }
 
-.section-overlay p {
+.section-overlay--frost p {
   color: white;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 画像の収まり管理 - 上下が切れないことを最優先 */
+.track-item img {
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
 }
 
 /* 画像高さの統一管理 - CSSカスタムプロパティ */
@@ -190,7 +200,8 @@ section {
   }
 }
 
-/* Collection セクション全体の表示を確実にする */
+/* Collection セクション - 統合済み */
+/* Duplicate removed: 個別のCollection設定をここに統合 */
 .collection-section,
 #collection {
   display: block;
@@ -205,14 +216,14 @@ section {
   padding: 20px 0;
 }
 
-/* Collection 行のスタイル - 上下2段を確実に表示 */
+/* Collection 行のスタイル - 上下2段を厳密に別トラックとして表示 */
 .collection-row-top,
 .collection-row-bottom {
   display: flex;
   visibility: visible;
   opacity: 1;
-  height: 300px;
-  min-height: 300px;
+  height: 350px;
+  min-height: 350px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 20px;
@@ -222,6 +233,23 @@ section {
   z-index: 1;
   margin-bottom: 20px;
   overflow: hidden;
+}
+
+/* レスポンシブ対応 - 画面サイズに応じて高さを調整 */
+@media (max-width: 768px) {
+  .collection-row-top,
+  .collection-row-bottom {
+    height: 280px;
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-row-top,
+  .collection-row-bottom {
+    height: 220px;
+    min-height: 220px;
+  }
 }
 
 /* Collection スクロールコンテナのスタイル */
@@ -247,20 +275,35 @@ section {
   animation: move-left var(--track-speed) linear infinite;
 }
 
-/* Collection 画像のスタイル - 統一管理 */
+/* Collection 画像のスタイル - 上下が切れないことを最優先 */
 .collection-scroll-top img,
 .collection-scroll-bottom img {
   display: block;
   visibility: visible;
   opacity: 1;
-  height: 250px;
-  width: 250px;
+  height: 300px;
+  width: auto;
   flex-shrink: 0;
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   position: relative;
   z-index: 3;
+}
+
+/* レスポンシブ対応 - 画面サイズに応じて画像サイズを調整 */
+@media (max-width: 768px) {
+  .collection-scroll-top img,
+  .collection-scroll-bottom img {
+    height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-scroll-top img,
+  .collection-scroll-bottom img {
+    height: 180px;
+  }
 }
 
 /* ホバー停止（pointer有デバイスのみ） */
@@ -279,17 +322,23 @@ section {
   }
 }
 
-/* Lookbook セクションのスタイル - 統合済み */
+/* Lookbook セクション - 統合済み */
+/* Duplicate removed: 個別のLookbook設定をここに統合 */
 .lookbook-container {
   width: 100%;
   overflow: hidden;
   position: relative;
   height: 400px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  cursor: grab;
+}
+
+.lookbook-container:active {
+  cursor: grabbing;
 }
 
 .lookbook-track {
@@ -313,6 +362,10 @@ section {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .lookbook-item img:hover {
@@ -792,34 +845,43 @@ section p {
   margin-top: 60px;
 }
 
-/* ブランドセクションのスタイル - 統合済み */
+/* Brands セクション - 統合済み */
+/* Duplicate removed: 個別のBrands設定をここに統合 */
 .brands-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 1.5rem;
   justify-items: center;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  height: 400px;
 }
 
-/* レスポンシブ対応 - 画面サイズに応じて列数を調整 */
+/* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
 @media (max-width: 1200px) {
   .brands-grid {
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 450px;
   }
 }
 
 @media (max-width: 900px) {
   .brands-grid {
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    height: 500px;
   }
 }
 
 @media (max-width: 600px) {
   .brands-grid {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 600px;
   }
 }
 
@@ -830,10 +892,11 @@ section p {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background: white;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   width: 100%;
-  height: 150px;
+  height: 100%;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -850,7 +913,7 @@ section p {
   opacity: 1;
   transition: opacity 0.3s ease;
   max-width: 100%;
-  max-height: 80px;
+  max-height: 60px;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -864,7 +927,7 @@ section p {
   opacity: 0;
   transition: opacity 0.3s ease;
   max-width: 100%;
-  max-height: 80px;
+  max-height: 60px;
   width: auto;
   height: auto;
   object-fit: contain;
