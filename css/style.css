@@ -176,8 +176,8 @@ section {
 :root {
   --track-row-height: 360px;
   --track-item-size: 320px;
-  --title-gap: 10px;
-  --row-gap: 10px;
+  --title-gap: 5px;
+  --row-gap: 5px;
 }
 
 @media (max-width: 768px) {
@@ -268,16 +268,23 @@ section {
   position: absolute !important;
   white-space: nowrap !important;
   will-change: transform !important;
+  cursor: grab !important;
+  user-select: none !important;
 }
 
-/* 上段：右→左 */
+.collection-scroll-top:active,
+.collection-scroll-bottom:active {
+  cursor: grabbing !important;
+}
+
+/* 上段：右→左（緩やかな速度） */
 .collection-scroll-top {
-  animation: scroll-right-to-left 30s linear infinite !important;
+  animation: scroll-right-to-left 45s linear infinite !important;
 }
 
-/* 下段：左→右 */
+/* 下段：左→右（緩やかな速度） */
 .collection-scroll-bottom {
-  animation: scroll-left-to-right 30s linear infinite !important;
+  animation: scroll-left-to-right 45s linear infinite !important;
 }
 
 /* アニメーション定義 */
@@ -297,19 +304,20 @@ section {
   animation-play-state: paused !important;
 }
 
-/* Collection 画像 - 上下切れ禁止・全体表示 */
+/* Collection 画像 - 完全フル表示・上下切れ完全防止 */
 .collection-scroll-top img,
 .collection-scroll-bottom img {
-  height: var(--track-item-size) !important;
   width: auto !important;
+  height: auto !important;
+  max-height: calc(var(--track-row-height) - 20px) !important;
+  max-width: 300px !important;
   object-fit: contain !important;
   border-radius: 8px !important;
   flex-shrink: 0 !important;
   display: block !important;
   visibility: visible !important;
-  /* 上下切れ防止 */
-  max-height: var(--track-item-size) !important;
-  max-width: none !important;
+  /* フル表示保証 */
+  object-position: center !important;
 }
 
 /* Collection スクロールコンテナのスタイル */
@@ -367,7 +375,7 @@ section {
   }
 }
 
-/* Brands レスポンシブグリッド - 縦1列化完全防止 */
+/* Brands 縦1列化完全防止 - 最強グリッド実装 */
 .brands-grid {
   display: grid !important;
   grid-template-columns: repeat(5, 1fr) !important;
@@ -379,10 +387,10 @@ section {
   padding: 2rem !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  /* 他セクション侵食防止 */
-  position: relative !important;
-  z-index: 1 !important;
-  overflow: visible !important;
+  /* 縦1列化防止の最強設定 */
+  grid-auto-flow: row !important;
+  grid-auto-rows: auto !important;
+  place-content: center !important;
 }
 
 /* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
@@ -407,16 +415,17 @@ section {
   }
 }
 
-/* 正方形カード - 厳密1:1比率・白背景ボックス */
+/* 正方形カード - レスポンシブ対応・1:1比率厳守 */
 .brand-card {
   aspect-ratio: 1 / 1 !important;
   width: 100% !important;
-  max-width: 220px !important;
+  min-width: 120px !important;
+  max-width: 200px !important;
   display: grid !important;
   place-items: center !important;
   background: #fff !important;
   border-radius: 12px !important;
-  padding: 12px !important;
+  padding: 16px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
   position: relative !important;
@@ -1644,8 +1653,8 @@ body {
 
 /* 見た目定義最優先実装完了 - Collection=1ラッパー背景・8px gap、Brands=正方形ボックス・レスポンシブグリッド */
 
-/* BUILD-STAMP: 2025-01-18-COLLECTION-BRANDS-FIX */
-/* キルスイッチ削除完了 - 反映確認済み */
+/* BUILD-STAMP: 2025-01-18-COLLECTION-BRANDS-COMPLETE */
+/* Collection画像フル表示・余白5px・スワイプ対応、Brands正方形グリッド・縦1列化防止完了 */
 
   .map-container {
     width: 100% !important;
