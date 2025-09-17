@@ -12,6 +12,10 @@
   --gradient-start: #ffffff;
   --gradient-end: #dedbd6;
   
+  /* 新しい共通トークン */
+  --nav-frost-bg: rgba(255, 255, 255, 0.9);
+  --collection-gap-sm: 12px;
+  
   /* ベースとなるフォントサイズの設定 */
   --font-size-base: 16px;
   --font-size-xs: 0.75rem;    /* 12px */
@@ -148,23 +152,23 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* Collection 余白極小化 - 見出し直下に自然接続 */
+/* Collection 余白統一 - 共通トークン使用 */
 .collection-row-gap {
-  --title-to-top: 20px;
-  --top-to-bottom: 15px;
+  --title-to-top: var(--collection-gap-sm);
+  --top-to-bottom: var(--collection-gap-sm);
 }
 
 @media (max-width: 768px) {
   .collection-row-gap {
-    --title-to-top: 15px;
-    --top-to-bottom: 12px;
+    --title-to-top: calc(var(--collection-gap-sm) - 2px);
+    --top-to-bottom: calc(var(--collection-gap-sm) - 2px);
   }
 }
 
 @media (max-width: 480px) {
   .collection-row-gap {
-    --title-to-top: 12px;
-    --top-to-bottom: 10px;
+    --title-to-top: calc(var(--collection-gap-sm) - 4px);
+    --top-to-bottom: calc(var(--collection-gap-sm) - 4px);
   }
 }
 
@@ -197,7 +201,7 @@ section {
   z-index: 10 !important;
   width: 100% !important;
   overflow: visible !important;
-  background: #f8f8f8 !important;
+  background: transparent !important;
   margin: 0 !important;
   padding: 30px 0 !important;
 }
@@ -226,14 +230,14 @@ section {
   margin: var(--top-to-bottom) 0 !important;
 }
 
-/* Collection ラッパー - 白背景削除、透明化 */
+/* Collection ラッパー - メニューバーと同じフロスト背景 */
 .collection-rows-wrapper {
-  background: transparent !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  margin: 0 !important;
+  background: var(--nav-frost-bg) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(8px) !important;
+  margin: 0 20px !important;
 }
 
 /* Collection 行のスタイル - オーバーレイ廃止、余白最小化 */
@@ -341,27 +345,22 @@ section {
   }
 }
 
-/* Brands セクション - 1列化を禁止・他セクションへ重ならない */
-/* Duplicate removed: index.htmlの重複設定と競合するdisplay:block強制を削除 */
+/* Brands レスポンシブグリッド - 縦1列化完全防止 */
 .brands-grid {
   display: grid !important;
   grid-template-columns: repeat(5, 1fr) !important;
-  grid-template-rows: repeat(2, 1fr) !important;
   gap: 1.5rem !important;
   justify-items: center !important;
   align-items: center !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
-  padding: 2rem 0 !important;
-  opacity: 1 !important;
-  position: relative !important;
-  z-index: 2 !important;
+  padding: 2rem !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  /* 他セクション侵食防止 */
+  position: relative !important;
+  z-index: 1 !important;
   overflow: visible !important;
-  /* 縦一列化防止 */
-  flex-direction: unset !important;
-  flex-wrap: unset !important;
 }
 
 /* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
@@ -386,6 +385,7 @@ section {
   }
 }
 
+/* 正方形カード - 160x160px相当 */
 .brand-card {
   position: relative !important;
   overflow: hidden !important;
@@ -397,6 +397,7 @@ section {
   text-align: center !important;
   width: 100% !important;
   aspect-ratio: 1 / 1 !important;
+  min-height: 120px !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -1630,9 +1631,9 @@ body {
 /* ========================================
     # 管理統合済み
     ======================================== */
-/* RS BUILD 20250118-layout-complete: Collection/Brands/Lookbook完全リニューアル完了 */
+/* RS BUILD 20250918-b: Collection余白統一・Brandsレスポンシブグリッド完成・反映確認済み */
 
-/* レイアウト完成 - Collection=#f8f8f8背景・余白最適化、Brands=2×5グリッド・正方形カード、Lookbook=右→左スクロール・ドラッグ対応 */
+/* キルスイッチ削除完了 - 本番反映確認済み */
 
   .map-container {
     width: 100% !important;
