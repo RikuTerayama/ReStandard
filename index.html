@@ -1427,14 +1427,36 @@
   </style>
 </head>
 <body>
+  <!-- サイト改修中メッセージ -->
+  <div id="maintenance-message" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-family: 'Noto Serif JP', serif;
+    z-index: 99999;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  ">
+    サイトの改修中です
+  </div>
+
   <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
-  <div id="splash-video-wrapper">
+  <div id="splash-video-wrapper" style="display: none;">
     <video id="splash-video" src="5.mov" autoplay playsinline muted></video>
     <!-- <div id="splash-loading">Loading...</div> -->
   </div>
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
-  <nav class="fixed-top navbar navbar-expand-lg">
+  <nav class="fixed-top navbar navbar-expand-lg" style="display: none;">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
       <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
@@ -1460,7 +1482,7 @@
   </nav>
 
   <!-- PC版背景動画 -->
-  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display: none;"></video>
   
   <style>
     /* PC版とスマートフォン版で背景動画を切り替え */
@@ -1659,16 +1681,16 @@
 
 
   <!-- スマートフォン用カルーセル -->
-  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
+  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）" style="display: none;">
       <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
       <!-- カルーセルは削除 -->
   </section>
 
   <!-- ヘッダーとのギャップ確保用スペーサー -->
-  <div class="rs-header-spacer" aria-hidden="true"></div>
+  <div class="rs-header-spacer" aria-hidden="true" style="display: none;"></div>
   
   <!-- Collection Section - 統合済み -->
-  <section id="collection" class="collection-section">
+  <section id="collection" class="collection-section" style="display: none;">
     <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 0px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
     
     <!-- デバッグ情報表示 -->
@@ -1872,7 +1894,7 @@
   </script>
 
   <!-- Brands Section -->
-  <section id="brands" class="section-brands brands-section section-spacing" data-role="brands">
+  <section id="brands" class="section-brands brands-section section-spacing" data-role="brands" style="display: none;">
     <h2 class="section-title">Brands</h2>
     <div class="brands-grid">
       <figure class="brand-card" data-hover="image/rockmount-hover.webp">
@@ -1948,7 +1970,7 @@
 </section>
 
   <!-- Lookbook Section -->
-  <section id="lookbook" class="section-lookbook lookbook-section section-spacing" data-role="lookbook">
+  <section id="lookbook" class="section-lookbook lookbook-section section-spacing" data-role="lookbook" style="display: none;">
     <h2 class="section-title">Lookbook</h2>
     <div class="lookbook-container">
               <div class="lookbook-track">
@@ -2023,7 +2045,7 @@
   </section>
 
   <!-- About ReStandard Section -->
-  <section id="about-restandard" class="section-about restandard-section section-spacing" data-role="about-restandard">
+  <section id="about-restandard" class="section-about restandard-section section-spacing" data-role="about-restandard" style="display: none;">
     <h2 class="section-title">About ReStandard</h2>
     <!-- PC用（md以上） -->
     <div class="about-inner only-pc restandard-body">
@@ -2086,7 +2108,7 @@
 
 
   <!-- Footer -->
-<footer class="py-5 text-center">
+<footer class="py-5 text-center" style="display: none;">
   <style>
     footer {
       background-color: rgba(255, 255, 255, 0.95);
