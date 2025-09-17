@@ -138,9 +138,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18-final">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18-final">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-18-final">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -705,13 +705,7 @@
       gap: 1px !important;
     }
     
-    /* 下段専用のアニメーション強制 */
-    html body .collection-scroll-bottom,
-    body .collection-scroll-bottom,
-    .collection-scroll-bottom {
-      animation: move-left 60s linear infinite !important;
-      gap: 1px !important;
-    }
+    /* Collection重複スタイル削除 - style.cssで統一管理 */
     
     /* 最強特異性でアニメーションを強制 */
     html body #collection .collection-scroll-top {
@@ -1277,8 +1271,11 @@
     </div>
   </nav>
 
-  <!-- PC版背景動画 -->
-  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+  <!-- 単一背景動画 - PC/SP自動切替 -->
+  <div id="background-video-container">
+    <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
+  </div>
   
   <style>
     /* PC版とスマートフォン版で背景動画を切り替え */
@@ -1443,22 +1440,15 @@
   </script>
 
 
-  <!-- スマートフォン用カルーセル -->
+  <!-- スマートフォン用カルーセル - 動画は上部の単一コンテナに統合済み -->
   <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
-      <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
-      <!-- カルーセルは削除 -->
+      <!-- 背景動画削除 - 単一コンテナに統合済み -->
   </section>
 
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
-  <!-- Hero Video Section -->
-  <section id="hero-video" class="hero-video-section">
-    <video id="hero-video" autoplay muted loop playsinline preload="auto" poster="image/hero-poster.jpg">
-      <source src="7.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </section>
+  <!-- Hero Video削除 - 背景動画に統合済み -->
   
   <!-- Collection Section - 統合済み -->
   <section id="collection" class="collection-section collection-row-gap">
@@ -2130,8 +2120,8 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
 
 <!-- テキスト演出スクリプト -->
-<script src="js/reveal.js"></script>
-<script src="js/lang-toggle.js"></script>
+<script src="js/reveal.js?v=2025-01-18-final"></script>
+<script src="js/lang-toggle.js?v=2025-01-18-final"></script>
   <!-- 統合済み: flowing-fix.js の内容を index.html 内のスクリプトに統合 -->
   <!-- Duplicate removed: 競合を避けるため、外部JSファイルを削除 -->
   <script>
@@ -2238,7 +2228,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   <!-- セクション初期化スクリプト - 統合済み -->
   <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
-  <script src="js/init-sections.js"></script>
+  <script src="js/init-sections.js?v=2025-01-18-final"></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-18-final"></script>
 
 </body>
 </html>
