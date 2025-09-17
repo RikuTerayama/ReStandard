@@ -95,6 +95,37 @@ function ensureCollectionHeight() {
     img.style.setProperty('flex-shrink', '0', 'important');
     img.style.setProperty('object-fit', 'cover', 'important');
   });
+  
+  // 下段の表示を強制する追加処理
+  setTimeout(() => {
+    const bottomRow = document.querySelector('.collection-row-bottom');
+    const bottomScroll = document.querySelector('.collection-scroll-bottom');
+    
+    if (bottomRow) {
+      bottomRow.style.setProperty('display', 'flex', 'important');
+      bottomRow.style.setProperty('visibility', 'visible', 'important');
+      bottomRow.style.setProperty('opacity', '1', 'important');
+      bottomRow.style.setProperty('height', '600px', 'important');
+      bottomRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
+      bottomRow.style.setProperty('align-items', 'center', 'important');
+      bottomRow.style.setProperty('position', 'relative', 'important');
+      bottomRow.style.setProperty('z-index', '9999', 'important');
+    }
+    
+    if (bottomScroll) {
+      bottomScroll.style.setProperty('display', 'flex', 'important');
+      bottomScroll.style.setProperty('visibility', 'visible', 'important');
+      bottomScroll.style.setProperty('opacity', '1', 'important');
+      bottomScroll.style.setProperty('animation', 'move-left 60s linear infinite', 'important');
+      bottomScroll.style.setProperty('gap', '1px', 'important');
+      bottomScroll.style.setProperty('flex-direction', 'row', 'important');
+      bottomScroll.style.setProperty('height', '100%', 'important');
+      bottomScroll.style.setProperty('width', 'max-content', 'important');
+      bottomScroll.style.setProperty('align-items', 'center', 'important');
+      bottomScroll.style.setProperty('position', 'relative', 'important');
+      bottomScroll.style.setProperty('z-index', '10000', 'important');
+    }
+  }, 100);
 }
 
 // 新しいCollectionセクションのリンク機能を保証
