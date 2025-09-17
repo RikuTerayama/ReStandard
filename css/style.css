@@ -83,23 +83,21 @@ section {
 /* About セクション - 統合済み */
 /* Duplicate removed: 個別のAbout設定をここに統合 */
 .about-inner {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  color: white;
+  backdrop-filter: blur(8px);
+  color: var(--main-color);
 }
 
 .about-inner h2 {
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: var(--main-color);
   margin-bottom: 20px;
 }
 
 .about-inner p {
-  color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  color: var(--main-color);
 }
 
 /* ========================================
@@ -114,6 +112,26 @@ section {
 .section-spacing {
   margin-top: clamp(100px, 12vw, 150px);
   margin-bottom: clamp(50px, 6vw, 80px);
+}
+
+/* Collection 行間ギャップ - 1箇所管理 */
+.collection-row-gap {
+  --title-to-top: 12px;
+  --top-to-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .collection-row-gap {
+    --title-to-top: 10px;
+    --top-to-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-row-gap {
+    --title-to-top: 8px;
+    --top-to-bottom: 6px;
+  }
 }
 
 /* Collection セクション - 上下2段を必ず表示・切れを禁止 */
@@ -154,28 +172,45 @@ section {
 .collection-title {
   text-align: center !important;
   font-size: 2.5rem !important;
-  margin-bottom: 0px !important;
+  margin-bottom: var(--title-to-top) !important;
   color: white !important;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
 }
 
-/* Collection 行のスタイル - 上下2段を厳密に別トラックとして表示 */
-.collection-row-top,
+/* Collection 行のスタイル - オーバーレイ廃止、余白最小化 */
+.collection-row-top {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: var(--track-row-height) !important;
+  min-height: var(--track-row-height) !important;
+  background: transparent !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+  margin-bottom: var(--top-to-bottom) !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
 .collection-row-bottom {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
   height: var(--track-row-height) !important;
   min-height: var(--track-row-height) !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-radius: 16px !important;
-  padding: 20px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  background: transparent !important;
   align-items: center !important;
   position: relative !important;
   z-index: 1 !important;
-  margin-bottom: 20px !important;
+  margin-bottom: 0 !important;
   overflow: hidden !important;
+  padding: 0 !important;
 }
 
 /* Collection スクロールコンテナのスタイル */
@@ -338,25 +373,23 @@ section {
 /* セクション共通の半透明オーバーレイ - ナビバーと同じ色/透明度 */
 .section-overlay--frost {
   position: relative;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  color: white;
+  backdrop-filter: blur(8px);
+  color: var(--main-color);
 }
 
 .section-overlay--frost h2 {
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: var(--main-color);
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
 .section-overlay--frost p {
-  color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  color: var(--main-color);
 }
 
 /* 画像の収まり管理 - 上下が切れないことを最優先 */
@@ -423,11 +456,11 @@ section {
   overflow: hidden;
   position: relative;
   height: 400px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   cursor: grab;
 }
 
@@ -945,39 +978,8 @@ section p {
 /* Brands セクション - 統合済み */
 /* Duplicate removed: 個別のBrands設定と重複するレスポンシブ設定をsections専用ブロックに統合 */
 
-.brandlogo {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background: transparent;
-  border-radius: 12px;
-  transition: transform 0.3s var(--transition-timing);
-  aspect-ratio: 1;
-}
-
-.brandlogo:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-}
-
-.brandlogo img {
-  max-width: 180px;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  transition: all 0.3s ease;
-  filter: grayscale(20%);
-  opacity: 0.9;
-}
-
-.brandlogo:hover img {
-  filter: grayscale(0%);
-  opacity: 1;
-  transform: scale(1.05);
-}
+/* Brandlogo 重複設定削除 */
+/* Duplicate removed: 古いbrandlogo設定をBrandsセクションのbrand-cardに統合 */
 
 .preview {
   position: absolute;
