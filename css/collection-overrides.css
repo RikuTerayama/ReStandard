@@ -1,0 +1,227 @@
+/* ========================================
+   Collection Overrides - Site-fixes.css上書き専用
+   ======================================== */
+
+/* site-fixes.cssの重複設定を最強特異性で上書き */
+
+/* PC用Collection設定 - 最強特異性 */
+@media (min-width: 1025px) {
+  html body main #collection,
+  html body main .section-collection,
+  html body main .collection-section,
+  html body #collection,
+  html body .section-collection,
+  html body .collection-section,
+  body main #collection,
+  body main .section-collection,
+  body main .collection-section,
+  body #collection,
+  body .section-collection,
+  body .collection-section,
+  main #collection,
+  main .section-collection,
+  main .collection-section,
+  #collection,
+  .section-collection,
+  .collection-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 999 !important;
+    min-height: 300px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 20px 0 !important;
+  }
+
+  /* PC用Collection見出し - 最強特異性 */
+  html body main #collection .section-title,
+  html body main #collection-title,
+  html body main .collection-title,
+  html body #collection .section-title,
+  html body #collection-title,
+  html body .collection-title,
+  body main #collection .section-title,
+  body main #collection-title,
+  body main .collection-title,
+  body #collection .section-title,
+  body #collection-title,
+  body .collection-title,
+  main #collection .section-title,
+  main #collection-title,
+  main .collection-title,
+  #collection .section-title,
+  #collection-title,
+  .collection-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: clamp(28px, 3vw, 42px) !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin-bottom: 16px !important;
+    position: relative !important;
+    z-index: 1000 !important;
+  }
+
+  /* PC用flowing images - 最強特異性 */
+  html body main #flowing-images,
+  html body main .flowing-images,
+  html body main .section-flowing,
+  html body #flowing-images,
+  html body .flowing-images,
+  html body .section-flowing,
+  body main #flowing-images,
+  body main .flowing-images,
+  body main .section-flowing,
+  body #flowing-images,
+  body .flowing-images,
+  body .section-flowing,
+  main #flowing-images,
+  main .flowing-images,
+  main .section-flowing,
+  #flowing-images,
+  .flowing-images,
+  .section-flowing {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 998 !important;
+    min-height: 200px !important;
+    width: 100% !important;
+  }
+}
+
+/* スマホ用Collection設定 - 最強特異性 */
+@media (max-width: 1024px) {
+  html body main #collection,
+  html body main .section-collection,
+  html body main .collection-section,
+  html body #collection,
+  html body .section-collection,
+  html body .collection-section,
+  body main #collection,
+  body main .section-collection,
+  body main .collection-section,
+  body #collection,
+  body .section-collection,
+  body .collection-section,
+  main #collection,
+  main .section-collection,
+  main .collection-section,
+  #collection,
+  .section-collection,
+  .collection-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 999 !important;
+    min-height: 300px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 20px 0 !important;
+  }
+
+  /* スマホ用Collection見出し - 最強特異性 */
+  html body main #collection .section-title,
+  html body main #collection-title,
+  html body main .collection-title,
+  html body #collection .section-title,
+  html body #collection-title,
+  html body .collection-title,
+  body main #collection .section-title,
+  body main #collection-title,
+  body main .collection-title,
+  body #collection .section-title,
+  body #collection-title,
+  body .collection-title,
+  main #collection .section-title,
+  main #collection-title,
+  main .collection-title,
+  #collection .section-title,
+  #collection-title,
+  .collection-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: clamp(28px, 3vw, 42px) !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin-bottom: 16px !important;
+    position: relative !important;
+    z-index: 1000 !important;
+  }
+
+  /* スマホ用flowing images - 最強特異性 */
+  html body main #flowing-images,
+  html body main .flowing-images,
+  html body main .section-flowing,
+  html body #flowing-images,
+  html body .flowing-images,
+  html body .section-flowing,
+  body main #flowing-images,
+  body main .flowing-images,
+  body main .section-flowing,
+  body #flowing-images,
+  body .flowing-images,
+  body .section-flowing,
+  main #flowing-images,
+  main .flowing-images,
+  main .section-flowing,
+  #flowing-images,
+  .flowing-images,
+  .section-flowing {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 998 !important;
+    min-height: 200px !important;
+    width: 100% !important;
+  }
+}
+
+/* flowing images背景要素も最強特異性で表示 */
+html body main .flowing-bg,
+html body main .flow-row-bg,
+html body main .flow-row,
+html body main .flow-track,
+html body .flowing-bg,
+html body .flow-row-bg,
+html body .flow-row,
+html body .flow-track,
+body main .flowing-bg,
+body main .flow-row-bg,
+body main .flow-row,
+body main .flow-track,
+body .flowing-bg,
+body .flow-row-bg,
+body .flow-row,
+body .flow-track,
+main .flowing-bg,
+main .flow-row-bg,
+main .flow-row,
+main .flow-track,
+.flowing-bg,
+.flow-row-bg,
+.flow-row,
+.flow-track {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 998 !important;
+} 
