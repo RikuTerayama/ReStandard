@@ -74,19 +74,11 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* Collection セクションの特別な間隔設定 */
 /* Collection セクション間隔 - 統合済み */
-#collection {
-  /* .section-spacing クラスで管理 */
-}
+/* Duplicate removed: 個別の間隔設定を.section-spacingに統合 */
 
 /* セクション間隔設定 - 統合済み */
 /* Duplicate removed: 個別のmargin設定を.section-spacingに統合 */
-#brands,
-#lookbook,
-#about-restandard {
-  /* .section-spacing クラスで管理 */
-}
 
 /* About セクション - 統合済み */
 /* Duplicate removed: 個別のAbout設定をここに統合 */
@@ -222,8 +214,8 @@ section {
   display: flex;
   visibility: visible;
   opacity: 1;
-  height: 350px;
-  min-height: 350px;
+  height: 400px;
+  min-height: 400px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 20px;
@@ -239,16 +231,16 @@ section {
 @media (max-width: 768px) {
   .collection-row-top,
   .collection-row-bottom {
-    height: 280px;
-    min-height: 280px;
+    height: 320px;
+    min-height: 320px;
   }
 }
 
 @media (max-width: 480px) {
   .collection-row-top,
   .collection-row-bottom {
-    height: 220px;
-    min-height: 220px;
+    height: 280px;
+    min-height: 280px;
   }
 }
 
@@ -281,7 +273,7 @@ section {
   display: block;
   visibility: visible;
   opacity: 1;
-  height: 300px;
+  height: 350px;
   width: auto;
   flex-shrink: 0;
   object-fit: contain;
@@ -295,14 +287,14 @@ section {
 @media (max-width: 768px) {
   .collection-scroll-top img,
   .collection-scroll-bottom img {
-    height: 240px;
+    height: 280px;
   }
 }
 
 @media (max-width: 480px) {
   .collection-scroll-top img,
   .collection-scroll-bottom img {
-    height: 180px;
+    height: 240px;
   }
 }
 
@@ -391,6 +383,22 @@ section {
   }
 }
 
+/* モバイル対応 - 統合済み */
+@media (max-width: 768px) {
+  .lookbook-container {
+    height: 300px;
+  }
+  
+  .lookbook-item img {
+    height: 250px;
+  }
+  
+  .lookbook-track {
+    gap: 16px;
+    animation-duration: 20s;
+  }
+}
+
 /* 右下番号を非表示 - 統合済み */
 .image-number {
   display: none !important;
@@ -420,21 +428,8 @@ section {
   }
 }
 
-/* モバイル対応 */
-@media (max-width: 768px) {
-  .lookbook-container {
-    height: 300px;
-  }
-  
-  .lookbook-item img {
-    height: 250px;
-  }
-  
-  .lookbook-track {
-    gap: 16px;
-    animation-duration: 20s;
-  }
-}
+/* モバイル対応 - 統合済み */
+/* Duplicate removed: 重複するモバイル設定をメインのLookbook設定に統合 */
 
 /* セクション見出しのスタイル */
 section h2 {
@@ -858,6 +853,8 @@ section p {
   margin: 0 auto;
   padding: 2rem;
   height: 400px;
+  opacity: 0;
+  animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards;
 }
 
 /* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
@@ -1166,11 +1163,8 @@ footer .nav-link {
   animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards;
 }
 
-/* ブランドグリッドのアニメーション */
-.brands-grid {
-  opacity: 0;
-  animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards;
-}
+/* ブランドグリッドのアニメーション - 統合済み */
+/* Duplicate removed: アニメーション設定をメインの.brands-gridに統合 */
 
 .brandlogo {
   opacity: 0;
