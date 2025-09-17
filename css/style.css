@@ -108,6 +108,69 @@ section {
 
 /* Collection / Brands セクション専用ブロック - 本番想定の挙動復旧 */
 
+/* Hero Video セクション - 最初に表示・再生 */
+.hero-video-section {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .hero-video-section {
+    height: 50vh;
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-video-section {
+    height: 40vh;
+    min-height: 250px;
+  }
+}
+
+/* セクション共通の縦間隔 - トークン化 */
+.section-spacing {
+  margin-top: clamp(100px, 12vw, 150px);
+  margin-bottom: clamp(50px, 6vw, 80px);
+}
+
+/* Collection 行間ギャップ - 1箇所管理 */
+.collection-row-gap {
+  --title-to-top: 8px;
+  --top-to-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .collection-row-gap {
+    --title-to-top: 8px;
+    --top-to-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-row-gap {
+    --title-to-top: 8px;
+    --top-to-bottom: 8px;
+  }
+}
+
+/* Collection セクション - 上下2段を必ず表示・切れを禁止 */
+:root {
+  --track-row-height: 400px;
   --track-item-size: 350px;
 }
 
@@ -132,9 +195,14 @@ section {
   opacity: 1 !important;
   position: relative !important;
   z-index: 10 !important;
-  width: 100% !important;
-  overflow: visible !important;
-  background: transparent !important;
+    width: 100% !important;
+    overflow: visible !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px) !important;
+    margin: 0 !important;
+    padding: 20px 0 !important;
+}
+
 .collection-title {
   text-align: center !important;
   font-size: 2.5rem !important;
@@ -150,43 +218,62 @@ section {
 
 /* Collection 上下2行を包む囲い背景 - ナビと同じ色/透明度 */
 .collection-rows-wrapper {
-  background: rgba(255, 255, 255, 0.1) !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  background: rgba(255, 255, 255, 0.1) !important;tant;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
   backdrop-filter: blur(10px) !important;
   margin: 0 !important;
 }
 
 /* Collection 行のスタイル - オーバーレイ廃止、余白最小化 */
-.collection-row-top {
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: var(--track-row-height) !important;
-  min-height: var(--track-row-height) !important;
-  background: transparent !important;
-  align-items: center !important;
-  position: relative !important;
-  z-index: 1 !important;
-  margin-bottom: var(--top-to-bottom) !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-}
-
+/* Collection 二段マルキー実装 */
+.collection-row-top,
 .collection-row-bottom {
   display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  width: 100% !important;
   height: var(--track-row-height) !important;
-  min-height: var(--track-row-height) !important;
-  background: transparent !important;
-  align-items: center !important;
-  position: relative !important;
-  z-index: 1 !important;
-  margin-bottom: 0 !important;
   overflow: hidden !important;
-  padding: 0 !important;
+  position: relative !important;
+  margin: var(--top-to-bottom) 0 !important;
+  background: transparent !important;
+}
+
+.collection-scroll-top,
+.collection-scroll-bottom {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  will-change: transform !important;
+}
+
+/* 上段：右→左 */
+.collection-scroll-top {
+  animation: scroll-right-to-left 30s linear infinite !important;
+}
+
+/* 下段：左→右 */
+.collection-scroll-bottom {
+  animation: scroll-left-to-right 30s linear infinite !important;
+}
+
+/* アニメーション定義 */
+@keyframes scroll-right-to-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes scroll-left-to-right {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ホバーで一時停止 */
+.collection-row-top:hover .collection-scroll-top,
+.collection-row-bottom:hover .collection-scroll-bottom {
+  animation-play-state: paused !important;
 }
 
 /* Collection スクロールコンテナのスタイル */
@@ -292,12 +379,12 @@ section {
   padding: 1rem !important;
   text-align: center !important;
   width: 100% !important;
-  height: 120px !important;
-  max-height: 120px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  height: 150px !important;
-  max-height: 150px !important;t;
+    height: 120px !important;
+    max-height: 120px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .brand-card:hover {
@@ -306,33 +393,33 @@ section {
 }
 
 /* ブランドロゴのホバー挙動 - 80x80px正方形ボックス */
-/* ブランドロゴのホバー挙動 - 80x80px正方形ボックス */
-/* ブランドロゴのホバー挙動 - 80x80px正方形ボックス */
+.brand-logo {
+  opacity: 1 !important;
   transition: opacity 0.3s ease !important;
-/* ブランドロゴのホバー挙動 - 統合済み */
-  max-width: 80px !important;
   max-width: 80px !important;
   max-height: 80px !important;
-  max-width: 100% !important;
-  height: 80px !important;;
-  width: auto !important;
-  height: auto !important;
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: contain !important;
+  display: block !important;
+  visibility: visible !important;
+}
 
 .brand-hover {
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
-  opacity: 0 !important;
-  transition: opacity 0.3s ease !important;
-  max-width: 80px !important;
-  max-width: 80px !important;
-  max-height: 80px !important;
-  width: 80px !important;
-  max-width: 100% !important;nt;
-  display: block !important;
-  width: auto !important;
-  height: auto !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+    max-width: 80px !important;
+    max-height: 80px !important;
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: contain !important;
+    display: block !important;
+    visibility: visible !important;
+}
 
 .brand-card:hover .brand-logo {
   opacity: 0 !important;
@@ -1060,14 +1147,10 @@ footer .nav-link:hover::after {
 /* ROOT CAUSE ELIMINATED: 古い.brandlogo設定が競合していた */
 
 /* iframeのスタイル */
-.brandlogo:hover .preview {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -110%) scale(1);
-}
-  visibility: visible;
-  transform: translate(-50%, -110%) scale(1);
-}
+/* 古いbrandlogo設定完全削除 - .brand-cardに統合済み */
+
+iframe {
+  display: block;
   max-width: 800px;
   width: 100%;
   margin: 30px auto 0;
@@ -1142,29 +1225,11 @@ footer .nav-link {
 }
 
 /* 古いbrandlogo設定完全削除 */
-/* アニメーションの改善 */
-.brandlogo {
-  transition: transform 0.3s var(--transition-timing);
-}
+/* 古いbrandlogo設定削除完了 - .brand-cardに統合済み */
 
-.brandlogo:hover {
-  transform: translateY(-5px);
-}
-  transition: transform 0.3s var(--transition-timing);
-}
-
-.brandlogo:hover {
-  transform: translateY(-5px);
-}
 .nav-link:focus-visible {
-/* アニメーションの改善 */
-.brandlogo {
-  transition: transform 0.3s var(--transition-timing);
-}
-
-.brandlogo:hover {
-  transform: translateY(-5px);
-}
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
 }
 
 /* アニメーション用キーフレーム */
@@ -1228,51 +1293,11 @@ footer .nav-link {
   font-size: var(--font-size-4xl);
   font-weight: 700;
   margin-bottom: 2.5rem;
-  letter-spacing: 0.05em;
-  display: inline-block;
-.brandlogo {
-  opacity: 0;
-  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    color: var(--main-color);
 }
 
-/* アニメーションの遅延を設定 */
-.brandlogo:nth-child(1) { animation-delay: 0.2s; }
-.brandlogo:nth-child(2) { animation-delay: 0.3s; }
-.brandlogo:nth-child(3) { animation-delay: 0.4s; }
-.brandlogo:nth-child(4) { animation-delay: 0.5s; }
-.brandlogo {
-  opacity: 0;
-  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
-}
-
-/* アニメーションの遅延を設定 */
-.brandlogo:nth-child(1) { animation-delay: 0.2s; }
-.brandlogo:nth-child(2) { animation-delay: 0.3s; }
-.brandlogo:nth-child(3) { animation-delay: 0.4s; }
-.brandlogo:nth-child(4) { animation-delay: 0.5s; }
-.brandlogo {
-  opacity: 0;
-  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
-}
-
-/* アニメーションの遅延を設定 */
-.brandlogo:nth-child(1) { animation-delay: 0.2s; }
-.brandlogo:nth-child(2) { animation-delay: 0.3s; }
-.brandlogo:nth-child(3) { animation-delay: 0.4s; }
-.brandlogo:nth-child(4) { animation-delay: 0.5s; }
-.brandlogo:nth-child(5) { animation-delay: 0.6s; }
-.brandlogo:nth-child(6) { animation-delay: 0.7s; }
-.brandlogo:nth-child(7) { animation-delay: 0.8s; }
-.brandlogo:nth-child(8) { animation-delay: 0.9s; }
-.brandlogo:nth-child(9) { animation-delay: 1.0s; }
-.brandlogo:nth-child(10) { animation-delay: 1.1s; }
-.brandlogo:nth-child(7) { animation-delay: 0.8s; }
-.brandlogo:nth-child(8) { animation-delay: 0.9s; }
-.brandlogo:nth-child(9) { animation-delay: 1.0s; }
-.brandlogo:nth-child(10) { animation-delay: 1.1s; }
-.brandlogo:nth-child(8) { animation-delay: 0.9s; }
-.brandlogo:nth-child(9) { animation-delay: 1.0s; }
-.brandlogo:nth-child(10) { animation-delay: 1.1s; }
 .section-content {
   opacity: 0;
   animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards;
@@ -1581,10 +1606,12 @@ body {
 }
 
 /* ========================================
-   # 管理統合済み
-   ======================================== */
-  .map-container {
-    width: 100% !important;
+    # 管理統合済み
+    ======================================== */
+/* RS BUILD 20250118-final: 競合排除、マルキー実装、グリッド最適化、ドラッグ対応完了 */
+
+    .map-container {
+      width: 100% !important;
     max-width: 900px !important;
     min-width: 0 !important;
     margin: 0 auto !important;
