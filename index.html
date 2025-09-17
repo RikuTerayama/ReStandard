@@ -138,9 +138,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/reveal.css">
-  <link rel="stylesheet" href="css/i18n-visibility.css">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-17-001">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-17-001">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-17-FINAL">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -1390,8 +1390,38 @@
   </style>
 
   <script>
-    // 背景動画の読み込みと再生を確実にする
+    // Service Worker アンレジスター（キャッシュ問題解決）
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        registrations.forEach(function(registration) {
+          registration.unregister();
+          console.log('Service Worker unregistered:', registration);
+        });
+      });
+    }
+    
+    // ヒーロー動画の自動再生確実化
     document.addEventListener('DOMContentLoaded', function() {
+      const heroVideo = document.getElementById('hero-video');
+      
+      if (heroVideo) {
+        heroVideo.addEventListener('loadeddata', function() {
+          console.log('Hero video loaded');
+          heroVideo.play().catch(function(error) {
+            console.log('Hero video autoplay failed:', error);
+          });
+        });
+        
+        // リトライ機能
+        setTimeout(function() {
+          if (heroVideo.paused) {
+            heroVideo.play().catch(function(error) {
+              console.log('Hero video retry failed:', error);
+            });
+          }
+        }, 1000);
+      }
+      
       const desktopVideo = document.getElementById('desktop-bg-video');
       const mobileVideo = document.getElementById('mobile-bg-video');
       
@@ -1443,6 +1473,14 @@
 
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
+  
+  <!-- Hero Video Section -->
+  <section id="hero-video" class="hero-video-section">
+    <video id="hero-video" autoplay muted loop playsinline preload="auto" poster="image/hero-poster.jpg">
+      <source src="7.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </section>
   
   <!-- Collection Section - 統合済み -->
   <section id="collection" class="collection-section collection-row-gap">
