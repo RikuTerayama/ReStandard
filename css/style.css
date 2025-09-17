@@ -108,72 +108,6 @@ section {
 
 /* Collection / Brands セクション専用ブロック - 本番想定の挙動復旧 */
 
-/* Hero Video セクション - 最初に表示・再生 */
-.hero-video-section {
-  position: relative;
-  z-index: 0;
-  width: 100%;
-  height: 60vh;
-  min-height: 400px;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-#hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* レスポンシブ対応 */
-@media (max-width: 768px) {
-  .hero-video-section {
-    height: 50vh;
-    min-height: 300px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-video-section {
-    height: 40vh;
-    min-height: 250px;
-  }
-}
-
-/* 診断用アウトライン削除 - 根本原因特定完了 */
-
-/* セクション共通の縦間隔 - トークン化 */
-.section-spacing {
-  margin-top: clamp(100px, 12vw, 150px);
-  margin-bottom: clamp(50px, 6vw, 80px);
-}
-
-/* Collection 行間ギャップ - 1箇所管理 */
-.collection-row-gap {
-  --title-to-top: 8px;
-  --top-to-bottom: 8px;
-}
-
-@media (max-width: 768px) {
-  .collection-row-gap {
-    --title-to-top: 8px;
-    --top-to-bottom: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .collection-row-gap {
-    --title-to-top: 8px;
-    --top-to-bottom: 8px;
-  }
-}
-
-/* Collection セクション - 上下2段を必ず表示・切れを禁止 */
-/* Duplicate removed: index.htmlの重複インラインスタイルを統合 */
-:root {
-  --track-row-height: 400px;
   --track-item-size: 350px;
 }
 
@@ -200,12 +134,7 @@ section {
   z-index: 10 !important;
   width: 100% !important;
   overflow: visible !important;
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(8px) !important;
-  margin: 0 !important;
-  padding: 20px 0 !important;
-}
-
+  background: transparent !important;
 .collection-title {
   text-align: center !important;
   font-size: 2.5rem !important;
@@ -221,10 +150,10 @@ section {
 
 /* Collection 上下2行を包む囲い背景 - ナビと同じ色/透明度 */
 .collection-rows-wrapper {
-  background: rgba(255, 255, 255, 0.7) !important;
-  border-radius: 16px !important;
-  padding: 20px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;tant;
   backdrop-filter: blur(10px) !important;
   margin: 0 !important;
 }
@@ -367,8 +296,8 @@ section {
   max-height: 120px !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
+  height: 150px !important;
+  max-height: 150px !important;t;
 }
 
 .brand-card:hover {
@@ -376,18 +305,18 @@ section {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* ブランドロゴのホバー挙動 - 120x120px正方形ボックス */
-.brand-logo {
-  opacity: 1 !important;
+/* ブランドロゴのホバー挙動 - 80x80px正方形ボックス */
+/* ブランドロゴのホバー挙動 - 80x80px正方形ボックス */
+/* ブランドロゴのホバー挙動 - 80x80px正方形ボックス */
   transition: opacity 0.3s ease !important;
-  max-width: 120px !important;
-  max-height: 120px !important;
-  width: 120px !important;
-  height: 120px !important;
-  object-fit: contain !important;
-  display: block !important;
-  visibility: visible !important;
-}
+/* ブランドロゴのホバー挙動 - 統合済み */
+  max-width: 80px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
+  max-width: 100% !important;
+  height: 80px !important;;
+  width: auto !important;
+  height: auto !important;
 
 .brand-hover {
   position: absolute !important;
@@ -396,14 +325,14 @@ section {
   transform: translate(-50%, -50%) !important;
   opacity: 0 !important;
   transition: opacity 0.3s ease !important;
-  max-width: 120px !important;
-  max-height: 120px !important;
-  width: 120px !important;
-  height: 120px !important;
-  object-fit: contain !important;
+  max-width: 80px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
+  width: 80px !important;
+  max-width: 100% !important;nt;
   display: block !important;
-  visibility: visible !important;
-}
+  width: auto !important;
+  height: auto !important;
 
 .brand-card:hover .brand-logo {
   opacity: 0 !important;
@@ -1131,8 +1060,14 @@ footer .nav-link:hover::after {
 /* ROOT CAUSE ELIMINATED: 古い.brandlogo設定が競合していた */
 
 /* iframeのスタイル */
-iframe {
-  display: block;
+.brandlogo:hover .preview {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -110%) scale(1);
+}
+  visibility: visible;
+  transform: translate(-50%, -110%) scale(1);
+}
   max-width: 800px;
   width: 100%;
   margin: 30px auto 0;
@@ -1207,11 +1142,29 @@ footer .nav-link {
 }
 
 /* 古いbrandlogo設定完全削除 */
-/* ROOT CAUSE ELIMINATED: 古い.brandlogo設定が.brand-logoを無効化していた */
+/* アニメーションの改善 */
+.brandlogo {
+  transition: transform 0.3s var(--transition-timing);
+}
 
+.brandlogo:hover {
+  transform: translateY(-5px);
+}
+  transition: transform 0.3s var(--transition-timing);
+}
+
+.brandlogo:hover {
+  transform: translateY(-5px);
+}
 .nav-link:focus-visible {
-  outline: 2px solid var(--main-color);
-  outline-offset: 2px;
+/* アニメーションの改善 */
+.brandlogo {
+  transition: transform 0.3s var(--transition-timing);
+}
+
+.brandlogo:hover {
+  transform: translateY(-5px);
+}
 }
 
 /* アニメーション用キーフレーム */
@@ -1277,9 +1230,49 @@ footer .nav-link {
   margin-bottom: 2.5rem;
   letter-spacing: 0.05em;
   display: inline-block;
-  color: var(--main-color);
+.brandlogo {
+  opacity: 0;
+  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
 }
 
+/* アニメーションの遅延を設定 */
+.brandlogo:nth-child(1) { animation-delay: 0.2s; }
+.brandlogo:nth-child(2) { animation-delay: 0.3s; }
+.brandlogo:nth-child(3) { animation-delay: 0.4s; }
+.brandlogo:nth-child(4) { animation-delay: 0.5s; }
+.brandlogo {
+  opacity: 0;
+  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
+}
+
+/* アニメーションの遅延を設定 */
+.brandlogo:nth-child(1) { animation-delay: 0.2s; }
+.brandlogo:nth-child(2) { animation-delay: 0.3s; }
+.brandlogo:nth-child(3) { animation-delay: 0.4s; }
+.brandlogo:nth-child(4) { animation-delay: 0.5s; }
+.brandlogo {
+  opacity: 0;
+  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
+}
+
+/* アニメーションの遅延を設定 */
+.brandlogo:nth-child(1) { animation-delay: 0.2s; }
+.brandlogo:nth-child(2) { animation-delay: 0.3s; }
+.brandlogo:nth-child(3) { animation-delay: 0.4s; }
+.brandlogo:nth-child(4) { animation-delay: 0.5s; }
+.brandlogo:nth-child(5) { animation-delay: 0.6s; }
+.brandlogo:nth-child(6) { animation-delay: 0.7s; }
+.brandlogo:nth-child(7) { animation-delay: 0.8s; }
+.brandlogo:nth-child(8) { animation-delay: 0.9s; }
+.brandlogo:nth-child(9) { animation-delay: 1.0s; }
+.brandlogo:nth-child(10) { animation-delay: 1.1s; }
+.brandlogo:nth-child(7) { animation-delay: 0.8s; }
+.brandlogo:nth-child(8) { animation-delay: 0.9s; }
+.brandlogo:nth-child(9) { animation-delay: 1.0s; }
+.brandlogo:nth-child(10) { animation-delay: 1.1s; }
+.brandlogo:nth-child(8) { animation-delay: 0.9s; }
+.brandlogo:nth-child(9) { animation-delay: 1.0s; }
+.brandlogo:nth-child(10) { animation-delay: 1.1s; }
 .section-content {
   opacity: 0;
   animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards;
@@ -1590,26 +1583,6 @@ body {
 /* ========================================
    # 管理統合済み
    ======================================== */
-/* 全てのCollection・Brandsスタイルはこのファイルのsections専用ブロックで管理 */
-/* 競合ファイル削除済み: collection-overrides.css, site-fixes.css, mobile-fixes.css */
-/* 古いセレクタ削除済み: .brandlogo { opacity: 0; } */
-/* BUILD-STAMP-2025-01-18 */
-/* FIX_APPLIED_20250118: Collection背景統一、Brands grid修正、重複CSS削除完了 */
-
-/* キルスイッチ検証完了 - 反映確認済み */
-@font-face {
-  font-family: "Font Awesome 6 Free";
-  font-style: normal;
-  font-weight: 900;
-  src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-solid-900.woff2") format("woff2");
-  font-display: swap;
-}
-*/
-
-/* 古いflowing-imagesスタイルは無効化 */
-
-@media (max-width: 768px) {
-  .form-container,
   .map-container {
     width: 100% !important;
     max-width: 900px !important;
