@@ -105,7 +105,7 @@ function ensureCollectionHeight() {
       bottomRow.style.setProperty('display', 'flex', 'important');
       bottomRow.style.setProperty('visibility', 'visible', 'important');
       bottomRow.style.setProperty('opacity', '1', 'important');
-      bottomRow.style.setProperty('height', '600px', 'important');
+      bottomRow.style.setProperty('height', '300px', 'important');
       bottomRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
       bottomRow.style.setProperty('align-items', 'center', 'important');
       bottomRow.style.setProperty('position', 'relative', 'important');
@@ -126,6 +126,25 @@ function ensureCollectionHeight() {
       bottomScroll.style.setProperty('z-index', '10000', 'important');
     }
   }, 100);
+  
+  // さらに強力な下段表示処理
+  setTimeout(() => {
+    const bottomRow = document.querySelector('.collection-row-bottom');
+    const bottomScroll = document.querySelector('.collection-scroll-bottom');
+    const bottomImages = document.querySelectorAll('.collection-scroll-bottom img');
+    
+    if (bottomRow) {
+      bottomRow.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important; height: 300px !important; background: rgba(255, 255, 255, 0.1) !important; align-items: center !important; position: relative !important; z-index: 9999 !important;';
+    }
+    
+    if (bottomScroll) {
+      bottomScroll.style.cssText = 'display: flex !important; visibility: visible !important; opacity: 1 !important; animation: move-left 60s linear infinite !important; gap: 1px !important; flex-direction: row !important; height: 100% !important; width: max-content !important; align-items: center !important; position: relative !important; z-index: 10000 !important;';
+    }
+    
+    bottomImages.forEach(img => {
+      img.style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important; height: 250px !important; width: 250px !important; flex-shrink: 0 !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; position: relative !important; z-index: 10001 !important;';
+    });
+  }, 500);
 }
 
 // 新しいCollectionセクションのリンク機能を保証
