@@ -1427,7 +1427,7 @@
   </style>
 </head>
 <body>
-  <!-- サイト改修中メッセージ -->
+  <!-- サイト改修中メッセージ - 一時的に非表示 -->
   <div id="maintenance-message" style="
     position: fixed;
     top: 0;
@@ -1436,7 +1436,7 @@
     height: 100vh;
     background: #000;
     color: #fff;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
@@ -1456,7 +1456,7 @@
   </div>
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
-  <nav class="fixed-top navbar navbar-expand-lg" style="display: none;">
+  <nav class="fixed-top navbar navbar-expand-lg">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
       <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
@@ -1482,7 +1482,7 @@
   </nav>
 
   <!-- PC版背景動画 -->
-  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display: none;"></video>
+  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
   
   <style>
     /* PC版とスマートフォン版で背景動画を切り替え */
@@ -1681,16 +1681,16 @@
 
 
   <!-- スマートフォン用カルーセル -->
-  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）" style="display: none;">
+  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
       <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
       <!-- カルーセルは削除 -->
   </section>
 
   <!-- ヘッダーとのギャップ確保用スペーサー -->
-  <div class="rs-header-spacer" aria-hidden="true" style="display: none;"></div>
+  <div class="rs-header-spacer" aria-hidden="true"></div>
   
   <!-- Collection Section - 統合済み -->
-  <section id="collection" class="collection-section" style="display: none;">
+  <section id="collection" class="collection-section">
     <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 0px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
     
     <!-- デバッグ情報表示 -->
@@ -1894,7 +1894,7 @@
   </script>
 
   <!-- Brands Section -->
-  <section id="brands" class="section-brands brands-section section-spacing" data-role="brands" style="display: none;">
+  <section id="brands" class="section-brands brands-section section-spacing" data-role="brands">
     <h2 class="section-title">Brands</h2>
     <div class="brands-grid">
       <figure class="brand-card" data-hover="image/rockmount-hover.webp">
@@ -1970,7 +1970,7 @@
 </section>
 
   <!-- Lookbook Section -->
-  <section id="lookbook" class="section-lookbook lookbook-section section-spacing" data-role="lookbook" style="display: none;">
+  <section id="lookbook" class="section-lookbook lookbook-section section-spacing" data-role="lookbook">
     <h2 class="section-title">Lookbook</h2>
     <div class="lookbook-container">
               <div class="lookbook-track">
@@ -2045,7 +2045,7 @@
   </section>
 
   <!-- About ReStandard Section -->
-  <section id="about-restandard" class="section-about restandard-section section-spacing" data-role="about-restandard" style="display: none;">
+  <section id="about-restandard" class="section-about restandard-section section-spacing" data-role="about-restandard">
     <h2 class="section-title">About ReStandard</h2>
     <!-- PC用（md以上） -->
     <div class="about-inner only-pc restandard-body">
@@ -2108,7 +2108,7 @@
 
 
   <!-- Footer -->
-<footer class="py-5 text-center" style="display: none;">
+<footer class="py-5 text-center">
   <style>
     footer {
       background-color: rgba(255, 255, 255, 0.95);
@@ -2531,6 +2531,63 @@ document.addEventListener('DOMContentLoaded', function() {
         el.removeAttribute('style');
         const card = el.closest('.item, .card, div');
         if (card) card.removeAttribute('style');
+      });
+    });
+  </script>
+  
+  <script>
+    // ========================================
+    // MARQUEE INITIALIZATION - Single Source of Truth
+    // ========================================
+    // 統合済み: flowing-fix.js の内容を統合
+    // Duplicate removed: 競合を避けるため、ここでのみ管理
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // 統合されたmarquee初期化関数
+      function initMarquee({selector, direction, speed, pauseOnHover = true}) {
+        const elements = document.querySelectorAll(selector);
+        
+        elements.forEach(element => {
+          // アニメーション設定
+          element.style.animation = `${direction} ${speed} linear infinite`;
+          
+          // ホバー停止設定（pointer有デバイスのみ）
+          if (pauseOnHover && window.matchMedia('(hover: hover)').matches) {
+            element.addEventListener('mouseenter', () => {
+              element.style.animationPlayState = 'paused';
+            });
+            element.addEventListener('mouseleave', () => {
+              element.style.animationPlayState = 'running';
+            });
+          }
+          
+          // prefers-reduced-motion 対応
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            element.style.animation = 'none';
+          }
+        });
+      }
+      
+      // marquee初期化
+      initMarquee({
+        selector: '.collection-scroll-top',
+        direction: 'move-right',
+        speed: 'var(--track-speed)',
+        pauseOnHover: true
+      });
+      
+      initMarquee({
+        selector: '.collection-scroll-bottom',
+        direction: 'move-left',
+        speed: 'var(--track-speed)',
+        pauseOnHover: true
+      });
+      
+      initMarquee({
+        selector: '.lookbook-track',
+        direction: 'lookbook-scroll',
+        speed: 'var(--track-speed)',
+        pauseOnHover: true
       });
     });
   </script>
