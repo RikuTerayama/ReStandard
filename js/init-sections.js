@@ -5,7 +5,7 @@
  * Duplicate removed: 競合を避けるため、ここでのみ管理
  */
 
-// 統合されたmarquee初期化関数
+// 統合されたmarquee初期化関数 - Single Source of Truth
 function initMarquee({trackSelector, direction, speed, pauseOnHover = true}) {
   const elements = document.querySelectorAll(trackSelector);
   
@@ -30,7 +30,7 @@ function initMarquee({trackSelector, direction, speed, pauseOnHover = true}) {
   });
 }
 
-// Lookbook のドラッグ/スワイプ操作を有効化
+// Lookbook のドラッグ/スワイプ操作を有効化 - Single Source of Truth
 function enableSwipe({containerSelector}) {
   const container = document.querySelector(containerSelector);
   if (!container) return;
