@@ -1,4 +1,18 @@
-# Collection・Brands レイアウト問題 技術レポート
+# Collection・Brands レイアウト問題 技術レポート（最終版）
+
+## 実行結果サマリー
+
+### 🔍 **根本原因特定完了**
+- **Collection**: 既に正常動作中
+- **Brands**: 古い`.brandlogo { opacity: 0; }`が`.brand-logo`を無効化していた
+
+### ✅ **完全削除済み**
+- `css/collection-overrides.css` → 削除
+- 古い`.brandlogo`設定 → 削除
+- HTMLの古いCSS参照 → 削除
+
+### 📋 **現在の管理体制**
+- **単一管理**: `css/style.css`のsections専用ブロックのみ
 
 ## 1. Cascade/Specificity レポート
 
@@ -75,3 +89,56 @@
 - HTMLでのインラインスタイル追加
 - 複数ファイルでの同一セレクタ定義
 - 古いクラス名の使用継続
+
+## 7. 最終確認・デプロイ手順
+
+### CSSファイル一覧（現存）
+1. **css/style.css** - メイン管理ファイル（Collection・Brands統合済み）
+2. **css/reveal.css** - アニメーション専用（競合なし）
+3. **css/i18n-visibility.css** - 多言語切替専用（競合なし）
+
+### HTML参照一覧（読み込み順）
+1. Bootstrap CSS（外部CDN）
+2. Font Awesome CSS（外部CDN）
+3. Google Fonts CSS（外部CDN）
+4. **css/style.css** ← **メイン管理**
+5. css/reveal.css
+6. css/i18n-visibility.css
+7. Swiper CSS（外部CDN）
+
+### 削除証跡
+- ✅ **css/collection-overrides.css** → 完全削除
+- ✅ **古い.brandlogo設定** → css/style.css から完全削除
+- ✅ **HTMLの古いCSS参照** → 削除済みコメントに置換
+
+### 最終決定表
+| セクション | 管理ファイル | 管理セレクタ | 競合リスク |
+|-----------|-------------|-------------|-----------|
+| Collection | css/style.css | .collection-* | ✅ なし |
+| Brands | css/style.css | .brands-grid, .brand-* | ✅ なし |
+| 行間管理 | css/style.css | .collection-row-gap | ✅ なし |
+| 背景管理 | css/style.css | .section-overlay--frost | ✅ なし |
+
+### デプロイ後確認手順
+1. **ブラウザキャッシュクリア**:
+   - Chrome: Ctrl+Shift+R（強制リロード）
+   - Firefox: Ctrl+F5
+   - Safari: Cmd+Shift+R
+
+2. **開発者ツール確認**:
+   ```
+   F12 → Elements → .brands-grid を選択
+   → Computed タブで display: grid が適用されているか確認
+   → .brand-logo を選択 → opacity: 1 が適用されているか確認
+   ```
+
+3. **レスポンシブ確認**:
+   - 360px: Brands 2列表示
+   - 768px: Brands 3列表示  
+   - 1024px: Brands 4列表示
+   - 1440px: Brands 5列表示
+
+### 成功条件
+- Collection: タイトル〜上段 8px、上段〜下段 8px間隔
+- Brands: PC=5×2、タブレット=3×3、モバイル=2×5のグリッド表示
+- ロゴ: 80px高さ、正方形ボックス内で中央寄せ表示
