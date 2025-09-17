@@ -175,11 +175,21 @@ section {
   margin-bottom: var(--title-to-top) !important;
   color: white !important;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Collection 上下2行を包む囲い背景 - ナビと同じ色/透明度 */
+.collection-rows-wrapper {
+  background: rgba(255, 255, 255, 0.9) !important;
   border-radius: 16px !important;
   padding: 20px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-  backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(8px) !important;
+  margin: 0 !important;
 }
 
 /* Collection 行のスタイル - オーバーレイ廃止、余白最小化 */
@@ -281,7 +291,7 @@ section {
   margin: 0 auto !important;
   padding: 2rem !important;
   height: 400px !important;
-  opacity: 0 !important;
+  opacity: 1 !important;
   animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards !important;
   position: relative !important;
   z-index: 1 !important;
@@ -316,7 +326,7 @@ section {
 
 .brand-card {
   position: relative !important;
-  overflow: hidden !important;
+  overflow: visible !important;
   border-radius: 12px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
@@ -339,35 +349,39 @@ section {
 
 /* ブランドロゴのホバー挙動 - 統合済み */
 .brand-logo {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-  max-width: 100%;
-  max-height: 60px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  opacity: 1 !important;
+  transition: opacity 0.3s ease !important;
+  max-width: 100% !important;
+  max-height: 60px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  visibility: visible !important;
 }
 
 .brand-hover {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  max-width: 100%;
-  max-height: 60px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  max-width: 100% !important;
+  max-height: 60px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  visibility: visible !important;
 }
 
 .brand-card:hover .brand-logo {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 .brand-card:hover .brand-hover {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 /* セクション共通の半透明オーバーレイ - ナビバーと同じ色/透明度 */
@@ -452,16 +466,17 @@ section {
 /* Lookbook セクション - 統合済み */
 /* Duplicate removed: 個別のLookbook設定をここに統合 */
 .lookbook-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  height: 400px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  cursor: grab;
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  height: 400px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 0 !important;
+  padding: 20px 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(8px) !important;
+  cursor: grab !important;
 }
 
 .lookbook-container:active {
@@ -506,8 +521,8 @@ section {
 
 /* ホバー停止（pointer有デバイスのみ） */
 @media (hover: hover) {
-  .lookbook-container:hover .lookbook-track {
-    animation-play-state: paused;
+.lookbook-container:hover .lookbook-track {
+  animation-play-state: paused;
   }
 }
 
