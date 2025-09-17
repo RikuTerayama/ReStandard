@@ -1435,12 +1435,8 @@
         padding: 0 15px !important;
       }
       
-      /* フッターも下に移動 */
-      html body footer {
-        position: relative !important;
-        top: 450px !important;
-        margin-top: 100px !important;
-      }
+      /* Footer 重複スタイル削除 */
+      /* Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 */
       
       /* ヘッダー固定の強化 */
       html body .navbar {
@@ -1929,79 +1925,8 @@
 
   <!-- Footer -->
 <footer class="py-5 text-center">
-  <style>
-    footer {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-top: 1px solid rgba(204, 204, 204, 0.3);
-      backdrop-filter: blur(10px);
-    }
-
-    footer .nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    footer .nav-link {
-      color: var(--main-color) !important;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      position: relative;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-
-    footer .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    footer .nav-link:hover::after {
-      width: 70%;
-    }
-
-    .social-links {
-      margin: 2rem 0;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin: 0 10px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #333, #666);
-      color: white !important;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      background: linear-gradient(45deg, #444, #777);
-    }
-
-    .copyright {
-      font-family: var(--body-font);
-      font-size: 0.9rem;
-      color: var(--accent-color);
-      margin-top: 2rem;
-      letter-spacing: 0.02em;
-    }
-  </style>
+  <!-- Footer 重複スタイル削除 -->
+  <!-- Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 -->
 
   <ul class="nav">
     <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
