@@ -148,15 +148,15 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* Collection 行間ギャップ - 1箇所管理 */
+/* Collection 余白最小化 - 8-16px統一 */
 .collection-row-gap {
-  --title-to-top: 8px;
+  --title-to-top: 12px;
   --top-to-bottom: 8px;
 }
 
 @media (max-width: 768px) {
   .collection-row-gap {
-    --title-to-top: 8px;
+    --title-to-top: 10px;
     --top-to-bottom: 8px;
   }
 }
@@ -214,6 +214,17 @@ section {
   padding: 0 !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
+}
+
+/* Collection行は背景なし - wrapperのみ背景適用 */
+.collection-row-top,
+.collection-row-bottom {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  margin: var(--top-to-bottom) 0 !important;
 }
 
 /* Collection 上下2行を包む囲い背景 - ナビと同じ色/透明度 */
@@ -341,13 +352,16 @@ section {
   align-items: center !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
-  padding: 2rem !important;
+  padding: 2rem 0 !important;
   opacity: 1 !important;
   position: relative !important;
-  z-index: 1 !important;
+  z-index: 2 !important;
   width: 100% !important;
   box-sizing: border-box !important;
   overflow: visible !important;
+  /* 縦一列化防止 */
+  flex-direction: unset !important;
+  flex-wrap: unset !important;
 }
 
 /* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
@@ -1293,9 +1307,9 @@ footer .nav-link {
   font-size: var(--font-size-4xl);
   font-weight: 700;
   margin-bottom: 2.5rem;
-    letter-spacing: 0.05em;
-    display: inline-block;
-    color: var(--main-color);
+  letter-spacing: 0.05em;
+  display: inline-block;
+  color: var(--main-color);
 }
 
 .section-content {
@@ -1608,10 +1622,12 @@ body {
 /* ========================================
     # 管理統合済み
     ======================================== */
-/* RS BUILD 20250118-final: 競合排除、マルキー実装、グリッド最適化、ドラッグ対応完了 */
+/* RS BUILD 20250118-structure-fix: Collection余白最小化、Brands縦一列化防止、個別背景削除完了 */
 
-    .map-container {
-      width: 100% !important;
+/* 構造修正完了 - wrapper背景のみ、grid強制、余白8-16px統一 */
+
+  .map-container {
+    width: 100% !important;
     max-width: 900px !important;
     min-width: 0 !important;
     margin: 0 auto !important;
