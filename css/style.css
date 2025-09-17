@@ -116,7 +116,7 @@ section {
 
 /* Collection 行間ギャップ - 1箇所管理 */
 .collection-row-gap {
-  --title-to-top: 12px;
+  --title-to-top: 8px;
   --top-to-bottom: 8px;
 }
 
@@ -289,13 +289,12 @@ section {
   max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 2rem !important;
-  opacity: 0 !important;
-  animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards !important;
+  opacity: 1 !important;
   position: relative !important;
   z-index: 1 !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 /* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
