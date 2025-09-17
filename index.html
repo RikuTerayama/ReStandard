@@ -138,9 +138,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18-final">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18-final">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18-final">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18-structure-fix">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18-structure-fix">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-18-structure-fix">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -872,26 +872,9 @@
     /* Duplicate removed: 重複するCollection設定をstyle.cssのsectionsブロックに統合 */
     
     
-    html body #collection .collection-row-top,
-    html body #collection .collection-row-bottom,
-    html body .collection-section .collection-row-top,
-    html body .collection-section .collection-row-bottom {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-    }
+    /* Collection行の個別背景削除 - wrapperのみ背景適用 */
     
-    /* 半透明背景の最強表示 */
-    #collection .collection-row-top,
-    #collection .collection-row-bottom {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-      position: relative !important;
-      z-index: 1 !important;
-    }
+    /* Collection行の個別背景削除完了 */
     
     /* 半透明背景の最強表示 - 最高特異性 */
     html body #collection .collection-row-top,
@@ -1273,7 +1256,7 @@
 
   <!-- 単一背景動画 - PC/SP自動切替 -->
   <div id="background-video-container">
-    <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
     <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
   </div>
   
@@ -1456,7 +1439,7 @@
     
     <!-- 上下2行を包む囲い背景 -->
     <div class="collection-rows-wrapper">
-      <!-- 上段：右→左スクロール -->
+    <!-- 上段：右→左スクロール -->
       <div class="collection-row-top">
       <div class="collection-scroll-top">
         <!-- 1周目 -->
@@ -1554,7 +1537,7 @@
         </div>
       </div>
     
-      <!-- 下段：左→右スクロール -->
+    <!-- 下段：左→右スクロール -->
       <div class="collection-row-bottom">
       <div class="collection-scroll-bottom">
         <!-- 1周目（逆順） -->
@@ -1615,8 +1598,8 @@
         <img src="image/23.JPG" alt="Collection Item 23">
         <img src="image/22.JPG" alt="Collection Item 22">
         <img src="image/21.JPG" alt="Collection Item 21">
-        </div>
       </div>
+    </div>
     </div> <!-- collection-rows-wrapper 終了 -->
   </section>
 
