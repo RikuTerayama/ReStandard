@@ -139,74 +139,82 @@ section {
 
 .collection-section,
 #collection {
-  display: block;
-  visibility: visible;
-  opacity: 1;
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  overflow: visible;
-  background: transparent;
-  margin: 0;
-  padding: 20px 0;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  overflow: visible !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 20px 0 !important;
+}
+
+.collection-title {
+  text-align: center !important;
+  font-size: 2.5rem !important;
+  margin-bottom: 0px !important;
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
 /* Collection 行のスタイル - 上下2段を厳密に別トラックとして表示 */
 .collection-row-top,
 .collection-row-bottom {
-  display: flex;
-  visibility: visible;
-  opacity: 1;
-  height: var(--track-row-height);
-  min-height: var(--track-row-height);
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  align-items: center;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 20px;
-  overflow: hidden;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: var(--track-row-height) !important;
+  min-height: var(--track-row-height) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+  margin-bottom: 20px !important;
+  overflow: hidden !important;
 }
 
 /* Collection スクロールコンテナのスタイル */
 .collection-scroll-top,
 .collection-scroll-bottom {
-  display: flex;
-  visibility: visible;
-  opacity: 1;
-  gap: var(--track-gap);
-  flex-direction: row;
-  height: 100%;
-  width: max-content;
-  align-items: center;
-  position: relative;
-  z-index: 2;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  gap: var(--track-gap) !important;
+  flex-direction: row !important;
+  height: 100% !important;
+  width: max-content !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 2 !important;
 }
 
 .collection-scroll-top {
-  animation: move-right var(--track-speed) linear infinite;
+  animation: move-right var(--track-speed) linear infinite !important;
 }
 
 .collection-scroll-bottom {
-  animation: move-left var(--track-speed) linear infinite;
+  animation: move-left var(--track-speed) linear infinite !important;
 }
 
 /* Collection 画像のスタイル - 上下が切れないことを最優先 */
 .collection-scroll-top img,
 .collection-scroll-bottom img {
-  display: block;
-  visibility: visible;
-  opacity: 1;
-  height: var(--track-item-size);
-  width: auto;
-  flex-shrink: 0;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  position: relative;
-  z-index: 3;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: var(--track-item-size) !important;
+  width: auto !important;
+  flex-shrink: 0 !important;
+  object-fit: contain !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  position: relative !important;
+  z-index: 3 !important;
 }
 
 /* ホバー停止（pointer有デバイスのみ） */
@@ -231,17 +239,19 @@ section {
   display: grid !important;
   grid-template-columns: repeat(5, 1fr) !important;
   grid-template-rows: repeat(2, 1fr) !important;
-  gap: 1.5rem;
-  justify-items: center;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  height: 400px;
-  opacity: 0;
-  animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards;
-  position: relative;
-  z-index: 1;
+  gap: 1.5rem !important;
+  justify-items: center !important;
+  align-items: center !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 2rem !important;
+  height: 400px !important;
+  opacity: 0 !important;
+  animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards !important;
+  position: relative !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
@@ -270,21 +280,21 @@ section {
 }
 
 .brand-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: white;
-  padding: 1rem;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  min-height: 120px;
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  background: white !important;
+  padding: 1rem !important;
+  text-align: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 120px !important;
   display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .brand-card:hover {
