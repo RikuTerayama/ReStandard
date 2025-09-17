@@ -138,9 +138,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=build-20250918-b">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=build-20250918-b">
-  <link rel="stylesheet" href="css/style.css?v=build-20250918-b">
+  <link rel="stylesheet" href="css/reveal.css?v=build-20250918-final">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=build-20250918-final">
+  <link rel="stylesheet" href="css/style.css?v=build-20250918-final">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -876,71 +876,13 @@
     
     /* Collection行の個別背景削除完了 */
     
-    /* 半透明背景の最強表示 - 最高特異性 */
-    html body #collection .collection-row-top,
-    html body #collection .collection-row-bottom {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-      position: relative !important;
-      z-index: 1 !important;
-      height: 600px !important;
-      min-height: 600px !important;
-      max-height: 600px !important;
-    }
+    /* Collection重複背景設定削除 - CSSで統一管理 */
     
-    /* 上段と下段の高さを統一 */
-    #collection .collection-row-top,
-    #collection .collection-row-bottom {
-      height: 600px !important;
-      min-height: 600px !important;
-      max-height: 600px !important;
-    }
+    /* Collection重複設定削除完了 - style.cssで統一管理 */
     
-    /* 下段の表示を最強で強制 - 最高特異性 */
-    html body #collection .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 600px !important;
-      min-height: 600px !important;
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-      position: relative !important;
-      z-index: 999 !important;
-    }
+    /* Collection重複スタイル削除 - style.cssで統一管理 */
     
-    html body #collection .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      animation: move-left 60s linear infinite !important;
-      gap: 1px !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      height: 100% !important;
-      width: max-content !important;
-      align-items: center !important;
-      position: relative !important;
-      z-index: 9999 !important;
-    }
-    
-    html body #collection .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-      object-fit: cover !important;
-      border-radius: 8px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      position: relative !important;
-      z-index: 10000 !important;
-    }
+    /* Collection画像重複設定削除 - style.cssで統一管理 */
     
     /* 上段専用スタイル */
     html body .collection-scroll-top,
