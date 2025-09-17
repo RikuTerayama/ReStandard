@@ -108,6 +108,8 @@ section {
 
 /* Collection / Brands セクション専用ブロック - 本番想定の挙動復旧 */
 
+/* 診断用アウトライン削除 - 根本原因特定完了 */
+
 /* セクション共通の縦間隔 - トークン化 */
 .section-spacing {
   margin-top: clamp(100px, 12vw, 150px);
@@ -1260,22 +1262,9 @@ footer .nav-link {
 /* ブランドグリッドのアニメーション - 統合済み */
 /* Duplicate removed: アニメーション設定をメインの.brands-gridに統合 */
 
-.brandlogo {
-  opacity: 0;
-  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
-}
-
-/* アニメーションの遅延を設定 */
-.brandlogo:nth-child(1) { animation-delay: 0.2s; }
-.brandlogo:nth-child(2) { animation-delay: 0.3s; }
-.brandlogo:nth-child(3) { animation-delay: 0.4s; }
-.brandlogo:nth-child(4) { animation-delay: 0.5s; }
-.brandlogo:nth-child(5) { animation-delay: 0.6s; }
-.brandlogo:nth-child(6) { animation-delay: 0.7s; }
-.brandlogo:nth-child(7) { animation-delay: 0.8s; }
-.brandlogo:nth-child(8) { animation-delay: 0.9s; }
-.brandlogo:nth-child(9) { animation-delay: 1.0s; }
-.brandlogo:nth-child(10) { animation-delay: 1.1s; }
+/* 古いbrandlogo設定削除 - 根本原因解決 */
+/* Duplicate removed: 古い.brandlogo設定をBrandsセクションのbrand-cardに統合 */
+/* ROOT CAUSE: .brandlogo { opacity: 0; } が.brand-logoを上書きしていた */
 
 /* スクロールアニメーション用のクラス */
 .scroll-fade {
