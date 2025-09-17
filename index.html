@@ -1234,6 +1234,50 @@
       align-self: center !important;
     }
     
+    /* 下段の強制表示 - 最強ルール */
+    .collection-row-bottom {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      height: 600px !important;
+      min-height: 600px !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important;
+      padding: 20px !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+      align-items: center !important;
+      position: relative !important;
+      z-index: 9999 !important;
+    }
+    
+    .collection-scroll-bottom {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      animation: move-left 60s linear infinite !important;
+      gap: 1px !important;
+      flex-direction: row !important;
+      height: 100% !important;
+      width: max-content !important;
+      align-items: center !important;
+      position: relative !important;
+      z-index: 10000 !important;
+    }
+    
+    .collection-scroll-bottom img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      height: 250px !important;
+      width: 250px !important;
+      flex-shrink: 0 !important;
+      object-fit: cover !important;
+      border-radius: 8px !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+      position: relative !important;
+      z-index: 10001 !important;
+    }
+    
     html body .collection-row-top,
     html body .collection-row-bottom,
     body .collection-row-top,
@@ -1629,7 +1673,7 @@
   
   <!-- Collection Section - シンプル版 -->
   <section id="collection" class="collection-section" style="width: 100vw !important; margin-left: calc(-50vw + 50%) !important; padding: 60px 0 !important; background: transparent !important; position: relative !important; overflow: hidden !important; display: block !important; visibility: visible !important; opacity: 1 !important; z-index: 999 !important; min-height: 400px !important;">
-    <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
+    <h2 class="collection-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 10px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Collection</h2>
     
     <!-- デバッグ情報表示 -->
     
