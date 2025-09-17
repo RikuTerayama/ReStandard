@@ -1,21 +1,21 @@
-// Collection スワイプ・無限ループ機能
+// Collection スワイプ・無限ループ機能（Lookbook同様）
 document.addEventListener('DOMContentLoaded', function() {
   const collectionTop = document.querySelector('.collection-scroll-top');
   const collectionBottom = document.querySelector('.collection-scroll-bottom');
   
-  // 無限ループのための画像複製
+  // 無限ループのための画像複製（Lookbook同様の仕様）
   function duplicateImages(container) {
     if (!container) return;
-    const images = container.querySelectorAll('img, a');
-    images.forEach(img => {
+    const originalImages = Array.from(container.querySelectorAll('img, a'));
+    
+    // 2セット複製で無限ループ実現
+    originalImages.forEach(img => {
       const clone = img.cloneNode(true);
       container.appendChild(clone);
     });
   }
   
-  // 画像を3セット複製（無限ループ用）
-  duplicateImages(collectionTop);
-  duplicateImages(collectionBottom);
+  // 画像を2セット複製（Lookbook同様）
   duplicateImages(collectionTop);
   duplicateImages(collectionBottom);
   
@@ -84,13 +84,13 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
         container.style.cursor = 'grab';
         
-        // 2秒後にアニメーション再開
+        // 3秒後にアニメーション再開（Lookbook同様）
         setTimeout(() => {
           if (animationPaused) {
             container.style.animationPlayState = 'running';
             animationPaused = false;
           }
-        }, 2000);
+        }, 3000);
       });
     });
     
