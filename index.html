@@ -694,31 +694,9 @@
       z-index: 2;
       display: none;
     }
-    /* Collection セクション用の基本設定 */
-    :root {
-      --rs-header-h: 80px;
-    }
-    @media (min-width: 1024px) {
-      :root { 
-        --rs-header-h: 96px;
-      }
-    }
+    /* Collection - style.cssで統一管理 */
     
-    /* 古いCollection関連のスタイルは削除 */
-    
-    /* 新しいCollection用アニメーション - シンプル版 */
-    @keyframes move-right {
-      0% { transform: translateX(0%); }
-      100% { transform: translateX(-50%); }
-    }
-    
-    @keyframes move-left {
-      0% { transform: translateX(-50%); }
-      100% { transform: translateX(0%); }
-    }
-    
-    /* Collection セクション重複インラインスタイル削除 */
-    /* Duplicate removed: 重複する強制表示設定をstyle.cssのsections専用ブロックに統合 */
+    /* Collection重複スタイル削除完了 - style.cssで統一管理 */
     
     
     /* Collection セクション重複インラインスタイル削除 - 続き */
