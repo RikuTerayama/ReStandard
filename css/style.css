@@ -108,6 +108,40 @@ section {
 
 /* Collection / Brands セクション専用ブロック - 本番想定の挙動復旧 */
 
+/* Hero Video セクション - 最初に表示・再生 */
+.hero-video-section {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .hero-video-section {
+    height: 50vh;
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-video-section {
+    height: 40vh;
+    min-height: 250px;
+  }
+}
+
 /* 診断用アウトライン削除 - 根本原因特定完了 */
 
 /* セクション共通の縦間隔 - トークン化 */
@@ -1558,6 +1592,9 @@ body {
 /* 全てのCollection・Brandsスタイルはこのファイルのsections専用ブロックで管理 */
 /* 競合ファイル削除済み: collection-overrides.css, site-fixes.css, mobile-fixes.css */
 /* 古いセレクタ削除済み: .brandlogo { opacity: 0; } */
+/* BUILD-STAMP: 2025-01-17-FINAL-FIX */
+
+/* キルスイッチ削除 - 反映確認完了 */
 @font-face {
   font-family: "Font Awesome 6 Free";
   font-style: normal;
