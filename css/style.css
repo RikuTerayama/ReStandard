@@ -122,15 +122,15 @@ section {
 
 @media (max-width: 768px) {
   .collection-row-gap {
-    --title-to-top: 10px;
-    --top-to-bottom: 8px;
+    --title-to-top: 8px;
+    --top-to-bottom: 6px;
   }
 }
 
 @media (max-width: 480px) {
   .collection-row-gap {
-    --title-to-top: 8px;
-    --top-to-bottom: 6px;
+    --title-to-top: 6px;
+    --top-to-bottom: 4px;
   }
 }
 
@@ -184,11 +184,11 @@ section {
 
 /* Collection 上下2行を包む囲い背景 - ナビと同じ色/透明度 */
 .collection-rows-wrapper {
-  background: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   padding: 20px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-  backdrop-filter: blur(8px) !important;
+  backdrop-filter: blur(10px) !important;
   margin: 0 !important;
 }
 
@@ -283,50 +283,43 @@ section {
 .brands-grid {
   display: grid !important;
   grid-template-columns: repeat(5, 1fr) !important;
-  grid-template-rows: repeat(2, 1fr) !important;
   gap: 1.5rem !important;
   justify-items: center !important;
   align-items: center !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 2rem !important;
-  height: 400px !important;
-  opacity: 1 !important;
+  opacity: 0 !important;
   animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards !important;
   position: relative !important;
   z-index: 1 !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 /* レスポンシブ対応 - 画面サイズに応じて列数を調整（1列化を禁止） */
 @media (max-width: 1200px) {
   .brands-grid {
     grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: repeat(3, 1fr) !important;
-    height: 450px;
   }
 }
 
 @media (max-width: 900px) {
   .brands-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    grid-template-rows: repeat(4, 1fr) !important;
-    height: 500px;
   }
 }
 
 @media (max-width: 600px) {
   .brands-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    grid-template-rows: repeat(5, 1fr) !important;
-    height: 600px;
   }
 }
 
 .brand-card {
   position: relative !important;
-  overflow: visible !important;
+  overflow: hidden !important;
   border-radius: 12px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
@@ -334,8 +327,8 @@ section {
   padding: 1rem !important;
   text-align: center !important;
   width: 100% !important;
-  height: 100% !important;
-  min-height: 120px !important;
+  height: 150px !important;
+  max-height: 150px !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -352,7 +345,7 @@ section {
   opacity: 1 !important;
   transition: opacity 0.3s ease !important;
   max-width: 100% !important;
-  max-height: 60px !important;
+  max-height: 80px !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
@@ -368,7 +361,7 @@ section {
   opacity: 0 !important;
   transition: opacity 0.3s ease !important;
   max-width: 100% !important;
-  max-height: 60px !important;
+  max-height: 80px !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
@@ -992,6 +985,84 @@ section p {
 
 /* Brands セクション - 統合済み */
 /* Duplicate removed: 個別のBrands設定と重複するレスポンシブ設定をsections専用ブロックに統合 */
+
+/* Footer セクション - 統合済み */
+/* Duplicate removed: index.htmlのFooter重複設定を統合 */
+footer {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-top: 1px solid rgba(204, 204, 204, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  position: relative !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  margin-top: auto !important;
+}
+
+footer .nav {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  margin-bottom: 2rem !important;
+}
+
+footer .nav-link {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  padding: 0.5rem 1rem !important;
+  position: relative !important;
+  transition: all 0.3s ease !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+}
+
+footer .nav-link::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 2px !important;
+  background-color: var(--main-color) !important;
+  transition: all 0.3s ease !important;
+  transform: translateX(-50%) !important;
+}
+
+footer .nav-link:hover::after {
+  width: 70% !important;
+}
+
+.social-links {
+  margin: 2rem 0 !important;
+}
+
+.social-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 10px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(45deg, #333, #666) !important;
+  color: white !important;
+  font-size: 1.2rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+  background: linear-gradient(45deg, #444, #777) !important;
+}
+
+.copyright {
+  font-family: var(--body-font) !important;
+  font-size: 0.9rem !important;
+  color: var(--accent-color) !important;
+  margin-top: 2rem !important;
+  letter-spacing: 0.02em !important;
+}
 
 /* Brandlogo 重複設定削除 */
 /* Duplicate removed: 古いbrandlogo設定をBrandsセクションのbrand-cardに統合 */
