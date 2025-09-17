@@ -17,8 +17,8 @@
   /* 新しい共通トークン */
   --nav-frost-bg: rgba(255, 255, 255, 0.9);
   --collection-gap-sm: 8px;
-  --track-gap: 8px;
-  --track-speed: 90s;
+  --track-gap: 20px;
+  --track-speed: 120s;
   
   /* ベースとなるフォントサイズの設定 */
   --font-size-base: 16px;
@@ -176,37 +176,37 @@ section {
   }
 }
 
-/* Collection セクション - 上下切れ禁止・余白最適化 */
+/* Collection セクション - 画像サイズ統一・余白最適化 */
 :root {
-  --track-row-height: 360px;
-  --track-item-size: 320px;
+  --track-row-height: 280px;
+  --track-item-size: 250px;
   --title-gap: 5px;
   --row-gap: 5px;
 }
 
 @media (max-width: 1024px) {
   :root {
-    --track-speed: 70s;
+    --track-speed: 90s;
   }
 }
 
 @media (max-width: 768px) {
   :root {
-    --track-row-height: 300px;
-    --track-item-size: 260px;
+    --track-row-height: 180px;
+    --track-item-size: 150px;
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --track-speed: 55s;
+    --track-speed: 80s;
   }
 }
 
 @media (max-width: 480px) {
   :root {
-    --track-row-height: 260px;
-    --track-item-size: 220px;
+    --track-row-height: 150px;
+    --track-item-size: 120px;
   }
 }
 
@@ -322,13 +322,11 @@ section {
   animation-play-state: paused !important;
 }
 
-/* Collection 画像 - 完全フル表示・上下切れ完全防止 */
+/* Collection 画像 - 統一サイズ・完全フル表示 */
 .collection-scroll-top img,
 .collection-scroll-bottom img {
+  height: var(--track-item-size) !important;
   width: auto !important;
-  height: auto !important;
-  max-height: calc(var(--track-row-height) - 20px) !important;
-  max-width: 300px !important;
   object-fit: contain !important;
   border-radius: 8px !important;
   flex-shrink: 0 !important;
@@ -336,6 +334,7 @@ section {
   visibility: visible !important;
   /* フル表示保証 */
   object-position: center !important;
+  max-height: var(--track-item-size) !important;
 }
 
 /* Collection スクロールコンテナのスタイル */
@@ -393,23 +392,29 @@ section {
   }
 }
 
-/* Brands 縦1列化完全防止 - auto-fit最強グリッド */
+/* Brands レスポンシブグリッド - 縦1列化完全防止 */
 .brands-grid {
   display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+  grid-template-columns: repeat(5, 1fr) !important;
   gap: 16px !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 2rem !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  /* 縦1列化防止の最強設定 */
+  /* 縦1列化防止 */
   grid-auto-flow: row !important;
   place-content: center !important;
 }
 
 /* レスポンシブ対応 - 厳密な列数制御 */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .brands-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
   .brands-grid {
     grid-template-columns: repeat(3, 1fr) !important;
   }
@@ -1659,8 +1664,8 @@ body {
 
 /* 見た目定義最優先実装完了 - Collection=1ラッパー背景・8px gap、Brands=正方形ボックス・レスポンシブグリッド */
 
-/* BUILD_STAMP: 2025-01-18_CollectionBrands_Sync */
-/* Collection1背景・切れなし・余白8px・速度同一・スワイプ対応、Brands正方形グリッド・縦1列解消完了 */
+/* BUILD_STAMP: 2025-01-18_FINAL_SYNC */
+/* Collection画像統一サイズ・余白5px・120s緩やか速度・Lookbook同様スワイプ、Brands厳密レスポンシブグリッド・縦1列完全解消 */
 
   .map-container {
     width: 100% !important;
