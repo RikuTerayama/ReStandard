@@ -1092,11 +1092,8 @@ footer .nav-link:hover::after {
   opacity: 1;
 }
 
-.brandlogo:hover .preview {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -110%) scale(1);
-}
+/* 古いbrandlogo:hover設定削除 */
+/* ROOT CAUSE ELIMINATED: 古い.brandlogo設定が競合していた */
 
 /* iframeのスタイル */
 iframe {
@@ -1174,14 +1171,8 @@ footer .nav-link {
   background: linear-gradient(45deg, #444, #777);
 }
 
-/* アニメーションの改善 */
-.brandlogo {
-  transition: transform 0.3s var(--transition-timing);
-}
-
-.brandlogo:hover {
-  transform: translateY(-5px);
-}
+/* 古いbrandlogo設定完全削除 */
+/* ROOT CAUSE ELIMINATED: 古い.brandlogo設定が.brand-logoを無効化していた */
 
 .nav-link:focus-visible {
   outline: 2px solid var(--main-color);
@@ -1560,6 +1551,13 @@ body {
   src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2") format("woff2");
   font-display: swap;
 }
+
+/* ========================================
+   # 管理統合済み
+   ======================================== */
+/* 全てのCollection・Brandsスタイルはこのファイルのsections専用ブロックで管理 */
+/* 競合ファイル削除済み: collection-overrides.css, site-fixes.css, mobile-fixes.css */
+/* 古いセレクタ削除済み: .brandlogo { opacity: 0; } */
 @font-face {
   font-family: "Font Awesome 6 Free";
   font-style: normal;
