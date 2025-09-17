@@ -1041,46 +1041,9 @@
       flex-shrink: 0 !important;
     }
     
-    /* 下段の表示を最強で強制 - 最高特異性 */
-    #collection .collection-row-bottom,
-    #collection .collection-scroll-bottom,
-    #collection .collection-scroll-bottom img {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      position: relative !important;
-      z-index: 9999 !important;
-    }
+    /* Collection セクション重複スタイル削除 */
+    /* Duplicate removed: 重複するCollection設定をstyle.cssのsectionsブロックに統合 */
     
-    #collection .collection-scroll-bottom {
-      animation: move-left 60s linear infinite !important;
-      gap: 1px !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      height: 100% !important;
-      width: max-content !important;
-      align-items: center !important;
-    }
-    
-    #collection .collection-scroll-bottom img {
-      display: block !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-      object-fit: cover !important;
-      border-radius: 8px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      z-index: 10000 !important;
-    }
-    
-    /* 半透明背景の強制表示 */
-    .collection-row-top,
-    .collection-row-bottom {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-    }
     
     html body #collection .collection-row-top,
     html body #collection .collection-row-bottom,
