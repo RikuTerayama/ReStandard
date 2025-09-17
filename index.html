@@ -2535,82 +2535,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   </script>
   
-  <script>
-    // ========================================
-    // MARQUEE INITIALIZATION - Single Source of Truth
-    // ========================================
-    // 統合済み: flowing-fix.js の内容を統合
-    // Duplicate removed: 競合を避けるため、ここでのみ管理
-    
-    document.addEventListener('DOMContentLoaded', function() {
-      // 統合されたmarquee初期化関数
-      function initMarquee({selector, direction, speed, pauseOnHover = true}) {
-        const elements = document.querySelectorAll(selector);
-        
-        elements.forEach(element => {
-          // アニメーション設定
-          element.style.animation = `${direction} ${speed} linear infinite`;
-          
-          // ホバー停止設定（pointer有デバイスのみ）
-          if (pauseOnHover && window.matchMedia('(hover: hover)').matches) {
-            element.addEventListener('mouseenter', () => {
-              element.style.animationPlayState = 'paused';
-            });
-            element.addEventListener('mouseleave', () => {
-              element.style.animationPlayState = 'running';
-            });
-          }
-          
-          // prefers-reduced-motion 対応
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            element.style.animation = 'none';
-          }
-        });
-      }
-      
-      // marquee初期化
-      initMarquee({
-        selector: '.collection-scroll-top',
-        direction: 'move-right',
-        speed: 'var(--track-speed)',
-        pauseOnHover: true
-      });
-      
-      initMarquee({
-        selector: '.collection-scroll-bottom',
-        direction: 'move-left',
-        speed: 'var(--track-speed)',
-        pauseOnHover: true
-      });
-      
-      initMarquee({
-        selector: '.lookbook-track',
-        direction: 'lookbook-scroll',
-        speed: 'var(--track-speed)',
-        pauseOnHover: true
-      });
-    });
-  </script>
-  
-  <script>
-    // Collection セクション表示確認 - 統合済み
-    // Duplicate removed: 重複する診断スクリプトを統合
-    document.addEventListener('DOMContentLoaded', function() {
-      function ensureCollectionDisplay() {
-        const collectionSection = document.getElementById('collection');
-        const topRow = document.querySelector('.collection-row-top');
-        const bottomRow = document.querySelector('.collection-row-bottom');
-        
-        if (collectionSection && topRow && bottomRow) {
-          console.info("[COLLECTION] Section properly structured");
-        } else {
-          console.warn("[COLLECTION] Section structure issue detected");
-        }
-      }
-      
-      ensureCollectionDisplay();
-    });
-  </script>
+  <!-- セクション初期化スクリプト - 統合済み -->
+  <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
+  <script src="js/init-sections.js"></script>
 
 </body>
 </html>
