@@ -172,23 +172,25 @@ section {
   }
 }
 
-/* Collection セクション - 上下2段を必ず表示・切れを禁止 */
+/* Collection セクション - 上下切れ禁止・余白最適化 */
 :root {
-  --track-row-height: 400px;
-  --track-item-size: 350px;
+  --track-row-height: 360px;
+  --track-item-size: 320px;
+  --title-gap: 10px;
+  --row-gap: 10px;
 }
 
 @media (max-width: 768px) {
   :root {
-    --track-row-height: 320px;
-    --track-item-size: 280px;
+    --track-row-height: 300px;
+    --track-item-size: 260px;
   }
 }
 
 @media (max-width: 480px) {
   :root {
-    --track-row-height: 280px;
-    --track-item-size: 240px;
+    --track-row-height: 260px;
+    --track-item-size: 220px;
   }
 }
 
@@ -209,7 +211,7 @@ section {
 .collection-title {
   text-align: center !important;
   font-size: 2.5rem !important;
-  margin-bottom: var(--title-to-top) !important;
+  margin-bottom: var(--title-gap) !important;
   color: white !important;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
   background: transparent !important;
@@ -227,21 +229,23 @@ section {
   padding: 0 !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
-  margin: var(--top-to-bottom) 0 !important;
+  margin: var(--row-gap) 0 !important;
 }
 
-/* Collection ラッパー - メニューバーと同じフロスト背景 */
+/* Collection ラッパー - full-bleed & メニューバー同色背景 */
 .collection-rows-wrapper {
-  background: var(--nav-frost-bg) !important;
-  border-radius: 16px !important;
-  padding: 20px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(8px) !important;
-  margin: 0 20px !important;
+  border-radius: 16px !important;
+  padding: 12px 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Collection 行のスタイル - オーバーレイ廃止、余白最小化 */
 /* Collection 二段マルキー実装 */
+/* Collection 行設定 - 高さ自動調整 */
 .collection-row-top,
 .collection-row-bottom {
   display: flex !important;
@@ -249,8 +253,11 @@ section {
   height: var(--track-row-height) !important;
   overflow: hidden !important;
   position: relative !important;
-  margin: var(--top-to-bottom) 0 !important;
   background: transparent !important;
+}
+
+.collection-row-top {
+  margin-bottom: var(--row-gap) !important;
 }
 
 .collection-scroll-top,
@@ -288,6 +295,21 @@ section {
 .collection-row-top:hover .collection-scroll-top,
 .collection-row-bottom:hover .collection-scroll-bottom {
   animation-play-state: paused !important;
+}
+
+/* Collection 画像 - 上下切れ禁止・全体表示 */
+.collection-scroll-top img,
+.collection-scroll-bottom img {
+  height: var(--track-item-size) !important;
+  width: auto !important;
+  object-fit: contain !important;
+  border-radius: 8px !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+  visibility: visible !important;
+  /* 上下切れ防止 */
+  max-height: var(--track-item-size) !important;
+  max-width: none !important;
 }
 
 /* Collection スクロールコンテナのスタイル */
@@ -349,9 +371,9 @@ section {
 .brands-grid {
   display: grid !important;
   grid-template-columns: repeat(5, 1fr) !important;
-  gap: 1.5rem !important;
-  justify-items: center !important;
+  gap: 16px !important;
   align-items: center !important;
+  justify-items: center !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 2rem !important;
@@ -385,25 +407,20 @@ section {
   }
 }
 
-/* 正方形カード - 画面サイズ対応の白背景ボックス */
+/* 正方形カード - 厳密1:1比率・白背景ボックス */
 .brand-card {
-  position: relative !important;
-  overflow: hidden !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  max-width: 220px !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #fff !important;
   border-radius: 12px !important;
+  padding: 12px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-  background: white !important;
-  padding: 20px !important;
-  text-align: center !important;
-  width: 100% !important;
-  aspect-ratio: 1 / 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  /* 画像サイズ制御 */
-  min-height: 140px !important;
-  max-height: 200px !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .brand-card:hover {
@@ -411,34 +428,23 @@ section {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* ブランドロゴ - 正方形ボックス内自動リサイズ・中央寄せ */
+/* ブランドロゴ - 共通ルールでsans arcide含む全画像対応 */
+.brand-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  transition: opacity 0.3s ease !important;
+}
+
 .brand-logo {
   opacity: 1 !important;
-  transition: opacity 0.3s ease !important;
-  max-width: 80% !important;
-  max-height: 80% !important;
-  width: auto !important;
-  height: auto !important;
-  object-fit: contain !important;
-  display: block !important;
-  visibility: visible !important;
-  margin: auto !important;
 }
 
 .brand-hover {
   position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  opacity: 0 !important;
-  transition: opacity 0.3s ease !important;
-  max-width: 80% !important;
-  max-height: 80% !important;
-  width: auto !important;
-  height: auto !important;
+  inset: 12px !important;
   object-fit: contain !important;
-  display: block !important;
-  visibility: visible !important;
+  opacity: 0 !important;
 }
 
 .brand-card:hover .brand-logo {
@@ -1637,6 +1643,9 @@ body {
 /* RS BUILD 20250918-final: Collection1背景統一・Brands正方形グリッド・重複削除完了 */
 
 /* 見た目定義最優先実装完了 - Collection=1ラッパー背景・8px gap、Brands=正方形ボックス・レスポンシブグリッド */
+
+/* BUILD-STAMP: 2025-01-18-COLLECTION-BRANDS-FIX */
+/* キルスイッチ削除完了 - 反映確認済み */
 
   .map-container {
     width: 100% !important;
