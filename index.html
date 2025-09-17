@@ -2593,41 +2593,24 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
   
   <script>
-    // 新しいCollectionセクション用の診断スクリプト（簡略化）
-    (function(){
-      function log(msg){ console.info("[NEW-COLLECTION]", msg); }
-
-      function ensureCollectionDisplay(){
-        const section = document.querySelector('[data-role="collection"]');
-        const container = section && section.querySelector('.collection-container');
+    // Collection セクション表示確認 - 統合済み
+    // Duplicate removed: 重複する診断スクリプトを統合
+    document.addEventListener('DOMContentLoaded', function() {
+      function ensureCollectionDisplay() {
+        const collectionSection = document.getElementById('collection');
+        const topRow = document.querySelector('.collection-row-top');
+        const bottomRow = document.querySelector('.collection-row-bottom');
         
-        if (section && container) {
-          log("Collection section found and properly structured");
-          
-          // セクション間隔の統一
-          section.style.setProperty('padding-top','clamp(80px, 10vw, 120px)','important');
-          
-          const title = section.querySelector('.section-title');
-          if (title) {
-            title.style.setProperty('margin-bottom','40px','important');
-            title.style.setProperty('text-align','center','important');
-          }
+        if (collectionSection && topRow && bottomRow) {
+          console.info("[COLLECTION] Section properly structured");
         } else {
-          console.warn("[NEW-COLLECTION] Collection section or container not found");
+          console.warn("[COLLECTION] Section structure issue detected");
         }
       }
-
-      function run(){
-        ensureCollectionDisplay();
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', run);
-      } else {
-        run();
-      }
-    })();
-</script>
+      
+      ensureCollectionDisplay();
+    });
+  </script>
 
 </body>
 </html>
