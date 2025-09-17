@@ -68,12 +68,129 @@ section {
   margin-bottom: 30px;
 }
 
-/* セクション間の縦間隔を統一 */
+/* セクション間の縦間隔を統一 - 修正済み */
 .section-spacing {
-  margin-top: clamp(80px, 10vw, 120px);
+  margin-top: clamp(100px, 12vw, 150px);
+  margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* 古いCollection関連のスタイルは削除 - HTML内のインラインスタイルを使用 */
+/* Collection セクションの特別な間隔設定 */
+#collection {
+  margin-top: 0;
+  margin-bottom: clamp(100px, 12vw, 150px);
+}
+
+/* Brands セクションの間隔設定 */
+#brands {
+  margin-top: clamp(100px, 12vw, 150px);
+  margin-bottom: clamp(50px, 6vw, 80px);
+}
+
+/* Lookbook セクションの間隔設定 */
+#lookbook {
+  margin-top: clamp(100px, 12vw, 150px);
+  margin-bottom: clamp(50px, 6vw, 80px);
+}
+
+/* About セクションの間隔設定 */
+#about-restandard {
+  margin-top: clamp(100px, 12vw, 150px);
+  margin-bottom: clamp(50px, 6vw, 80px);
+}
+
+/* Collection セクションのスタイル - 統合済み */
+/* Duplicate removed from collection-fixes.css */
+
+/* Collection アニメーション定義 */
+@keyframes move-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes move-left {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Collection セクション全体の表示を確実にする */
+.collection-section,
+#collection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 999 !important;
+  min-height: 300px !important;
+  width: 100% !important;
+  overflow: visible !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 20px 0 !important;
+}
+
+/* Collection 行のスタイル */
+.collection-row-top,
+.collection-row-bottom {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 300px !important;
+  min-height: 300px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+/* Collection スクロールコンテナのスタイル */
+.collection-scroll-top,
+.collection-scroll-bottom {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  gap: 1px !important;
+  flex-direction: row !important;
+  height: 100% !important;
+  width: max-content !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 10000 !important;
+}
+
+.collection-scroll-top {
+  animation: move-right 60s linear infinite !important;
+}
+
+.collection-scroll-bottom {
+  animation: move-left 60s linear infinite !important;
+}
+
+/* Collection 画像のスタイル */
+.collection-scroll-top img,
+.collection-scroll-bottom img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 250px !important;
+  width: 250px !important;
+  flex-shrink: 0 !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  position: relative !important;
+  z-index: 10001 !important;
+}
 
 /* Lookbook セクションのスタイル */
 .lookbook-container {
