@@ -200,7 +200,8 @@ section {
   z-index: 10 !important;
   width: 100% !important;
   overflow: visible !important;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(8px) !important;
   margin: 0 !important;
   padding: 20px 0 !important;
 }
@@ -220,7 +221,7 @@ section {
 
 /* Collection 上下2行を包む囲い背景 - ナビと同じ色/透明度 */
 .collection-rows-wrapper {
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
   border-radius: 16px !important;
   padding: 20px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
@@ -375,14 +376,14 @@ section {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* ブランドロゴのホバー挙動 - 80x80px正方形ボックス */
+/* ブランドロゴのホバー挙動 - 120x120px正方形ボックス */
 .brand-logo {
   opacity: 1 !important;
   transition: opacity 0.3s ease !important;
-  max-width: 80px !important;
-  max-height: 80px !important;
-  width: 80px !important;
-  height: 80px !important;
+  max-width: 120px !important;
+  max-height: 120px !important;
+  width: 120px !important;
+  height: 120px !important;
   object-fit: contain !important;
   display: block !important;
   visibility: visible !important;
@@ -395,10 +396,10 @@ section {
   transform: translate(-50%, -50%) !important;
   opacity: 0 !important;
   transition: opacity 0.3s ease !important;
-  max-width: 80px !important;
-  max-height: 80px !important;
-  width: 80px !important;
-  height: 80px !important;
+  max-width: 120px !important;
+  max-height: 120px !important;
+  width: 120px !important;
+  height: 120px !important;
   object-fit: contain !important;
   display: block !important;
   visibility: visible !important;
@@ -1593,6 +1594,7 @@ body {
 /* 競合ファイル削除済み: collection-overrides.css, site-fixes.css, mobile-fixes.css */
 /* 古いセレクタ削除済み: .brandlogo { opacity: 0; } */
 /* BUILD-STAMP-2025-01-18 */
+/* FIX_APPLIED_20250118: Collection背景統一、Brands grid修正、重複CSS削除完了 */
 
 /* キルスイッチ検証完了 - 反映確認済み */
 @font-face {
