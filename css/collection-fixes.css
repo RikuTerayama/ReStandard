@@ -197,8 +197,8 @@ body .collection-section .collection-row-bottom {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-  height: 600px !important;
-  min-height: 600px !important;
+  height: 300px !important;
+  min-height: 300px !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   padding: 20px !important;
@@ -244,8 +244,8 @@ body .collection-section .collection-row-top {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-  height: 600px !important;
-  min-height: 600px !important;
+  height: 300px !important;
+  min-height: 300px !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   padding: 20px !important;
@@ -313,8 +313,8 @@ body .collection-section .collection-row-bottom,
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-  height: 600px !important;
-  min-height: 600px !important;
+  height: 300px !important;
+  min-height: 300px !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   padding: 20px !important;
@@ -373,8 +373,8 @@ body .collection-section .collection-row-bottom {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-  height: 600px !important;
-  min-height: 600px !important;
+  height: 300px !important;
+  min-height: 300px !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   padding: 20px !important;
