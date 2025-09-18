@@ -75,9 +75,10 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* セクションタイトル共通スタイル */
+/* セクションタイトル共通スタイル - 白色統一・背景なし */
 .section-title {
   color: #fff;
+  background: none;
   font-weight: 600;
   line-height: 1.2;
   /* 画面幅でスケール */
@@ -119,6 +120,29 @@ section {
   box-shadow: 0 4px 20px rgba(0,0,0,.10);
   backdrop-filter: blur(8px);
   margin: 0 clamp(12px, 2vw, 20px);
+}
+
+/* 共通フルブリード背景帯 */
+.section-bg {
+  position: relative;
+  left: 50%;
+  right: auto;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: var(--nav-frost-bg, rgba(0,0,0,0.8));
+}
+
+/* 共通コンテンツ幅中央化 */
+.section-inner {
+  max-width: clamp(960px, 92vw, 1400px);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 2vw, 24px);
+}
+
+/* ドラッグ中の共通制御 */
+.dragging {
+  animation-play-state: paused !important;
+  cursor: grabbing !important;
 }
 
 /* ========================================
@@ -259,57 +283,38 @@ section {
 /* ========================================
    Brands - 正方形・中央揃え・ホバー制御
    ======================================== */
-/* Brands セクションは背景透明 */
-#brands, 
-.brands-section { 
-  background: transparent !important; 
+/* Brands - 背景透明・正方形レスポンシブグリッド */
+#brands {
+  background: none;
   padding: clamp(60px, 8vw, 80px) clamp(16px, 3vw, 20px);
   text-align: center;
 }
 
 .brands-grid {
   display: grid;
-  gap: clamp(8px, 1.5vw, 16px);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(12px, 1.2vw, 20px);
+  align-items: center;
+  justify-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  justify-items: center;
-  align-items: center;
 }
 
-/* レスポンシブグリッド明示 */
-@media (min-width: 1025px) {
+@media (min-width: 768px) {
   .brands-grid {
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 1024px) and (min-width: 769px) {
-  .brands-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .brands-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-  }
-}
-
-.brand-card { 
-  position: relative; 
-  width: min(180px, 22vw); 
-  aspect-ratio: 1/1; 
-  display: grid; 
-  place-items: center; 
+.brand-card {
+  aspect-ratio: 1/1;
+  position: relative;
   overflow: hidden;
   background: #fff;
   border-radius: 12px;
   padding: clamp(8px, 1.5vw, 16px);
   box-shadow: 0 4px 12px rgba(0,0,0,.10);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin: 0 auto;
 }
 
 .brand-card:hover {
@@ -317,29 +322,28 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-.brand-card img { 
-  width: 90%; 
-  height: 90%; 
-  object-fit: contain; 
+.brand-card img.logo,
+.brand-card img.hover {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   object-position: center;
-  transition: opacity .3s ease;
+  display: block;
 }
 
-.brand-card .brand-hover { 
-  position: absolute; 
-  left: 50%; 
-  top: 50%; 
-  transform: translate(-50%, -50%); 
-  width: 90%; 
-  height: 90%; 
-  object-fit: contain; 
-  opacity: 0; 
-  transition: opacity .25s; 
-  pointer-events: none; 
+.brand-card img.hover {
+  opacity: 0;
+  transition: opacity .25s;
+  pointer-events: none;
 }
 
-.brand-card:hover .brand-hover { 
-  opacity: 1; 
+@media (hover: hover) {
+  .brand-card:hover img.hover {
+    opacity: 1;
+  }
 }
 
 /* ========================================
