@@ -1,4 +1,4 @@
-// Lookbook 横スクロール・無限ループ機能
+// Lookbook 双方向ドラッグ安定化・クラス制御（Senior FE仕様）
 document.addEventListener('DOMContentLoaded', function() {
   const lookbookTrack = document.querySelector('.lookbook-track');
   
@@ -18,46 +18,42 @@ document.addEventListener('DOMContentLoaded', function() {
   // Lookbook無限ループ設定
   ensureLookbookLoop(lookbookTrack);
   
-  // スワイプ機能追加（Collection同様）
+  // Lookbook 双方向ドラッグ機能（クリック共存・draggingクラス制御）
   function addLookbookSwipeSupport(container) {
     if (!container) return;
     
     let isDragging = false;
+    let dragStarted = false;
     let startX = 0;
-    let animationPaused = false;
+    const DRAG_THRESHOLD = 10; // 10px以上でドラッグ判定
     
-    const events = {
-      start: ['mousedown', 'touchstart'],
-      move: ['mousemove', 'touchmove'],
-      end: ['mouseup', 'touchend', 'mouseleave']
-    };
+    // タッチイベント（passive: false でpreventDefault制御可能）
+    container.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      dragStarted = false;
+      container.style.cursor = 'grabbing';
+      
+      startX = e.touches[0].clientX;
+      
+      // start では preventDefault しない（クリック温存）
+    }, { passive: false });
     
-    // ドラッグ開始
-    events.start.forEach(event => {
-      container.addEventListener(event, (e) => {
-        isDragging = true;
-        container.style.cursor = 'grabbing';
-        
-        // アニメーション一時停止
-        container.style.animationPlayState = 'paused';
-        animationPaused = true;
-        
-        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-        startX = clientX;
-        
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      
+      const clientX = e.touches[0].clientX;
+      const deltaX = Math.abs(clientX - startX);
+      
+      // 閾値超過でドラッグ開始
+      if (deltaX > DRAG_THRESHOLD && !dragStarted) {
+        dragStarted = true;
+        container.classList.add('dragging'); // CSS制御用クラス
+      }
+      
+      // ドラッグ開始後のみ preventDefault & transform更新
+      if (dragStarted) {
         e.preventDefault();
-      });
-    });
-    
-    // ドラッグ中
-    events.move.forEach(event => {
-      container.addEventListener(event, (e) => {
-        if (!isDragging) return;
         
-        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-        const deltaX = (clientX - startX) * 1.5;
-        
-        // 現在のtransform値を取得して調整（X方向のみ、Y=-50%維持）
         const currentTransform = getComputedStyle(container).transform;
         let currentX = 0;
         
@@ -73,30 +69,111 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
         
-        container.style.transform = `translate3d(${currentX + deltaX}px, -50%, 0)`;
+        const moveX = (clientX - startX) * 1.5;
+        container.style.transform = `translate3d(${currentX + moveX}px, -50%, 0)`;
         startX = clientX;
-        
+      }
+    }, { passive: false });
+    
+    container.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      
+      // ドラッグ未開始（閾値以下）ならクリック許可
+      if (!dragStarted) {
+        console.info('[LOOKBOOK] タップ判定: 通常動作許可');
+        // e.preventDefault() しない
+      } else {
+        console.info('[LOOKBOOK] ドラッグ判定');
         e.preventDefault();
-      });
+      }
+      
+      isDragging = false;
+      dragStarted = false;
+      container.style.cursor = 'grab';
+      container.classList.remove('dragging'); // dragging状態解除
+      
+      // 自然な再開（数百ms遅延）
+      setTimeout(() => {
+        container.style.transform = 'translateY(-50%)'; // Y中央維持
+      }, 300);
+    }, { passive: false });
+    
+    // マウスイベント（PC用・同様のロジック）
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragStarted = false;
+      container.style.cursor = 'grabbing';
+      
+      startX = e.clientX;
+      
+      // start では preventDefault しない
     });
     
-    // ドラッグ終了
-    events.end.forEach(event => {
-      container.addEventListener(event, () => {
-        if (!isDragging) return;
+    container.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      
+      const deltaX = Math.abs(e.clientX - startX);
+      
+      if (deltaX > DRAG_THRESHOLD && !dragStarted) {
+        dragStarted = true;
+        container.classList.add('dragging');
+      }
+      
+      if (dragStarted) {
+        e.preventDefault();
         
-        isDragging = false;
-        container.style.cursor = 'grab';
+        const currentTransform = getComputedStyle(container).transform;
+        let currentX = 0;
         
-        // 1.5秒後にアニメーション再開（Y=-50%維持）
-        setTimeout(() => {
-          if (animationPaused) {
-            container.style.animationPlayState = 'running';
-            container.style.transform = 'translateY(-50%)'; /* Y中央維持 */
-            animationPaused = false;
+        if (currentTransform && currentTransform !== 'none') {
+          const matrix = currentTransform.match(/matrix3d\((.+)\)/);
+          if (matrix) {
+            currentX = parseFloat(matrix[1].split(',')[12]);
+          } else {
+            const matrix2d = currentTransform.match(/matrix\((.+)\)/);
+            if (matrix2d) {
+              currentX = parseFloat(matrix2d[1].split(',')[4]);
+            }
           }
-        }, 1500);
-      });
+        }
+        
+        const moveX = (e.clientX - startX) * 1.5;
+        container.style.transform = `translate3d(${currentX + moveX}px, -50%, 0)`;
+        startX = e.clientX;
+      }
+    });
+    
+    container.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      
+      if (!dragStarted) {
+        // クリック許可
+        console.info('[LOOKBOOK] クリック判定: 通常動作');
+      } else {
+        e.preventDefault();
+      }
+      
+      isDragging = false;
+      dragStarted = false;
+      container.style.cursor = 'grab';
+      container.classList.remove('dragging');
+      
+      setTimeout(() => {
+        container.style.transform = 'translateY(-50%)';
+      }, 300);
+    });
+    
+    container.addEventListener('mouseleave', () => {
+      if (isDragging) {
+        isDragging = false;
+        dragStarted = false;
+        container.style.cursor = 'grab';
+        container.classList.remove('dragging');
+        
+        setTimeout(() => {
+          container.style.transform = 'translateY(-50%)';
+        }, 300);
+      }
     });
     
     // 基本カーソル設定
