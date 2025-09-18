@@ -426,12 +426,12 @@ section {
   }
 }
 
-/* 正方形カード - レスポンシブ対応・1:1比率厳守 */
+/* 正方形カード - 1frに素直に広げる */
 .brand-card {
   aspect-ratio: 1 / 1 !important;
   width: 100% !important;
-  min-width: 120px !important;
-  max-width: 200px !important;
+  min-width: 0 !important;
+  max-width: none !important;
   display: grid !important;
   place-items: center !important;
   background: #fff !important;
@@ -441,6 +441,11 @@ section {
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
   position: relative !important;
   overflow: hidden !important;
+}
+
+/* 余白の暴れを防止 */
+figure.brand-card {
+  margin: 0 !important;
 }
 
 .brand-card:hover {
