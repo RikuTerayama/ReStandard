@@ -3,21 +3,29 @@ document.addEventListener('DOMContentLoaded', function() {
   const collectionTop = document.querySelector('.collection-scroll-top');
   const collectionBottom = document.querySelector('.collection-scroll-bottom');
   
-  // 無限ループのための画像複製（Lookbook同様の仕様）
-  function duplicateImages(container) {
-    if (!container) return;
-    const originalImages = Array.from(container.querySelectorAll('img, a'));
-    
-    // 2セット複製で無限ループ実現
-    originalImages.forEach(img => {
-      const clone = img.cloneNode(true);
-      container.appendChild(clone);
-    });
+  // シームレス無限ループ実装（親幅×2まで複製）
+  function ensureSeamlessLoop(track) {
+    if (!track || track.dataset.loopReady === '1') return;
+    const parent = track.parentElement;
+    const items = Array.from(track.children);
+    if (items.length === 0) return;
+
+    // 一旦1周ぶんだけのDOMに揃える（HTML手動複製削除済み前提）
+    const unique = items.slice(0, 20); // 1-20の画像のみ
+    track.innerHTML = '';
+    unique.forEach(el => track.appendChild(el.cloneNode(true)));
+
+    // 親幅×2を満たすまでクローン追加（シームレス無限）
+    const needWidth = parent.clientWidth * 2;
+    while (track.scrollWidth < needWidth) {
+      unique.forEach(el => track.appendChild(el.cloneNode(true)));
+    }
+    track.dataset.loopReady = '1';
   }
   
-  // 画像を2セット複製（Lookbook同様）
-  duplicateImages(collectionTop);
-  duplicateImages(collectionBottom);
+  // シームレス無限ループ設定
+  ensureSeamlessLoop(collectionTop);
+  ensureSeamlessLoop(collectionBottom);
   
   // スワイプ機能追加
   function addSwipeSupport(container) {
@@ -84,13 +92,14 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
         container.style.cursor = 'grab';
         
-        // 3秒後にアニメーション再開（Lookbook同様）
+        // 2秒後にアニメーション再開・CSS基準位置へ戻す
         setTimeout(() => {
           if (animationPaused) {
             container.style.animationPlayState = 'running';
+            container.style.transform = ''; // CSS アニメ基準位置へ戻す
             animationPaused = false;
           }
-        }, 3000);
+        }, 2000);
       });
     });
     
