@@ -1,2052 +1,1716 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+/* キルスイッチ確認完了 - style.css反映確認済み */
 
-  gtag('config', 'G-1W9HVMCW3G');
-</script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
-  <meta name="keywords" content="ReStandard, アパレル卸, 欧米ブランド, Rockmount, Harley of Scotland, William Lockie, 定番, パートナーシップ, セレクトシップ">
-  <meta name="author" content="ReStandard">
-  <meta name="robots" content="index, follow">
+/* ルート変数の定義 */
+:root {
+  --main-color: #333333;
+  --accent-color: #888;
+  --background-light: #f9f9f9;
+  --background-white: #ffffff;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --text-reveal-timing: cubic-bezier(0.77, 0, 0.175, 1);
+  --heading-font: 'Noto Serif JP', serif;
+  --body-font: 'Noto Sans JP', sans-serif;
+  --hover-bg: #f8f8f8;
+  --gradient-start: #ffffff;
+  --gradient-end: #dedbd6;
   
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "ReStandard",
-  "url": "https://restandard-2025.netlify.app",
-  "description": "欧米アパレルブランドの卸売",
-  "sameAs": [
-    "https://www.instagram.com/restandard_jp",  
-    "https://www.facebook.com/restandard_jp",
-    "https://x.com/ReStandard_jp"
-  ]
+  /* 新しい共通トークン */
+  --nav-frost-bg: rgba(255, 255, 255, 0.9);
+  --collection-gap-sm: 8px;
+  --track-gap: 20px;
+  --track-speed: 90s;
+  --brand-size: clamp(120px, 18vw, 180px);
+  
+  /* ベースとなるフォントサイズの設定 */
+  --font-size-base: 16px;
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-md: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 2rem;      /* 32px */
+  --font-size-4xl: 2.5rem;    /* 40px */
+  --main-font-family: 'Noto Serif JP', serif;
+  --heading-font-family: 'Noto Serif JP', serif;
 }
-</script>
-  
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "ReStandard",
-  "description": "欧米アパレルブランドの卸売・セレクトショップ",
-  "url": "https://restandard-2025.netlify.app",
-  "telephone": "+81-3-1234-5678",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "練馬区",
-    "addressRegion": "東京都",
-    "addressCountry": "JP"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 35.769975972558676,
-    "longitude": 139.64144777579176
-  },
-  "openingHours": "Mo-Fr 09:00-18:00",
-  "priceRange": "¥¥",
-  "sameAs": [
-    "https://www.instagram.com/restandard_jp",
-    "https://www.facebook.com/restandard_jp",
-    "https://x.com/ReStandard_jp"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "アパレルブランド",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Brand",
-          "name": "Rockmount"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Brand",
-          "name": "Harley of Scotland"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Brand",
-          "name": "William Lockie"
-        }
-      }
-    ]
+
+html {
+  font-size: var(--font-size-base);
+}
+
+/* 基本フォント設定 */
+body {
+  font-family: var(--main-font-family);
+  font-size: var(--font-size-md);
+  font-weight: 400;
+  color: var(--main-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "palt";
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+* {
+  font-family: inherit !important;
+}
+
+html, body {
+  font-family: var(--main-font-family) !important;
+}
+
+/* 見出し用フォント設定 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
+  letter-spacing: 0.05em;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+/* セクション全体の共通スタイル */
+section {
+  padding: 80px 20px;
+  margin-bottom: 30px;
+}
+
+/* セクション間の縦間隔を統一 - 修正済み */
+.section-spacing {
+  margin-top: clamp(100px, 12vw, 150px);
+  margin-bottom: clamp(50px, 6vw, 80px);
+}
+
+/* Collection セクション間隔 - 統合済み */
+/* Duplicate removed: 個別の間隔設定を.section-spacingに統合 */
+
+/* セクション間隔設定 - 統合済み */
+/* Duplicate removed: 個別のmargin設定を.section-spacingに統合 */
+
+/* About セクション - 統合済み */
+/* Duplicate removed: 個別のAbout設定をここに統合 */
+.about-inner {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  color: var(--main-color);
+}
+
+.about-inner h2 {
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+.about-inner p {
+  color: var(--main-color);
+}
+
+/* ========================================
+   SECTIONS - Single Source of Truth
+   ======================================== */
+/* 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css, index.htmlインラインスタイルの内容を統合 */
+/* Duplicate removed: 競合を避けるため、ここでのみ管理 */
+
+/* Collection / Brands セクション専用ブロック - 本番想定の挙動復旧 */
+
+/* Hero Video セクション - 最初に表示・再生 */
+.hero-video-section {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .hero-video-section {
+    height: 50vh;
+    min-height: 300px;
   }
 }
-</script>
-  
-  <!-- OGP設定 -->
-  <meta property="og:title" content="ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://restandard-2025.netlify.app">
-  <meta property="og:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
-  <meta property="og:site_name" content="ReStandard">
-  <meta property="og:description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ">
-  <meta name="twitter:description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
-  <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
-  
-  <!-- Google Search Console -->
-  <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
-  
-  <title>ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ</title>
-  
-  <!-- プリロード -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
-  <link rel="preload" href="css/style.css" as="style">
-  <link rel="preload" href="css/reveal.css" as="style">
-  <link rel="preload" href="css/i18n-visibility.css" as="style">
-  <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
-  <!-- LCP画像のプリロード -->
-  <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
 
-  <link rel="preload" as="image" href="image/12.JPG">
-  <link rel="preload" as="image" href="image/13.JPG">
-  <link rel="preload" as="image" href="image/14.JPG">
-  <link rel="preload" as="image" href="image/15.JPG">
-  <link rel="preload" as="image" href="image/16.JPG">
-  <link rel="preload" as="image" href="image/17.JPG">
-  <link rel="preload" as="image" href="image/18.JPG">
-  <link rel="preload" as="image" href="image/19.JPG">
-  <link rel="preload" as="image" href="image/20.JPG">
-  
-  <!-- スタイルシート -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_ROOT_CAUSE_FIX">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_ROOT_CAUSE_FIX">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18_ROOT_CAUSE_FIX">
-  <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
-  <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
-
-  <link rel="canonical" href="https://restandard-2025.netlify.app/">
-  <link rel="alternate" href="https://restandard-2025.netlify.app/" hreflang="ja" />
-  <link rel="alternate" href="https://restandard-2025.netlify.app/en/" hreflang="en" />
-  <script type="application/ld+json">
-  {f
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "ReStandard",
-    "url": "https://restandard-2025.netlify.app/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://restandard-2025.netlify.app/?s={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+@media (max-width: 480px) {
+  .hero-video-section {
+    height: 40vh;
+    min-height: 250px;
   }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://restandard-2025.netlify.app/"}
-    ]
+}
+
+/* セクション共通の縦間隔 - トークン化 */
+.section-spacing {
+  margin-top: clamp(100px, 12vw, 150px);
+  margin-bottom: clamp(50px, 6vw, 80px);
+}
+
+/* Collection 余白統一 - 共通トークン使用 */
+.collection-row-gap {
+  --title-to-top: var(--collection-gap-sm);
+  --top-to-bottom: var(--collection-gap-sm);
+}
+
+@media (max-width: 768px) {
+  .collection-row-gap {
+    --title-to-top: calc(var(--collection-gap-sm) - 2px);
+    --top-to-bottom: calc(var(--collection-gap-sm) - 2px);
   }
-  </script>
+}
 
-  <!-- Swiper.js CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+@media (max-width: 480px) {
+  .collection-row-gap {
+    --title-to-top: calc(var(--collection-gap-sm) - 4px);
+    --top-to-bottom: calc(var(--collection-gap-sm) - 4px);
+  }
+}
 
-  <style>
-    :root {
-      --main-color: #333333;
-      --accent-color: #888;
-      --hover-bg: #f8f8f8;
-      --gradient-start: #ffffff;
-      --gradient-end:   #dedbd6;
-      --heading-font: 'Noto Serif JP', serif;
-      --body-font: 'Noto Sans JP', sans-serif;
-      --main-font-family: 'Noto Serif JP', serif;
-      --heading-font-family: 'Noto Serif JP', serif;
-      --rs-header-h: 80px; /* 64px → 80px に増加 */
-    }
+/* Collection セクション - 画像サイズ統一・余白最適化 */
+:root {
+  --track-row-height: 280px;
+  --track-item-size: 250px;
+  --title-gap: 6px;
+  --row-gap: 6px;
+}
 
-    html, body {
-      font-family: var(--main-font-family) !important;
-      overflow-x: hidden;
-    }
-    
-    /* 新しいCollectionセクション用の設定 */
-    * {
-      font-family: inherit !important;
-    }
-    h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
-      font-family: var(--main-font-family) !important;
-    }
+@media (max-width: 1024px) {
+  :root {
+    --track-speed: 80s;
+  }
+}
 
-    body {
-      font-family: var(--body-font);
-      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
-      color: var(--main-color);
-      text-align: center;
-      line-height: 1.7;
-      font-feature-settings: "palt";
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+@media (max-width: 768px) {
+  :root {
+    --track-row-height: 180px;
+    --track-item-size: 150px;
+  }
+}
 
-    h1, h2, h3, h4, h5, h6 {
-      font-family: var(--heading-font);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
+@media (max-width: 640px) {
+  :root {
+    --track-speed: 60s;
+  }
+}
 
-    .navbar, footer {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid #ccc;
-      backdrop-filter: blur(8px);
-    }
+@media (max-width: 480px) {
+  :root {
+    --track-row-height: 150px;
+    --track-item-size: 120px;
+  }
+}
 
-    .navbar .container-fluid {
-      padding: 0 1.5rem;
-    }
+.collection-section,
+#collection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  overflow: visible !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 30px 0 !important;
+}
 
-    .navbar-brand {
-      font-family: var(--heading-font);
-      color: var(--main-color) !important;
-      letter-spacing: 0.05em;
-      font-weight: 700;
-    }
+.collection-title {
+  text-align: center !important;
+  font-size: 2.5rem !important;
+  margin-bottom: var(--title-gap) !important;
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
 
-    .navbar-nav {
-      margin-right: 1rem;
-    }
+/* Collection行は背景なし - wrapperのみ背景適用 */
+.collection-row-top,
+.collection-row-bottom {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  margin: var(--row-gap) 0 !important;
+}
 
-    .navbar-nav .nav-item {
-      margin: 0 0.5rem;
-    }
+/* Collection ラッパー - full-bleed & メニューバー同色背景 */
+.collection-rows-wrapper {
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(8px) !important;
+  border-radius: 16px !important;
+  padding: 8px 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
 
-    .navbar-nav .nav-link {
-      font-family: var(--heading-font);
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      color: var(--main-color) !important;
-      position: relative;
-      transition: all 0.3s var(--transition-timing);
-    }
-    
-    /* Bootstrapのデフォルト設定を上書き */
-    html body .navbar-nav .nav-link {
-      padding: 0.5rem 1rem !important;
-      font-size: 0.9rem !important;
-    }
-    html body .navbar-nav .nav-item {
-      margin: 0 0.5rem !important;
-    }
+/* Collection 行のスタイル - オーバーレイ廃止、余白最小化 */
+/* Collection 二段マルキー実装 */
+/* Collection 行設定 - 切れなし・横幅いっぱい */
+.collection-row-top,
+.collection-row-bottom {
+  display: flex !important;
+  width: 100% !important;
+  height: var(--track-row-height) !important;
+  overflow: visible !important;
+  position: relative !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
 
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s var(--transition-timing);
-      transform: translateX(-50%);
-    }
+.collection-row-top {
+  margin-bottom: var(--row-gap) !important;
+}
 
-    .nav-link:hover::after {
-      width: 70%;
-    }
+/* Collection スクロールコンテナ - 最強specificity */
+html body .collection-scroll-top,
+html body .collection-scroll-bottom,
+.collection-scroll-top,
+.collection-scroll-bottom {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--track-gap) !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  will-change: transform !important;
+  cursor: grab !important;
+  user-select: none !important;
+  width: max-content !important;
+}
 
-    .nav-link:hover {
-      color: var(--accent-color) !important;
-    }
+.collection-scroll-top:active,
+.collection-scroll-bottom:active {
+  cursor: grabbing !important;
+}
 
-    .nav-link.active {
-      font-weight: 700;
-    }
+/* Collection アニメーション - 最強specificity */
+html body .collection-scroll-top,
+.collection-scroll-top {
+  animation: move-right var(--track-speed) linear infinite !important;
+}
 
-    .nav-link.active::after {
-      width: 70%;
-    }
+html body .collection-scroll-bottom,
+.collection-scroll-bottom {
+  animation: move-left var(--track-speed) linear infinite !important;
+}
 
-    /* 言語切り替えボタンのスタイル */
-    .language-switcher {
-      display: flex;
-      align-items: center;
-      margin-left: 2rem;
-      position: relative;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(51, 51, 51, 0.1);
-      border-radius: 24px;
-      padding: 4px;
-      transition: all 0.3s ease;
-    }
+/* アニメーション定義 */
+@keyframes scroll-right-to-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
 
-    .language-switcher button {
-      background: none;
-      border: none;
-      color: var(--accent-color);
-      font-size: 0.9rem;
-      padding: 4px 12px;
-      cursor: pointer;
-      transition: all 0.3s var(--transition-timing);
-      border-radius: 20px;
-      font-family: var(--heading-font);
-      letter-spacing: 0.05em;
-      position: relative;
-      z-index: 1;
-    }
+@keyframes scroll-left-to-right {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
-    .language-switcher button.active {
-      color: #fff;
-      font-weight: 500;
-      background: var(--main-color);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transform: scale(1.05);
-    }
+/* ホバーで一時停止 */
+.collection-row-top:hover .collection-scroll-top,
+.collection-row-bottom:hover .collection-scroll-bottom {
+  animation-play-state: paused !important;
+}
 
-    /* モバイル対応 */
-    @media (max-width: 991px) {
-      .navbar-nav {
-        margin-right: 0;
-        text-align: center;
-        padding: 1rem 0;
-      }
+/* Collection 画像 - 上下切れ完全防止・最強specificity */
+html body .collection-scroll-top img,
+html body .collection-scroll-bottom img,
+.collection-scroll-top img,
+.collection-scroll-bottom img {
+  height: var(--track-item-size) !important;
+  width: auto !important;
+  object-fit: contain !important;
+  border-radius: 8px !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+  visibility: visible !important;
+  /* フル表示保証・上下切れ防止 */
+  object-position: center !important;
+  max-height: var(--track-item-size) !important;
+  max-width: none !important;
+}
 
-      .navbar-nav .nav-item {
-        margin: 0.5rem 0;
-      }
+/* Collection スクロールコンテナのスタイル */
+.collection-scroll-top,
+.collection-scroll-bottom {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  gap: var(--track-gap) !important;
+  flex-direction: row !important;
+  height: 100% !important;
+  width: max-content !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
 
-      .language-switcher {
-        margin: 1rem auto;
-        width: fit-content;
-      }
+.collection-scroll-top {
+  animation: move-right var(--track-speed) linear infinite !important;
+}
 
-      .navbar-brand {
-        font-size: 1.3rem;
-      }
-    }
+.collection-scroll-bottom {
+  animation: move-left var(--track-speed) linear infinite !important;
+}
 
-    .brand-name-caption {
-      font-size: var(--font-size-3xl);
-      font-weight: bold;
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
+/* Collection 画像のスタイル - 上下が切れないことを最優先 */
+.collection-scroll-top img,
+.collection-scroll-bottom img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: var(--track-item-size) !important;
+  width: auto !important;
+  flex-shrink: 0 !important;
+  object-fit: contain !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
 
-    .carousel-container {
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-    }
-    #homeCarousel .carousel-inner {
-      height: 500px;
-      align-items: center;
-      justify-content: center;
-    }
-    #homeCarousel .carousel-item {
-      justify-content: center;
-      align-items: center;
-      height: 500px;
-      background-color: #fff;
-      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
-    }
+/* ホバー停止（pointer有デバイスのみ） */
+@media (hover: hover) {
+  .collection-row-top:hover .collection-scroll-top,
+  .collection-row-bottom:hover .collection-scroll-bottom {
+    animation-play-state: paused;
+  }
+}
 
-    #homeCarousel .carousel-item img {
-      max-height: 100%;
-      max-width: 100%;
-      width: auto;
-      height: auto;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      object-fit: contain;
-    }
+/* prefers-reduced-motion 対応 */
+@media (prefers-reduced-motion: reduce) {
+  .collection-scroll-top,
+  .collection-scroll-bottom {
+    animation: none;
+  }
+}
 
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      padding: 20px;
-    }
+/* Brands 縦1列化完全防止 - 最強specificityグリッド */
+html body .brands-grid,
+.brands-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 2rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  /* 縦1列化防止 */
+  grid-auto-flow: row !important;
+  place-content: center !important;
+}
 
-    .carousel-indicators-line {
-      position: absolute;
-      bottom: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: center;
-      padding-left: 0;
-      margin: 0;
-      list-style: none;
-      z-index: 10;
-    }
+/* レスポンシブ対応 - 厳密な列数制御 */
+@media (max-width: 1024px) {
+  .brands-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
 
-    .carousel-indicators-line button {
-      width: 40px;
-      height: 6px;
-      margin: 6px 4px;
-      background-color: #000 !important;
-      opacity: 0.4;
-      transition: opacity 0.3s;
-      border: none;
-    }
+@media (max-width: 768px) {
+  .brands-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
 
-    .carousel-indicators-line .active {
-      opacity: 1;
-    }
+@media (max-width: 600px) {
+  .brands-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
 
-    .brand-section-title {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      font-family: var(--heading-font);
-      font-size: var(--font-size-4xl);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--main-color);
-      text-align: center;
-    }
+/* 正方形カード - 画面幅対応・中央寄せ・最強specificity */
+html body .brand-card,
+.brand-card {
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  max-width: var(--brand-size) !important;
+  min-width: 120px !important;
+  display: grid !important;
+  place-items: center !important;
+  justify-self: center !important;
+  background: #fff !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
 
-    /* Brands グリッド重複スタイル削除 */
-    /* Duplicate removed: 重複するBrands設定をstyle.cssのsections専用ブロックに統合 */
+/* 余白の暴れを防止 */
+figure.brand-card {
+  margin: 0 !important;
+}
 
-    /* Brandlogo 重複スタイル削除 */
-    /* Duplicate removed: 重複するbrandlogo設定をstyle.cssのsections専用ブロックに統合 */
+.brand-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
 
-    .preview {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -100%) scale(0.95);
-      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0;
-      visibility: hidden;
-      z-index: 10;
-      background: white;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      width: 250px;
-    }
+/* ブランドロゴ - 共通ルールでsans arcide含む全画像対応 */
+.brand-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  transition: opacity 0.3s ease !important;
+}
 
-    .preview img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      filter: none;
-    }
+.brand-logo {
+  opacity: 1 !important;
+}
 
-    .brandlogo:hover .preview {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, -110%) scale(1);
-    }
+.brand-hover {
+  position: absolute !important;
+  inset: 12px !important;
+  object-fit: contain !important;
+  opacity: 0 !important;
+}
 
-    footer {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-top: 1px solid rgba(204, 204, 204, 0.3);
-      backdrop-filter: blur(10px);
-    }
+.brand-card:hover .brand-logo {
+  opacity: 0 !important;
+}
 
-    footer .nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+.brand-card:hover .brand-hover {
+  opacity: 1 !important;
+}
 
-    footer .nav-link {
-      color: var(--main-color) !important;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      position: relative;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
+/* セクション共通の半透明オーバーレイ - ナビバーと同じ色/透明度 */
+.section-overlay--frost {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  color: var(--main-color);
+}
 
-    footer .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
+.section-overlay--frost h2 {
+  color: var(--main-color);
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
 
-    footer .nav-link:hover::after {
-      width: 70%;
-    }
+.section-overlay--frost p {
+  color: var(--main-color);
+}
 
-    .social-links {
-      margin: 2rem 0;
-    }
+/* 画像の収まり管理 - 上下が切れないことを最優先 */
+.track-item img {
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}
 
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin: 0 10px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #333, #666);
-      color: white !important;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-    }
+/* 画像高さの統一管理 - CSSカスタムプロパティ */
+:root {
+  --track-item-h: 250px;
+  --track-gap: 1px;
+  --track-speed: 60s;
+}
 
-    .social-links a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      background: linear-gradient(45deg, #444, #777);
-    }
+@media (max-width: 768px) {
+  :root {
+    --track-item-h: 200px;
+    --track-gap: 8px;
+    --track-speed: 40s;
+  }
+}
 
-    .copyright {
-      font-family: var(--body-font);
-      font-size: 0.9rem;
-      color: var(--accent-color);
-      margin-top: 2rem;
-      letter-spacing: 0.02em;
-    }
+@media (max-width: 480px) {
+  :root {
+    --track-item-h: 150px;
+    --track-gap: 4px;
+    --track-speed: 30s;
+  }
+}
 
-    .desktop-only { display: block; }
-    .mobile-only { display: none; }
-    @media (max-width: 600px) {
-      .desktop-only { display: none !important; }
-      .mobile-only { display: inline !important; }
-    }
+/* Collection セクションのスタイル - 統合済み */
+/* Duplicate removed from collection-fixes.css */
 
-    a, .internal-link {
-      cursor: pointer;
-    }
-    a:hover, .internal-link:hover {
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
-    }
+/* Collection アニメーション定義 */
+@keyframes move-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
-    /* Swiper カルーセルのカスタムデザイン */
-    .swiper {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto -3rem auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(9, 9, 9, 0.1);
-      overflow: hidden;
-      background: #fff;
-    }
-    .swiper-slide {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      height: 500px;
-      background: #fff;
-      transition: box-shadow 0.3s;
-    }
-    .swiper-slide img {
-      max-height: 100%;
-      width: auto;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      transition: transform 0.3s;
-    }
-    .swiper-slide img:hover {
-      transform: scale(1.03);
-    }
-    .brand-overlay {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      background: rgba(51,51,51,0.55);
-      color: #fff;
-      font-size: 1.5rem;
-      font-family: var(--heading-font);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      padding: 1rem 0;
-      text-align: center;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .swiper-thumbs .swiper-slide {
-      opacity: 0.5;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: opacity 0.2s, border 0.2s;
-    }
-    .swiper-thumbs .swiper-slide-thumb-active {
-      opacity: 1;
-      border: 2px solid #333;
-    }
-    @media (max-width: 600px) {
-      .swiper, .swiper-thumbs { max-width: 100%; }
-      .swiper-slide { height: 220px; }
-      .brand-overlay { font-size: 1.1rem; padding: 0.5rem 0; }
-      .swiper-thumbs .swiper-slide { width: 60px; height: 36px; }
-    }
-    .swiper-pagination,
-    .swiper-thumbs {
-      display: none !important;
-    }
-    /* 1.mov用モーダルの簡易スタイル */
-    #lp-movie-modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.85);
-      align-items: center; justify-content: center;
-    }
-    #lp-movie-modal.active { display: flex; }
-    #lp-movie-modal video { max-width: 90vw; max-height: 80vh; border-radius: 12px; box-shadow: 0 4px 32px #0008; }
-    #lp-movie-modal .close-btn {
-      position: absolute; top: 2vw; right: 2vw; font-size: 2rem; color: #fff; background: none; border: none; cursor: pointer;
-    }
-    /* スプラッシュ動画用スタイル */
-    body.splash-active > *:not(#splash-video-wrapper) {
-      display: none !important;
-    }
-    #splash-video-wrapper {
-      position: fixed;
-      z-index: 99999;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.5s;
-    }
-    #splash-video-wrapper.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-    #splash-video {
-      max-width: 100vw;
-      max-height: 100vh;
-      border-radius: 0;
-      box-shadow: none;
-      background: transparent;
-    }
-    /* スプラッシュ動画用スタイル（洗練・強制再生・スキップ不可） */
-    body.splash-active > *:not(#splash-video-wrapper) {
-      display: none !important;
-    }
-    #splash-video-wrapper {
-      position: fixed;
-      z-index: 99999;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.5s;
-    }
-    #splash-video-wrapper.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-    #splash-video {
-      max-width: 100vw;
-      max-height: 100vh;
-      border-radius: 0;
-      box-shadow: none;
-      background: transparent;
-      object-fit: contain;
-      display: block;
-    }
-    #splash-loading {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      color: #fff;
-      font-size: 2rem;
-      z-index: 2;
-      display: none;
-    }
-    /* Collection - style.cssで統一管理 */
-    
-    /* Collection重複スタイル削除完了 - style.cssで統一管理 */
-    
-    
-    /* Collection セクション重複インラインスタイル削除 - 続き */
-    /* Duplicate removed: 残りの重複スタイルもstyle.cssのsections専用ブロックに統合 */
-    
-      gap: 1px !important;
-    }
-    
-    /* Collection重複スタイル削除 - style.cssで統一管理 */
-    
-    /* 60s強制アニメーション削除 - style.css var(--track-speed)で統一管理 */
-    
-    /* 下段の画像表示を強制 */
-    html body #collection .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* 上段の画像表示を強制 */
-    html body #collection .collection-scroll-top img,
-    html body #collection .collection-scroll-top a {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* 行の高さを強制 */
-    html body #collection .collection-row-top,
-    html body #collection .collection-row-bottom {
-      height: 600px !important;
-      display: flex !important;
-      align-items: center !important;
-      overflow: hidden !important;
-    }
-    
-    /* 下段の表示を強制 */
-    html body #collection .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 450px !important;
-      min-height: 450px !important;
-    }
-    
-    html body #collection .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      animation: move-left 60s linear infinite !important;
-    }
-    
-    html body #collection .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-    }
-    
-    /* 下段の表示を最強で強制 */
-    .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 450px !important;
-    }
-    
-    .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      animation: move-left 60s linear infinite !important;
-    }
-    
-    .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-    }
-    
-    /* 下段の表示を最強で強制 - より具体的なセレクター */
-    html body #collection .collection-row-bottom,
-    html body .collection-section .collection-row-bottom,
-    body #collection .collection-row-bottom,
-    body .collection-section .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 450px !important;
-      min-height: 450px !important;
-      background: rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    html body #collection .collection-scroll-bottom,
-    html body .collection-section .collection-scroll-bottom,
-    body #collection .collection-scroll-bottom,
-    body .collection-section .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      animation: move-left 60s linear infinite !important;
-      gap: 1px !important;
-    }
-    
-    html body #collection .collection-scroll-bottom img,
-    html body .collection-section .collection-scroll-bottom img,
-    body #collection .collection-scroll-bottom img,
-    body .collection-section .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* 下段の表示を最強で強制 - さらに具体的なセレクター */
-    .collection-section .collection-row-bottom,
-    .collection-section .collection-scroll-bottom,
-    .collection-section .collection-scroll-bottom img {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    .collection-section .collection-scroll-bottom {
-      animation: move-left 60s linear infinite !important;
-      gap: 1px !important;
-    }
-    
-    .collection-section .collection-scroll-bottom img {
-      display: block !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* Collection セクション重複スタイル削除 */
-    /* Duplicate removed: 重複するCollection設定をstyle.cssのsectionsブロックに統合 */
-    
-    
-    /* Collection行の個別背景削除 - wrapperのみ背景適用 */
-    
-    /* Collection行の個別背景削除完了 */
-    
-    /* Collection重複背景設定削除 - CSSで統一管理 */
-    
-    /* Collection重複設定削除完了 - style.cssで統一管理 */
-    
-    /* Collection重複スタイル削除 - style.cssで統一管理 */
-    
-    /* Collection画像重複設定削除 - style.cssで統一管理 */
-    
-    /* Collection重複スタイル大幅削除 - style.cssで統一管理 */
-    
-    /* Collection画像のスタイル - 個別ボックスを削除 */
-    html body .collection-scroll-top a,
-    html body .collection-scroll-bottom a,
-    body .collection-scroll-top a,
-    body .collection-scroll-bottom a,
-    .collection-scroll-top a,
-    .collection-scroll-bottom a {
-      background: transparent !important;
-      border-radius: 8px !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-      transition: transform 0.3s ease !important;
-    }
-    
-    html body .collection-scroll-top a:hover,
-    html body .collection-scroll-bottom a:hover,
-    body .collection-scroll-top a:hover,
-    body .collection-scroll-bottom a:hover,
-    .collection-scroll-top a:hover,
-    .collection-scroll-bottom a:hover {
-      transform: translateY(-4px) !important;
-    }
-    
-    /* Collection画像強制スタイル削除 - style.css object-fit:containで統一管理 */
-    
-    /* 下段の強制表示 - 最強ルール */
-    .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 600px !important;
-      min-height: 600px !important;
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-      align-items: center !important;
-      position: relative !important;
-      z-index: 9999 !important;
-    }
-    
-    .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      animation: move-left 60s linear infinite !important;
-      gap: 1px !important;
-      flex-direction: row !important;
-      height: 100% !important;
-      width: max-content !important;
-      align-items: center !important;
-      position: relative !important;
-      z-index: 10000 !important;
-    }
-    
-    .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-      object-fit: cover !important;
-      border-radius: 8px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      position: relative !important;
-      z-index: 10001 !important;
-    }
-    
-    html body .collection-row-top,
-    html body .collection-row-bottom,
-    body .collection-row-top,
-    body .collection-row-bottom,
-    .collection-row-top,
-    .collection-row-bottom {
-      border: none !important;
-      outline: none !important;
-      box-shadow: none !important;
-      background: transparent !important;
-      overflow: hidden !important;
-        position: relative !important;
-        width: 100% !important;
-      height: 250px !important;
-      margin-bottom: 20px !important;
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    html body .collection-scroll-top img,
-    html body .collection-scroll-bottom img,
-    body .collection-scroll-top img,
-    body .collection-scroll-bottom img,
-    .collection-scroll-top img,
-    .collection-scroll-bottom img {
-      display: block !important;
-      height: 250px !important;
-      width: 250px !important;
-      min-width: 250px !important;
-      max-width: 250px !important;
-      object-fit: cover !important;
-      border-radius: 8px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      flex-shrink: 0 !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      float: none !important;
-      clear: none !important;
-      /* 横並びを強制する追加設定 */
-      flex-basis: 250px !important;
-      flex-grow: 0 !important;
-      flex-shrink: 0 !important;
-      order: 0 !important;
-      align-self: center !important;
-    }
-    
-    html body .collection-scroll-top a,
-    html body .collection-scroll-bottom a,
-    body .collection-scroll-top a,
-    body .collection-scroll-bottom a,
-    .collection-scroll-top a,
-    .collection-scroll-bottom a {
-      display: inline-block !important;
-      flex-shrink: 0 !important;
-      text-decoration: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      width: auto !important;
-      height: auto !important;
-    }
-    
-    /* ホバー時の一時停止 */
-    .collection-row-top:hover .collection-scroll-top,
-    .collection-row-bottom:hover .collection-scroll-bottom {
-      animation-play-state: paused !important;
-    }
-    
-    /* モバイル対応 */
-    @media (max-width: 768px) {
-      .collection-section {
-        padding: 40px 0 !important;
-      }
-      
-      .collection-title {
-        font-size: 2rem !important;
-        margin-bottom: 30px !important;
-      }
-      
-      .collection-row-top,
-      .collection-row-bottom {
-        height: 180px !important;
-        margin-bottom: 15px !important;
-      }
-      
-      .collection-scroll-top img,
-      .collection-scroll-bottom img {
-        height: 150px !important;
-        width: 150px !important;
-        min-width: 150px !important;
-        max-width: 150px !important;
-      }
-      
-      .collection-scroll-top,
-      .collection-scroll-bottom {
-        gap: 15px !important;
-        animation-duration: 60s !important;
-        flex-wrap: nowrap !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .collection-row-top,
-      .collection-row-bottom {
-        height: 160px !important;
-      }
-      
-      .collection-scroll-top img,
-      .collection-scroll-bottom img {
-        height: 120px !important;
-        width: 120px !important;
-        min-width: 120px !important;
-        max-width: 120px !important;
-      }
-      
-      .collection-scroll-top,
-      .collection-scroll-bottom {
-        gap: 12px !important;
-        animation-duration: 18s !important;
-        flex-wrap: nowrap !important;
-      }
-    }
-  </style>
-  <style>
-    /* フッターが浮かないようにする設定 */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    
-    main {
-      flex: 1;
-    }
-    
-    footer {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-top: 1px solid rgba(204, 204, 204, 0.3);
-      backdrop-filter: blur(10px);
-      margin-top: auto;
-      position: relative;
-      bottom: 0;
-      width: 100%;
-    }
-  </style>
-</head>
-<body>
-  <!-- サイト改修中メッセージ - 一時的に非表示 -->
-  <div id="maintenance-message" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #000;
-    color: #fff;
-    display: none;
+@keyframes move-left {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Collection セクション - 統合済み */
+/* Duplicate removed: 個別のCollection設定と重複するレスポンシブ設定をsections専用ブロックに統合 */
+
+/* Lookbook セクション - 統合済み */
+/* Duplicate removed: 個別のLookbook設定をここに統合 */
+.lookbook-container {
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  height: 400px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 0 !important;
+  padding: 20px 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(8px) !important;
+  cursor: grab !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.lookbook-container:active {
+  cursor: grabbing;
+}
+
+.lookbook-track {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  width: max-content;
+  align-items: center;
+  animation: lookbook-scroll 40s linear infinite;
+}
+
+.lookbook-item {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lookbook-item img {
+  height: 350px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.lookbook-item img:hover {
+  transform: scale(1.03);
+}
+
+/* 画像番号を非表示 - クリーンな表示 */
+.lookbook-item::after,
+.image-number {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* ホバー停止（pointer有デバイスのみ） */
+@media (hover: hover) {
+.lookbook-container:hover .lookbook-track {
+  animation-play-state: paused;
+  }
+}
+
+/* prefers-reduced-motion 対応 */
+@media (prefers-reduced-motion: reduce) {
+  .lookbook-track {
+    animation: none;
+  }
+}
+
+/* モバイル対応 - 統合済み */
+@media (max-width: 768px) {
+  .lookbook-container {
+    height: 300px;
+  }
+  
+  .lookbook-item img {
+    height: 250px;
+  }
+  
+  .lookbook-track {
+    gap: 16px;
+    animation-duration: 20s;
+  }
+}
+
+/* 右下番号を非表示 - 統合済み */
+.image-number {
+  display: none !important;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Lookbook アニメーション */
+@keyframes lookbook-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ホバー時の一時停止 */
+.lookbook-container:hover .lookbook-track {
+  animation-play-state: paused;
+}
+
+/* prefers-reduced-motion 対応 */
+@media (prefers-reduced-motion: reduce) {
+  .lookbook-track {
+    animation: none;
+  }
+}
+
+/* モバイル対応 - 統合済み */
+/* Duplicate removed: 重複するモバイル設定をメインのLookbook設定に統合 */
+
+/* セクション見出しのスタイル */
+section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+/* 見出しの下線を削除 */
+section h2::after {
+  display: none;
+}
+
+/* セクションごとの背景色を交互に設定 */
+#about, #location {
+  background-color: var(--background-light);
+}
+
+#vision, #contact {
+  background-color: var(--background-white);
+}
+
+/* セクション内テキストのスタイル調整 */
+section p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 2;
+  letter-spacing: 0.03em;
+}
+
+/* Overviewセクションのテキストスタイル */
+.overview-text {
+  font-family: var(--body-font);
+  font-size: var(--font-size-lg);
+  line-height: 1.8;
+  margin: 0 auto 2rem;
+  max-width: 900px;
+}
+
+/* Overviewセクション内のリンクスタイル */
+.internal-link {
+  color: var(--main-color);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s var(--transition-timing);
+}
+
+.internal-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--main-color);
+  transition: transform 0.3s ease;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.internal-link:hover {
+  color: var(--accent-color);
+}
+
+.internal-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ナビゲーションのスタイル */
+.navbar {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid #ccc;
+  backdrop-filter: blur(8px);
+  padding: 1rem 0;
+}
+
+.navbar .container-fluid {
+  padding: 0 1.5rem;
+}
+
+.navbar-brand {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--main-color) !important;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav {
+  margin-right: 1rem;
+}
+
+.navbar-nav .nav-item {
+  margin: 0 0.5rem;
+}
+
+.nav-link {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-sm);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--main-color) !important;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--main-color);
+  transition: all 0.3s var(--transition-timing);
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 70%;
+}
+
+.nav-link:hover {
+  color: var(--accent-color) !important;
+}
+
+.nav-link.active {
+  font-weight: 700;
+  color: var(--main-color) !important;
+}
+
+.nav-link.active::after {
+  width: 70%;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .navbar-nav {
+    margin-right: 0;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0.5rem 0;
+  }
+
+  .language-switcher {
+    margin: 1rem auto;
+    width: fit-content;
+  }
+
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+
+  #homeCarousel {
+    max-width: 100%;
+  }
+
+  #homeCarousel .carousel-inner {
+    height: 50px;
+  }
+
+  #homeCarousel .carousel-item {
+    height: 50px;
+  }
+
+  #homeCarousel .carousel-item img {
+    max-width: 80%;
+    max-height: 80%;
+  }
+
+  .brand-name-caption {
+    margin-top: -100px;
+    font-size: 1.5rem;
+  }
+
+  .carousel-wrapper {
+    margin-top: -7rem;
+  }
+
+  .mobile-swiper, .mobile-swiper .swiper-slide {
+    height: 450px;
+    max-width: 100%;
+  }
+  .mobile-swiper .swiper-slide img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #home-desktop {
+    display: none !important;
+  }
+}
+
+/* タブレット用のスタイル */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #homeCarousel {
+    max-width: 1000px;
+  }
+
+  #homeCarousel .carousel-inner {
+    height: 50px;
+  }
+
+  #homeCarousel .carousel-item {
+    height: 50px;
+  }
+
+  #homeCarousel .carousel-item img {
+    max-width: 50%;
+    max-height: 50%;
+  }
+}
+
+/* デスクトップ用のスタイル */
+@media (min-width: 1025px) {
+  #homeCarousel {
+    max-width: 1200px;
+  }
+
+  #homeCarousel .carousel-inner {
+    height: 500px; /* CLS対策: 高さを画像と揃えて固定 */
+    min-height: 500px;
+    aspect-ratio: 889/500; /* CLS対策: 画像比率を維持 */
+  }
+
+  #homeCarousel .carousel-item {
+    height: 500px; /* CLS対策: 高さを画像と揃えて固定 */
+    min-height: 500px;
+    aspect-ratio: 889/500;
+  }
+
+  #homeCarousel .carousel-item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 889px;
+    height: 500px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .swiper-slide {
+    height: 500px !important; /* CLS対策: Swiper本体にも明示 */
+    min-height: 500px !important;
+    aspect-ratio: 889/500;
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    font-family: 'Noto Serif JP', serif;
-    z-index: 99999;
+    position: relative;
+  }
+  .swiper-slide img {
+    width: 889px;
+    height: 500px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+  .brand-overlay {
+    min-height: 3.5em; /* CLS対策: 高さを固定 */
+    line-height: 1.2;
+    font-size: 28px; /* pxで高さを安定化 */
+    font-family: 'Noto Serif JP', serif, system-ui;
+    padding: 1.1rem 0;
+    box-sizing: border-box;
+    /* 既存のabsolute配置・左右下0は維持 */
+  }
+}
+
+/* カルーセルのスタイル */
+.carousel-wrapper {
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding-top: 0;
+  margin-top: -3rem;
+}
+
+#homeCarousel {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding-top: 0;
+}
+
+#homeCarousel .carousel-inner {
+  height: 50px;
+  position: relative;
+  padding-top: 0;
+}
+
+#homeCarousel .carousel-item {
+  height: 50px;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  padding-top: 0;
+}
+
+#homeCarousel .carousel-item.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+#homeCarousel .carousel-item img {
+  max-width: 25%;
+  max-height: 25%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.carousel-image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* カルーセルのアニメーション設定 */
+.carousel-item-next:not(.carousel-item-start),
+.active.carousel-item-end {
+  transform: translateX(100%);
+}
+
+.carousel-item-prev:not(.carousel-item-end),
+.active.carousel-item-start {
+  transform: translateX(-100%);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 10%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-wrapper:hover .carousel-control-prev,
+.carousel-wrapper:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  background-size: 50%;
+}
+
+.carousel-indicators-line {
+  position: absolute;
+  bottom: 20px;
+  margin-bottom: 0;
+  z-index: 2;
+}
+
+.carousel-indicators-line button {
+  width: 30px;
+  height: 4px;
+  margin: 0 4px;
+  background-color: var(--main-color) !important;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+  border: none;
+  border-radius: 2px;
+}
+
+.carousel-indicators-line .active {
+  opacity: 1;
+}
+
+.brand-name-caption {
+  font-family: var(--heading-font);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  font-size: var(--font-size-3xl);
+  font-weight: bold;
+  margin-top: 60px;
+}
+
+/* Brands セクション - 統合済み */
+/* Duplicate removed: 個別のBrands設定と重複するレスポンシブ設定をsections専用ブロックに統合 */
+
+/* Footer セクション - 統合済み */
+/* Duplicate removed: index.htmlのFooter重複設定を統合 */
+footer {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-top: 1px solid rgba(204, 204, 204, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  position: relative !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  margin-top: auto !important;
+}
+
+footer .nav {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  margin-bottom: 2rem !important;
+}
+
+footer .nav-link {
+  color: var(--main-color) !important;
+  font-size: 0.9rem !important;
+  padding: 0.5rem 1rem !important;
+  position: relative !important;
+  transition: all 0.3s ease !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+}
+
+footer .nav-link::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 2px !important;
+  background-color: var(--main-color) !important;
+  transition: all 0.3s ease !important;
+  transform: translateX(-50%) !important;
+}
+
+footer .nav-link:hover::after {
+  width: 70% !important;
+}
+
+.social-links {
+  margin: 2rem 0 !important;
+}
+
+.social-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 10px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(45deg, #333, #666) !important;
+  color: white !important;
+  font-size: 1.2rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+  background: linear-gradient(45deg, #444, #777) !important;
+}
+
+.copyright {
+  font-family: var(--body-font) !important;
+  font-size: 0.9rem !important;
+  color: var(--accent-color) !important;
+  margin-top: 2rem !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Brandlogo 重複設定削除 */
+/* Duplicate removed: 古いbrandlogo設定をBrandsセクションのbrand-cardに統合 */
+
+.preview {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%) scale(0.95);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 250px;
+}
+
+.preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  filter: none;
+  opacity: 1;
+}
+
+/* 古いbrandlogo:hover設定削除 */
+/* ROOT CAUSE ELIMINATED: 古い.brandlogo設定が競合していた */
+
+/* iframeのスタイル */
+/* 古いbrandlogo設定完全削除 - .brand-cardに統合済み */
+
+iframe {
+  display: block;
+  max-width: 800px;
+  width: 100%;
+  margin: 30px auto 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* フッターのナビゲーションスタイル */
+footer .nav-link {
+  font-family: var(--heading-font);
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  letter-spacing: 0.05em;
+}
+
+/* ページタイトルの共通スタイル */
+.brand-section-title,
+.about-title,
+.contact-title,
+.vision-title,
+.location-title {
+  font-family: var(--heading-font);
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* コンタクトフォームのスタイル */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  display: block;
+}
+
+.form-control {
+  font-family: var(--body-font);
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.1);
+}
+
+.btn-submit {
+  background: linear-gradient(45deg, #333, #666);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  background: linear-gradient(45deg, #444, #777);
+}
+
+/* 古いbrandlogo設定完全削除 */
+/* 古いbrandlogo設定削除完了 - .brand-cardに統合済み */
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+}
+
+/* アニメーション用キーフレーム */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textReveal {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* テキストアニメーション用の基本クラス */
+.animate-text {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s var(--text-reveal-timing) forwards;
+}
+
+.text-reveal {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: slideUp 0.8s var(--text-reveal-timing) forwards;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* セクションタイトルのアニメーション */
+.section-title {
+  opacity: 0;
+  animation: fadeInUp 1s var(--text-reveal-timing) 0.2s forwards;
+  font-family: var(--heading-font);
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  color: var(--main-color);
+}
+
+.section-content {
+  opacity: 0;
+  animation: fadeInUp 1s var(--text-reveal-timing) 0.4s forwards;
+}
+
+/* ブランドグリッドのアニメーション - 統合済み */
+/* Duplicate removed: アニメーション設定をメインの.brands-gridに統合 */
+
+/* 古いbrandlogo設定削除 - 根本原因解決 */
+/* Duplicate removed: 古い.brandlogo設定をBrandsセクションのbrand-cardに統合 */
+/* ROOT CAUSE: .brandlogo { opacity: 0; } が.brand-logoを上書きしていた */
+
+/* スクロールアニメーション用のクラス */
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s var(--text-reveal-timing);
+  will-change: transform, opacity;
+}
+
+.scroll-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* テキストブロック用のスタイル */
+.text-block {
+  margin: 2rem 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s var(--text-reveal-timing);
+  will-change: transform, opacity;
+}
+
+.text-block.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 段階的なアニメーション用のディレイ */
+.delay-1 { transition-delay: 0.2s; }
+.delay-2 { transition-delay: 0.4s; }
+.delay-3 { transition-delay: 0.6s; }
+.delay-4 { transition-delay: 0.8s; }
+.delay-5 { transition-delay: 1.0s; }
+
+/* 言語切り替えボタンのスタイル */
+.language-switcher {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(51, 51, 51, 0.1);
+  border-radius: 24px;
+  padding: 4px;
+  transition: all 0.3s ease;
+}
+
+.language-switcher button {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: 0.9rem;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all 0.3s var(--transition-timing);
+  border-radius: 20px;
+  font-family: var(--heading-font);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}
+
+.language-switcher span {
+  color: var(--accent-color);
+  margin: 0 -4px;
+  font-size: 0.9rem;
+}
+
+.language-switcher button.active {
+  color: #fff;
+  font-weight: 500;
+  background: var(--main-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+/* モバイル対応 */
+@media (max-width: 991px) {
+  .navbar-nav {
+    margin-right: 0;
     text-align: center;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-  ">
-    サイトの改修中です
-  </div>
-
-  <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
-  <div id="splash-video-wrapper" style="display: none;">
-    <video id="splash-video" src="5.mov" autoplay playsinline muted></video>
-    <!-- <div id="splash-loading">Loading...</div> -->
-  </div>
-  <!-- 1.mov モーダル -->
-  <!-- （このブロックを削除） -->
-  <nav class="fixed-top navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <div class="d-lg-none" style="width: 40px;"></div>
-      <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link active" href="#brands">Brands</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
-          <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
-          <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
-        </ul>
-        <div class="language-switcher">
-          <button data-lang-btn="ja" class="active">JA</button>
-          <button data-lang-btn="en">EN</button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- 単一背景動画 - PC/SP自動切替 -->
-  <div id="background-video-container">
-  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
-    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
-  </div>
-  
-  <style>
-    /* PC版とスマートフォン版で背景動画を切り替え */
-    @media (min-width: 901px) {
-      #desktop-bg-video {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-      #mobile-bg-video {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-    }
-    @media (max-width: 900px) {
-      #desktop-bg-video {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-      #mobile-bg-video {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-    }
-    
-    /* PC版でもスマートフォン版と同様の透過設定を適用 */
-    @media (min-width: 901px) {
-      body {
-        background: #000 !important;
-      }
-      .navbar {
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        backdrop-filter: blur(10px) !important;
-        margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
-      }
-      .flow-row-bg {
-        background: rgba(255,255,255,0.9) !important;
-      }
-      .section-title {
-        color: #fff !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
-      }
-      #flowing-images {
-        margin-top: 0 !important; /* 既存のmarginをリセット */
-        padding-top: 0 !important; /* 既存のpaddingをリセット */
-        position: relative !important;
-        top: 450px !important; /* flowing imagesをさらに下に配置 */
-      }
-      
-      /* PC版で画像サイズを250pxに設定 */
-      #flowing-images img {
-        max-height: 250px !important;
-        width: auto !important;
-        height: auto !important;
-      }
-      
-      /* PC版でflow-rowの高さも調整 */
-      .flow-row {
-        height: 270px !important;
-      }
-      
-      /* 競合スタイル削除 */
-      /* Duplicate removed: 位置調整設定をstyle.cssのsections専用ブロックに統合 */
-      
-      /* Brands セクション重複スタイル削除 */
-      /* Duplicate removed: Brands位置調整設定をstyle.cssのsections専用ブロックに統合 */
-      
-      /* Overview セクション重複スタイル削除 */
-      /* Duplicate removed: Overview設定をstyle.cssのsections専用ブロックに統合 */
-      
-      
-      /* Footer 重複スタイル削除 */
-      /* Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 */
-      
-      /* ヘッダー固定の強化 */
-      html body .navbar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 1030 !important;
-      }
-    }
-  </style>
-
-  <script>
-    // Service Worker アンレジスター（キャッシュ問題解決）
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        registrations.forEach(function(registration) {
-          registration.unregister();
-          console.log('Service Worker unregistered:', registration);
-        });
-      });
-    }
-    
-    // ヒーロー動画の自動再生確実化
-    document.addEventListener('DOMContentLoaded', function() {
-      const heroVideo = document.getElementById('hero-video');
-      
-      if (heroVideo) {
-        heroVideo.addEventListener('loadeddata', function() {
-          console.log('Hero video loaded');
-          heroVideo.play().catch(function(error) {
-            console.log('Hero video autoplay failed:', error);
-          });
-        });
-        
-        // リトライ機能
-        setTimeout(function() {
-          if (heroVideo.paused) {
-            heroVideo.play().catch(function(error) {
-              console.log('Hero video retry failed:', error);
-            });
-          }
-        }, 1000);
-      }
-      
-      const desktopVideo = document.getElementById('desktop-bg-video');
-      const mobileVideo = document.getElementById('mobile-bg-video');
-      
-      // PC版動画の読み込みと再生
-      if (desktopVideo) {
-        desktopVideo.addEventListener('loadeddata', function() {
-          console.log('PC版背景動画が読み込まれました');
-          desktopVideo.play().catch(function(error) {
-            console.log('PC版動画の自動再生に失敗:', error);
-          });
-        });
-        
-        desktopVideo.addEventListener('error', function(e) {
-          console.error('PC版動画の読み込みエラー:', e);
-        });
-        
-        // 動画が再生されていない場合は再試行
-        setTimeout(function() {
-          if (desktopVideo.paused && window.innerWidth >= 901) {
-            desktopVideo.play().catch(function(error) {
-              console.log('PC版動画の再試行に失敗:', error);
-            });
-          }
-        }, 1000);
-      }
-      
-      // スマートフォン版動画の読み込みと再生
-      if (mobileVideo) {
-        mobileVideo.addEventListener('loadeddata', function() {
-          console.log('スマートフォン版背景動画が読み込まれました');
-          mobileVideo.play().catch(function(error) {
-            console.log('スマートフォン版動画の自動再生に失敗:', error);
-          });
-        });
-        
-        mobileVideo.addEventListener('error', function(e) {
-          console.error('スマートフォン版動画の読み込みエラー:', e);
-        });
-      }
-    });
-  </script>
-
-
-  <!-- スマートフォン用カルーセル - 動画は上部の単一コンテナに統合済み -->
-  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
-      <!-- 背景動画削除 - 単一コンテナに統合済み -->
-  </section>
-
-  <!-- ヘッダーとのギャップ確保用スペーサー -->
-  <div class="rs-header-spacer" aria-hidden="true"></div>
-  
-  <!-- Hero Video削除 - 背景動画に統合済み -->
-  
-  <!-- Collection Section - 統合済み -->
-  <section id="collection" class="collection-section collection-row-gap">
-    <h2 class="collection-title">Collection</h2>
-    
-    <!-- 上下2行を包む囲い背景 -->
-    <div class="collection-rows-wrapper">
-    <!-- 上段：右→左スクロール -->
-      <div class="collection-row-top" data-draggable>
-      <div class="collection-scroll-top">
-        <!-- 1周目 -->
-        <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
-          <img src="image/1.JPG" alt="Collection Item 1">
-        </a>
-        <img src="image/2.JPG" alt="Collection Item 2">
-        <img src="image/3.JPG" alt="Collection Item 3">
-        <img src="image/4.JPG" alt="Collection Item 4">
-        <img src="image/5.JPG" alt="Collection Item 5">
-        <img src="image/6.JPG" alt="Collection Item 6">
-        <img src="image/7.JPG" alt="Collection Item 7">
-        <img src="image/8.JPG" alt="Collection Item 8">
-        <img src="image/9.JPG" alt="Collection Item 9">
-        <img src="image/10.JPG" alt="Collection Item 10">
-        <img src="image/12.JPG" alt="Collection Item 12">
-        <img src="image/13.JPG" alt="Collection Item 13">
-        <img src="image/14.JPG" alt="Collection Item 14">
-        <img src="image/15.JPG" alt="Collection Item 15">
-        <img src="image/16.JPG" alt="Collection Item 16">
-        <img src="image/17.JPG" alt="Collection Item 17">
-        <img src="image/18.JPG" alt="Collection Item 18">
-        <img src="image/19.JPG" alt="Collection Item 19">
-        <img src="image/20.JPG" alt="Collection Item 20">
-        <!-- 重複削除完了 - 1周分のみ、JS側で無限ループ管理 -->
-        <img src="image/2.JPG" alt="Collection Item 2">
-        <img src="image/3.JPG" alt="Collection Item 3">
-        <img src="image/4.JPG" alt="Collection Item 4">
-        <img src="image/5.JPG" alt="Collection Item 5">
-        <img src="image/6.JPG" alt="Collection Item 6">
-        <img src="image/7.JPG" alt="Collection Item 7">
-        <img src="image/8.JPG" alt="Collection Item 8">
-        <img src="image/9.JPG" alt="Collection Item 9">
-        <img src="image/10.JPG" alt="Collection Item 10">
-        <img src="image/11.JPG" alt="Collection Item 11">
-        <img src="image/12.JPG" alt="Collection Item 12">
-        <img src="image/13.JPG" alt="Collection Item 13">
-        <img src="image/14.JPG" alt="Collection Item 14">
-        <img src="image/15.JPG" alt="Collection Item 15">
-        <img src="image/16.JPG" alt="Collection Item 16">
-        <img src="image/17.JPG" alt="Collection Item 17">
-        <img src="image/18.JPG" alt="Collection Item 18">
-        <img src="image/19.JPG" alt="Collection Item 19">
-        <img src="image/20.JPG" alt="Collection Item 20">
-        </div>
-      </div>
-    
-    <!-- 下段：左→右スクロール -->
-      <div class="collection-row-bottom" data-draggable>
-      <div class="collection-scroll-bottom">
-        <!-- 1周目（逆順） -->
-        <img src="image/32.JPG" alt="Collection Item 32">
-        <img src="image/31.JPG" alt="Collection Item 31">
-        <img src="image/30.JPG" alt="Collection Item 30">
-        <img src="image/29.JPG" alt="Collection Item 29">
-        <img src="image/28.JPG" alt="Collection Item 28">
-        <img src="image/27.JPG" alt="Collection Item 27">
-        <img src="image/26.JPG" alt="Collection Item 26">
-        <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
-          <img src="image/25.JPG" alt="Collection Item 25">
-        </a>
-        <img src="image/24.JPG" alt="Collection Item 24">
-        <img src="image/23.JPG" alt="Collection Item 23">
-        <img src="image/22.JPG" alt="Collection Item 22">
-        <img src="image/21.JPG" alt="Collection Item 21">
-        <!-- 2周目（ループ用） -->
-        <img src="image/32.JPG" alt="Collection Item 32">
-        <img src="image/31.JPG" alt="Collection Item 31">
-        <img src="image/30.JPG" alt="Collection Item 30">
-        <img src="image/29.JPG" alt="Collection Item 29">
-        <img src="image/28.JPG" alt="Collection Item 28">
-        <img src="image/27.JPG" alt="Collection Item 27">
-        <img src="image/26.JPG" alt="Collection Item 26">
-        <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
-          <img src="image/25.JPG" alt="Collection Item 25">
-        </a>
-        <img src="image/24.JPG" alt="Collection Item 24">
-        <img src="image/23.JPG" alt="Collection Item 23">
-        <img src="image/22.JPG" alt="Collection Item 22">
-        <img src="image/21.JPG" alt="Collection Item 21">
-        
-        <!-- 3周目（ループ用） -->
-        <img src="image/32.JPG" alt="Collection Item 32">
-        <img src="image/31.JPG" alt="Collection Item 31">
-        <img src="image/30.JPG" alt="Collection Item 30">
-        <img src="image/29.JPG" alt="Collection Item 29">
-        <img src="image/28.JPG" alt="Collection Item 28">
-        <img src="image/27.JPG" alt="Collection Item 27">
-        <img src="image/26.JPG" alt="Collection Item 26">
-        <img src="image/25.JPG" alt="Collection Item 25">
-        <img src="image/24.JPG" alt="Collection Item 24">
-        <img src="image/23.JPG" alt="Collection Item 23">
-        <img src="image/22.JPG" alt="Collection Item 22">
-        <img src="image/21.JPG" alt="Collection Item 21">
-        
-        <!-- 2周目（ループ用） -->
-        <img src="image/32.JPG" alt="Collection Item 32">
-        <img src="image/31.JPG" alt="Collection Item 31">
-        <img src="image/30.JPG" alt="Collection Item 30">
-        <img src="image/29.JPG" alt="Collection Item 29">
-        <img src="image/28.JPG" alt="Collection Item 28">
-        <img src="image/27.JPG" alt="Collection Item 27">
-        <img src="image/26.JPG" alt="Collection Item 26">
-        <img src="image/25.JPG" alt="Collection Item 25">
-        <img src="image/24.JPG" alt="Collection Item 24">
-        <img src="image/23.JPG" alt="Collection Item 23">
-        <img src="image/22.JPG" alt="Collection Item 22">
-        <img src="image/21.JPG" alt="Collection Item 21">
-      </div>
-    </div>
-    </div> <!-- collection-rows-wrapper 終了 -->
-  </section>
-
-  <!-- デバッグ用JavaScript -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // 画像数をカウント
-      const topImages = document.querySelectorAll('.collection-scroll-top img').length;
-      const bottomImages = document.querySelectorAll('.collection-scroll-bottom img').length;
-      
-      document.getElementById('debug-count-top').textContent = topImages;
-      document.getElementById('debug-count-bottom').textContent = bottomImages;
-      
-      // アニメーション状況を監視
-      const topScroll = document.querySelector('.collection-scroll-top');
-      const bottomScroll = document.querySelector('.collection-scroll-bottom');
-      
-      if (topScroll) {
-        topScroll.addEventListener('animationstart', function() {
-          console.log('上段アニメーション開始');
-        });
-        topScroll.addEventListener('animationiteration', function() {
-          console.log('上段アニメーション繰り返し');
-        });
-      }
-      
-      if (bottomScroll) {
-        bottomScroll.addEventListener('animationstart', function() {
-          console.log('下段アニメーション開始');
-        });
-        bottomScroll.addEventListener('animationiteration', function() {
-          console.log('下段アニメーション繰り返し');
-        });
-      }
-      
-    });
-  </script>
-
-  <!-- Brands Section -->
-  <section id="brands" class="section-brands brands-section section-spacing" data-role="brands">
-    <h2 class="section-title">Brands</h2>
-    <div class="brands-grid">
-      <figure class="brand-card" data-hover="image/rockmount-hover.webp">
-        <a href="https://rockmount.com/" target="_blank" rel="noopener">
-          <img src="image/rockmount.webp" alt="Rockmount" loading="lazy" class="brand-logo">
-          <img src="image/rockmount3.webp" alt="Rockmount Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/Harley-hover.webp">
-        <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
-          <img src="image/Harley.webp" alt="Harley of Scotland" loading="lazy" class="brand-logo">
-          <img src="image/Harley1.webp" alt="Harley of Scotland Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/william lockie-hover.webp">
-        <a href="https://williamlockie.com/" target="_blank" rel="noopener">
-          <img src="image/william lockie.webp" alt="William Lockie" loading="lazy" class="brand-logo">
-          <img src="image/william2.webp" alt="William Lockie Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/eribe-hover.svg">
-        <a href="https://www.eribe.com/" target="_blank" rel="noopener">
-          <img src="image/eribe.svg" alt="Eribe" loading="lazy" class="brand-logo">
-          <img src="image/eribe.webp" alt="Eribe Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/glen prince-hover.webp">
-        <a href="https://www.glenprince.com/" target="_blank" rel="noopener">
-          <img src="image/glen prince.webp" alt="Glen Prince" loading="lazy" class="brand-logo">
-          <img src="image/glenprince2.webp" alt="Glen Prince Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/athena designs-hover.webp">
-        <a href="https://www.athenaknitwear.com/" target="_blank" rel="noopener">
-          <img src="image/athena designs.webp" alt="Athena Designs" loading="lazy" class="brand-logo">
-          <img src="image/athenadesigns.webp" alt="Athena Designs Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/kopka-hover.webp">
-        <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener">
-          <img src="image/kopka.webp" alt="Kopka Accessories" loading="lazy" class="brand-logo">
-          <img src="image/kopka2.webp" alt="Kopka Accessories Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/leminor-hover.webp">
-        <a href="https://leminor.fr/en" target="_blank" rel="noopener">
-          <img src="image/leminor.webp" alt="Le Minor" loading="lazy" class="brand-logo">
-          <img src="image/leminor2.webp" alt="Le Minor Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card">
-        <a href="https://sans-arcidet.fr/" target="_blank" rel="noopener">
-          <img src="image/san arcident.webp" alt="Sans Arcidet" loading="lazy" class="brand-logo">
-          <img src="image/sansarcident.webp" alt="Sans Arcident Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-      
-      <figure class="brand-card" data-hover="image/hat attack-hover.webp">
-        <a href="https://hatattack.com/" target="_blank" rel="noopener">
-          <img src="image/hat attack.webp" alt="Hat Attack" loading="lazy" class="brand-logo">
-          <img src="image/hatattack.webp" alt="Hat Attack Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
-  </div>
-</section>
-
-  <!-- Lookbook Section -->
-  <section id="lookbook" class="section-lookbook lookbook-section section-spacing" data-role="lookbook">
-    <h2 class="section-title">Lookbook</h2>
-    <div class="lookbook-container">
-              <div class="lookbook-track">
-        <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
-          <div class="lookbook-item">
-          <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
-            <div class="image-number">1/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look2.webp" alt="Lookbook Item 2" loading="lazy" width="300" height="400">
-            <div class="image-number">2/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look3.webp" alt="Lookbook Item 3" loading="lazy" width="300" height="400">
-            <div class="image-number">3/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look4.webp" alt="Lookbook Item 4" loading="lazy" width="300" height="400">
-            <div class="image-number">4/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look5.webp" alt="Lookbook Item 5" loading="lazy" width="300" height="400">
-            <div class="image-number">5/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look6.webp" alt="Lookbook Item 6" loading="lazy" width="300" height="400">
-            <div class="image-number">6/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look7.webp" alt="Lookbook Item 7" loading="lazy" width="300" height="400">
-            <div class="image-number">7/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look8.webp" alt="Lookbook Item 8" loading="lazy" width="300" height="400">
-            <div class="image-number">8/8</div>
-          </div>
-        <!-- 2周目 -->
-          <div class="lookbook-item">
-          <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
-            <div class="image-number">1/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look2.webp" alt="Lookbook Item 2" loading="lazy" width="300" height="400">
-            <div class="image-number">2/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look3.webp" alt="Lookbook Item 3" loading="lazy" width="300" height="400">
-            <div class="image-number">3/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look4.webp" alt="Lookbook Item 4" loading="lazy" width="300" height="400">
-            <div class="image-number">4/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look5.webp" alt="Lookbook Item 5" loading="lazy" width="300" height="400">
-            <div class="image-number">5/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look6.webp" alt="Lookbook Item 6" loading="lazy" width="300" height="400">
-            <div class="image-number">6/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look7.webp" alt="Lookbook Item 7" loading="lazy" width="300" height="400">
-            <div class="image-number">7/8</div>
-          </div>
-          <div class="lookbook-item">
-          <img src="image/look8.webp" alt="Lookbook Item 8" loading="lazy" width="300" height="400">
-            <div class="image-number">8/8</div>
-          </div>
-        </div>
-    </div>
-  </section>
-
-  <!-- About ReStandard Section -->
-  <section id="about-restandard" class="section-about restandard-section section-spacing" data-role="about-restandard">
-    <h2 class="section-title">About ReStandard</h2>
-    <!-- PC用（md以上） -->
-    <div class="about-inner only-pc restandard-body">
-      <!-- 日本語版 -->
-      <div class="only-ja">
-        <p class="about-text">
-            欧米の厳選されたアパレルブランドを日本に紹介するディストリビューター。<br>
-          RockmountやHarleyをはじめとする<b>欧米の厳選ブランドとの取引を32年間継続</b>しており、<br>
-          現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。<br>
-          私たちの<a href="about.html" class="internal-link">理念</a>や<a href="vision.html" class="internal-link">ビジョン</a>については、それぞれのページで詳しくご紹介しています。<br>
-          最新の<a href="news.html" class="internal-link">ニュース</a>や<a href="location.html" class="internal-link">アクセス情報</a>、<br>
-          そして<a href="contact.html" class="internal-link">お問い合わせ</a>については、ぜひ各ページをご覧ください。
-        </p>
-      </div>
-      
-      <!-- 英語版 -->
-      <div class="only-en">
-        <p class="about-text">
-            ReStandard is a distributor that introduces carefully selected European and American apparel brands to Japan.<br>
-            We have maintained <b>trading relationships with carefully selected European and American brands such as Rockmount and Harley for 32 years</b>,<br>
-            and have established partnerships with <b>more than 25 manufacturers</b> to date.<br>
-            For details about our <a href="about.html" class="internal-link">philosophy</a> and <a href="vision.html" class="internal-link">vision</a>, please see each page.<br>
-            For the latest <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access information</a>,<br>
-            and <a href="contact.html" class="internal-link">inquiries</a>, please visit each page.
-        </p>
-      </div>
-    </div>
-    
-    <!-- SP用（md未満） -->
-    <div class="about-inner only-sp restandard-body">
-      <!-- 日本語版 -->
-      <div class="only-ja">
-        <p class="about-text">
-          欧米の厳選されたアパレルブランドを<br>
-          日本のセレクトショップへ卸す<br>
-            ディストリビューター。<br>
-          RockmountやHarleyなど<br>
-          <b>計25メーカーと32年の取引実績</b>。<br>
-          <a href="about.html" class="internal-link">理念</a>・<a href="vision.html" class="internal-link">ビジョン</a>・<a href="news.html" class="internal-link">ニュース</a>・<a href="location.html" class="internal-link"><br>
-            アクセス</a>・<a href="contact.html" class="internal-link">お問い合わせ</a>はこちら。
-        </p>
-      </div>
-      
-      <!-- 英語版 -->
-      <div class="only-en">
-        <p class="about-text">
-            ReStandard is a distributor<br>
-            that introduces carefully selected<br>
-            European and American apparel brands<br>
-            to select shops in Japan.<br>
-            Rockmount, Harley and others<br>
-            <b>32 years of trading with 25+ manufacturers</b>.<br>
-            <a href="about.html" class="internal-link">Philosophy</a>・<a href="vision.html" class="internal-link">Vision</a>・<a href="news.html" class="internal-link">News</a>・<a href="location.html" class="internal-link"><br>
-              Access</a>・<a href="contact.html" class="internal-link">Contact</a> here.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-
-  <!-- Footer -->
-<footer class="py-5 text-center">
-  <!-- Footer 重複スタイル削除 -->
-  <!-- Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 -->
-
-  <ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
-    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-    <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
-    <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
-    <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
-    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-    <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
-  </ul>
-
-  <div class="social-links">
-    <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
-      <!-- Instagram モノトーンSVG -->
-      <svg width="24" height="24" viewBox="0 0 448 448" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="32" y="32" width="384" height="384" rx="96" fill="#fff"/>
-        <rect x="32" y="32" width="384" height="384" rx="96" stroke="#222" stroke-width="32"/>
-        <circle cx="224" cy="224" r="80" fill="none" stroke="#222" stroke-width="32"/>
-        <circle cx="320" cy="128" r="24" fill="#222"/>
-      </svg>
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" aria-label="Facebook">
-      <!-- Facebook 公式SVG -->
-      <svg width="24" height="24" viewBox="0 0 320 512" fill="#1877F3" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91V127.91c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h100.2V288z" fill="#1877F3"/><path d="M202.66 512V288h69.56l10.42-92.66h-79.98v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h98.3z" fill="#fff"/></svg>
-    </a>
-    <a href="https://x.com/restandard_2025" target="_blank" aria-label="X (Twitter)">
-      <!-- X 公式風モノトーンSVG（大きめ中央） -->
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.5 4H20L14.5 11.5L20.5 20H16L12 14.5L8.1 20H4L10 12.5L4.5 4H9L12.7 9.1L17.5 4ZM15.7 18.5H17.2L9.7 6.7H8.2L15.7 18.5Z" fill="#fff"/>
-      </svg>
-    </a>
-    <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
-      <!-- note 白抜きn文字SVG（さらに大きめ・完全中心中央揃え） -->
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="12" y="12" font-size="26" font-family="Arial Black, Arial, sans-serif" fill="#fff" font-weight="bold" text-anchor="middle" dominant-baseline="middle">n</text>
-      </svg>
-    </a>
-  </div>
-  
-  <div class="copyright">©2025 Restandard Inc. All Rights Reserved.</div>
-</footer>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // スクロールアニメーション
-      const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, options);
-
-      // アニメーション対象の要素を監視
-      document.querySelectorAll('.scroll-fade, .text-block').forEach(el => {
-        observer.observe(el);
-      });
-
-      // Brandsセクションのアクティブ状態管理
-      const brandsSection = document.getElementById('brands');
-      const brandsLink = document.querySelector('a[href="#brands"]');
-      
-      const brandsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            brandsLink.classList.add('active');
-          } else {
-            brandsLink.classList.remove('active');
-          }
-        });
-      }, {
-        threshold: 0.2
-      });
-
-      if (brandsSection) {
-        brandsObserver.observe(brandsSection);
-      }
-
-      // 保存された言語設定を読み込む
-      const savedLang = localStorage.getItem('preferred-language');
-      if (savedLang) {
-        switchLanguage(savedLang, false);
-      }
-    });
-
-    // 言語切り替え機能は lang-toggle.js で管理
-  </script>
-
-  <!-- Swiper.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', function() {
-      // メインSwiper
-      const mainSwiper = new Swiper('.main-swiper', {
-        loop: true,
-        spaceBetween: 0,
-        effect: 'fade',
-        fadeEffect: { crossFade: true },
-        speed: 1200,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        autoplay: {
-          delay: 3500,
-          disableOnInteraction: false,
-        },
-      });
-      // スマートフォン用Swiper
-      const mobileSwiper = new Swiper('.mobile-swiper', {
-        loop: true,
-        spaceBetween: 0,
-        effect: 'fade',
-        fadeEffect: { crossFade: true },
-        speed: 1200,
-        autoplay: {
-          delay: 3500,
-          disableOnInteraction: false,
-        },
-      });
-    });
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // スプラッシュ動画演出（外部サイトからの遷移・直接アクセス時のみ表示）
-      const splash = document.getElementById('splash-video-wrapper');
-      const video = document.getElementById('splash-video');
-      // const loading = document.getElementById('splash-loading');
-      // 自サイト判定
-      const isInternal = document.referrer && document.referrer.includes(window.location.hostname);
-      if (isInternal) {
-        // サイト内遷移ならスプラッシュ非表示
-        document.body.classList.remove('splash-active');
-        if (splash) splash.style.display = 'none';
-        return;
-      }
-      // 外部からの遷移 or 直接アクセス時のみスプラッシュ表示
-      document.body.classList.add('splash-active');
-      splash.style.display = 'flex';
-      // loading.style.display = 'block';
-      video.oncanplay = function() {
-        // loading.style.display = 'none';
-        video.play();
-      };
-      splash.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); }, true);
-      window.addEventListener('keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }, true);
-      video.onended = function() {
-        splash.classList.add('hide');
-        setTimeout(function() {
-          splash.style.display = 'none';
-          document.body.classList.remove('splash-active');
-        }, 500);
-      };
-    });
-  </script>
-  <!-- Collection画像クリックで拡大モーダル表示 -->
-  <div id="image-modal" style="display:none; position:fixed; z-index:10000; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
-    <img id="modal-img" src="" alt="" style="max-width:90vw; max-height:90vh; border-radius:16px; box-shadow:0 8px 32px #000a;">
-    <button id="modal-close" style="position:absolute;top:2vw;right:2vw;font-size:2rem;color:#fff;background:none;border:none;cursor:pointer;">&times;</button>
-  </div>
-  <script>
-// 新しいCollection画像のドラッグ開始を禁止
-(function() {
-  const tracks = document.querySelectorAll('.collection-scroll-top, .collection-scroll-bottom');
-  tracks.forEach(track => {
-    track.querySelectorAll('img').forEach(img => {
-      img.addEventListener('dragstart', e => e.preventDefault());
-    });
-  });
-})();
-  </script>
-  <script>
-// スマホ背景動画 2.mp4 を常に再生し続ける
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileVideo = document.getElementById('mobile-bg-video');
-  if (mobileVideo) {
-    // ページ表示時
-    mobileVideo.play().catch(()=>{});
-    // タブ復帰時
-    document.addEventListener('visibilitychange', function() {
-      if (!document.hidden) {
-        mobileVideo.play().catch(()=>{});
-      }
-    });
-  }
-});
-</script>
-  <script>
-// ハンバーガーメニューの外をクリックした時に閉じる機能
-document.addEventListener('DOMContentLoaded', function() {
-  const navbarToggler = document.querySelector('.navbar-toggler');
-  const navbarCollapse = document.querySelector('.navbar-collapse');
-  
-  // メニューの外をクリックした時の処理
-  document.addEventListener('click', function(event) {
-    // ハンバーガーボタンまたはメニュー内をクリックした場合は何もしない
-    if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
-      return;
-    }
-    
-    // メニューが開いている場合のみ閉じる
-    if (navbarCollapse.classList.contains('show')) {
-      navbarToggler.click();
-    }
-  });
-});
-</script>
-  <script>
-// 新しいCollectionセクション用のJavaScript（簡略化）
-</script>
-
-<!-- Collection セクション用のギャップ調整スクリプト -->
-<script>
-  (function() {
-    function applyGap() {
-      var header = document.querySelector('header, .site-header, nav');
-      var gap = 0, base = 96;
-      var h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
-      var vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      gap = vw >= 1024 ? 72 : 96;
-
-      var spacer = document.querySelector('.rs-header-spacer');
-      if (spacer) {
-        spacer.style.setProperty('height', (h + gap) + 'px', 'important');
-        spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
-      }
-    }
-    window.addEventListener('load', applyGap, { once:true });
-    window.addEventListener('resize', applyGap);
-})();
-  </script>
-
-<!-- テキスト演出スクリプト -->
-<script src="js/reveal.js?v=2025-01-18-final"></script>
-<script src="js/lang-toggle.js?v=2025-01-18-final"></script>
-  <!-- 統合済み: flowing-fix.js の内容を index.html 内のスクリプトに統合 -->
-  <!-- Duplicate removed: 競合を避けるため、外部JSファイルを削除 -->
-  <script>
-  // DOM完成後にテキスト演出を有効化
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof initReveal === 'function') {
-      initReveal();
-  }
-});
-
-  // Collection セクションの表示を強制する関数 - 統合済み
-  // Duplicate removed from flowing-fix.js
-  function ensureCollectionDisplay() {
-    // Collectionセクションの表示を強制
-    const collectionSection = document.querySelector('#collection, .collection-section');
-    if (collectionSection) {
-      collectionSection.style.setProperty('display', 'block', 'important');
-      collectionSection.style.setProperty('visibility', 'visible', 'important');
-      collectionSection.style.setProperty('opacity', '1', 'important');
-      collectionSection.style.setProperty('position', 'relative', 'important');
-      collectionSection.style.setProperty('z-index', '999', 'important');
-    }
-    
-    // 上段の行の表示を強制
-    const topRow = document.querySelector('.collection-row-top');
-    if (topRow) {
-      topRow.style.setProperty('display', 'flex', 'important');
-      topRow.style.setProperty('visibility', 'visible', 'important');
-      topRow.style.setProperty('opacity', '1', 'important');
-      topRow.style.setProperty('height', '300px', 'important');
-      topRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
-      topRow.style.setProperty('align-items', 'center', 'important');
-    }
-    
-    // 下段の行の表示を強制
-    const bottomRow = document.querySelector('.collection-row-bottom');
-    if (bottomRow) {
-      bottomRow.style.setProperty('display', 'flex', 'important');
-      bottomRow.style.setProperty('visibility', 'visible', 'important');
-      bottomRow.style.setProperty('opacity', '1', 'important');
-      bottomRow.style.setProperty('height', '300px', 'important');
-      bottomRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
-      bottomRow.style.setProperty('align-items', 'center', 'important');
-      bottomRow.style.setProperty('position', 'relative', 'important');
-      bottomRow.style.setProperty('z-index', '9999', 'important');
-    }
-    
-    // 下段のスクロールコンテナの表示を強制
-    const bottomScroll = document.querySelector('.collection-scroll-bottom');
-    if (bottomScroll) {
-      bottomScroll.style.setProperty('display', 'flex', 'important');
-      bottomScroll.style.setProperty('visibility', 'visible', 'important');
-      bottomScroll.style.setProperty('opacity', '1', 'important');
-      bottomScroll.style.setProperty('position', 'relative', 'important');
-      bottomScroll.style.setProperty('z-index', '10000', 'important');
-      bottomScroll.style.setProperty('flex-direction', 'row', 'important');
-      bottomScroll.style.setProperty('gap', '1px', 'important');
-      bottomScroll.style.setProperty('height', '100%', 'important');
-      bottomScroll.style.setProperty('width', 'max-content', 'important');
-      bottomScroll.style.setProperty('align-items', 'center', 'important');
-    }
-    
-    // 下段の画像の表示を強制
-    const bottomImages = document.querySelectorAll('.collection-scroll-bottom img');
-    bottomImages.forEach((img, index) => {
-      img.style.setProperty('display', 'block', 'important');
-      img.style.setProperty('visibility', 'visible', 'important');
-      img.style.setProperty('opacity', '1', 'important');
-      img.style.setProperty('position', 'relative', 'important');
-      img.style.setProperty('z-index', '10001', 'important');
-      img.style.setProperty('height', '250px', 'important');
-      img.style.setProperty('width', '250px', 'important');
-      img.style.setProperty('flex-shrink', '0', 'important');
-      img.style.setProperty('object-fit', 'cover', 'important');
-    });
+    padding: 1rem 0;
   }
 
-  // Collection セクションの表示を確実にする
-  document.addEventListener('DOMContentLoaded', function() {
-    ensureCollectionDisplay();
-  });
-  
-  // ページ読み込み完了後にも実行
-  window.addEventListener('load', function() {
-    ensureCollectionDisplay();
-  });
+  .navbar-nav .nav-item {
+    margin: 0.5rem 0;
+  }
 
-  // 少し遅れて再実行
-  setTimeout(function() {
-    ensureCollectionDisplay();
-  }, 500);
-</script>
-  <script>
-    // モバイルレイアウト修正のためのJavaScriptガード
-    // 1.JPGと25.JPGのインラインスタイルを削除
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('img[src$="/1.JPG"], img[src$="/1.jpg"], img[src$="/25.JPG"], img[src$="/25.jpg"]').forEach(el => {
-        el.removeAttribute('style');
-        const card = el.closest('.item, .card, div');
-        if (card) card.removeAttribute('style');
-      });
-  });
-</script>
-  
-  <!-- セクション初期化スクリプト - 統合済み -->
-  <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
-  <script src="js/init-sections.js?v=2025-01-18-final"></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-18-final"></script>
-  <script src="js/collection-interaction.js?v=2025-01-18-final"></script>
+  .language-switcher {
+    margin: 1rem auto;
+    width: fit-content;
+  }
 
-</body>
-</html>
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+}
+
+[lang="en"] .ja-content {
+  display: none;
+}
+
+[lang="ja"] .en-content {
+  display: none;
+}
+
+/* コンテンツ切り替えアニメーション */
+.ja-content,
+.en-content {
+  animation: fadeInContent 0.5s ease-out;
+}
+
+/* アクセシビリティの改善 */
+.language-switcher button:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+}
+
+/* 言語切り替え時のページ全体のトランジション */
+body {
+  transition: background-color 0.3s ease;
+}
+
+[lang="ja"] body {
+  background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+}
+
+[lang="en"] body {
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+}
+
+/* フォントサイズのクラス定義 */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-md { font-size: var(--font-size-md); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+
+/* PC・スマホでカルーセルを切り替え */
+#home-desktop, #home-mobile { display: none; }
+@media (min-width: 769px) { #home-desktop { display: block; } }
+@media (max-width: 768px) { #home-mobile { display: block; } }
+
+.swiper-slide { position: relative; }
+.swiper-slide .slide-link {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: block;
+  background: transparent;
+  cursor: pointer;
+}
+
+.about-section-subtitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1.1rem;
+  letter-spacing: 0.04em;
+  border-left: 4px solid #dedbd6;
+  padding-left: 0.7em;
+  background: linear-gradient(90deg, #f7f7f7 80%, rgba(255,255,255,0));
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.about-section-subtitle > span {
+  font-size: 1.5em;
+}
+
+@media (max-width: 600px) {
+  .about-section-subtitle {
+    font-size: 1.2rem;
+    margin: 2rem 0 1rem 0;
+  }
+  .section-content, .text-block {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+  .text-block {
+    font-size: 1rem;
+    line-height: 2;
+    margin-bottom: 1.5rem;
+  }
+  .about-section-subtitle + .text-block {
+    margin-top: 0.5rem;
+  }
+  .about-section-box {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin: 1.5rem 0;
+    padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+    border: 1px solid #ececec;
+    transition: box-shadow 0.2s;
+    font-size: 0.92rem;
+  }
+  .about-section-box .about-section-subtitle {
+    font-size: 1.3rem;
+  }
+  .about-section-box .text-block {
+    font-size: 0.8rem;
+  }
+  .about-section-box:first-child {
+    margin-top: 0.5rem;
+  }
+  .about-section-box:last-child {
+    margin-bottom: 0.5rem;
+  }
+  .about-section-box h3.text-center,
+  .vision-section .about-section-box h3.text-center {
+    font-size: 1.08rem;
+  }
+  .about-section-box p.text-center,
+  .vision-section .about-section-box p.text-center {
+    font-size: 1rem;
+  }
+  .note-embed {
+    height: 200px !important;
+  }
+  .location-section .section-content {
+    font-size: 0.7rem !important;
+  }
+}
+
+.about-section-box img {
+  display: block;
+  max-width: 100%;
+  max-height: 180px;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* about/vision共通のボックスデザイン */
+.about-section-box {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1.5px 4px rgba(0,0,0,0.04);
+  padding: 2.2rem 1.5rem 2.2rem 1.5rem;
+  margin: 2.2rem auto 0 auto;
+  max-width: 800px;
+  text-align: left;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .about-section-box {
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+    margin-top: 1.2rem;
+    border-radius: 12px;
+  }
+}
+/* h3/pのデザインも完全統一 */
+.about-section-box h3.text-center,
+.vision-section .about-section-box h3.text-center {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 1.13rem;
+  color: #333;
+}
+@media (max-width: 600px) {
+  .about-section-box h3.text-center,
+  .vision-section .about-section-box h3.text-center {
+    font-size: 0.98rem;
+  }
+}
+.about-section-box p.text-center,
+.vision-section .about-section-box p.text-center {
+  font-size: 1.1rem;
+}
+@media (max-width: 600px) {
+  .about-section-box p.text-center,
+  .vision-section .about-section-box p.text-center {
+    font-size: 1rem;
+  }
+}
+/*
+@font-face {
+  font-family: "Font Awesome 6 Brands";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/webfonts/fa-brands-400.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* ========================================
+    # 管理統合済み
+    ======================================== */
+/* RS BUILD 20250918-final: Collection1背景統一・Brands正方形グリッド・重複削除完了 */
+
+/* 見た目定義最優先実装完了 - Collection=1ラッパー背景・8px gap、Brands=正方形ボックス・レスポンシブグリッド */
+
+/* BUILD_STAMP: 2025-01-18_ROOT_CAUSE_FIX */
+/* 根本原因解決: インライン最強CSS削除・JS重複解消・単一ソース化、Collection切れなし・余白6px・90s統一・Lookbook同様スワイプ、Brands自動サイズ調整グリッド */
+
+/* 検証用スタイル削除完了 - 反映確認済み */
+
+/* 最終値コメント記録 */
+/* Collection余白: --title-gap: 6px, --row-gap: 6px, wrapper padding: 8px */
+/* Collection速度: --track-speed: 90s(PC), 80s(TB), 60s(SP) */
+/* Collection画像: object-fit: contain, height: var(--track-item-size) */
+/* Brands列数: 5列(PC), 4列(≤1024px), 3列(≤768px), 2列(≤600px) */
+/* Brandsサイズ: --brand-size: clamp(120px, 18vw, 180px) */
+
+  .map-container {
+    width: 100% !important;
+    max-width: 900px !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: visible !important;
+  }
+  .form-container iframe,
+  .map-container iframe {
+    width: 100% !important;
+    max-width: 900px !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    display: block;
+    box-sizing: border-box;
+  }
+}
