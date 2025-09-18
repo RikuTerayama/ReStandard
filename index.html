@@ -139,9 +139,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_CURSOR_COMPLETE">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_CURSOR_COMPLETE">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18_CURSOR_COMPLETE">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_CURSOR_PROMPT">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_CURSOR_PROMPT">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-18_CURSOR_PROMPT">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -695,364 +695,7 @@
       z-index: 2;
       display: none;
     }
-    /* Collection - style.cssで統一管理 */
-    
-    /* Collection重複スタイル削除完了 - style.cssで統一管理 */
-    
-    
-    /* Collection セクション重複インラインスタイル削除 - 続き */
-    /* Duplicate removed: 残りの重複スタイルもstyle.cssのsections専用ブロックに統合 */
-    
-      /* gap強制削除 - style.css var(--track-gap)で統一管理 */
-    }
-    
-    /* Collection重複スタイル削除 - style.cssで統一管理 */
-    
-    /* 60s強制アニメーション削除 - style.css var(--track-speed)で統一管理 */
-    
-    /* 下段の画像表示を強制 */
-    html body #collection .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* 上段の画像表示を強制 */
-    html body #collection .collection-scroll-top img,
-    html body #collection .collection-scroll-top a {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* 行の高さを強制 */
-    html body #collection .collection-row-top,
-    html body #collection .collection-row-bottom {
-      height: 600px !important;
-      display: flex !important;
-      align-items: center !important;
-      overflow: hidden !important;
-    }
-    
-    /* 下段の表示を強制 */
-    html body #collection .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 450px !important;
-      min-height: 450px !important;
-    }
-    
-    html body #collection .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      /* 60s強制削除 - style.css var(--track-speed)で統一管理 */
-    }
-    
-    html body #collection .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-    }
-    
-    /* 下段の表示を最強で強制 */
-    .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 450px !important;
-    }
-    
-    .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      /* 60s強制削除 - style.css var(--track-speed)で統一管理 */
-    }
-    
-    .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-    }
-    
-    /* 下段の表示を最強で強制 - より具体的なセレクター */
-    html body #collection .collection-row-bottom,
-    html body .collection-section .collection-row-bottom,
-    body #collection .collection-row-bottom,
-    body .collection-section .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 450px !important;
-      min-height: 450px !important;
-      background: rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    html body #collection .collection-scroll-bottom,
-    html body .collection-section .collection-scroll-bottom,
-    body #collection .collection-scroll-bottom,
-    body .collection-section .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      /* 60s強制削除 - style.css var(--track-speed)で統一管理 */
-      /* gap強制削除 - style.css var(--track-gap)で統一管理 */
-    }
-    
-    html body #collection .collection-scroll-bottom img,
-    html body .collection-section .collection-scroll-bottom img,
-    body #collection .collection-scroll-bottom img,
-    body .collection-section .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* 下段の表示を最強で強制 - さらに具体的なセレクター */
-    .collection-section .collection-row-bottom,
-    .collection-section .collection-scroll-bottom,
-    .collection-section .collection-scroll-bottom img {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    .collection-section .collection-scroll-bottom {
-      /* 60s強制削除 - style.css var(--track-speed)で統一管理 */
-      /* gap強制削除 - style.css var(--track-gap)で統一管理 */
-    }
-    
-    .collection-section .collection-scroll-bottom img {
-      display: block !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-    }
-    
-    /* Collection セクション重複スタイル削除 */
-    /* Duplicate removed: 重複するCollection設定をstyle.cssのsectionsブロックに統合 */
-    
-    
-    /* Collection行の個別背景削除 - wrapperのみ背景適用 */
-    
-    /* Collection行の個別背景削除完了 */
-    
-    /* Collection重複背景設定削除 - CSSで統一管理 */
-    
-    /* Collection重複設定削除完了 - style.cssで統一管理 */
-    
-    /* Collection重複スタイル削除 - style.cssで統一管理 */
-    
-    /* Collection画像重複設定削除 - style.cssで統一管理 */
-    
-    /* Collection重複スタイル大幅削除 - style.cssで統一管理 */
-    
-    /* Collection画像のスタイル - 個別ボックスを削除 */
-    html body .collection-scroll-top a,
-    html body .collection-scroll-bottom a,
-    body .collection-scroll-top a,
-    body .collection-scroll-bottom a,
-    .collection-scroll-top a,
-    .collection-scroll-bottom a {
-      background: transparent !important;
-      border-radius: 8px !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-      transition: transform 0.3s ease !important;
-    }
-    
-    html body .collection-scroll-top a:hover,
-    html body .collection-scroll-bottom a:hover,
-    body .collection-scroll-top a:hover,
-    body .collection-scroll-bottom a:hover,
-    .collection-scroll-top a:hover,
-    .collection-scroll-bottom a:hover {
-      transform: translateY(-4px) !important;
-    }
-    
-    /* Collection画像強制スタイル削除 - style.css object-fit:containで統一管理 */
-    
-    /* 下段の強制表示 - 最強ルール */
-    .collection-row-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 600px !important;
-      min-height: 600px !important;
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-      align-items: center !important;
-      position: relative !important;
-      z-index: 9999 !important;
-    }
-    
-    .collection-scroll-bottom {
-      display: flex !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      /* 60s強制削除 - style.css var(--track-speed)で統一管理 */
-      /* gap強制削除 - style.css var(--track-gap)で統一管理 */
-      flex-direction: row !important;
-      height: 100% !important;
-      width: max-content !important;
-      align-items: center !important;
-      position: relative !important;
-      z-index: 10000 !important;
-    }
-    
-    .collection-scroll-bottom img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 250px !important;
-      width: 250px !important;
-      flex-shrink: 0 !important;
-      object-fit: cover !important;
-      border-radius: 8px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      position: relative !important;
-      z-index: 10001 !important;
-    }
-    
-    html body .collection-row-top,
-    html body .collection-row-bottom,
-    body .collection-row-top,
-    body .collection-row-bottom,
-    .collection-row-top,
-    .collection-row-bottom {
-      border: none !important;
-      outline: none !important;
-      box-shadow: none !important;
-      background: transparent !important;
-      overflow: hidden !important;
-        position: relative !important;
-        width: 100% !important;
-      height: 250px !important;
-      margin-bottom: 20px !important;
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-    
-    html body .collection-scroll-top img,
-    html body .collection-scroll-bottom img,
-    body .collection-scroll-top img,
-    body .collection-scroll-bottom img,
-    .collection-scroll-top img,
-    .collection-scroll-bottom img {
-      display: block !important;
-      height: 250px !important;
-      width: 250px !important;
-      min-width: 250px !important;
-      max-width: 250px !important;
-      object-fit: cover !important;
-      border-radius: 8px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      flex-shrink: 0 !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      float: none !important;
-      clear: none !important;
-      /* 横並びを強制する追加設定 */
-      flex-basis: 250px !important;
-      flex-grow: 0 !important;
-      flex-shrink: 0 !important;
-      order: 0 !important;
-      align-self: center !important;
-    }
-    
-    html body .collection-scroll-top a,
-    html body .collection-scroll-bottom a,
-    body .collection-scroll-top a,
-    body .collection-scroll-bottom a,
-    .collection-scroll-top a,
-    .collection-scroll-bottom a {
-      display: inline-block !important;
-      flex-shrink: 0 !important;
-      text-decoration: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      width: auto !important;
-      height: auto !important;
-    }
-    
-    /* ホバー時の一時停止 */
-    .collection-row-top:hover .collection-scroll-top,
-    .collection-row-bottom:hover .collection-scroll-bottom {
-      animation-play-state: paused !important;
-    }
-    
-    /* モバイル対応 */
-    @media (max-width: 768px) {
-      .collection-section {
-        padding: 40px 0 !important;
-      }
-      
-      .collection-title {
-        font-size: 2rem !important;
-        margin-bottom: 30px !important;
-      }
-      
-      .collection-row-top,
-      .collection-row-bottom {
-        height: 180px !important;
-        margin-bottom: 15px !important;
-      }
-      
-      .collection-scroll-top img,
-      .collection-scroll-bottom img {
-        height: 150px !important;
-        width: 150px !important;
-        min-width: 150px !important;
-        max-width: 150px !important;
-      }
-      
-      .collection-scroll-top,
-      .collection-scroll-bottom {
-        gap: 15px !important;
-        animation-duration: 60s !important;
-        flex-wrap: nowrap !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .collection-row-top,
-      .collection-row-bottom {
-        height: 160px !important;
-      }
-      
-      .collection-scroll-top img,
-      .collection-scroll-bottom img {
-        height: 120px !important;
-        width: 120px !important;
-        min-width: 120px !important;
-        max-width: 120px !important;
-      }
-      
-      .collection-scroll-top,
-      .collection-scroll-bottom {
-        gap: 12px !important;
-        animation-duration: 18s !important;
-        flex-wrap: nowrap !important;
-      }
-    }
+    /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
   </style>
   <style>
     /* フッターが浮かないようにする設定 */
@@ -1318,14 +961,13 @@
   <!-- Hero Video削除 - 背景動画に統合済み -->
   
   <!-- Collection Section - 統合済み -->
-  <section id="collection" class="collection-section collection-row-gap">
-    <h2 class="collection-title">Collection</h2>
-    
-    <!-- 上下2行を包む囲い背景 -->
-    <div class="collection-rows-wrapper">
+  <section id="collection" class="section-spacing">
+    <div class="collection-outer section-overlay--frost">
+      <h2 class="collection-title">Collection</h2>
+      <div class="collection-rows-wrapper">
     <!-- 上段：右→左スクロール -->
-      <div class="collection-row-top" data-draggable>
-      <div class="collection-scroll-top">
+        <div class="collection-row collection-row-top">
+          <div class="collection-track collection-scroll-top">
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
           <img src="image/1.JPG" alt="Collection Item 1">
         </a>
@@ -1348,12 +990,12 @@
         <img src="image/18.JPG" alt="Collection Item 18">
         <img src="image/19.JPG" alt="Collection Item 19">
         <img src="image/20.JPG" alt="Collection Item 20">
+          </div>
         </div>
-      </div>
     
     <!-- 下段：左→右スクロール -->
-      <div class="collection-row-bottom" data-draggable>
-      <div class="collection-scroll-bottom">
+        <div class="collection-row collection-row-bottom">
+          <div class="collection-track collection-scroll-bottom">
         <img src="image/32.JPG" alt="Collection Item 32">
         <img src="image/31.JPG" alt="Collection Item 31">
         <img src="image/30.JPG" alt="Collection Item 30">
@@ -1368,9 +1010,10 @@
         <img src="image/23.JPG" alt="Collection Item 23">
         <img src="image/22.JPG" alt="Collection Item 22">
         <img src="image/21.JPG" alt="Collection Item 21">
+          </div>
+        </div>
       </div>
     </div>
-    </div> <!-- collection-rows-wrapper 終了 -->
   </section>
 
   <!-- デバッグ用JavaScript -->
@@ -1982,8 +1625,8 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- セクション初期化スクリプト - 統合済み -->
   <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
   <script src="js/init-sections.js?v=2025-01-18-final"></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-18_CURSOR_COMPLETE"></script>
-  <script src="js/collection-interaction.js?v=2025-01-18_CURSOR_COMPLETE"></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-18_CURSOR_PROMPT"></script>
+  <script src="js/collection-interaction.js?v=2025-01-18_CURSOR_PROMPT"></script>
 
 </body>
 </html>
