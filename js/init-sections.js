@@ -104,9 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (collectionSection && topRow && bottomRow) {
       console.info("[COLLECTION] Section properly structured");
       
-      // 画像複製処理（無限ループのため）
-      duplicateImages('.collection-scroll-top');
-      duplicateImages('.collection-scroll-bottom');
+      // 画像複製処理削除 - collection-interaction.jsに統一
     } else {
       console.warn("[COLLECTION] Section structure issue detected");
     }
