@@ -209,48 +209,7 @@ html:not([lang]) #about-restandard .only-en {
   margin: 0 auto !important;
 }
 
-/* ========================================
-  PC表示でのCollectionセクション表示問題解決
-  ======================================== */
-
-@media (min-width: 1025px) {
-  .collection-section {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .collection-section .flowing-images {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .collection-section .flowing-bg {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .collection-section .flow-row-bg {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  /* 背景の復活 */
-  .collection-section .flowing-bg {
-    background: rgba(250, 250, 235, 0.9) !important;
-    border-radius: 16px !important;
-    padding: 16px 20px !important;
-  }
-  
-  .collection-section .flow-row-bg {
-    background: rgba(250, 250, 235, 0.9) !important;
-    border-radius: 16px !important;
-    padding: 16px 20px !important;
-  }
-}
+/* Collection競合ルール削除済み - style.cssで統一管理 */
 
 /* ========================================
   言語切り替えボタンのスタイル
