@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_CLICK_DRAG_COMPLETE */
-/* クリック/ドラッグ完全実装: 10px閾値・リンク遷移温存・双方向ドラッグ・hover端末制御・draggingクラス・満幅背景 */
+/* BUILD_STAMP: 2025-01-18_TRANSFORM_UNIFIED_COMPLETE */
+/* Transform統一完全実装: DOM構造正規化・10px閾値・クリック/ドラッグ両立・hover端末制御・フルブリード・回帰確認済み */
 
 /* ========================================
    共通トークンとベース - Single Source
