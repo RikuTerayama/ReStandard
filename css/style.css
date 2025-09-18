@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_MINIMAL_DIFF_COMPLETE */
-/* 最小差分実装: 表示一貫性・背景適用範囲統一・スクロール/ドラッグ体験安定化・--collection-speed統一・Frost囲い範囲最適化 */
+/* BUILD_STAMP: 2025-01-18_FINAL_SPEC_COMPLETE */
+/* 最終仕様完全実装: フルブリードCollection/Lookbook・レスポンシブBrands・統一タイトル・縦中央寄せ・インライン固定削除・競合解消 */
 
 /* ========================================
    共通トークンとベース
@@ -103,19 +103,25 @@ section {
   padding: clamp(40px, 6vw, 80px) 0;
   width: 100vw;
   margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .collection-section {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  margin: 0;
+  margin-right: calc(50% - 50vw);
+  margin-top: 0;
+  margin-bottom: 0;
   padding: 0;
 }
 
-/* collection-outer の Frost 背景は外す */
+/* collection-outer フルブリード化 */
 .collection-outer {
-  width: 100%;
-  margin: 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: 0;
+  margin-bottom: 0;
   padding: 0;
 }
 
@@ -314,6 +320,12 @@ section {
   object-position: center; /* ホバー画像中央表示 */
 }
 
+/* 特異性を上げたホバー中央揃えルール（競合対策） */
+.brands .brand-card .brand-hover img {
+  object-position: center;
+  object-fit: contain;
+}
+
 .brand-card:hover .brand-logo { 
   opacity: 0; 
 }
@@ -354,9 +366,11 @@ section {
   gap: 12px;
   align-items: center;
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* 縦中央寄せ */
   animation: lookbook-scroll 40s linear infinite;
   will-change: transform;
-  height: 100%;
+  height: auto; /* 画像の自然な高さ */
   cursor: grab;
 }
 
@@ -391,13 +405,13 @@ section {
   box-shadow: none;
 }
 
-/* Lookbook 自動スクロールアニメーション（右→左） */
+/* Lookbook 自動スクロールアニメーション（右→左・Y中央維持） */
 @keyframes lookbook-scroll {
   0% { 
-    transform: translateX(0); 
+    transform: translate3d(0, -50%, 0); 
   }
   100% { 
-    transform: translateX(-50%); 
+    transform: translate3d(-50%, -50%, 0); 
   }
 }
 
@@ -472,8 +486,8 @@ section {
 
 @media (max-width: 480px) {
   :root {
-    --collection-row-h: clamp(100px, 18vw, 150px);
-    --collection-speed: 30s;
+    --collection-row-h: clamp(120px, 24vw, 180px); /* SP判読性向上 */
+    --collection-speed: 35s;
   }
   
   .collection-track img {
@@ -481,6 +495,6 @@ section {
   }
   
   .lookbook-item img {
-    height: clamp(200px, 25vw, 280px);
+    height: clamp(220px, 28vw, 300px); /* SP判読性向上 */
   }
 }
