@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!window.__collectionDoubled) {
     window.__collectionDoubled = true;
     
-    document.querySelectorAll('.collection-track').forEach(track => {
+    document.querySelectorAll('.collection-scroll-top, .collection-scroll-bottom').forEach(track => {
       const items = Array.from(track.children);
       
       // すでに複製済みならスキップ
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // 二段同時表示の確認
-  const collectionTop = document.querySelector('.collection-track.collection-scroll-top');
-  const collectionBottom = document.querySelector('.collection-track.collection-scroll-bottom');
+  const collectionTop = document.querySelector('.collection-scroll-top');
+  const collectionBottom = document.querySelector('.collection-scroll-bottom');
   
   if (collectionTop && collectionBottom) {
     console.info('[COLLECTION] 二段同時表示確認: OK');
