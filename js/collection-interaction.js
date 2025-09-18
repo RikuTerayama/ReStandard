@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let startX = 0;
     let startY = 0;
     let animationPaused = false;
-    const DRAG_THRESHOLD = 10; // 10px以上でドラッグ判定
+    const DRAG_THRESHOLD = 8; // 8px以上でドラッグ判定
     
     // タッチイベント（passive: false でpreventDefault制御可能）
     container.addEventListener('touchstart', (e) => {
@@ -240,6 +240,89 @@ document.addEventListener('DOMContentLoaded', function() {
         dragStarted = false;
         container.style.cursor = 'grab';
         container.classList.remove('dragging'); // dragging状態解除
+        
+        if (animationPaused) {
+          setTimeout(() => {
+            container.style.animationPlayState = 'running';
+            animationPaused = false;
+          }, 1500);
+        }
+      }
+    });
+    
+    // ポインターイベント（setPointerCapture使用）
+    container.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      dragStarted = false;
+      container.style.cursor = 'grabbing';
+      container.setPointerCapture(e.pointerId);
+      
+      startX = e.clientX;
+      
+      // start では preventDefault しない
+    });
+    
+    container.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      
+      const deltaX = Math.abs(e.clientX - startX);
+      
+      if (deltaX > DRAG_THRESHOLD && !dragStarted) {
+        dragStarted = true;
+        container.classList.add('dragging'); // CSS制御用クラス
+        animationPaused = true;
+      }
+      
+      if (dragStarted) {
+        e.preventDefault();
+        
+        const currentTransform = getComputedStyle(container).transform;
+        let currentX = 0;
+        
+        if (currentTransform && currentTransform !== 'none') {
+          const matrix = currentTransform.match(/matrix\((.+)\)/);
+          if (matrix) {
+            currentX = parseFloat(matrix[1].split(',')[4]);
+          }
+        }
+        
+        const moveX = (e.clientX - startX) * 1.5;
+        container.style.transform = `translateX(${currentX + moveX}px)`;
+        startX = e.clientX;
+      }
+    });
+    
+    container.addEventListener('pointerup', (e) => {
+      if (!isDragging) return;
+      
+      if (!dragStarted) {
+        // クリック許可
+        console.info('[COLLECTION] ポインタークリック判定: 通常遷移');
+      } else {
+        e.preventDefault();
+      }
+      
+      isDragging = false;
+      dragStarted = false;
+      container.style.cursor = 'grab';
+      container.classList.remove('dragging'); // dragging状態解除
+      container.releasePointerCapture(e.pointerId);
+      
+      if (animationPaused) {
+        setTimeout(() => {
+          container.style.animationPlayState = 'running';
+          animationPaused = false;
+        }, 1500);
+      }
+    });
+    
+    container.addEventListener('pointercancel', (e) => {
+      if (isDragging) {
+        isDragging = false;
+        dragStarted = false;
+        container.style.cursor = 'grab';
+        container.classList.remove('dragging');
+        container.releasePointerCapture(e.pointerId);
         
         if (animationPaused) {
           setTimeout(() => {
