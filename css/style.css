@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_CURSOR_PROMPT_COMPLETE */
-/* Cursor向け完全実装: フルブリードCollection・5×2Brandsグリッド・統一背景Lookbook・アクセシビリティ対応 */
+/* BUILD_STAMP: 2025-01-18_UNIFIED_RESPONSIVE */
+/* 統一レスポンシブ実装: 100vwCollection・5×2/3×4/2×5Brands・統一背景Lookbook・競合解消・タッチ対応 */
 
 /* ========================================
    共通トークンとベース
@@ -83,89 +83,120 @@ section {
 }
 
 /* ========================================
-   Collection（フル幅・二段・永続スクロール・余白圧縮）
+   Collection（100vw横幅・統一背景・二段同時表示）
    ======================================== */
 
-/* セクションはフルブリード。内側の frost ボックスに余白を持たせる */
+/* セクション全体を100vw横幅にする */
 #collection { 
   margin: 0; 
-  padding: 0; 
-}
-
-#collection .collection-outer {
+  padding: 0;
   width: 100vw;
   margin-left: calc(50% - 50vw);
 }
 
-/* タイトルの上下余白を圧縮 */
+.collection-section {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin: 0;
+  padding: 0;
+}
+
+.collection-outer {
+  width: 100vw;
+  margin: 0;
+  padding: clamp(20px, 3vw, 40px) 0;
+}
+
+/* タイトルのレスポンシブ対応 */
 .collection-title {
   text-align: center;
-  margin: 0 0 clamp(8px, 1.2vw, 14px) 0 !important;
+  margin: 0 0 clamp(16px, 2vw, 24px) 0;
   color: white;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  background: none;
 }
 
-/* 2段のラッパーを1つの frost で囲う。行間は最小に */
+/* 統一背景を rows-wrapper にのみ適用 */
 .collection-rows-wrapper {
+  background: var(--nav-frost-bg);
+  border-radius: 16px;
+  padding: clamp(16px, 2.5vw, 24px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.10);
+  backdrop-filter: blur(8px);
+  margin: 0 clamp(12px, 2vw, 20px);
   display: grid;
   grid-template-rows: 1fr 1fr;
-  gap: clamp(4px, 0.8vw, 10px);
+  gap: 8px;
 }
 
-/* 各段は高さ一定で横スクロールトラックを収める */
+/* 各段の高さ設定 */
 .collection-row {
   height: var(--collection-row-h);
   overflow: hidden;
+  position: relative;
 }
 
-/* トラック（連結させるため width: max-content） */
+/* トラック設定 */
 .collection-track {
   display: flex;
   align-items: center;
-  gap: clamp(12px, 2vw, 24px);
+  gap: clamp(12px, 2vw, 20px);
   width: max-content;
   will-change: transform;
   cursor: grab;
+  height: 100%;
 }
 
 .collection-track:active {
   cursor: grabbing;
 }
 
-/* 画像は上下が切れない。正方形でなく比率維持 */
+/* 画像のレスポンシブ対応・object-fit: contain */
 .collection-track img {
   height: calc(var(--collection-row-h) - 8px);
   width: auto;
-  object-fit: contain !important;
+  object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,.15);
   user-select: none;
   pointer-events: auto;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .collection-track img:hover {
   transform: translateY(-4px);
 }
 
-/* アニメーション（上下で逆方向） */
-@keyframes marquee-ltr { 
-  from { transform: translateX(-50%); } 
-  to { transform: translateX(0); } 
+.collection-track a {
+  display: block;
+  flex-shrink: 0;
 }
 
-@keyframes marquee-rtl { 
+.collection-track a img {
+  height: calc(var(--collection-row-h) - 8px);
+  width: auto;
+  object-fit: contain;
+}
+
+/* アニメーション（上段: 右→左、下段: 左→右） */
+@keyframes scroll-right-to-left { 
   from { transform: translateX(0); } 
   to { transform: translateX(-50%); } 
 }
 
+@keyframes scroll-left-to-right { 
+  from { transform: translateX(-50%); } 
+  to { transform: translateX(0); } 
+}
+
 .collection-scroll-top  { 
-  animation: marquee-rtl var(--collection-speed) linear infinite; 
+  animation: scroll-right-to-left var(--collection-speed) linear infinite; 
 }
 
 .collection-scroll-bottom { 
-  animation: marquee-ltr var(--collection-speed) linear infinite; 
+  animation: scroll-left-to-right var(--collection-speed) linear infinite; 
 }
 
 /* ホバーで一時停止（ポインタデバイスのみ） */
@@ -183,49 +214,67 @@ section {
 }
 
 /* ========================================
-   Brands（5×2 / 2×5、中央寄せ、カード自動拡大）
+   Brands（レスポンシブグリッド・中央揃え・正方形維持）
    ======================================== */
 .brands {
-  padding: 80px 20px;
+  padding: clamp(60px, 8vw, 80px) clamp(16px, 3vw, 20px);
   text-align: center;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .brands h2 {
-  font-size: 2.5rem;
-  margin-bottom: 50px;
-  color: var(--main-color);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: clamp(30px, 5vw, 50px);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  background: none;
 }
 
 .brands-grid {
-  display: grid !important;
-  grid-template-columns: repeat(5, 1fr); /* デフォルト 5列 */
-  gap: clamp(12px, 1.6vw, 20px) !important;
-  max-width: min(1200px, 92vw) !important;
-  margin: 0 auto !important;
-  justify-items: center !important;
+  display: grid;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 20px);
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-items: center;
+  align-items: center;
 }
 
-/* 幅が狭い時は 2列（= 2×5） */
-@media (max-width: 860px) {
-  .brands-grid { 
-    grid-template-columns: repeat(2, 1fr) !important; 
+/* PC: 5×2レイアウト */
+@media (min-width: 1025px) {
+  .brands-grid {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
-/* カードは正方形。サイズは画面幅に応じて自動拡大 */
+/* タブレット: 3×4レイアウト */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .brands-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* モバイル: 2×5レイアウト */
+@media (max-width: 768px) {
+  .brands-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ブランドカード - 正方形維持・レスポンシブサイズ */
 .brand-card {
-  aspect-ratio: 1/1 !important;
-  width: clamp(130px, 18vw, 220px) !important;
-  display: grid !important;
-  place-items: center !important;
-  background: #fff !important;
-  border-radius: 14px !important;
-  padding: clamp(12px, 1.2vw, 18px) !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,.10) !important;
-  position: relative !important;
-  overflow: hidden !important;
+  aspect-ratio: 1/1;
+  width: clamp(120px, 15vw, 200px);
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border-radius: 12px;
+  padding: clamp(8px, 1.5vw, 16px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.10);
+  position: relative;
+  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 auto;
 }
 
 .brand-card:hover {
@@ -233,86 +282,91 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-/* ロゴの切替（既存仕様を尊重） */
+/* ブランドロゴ画像 */
 .brand-card img { 
-  width: 100% !important; 
-  height: 100% !important; 
-  object-fit: contain !important; 
-  transition: opacity .25s ease; 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  transition: opacity .3s ease; 
+}
+
+.brand-card .brand-logo {
+  opacity: 1;
 }
 
 .brand-card .brand-hover { 
-  position: absolute !important; 
-  inset: clamp(10px,1vw,12px) !important; 
-  opacity: 0 !important; 
+  position: absolute; 
+  top: clamp(8px, 1.5vw, 16px);
+  left: clamp(8px, 1.5vw, 16px);
+  right: clamp(8px, 1.5vw, 16px);
+  bottom: clamp(8px, 1.5vw, 16px);
+  opacity: 0; 
 }
 
 .brand-card:hover .brand-logo { 
-  opacity: 0 !important; 
+  opacity: 0; 
 }
 
 .brand-card:hover .brand-hover { 
-  opacity: 1 !important; 
+  opacity: 1; 
 }
 
 /* ========================================
-   Lookbook（個別背景削除、セクション全体のみ背景）
+   Lookbook（統一背景・横並びレイアウト・12pxギャップ）
    ======================================== */
 .lookbook {
-  padding: 80px 20px;
+  padding: clamp(60px, 8vw, 80px) 0;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   overflow: hidden;
 }
 
 .lookbook h2 {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
-  color: var(--main-color);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: clamp(30px, 5vw, 50px);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  background: none;
 }
 
-/* セクション全体の背景は外側に一回だけ */
-.lookbook-outer.section-overlay--frost {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-}
-
+/* 統一背景を lookbook-container にのみ適用 */
 .lookbook-container {
+  background: var(--nav-frost-bg);
+  border-radius: 16px;
+  padding: clamp(16px, 2.5vw, 24px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.10);
+  backdrop-filter: blur(8px);
+  margin: 0 clamp(12px, 2vw, 20px);
   position: relative;
-  overflow: hidden !important;
-  height: 300px;
+  overflow: hidden;
+  height: clamp(280px, 30vw, 360px);
 }
 
 .lookbook-track {
-  display: flex !important;
+  display: flex;
   flex-direction: row;
-  gap: clamp(16px, 1.6vw, 24px) !important;
-  align-items: center !important;
+  gap: 12px;
+  align-items: center;
   position: absolute;
   animation: lookbook-scroll 40s linear infinite;
   will-change: transform;
+  height: 100%;
+  cursor: grab;
 }
 
-/* 個々の item から背景・白いカード枠を撤廃 */
+.lookbook-track:active {
+  cursor: grabbing;
+}
+
+/* 個々のアイテムから背景削除・横並び設定 */
 .lookbook-item { 
-  position: relative; 
   flex-shrink: 0;
-  flex: 0 0 250px;
-  height: 250px;
-}
-
-.lookbook-item,
-.lookbook-item img {
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 8px !important; /* 角丸だけ残す */
-}
-
-/* 画像の高さを控えめにして均一化 */
-.lookbook-item img {
-  height: clamp(280px, 28vw, 360px);
+  height: clamp(240px, 26vw, 320px);
   width: auto;
-  object-fit: contain !important;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 8px;
+  overflow: hidden;
   transition: transform 0.3s ease;
 }
 
@@ -320,11 +374,18 @@ section {
   transform: scale(1.05);
 }
 
-.lookbook-item:hover img {
-  transform: scale(1.05);
+/* 画像のレスポンシブ対応 */
+.lookbook-item img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  background: transparent;
+  box-shadow: none;
 }
 
-/* Lookbook 自動スクロールアニメーション */
+/* Lookbook 自動スクロールアニメーション（右→左） */
 @keyframes lookbook-scroll {
   0% { 
     transform: translateX(0); 
@@ -344,7 +405,7 @@ section {
 /* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .lookbook-track { 
-    animation: none !important; 
+    animation: none; 
   }
 }
 
