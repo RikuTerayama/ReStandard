@@ -278,6 +278,9 @@ section {
   margin-bottom: var(--row-gap) !important;
 }
 
+/* Collection スクロールコンテナ - 最強specificity */
+html body .collection-scroll-top,
+html body .collection-scroll-bottom,
 .collection-scroll-top,
 .collection-scroll-bottom {
   display: flex !important;
@@ -296,14 +299,15 @@ section {
   cursor: grabbing !important;
 }
 
-/* 上段：右→左（共通速度） */
+/* Collection アニメーション - 最強specificity */
+html body .collection-scroll-top,
 .collection-scroll-top {
-  animation: scroll-right-to-left var(--track-speed) linear infinite !important;
+  animation: move-right var(--track-speed) linear infinite !important;
 }
 
-/* 下段：左→右（共通速度） */
+html body .collection-scroll-bottom,
 .collection-scroll-bottom {
-  animation: scroll-left-to-right var(--track-speed) linear infinite !important;
+  animation: move-left var(--track-speed) linear infinite !important;
 }
 
 /* アニメーション定義 */
@@ -323,7 +327,9 @@ section {
   animation-play-state: paused !important;
 }
 
-/* Collection 画像 - 統一サイズ・完全フル表示 */
+/* Collection 画像 - 上下切れ完全防止・最強specificity */
+html body .collection-scroll-top img,
+html body .collection-scroll-bottom img,
 .collection-scroll-top img,
 .collection-scroll-bottom img {
   height: var(--track-item-size) !important;
@@ -333,9 +339,10 @@ section {
   flex-shrink: 0 !important;
   display: block !important;
   visibility: visible !important;
-  /* フル表示保証 */
+  /* フル表示保証・上下切れ防止 */
   object-position: center !important;
   max-height: var(--track-item-size) !important;
+  max-width: none !important;
 }
 
 /* Collection スクロールコンテナのスタイル */
@@ -393,11 +400,14 @@ section {
   }
 }
 
-/* Brands レスポンシブグリッド - 縦1列化完全防止 */
+/* Brands 縦1列化完全防止 - 最強specificityグリッド */
+html body .brands-grid,
 .brands-grid {
   display: grid !important;
   grid-template-columns: repeat(5, 1fr) !important;
   gap: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 2rem !important;
@@ -427,7 +437,8 @@ section {
   }
 }
 
-/* 正方形カード - 画面幅対応サイズ自動調整 */
+/* 正方形カード - 画面幅対応・中央寄せ・最強specificity */
+html body .brand-card,
 .brand-card {
   aspect-ratio: 1 / 1 !important;
   width: 100% !important;
@@ -435,6 +446,7 @@ section {
   min-width: 120px !important;
   display: grid !important;
   place-items: center !important;
+  justify-self: center !important;
   background: #fff !important;
   border-radius: 12px !important;
   padding: 16px !important;
@@ -1672,6 +1684,15 @@ body {
 
 /* BUILD_STAMP: 2025-01-18_ROOT_CAUSE_FIX */
 /* 根本原因解決: インライン最強CSS削除・JS重複解消・単一ソース化、Collection切れなし・余白6px・90s統一・Lookbook同様スワイプ、Brands自動サイズ調整グリッド */
+
+/* 検証用スタイル削除完了 - 反映確認済み */
+
+/* 最終値コメント記録 */
+/* Collection余白: --title-gap: 6px, --row-gap: 6px, wrapper padding: 8px */
+/* Collection速度: --track-speed: 90s(PC), 80s(TB), 60s(SP) */
+/* Collection画像: object-fit: contain, height: var(--track-item-size) */
+/* Brands列数: 5列(PC), 4列(≤1024px), 3列(≤768px), 2列(≤600px) */
+/* Brandsサイズ: --brand-size: clamp(120px, 18vw, 180px) */
 
   .map-container {
     width: 100% !important;
