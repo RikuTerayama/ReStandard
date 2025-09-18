@@ -1,4 +1,4 @@
-// Collection 二段同時表示・無限ループ機能（Cursor仕様）
+// Collection スワイプ & リンクタップ共存機能（Senior FE仕様）
 document.addEventListener('DOMContentLoaded', function() {
   
   // 重複防止ガード
@@ -73,46 +73,44 @@ document.addEventListener('DOMContentLoaded', function() {
     console.warn('[COLLECTION] 二段のうち片方が見つからない');
   }
   
-  // スワイプ機能追加（両段対応）
+  // Collection スワイプ & リンクタップ共存機能
   function addCollectionSwipeSupport(container) {
     if (!container) return;
     
     let isDragging = false;
     let startX = 0;
+    let startY = 0;
+    let totalDeltaX = 0;
     let animationPaused = false;
+    const DRAG_THRESHOLD = 8; // 8px以上でドラッグ判定
     
-    const events = {
-      start: ['mousedown', 'touchstart'],
-      move: ['mousemove', 'touchmove'],
-      end: ['mouseup', 'touchend', 'mouseleave']
-    };
+    // タッチイベント（passive: false でpreventDefault可能）
+    container.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      totalDeltaX = 0;
+      container.style.cursor = 'grabbing';
+      
+      // アニメーション一時停止
+      container.style.animationPlayState = 'paused';
+      animationPaused = true;
+      
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      
+      // 閾値判定前はpreventDefaultしない（リンククリック温存）
+    }, { passive: false });
     
-    // ドラッグ開始
-    events.start.forEach(event => {
-      container.addEventListener(event, (e) => {
-        isDragging = true;
-        container.style.cursor = 'grabbing';
-        
-        // アニメーション一時停止
-        container.style.animationPlayState = 'paused';
-        animationPaused = true;
-        
-        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-        startX = clientX;
-        
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      
+      const clientX = e.touches[0].clientX;
+      const deltaX = (clientX - startX) * 1.5;
+      totalDeltaX += Math.abs(deltaX);
+      
+      // 閾値超過後のみpreventDefault & transform更新
+      if (totalDeltaX > DRAG_THRESHOLD) {
         e.preventDefault();
-      });
-    });
-    
-    // ドラッグ中
-    events.move.forEach(event => {
-      container.addEventListener(event, (e) => {
-        if (!isDragging) return;
         
-        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-        const deltaX = (clientX - startX) * 1.5;
-        
-        // 現在のtransform値を取得して調整
         const currentTransform = getComputedStyle(container).transform;
         let currentX = 0;
         
@@ -124,21 +122,99 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         container.style.transform = `translateX(${currentX + deltaX}px)`;
-        startX = clientX;
-        
+      }
+      
+      startX = clientX;
+    }, { passive: false });
+    
+    container.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      
+      // 閾値以下ならリンククリック許可
+      if (totalDeltaX <= DRAG_THRESHOLD) {
+        console.info('[COLLECTION] タップ判定: リンク遷移許可');
+        // リンククリックを妨げない
+      } else {
+        console.info('[COLLECTION] ドラッグ判定: リンク遷移防止');
         e.preventDefault();
-      });
+      }
+      
+      isDragging = false;
+      container.style.cursor = 'grab';
+      
+      // アニメーション再開
+      setTimeout(() => {
+        if (animationPaused) {
+          container.style.animationPlayState = 'running';
+          container.style.transform = '';
+          animationPaused = false;
+        }
+      }, 1500);
+    }, { passive: false });
+    
+    // マウスイベント（PC用・同様のロジック）
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      totalDeltaX = 0;
+      container.style.cursor = 'grabbing';
+      
+      container.style.animationPlayState = 'paused';
+      animationPaused = true;
+      
+      startX = e.clientX;
+      e.preventDefault();
     });
     
-    // ドラッグ終了
-    events.end.forEach(event => {
-      container.addEventListener(event, () => {
-        if (!isDragging) return;
+    container.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      
+      const deltaX = (e.clientX - startX) * 1.5;
+      totalDeltaX += Math.abs(deltaX);
+      
+      if (totalDeltaX > DRAG_THRESHOLD) {
+        const currentTransform = getComputedStyle(container).transform;
+        let currentX = 0;
         
+        if (currentTransform && currentTransform !== 'none') {
+          const matrix = currentTransform.match(/matrix\((.+)\)/);
+          if (matrix) {
+            currentX = parseFloat(matrix[1].split(',')[4]);
+          }
+        }
+        
+        container.style.transform = `translateX(${currentX + deltaX}px)`;
+      }
+      
+      startX = e.clientX;
+      e.preventDefault();
+    });
+    
+    container.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      
+      if (totalDeltaX <= DRAG_THRESHOLD) {
+        // クリック許可
+      } else {
+        e.preventDefault();
+      }
+      
+      isDragging = false;
+      container.style.cursor = 'grab';
+      
+      setTimeout(() => {
+        if (animationPaused) {
+          container.style.animationPlayState = 'running';
+          container.style.transform = '';
+          animationPaused = false;
+        }
+      }, 1500);
+    });
+    
+    container.addEventListener('mouseleave', () => {
+      if (isDragging) {
         isDragging = false;
         container.style.cursor = 'grab';
         
-        // 1.5秒後にアニメーション再開
         setTimeout(() => {
           if (animationPaused) {
             container.style.animationPlayState = 'running';
@@ -146,12 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
             animationPaused = false;
           }
         }, 1500);
-        
-        // さらに予備処理で確実に再開
-        setTimeout(() => {
-          container.style.animationPlayState = 'running';
-        }, 2500);
-      });
+      }
     });
     
     // 基本カーソル設定
