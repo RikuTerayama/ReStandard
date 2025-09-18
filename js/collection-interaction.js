@@ -15,9 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
     track.innerHTML = '';
     unique.forEach(el => track.appendChild(el.cloneNode(true)));
 
-    // 親幅×2を満たすまでクローン追加（シームレス無限）
-    const needWidth = parent.clientWidth * 2;
+    // 親幅×3を満たすまでクローン追加（確実な無限ループ）
+    const needWidth = parent.clientWidth * 3;
     while (track.scrollWidth < needWidth) {
+      unique.forEach(el => track.appendChild(el.cloneNode(true)));
+    }
+    
+    // さらに追加で3回複製（途切れ防止）
+    for (let i = 0; i < 3; i++) {
       unique.forEach(el => track.appendChild(el.cloneNode(true)));
     }
     track.dataset.loopReady = '1';
@@ -92,14 +97,19 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
         container.style.cursor = 'grab';
         
-        // 2秒後にアニメーション再開・CSS基準位置へ戻す
+        // 1.5秒後にアニメーション再開・CSS基準位置へ戻す
         setTimeout(() => {
           if (animationPaused) {
             container.style.animationPlayState = 'running';
             container.style.transform = ''; // CSS アニメ基準位置へ戻す
             animationPaused = false;
           }
-        }, 2000);
+        }, 1500);
+        
+        // さらに予備処理で確実に再開
+        setTimeout(() => {
+          container.style.animationPlayState = 'running';
+        }, 2500);
       });
     });
     
