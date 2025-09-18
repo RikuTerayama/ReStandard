@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_COMPLETE_REBUILD */
-/* 完全再構築: 翻訳プラグイン無効化・CSS重複排除・Collection画像縮小全体表示・Brands正方形グリッド */
+/* BUILD_STAMP: 2025-01-18_CURSOR_COMPLETE */
+/* Cursor向け完全修正: Collection統一背景・自動スクロール復活・Brands5×2グリッド・Lookbook横スクロール・アニメーション整合性確保 */
 
 /* ========================================
    カスタムプロパティ - 単一ソース定義
@@ -11,10 +11,10 @@
   --track-speed: 80s;           /* 上下ともゆっくり流れる */
   --collection-gap: 4px;        /* 行間や見出し間のギャップ */
   
-  /* Brands設定 */
-  --brand-size-min: 120px;
-  --brand-size-max: 180px;
-  --brand-gap: 1rem;
+  /* Brands設定 - カードサイズ拡大 */
+  --brand-size-min: 140px;
+  --brand-size-max: 220px;
+  --brand-gap: 1.5rem;
   
   /* 共通設定 */
   --main-color: #333333;
@@ -83,44 +83,41 @@ section {
    Collection セクション - 統合定義
    ======================================== */
 .collection {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  color: var(--main-color);
+  padding: 30px 0;
+  text-align: center;
 }
 
 .collection-title {
   text-align: center;
   font-size: 2.5rem;
-  margin-bottom: calc(var(--collection-gap) / 2);
+  margin-bottom: 20px;
   color: white;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
-  backdrop-filter: none;
 }
 
-.collection-row-gap {
-  --title-to-top: var(--collection-gap);
-  --top-to-bottom: var(--collection-gap);
+/* Collection 親コンテナ - 統一背景 */
+.collection-rows-wrapper {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
-/* Collection 行コンテナ */
+/* Collection 行コンテナ - 間隔4px */
 .collection-row-top,
 .collection-row-bottom {
   display: flex;
   height: var(--track-row-height);
-  margin-bottom: var(--collection-gap);
+  margin-bottom: 4px;
   overflow: hidden;
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
-  backdrop-filter: none;
+  position: relative;
+}
+
+.collection-row-bottom {
+  margin-bottom: 0;
 }
 
 /* Collection スクロールコンテナ */
@@ -133,6 +130,7 @@ section {
   white-space: nowrap;
   will-change: transform;
   cursor: grab;
+  height: 100%;
 }
 
 .collection-scroll-top {
@@ -152,6 +150,23 @@ section {
   object-fit: contain;
   border-radius: 8px;
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.collection-scroll-top img:hover,
+.collection-scroll-bottom img:hover {
+  transform: translateY(-4px);
+}
+
+/* Collection アニメーション継続保証 */
+.collection-scroll-top,
+.collection-scroll-bottom {
+  animation-play-state: running !important;
+}
+
+.collection-row-top:hover .collection-scroll-top,
+.collection-row-bottom:hover .collection-scroll-bottom {
+  animation-play-state: paused;
 }
 
 /* Collection アニメーション */
@@ -188,6 +203,7 @@ section {
 .brands {
   padding: 80px 20px;
   text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .brands h2 {
@@ -201,19 +217,21 @@ section {
   gap: var(--brand-gap);
   justify-items: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
   margin: 0 auto;
   max-width: 1200px;
 }
 
-/* PC: 5列（5×2） */
+/* PC: 5列（5×2） - 10個のブランドロゴ */
 @media (min-width: 901px) {
   .brands-grid {
     grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
   }
 }
 
-/* タブレット: 3列（3×3相当） */
+/* タブレット: 3列（3×4相当） */
 @media (max-width: 900px) and (min-width: 601px) {
   .brands-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -227,7 +245,7 @@ section {
   }
 }
 
-/* ブランドカード - 正方形統一 */
+/* ブランドカード - 正方形統一・ホバー切替対応 */
 .brand-card {
   aspect-ratio: 1 / 1;
   width: 100%;
@@ -240,6 +258,8 @@ section {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  margin: auto;
 }
 
 .brand-card:hover {
@@ -247,19 +267,43 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-.brand-card img {
+/* ブランドロゴ画像 - 基本表示 */
+.brand-card .brand-logo {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.3s ease;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+/* ホバー時画像 - 初期は非表示 */
+.brand-card .brand-hover {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ホバー時の画像切替 */
+.brand-card:hover .brand-logo {
+  opacity: 0;
+}
+
+.brand-card:hover .brand-hover {
+  opacity: 1;
 }
 
 /* ========================================
-   Lookbook セクション
+   Lookbook セクション - 横スクロール
    ======================================== */
 .lookbook {
   padding: 80px 20px;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  overflow: hidden;
 }
 
 .lookbook h2 {
@@ -269,17 +313,24 @@ section {
   color: var(--main-color);
 }
 
-.lookbook-scroll {
+.lookbook-container {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+
+.lookbook-track {
   display: flex;
+  flex-direction: row;
   gap: 20px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 20px 0;
+  position: absolute;
+  animation: lookbook-scroll 40s linear infinite;
+  will-change: transform;
 }
 
 .lookbook-item {
-  flex: 0 0 300px;
-  height: 400px;
+  flex: 0 0 250px;
+  height: 250px;
   background: white;
   border-radius: 12px;
   overflow: hidden;
@@ -294,7 +345,22 @@ section {
 .lookbook-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+/* Lookbook 自動スクロールアニメーション */
+@keyframes lookbook-scroll {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    transform: translateX(-50%); 
+  }
+}
+
+/* ホバー時一時停止 */
+.lookbook-container:hover .lookbook-track {
+  animation-play-state: paused;
 }
 
 /* ========================================
