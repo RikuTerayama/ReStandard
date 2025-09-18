@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 閾値超過でドラッグ開始
       if (deltaX > DRAG_THRESHOLD && !dragStarted) {
         dragStarted = true;
-        container.style.animationPlayState = 'paused';
+        container.classList.add('dragging'); // CSS制御用クラス
         animationPaused = true;
       }
       
@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
       isDragging = false;
       dragStarted = false;
       container.style.cursor = 'grab';
+      container.classList.remove('dragging'); // dragging状態解除
       
       // アニメーション再開
       if (animationPaused) {
@@ -187,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (deltaX > DRAG_THRESHOLD && !dragStarted) {
         dragStarted = true;
-        container.style.animationPlayState = 'paused';
+        container.classList.add('dragging'); // CSS制御用クラス
         animationPaused = true;
       }
       
@@ -223,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
       isDragging = false;
       dragStarted = false;
       container.style.cursor = 'grab';
+      container.classList.remove('dragging'); // dragging状態解除
       
       if (animationPaused) {
         setTimeout(() => {
@@ -237,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
         dragStarted = false;
         container.style.cursor = 'grab';
+        container.classList.remove('dragging'); // dragging状態解除
         
         if (animationPaused) {
           setTimeout(() => {
