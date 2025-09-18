@@ -57,18 +57,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
         const deltaX = (clientX - startX) * 1.5;
         
-        // 現在のtransform値を取得して調整
+        // 現在のtransform値を取得して調整（X方向のみ、Y=-50%維持）
         const currentTransform = getComputedStyle(container).transform;
         let currentX = 0;
         
         if (currentTransform && currentTransform !== 'none') {
-          const matrix = currentTransform.match(/matrix\((.+)\)/);
+          const matrix = currentTransform.match(/matrix3d\((.+)\)/);
           if (matrix) {
-            currentX = parseFloat(matrix[1].split(',')[4]);
+            currentX = parseFloat(matrix[1].split(',')[12]);
+          } else {
+            const matrix2d = currentTransform.match(/matrix\((.+)\)/);
+            if (matrix2d) {
+              currentX = parseFloat(matrix2d[1].split(',')[4]);
+            }
           }
         }
         
-        container.style.transform = `translateX(${currentX + deltaX}px)`;
+        container.style.transform = `translate3d(${currentX + deltaX}px, -50%, 0)`;
         startX = clientX;
         
         e.preventDefault();
@@ -83,11 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
         container.style.cursor = 'grab';
         
-        // 1.5秒後にアニメーション再開
+        // 1.5秒後にアニメーション再開（Y=-50%維持）
         setTimeout(() => {
           if (animationPaused) {
             container.style.animationPlayState = 'running';
-            container.style.transform = '';
+            container.style.transform = 'translateY(-50%)'; /* Y中央維持 */
             animationPaused = false;
           }
         }, 1500);
