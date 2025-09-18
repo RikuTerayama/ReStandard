@@ -124,18 +124,18 @@ document.addEventListener('DOMContentLoaded', function() {
   
   ensureCollectionDisplay();
   
-  // marquee初期化 - Collection上下・Lookbookを統一関数で制御（CSS keyframes名と一致）
+  // marquee初期化 - Collection/Lookbookを統一関数で制御（--collection-speed統一）
   initMarquee({
     trackSelector: '.collection-scroll-top',
     direction: 'scroll-right-to-left',
-    speed: 'var(--track-speed)',
+    speed: 'var(--collection-speed)',
     pauseOnHover: true
   });
   
   initMarquee({
     trackSelector: '.collection-scroll-bottom',
     direction: 'scroll-left-to-right',
-    speed: 'var(--track-speed)',
+    speed: 'var(--collection-speed)',
     pauseOnHover: true
   });
   
@@ -146,8 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
     pauseOnHover: true
   });
   
-  // Lookbook のドラッグ/スワイプ操作を有効化
+  // Lookbook のドラッグ/スワイプ操作を有効化（Collectionはcollection-interaction.jsで管理）
   enableSwipe({
     containerSelector: '.lookbook-container'
   });
+  
+  // Collection用のscrollLeft方式は無効化（transform方式と競合回避）
+  // Collection ドラッグは collection-interaction.js の transform 方式で完結
 });
