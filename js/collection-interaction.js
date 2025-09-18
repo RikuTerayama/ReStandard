@@ -338,19 +338,30 @@ document.addEventListener('DOMContentLoaded', function() {
     container.style.userSelect = 'none';
   }
   
-  // 上下段ともスワイプ有効化
-  addCollectionSwipeSupport(collectionTop);
-  addCollectionSwipeSupport(collectionBottom); // 下段追加
+  // 【必須実行順序固定】複製→リンク→marquee→ドラッグ
+  console.log('[COLLECTION] 必須実行順序開始: 複製→リンク→marquee→ドラッグ');
   
-  // リンク埋め込み初期化（最後に一度だけ実行）
+  // 1) 複製拡張（既存1回＋追加1回=合計3周分）
+  document.querySelectorAll('.collection-scroll-top, .collection-scroll-bottom').forEach(track => {
+    const originalItems = Array.from(track.children).filter(el => !el.dataset?.cloned);
+    if (originalItems.length > 0) {
+      originalItems.forEach(node => {
+        const clone = node.cloneNode(true);
+        clone.dataset.cloned = '2'; // 2回目拡張マーク
+        track.appendChild(clone);
+      });
+      console.log(`[COLLECTION] 追加複製: ${originalItems.length}個 (合計3周分)`);
+    }
+  });
+  
+  // 2) リンク埋め込み必須実行
   initializeImageLinks();
   
-  // アニメーション継続保証
-  setTimeout(() => {
-    [collectionTop, collectionBottom].forEach(track => {
-      if (track) {
-        track.style.animationPlayState = 'running';
-      }
-    });
-  }, 100);
+  // 3) marquee起動は init-sections.js で実行済み
+  
+  // 4) ドラッグ有効化
+  addCollectionSwipeSupport(collectionTop);
+  addCollectionSwipeSupport(collectionBottom);
+  
+  console.log('[COLLECTION] 必須実行順序完了 - 3周分・リンク・ドラッグ両立');
 });
