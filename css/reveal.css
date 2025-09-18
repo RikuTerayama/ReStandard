@@ -102,15 +102,7 @@
   transition: none !important; /* 一旦アニメも停止 */
 }
 
-/* 万一 display:none / visibility:hidden が混入しているケースを殺す */
-#about, #about * {
-  display: revert-layer !important;
-  visibility: visible !important;
-}
-#brands, #brands * {
-  display: revert-layer !important;
-  visibility: visible !important;
-}
+/* 過度な表示強制削除 - 必要な場合のみ個別対応 */
 
 /* z-index/重なり対策（header等が覆っている場合の保険） */
 #about, #brands { 
