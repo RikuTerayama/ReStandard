@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_SURGICAL_REFACTOR_COMPLETE */
-/* Surgical Refactor完了: Expected Behavior達成・Single-sourced・LCP/CLS維持・フルブリード・ドラッグ/リンク共存・完全中央揃え */
+/* BUILD_STAMP: 2025-01-18_CLICK_DRAG_COMPLETE */
+/* クリック/ドラッグ完全実装: 10px閾値・リンク遷移温存・双方向ドラッグ・hover端末制御・draggingクラス・満幅背景 */
 
 /* ========================================
    共通トークンとベース - Single Source
@@ -181,6 +181,12 @@ section {
   animation: scroll-left-to-right var(--collection-speed) linear infinite; 
 }
 
+/* クリック可視性確保 */
+.collection-track {
+  touch-action: pan-y; /* スクロール操作向け */
+  pointer-events: auto; /* クリック可視性 */
+}
+
 /* ホバー一時停止 */
 @media (hover: hover) {
   .collection-row:hover .collection-track { 
@@ -239,7 +245,7 @@ section {
 
 /* Brands - Square & Centered (仕様通り) */
 .brand-card {
-  position: relative;
+    position: relative;
   aspect-ratio: 1/1;
   overflow: hidden;
   width: clamp(120px, 15vw, 200px);
@@ -281,12 +287,24 @@ section {
   transition: opacity .3s ease;
 }
 
-.brand-card:hover .brand-logo { 
-  opacity: 0; 
+/* ホバー制御 - hover端末のみ */
+@media (hover: hover) and (pointer: fine) {
+  .brand-card .hover-img { 
+    opacity: 0; 
+  }
+  .brand-card:hover .brand-logo { 
+    opacity: 0; 
+  }
+  .brand-card:hover .hover-img { 
+    opacity: 1; 
+  }
 }
 
-.brand-card:hover .hover-img { 
-  opacity: 1; 
+/* タッチ端末では常時非表示 */
+@media (hover: none) {
+  .brand-card .hover-img { 
+    opacity: 0 !important; 
+  }
 }
 
 /* ========================================
@@ -377,6 +395,11 @@ section {
   }
 }
 
+/* ドラッグ中停止 - クラス制御 */
+.lookbook-track.dragging { 
+  animation-play-state: paused; 
+}
+
 /* ホバー一時停止 */
 @media (hover: hover) {
   .lookbook-container:hover .lookbook-track {
@@ -447,12 +470,12 @@ section {
   overflow-x: visible;
 }
 
-.form-container iframe,
-.map-container iframe {
+  .form-container iframe,
+  .map-container iframe {
   width: 100%;
   max-width: 900px;
   min-width: 0;
   margin: 0 auto;
-  display: block;
-  box-sizing: border-box;
-}
+    display: block;
+    box-sizing: border-box;
+  }
