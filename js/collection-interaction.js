@@ -1,39 +1,58 @@
-// Collection スワイプ・無限ループ機能（Lookbook同様）
+// Collection 二段同時表示・無限ループ機能（Cursor仕様）
 document.addEventListener('DOMContentLoaded', function() {
-  const collectionTop = document.querySelector('.collection-scroll-top');
-  const collectionBottom = document.querySelector('.collection-scroll-bottom');
   
-  // シームレス無限ループ実装（親幅×2まで複製）
-  function ensureSeamlessLoop(track) {
-    if (!track || track.dataset.loopReady === '1') return;
-    const parent = track.parentElement;
-    const items = Array.from(track.children);
-    if (items.length === 0) return;
-
-    // 一旦1周ぶんだけのDOMに揃える（HTML手動複製削除済み前提）
-    const unique = items.slice(0, 20); // 1-20の画像のみ
-    track.innerHTML = '';
-    unique.forEach(el => track.appendChild(el.cloneNode(true)));
-
-    // 親幅×3を満たすまでクローン追加（確実な無限ループ）
-    const needWidth = parent.clientWidth * 3;
-    while (track.scrollWidth < needWidth) {
-      unique.forEach(el => track.appendChild(el.cloneNode(true)));
-    }
+  // 重複防止ガード
+  if (!window.__collectionDoubled) {
+    window.__collectionDoubled = true;
     
-    // さらに追加で3回複製（途切れ防止）
-    for (let i = 0; i < 3; i++) {
-      unique.forEach(el => track.appendChild(el.cloneNode(true)));
-    }
-    track.dataset.loopReady = '1';
+    document.querySelectorAll('.collection-track').forEach(track => {
+      const items = Array.from(track.children);
+      
+      // すでに複製済みならスキップ
+      const alreadyDoubled = items.some(el => el.dataset?.cloned === '1');
+      if (alreadyDoubled) return;
+      
+      items.forEach(node => {
+        const clone = node.cloneNode(true);
+        clone.dataset.cloned = '1';
+        track.appendChild(clone);
+      });
+    });
   }
   
-  // シームレス無限ループ設定
-  ensureSeamlessLoop(collectionTop);
-  ensureSeamlessLoop(collectionBottom);
+  // 二段同時表示の確認
+  const collectionTop = document.querySelector('.collection-track.collection-scroll-top');
+  const collectionBottom = document.querySelector('.collection-track.collection-scroll-bottom');
   
-  // スワイプ機能追加
-  function addSwipeSupport(container) {
+  if (collectionTop && collectionBottom) {
+    console.info('[COLLECTION] 二段同時表示確認: OK');
+    
+    // display:none / visibility:hidden の強制削除
+    [collectionTop, collectionBottom].forEach(track => {
+      const row = track.closest('.collection-row');
+      if (row) {
+        row.style.removeProperty('display');
+        row.style.removeProperty('visibility');
+        row.style.removeProperty('opacity');
+        row.style.removeProperty('position');
+        row.style.display = '';
+        row.style.visibility = '';
+        row.style.opacity = '';
+      }
+      
+      track.style.removeProperty('display');
+      track.style.removeProperty('visibility');
+      track.style.removeProperty('opacity');
+      track.style.display = '';
+      track.style.visibility = '';
+      track.style.opacity = '';
+    });
+  } else {
+    console.warn('[COLLECTION] 二段のうち片方が見つからない');
+  }
+  
+  // スワイプ機能追加（両段対応）
+  function addCollectionSwipeSupport(container) {
     if (!container) return;
     
     let isDragging = false;
@@ -69,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isDragging) return;
         
         const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-        const deltaX = (clientX - startX) * 1.5; // 感度調整
+        const deltaX = (clientX - startX) * 1.5;
         
         // 現在のtransform値を取得して調整
         const currentTransform = getComputedStyle(container).transform;
@@ -97,11 +116,11 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
         container.style.cursor = 'grab';
         
-        // 1.5秒後にアニメーション再開・CSS基準位置へ戻す
+        // 1.5秒後にアニメーション再開
         setTimeout(() => {
           if (animationPaused) {
             container.style.animationPlayState = 'running';
-            container.style.transform = ''; // CSS アニメ基準位置へ戻す
+            container.style.transform = '';
             animationPaused = false;
           }
         }, 1500);
@@ -119,6 +138,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // 上下段にスワイプ機能を追加
-  addSwipeSupport(collectionTop);
-  addSwipeSupport(collectionBottom);
+  addCollectionSwipeSupport(collectionTop);
+  addCollectionSwipeSupport(collectionBottom);
+  
+  // アニメーション継続保証（強制実行）
+  setTimeout(() => {
+    [collectionTop, collectionBottom].forEach(track => {
+      if (track) {
+        track.style.animationPlayState = 'running';
+      }
+    });
+  }, 100);
 });
