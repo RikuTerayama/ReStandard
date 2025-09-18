@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_UNIFIED_DRAG_CLICK_COMPLETE */
-/* 統一ドラッグ&クリック実装: CSS/JS競合解消・fullbleed背景・draggingクラス制御・10px閾値・transform統一 */
+/* BUILD_STAMP: 2025-01-18_FINAL_REQUIREMENTS_COMPLETE */
+/* 最終要件完全実装: 新設計DOM統一・8px閾値・ポインターイベント・90%中央配置・transform統一・競合解消 */
 
 /* ========================================
    共通トークンとベース - Single Source
@@ -122,10 +122,47 @@ section {
 }
 
 /* ========================================
-   Collection - ドラッグ&クリック両立
+   Collection - フルブリード・ドラッグ&クリック両立
    ======================================== */
+
+/* Collection フルブリード */
+#collection, 
+.collection-section, 
+.collection-outer { 
+  width: 100vw; 
+  margin-left: calc(50% - 50vw); 
+}
+
+/* Collection タイトル */
+.collection-title {
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.2;
+  font-size: clamp(18px, 2.5vw, 28px);
+  background: transparent;
+  text-align: center;
+  margin-bottom: clamp(16px, 2vw, 24px);
+  font-family: var(--heading-font);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* rows-wrapper のみ Frost 背景 */
+.collection-rows-wrapper {
+  background: var(--nav-frost-bg);
+  border-radius: 16px;
+  padding: clamp(16px, 2.5vw, 24px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.10);
+  backdrop-filter: blur(8px);
+  margin: 0 clamp(12px, 2vw, 20px);
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+}
+
 .collection-row { 
-  overflow: hidden; 
+  overflow: hidden;
+  height: var(--collection-row-h);
+  position: relative;
 }
 
 .collection-track {
@@ -208,7 +245,7 @@ section {
 /* ホバー一時停止 */
 @media (hover: hover) {
   .collection-row:hover .collection-track { 
-    animation-play-state: paused; 
+  animation-play-state: paused;
   }
 }
 
@@ -230,10 +267,8 @@ section {
   text-align: center;
 }
 
-.brand-grid {
+.brands-grid {
   display: grid;
-  /* 2×5 / 5×2 が自動で切り替わるように */
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: clamp(8px, 1.5vw, 16px);
   max-width: 1200px;
   margin: 0 auto;
@@ -243,31 +278,32 @@ section {
 
 /* レスポンシブグリッド明示 */
 @media (min-width: 1025px) {
-  .brand-grid {
+  .brands-grid {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
-  .brand-grid {
+  .brands-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .brand-grid {
+  .brands-grid {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(5, 1fr);
   }
 }
 
-.brand-card {
-  position: relative;
-  aspect-ratio: 1/1;
-  background: transparent;
+.brand-card { 
+  position: relative; 
+  width: min(180px, 22vw); 
+  aspect-ratio: 1/1; 
+  display: grid; 
+  place-items: center; 
   overflow: hidden;
-  width: clamp(120px, 15vw, 200px);
   background: #fff;
   border-radius: 12px;
   padding: clamp(8px, 1.5vw, 16px);
@@ -281,50 +317,29 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-/* ロゴは正方形に対して縮尺維持・中央配置 */
-.brand-card img.logo,
-.brand-card .brand-logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.brand-card img { 
+  width: 90%; 
+  height: 90%; 
+  object-fit: contain; 
   object-position: center;
-  display: block;
   transition: opacity .3s ease;
 }
 
-/* ホバー画像は初期は非表示、中央に出す */
-.brand-card .hover,
-.brand-card .hover-img {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  transition: opacity .25s ease;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+.brand-card .brand-hover { 
+  position: absolute; 
+  left: 50%; 
+  top: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 90%; 
+  height: 90%; 
+  object-fit: contain; 
+  opacity: 0; 
+  transition: opacity .25s; 
+  pointer-events: none; 
 }
 
-/* ホバー制御 - hover端末のみ */
-@media (hover: hover) and (pointer: fine) {
-  .brand-card:hover .hover,
-  .brand-card:hover .hover-img { 
-    opacity: 1; 
-  }
-  .brand-card:hover .brand-logo { 
-    opacity: 0; 
-  }
-}
-
-/* タッチ端末では常時非表示 */
-@media (hover: none) {
-  .brand-card .hover,
-  .brand-card .hover-img { 
-    opacity: 0 !important; 
-  }
+.brand-card:hover .brand-hover { 
+  opacity: 1; 
 }
 
 /* ========================================
@@ -395,7 +410,7 @@ section {
   0% { 
     transform: translate3d(0, -50%, 0); 
   }
-  100% { 
+  100% {
     transform: translate3d(-50%, -50%, 0); 
   }
 }
@@ -471,12 +486,12 @@ section {
   overflow-x: visible;
 }
 
-.form-container iframe,
-.map-container iframe {
+  .form-container iframe,
+  .map-container iframe {
   width: 100%;
   max-width: 900px;
   min-width: 0;
   margin: 0 auto;
-  display: block;
-  box-sizing: border-box;
-}
+    display: block;
+    box-sizing: border-box;
+  }
