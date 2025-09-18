@@ -124,17 +124,17 @@ document.addEventListener('DOMContentLoaded', function() {
   
   ensureCollectionDisplay();
   
-  // marquee初期化 - Collection上下・Lookbookを統一関数で制御
+  // marquee初期化 - Collection上下・Lookbookを統一関数で制御（CSS keyframes名と一致）
   initMarquee({
     trackSelector: '.collection-scroll-top',
-    direction: 'move-right',
+    direction: 'scroll-right-to-left',
     speed: 'var(--track-speed)',
     pauseOnHover: true
   });
   
   initMarquee({
     trackSelector: '.collection-scroll-bottom',
-    direction: 'move-left',
+    direction: 'scroll-left-to-right',
     speed: 'var(--track-speed)',
     pauseOnHover: true
   });
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initMarquee({
     trackSelector: '.lookbook-track',
     direction: 'lookbook-scroll',
-    speed: 'var(--track-speed)',
+    speed: '40s',
     pauseOnHover: true
   });
   
