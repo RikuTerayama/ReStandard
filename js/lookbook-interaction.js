@@ -1,6 +1,39 @@
 // Lookbook 双方向ドラッグ安定化・クラス制御（Senior FE仕様）
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('[LOOKBOOK] 唯一初期化者として開始');
+  
   const lookbookTrack = document.querySelector('.lookbook-track');
+  
+  if (!lookbookTrack) {
+    console.warn('[LOOKBOOK] Track not found');
+    return;
+  }
+  
+  // Lookbook独立初期化: 複製→アニメ→ドラッグ
+  ensureLookbookLoop();
+  
+  function ensureLookbookLoop() {
+    const images = Array.from(lookbookTrack.querySelectorAll('img'));
+    if (images.length === 0) return;
+    
+    // 不足時の拡張複製（もう1セット）
+    const currentItems = lookbookTrack.children.length;
+    const minRequired = images.length * 2; // 最低2周分
+    
+    if (currentItems < minRequired) {
+      images.forEach(img => {
+        const clone = img.cloneNode(true);
+        clone.dataset.lookbookCloned = '1';
+        lookbookTrack.appendChild(clone);
+      });
+      console.log(`[LOOKBOOK] 拡張複製完了: ${images.length}個追加`);
+    }
+    
+    // Y中央維持のための初期transform設定
+    if (!lookbookTrack.style.transform.includes('translateY')) {
+      lookbookTrack.style.transform = 'translate3d(0, -50%, 0)';
+    }
+  }
   
   // シームレス無限ループ実装
   function ensureLookbookLoop(track) {
@@ -261,6 +294,28 @@ document.addEventListener('DOMContentLoaded', function() {
     container.style.userSelect = 'none';
   }
   
-  // Lookbookにスワイプ機能を追加
+  // Lookbook独立アニメ起動（init-sections.js から分離）
+  if (lookbookTrack) {
+    lookbookTrack.style.animation = 'lookbook-scroll 40s linear infinite';
+    
+    // ホバー停止（pointer有デバイスのみ）
+    if (window.matchMedia('(hover: hover)').matches) {
+      lookbookTrack.addEventListener('mouseenter', () => {
+        lookbookTrack.style.animationPlayState = 'paused';
+      });
+      lookbookTrack.addEventListener('mouseleave', () => {
+        lookbookTrack.style.animationPlayState = 'running';
+      });
+    }
+    
+    // prefers-reduced-motion 対応
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      lookbookTrack.style.animation = 'none';
+    }
+  }
+  
+  // Lookbookスワイプ機能追加
   addLookbookSwipeSupport(lookbookTrack);
+  
+  console.log('[LOOKBOOK] 独立初期化完了 - 複製・アニメ・ドラッグ');
 });
