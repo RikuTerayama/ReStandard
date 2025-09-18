@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_TRANSFORM_UNIFIED_COMPLETE */
-/* Transform統一完全実装: DOM構造正規化・10px閾値・クリック/ドラッグ両立・hover端末制御・フルブリード・回帰確認済み */
+/* BUILD_STAMP: 2025-01-18_UNIFIED_DRAG_CLICK_COMPLETE */
+/* 統一ドラッグ&クリック実装: CSS/JS競合解消・fullbleed背景・draggingクラス制御・10px閾値・transform統一 */
 
 /* ========================================
    共通トークンとベース - Single Source
@@ -75,74 +75,80 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* 統一セクションタイトル - Single Source */
+/* セクションタイトル共通スタイル */
 .section-title {
   color: #fff;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  background: none;
+  font-weight: 600;
+  line-height: 1.2;
+  /* 画面幅でスケール */
+  font-size: clamp(18px, 2.5vw, 28px);
+  background: transparent; /* メニューバー色の背景はかけない */
   text-align: center;
   margin-bottom: clamp(16px, 2vw, 24px);
   font-family: var(--heading-font);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 /* ========================================
-   Collection - Full-bleed & Consistent Mobile Size
+   背景用全幅ラッパー
    ======================================== */
-
-/* フルブリード - サイドパディングなし */
-#collection, 
-.collection-section, 
-.collection-outer { 
-  width: 100vw; 
-  margin-left: calc(50% - 50vw); 
-  margin-right: calc(50% - 50vw);
-  padding: 0;
+.fullbleed-bg {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
 }
 
-#collection {
-  padding: clamp(40px, 6vw, 80px) 0;
-}
-
-/* 統一背景 - rows-wrapper のみ */
-.collection-rows-wrapper {
+/* Collection 専用背景カラー（メニューバーと同色） */
+.collection-bg { 
   background: var(--nav-frost-bg);
   border-radius: 16px;
   padding: clamp(16px, 2.5vw, 24px);
   box-shadow: 0 4px 20px rgba(0,0,0,.10);
   backdrop-filter: blur(8px);
   margin: 0 clamp(12px, 2vw, 20px);
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 8px;
 }
 
-/* 行設定 */
-.collection-row {
-  height: var(--collection-row-h);
-  overflow: hidden;
-  position: relative;
+/* Lookbook も同様 */
+.lookbook-bg { 
+  background: var(--nav-frost-bg);
+  border-radius: 16px;
+  padding: clamp(16px, 2.5vw, 24px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.10);
+  backdrop-filter: blur(8px);
+  margin: 0 clamp(12px, 2vw, 20px);
 }
 
-/* トラック設定 */
+/* ========================================
+   Collection - ドラッグ&クリック両立
+   ======================================== */
+.collection-row { 
+  overflow: hidden; 
+}
+
 .collection-track {
   display: flex;
-  align-items: center;
-  gap: clamp(12px, 2vw, 20px);
-  width: max-content;
+  gap: min(1.5vw, 12px);
   will-change: transform;
   cursor: grab;
+  align-items: center;
+  width: max-content;
   height: 100%;
 }
 
-.collection-track:active {
+.collection-track.dragging {
   cursor: grabbing;
+  animation: none !important; /* ドラッグ中はCSSアニメ停止 */
 }
 
-/* 画像サイズ - 行高さ基準 */
 .collection-track img, 
 .collection-track a img {
-  height: calc(var(--collection-row-h) - 8px);
+  display: block;
+  height: auto;
+  /* PC/モバイルで自然に縮む: 高さ基準ではなく横並び重視 */
+  max-height: clamp(90px, 14vh, 160px);
   width: auto;
   object-fit: contain;
   border-radius: 8px;
@@ -153,6 +159,13 @@ section {
   flex-shrink: 0;
 }
 
+@media (max-width: 767px) {
+  .collection-track img, 
+  .collection-track a img {
+    max-height: clamp(70px, 12vh, 120px);
+  }
+}
+
 .collection-track img:hover {
   transform: translateY(-4px);
 }
@@ -160,6 +173,11 @@ section {
 .collection-track a {
   display: block;
   flex-shrink: 0;
+}
+
+/* 上下段のわずかな間隔 */
+.collection-row + .collection-row { 
+  margin-top: clamp(8px, 1.5vh, 16px); 
 }
 
 /* Collection アニメーション */
@@ -202,51 +220,52 @@ section {
 }
 
 /* ========================================
-   Brands - Hover Image Exact Centering
+   Brands - 正方形・中央揃え・ホバー制御
    ======================================== */
-.brands {
+/* Brands セクションは背景透明 */
+#brands, 
+.brands-section { 
+  background: transparent !important; 
   padding: clamp(60px, 8vw, 80px) clamp(16px, 3vw, 20px);
   text-align: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-.brands-grid {
+.brand-grid {
   display: grid;
-  justify-content: center;
-  gap: clamp(12px, 2vw, 20px);
+  /* 2×5 / 5×2 が自動で切り替わるように */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: clamp(8px, 1.5vw, 16px);
   max-width: 1200px;
   margin: 0 auto;
   justify-items: center;
   align-items: center;
 }
 
-/* PC横広: 2行×5列 */
+/* レスポンシブグリッド明示 */
 @media (min-width: 1025px) {
-  .brands-grid {
+  .brand-grid {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
 }
 
-/* タブレット: 3×4 */
 @media (max-width: 1024px) and (min-width: 769px) {
-  .brands-grid {
+  .brand-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* 縦長/狭幅: 5行×2列 */
 @media (max-width: 768px) {
-  .brands-grid {
+  .brand-grid {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(5, 1fr);
   }
 }
 
-/* Brands - Square & Centered (仕様通り) */
 .brand-card {
-    position: relative;
+  position: relative;
   aspect-ratio: 1/1;
+  background: transparent;
   overflow: hidden;
   width: clamp(120px, 15vw, 200px);
   background: #fff;
@@ -262,99 +281,85 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-/* 全画像完全中央配置 */
-.brand-card img {
-  position: absolute;
-  inset: 0;
-  margin: auto;
+/* ロゴは正方形に対して縮尺維持・中央配置 */
+.brand-card img.logo,
+.brand-card .brand-logo {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center;
+  display: block;
   transition: opacity .3s ease;
 }
 
-/* ホバー画像 - 完全中央・アライメントシフト防止 */
+/* ホバー画像は初期は非表示、中央に出す */
+.brand-card .hover,
 .brand-card .hover-img {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .3s ease;
+  object-position: center;
 }
 
 /* ホバー制御 - hover端末のみ */
 @media (hover: hover) and (pointer: fine) {
-  .brand-card .hover-img { 
-    opacity: 0; 
+  .brand-card:hover .hover,
+  .brand-card:hover .hover-img { 
+    opacity: 1; 
   }
   .brand-card:hover .brand-logo { 
     opacity: 0; 
-  }
-  .brand-card:hover .hover-img { 
-    opacity: 1; 
   }
 }
 
 /* タッチ端末では常時非表示 */
 @media (hover: none) {
+  .brand-card .hover,
   .brand-card .hover-img { 
     opacity: 0 !important; 
   }
 }
 
 /* ========================================
-   Lookbook - Vertical Centering & Hide Numbering
+   Lookbook - 双方向ドラッグとアニメ両立
    ======================================== */
-
-/* 重複Brandsブロック削除済み - 上記Single Sourceで統一 */
 .lookbook {
   padding: clamp(40px, 6vw, 80px) 0;
   background: transparent;
   overflow: hidden;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
 }
 
-/* フルブリード囲い */
-.lookbook-container {
+.lookbook-container { 
+  overflow: hidden; 
   position: relative;
-  background: var(--nav-frost-bg);
-  border-radius: 16px;
-  padding: clamp(16px, 2.5vw, 24px);
-  box-shadow: 0 4px 20px rgba(0,0,0,.10);
-  backdrop-filter: blur(8px);
-  margin: 0 clamp(12px, 2vw, 20px);
-  overflow: hidden;
   height: clamp(280px, 30vw, 360px);
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
 }
 
-/* 縦中央配置トラック */
 .lookbook-track {
+  display: flex;
+  gap: min(1.5vw, 12px);
+  will-change: transform;
+  cursor: grab;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
+  transform: translate3d(0, -50%, 0); /* Y中央基準 */
   animation: lookbook-scroll 40s linear infinite;
-  will-change: transform;
   height: auto;
-  cursor: grab;
+  align-items: center;
 }
 
-.lookbook-track:active {
+.lookbook-track.dragging {
   cursor: grabbing;
+  animation: none !important; /* ドラッグ中は必ず停止 */
 }
 
-/* アイテム - 背景削除 */
 .lookbook-item { 
   flex-shrink: 0;
   height: clamp(240px, 26vw, 320px);
@@ -395,11 +400,6 @@ section {
   }
 }
 
-/* ドラッグ中停止 - クラス制御 */
-.lookbook-track.dragging { 
-  animation-play-state: paused; 
-}
-
 /* ホバー一時停止 */
 @media (hover: hover) {
   .lookbook-container:hover .lookbook-track {
@@ -409,8 +409,9 @@ section {
 
 /* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
+  .collection-track,
   .lookbook-track { 
-    animation: none; 
+    animation: none !important; 
   }
 }
 
@@ -470,12 +471,12 @@ section {
   overflow-x: visible;
 }
 
-  .form-container iframe,
-  .map-container iframe {
+.form-container iframe,
+.map-container iframe {
   width: 100%;
   max-width: 900px;
   min-width: 0;
   margin: 0 auto;
-    display: block;
-    box-sizing: border-box;
-  }
+  display: block;
+  box-sizing: border-box;
+}
