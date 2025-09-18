@@ -27,25 +27,47 @@ document.addEventListener('DOMContentLoaded', function() {
   if (collectionTop && collectionBottom) {
     console.info('[COLLECTION] 二段同時表示確認: OK');
     
-    // display:none / visibility:hidden の強制削除
+    // インライン固定指定の強制削除（高さ・サイズ変更無効化）
     [collectionTop, collectionBottom].forEach(track => {
       const row = track.closest('.collection-row');
       if (row) {
+        // 表示関連
         row.style.removeProperty('display');
         row.style.removeProperty('visibility');
         row.style.removeProperty('opacity');
         row.style.removeProperty('position');
+        // サイズ関連削除（CSS変数に委ねる）
+        row.style.removeProperty('height');
+        row.style.removeProperty('width');
+        row.style.removeProperty('background');
         row.style.display = '';
         row.style.visibility = '';
         row.style.opacity = '';
+        row.style.height = '';
+        row.style.width = '';
       }
       
       track.style.removeProperty('display');
       track.style.removeProperty('visibility');
       track.style.removeProperty('opacity');
+      track.style.removeProperty('height');
+      track.style.removeProperty('width');
       track.style.display = '';
       track.style.visibility = '';
       track.style.opacity = '';
+      track.style.height = '';
+      track.style.width = '';
+      
+      // 画像のサイズ固定も削除
+      const images = track.querySelectorAll('img');
+      images.forEach(img => {
+        img.style.removeProperty('height');
+        img.style.removeProperty('width');
+        img.style.removeProperty('object-fit');
+        img.style.height = '';
+        img.style.width = '';
+        img.style.objectFit = '';
+      });
     });
   } else {
     console.warn('[COLLECTION] 二段のうち片方が見つからない');
