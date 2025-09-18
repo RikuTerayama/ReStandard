@@ -139,9 +139,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_UNIFIED">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_UNIFIED">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18_UNIFIED">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_MINIMAL_DIFF">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_MINIMAL_DIFF">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-18_MINIMAL_DIFF">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -420,16 +420,7 @@
       opacity: 1;
     }
 
-    .brand-section-title {
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      font-family: var(--heading-font);
-      font-size: var(--font-size-4xl);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--main-color);
-      text-align: center;
-    }
+    /* brand-section-title削除 - .section-titleで統一 */
 
     /* Brands グリッド重複スタイル削除 */
     /* Duplicate removed: 重複するBrands設定をstyle.cssのsections専用ブロックに統合 */
@@ -962,8 +953,8 @@
   
   <!-- Collection Section - 統合済み -->
   <section id="collection" class="section-spacing">
-    <div class="collection-outer section-overlay--frost">
-      <h2 class="collection-title">Collection</h2>
+    <div class="collection-outer">
+      <h2 class="section-title">Collection</h2>
       <div class="collection-rows-wrapper">
     <!-- 上段：右→左スクロール -->
         <div class="collection-row collection-row-top">
@@ -1625,8 +1616,8 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- セクション初期化スクリプト - 統合済み -->
   <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
   <script src="js/init-sections.js?v=2025-01-18-final"></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-18_UNIFIED"></script>
-  <script src="js/collection-interaction.js?v=2025-01-18_UNIFIED"></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-18_MINIMAL_DIFF"></script>
+  <script src="js/collection-interaction.js?v=2025-01-18_MINIMAL_DIFF"></script>
 
 </body>
 </html>
