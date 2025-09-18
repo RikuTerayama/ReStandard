@@ -93,38 +93,11 @@ function enableSwipe({containerSelector}) {
   });
 }
 
-// Collection / Brands セクション初期化 - Single Source of Truth
+// Collection 専用初期化 - Single Source of Truth（Lookbook除外）
 document.addEventListener('DOMContentLoaded', function() {
-  // Collection セクションの表示確認と複製処理
-  function ensureCollectionDisplay() {
-    const collectionSection = document.getElementById('collection');
-    const topRow = document.querySelector('.collection-row-top');
-    const bottomRow = document.querySelector('.collection-row-bottom');
-    
-    if (collectionSection && topRow && bottomRow) {
-      console.info("[COLLECTION] Section properly structured");
-      
-      // 画像複製処理削除 - collection-interaction.jsに統一
-    } else {
-      console.warn("[COLLECTION] Section structure issue detected");
-    }
-  }
+  console.log('[INIT] Collection専用初期化開始');
   
-  // 画像複製関数（無限ループ用）
-  function duplicateImages(selector) {
-    const track = document.querySelector(selector);
-    if (!track) return;
-    
-    const images = track.querySelectorAll('img, a');
-    images.forEach(item => {
-      const clone = item.cloneNode(true);
-      track.appendChild(clone);
-    });
-  }
-  
-  ensureCollectionDisplay();
-  
-  // marquee初期化 - Collection/Lookbookを統一関数で制御（--collection-speed統一）
+  // Collection marquee初期化のみ（Lookbook除外）
   initMarquee({
     trackSelector: '.collection-scroll-top',
     direction: 'scroll-right-to-left',
@@ -139,16 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
     pauseOnHover: true
   });
   
-  initMarquee({
-    trackSelector: '.lookbook-track',
-    direction: 'lookbook-scroll',
-    speed: '40s',
-    pauseOnHover: true
-  });
-  
-  // Lookbook scrollLeft方式無効化 - lookbook-interaction.js の transform 方式で完結
-  // enableSwipe({ containerSelector: '.lookbook-container' }); // 削除
-  
-  // Collection用のscrollLeft方式は無効化（transform方式と競合回避）
-  // Collection ドラッグは collection-interaction.js の transform 方式で完結
+  // Lookbook初期化は lookbook-interaction.js に完全委譲
+  console.log('[INIT] Lookbook管理を lookbook-interaction.js に委譲');
 });
