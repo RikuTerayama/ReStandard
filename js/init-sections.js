@@ -146,10 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
     pauseOnHover: true
   });
   
-  // Lookbook のドラッグ/スワイプ操作を有効化（Collectionはcollection-interaction.jsで管理）
-  enableSwipe({
-    containerSelector: '.lookbook-container'
-  });
+  // Lookbook scrollLeft方式無効化 - lookbook-interaction.js の transform 方式で完結
+  // enableSwipe({ containerSelector: '.lookbook-container' }); // 削除
   
   // Collection用のscrollLeft方式は無効化（transform方式と競合回避）
   // Collection ドラッグは collection-interaction.js の transform 方式で完結
