@@ -139,9 +139,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_MINIMAL_DIFF">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_MINIMAL_DIFF">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18_MINIMAL_DIFF">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_SPEC">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_SPEC">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-18_FINAL_SPEC">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -1519,87 +1519,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-  // Collection セクションの表示を強制する関数 - 統合済み
-  // Duplicate removed from flowing-fix.js
-  function ensureCollectionDisplay() {
-    // Collectionセクションの表示を強制
-    const collectionSection = document.querySelector('#collection, .collection-section');
-    if (collectionSection) {
-      collectionSection.style.setProperty('display', 'block', 'important');
-      collectionSection.style.setProperty('visibility', 'visible', 'important');
-      collectionSection.style.setProperty('opacity', '1', 'important');
-      collectionSection.style.setProperty('position', 'relative', 'important');
-      collectionSection.style.setProperty('z-index', '999', 'important');
-    }
-    
-    // 上段の行の表示を強制
-    const topRow = document.querySelector('.collection-row-top');
-    if (topRow) {
-      topRow.style.setProperty('display', 'flex', 'important');
-      topRow.style.setProperty('visibility', 'visible', 'important');
-      topRow.style.setProperty('opacity', '1', 'important');
-      topRow.style.setProperty('height', '300px', 'important');
-      topRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
-      topRow.style.setProperty('align-items', 'center', 'important');
-    }
-    
-    // 下段の行の表示を強制
-    const bottomRow = document.querySelector('.collection-row-bottom');
-    if (bottomRow) {
-      bottomRow.style.setProperty('display', 'flex', 'important');
-      bottomRow.style.setProperty('visibility', 'visible', 'important');
-      bottomRow.style.setProperty('opacity', '1', 'important');
-      bottomRow.style.setProperty('height', '300px', 'important');
-      bottomRow.style.setProperty('background', 'rgba(255, 255, 255, 0.1)', 'important');
-      bottomRow.style.setProperty('align-items', 'center', 'important');
-      bottomRow.style.setProperty('position', 'relative', 'important');
-      bottomRow.style.setProperty('z-index', '9999', 'important');
-    }
-    
-    // 下段のスクロールコンテナの表示を強制
-    const bottomScroll = document.querySelector('.collection-scroll-bottom');
-    if (bottomScroll) {
-      bottomScroll.style.setProperty('display', 'flex', 'important');
-      bottomScroll.style.setProperty('visibility', 'visible', 'important');
-      bottomScroll.style.setProperty('opacity', '1', 'important');
-      bottomScroll.style.setProperty('position', 'relative', 'important');
-      bottomScroll.style.setProperty('z-index', '10000', 'important');
-      bottomScroll.style.setProperty('flex-direction', 'row', 'important');
-      bottomScroll.style.setProperty('gap', '1px', 'important');
-      bottomScroll.style.setProperty('height', '100%', 'important');
-      bottomScroll.style.setProperty('width', 'max-content', 'important');
-      bottomScroll.style.setProperty('align-items', 'center', 'important');
-    }
-    
-    // 下段の画像の表示を強制
-    const bottomImages = document.querySelectorAll('.collection-scroll-bottom img');
-    bottomImages.forEach((img, index) => {
-      img.style.setProperty('display', 'block', 'important');
-      img.style.setProperty('visibility', 'visible', 'important');
-      img.style.setProperty('opacity', '1', 'important');
-      img.style.setProperty('position', 'relative', 'important');
-      img.style.setProperty('z-index', '10001', 'important');
-      img.style.setProperty('height', '250px', 'important');
-      img.style.setProperty('width', '250px', 'important');
-      img.style.setProperty('flex-shrink', '0', 'important');
-      img.style.setProperty('object-fit', 'cover', 'important');
-    });
-  }
+  // Collection インライン固定指定削除済み - style.css の --collection-row-h で統一管理
 
-  // Collection セクションの表示を確実にする
-  document.addEventListener('DOMContentLoaded', function() {
-    ensureCollectionDisplay();
-  });
+  // Collection 固定指定削除済み - CSS変数で自動管理
   
-  // ページ読み込み完了後にも実行
-  window.addEventListener('load', function() {
-    ensureCollectionDisplay();
-  });
+  // ページ読み込み完了後の固定指定も削除済み
 
-  // 少し遅れて再実行
-  setTimeout(function() {
-    ensureCollectionDisplay();
-  }, 500);
+  // 遅延実行の固定指定も削除済み
 </script>
   <script>
     // モバイルレイアウト修正のためのJavaScriptガード
@@ -1616,8 +1542,8 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- セクション初期化スクリプト - 統合済み -->
   <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
   <script src="js/init-sections.js?v=2025-01-18-final"></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-18_MINIMAL_DIFF"></script>
-  <script src="js/collection-interaction.js?v=2025-01-18_MINIMAL_DIFF"></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-18_FINAL_SPEC"></script>
+  <script src="js/collection-interaction.js?v=2025-01-18_FINAL_SPEC"></script>
 
 </body>
 </html>
