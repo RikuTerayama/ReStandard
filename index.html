@@ -138,9 +138,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_SYNC">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_SYNC">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18_FINAL_SYNC">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_CollectionBrands_Sync">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_CollectionBrands_Sync">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-18_CollectionBrands_Sync">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -707,32 +707,7 @@
     
     /* Collection重複スタイル削除 - style.cssで統一管理 */
     
-    /* 最強特異性でアニメーションを強制 */
-    html body #collection .collection-scroll-top {
-      animation: move-right 60s linear infinite !important;
-      gap: 1px !important;
-      display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 100% !important;
-      width: max-content !important;
-      align-items: center !important;
-    }
-    
-    html body #collection .collection-scroll-bottom {
-      animation: move-left 60s linear infinite !important;
-      gap: 1px !important;
-      display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: 100% !important;
-      width: max-content !important;
-      align-items: center !important;
-    }
+    /* 60s強制アニメーション削除 - style.css var(--track-speed)で統一管理 */
     
     /* 下段の画像表示を強制 */
     html body #collection .collection-scroll-bottom img {
@@ -1394,57 +1369,7 @@
         <img src="image/18.JPG" alt="Collection Item 18">
         <img src="image/19.JPG" alt="Collection Item 19">
         <img src="image/20.JPG" alt="Collection Item 20">
-        <!-- 2周目（ループ用） -->
-        <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
-          <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
-        </a>
-        <img src="image/2.JPG" alt="Collection Item 2">
-        <img src="image/3.JPG" alt="Collection Item 3">
-        <img src="image/4.JPG" alt="Collection Item 4">
-        <img src="image/5.JPG" alt="Collection Item 5">
-        <img src="image/6.JPG" alt="Collection Item 6">
-        <img src="image/7.JPG" alt="Collection Item 7">
-        <img src="image/8.JPG" alt="Collection Item 8">
-        <img src="image/9.JPG" alt="Collection Item 9">
-        <img src="image/10.JPG" alt="Collection Item 10">
-        <img src="image/12.JPG" alt="Collection Item 12">
-        <img src="image/13.JPG" alt="Collection Item 13">
-        <img src="image/14.JPG" alt="Collection Item 14">
-        <img src="image/15.JPG" alt="Collection Item 15">
-        <img src="image/16.JPG" alt="Collection Item 16">
-        <img src="image/17.JPG" alt="Collection Item 17">
-        <img src="image/18.JPG" alt="Collection Item 18">
-        <img src="image/19.JPG" alt="Collection Item 19">
-        <img src="image/20.JPG" alt="Collection Item 20">
-        
-        <!-- 2周目（ループ用） -->
-        <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
-          <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
-        </a>
-        <img src="image/2.JPG" alt="Collection Item 2">
-        <img src="image/3.JPG" alt="Collection Item 3">
-        <img src="image/4.JPG" alt="Collection Item 4">
-        <img src="image/5.JPG" alt="Collection Item 5">
-        <img src="image/6.JPG" alt="Collection Item 6">
-        <img src="image/7.JPG" alt="Collection Item 7">
-        <img src="image/8.JPG" alt="Collection Item 8">
-        <img src="image/9.JPG" alt="Collection Item 9">
-        <img src="image/10.JPG" alt="Collection Item 10">
-        <img src="image/11.JPG" alt="Collection Item 11">
-        <img src="image/12.JPG" alt="Collection Item 12">
-        <img src="image/13.JPG" alt="Collection Item 13">
-        <img src="image/14.JPG" alt="Collection Item 14">
-        <img src="image/15.JPG" alt="Collection Item 15">
-        <img src="image/16.JPG" alt="Collection Item 16">
-        <img src="image/17.JPG" alt="Collection Item 17">
-        <img src="image/18.JPG" alt="Collection Item 18">
-        <img src="image/19.JPG" alt="Collection Item 19">
-        <img src="image/20.JPG" alt="Collection Item 20">
-        
-        <!-- 3周目（ループ用） -->
-        <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" style="display: block !important; flex-shrink: 0 !important; width: 250px !important; height: 250px !important;">
-          <img src="image/1.JPG" alt="Collection Item 1" style="height: 250px !important; width: 250px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important; display: block !important; flex-shrink: 0 !important;">
-        </a>
+        <!-- 重複削除完了 - 1周分のみ、JS側で無限ループ管理 -->
         <img src="image/2.JPG" alt="Collection Item 2">
         <img src="image/3.JPG" alt="Collection Item 3">
         <img src="image/4.JPG" alt="Collection Item 4">
