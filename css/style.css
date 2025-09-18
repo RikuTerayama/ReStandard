@@ -1,5 +1,5 @@
-/* BUILD_STAMP: 2025-01-18_UNIFIED_RESPONSIVE */
-/* 統一レスポンシブ実装: 100vwCollection・5×2/3×4/2×5Brands・統一背景Lookbook・競合解消・タッチ対応 */
+/* BUILD_STAMP: 2025-01-18_MINIMAL_DIFF_COMPLETE */
+/* 最小差分実装: 表示一貫性・背景適用範囲統一・スクロール/ドラッグ体験安定化・--collection-speed統一・Frost囲い範囲最適化 */
 
 /* ========================================
    共通トークンとベース
@@ -9,7 +9,7 @@
   --nav-frost-bg: rgba(255,255,255,0.9);
   --collection-row-h: clamp(150px, 22vw, 260px);
   --collection-gap: clamp(6px, 1vw, 12px);
-  --collection-speed: 60s; /* 上下同速 */
+  --collection-speed: 60s; /* 上下同速・統一変数 */
   
   /* 共通設定 */
   --main-color: #333333;
@@ -82,6 +82,17 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
+/* 統一セクションタイトル */
+.section-title {
+  color: #fff;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  background: none;
+  text-align: center;
+  margin-bottom: clamp(16px, 2vw, 24px);
+  font-family: var(--heading-font);
+}
+
 /* ========================================
    Collection（100vw横幅・統一背景・二段同時表示）
    ======================================== */
@@ -89,7 +100,7 @@ section {
 /* セクション全体を100vw横幅にする */
 #collection { 
   margin: 0; 
-  padding: 0;
+  padding: clamp(40px, 6vw, 80px) 0;
   width: 100vw;
   margin-left: calc(50% - 50vw);
 }
@@ -101,20 +112,11 @@ section {
   padding: 0;
 }
 
+/* collection-outer の Frost 背景は外す */
 .collection-outer {
-  width: 100vw;
+  width: 100%;
   margin: 0;
-  padding: clamp(20px, 3vw, 40px) 0;
-}
-
-/* タイトルのレスポンシブ対応 */
-.collection-title {
-  text-align: center;
-  margin: 0 0 clamp(16px, 2vw, 24px) 0;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  background: none;
+  padding: 0;
 }
 
 /* 統一背景を rows-wrapper にのみ適用 */
@@ -206,7 +208,7 @@ section {
   }
 }
 
-/* prefers-reduced-motion */
+/* prefers-reduced-motion - アクセシビリティ配慮でアニメーション停止 */
 @media (prefers-reduced-motion: reduce) {
   .collection-track { 
     animation: none !important; 
@@ -240,10 +242,11 @@ section {
   align-items: center;
 }
 
-/* PC: 5×2レイアウト */
+/* PC横広: 2行×5列レイアウト */
 @media (min-width: 1025px) {
   .brands-grid {
     grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
   }
 }
 
@@ -254,10 +257,11 @@ section {
   }
 }
 
-/* モバイル: 2×5レイアウト */
+/* 縦長/狭幅: 5行×2列レイアウト */
 @media (max-width: 768px) {
   .brands-grid {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
   }
 }
 
@@ -282,11 +286,12 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-/* ブランドロゴ画像 */
+/* ブランドロゴ画像 - 完全中央表示 */
 .brand-card img { 
   width: 100%; 
   height: 100%; 
   object-fit: contain; 
+  object-position: center; /* 完全中央表示 */
   transition: opacity .3s ease; 
 }
 
@@ -300,7 +305,13 @@ section {
   left: clamp(8px, 1.5vw, 16px);
   right: clamp(8px, 1.5vw, 16px);
   bottom: clamp(8px, 1.5vw, 16px);
-  opacity: 0; 
+  opacity: 0;
+  display: grid;
+  place-items: center; /* ホバー画像も完全中央 */
+}
+
+.brand-card .brand-hover img {
+  object-position: center; /* ホバー画像中央表示 */
 }
 
 .brand-card:hover .brand-logo { 
@@ -312,24 +323,17 @@ section {
 }
 
 /* ========================================
-   Lookbook（統一背景・横並びレイアウト・12pxギャップ）
+   Lookbook（フルブリード・簡潔背景・囲い範囲統一）
    ======================================== */
 .lookbook {
-  padding: clamp(60px, 8vw, 80px) 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: clamp(40px, 6vw, 80px) 0;
+  background: transparent; /* セクション背景は透明 */
   overflow: hidden;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
 }
 
-.lookbook h2 {
-  text-align: center;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  margin-bottom: clamp(30px, 5vw, 50px);
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  background: none;
-}
-
-/* 統一背景を lookbook-container にのみ適用 */
+/* 統一背景を lookbook-container にのみ適用・フルブリード */
 .lookbook-container {
   background: var(--nav-frost-bg);
   border-radius: 16px;
@@ -340,6 +344,8 @@ section {
   position: relative;
   overflow: hidden;
   height: clamp(280px, 30vw, 360px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
 }
 
 .lookbook-track {
@@ -402,7 +408,7 @@ section {
   }
 }
 
-/* prefers-reduced-motion */
+/* prefers-reduced-motion - アクセシビリティ配慮でアニメーション停止 */
 @media (prefers-reduced-motion: reduce) {
   .lookbook-track { 
     animation: none; 
