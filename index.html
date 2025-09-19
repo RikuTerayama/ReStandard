@@ -923,6 +923,40 @@
   </section>
 
   <!-- ヘッダーとのギャップ確保用スペーサー -->
+  <!-- 改修中メッセージ -->
+  <div id="maintenance-message" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+    font-family: 'Noto Sans JP', sans-serif;
+  ">
+    <h1 style="
+      font-size: clamp(24px, 6vw, 48px);
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    ">サイトの改修中です</h1>
+    <p style="
+      font-size: clamp(14px, 3vw, 18px);
+      text-align: center;
+      opacity: 0.9;
+      margin: 0;
+    ">しばらくお待ちください</p>
+  </div>
+
+  <!-- 既存コンテンツ（非表示） -->
+  <div id="main-content" style="display: none;">
+  
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
   <!-- Hero Video削除 - 背景動画に統合済み -->
@@ -1600,6 +1634,8 @@ document.addEventListener('DOMContentLoaded', function() {
   <script src="js/init-sections.js?v=2025-01-18-final"></script>
   <script src="js/lookbook-interaction.js?v=2025-01-18_FINAL_REQ"></script>
   <script src="js/collection-interaction.js?v=2025-01-18_FINAL_REQ"></script>
+
+  </div> <!-- main-content 終了 -->
 
 </body>
 </html>
