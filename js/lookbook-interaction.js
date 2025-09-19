@@ -29,10 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(`[LOOKBOOK] 拡張複製完了: ${images.length}個追加`);
     }
     
-    // Y中央維持のための初期transform設定
-    if (!lookbookTrack.style.transform.includes('translateY')) {
-      lookbookTrack.style.transform = 'translate3d(0, -50%, 0)';
-    }
+    // CSS中央化委譲 - translateY強制削除
+    console.log('[LOOKBOOK] 縦中央化はCSS align-items:center に委譲');
   }
   
   // シームレス無限ループ実装
@@ -126,9 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
       container.classList.remove('dragging'); // dragging状態解除
       
       // 自然な再開（数百ms遅延）
-      setTimeout(() => {
-        container.style.transform = 'translateY(-50%)'; // Y中央維持
-      }, 300);
+      // CSS中央化委譲 - translateY削除
     }, { passive: false });
     
     // マウスイベント（PC用・同様のロジック）
@@ -191,9 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
       container.style.cursor = 'grab';
       container.classList.remove('dragging');
       
-      setTimeout(() => {
-        container.style.transform = 'translateY(-50%)';
-      }, 300);
+      // CSS中央化委譲 - translateY削除
     });
     
     container.addEventListener('mouseleave', () => {
@@ -270,9 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
       container.classList.remove('dragging');
       container.releasePointerCapture(e.pointerId);
       
-      setTimeout(() => {
-        container.style.transform = 'translateY(-50%)';
-      }, 300);
+      // CSS中央化委譲 - translateY削除
     });
     
     container.addEventListener('pointercancel', (e) => {
