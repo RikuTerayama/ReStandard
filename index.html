@@ -928,13 +928,14 @@
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
   <!-- Collection Section - 統合済み -->
-  <section id="collection" class="collection-section">
-    <div class="collection-outer">
-      <h2 class="collection-title">Collection</h2>
-      <div class="collection-rows-wrapper">
-    <!-- 上段：右→左スクロール -->
-        <div class="collection-row collection-row-top">
-          <div class="collection-track collection-scroll-top">
+  <section id="collection" class="restandard-section">
+    <h2 class="section-title rs-reveal" data-reveal="line">Collection</h2>
+    <div class="collection-band section-band">
+      <div class="section-inner collection-wrap">
+        <div class="collection-rows">
+          <!-- 上段：右→左 -->
+          <div class="collection-row" data-direction="-1">
+            <div class="collection-track" id="collection-row-top">
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
           <img src="image/1.JPG" alt="Collection Item 1">
         </a>
@@ -960,9 +961,9 @@
         </div>
       </div>
     
-    <!-- 下段：左→右スクロール -->
-        <div class="collection-row collection-row-bottom">
-          <div class="collection-track collection-scroll-bottom">
+          <!-- 下段：左→右 -->
+          <div class="collection-row" data-direction="1">
+            <div class="collection-track" id="collection-row-bottom">
         <img src="image/32.JPG" alt="Collection Item 32">
         <img src="image/31.JPG" alt="Collection Item 31">
         <img src="image/30.JPG" alt="Collection Item 30">
@@ -977,8 +978,9 @@
         <img src="image/23.JPG" alt="Collection Item 23">
         <img src="image/22.JPG" alt="Collection Item 22">
         <img src="image/21.JPG" alt="Collection Item 21">
+            </div>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   </section>
@@ -1019,9 +1021,10 @@
   </script>
 
   <!-- Brands Section -->
-  <section id="brands" class="brands section-spacing" data-role="brands">
-    <h2 class="section-title">Brands</h2>
-    <div class="brands-grid">
+  <section id="brands" class="restandard-section">
+    <h2 class="section-title rs-reveal" data-reveal="line">Brands</h2>
+    <div class="section-inner">
+      <div class="brands-grid">
       <figure class="brand-card" data-hover="image/rockmount-hover.webp">
         <a href="https://rockmount.com/" target="_blank" rel="noopener">
           <img src="image/rockmount.webp" alt="Rockmount" loading="lazy" class="brand-logo">
@@ -1091,15 +1094,17 @@
           <img src="image/hatattack.webp" alt="Hat Attack Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
-  </div>
-</section>
+      </div>
+    </div>
+  </section>
 
   <!-- Lookbook Section -->
-  <section id="lookbook" class="lookbook section-spacing" data-role="lookbook">
-    <h2 class="section-title">Lookbook</h2>
-    <div class="fullbleed-bg lookbook-bg">
-    <div class="lookbook-container">
-              <div class="lookbook-track">
+  <section id="lookbook" class="restandard-section">
+    <h2 class="section-title rs-reveal" data-reveal="line">Lookbook</h2>
+    <div class="lookbook-band section-band">
+      <div class="section-inner">
+        <div class="lookbook-row" data-direction="-1">
+          <div class="lookbook-track" id="lookbook-track">
         <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
           <div class="lookbook-item">
           <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
@@ -1168,6 +1173,7 @@
           </div>
           </div>
         </div>
+      </div>
     </div>
   </section>
 
