@@ -64,5 +64,40 @@ document.addEventListener('DOMContentLoaded', function() {
   container.addEventListener('touchmove', move, {passive:true});
   container.addEventListener('touchend', up);
 
-  console.log('[LOOKBOOK] 中央維持・双方向ドラッグ・連続スクロール完了');
+  // setupMarquee確認 - 必ず初期化されるように
+  setTimeout(() => {
+    const imgs = track.querySelectorAll('img');
+    let loadedCount = 0;
+    const totalImages = imgs.length;
+    
+    const checkAnimation = () => {
+      const computedStyle = getComputedStyle(track);
+      const animation = computedStyle.animation;
+      console.log(`[LOOKBOOK] アニメーション確認: ${animation}`);
+      
+      if (!animation || animation === 'none') {
+        // 画像ロード後にアニメーション設定
+        track.style.animation = 'lookbook-scroll 40s linear infinite';
+        console.log('[LOOKBOOK] アニメーション手動設定完了');
+      }
+    };
+    
+    if (totalImages === 0) {
+      checkAnimation();
+    } else {
+      imgs.forEach(img => {
+        if (img.complete) {
+          loadedCount++;
+          if (loadedCount === totalImages) checkAnimation();
+        } else {
+          img.addEventListener('load', () => {
+            loadedCount++;
+            if (loadedCount === totalImages) checkAnimation();
+          }, { once: true });
+        }
+      });
+    }
+  }, 100);
+
+  console.log('[LOOKBOOK] 中央維持・双方向ドラッグ・連続スクロール・setupMarquee確認完了');
 });
