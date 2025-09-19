@@ -17,7 +17,7 @@
   ensureFilled();
 
   let x = 0, vx = 0;
-  const speed = 0.14, dir = -1;
+  const speed = 0.07, dir = -1; // 速度半減
 
   const step = () => {
     const setW = track.scrollWidth / 2;
