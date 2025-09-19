@@ -928,15 +928,17 @@
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
   <!-- Collection Section - 統合済み -->
-  <section id="collection" class="restandard-section">
-    <h2 class="section-title rs-reveal" data-reveal="line">Collection</h2>
-    <div class="collection-band section-band">
-      <div class="section-inner collection-wrap">
-        <div class="collection-rows-wrapper">
+  <section id="collection" class="section-spacing" data-role="collection">
+    <h2 class="section-title">Collection</h2>
+
+    <div class="fullbleed-bg">
+      <div class="section-inner">
+        <div class="band-frost">
           <div class="collection-rows">
-            <!-- 上段：右→左 -->
-            <div class="collection-row top" data-direction="-1">
-              <div class="collection-track" id="collection-row-top">
+
+            <!-- 上段（1-20）：右→左 -->
+            <div class="collection-row">
+              <div class="collection-track" data-direction="left" data-speed="55">
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" class="collection-item">
           <img src="image/1.JPG" alt="Collection Item 1" class="collection-image">
         </a>
@@ -1000,9 +1002,9 @@
               </div>
             </div>
     
-            <!-- 下段：左→右 -->
-            <div class="collection-row bottom" data-direction="1">
-              <div class="collection-track" id="collection-row-bottom">
+            <!-- 下段（21-40）：左→右 -->
+            <div class="collection-row">
+              <div class="collection-track" data-direction="right" data-speed="55">
         <div class="collection-item">
           <img src="image/32.JPG" alt="Collection Item 32" class="collection-image">
         </div>
@@ -1041,6 +1043,7 @@
         </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -1177,12 +1180,13 @@
 </section>
 
   <!-- Lookbook Section -->
-  <section id="lookbook" class="restandard-section">
-    <h2 class="section-title rs-reveal" data-reveal="line">Lookbook</h2>
-    <div class="lookbook-band section-band">
+  <section id="lookbook" class="section-spacing" data-role="lookbook">
+    <h2 class="section-title">Lookbook</h2>
+
+    <div class="fullbleed-bg">
       <div class="section-inner">
-    <div class="lookbook-container">
-          <div class="lookbook-track" id="lookbook-track">
+        <div class="band-frost lookbook-container">
+          <div class="lookbook-track">
         <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
           <div class="lookbook-item">
           <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
