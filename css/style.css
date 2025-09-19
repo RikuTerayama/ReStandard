@@ -149,11 +149,12 @@ section {
    Collection - フルブリード・ドラッグ&クリック両立
    ======================================== */
 
-/* Collection - 横幅一杯背景・中央揃え */
+/* Collection - 安定動作・横幅一杯背景 */
 .collection-section {
   width: 100%;
   background-color: var(--menu-bar-color);
   margin: 0;
+  padding: 20px 0;
 }
 
 /* Collection タイトル - 白フォント・中央揃え */
@@ -209,13 +210,14 @@ section {
   animation: none !important; /* ドラッグ中はCSSアニメ停止 */
 }
 
-/* Collection 画像 - レスポンシブ対応 */
+/* Collection 画像 - レスポンシブ対応・CSS委譲 */
 .collection-row img,
 .collection-track img, 
 .collection-track a img {
   width: 100%;
   height: auto;
   object-fit: contain;
+  max-height: 400px; /* PC版デフォルト */
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,.15);
   user-select: none;
@@ -223,15 +225,6 @@ section {
   transition: transform 0.3s ease;
   flex-shrink: 0;
   display: block;
-}
-
-/* PC版 */
-@media (min-width: 769px) {
-  .collection-row img,
-  .collection-track img, 
-  .collection-track a img {
-    max-height: 400px;
-  }
 }
 
 /* SP版 */
@@ -306,7 +299,7 @@ section {
   text-align: center;
 }
 
-/* Brands - グリッドレイアウト・レスポンシブ */
+/* Brands - グリッドレイアウト・安定配置 */
 .brands-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -333,7 +326,7 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-/* Brands - 正方形画像・ホバーオーバーレイ */
+/* Brands - 正方形画像・aspect-ratio統一 */
 .brands-grid img {
   width: 100%;
   height: 100%;
@@ -341,6 +334,7 @@ section {
   object-fit: contain;
 }
 
+/* ブランドロゴ・ホバーオーバーレイ中央配置 */
 .brand-logo {
   position: relative;
   width: 100%;
@@ -358,6 +352,7 @@ section {
   transition: opacity 0.3s ease;
   width: 100%;
   height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
 }
 
@@ -387,6 +382,8 @@ section {
   overflow: hidden; 
   position: relative;
   height: clamp(280px, 30vw, 360px);
+  display: flex;
+  align-items: center; /* CSS中央化 */
 }
 
 .lookbook-track {
