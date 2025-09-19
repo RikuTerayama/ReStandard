@@ -338,30 +338,47 @@ document.addEventListener('DOMContentLoaded', function() {
     container.style.userSelect = 'none';
   }
   
-  // 【必須実行順序固定】複製→リンク→marquee→ドラッグ
-  console.log('[COLLECTION] 必須実行順序開始: 複製→リンク→marquee→ドラッグ');
-  
-  // 1) 複製拡張（既存1回＋追加1回=合計3周分）
-  document.querySelectorAll('.collection-scroll-top, .collection-scroll-bottom').forEach(track => {
-    const originalItems = Array.from(track.children).filter(el => !el.dataset?.cloned);
-    if (originalItems.length > 0) {
-      originalItems.forEach(node => {
-        const clone = node.cloneNode(true);
-        clone.dataset.cloned = '2'; // 2回目拡張マーク
-        track.appendChild(clone);
-      });
-      console.log(`[COLLECTION] 追加複製: ${originalItems.length}個 (合計3周分)`);
+  // 無限スクロール実装（空白防止・双方向）
+  function setupInfiniteScroll(rowSelector, direction) {
+    const row = document.querySelector(rowSelector);
+    if (!row) return;
+    
+    const items = row.querySelectorAll("img, a");
+    const itemCount = items.length;
+
+    // アイテムを複製して途切れ防止
+    for (let i = 0; i < itemCount; i++) {
+      const clone = items[i].cloneNode(true);
+      clone.dataset.cloned = 'infinite';
+      row.appendChild(clone);
     }
-  });
+
+    let scrollAmount = 0;
+    function scroll() {
+      scrollAmount += direction;
+      if (scrollAmount <= -row.scrollWidth / 2) {
+        scrollAmount = 0;
+      }
+      row.style.transform = `translateX(${scrollAmount}px)`;
+      requestAnimationFrame(scroll);
+    }
+    scroll();
+    console.log(`[COLLECTION] 無限スクロール開始: ${rowSelector} (方向: ${direction})`);
+  }
+
+  // 上段: 右→左 / 下段: 左→右
+  setupInfiniteScroll(".collection-scroll-top", -0.5);
+  setupInfiniteScroll(".collection-scroll-bottom", 0.5);
   
-  // 2) リンク埋め込み必須実行
+  // 【必須実行順序固定】複製→リンク→marquee→ドラッグ
+  console.log('[COLLECTION] 必須実行順序開始: 無限スクロール→リンク→ドラッグ');
+  
+  // リンク埋め込み必須実行
   initializeImageLinks();
   
-  // 3) marquee起動は init-sections.js で実行済み
-  
-  // 4) ドラッグ有効化
+  // ドラッグ有効化
   addCollectionSwipeSupport(collectionTop);
   addCollectionSwipeSupport(collectionBottom);
   
-  console.log('[COLLECTION] 必須実行順序完了 - 3周分・リンク・ドラッグ両立');
+  console.log('[COLLECTION] 無限スクロール・リンク・ドラッグ完了');
 });
