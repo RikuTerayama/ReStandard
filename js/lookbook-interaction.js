@@ -35,14 +35,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const x = e.touches ? e.touches[0].clientX : e.clientX;
     const dx = x - currentX; currentX = x; moved += Math.abs(dx);
     
-    // translateX を相対移動（Y中央維持）
+    // translateX を相対移動（Y座標0・画像切れ防止）
     const m = getComputedStyle(track).transform;
     let baseX = 0;
     if (m !== 'none') {
       const matrix = new DOMMatrix(m);
       baseX = matrix.m41;
     }
-    track.style.transform = `translate3d(${baseX + dx}px, -50%, 0)`;
+    track.style.transform = `translate3d(${baseX + dx}px, 0, 0)`; // Y座標0に変更
   };
 
   const up = e => {
