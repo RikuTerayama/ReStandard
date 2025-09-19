@@ -30,68 +30,7 @@ function initMarquee({trackSelector, direction, speed, pauseOnHover = true}) {
   });
 }
 
-// Lookbook のドラッグ/スワイプ操作を有効化 - Single Source of Truth
-function enableSwipe({containerSelector}) {
-  const container = document.querySelector(containerSelector);
-  if (!container) return;
-  
-  let isDragging = false;
-  let startX = 0;
-  let scrollLeft = 0;
-  
-  // マウスイベント
-  container.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    container.style.cursor = 'grabbing';
-    startX = e.pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-    e.preventDefault();
-  });
-  
-  container.addEventListener('mouseleave', () => {
-    isDragging = false;
-    container.style.cursor = 'grab';
-  });
-  
-  container.addEventListener('mouseup', () => {
-    isDragging = false;
-    container.style.cursor = 'grab';
-  });
-  
-  container.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - container.offsetLeft;
-    const walk = (x - startX) * 2;
-    container.scrollLeft = scrollLeft - walk;
-  });
-  
-  // タッチイベント
-  container.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    startX = e.touches[0].pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-  });
-  
-  container.addEventListener('touchend', () => {
-    isDragging = false;
-  });
-  
-  container.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const x = e.touches[0].pageX - container.offsetLeft;
-    const walk = (x - startX) * 2;
-    container.scrollLeft = scrollLeft - walk;
-  });
-  
-  // ホイールイベント（横スクロール）
-  container.addEventListener('wheel', (e) => {
-    if (e.deltaY !== 0) {
-      e.preventDefault();
-      container.scrollLeft += e.deltaY;
-    }
-  });
-}
+// Lookbook関連削除 - lookbook-interaction.js に完全委譲
 
 // Collection 専用初期化 - Single Source of Truth（Lookbook除外）
 document.addEventListener('DOMContentLoaded', function() {
