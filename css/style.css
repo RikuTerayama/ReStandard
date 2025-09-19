@@ -853,26 +853,24 @@ section h2,
 
 /* === EMERGENCY FIXES - 緊急修正 === */
 
-/* セクション見出しの可視性強化 */
-section h2.section-title {
-  color: #fff !important;
-  text-shadow: 2px 2px 8px rgba(0,0,0,.5);
-  position: relative;
-  z-index: 3;
-  margin: 0 0 clamp(16px, 2vw, 28px);
-}
-
-/* A. セクション見出し強制統一（最優先） */
+/* セクション見出し完全統一 - 白色・レスポンシブ・SP揃え */
 section h2,
 .section-title,
 .collection-title {
   color: #fff !important;
-  font-size: clamp(18px, 4.5vw, 24px) !important; /* 統一サイズ */
+  font-size: clamp(18px, 4vw, 22px) !important; /* SP他セクション揃え */
   font-weight: 700 !important;
   text-align: center !important;
-  margin: clamp(16px, 3vw, 28px) 0 clamp(12px, 2vw, 20px) !important;
+  margin: clamp(16px, 3vw, 24px) 0 clamp(12px, 2vw, 20px) !important;
   background: none !important;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+  text-shadow: 2px 2px 8px rgba(0,0,0,.5) !important;
+  position: relative !important;
+  z-index: 3 !important; /* 背景動画より上 */
+}
+
+/* 共通box-sizing統一 */
+* {
+  box-sizing: border-box !important;
 }
 
 /* 内側グリッド（新たに挿入する .collection-rows に適用） */
@@ -895,19 +893,38 @@ section h2,
   }
 }
 
-/* B. Collection画像サイズ適正化 */
+/* Collection track中央配置・背景一括管理 */
+.collection-track {
+  display: flex !important;
+  justify-content: center !important; /* 左寄り防止・中央配置 */
+  align-items: center !important;
+  gap: clamp(8px, 1.2vw, 16px) !important;
+}
+
+/* Collection 背景一括管理（子要素から削除） */
+.collection {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+  width: 100% !important;
+  padding: clamp(20px, 4vw, 40px) 0 !important;
+}
+
+.collection-row {
+  background: none !important; /* 子要素背景削除 */
+}
+
+/* Collection画像レスポンシブサイズ */
 .collection-item img,
 .collection-track img,
 .collection-image {
-  max-height: clamp(120px, 18vw, 220px) !important; /* 少し拡大 */
-  width: auto !important;
+  max-width: clamp(120px, 15vw, 260px) !important; /* 固定px外し・レスポンシブ */
   height: auto !important;
   object-fit: contain !important;
   display: block !important;
 }
 
 .collection-row {
-  height: clamp(130px, 20vw, 240px) !important; /* コンテナも拡大 */
+  height: clamp(140px, 22vw, 280px) !important; /* PC大きめ・SP小さめ */
 }
 
 /* C. Lookbook高さ・表示修正 */
@@ -939,31 +956,78 @@ section h2,
   border-radius: 16px !important;
 }
 
-/* Brands の縦位置ズレ解消（常に中央） */
-.brand-logo { 
-  display: grid; 
-  place-items: center; 
-}
-.brand-logo img, .brand-logo .hover {
-  width: 100%; 
-  height: 100%;
-  aspect-ratio: 1/1; 
-  object-fit: contain;
-}
-.brand-logo .hover {
-  position: absolute; 
-  inset: 0;
-  opacity: 0; 
-  visibility: hidden; 
-  transition: opacity .3s;
-}
-.brand-logo:hover .hover { 
-  opacity: 1; 
-  visibility: visible; 
+/* Brands レスポンシブgrid・中央揃え統一 */
+.brands-grid {
+  display: grid !important;
+  align-items: center !important;
+  justify-items: center !important;
+  gap: clamp(12px, 2vw, 20px) !important;
+  grid-template-columns: repeat(5, 1fr) !important; /* PC: 5列 */
 }
 
-/* Lookbook の中央寄せ/高さ/アニメ維持を再確認 */
+@media (max-width: 768px) {
+  .brands-grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* SP: 2列 */
+  }
+}
+
+/* Brands の縦位置ズレ解消（常に中央） */
+.brand-logo { 
+  display: grid !important; 
+  place-items: center !important; 
+}
+
+.brand-logo img, .brand-logo .hover {
+  width: 100% !important; 
+  height: 100% !important;
+  aspect-ratio: 1/1 !important; 
+  object-fit: contain !important;
+}
+
+.brand-hover {
+  position: absolute !important; 
+  inset: 0 !important;
+  opacity: 0 !important; /* 初期非表示 */
+  visibility: hidden !important; 
+  transition: opacity .3s !important;
+}
+
+.brand-logo:hover .brand-hover { 
+  opacity: 1 !important; 
+  visibility: visible !important; 
+}
+
+/* Lookbook 中央配置・背景一括管理・overflow調整 */
+.lookbook {
+  background: rgba(255, 255, 255, 0.9) !important; /* 背景一括管理 */
+  backdrop-filter: blur(10px) !important;
+  width: 100% !important;
+  padding: clamp(20px, 4vw, 40px) 0 !important;
+}
+
+.lookbook-container {
+  overflow: hidden !important; /* 適切な調整 */
+  position: relative !important;
+  height: auto !important; /* height:auto */
+  min-height: clamp(200px, 25vw, 400px) !important;
+}
+
 .lookbook-track { 
-  left: 50%; 
-  transform: translate3d(-0%, -50%, 0); 
+  display: flex !important;
+  justify-content: center !important; /* 中央配置 */
+  align-items: center !important;
+  left: 50% !important; 
+  transform: translate3d(-50%, -50%, 0) !important; /* 完全中央 */
+}
+
+.lookbook-item {
+  height: auto !important; /* height:auto */
+  min-height: clamp(180px, 22vw, 360px) !important;
+}
+
+.lookbook-item img {
+  width: 100% !important;
+  height: auto !important; /* height:auto */
+  object-fit: cover !important;
+  object-position: center !important;
 }
