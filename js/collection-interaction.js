@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(`[COLLECTION] ループ幅確保: ${track.id} (${cloneCount}回複製・幅${currentWidth}px)`);
   }
 
+  // 新構造対応 - .collection-track統一セレクタ
   document.querySelectorAll('.collection-track').forEach(track => {
     ensureLoopWidth(track);
   });
