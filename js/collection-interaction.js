@@ -1,3 +1,4 @@
+// (deprecated) logic moved to init-sections.js on 2025-01-18
 // Collection クリック可能・双方向ドラッグ・リンクマッピング（Senior FE仕様）
 document.addEventListener('DOMContentLoaded', function() {
   
