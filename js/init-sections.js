@@ -109,3 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const lookTrack = document.querySelector('#lookbook .lookbook-track');
   setupMarquee(lookTrack, { direction: 'left', speedSec: 55 });
 });
+
+// 強制: Section titles の色/サイズは CSS (.section-title) で統一
+document.querySelectorAll('.section-title').forEach(el => {
+  el.style.color = ''; 
+  el.style.fontSize = ''; 
+  el.style.background = 'transparent';
+});
