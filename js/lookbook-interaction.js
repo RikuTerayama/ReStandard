@@ -294,6 +294,63 @@ document.addEventListener('DOMContentLoaded', function() {
     container.style.userSelect = 'none';
   }
   
+  // Lookbook両方向スクロール実装
+  function setupLookbookScroll(rowSelector) {
+    const row = document.querySelector(rowSelector);
+    if (!row) return;
+    
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    row.addEventListener("mousedown", (e) => {
+      isDown = true;
+      startX = e.pageX - row.offsetLeft;
+      scrollLeft = row.scrollLeft;
+      row.style.cursor = 'grabbing';
+    });
+
+    row.addEventListener("mouseleave", () => { 
+      isDown = false; 
+      row.style.cursor = 'grab';
+    });
+    
+    row.addEventListener("mouseup", () => { 
+      isDown = false; 
+      row.style.cursor = 'grab';
+    });
+
+    row.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - row.offsetLeft;
+      const walk = (x - startX) * 2;
+      row.scrollLeft = scrollLeft - walk;
+    });
+    
+    // タッチサポート
+    row.addEventListener("touchstart", (e) => {
+      isDown = true;
+      startX = e.touches[0].pageX - row.offsetLeft;
+      scrollLeft = row.scrollLeft;
+    });
+    
+    row.addEventListener("touchend", () => { 
+      isDown = false; 
+    });
+    
+    row.addEventListener("touchmove", (e) => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - row.offsetLeft;
+      const walk = (x - startX) * 2;
+      row.scrollLeft = scrollLeft - walk;
+    });
+    
+    console.log(`[LOOKBOOK] 両方向スクロール有効化: ${rowSelector}`);
+  }
+
+  setupLookbookScroll(".lookbook-track");
+  
   // Lookbook独立アニメ起動（init-sections.js から分離）
   if (lookbookTrack) {
     lookbookTrack.style.animation = 'lookbook-scroll 40s linear infinite';
@@ -317,5 +374,5 @@ document.addEventListener('DOMContentLoaded', function() {
   // Lookbookスワイプ機能追加
   addLookbookSwipeSupport(lookbookTrack);
   
-  console.log('[LOOKBOOK] 独立初期化完了 - 複製・アニメ・ドラッグ');
+  console.log('[LOOKBOOK] 独立初期化完了 - 複製・アニメ・両方向スクロール');
 });
