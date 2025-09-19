@@ -928,26 +928,21 @@
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
   <!-- Collection Section - 統合済み -->
-  <section id="collection" class="section-spacing" data-role="collection">
+  <section id="collection" class="band">
     <h2 class="section-title">Collection</h2>
 
-    <div class="fullbleed-bg">
-      <div class="section-inner">
-        <div class="band-frost">
-          <div class="collection-rows">
-
-            <!-- 上段（1-20）：右→左 -->
-            <div class="collection-row">
-              <div class="collection-track collection-scroll-top" data-direction="left" data-speed="55">
+    <!-- 横幅いっぱいの背景(=バンド)はこの .marquee-band だけ -->
+    <div class="marquee-band">
+      <!-- 上段: 右→左（speed=30s） -->
+      <div class="marquee-row">
+        <div class="collection-track" data-direction="left" data-speed="30">
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" class="collection-item">
           <img src="image/1.JPG" alt="Collection Item 1" class="collection-image">
         </a>
-        <div class="collection-item">
+        <a href="#" class="collection-item">
           <img src="image/2.JPG" alt="Collection Item 2" class="collection-image">
-        </div>
-        <div class="collection-item">
-          <img src="image/3.JPG" alt="Collection Item 3" class="collection-image">
-        </div>
+        </a>
+        <a href="#"><img src="image/3.JPG" alt="Collection Item 3"></a>
         <div class="collection-item">
           <img src="image/4.JPG" alt="Collection Item 4" class="collection-image">
         </div>
@@ -1002,9 +997,9 @@
         </div>
       </div>
     
-            <!-- 下段（21-40）：左→右 -->
-            <div class="collection-row">
-              <div class="collection-track collection-scroll-bottom" data-direction="right" data-speed="55">
+      <!-- 下段: 左→右（speed=30s） -->
+      <div class="marquee-row">
+        <div class="collection-track" data-direction="right" data-speed="30">
         <div class="collection-item">
           <img src="image/32.JPG" alt="Collection Item 32" class="collection-image">
         </div>
@@ -1041,63 +1036,61 @@
         <div class="collection-item">
           <img src="image/21.JPG" alt="Collection Item 21" class="collection-image">
         </div>
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- デバッグ用JavaScript -->
+  <!-- 最終QAチェック用JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // A. 要素存在確認
-      console.log('=== 要素存在確認 ===');
-      console.log('Collection top:', document.querySelector('#collection-row-top'));
-      console.log('Collection bottom:', document.querySelector('#collection-row-bottom'));
-      console.log('Lookbook track:', document.querySelector('#lookbook-track'));
-      console.log('Collection title:', document.querySelector('#collection .section-title'));
-      console.log('Lookbook title:', document.querySelector('#lookbook .section-title'));
+      console.log('=== 最終QAチェック ===');
       
-      // B. CSS適用確認
-      console.log('=== CSS適用確認 ===');
-      const collectionTitle = document.querySelector('#collection .section-title');
-      if (collectionTitle) {
-        const styles = getComputedStyle(collectionTitle);
-        console.log('Collection title color:', styles.color);
-        console.log('Collection title font-size:', styles.fontSize);
-        console.log('Collection title display:', styles.display);
-        console.log('Collection title visibility:', styles.visibility);
-      }
+      // 1. 背景1レイヤ確認
+      const collectionBands = document.querySelectorAll('#collection .band, #collection .marquee-band');
+      const lookbookBands = document.querySelectorAll('#lookbook .band, #lookbook .marquee-band');
+      console.log('✅ Collection背景レイヤ数:', collectionBands.length, '(1であるべき)');
+      console.log('✅ Lookbook背景レイヤ数:', lookbookBands.length, '(1であるべき)');
       
-      const lookbookTitle = document.querySelector('#lookbook .section-title');
-      if (lookbookTitle) {
-        const styles = getComputedStyle(lookbookTitle);
-        console.log('Lookbook title color:', styles.color);
-        console.log('Lookbook title font-size:', styles.fontSize);
-        console.log('Lookbook title display:', styles.display);
-      }
+      // 2. 画像全体表示確認
+      const collectionImgs = document.querySelectorAll('.collection-track img');
+      const lookbookImgs = document.querySelectorAll('.lookbook-track img');
+      collectionImgs.forEach(img => {
+        const styles = getComputedStyle(img);
+        if (styles.objectFit !== 'contain') {
+          console.warn('⚠️ Collection画像object-fit:', styles.objectFit, '(containであるべき)');
+        }
+      });
       
-      // C. 画像確認
-      console.log('=== 画像確認 ===');
-      const collectionImages = document.querySelectorAll('#collection img').length;
-      const lookbookImages = document.querySelectorAll('#lookbook img').length;
-      console.log('Collection images:', collectionImages);
-      console.log('Lookbook images:', lookbookImages);
+      // 3. ループ空白なし確認
+      const collectionTracks = document.querySelectorAll('.collection-track');
+      const lookbookTracks = document.querySelectorAll('.lookbook-track');
+      collectionTracks.forEach((track, i) => {
+        const width = track.scrollWidth;
+        const screenWidth = window.innerWidth;
+        console.log(`✅ Collection Track ${i+1} 幅:`, width, 'vs 画面幅:', screenWidth, '(300%以上:', width >= screenWidth * 3, ')');
+      });
       
-      // D. コンテナサイズ確認
-      const collectionContainer = document.querySelector('.collection-rows-wrapper');
-      const lookbookContainer = document.querySelector('.lookbook-container');
-      if (collectionContainer) {
-        const rect = collectionContainer.getBoundingClientRect();
-        console.log('Collection container:', { width: rect.width, height: rect.height });
-      }
-      if (lookbookContainer) {
-        const rect = lookbookContainer.getBoundingClientRect();
-        console.log('Lookbook container:', { width: rect.width, height: rect.height });
-      }
+      // 4. ドラッグクリック確認
+      console.log('✅ Collection tracks:', collectionTracks.length);
+      console.log('✅ Lookbook tracks:', lookbookTracks.length);
+      
+      // 5. 速度確認
+      collectionTracks.forEach((track, i) => {
+        const speed = track.getAttribute('data-speed');
+        console.log(`✅ Collection Track ${i+1} 速度:`, speed, 's (30sであるべき)');
+      });
+      lookbookTracks.forEach((track, i) => {
+        const speed = track.getAttribute('data-speed');
+        console.log(`✅ Lookbook Track ${i+1} 速度:`, speed, 's (32sであるべき)');
+      });
+      
+      // 6. 見出し統一確認
+      const titles = document.querySelectorAll('.section-title');
+      titles.forEach((title, i) => {
+        const styles = getComputedStyle(title);
+        console.log(`✅ Title ${i+1} 色:`, styles.color, 'サイズ:', styles.fontSize);
+      });
     });
   </script>
 
@@ -1180,13 +1173,12 @@
 </section>
 
   <!-- Lookbook Section -->
-  <section id="lookbook" class="section-spacing" data-role="lookbook">
+  <section id="lookbook" class="band">
     <h2 class="section-title">Lookbook</h2>
 
-    <div class="fullbleed-bg">
-      <div class="section-inner">
-        <div class="band-frost lookbook-container">
-              <div class="lookbook-track">
+    <div class="marquee-band">
+      <div class="marquee-row">
+        <div class="lookbook-track" data-direction="left" data-speed="32">
         <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
           <div class="lookbook-item">
           <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
