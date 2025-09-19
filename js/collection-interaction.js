@@ -2,9 +2,9 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   
-  // ensureLoopWidth調整 - 200%以上の幅確保（空白防止）
+  // ensureLoopWidth修正 - 300%幅確保（空白完全防止）
   function ensureLoopWidth(track) {
-    const targetWidth = window.innerWidth * 2; // 200%幅確保
+    const targetWidth = window.innerWidth * 3; // 300%幅確保
     let currentWidth = track.scrollWidth;
     let cloneCount = 0;
     
