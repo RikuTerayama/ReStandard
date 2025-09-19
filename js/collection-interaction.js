@@ -2,17 +2,26 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   
-  // 初期化時に各トラックの先頭から複製して末尾へ（幅の50%目安）
-  document.querySelectorAll('.collection-track').forEach(track => {
-    const items = Array.from(track.children);
-    let width = 0, i = 0;
-    while (width < track.scrollWidth / 2 && i < items.length) {
-      const clone = items[i].cloneNode(true);
-      track.appendChild(clone);
-      width += items[i].getBoundingClientRect().width;
-      i++;
+  // ensureLoopWidth調整 - 200%以上の幅確保（空白防止）
+  function ensureLoopWidth(track) {
+    const targetWidth = window.innerWidth * 2; // 200%幅確保
+    let currentWidth = track.scrollWidth;
+    let cloneCount = 0;
+    
+    while (currentWidth < targetWidth && cloneCount < 10) {
+      const items = Array.from(track.children);
+      items.forEach(item => {
+        const clone = item.cloneNode(true);
+        track.appendChild(clone);
+      });
+      currentWidth = track.scrollWidth;
+      cloneCount++;
     }
-    console.log(`[COLLECTION] ループ幅確保: ${track.id} (${i}個複製)`);
+    console.log(`[COLLECTION] ループ幅確保: ${track.id} (${cloneCount}回複製・幅${currentWidth}px)`);
+  }
+
+  document.querySelectorAll('.collection-track').forEach(track => {
+    ensureLoopWidth(track);
   });
 
   // ドラッグ双方向 + クリック遷移両立
