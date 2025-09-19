@@ -853,6 +853,15 @@ section h2,
 
 /* === EMERGENCY FIXES - 緊急修正 === */
 
+/* セクション見出しの可視性強化 */
+section h2.section-title {
+  color: #fff !important;
+  text-shadow: 2px 2px 8px rgba(0,0,0,.5);
+  position: relative;
+  z-index: 3;
+  margin: 0 0 clamp(16px, 2vw, 28px);
+}
+
 /* A. セクション見出し強制統一（最優先） */
 section h2,
 .section-title,
@@ -866,11 +875,31 @@ section h2,
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
 }
 
+/* 内側グリッド（新たに挿入する .collection-rows に適用） */
+#collection .collection-rows {
+  position: relative;
+  z-index: 1;
+  max-width: min(1600px, 92vw);
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(10px, 2.2vw, 24px);
+}
+
+/* 画像サイズ（行の高さ）を少しだけ拡大 */
+:root { 
+  --collection-row-h: clamp(170px, 23vw, 280px); /* 既定より+少し */
+}
+@media (max-width: 768px) {
+  :root { 
+    --collection-row-h: clamp(150px, 28vw, 240px); 
+  }
+}
+
 /* B. Collection画像サイズ適正化 */
 .collection-item img,
 .collection-track img,
 .collection-image {
-  max-height: clamp(80px, 12vw, 160px) !important; /* 大幅縮小 */
+  max-height: clamp(120px, 18vw, 220px) !important; /* 少し拡大 */
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
@@ -878,7 +907,7 @@ section h2,
 }
 
 .collection-row {
-  height: clamp(90px, 14vw, 180px) !important; /* コンテナも縮小 */
+  height: clamp(130px, 20vw, 240px) !important; /* コンテナも拡大 */
 }
 
 /* C. Lookbook高さ・表示修正 */
@@ -908,4 +937,33 @@ section h2,
   width: 100vw !important;
   padding: clamp(16px, 3vw, 24px) 0 !important;
   border-radius: 16px !important;
+}
+
+/* Brands の縦位置ズレ解消（常に中央） */
+.brand-logo { 
+  display: grid; 
+  place-items: center; 
+}
+.brand-logo img, .brand-logo .hover {
+  width: 100%; 
+  height: 100%;
+  aspect-ratio: 1/1; 
+  object-fit: contain;
+}
+.brand-logo .hover {
+  position: absolute; 
+  inset: 0;
+  opacity: 0; 
+  visibility: hidden; 
+  transition: opacity .3s;
+}
+.brand-logo:hover .hover { 
+  opacity: 1; 
+  visibility: visible; 
+}
+
+/* Lookbook の中央寄せ/高さ/アニメ維持を再確認 */
+.lookbook-track { 
+  left: 50%; 
+  transform: translate3d(-0%, -50%, 0); 
 }
