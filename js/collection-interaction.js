@@ -3,8 +3,8 @@
 
 (() => {
   const rows = [
-    { el: document.querySelector('#collection-row-top'),  speed: 0.15, dir: -1 },
-    { el: document.querySelector('#collection-row-bottom'), speed: 0.12, dir:  1 },
+    { el: document.querySelector('#collection-row-top'),  speed: 0.08, dir: -1 },    // 速度半減
+    { el: document.querySelector('#collection-row-bottom'), speed: 0.06, dir:  1 },  // 速度半減
   ].filter(r => r.el);
 
   // コンテンツを画面幅の2.2倍以上に複製 → 空白見え防止
@@ -17,7 +17,19 @@
     }
   };
 
-  rows.forEach(({ el }) => ensureFilled(el));
+  // 複製前に画像サイズ正規化
+  const normalizeImageSizes = (track) => {
+    track.querySelectorAll('img').forEach(img => {
+      img.style.maxHeight = '160px';
+      img.style.width = 'auto';
+      img.style.height = 'auto';
+    });
+  };
+
+  rows.forEach(({ el }) => {
+    ensureFilled(el);
+    normalizeImageSizes(el);
+  });
 
   // アニメーション（requestAnimationFrame）
   let rafId;
