@@ -75,20 +75,7 @@ section {
   margin-bottom: clamp(50px, 6vw, 80px);
 }
 
-/* セクションタイトル共通スタイル - 白色統一・背景なし */
-.section-title {
-  color: #fff;
-  background: none;
-  font-weight: 600;
-  line-height: 1.2;
-  /* 画面幅でスケール */
-  font-size: clamp(18px, 2.5vw, 28px);
-  background: transparent; /* メニューバー色の背景はかけない */
-  text-align: center;
-  margin-bottom: clamp(16px, 2vw, 24px);
-  font-family: var(--heading-font);
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
+/* 旧定義削除 - Layout core で統一 */
 
 /* ========================================
    背景用全幅ラッパー
@@ -562,40 +549,27 @@ section {
   padding-inline: clamp(12px,3vw,24px);
 }
 
-/* 全幅背景（ヘッダー色と同系の帯）: 横幅100%完全表示 */
+/* 全幅背景（ヘッダー色と同系の帯）: 統一背景・横幅100% */
 .fullbleed-bg{
   position:relative;
   left:50%;
   margin-left:-50vw;
   width:100vw;
   max-width: none !important; /* 制約解除 */
-}
-
-/* Collection背景（メニューバー同色・横幅100%） */
-#collection .fullbleed-bg,
-.collection-bg{
-  background: var(--nav-frost-bg) !important; /* メニューバー同色 */
+  background: var(--nav-frost-bg) !important; /* メニューバー同色・統一背景 */
   backdrop-filter: blur(8px) !important;
-  width: 100vw !important; /* 横幅100% */
-  max-width: none !important; /* 制約解除 */
 }
 
-/* 帯の見た目（ナビと同色のフロスト） */
+/* 帯の見た目（背景は.fullbleed-bgに統一）- 横幅一杯・margin削除 */
 .band-frost{
-  background: var(--nav-frost-bg) !important; /* メニューバー同色 */
+  background: transparent !important; /* 背景は.fullbleed-bgに統一 */
   border-radius:16px;
   padding: clamp(16px,2.5vw,24px);
   box-shadow:0 4px 20px rgba(0,0,0,.10);
-  backdrop-filter: blur(8px);
-  margin: 0; /* margin削除で横幅いっぱい */
+  backdrop-filter: none !important; /* 重複削除 */
+  margin: 0 !important; /* margin削除で横幅いっぱい */
   max-width: none !important; /* 制約解除 */
-}
-
-/* Lookbook背景もメニューバー同色統一 */
-#lookbook .fullbleed-bg,
-.lookbook-bg{
-  background: var(--nav-frost-bg) !important; /* メニューバー同色 */
-  backdrop-filter: blur(8px) !important;
+  width: 100% !important;
 }
 
 /* ====== Collection ====== */
@@ -635,7 +609,19 @@ section {
   margin: 0 auto !important; /* 中央揃え徹底 */
   text-align: center !important;
 }
-#collection .collection-track.dragging{ cursor:grabbing; animation:none !important; }
+
+/* Collection アニメーション確実適用 */
+#collection .collection-track[data-direction="left"]{
+  animation: scroll-right-to-left 55s linear infinite !important; /* 右→左 */
+}
+#collection .collection-track[data-direction="right"]{
+  animation: scroll-left-to-right 55s linear infinite !important; /* 左→右 */
+}
+
+#collection .collection-track.dragging{ 
+  cursor:grabbing; 
+  animation:none !important; /* ドラッグ中のみ停止 */
+}
 #collection .collection-item{ flex:0 0 auto; height:100%; aspect-ratio:4/5;
   border-radius:12px; overflow:hidden; background:#fff; }
 #collection .collection-item img{ 
@@ -674,9 +660,9 @@ section {
   height: auto !important;
   min-height: clamp(280px,30vw,360px) !important;
 }
-/* Lookbook 画像中央切れ防止・高さ自動調整 */
+/* Lookbook 画像見切れ修正・高さ自動調整 */
 .lookbook-container {
-  height: auto !important;
+  height: auto !important; /* 画像サイズに応じて伸縮 */
   min-height: 60vh !important; /* 画面に収まる範囲で最低限の高さを確保 */
 }
 
@@ -690,9 +676,12 @@ section {
   height: auto !important; /* 高さ柔軟化 */
   will-change: transform; 
   cursor:grab; 
-  animation: lookbook-scroll 40s linear infinite !important; /* lookbook-scroll必須適用 */
+  animation: lookbook-scroll 40s linear infinite !important; /* lookbook-scroll確実適用 */
 }
 #lookbook .lookbook-track:active{ cursor:grabbing; }
+#lookbook .lookbook-track.dragging{ 
+  animation:none !important; /* ドラッグ中のみ停止 */
+}
 #lookbook .lookbook-item{ 
   flex:0 0 auto; 
   height: auto !important; /* 高さ柔軟化 */
@@ -702,15 +691,15 @@ section {
   overflow:visible !important; /* 画像切れ防止 */
 }
 .lookbook-track img{ 
-  max-height: 50vh !important; /* レスポンシブ設定 */
+  object-fit: contain !important; /* 上下切れ防止 */
+  max-height: 100% !important; /* 画像見切れ防止 */
   width: auto !important;
-  object-fit: contain !important; /* 画像全体表示 */
 }
 #lookbook .lookbook-item img{ 
   height: auto !important; /* 高さ柔軟化 */
-  max-height: 50vh !important; /* レスポンシブ設定 */
-  width:auto; 
-  object-fit: contain !important; /* 画像全体表示 */
+  object-fit: contain !important; /* 上下切れ防止 */
+  max-height: 100% !important; /* 画像見切れ防止 */
+  width: auto !important;
   border-radius:8px; 
 }
 #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; }
