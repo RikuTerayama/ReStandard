@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   
+  // 新構造対応 - .lookbook-track統一セレクタ
   const track = document.querySelector('.lookbook-track');
   if (!track) {
     console.warn('[LOOKBOOK] Track not found');
