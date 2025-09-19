@@ -1,49 +1,68 @@
-// (deprecated) logic moved to init-sections.js on 2025-01-18
-// Lookbook 表示修正・右寄り解消・Collection同様挙動
+// Lookbook 中央維持 + 双方向ドラッグ + 連続スクロール
 
-(() => {
-  const track = document.querySelector('#lookbook-track');
-  if (!track) return;
+document.addEventListener('DOMContentLoaded', function() {
+  
+  const track = document.querySelector('.lookbook-track');
+  if (!track) {
+    console.warn('[LOOKBOOK] Track not found');
+    return;
+  }
 
-  const ensureFilled = () => {
-    const minWidth = window.innerWidth * 2.0;
-    let w = track.scrollWidth;
-    while (w < minWidth) {
-      track.innerHTML += track.innerHTML;
-      w = track.scrollWidth;
+  // 連続スクロール用に .lookbook-track 末尾へ先頭の要素を複製して幅を確保
+  const items = Array.from(track.children);
+  let width = 0, i = 0;
+  while (width < track.scrollWidth / 2 && i < items.length) {
+    const clone = items[i].cloneNode(true);
+    track.appendChild(clone);
+    width += items[i].getBoundingClientRect().width;
+    i++;
+  }
+  console.log(`[LOOKBOOK] 連続スクロール幅確保: ${i}個複製`);
+
+  // Collection と同等のドラッグ処理（中央維持）
+  let startX = 0, currentX = 0, dragging = false, moved = 0;
+
+  const down = e => {
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    startX = currentX = x;
+    moved = 0; dragging = true;
+    track.classList.add('dragging'); // CSS でアニメ停止
+  };
+
+  const move = e => {
+    if (!dragging) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const dx = x - currentX; currentX = x; moved += Math.abs(dx);
+    
+    // translateX を相対移動（Y中央維持）
+    const m = getComputedStyle(track).transform;
+    let baseX = 0;
+    if (m !== 'none') {
+      const matrix = new DOMMatrix(m);
+      baseX = matrix.m41;
     }
+    track.style.transform = `translate3d(${baseX + dx}px, -50%, 0)`;
   };
 
-  ensureFilled();
-
-  let x = 0, vx = 0;
-  const speed = 0.07, dir = -1; // 速度半減
-
-  const step = () => {
-    const setW = track.scrollWidth / 2;
-    x += speed * dir + vx;
-    if (x <= -setW) x += setW;
-    if (x >= 0)     x -= setW;
-    track.style.transform = `translateX(${x}px)`;
-    vx *= 0.94;
-    if (Math.abs(vx) < 0.01) vx = 0;
-    requestAnimationFrame(step);
+  const up = e => {
+    if (!dragging) return;
+    dragging = false;
+    track.classList.remove('dragging'); // アニメ再開
+    
+    if (moved < 8) return; // 8px未満はクリック許容
+    e.preventDefault(); // 8px以上はドラッグ優先
   };
 
-  requestAnimationFrame(step);
+  // DOM 構造（.lookbook-container > .lookbook-track > .lookbook-item）を前提
+  const container = track.parentElement; // .lookbook-container
+  
+  // マウス・タッチ両対応
+  container.addEventListener('mousedown', down);
+  container.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+  container.addEventListener('touchstart', down, {passive:true});
+  container.addEventListener('touchmove', move, {passive:true});
+  container.addEventListener('touchend', up);
 
-  const row = track.parentElement; // .lookbook-row
-  let dragging = false, lastX = 0;
-
-  const onDown = cx => { dragging = true; lastX = cx; };
-  const onMove = cx => { if (!dragging) return; const dx = cx - lastX; lastX = cx; vx = dx; };
-  const onUp   = () => { dragging = false; };
-
-  row.addEventListener('pointerdown', e => { row.setPointerCapture(e.pointerId); onDown(e.clientX); });
-  row.addEventListener('pointermove',  e => onMove(e.clientX));
-  row.addEventListener('pointerup',    onUp);
-  row.addEventListener('pointercancel',onUp);
-  row.addEventListener('wheel', e => { vx += (e.deltaY || e.deltaX) * -0.1; });
-
-  window.addEventListener('resize', ensureFilled);
-})();
+  console.log('[LOOKBOOK] 中央維持・双方向ドラッグ・連続スクロール完了');
+});
