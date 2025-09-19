@@ -149,15 +149,20 @@ section {
    Collection - フルブリード・ドラッグ&クリック両立
    ======================================== */
 
-/* Collection フルブリード */
-#collection, 
-.collection-section, 
-.collection-outer { 
-  width: 100vw; 
-  margin-left: calc(50% - 50vw); 
+/* Collection - 横幅一杯背景・中央揃え */
+.collection-section {
+  width: 100%;
+  background-color: var(--menu-bar-color);
+  margin: 0;
 }
 
-/* Collection タイトル */
+/* Collection タイトル - 白フォント・中央揃え */
+#collection h2 {
+  color: white !important;
+  font-size: 2rem;
+  text-align: center;
+}
+
 .collection-title {
   color: #fff;
   font-weight: 600;
@@ -204,13 +209,12 @@ section {
   animation: none !important; /* ドラッグ中はCSSアニメ停止 */
 }
 
+/* Collection 画像 - レスポンシブ対応 */
+.collection-row img,
 .collection-track img, 
 .collection-track a img {
-  display: block;
+  width: 100%;
   height: auto;
-  /* PC/モバイルで自然に縮む: 高さ基準ではなく横並び重視 */
-  max-height: clamp(90px, 14vh, 160px);
-  width: auto;
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,.15);
@@ -218,12 +222,24 @@ section {
   pointer-events: auto;
   transition: transform 0.3s ease;
   flex-shrink: 0;
+  display: block;
 }
 
-@media (max-width: 767px) {
+/* PC版 */
+@media (min-width: 769px) {
+  .collection-row img,
   .collection-track img, 
   .collection-track a img {
-    max-height: clamp(70px, 12vh, 120px);
+    max-height: 400px;
+  }
+}
+
+/* SP版 */
+@media (max-width: 768px) {
+  .collection-row img,
+  .collection-track img, 
+  .collection-track a img {
+    max-height: 250px;
   }
 }
 
@@ -290,20 +306,15 @@ section {
   text-align: center;
 }
 
+/* Brands - グリッドレイアウト・レスポンシブ */
 .brands-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: clamp(12px, 1.2vw, 20px);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
   align-items: center;
   justify-items: center;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .brands-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
 }
 
 .brand-card {
@@ -322,33 +333,50 @@ section {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-.brand-card img.logo,
-.brand-card img.hover {
+/* Brands - 正方形画像・ホバーオーバーレイ */
+.brands-grid img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.brand-logo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.brand-logo .hover {
   position: absolute;
-  inset: 0;
-  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center;
-  display: block;
 }
 
-.brand-card img.hover {
-  opacity: 0;
-  transition: opacity .25s;
-  pointer-events: none;
-}
-
-@media (hover: hover) {
-  .brand-card:hover img.hover {
-    opacity: 1;
-  }
+.brand-logo:hover .hover {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ========================================
    Lookbook - 双方向ドラッグとアニメ両立
    ======================================== */
+/* Lookbook - 横幅一杯背景・表示復活 */
+.lookbook-section {
+  width: 100%;
+  background-color: var(--menu-bar-color);
+  padding: 20px 0;
+  overflow: hidden;
+}
+
 .lookbook {
   padding: clamp(40px, 6vw, 80px) 0;
   background: transparent;
@@ -392,6 +420,20 @@ section {
 
 .lookbook-item:hover {
   transform: scale(1.05);
+}
+
+/* Lookbook 画像 - レスポンシブ対応 */
+.lookbook-row img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  max-height: 400px;
+}
+
+@media (max-width: 768px) {
+  .lookbook-row img {
+    max-height: 250px;
+  }
 }
 
 .lookbook-item img {
