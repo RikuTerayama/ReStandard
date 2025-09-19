@@ -99,15 +99,34 @@ function setupMarquee(track, { direction = 'left', speedSec = 40 } = {}) {
 
 /* ===================== init ===================== */
 document.addEventListener('DOMContentLoaded', () => {
-  // Collection 上段（右→左） / 下段（左→右）
-  const topTrack    = document.querySelector('#collection .collection-row.top .collection-track');
-  const bottomTrack = document.querySelector('#collection .collection-row.bottom .collection-track');
-  setupMarquee(topTrack,    { direction: 'left',  speedSec: 38 });
-  setupMarquee(bottomTrack, { direction: 'right', speedSec: 38 });
+  // DOM存在確認・querySelector修正
+  console.log('[INIT] setupMarquee DOM存在確認開始');
+  
+  // Collection 上段・下段（新構造対応）
+  const tracks = document.querySelectorAll('#collection .collection-track');
+  console.log(`[INIT] Collection tracks found: ${tracks.length}`);
+  
+  tracks.forEach((track, index) => {
+    const direction = track.getAttribute('data-direction');
+    const speed = track.getAttribute('data-speed') || '55';
+    
+    if (direction === 'left') {
+      setupMarquee(track, { direction: 'left', speedSec: parseInt(speed) });
+      console.log(`[INIT] Track ${index + 1}: 右→左 (${speed}s)`);
+    } else if (direction === 'right') {
+      setupMarquee(track, { direction: 'right', speedSec: parseInt(speed) });
+      console.log(`[INIT] Track ${index + 1}: 左→右 (${speed}s)`);
+    }
+  });
 
   // Lookbook（右→左）
   const lookTrack = document.querySelector('#lookbook .lookbook-track');
-  setupMarquee(lookTrack, { direction: 'left', speedSec: 55 });
+  if (lookTrack) {
+    setupMarquee(lookTrack, { direction: 'left', speedSec: 55 });
+    console.log('[INIT] Lookbook track: 右→左 (55s)');
+  } else {
+    console.warn('[INIT] Lookbook track not found');
+  }
 });
 
 // 見出しJSリセット削除 - CSS制御のみに統一
