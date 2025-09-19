@@ -850,3 +850,62 @@ section h2,
   height: 100%;
   object-fit: cover;
 }
+
+/* === EMERGENCY FIXES - 緊急修正 === */
+
+/* A. セクション見出し強制統一（最優先） */
+section h2,
+.section-title,
+.collection-title {
+  color: #fff !important;
+  font-size: clamp(18px, 4.5vw, 24px) !important; /* 統一サイズ */
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin: clamp(16px, 3vw, 28px) 0 clamp(12px, 2vw, 20px) !important;
+  background: none !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+}
+
+/* B. Collection画像サイズ適正化 */
+.collection-item img,
+.collection-track img,
+.collection-image {
+  max-height: clamp(80px, 12vw, 160px) !important; /* 大幅縮小 */
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.collection-row {
+  height: clamp(90px, 14vw, 180px) !important; /* コンテナも縮小 */
+}
+
+/* C. Lookbook高さ・表示修正 */
+.lookbook-container {
+  height: clamp(200px, 25vw, 400px) !important; /* 高さ拡大 */
+  overflow: visible !important; /* 切り取り防止 */
+  position: relative !important;
+}
+
+.lookbook-item {
+  height: clamp(180px, 22vw, 360px) !important; /* アイテム高さ拡大 */
+}
+
+.lookbook-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* D. 背景強制適用 */
+.collection-band,
+.lookbook-band {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+  margin-left: calc(50% - 50vw) !important;
+  width: 100vw !important;
+  padding: clamp(16px, 3vw, 24px) 0 !important;
+  border-radius: 16px !important;
+}
