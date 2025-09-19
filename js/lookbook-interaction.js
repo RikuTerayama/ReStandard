@@ -1,3 +1,4 @@
+// (deprecated) logic moved to init-sections.js on 2025-01-18
 // Lookbook 双方向ドラッグ安定化・クラス制御（Senior FE仕様）
 document.addEventListener('DOMContentLoaded', function() {
   console.log('[LOOKBOOK] 唯一初期化者として開始');
