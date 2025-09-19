@@ -702,3 +702,151 @@ section h2,
 /* ---- 共通キーフレーム（CSS/JS名をこれに揃える） ---- */
 @keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes scroll-right { from { transform: translateX(-50%);} to { transform: translateX(0); } }
+
+/* === Section Titles (unified) === */
+.section-title {
+  color: #fff !important;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  margin: clamp(16px, 4vw, 32px) 0 clamp(12px, 2.5vw, 24px);
+  font-size: clamp(22px, 3.6vw, 40px);
+}
+@media (max-width: 767px) {
+  .section-title { font-size: clamp(18px, 6vw, 26px); }
+}
+
+/* === Section container alignment === */
+.section-inner {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(12px, 3vw, 24px);
+}
+
+/* === Band background matching header === */
+.section-band {
+  background: var(--bar-bg, #f2f2f2ee);
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.06) inset;
+}
+
+/* === Collection === */
+.collection-wrap { position: relative; }
+.collection-band { /* 背景の帯（上下段まとめ） */
+  composes: section-band;
+  padding: clamp(12px, 2.2vw, 24px) 0;
+}
+.collection-rows {
+  display: grid;
+  gap: clamp(8px, 1.8vw, 16px);
+}
+.collection-row {
+  position: relative;
+  overflow: hidden;               /* 見切れ対策 */
+  height: clamp(110px, 18vw, 220px);  /* 画像高さのベース */
+  /* 画面が縦長で小さい時は少し背を高く */
+}
+@media (max-width: 767px) {
+  .collection-row { height: clamp(96px, 28vw, 164px); }
+}
+.collection-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.6vw, 14px);
+  white-space: nowrap;            /* 無限スクロールの土台 */
+  will-change: transform;
+}
+.collection-item {
+  flex: 0 0 auto;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 4/5;             /* 服画像の縦長想定 */
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.12);
+  overflow: hidden;
+  background: #fff;
+}
+.collection-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* はみ出し/見切れ防止 */
+  display: block;
+}
+
+/* === Brands Grid === */
+.brands-grid {
+  display: grid;
+  gap: clamp(12px, 2vw, 20px);
+  grid-template-columns: repeat(5, 1fr);
+}
+@media (max-width: 1024px) {
+  .brands-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 767px) {
+  .brands-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.brand-card {
+  position: relative;
+  aspect-ratio: 1 / 1;            /* 正方形固定 */
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08);
+}
+.brand-media, .brand-hover {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; /* 中央中央揃え */
+  padding: clamp(8px, 2.5vw, 18px);
+}
+.brand-media img, .brand-hover img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  display: block;
+}
+.brand-hover {
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+  background: rgba(255,255,255,.96);
+}
+.brand-card:is(:hover, :focus-visible) .brand-hover {
+  opacity: 1; pointer-events: auto;
+}
+/* タッチ端末→ :hoverを無効化（常時表示を防止） */
+@media (hover: none) and (pointer: coarse) {
+  .brand-hover { display: none; }
+}
+
+/* === Lookbook === */
+.lookbook-band { composes: section-band; padding: clamp(8px, 1.6vw, 16px) 0; }
+.lookbook-row {
+  position: relative;
+  overflow: hidden;
+  height: clamp(120px, 20vw, 240px);
+}
+@media (max-width: 767px) {
+  .lookbook-row { height: clamp(100px, 28vw, 180px); }
+}
+.lookbook-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.6vw, 14px);
+  white-space: nowrap;
+  will-change: transform;
+}
+.lookbook-item {
+  flex: 0 0 auto;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+.lookbook-item img {
+  display: block;
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
