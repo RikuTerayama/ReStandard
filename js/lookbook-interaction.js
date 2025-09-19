@@ -1,371 +1,49 @@
 // (deprecated) logic moved to init-sections.js on 2025-01-18
-// Lookbook 双方向ドラッグ安定化・クラス制御（Senior FE仕様）
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('[LOOKBOOK] 唯一初期化者として開始');
-  
-  const lookbookTrack = document.querySelector('.lookbook-track');
-  
-  if (!lookbookTrack) {
-    console.warn('[LOOKBOOK] Track not found');
-    return;
-  }
-  
-  // Lookbook独立初期化: 複製→アニメ→ドラッグ
-  ensureLookbookLoop();
-  
-  function ensureLookbookLoop() {
-    const images = Array.from(lookbookTrack.querySelectorAll('img'));
-    if (images.length === 0) return;
-    
-    // 不足時の拡張複製（もう1セット）
-    const currentItems = lookbookTrack.children.length;
-    const minRequired = images.length * 2; // 最低2周分
-    
-    if (currentItems < minRequired) {
-      images.forEach(img => {
-        const clone = img.cloneNode(true);
-        clone.dataset.lookbookCloned = '1';
-        lookbookTrack.appendChild(clone);
-      });
-      console.log(`[LOOKBOOK] 拡張複製完了: ${images.length}個追加`);
+// Lookbook 表示修正・右寄り解消・Collection同様挙動
+
+(() => {
+  const track = document.querySelector('#lookbook-track');
+  if (!track) return;
+
+  const ensureFilled = () => {
+    const minWidth = window.innerWidth * 2.0;
+    let w = track.scrollWidth;
+    while (w < minWidth) {
+      track.innerHTML += track.innerHTML;
+      w = track.scrollWidth;
     }
-    
-    // CSS中央化委譲 - translateY強制削除
-    console.log('[LOOKBOOK] 縦中央化はCSS align-items:center に委譲');
-  }
-  
-  // シームレス無限ループ実装
-  function ensureLookbookLoop(track) {
-    if (!track || track.dataset.loopReady === '1') return;
-    const items = Array.from(track.children);
-    if (items.length === 0) return;
+  };
 
-    // 元の画像を2回複製してシームレス無限ループ
-    const originalItems = items.slice();
-    originalItems.forEach(item => track.appendChild(item.cloneNode(true)));
-    
-    track.dataset.loopReady = '1';
-  }
-  
-  // Lookbook無限ループ設定
-  ensureLookbookLoop(lookbookTrack);
-  
-  // Lookbook 双方向ドラッグ機能（クリック共存・draggingクラス制御）
-  function addLookbookSwipeSupport(container) {
-    if (!container) return;
-    
-    let isDragging = false;
-    let dragStarted = false;
-    let startX = 0;
-    const DRAG_THRESHOLD = 8; // 8px以上でドラッグ判定
-    
-    // タッチイベント（passive: false でpreventDefault制御可能）
-    container.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      dragStarted = false;
-      container.style.cursor = 'grabbing';
-      
-      startX = e.touches[0].clientX;
-      
-      // start では preventDefault しない（クリック温存）
-    }, { passive: false });
-    
-    container.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      
-      const clientX = e.touches[0].clientX;
-      const deltaX = Math.abs(clientX - startX);
-      
-      // 閾値超過でドラッグ開始
-      if (deltaX > DRAG_THRESHOLD && !dragStarted) {
-        dragStarted = true;
-        container.classList.add('dragging'); // CSS制御用クラス
-      }
-      
-      // ドラッグ開始後のみ preventDefault & transform更新
-      if (dragStarted) {
-        e.preventDefault();
-        
-        const currentTransform = getComputedStyle(container).transform;
-        let currentX = 0;
-        
-        if (currentTransform && currentTransform !== 'none') {
-          const matrix = currentTransform.match(/matrix3d\((.+)\)/);
-          if (matrix) {
-            currentX = parseFloat(matrix[1].split(',')[12]);
-          } else {
-            const matrix2d = currentTransform.match(/matrix\((.+)\)/);
-            if (matrix2d) {
-              currentX = parseFloat(matrix2d[1].split(',')[4]);
-            }
-          }
-        }
-        
-        const moveX = (clientX - startX) * 1.5;
-        container.style.transform = `translate3d(${currentX + moveX}px, -50%, 0)`;
-        startX = clientX;
-      }
-    }, { passive: false });
-    
-    container.addEventListener('touchend', (e) => {
-      if (!isDragging) return;
-      
-      // ドラッグ未開始（閾値以下）ならクリック許可
-      if (!dragStarted) {
-        console.info('[LOOKBOOK] タップ判定: 通常動作許可');
-        // e.preventDefault() しない
-      } else {
-        console.info('[LOOKBOOK] ドラッグ判定');
-        e.preventDefault();
-      }
-      
-      isDragging = false;
-      dragStarted = false;
-      container.style.cursor = 'grab';
-      container.classList.remove('dragging'); // dragging状態解除
-      
-      // 自然な再開（数百ms遅延）
-      // CSS中央化委譲 - translateY削除
-    }, { passive: false });
-    
-    // マウスイベント（PC用・同様のロジック）
-    container.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      dragStarted = false;
-      container.style.cursor = 'grabbing';
-      
-      startX = e.clientX;
-      
-      // start では preventDefault しない
-    });
-    
-    container.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      
-      const deltaX = Math.abs(e.clientX - startX);
-      
-      if (deltaX > DRAG_THRESHOLD && !dragStarted) {
-        dragStarted = true;
-        container.classList.add('dragging');
-      }
-      
-      if (dragStarted) {
-        e.preventDefault();
-        
-        const currentTransform = getComputedStyle(container).transform;
-        let currentX = 0;
-        
-        if (currentTransform && currentTransform !== 'none') {
-          const matrix = currentTransform.match(/matrix3d\((.+)\)/);
-          if (matrix) {
-            currentX = parseFloat(matrix[1].split(',')[12]);
-          } else {
-            const matrix2d = currentTransform.match(/matrix\((.+)\)/);
-            if (matrix2d) {
-              currentX = parseFloat(matrix2d[1].split(',')[4]);
-            }
-          }
-        }
-        
-        const moveX = (e.clientX - startX) * 1.5;
-        container.style.transform = `translate3d(${currentX + moveX}px, -50%, 0)`;
-        startX = e.clientX;
-      }
-    });
-    
-    container.addEventListener('mouseup', (e) => {
-      if (!isDragging) return;
-      
-      if (!dragStarted) {
-        // クリック許可
-        console.info('[LOOKBOOK] クリック判定: 通常動作');
-      } else {
-        e.preventDefault();
-      }
-      
-      isDragging = false;
-      dragStarted = false;
-      container.style.cursor = 'grab';
-      container.classList.remove('dragging');
-      
-      // CSS中央化委譲 - translateY削除
-    });
-    
-    container.addEventListener('mouseleave', () => {
-      if (isDragging) {
-        isDragging = false;
-        dragStarted = false;
-        container.style.cursor = 'grab';
-        container.classList.remove('dragging');
-        
-        setTimeout(() => {
-          container.style.transform = 'translateY(-50%)';
-        }, 300);
-      }
-    });
-    
-    // ポインターイベント（setPointerCapture使用）
-    container.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      dragStarted = false;
-      container.style.cursor = 'grabbing';
-      container.setPointerCapture(e.pointerId);
-      
-      startX = e.clientX;
-      
-      // start では preventDefault しない
-    });
-    
-    container.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      
-      const deltaX = Math.abs(e.clientX - startX);
-      
-      if (deltaX > DRAG_THRESHOLD && !dragStarted) {
-        dragStarted = true;
-        container.classList.add('dragging');
-      }
-      
-      if (dragStarted) {
-        e.preventDefault();
-        
-        const currentTransform = getComputedStyle(container).transform;
-        let currentX = 0;
-        
-        if (currentTransform && currentTransform !== 'none') {
-          const matrix = currentTransform.match(/matrix3d\((.+)\)/);
-          if (matrix) {
-            currentX = parseFloat(matrix[1].split(',')[12]);
-          } else {
-            const matrix2d = currentTransform.match(/matrix\((.+)\)/);
-            if (matrix2d) {
-              currentX = parseFloat(matrix2d[1].split(',')[4]);
-            }
-          }
-        }
-        
-        const moveX = (e.clientX - startX) * 1.5;
-        container.style.transform = `translate3d(${currentX + moveX}px, -50%, 0)`;
-        startX = e.clientX;
-      }
-    });
-    
-    container.addEventListener('pointerup', (e) => {
-      if (!isDragging) return;
-      
-      if (!dragStarted) {
-        console.info('[LOOKBOOK] ポインタークリック判定: 通常動作');
-      } else {
-        e.preventDefault();
-      }
-      
-      isDragging = false;
-      dragStarted = false;
-      container.style.cursor = 'grab';
-      container.classList.remove('dragging');
-      container.releasePointerCapture(e.pointerId);
-      
-      // CSS中央化委譲 - translateY削除
-    });
-    
-    container.addEventListener('pointercancel', (e) => {
-      if (isDragging) {
-        isDragging = false;
-        dragStarted = false;
-        container.style.cursor = 'grab';
-        container.classList.remove('dragging');
-        container.releasePointerCapture(e.pointerId);
-        
-        setTimeout(() => {
-          container.style.transform = 'translateY(-50%)';
-        }, 300);
-      }
-    });
-    
-    // 基本カーソル設定
-    container.style.cursor = 'grab';
-    container.style.userSelect = 'none';
-  }
-  
-  // Lookbook両方向スクロール実装
-  function setupLookbookScroll(rowSelector) {
-    const row = document.querySelector(rowSelector);
-    if (!row) return;
-    
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+  ensureFilled();
 
-    row.addEventListener("mousedown", (e) => {
-      isDown = true;
-      startX = e.pageX - row.offsetLeft;
-      scrollLeft = row.scrollLeft;
-      row.style.cursor = 'grabbing';
-    });
+  let x = 0, vx = 0;
+  const speed = 0.14, dir = -1;
 
-    row.addEventListener("mouseleave", () => { 
-      isDown = false; 
-      row.style.cursor = 'grab';
-    });
-    
-    row.addEventListener("mouseup", () => { 
-      isDown = false; 
-      row.style.cursor = 'grab';
-    });
+  const step = () => {
+    const setW = track.scrollWidth / 2;
+    x += speed * dir + vx;
+    if (x <= -setW) x += setW;
+    if (x >= 0)     x -= setW;
+    track.style.transform = `translateX(${x}px)`;
+    vx *= 0.94;
+    if (Math.abs(vx) < 0.01) vx = 0;
+    requestAnimationFrame(step);
+  };
 
-    row.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - row.offsetLeft;
-      const walk = (x - startX) * 2;
-      row.scrollLeft = scrollLeft - walk;
-    });
-    
-    // タッチサポート
-    row.addEventListener("touchstart", (e) => {
-      isDown = true;
-      startX = e.touches[0].pageX - row.offsetLeft;
-      scrollLeft = row.scrollLeft;
-    });
-    
-    row.addEventListener("touchend", () => { 
-      isDown = false; 
-    });
-    
-    row.addEventListener("touchmove", (e) => {
-      if (!isDown) return;
-      const x = e.touches[0].pageX - row.offsetLeft;
-      const walk = (x - startX) * 2;
-      row.scrollLeft = scrollLeft - walk;
-    });
-    
-    console.log(`[LOOKBOOK] 両方向スクロール有効化: ${rowSelector}`);
-  }
+  requestAnimationFrame(step);
 
-  setupLookbookScroll(".lookbook-track");
-  
-  // Lookbook独立アニメ起動（init-sections.js から分離）
-  if (lookbookTrack) {
-    lookbookTrack.style.animation = 'lookbook-scroll 40s linear infinite';
-    
-    // ホバー停止（pointer有デバイスのみ）
-    if (window.matchMedia('(hover: hover)').matches) {
-      lookbookTrack.addEventListener('mouseenter', () => {
-        lookbookTrack.style.animationPlayState = 'paused';
-      });
-      lookbookTrack.addEventListener('mouseleave', () => {
-        lookbookTrack.style.animationPlayState = 'running';
-      });
-    }
-    
-    // prefers-reduced-motion 対応
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      lookbookTrack.style.animation = 'none';
-    }
-  }
-  
-  // Lookbookスワイプ機能追加
-  addLookbookSwipeSupport(lookbookTrack);
-  
-  console.log('[LOOKBOOK] 独立初期化完了 - 複製・アニメ・両方向スクロール');
-});
+  const row = track.parentElement; // .lookbook-row
+  let dragging = false, lastX = 0;
+
+  const onDown = cx => { dragging = true; lastX = cx; };
+  const onMove = cx => { if (!dragging) return; const dx = cx - lastX; lastX = cx; vx = dx; };
+  const onUp   = () => { dragging = false; };
+
+  row.addEventListener('pointerdown', e => { row.setPointerCapture(e.pointerId); onDown(e.clientX); });
+  row.addEventListener('pointermove',  e => onMove(e.clientX));
+  row.addEventListener('pointerup',    onUp);
+  row.addEventListener('pointercancel',onUp);
+  row.addEventListener('wheel', e => { vx += (e.deltaY || e.deltaX) * -0.1; });
+
+  window.addEventListener('resize', ensureFilled);
+})();
