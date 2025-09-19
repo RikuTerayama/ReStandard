@@ -528,19 +528,91 @@ section {
 
 /* 重複ブロック削除済み - 最終定義のみ残す */
 
-/* ====== Layout core (single source of truth) ====== */
-/* Collection/Lookbook見出し統一 */
+/* ====== 共通レイアウト ====== */
+
+/* セクション見出しは白字・共通レスポンシブ */
 .section-title{
-  color: white !important; /* 白統一 */
-  font-size: clamp(20px, 2vw, 28px) !important; /* レスポンシブ統一 */
-  text-align: center !important; /* 中央揃え強化 */
-  font-weight:700 !important;
-  line-height:1.2 !important;
-  margin: clamp(16px,4vw,32px) 0 clamp(12px,2.5vw,24px) !important;
-  background: transparent !important; /* 透明背景 */
-  text-shadow: 2px 2px 8px rgba(0,0,0,.5) !important;
-  position: relative !important;
-  z-index: 3 !important;
+  color:#fff;
+  text-align:center;
+  font-weight:700;
+  letter-spacing:.03em;
+  /* 560px〜1600pxで 28〜48px 相当 */
+  font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem);
+  margin: 0 0 1.2rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+
+/* 横幅いっぱいの背景（1枚だけ使う） */
+.band{
+  /* 画面端まで背景を広げる */
+  margin-inline: calc(50% - 50vw); /* full-bleed */
+  background: var(--nav-bg, rgba(255,255,255,.08)); /* メニューと同系色に */
+  backdrop-filter: blur(6px);
+  padding-block: 2.5rem;
+}
+
+/* 角丸パネルを使いたい場合はここ（任意） */
+.marquee-band{
+  max-width: min(1400px, 92vw);
+  margin-inline: auto;
+  border-radius: 18px;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.08) inset;
+  padding: 1.2rem 1rem 1.6rem;
+}
+
+/* 上下の行の間隔・左右の余白 */
+.marquee-row{ 
+  overflow: hidden; 
+  padding-block: .35rem;
+}
+
+/* ====== 画像カード ====== */
+
+.collection-track a,
+.lookbook-track a{
+  display: inline-block;
+  padding: .5rem .6rem; /* 画像間の「少しの隙間」 */
+}
+
+.collection-track img,
+.lookbook-track img{
+  display:block;
+  height: auto;                 /* 縦は自動 */
+  width: clamp(140px, 16vw, 340px);  /* 画面に比例して伸縮 */
+  object-fit: contain;          /* 画像を絶対に切り取らない */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+/* ====== アニメーション ====== */
+
+.collection-track,
+.lookbook-track{
+  will-change: transform;
+}
+
+/* 行アニメ（左/右） */
+@keyframes scroll-left   { to { transform: translateX(-50%); } }
+@keyframes scroll-right  { to { transform: translateX( 50%); } }
+
+/* ドラッグ中はCSSアニメを一時停止（JSが .dragging を付与） */
+.collection-track.dragging,
+.lookbook-track.dragging{
+  animation-play-state: paused;
+}
+
+/* 見出しの余白調整（行が食い込むのを防ぐ） */
+#collection .section-title,
+#lookbook   .section-title{
+  margin-top: .5rem;
+  margin-bottom: 1rem;
+}
+
+/* スマホ寄りでカードが大きすぎる時はさらに絞る（任意） */
+@media (max-width: 480px){
+  .collection-track img,
+  .lookbook-track img{ width: clamp(120px, 28vw, 220px); }
 }
 
 .section-inner{
