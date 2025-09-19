@@ -60,29 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (collectionTop && collectionBottom) {
     console.info('[COLLECTION] 二段同時表示確認: OK');
     
-    // インライン固定指定の強制削除
-    [collectionTop, collectionBottom].forEach(track => {
-      const row = track.closest('.collection-row');
-      if (row) {
-        // サイズ関連削除（CSS変数に委ねる）
-        row.style.removeProperty('height');
-        row.style.removeProperty('width');
-        row.style.removeProperty('background');
-        row.style.height = '';
-        row.style.width = '';
-      }
-      
-      // 画像のサイズ固定も削除
-      const images = track.querySelectorAll('img');
-      images.forEach(img => {
-        img.style.removeProperty('height');
-        img.style.removeProperty('width');
-        img.style.removeProperty('object-fit');
-        img.style.height = '';
-        img.style.width = '';
-        img.style.objectFit = '';
-      });
-    });
+    // CSS委譲 - style.removeProperty処理を削除
+    console.info('[COLLECTION] レイアウトはCSS側で完全管理');
   } else {
     console.warn('[COLLECTION] 二段のうち片方が見つからない');
   }
