@@ -56,16 +56,13 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault(); // 8px以上はドラッグだったのでクリック抑止
     };
 
-    // DOM 構造対応 - marquee-row > lookbook-track
-    const container = track.parentElement; // .marquee-row
-    
-    // マウス・タッチ両対応
-    container.addEventListener('mousedown', down);
-    container.addEventListener('mousemove', move);
+    // マウス・タッチ両対応（trackに直接付与）
+    track.addEventListener('mousedown', down);
+    track.addEventListener('mousemove', move);
     window.addEventListener('mouseup', up);
-    container.addEventListener('touchstart', down, {passive:true});
-    container.addEventListener('touchmove', move, {passive:true});
-    container.addEventListener('touchend', up);
+    track.addEventListener('touchstart', down, {passive:true});
+    track.addEventListener('touchmove', move, {passive:true});
+    track.addEventListener('touchend', up);
   });
 
   console.log('[LOOKBOOK] ドラッグクリック両立・300%幅確保完了');
