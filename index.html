@@ -718,27 +718,6 @@
   </style>
 </head>
 <body>
-  <!-- サイト改修中メッセージ - 一時的に非表示 -->
-  <div id="maintenance-message" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #000;
-    color: #fff;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    font-family: 'Noto Serif JP', serif;
-    z-index: 99999;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-  ">
-    サイトの改修中です
-  </div>
 
   <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
   <div id="splash-video-wrapper" style="display: none;">
@@ -807,9 +786,6 @@
     
     /* PC版でもスマートフォン版と同様の透過設定を適用 */
     @media (min-width: 901px) {
-      body {
-        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end)) !important;
-      }
       .navbar {
         background-color: rgba(255, 255, 255, 0.9) !important;
         backdrop-filter: blur(10px) !important;
@@ -925,69 +901,6 @@
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
-  <!-- サイト改修中メッセージ -->
-  <div id="maintenance-message" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    color: white;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-  ">
-    <div style="
-      text-align: center;
-      padding: 2rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    ">
-      <h1 style="
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 300;
-        margin: 0 0 1rem;
-        letter-spacing: 0.05em;
-      ">サイトの改修中です</h1>
-      <p style="
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
-        opacity: 0.8;
-        margin: 0;
-        font-weight: 300;
-      ">しばらくお待ちください</p>
-      <div style="
-        margin-top: 2rem;
-        width: 40px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, white, transparent);
-        animation: loading 2s infinite;
-      "></div>
-    </div>
-  </div>
-
-  <style>
-    @keyframes loading {
-      0% { transform: translateX(-100px); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateX(100px); opacity: 0; }
-    }
-    
-    /* メンテナンス中は他のコンテンツを非表示 */
-    body:has(#maintenance-message) nav,
-    body:has(#maintenance-message) main,
-    body:has(#maintenance-message) section,
-    body:has(#maintenance-message) footer,
-    body:has(#maintenance-message) #background-video-container,
-    body:has(#maintenance-message) #splash-video-wrapper {
-      display: none !important;
-    }
-  </style>
   
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
