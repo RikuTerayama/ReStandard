@@ -2,9 +2,9 @@
    Marquee initializer (Collection / Lookbook 共通) 2025-01-18
    ========================================================= */
 
-/** 子要素をクローンして 200% 幅以上にし、無限ループを成立させる */
+/** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
-  const maxLoopWidth = track.parentElement.offsetWidth * 2; // 200%
+  const maxLoopWidth = track.parentElement.offsetWidth * 3; // 300%
   let total = Array.from(track.children).reduce((w, el) => w + el.getBoundingClientRect().width, 0);
 
   // 画像が未ロードだと幅が 0 になるので暫定で幅推定
@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lookbook（右→左）
   const lookTrack = document.querySelector('#lookbook .lookbook-track');
   if (lookTrack) {
-    setupMarquee(lookTrack, { direction: 'left', speedSec: 55 });
-    console.log('[INIT] Lookbook track: 右→左 (55s)');
+    setupMarquee(lookTrack, { direction: 'left', speedSec: 25 });
+    console.log('[INIT] Lookbook track: 右→左 (25s)');
   } else {
     console.warn('[INIT] Lookbook track not found');
   }
