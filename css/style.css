@@ -874,3 +874,101 @@ section {
 .brand-card .brand-hover{ opacity:0; }
 .brand-card:hover .brand-logo{ opacity:0; }
 .brand-card:hover .brand-hover{ opacity:1; }
+
+/* =========================
+   Collection / Lookbook v7 - 完全統一
+   ========================= */
+
+/* 共通トークン */
+:root{
+  --band-bg: rgba(255,255,255,0.90); /* .navbar と同等の見た目に合わせる */
+  --gap: clamp(10px, 1.6vw, 20px);
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0,0,0,.06);
+  --title-fs: clamp(28px, 4.2vw, 56px);
+}
+
+/* セクションタイトル：白文字・背景無し（中央揃え） */
+.section-title{
+  color:#fff !important;
+  font-size:var(--title-fs) !important;
+  margin: clamp(20px, 3vw, 32px) auto !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  background: transparent !important;
+}
+
+/* 背景の帯（ナビと同系色。横幅いっぱい、上下はclampで可変） */
+.band{
+  width: 100vw !important;
+  margin-inline: calc(50% - 50vw) !important; /* 横いっぱいに広げる */
+  background: var(--band-bg) !important;
+  padding-block: clamp(10px, 2vw, 22px) !important;
+  overflow: hidden !important;
+}
+
+/* トラック（横並び・端の余白は少し） */
+.collection-track,
+.lookbook-track{
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--gap) !important;
+  will-change: transform !important;
+  user-select: none !important;
+  touch-action: pan-y !important;
+  cursor: grab !important;
+  padding-inline: clamp(8px, 2vw, 16px) !important;
+}
+
+/* --- Collection の行高（上下2段同値） --- */
+#collection .collection-track{
+  block-size: clamp(180px, 24vw, 340px) !important;
+}
+
+/* --- Lookbook の行高：PCは少し小さめ（SPはclamp下限に寄る） --- */
+#lookbook .lookbook-track{
+  block-size: clamp(180px, 22vw, 300px) !important;
+}
+
+/* カード：余白のみ。白いカード背景は無し */
+.collection-item,
+.lookbook-item{
+  inline-size: auto !important;
+  block-size: 100% !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important; /* 切れ防止 */
+}
+
+/* 画像（リンク内の <img>）は割合を保って必ず全部見せる */
+.collection-track a,
+.lookbook-track a{
+  display:block !important;
+  inline-size: auto !important;
+  block-size: 100% !important;
+  pointer-events: auto !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.collection-track img,
+.lookbook-track img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;   /* 全体を表示（切らない） */
+  display: block !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  user-select: none !important;
+  pointer-events: auto !important;
+}
+
+/* ドラッグ中はアニメ止め & カーソル */
+.collection-track.dragging,
+.lookbook-track.dragging{
+  cursor: grabbing !important;
+  animation-play-state: paused !important;
+}
