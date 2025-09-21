@@ -1,3 +1,7 @@
+// temporary disabled - init-sections.js is the single source of truth
+export {};
+return;
+
 // Lookbook ドラッグクリック両立・Collection同様処理・300%幅確保
 
 document.addEventListener('DOMContentLoaded', function() {
