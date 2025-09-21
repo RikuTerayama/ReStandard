@@ -8,15 +8,18 @@
   /* Nav frost 背景 */
   --nav-frost-bg: rgba(255,255,255,0.9);
   
-  /* Collection 統一変数 */
-  --collection-row-h: clamp(220px, 28vw, 360px);
-  --collection-speed: 55s;
-  --collection-img-max-h-pc: clamp(240px, 26vw, 360px);
-  --collection-img-max-h-sp: clamp(160px, 40vw, 260px);
+  /* === 統一トークン（PC/モバイル両対応のクランプ） === */
+  /* Collection の画像高（行と画像の「単一の基準」） */
+  --collection-img-h: clamp(240px, 27vw, 360px);
+  /* Lookbook の画像高（同様に単一化） */
+  --lookbook-img-h: clamp(260px, 27vw, 360px);
   
-  /* Lookbook 統一変数 */
+  /* 速度設定 */
+  --collection-speed: 55s;
   --lookbook-speed: 75s;
-  --lookbook-img-max-h: clamp(240px, 27vw, 360px);
+  
+  /* スペーシング */
+  --collection-gap: 12px;
   
   /* 共通設定 */
   --main-color: #333333;
@@ -158,11 +161,7 @@ section {
   background: transparent;
 }
 
-.collection-row { 
-  overflow: hidden;
-  height: var(--collection-row-h);
-  position: relative;
-}
+/* 既存の collection-row 定義は上記で統一済み */
 
 .collection-track {
   display: flex;
@@ -179,21 +178,38 @@ section {
   animation: none !important; /* ドラッグ中はCSSアニメ停止 */
 }
 
-/* Collection 画像 - レスポンシブ対応・CSS委譲 */
-.collection-row img,
-.collection-track img, 
-.collection-track a img {
-  width: 100%;
+/* ---------- Collection ---------- */
+/* 行（帯）高 = 画像高 + わずかな余白 */
+#collection .collection-row{
+  block-size: calc(var(--collection-img-h) + 12px);
+  overflow: hidden;
+  position: relative;
+}
+
+/* 画像は"常に"行内に収まる */
+#collection .collection-track img{
+  max-height: var(--collection-img-h);
   height: auto;
-  object-fit: contain;                 /* 全体表示で見切れない */
-  max-height: var(--collection-img-max-h-pc);
-  border-radius: 0;                    /* "カード感"を出さない */
-  box-shadow: none;
+  width: auto;
+  object-fit: contain;
+  display: block;
   user-select: none;
   pointer-events: auto;
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
-  display: block;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 縦位置は上寄せ（中央だと上下が不足時に欠けやすい） */
+#collection .collection-track{
+  align-items: flex-start;
+}
+
+/* 個々の画像カード化を撤去（白背景・影を無効化） */
+#collection .collection-track a{
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 var(--collection-gap, 12px);
 }
 
 /* SP版 */
@@ -753,27 +769,44 @@ section {
   min-height: clamp(280px,30vw,360px) !important;
 }
 /* Lookbook 画像見切れ修正・高さ自動調整 */
-.lookbook-container {
-  height: auto !important; /* 画像サイズに応じて伸縮 */
-  min-height: 60vh !important; /* 画面に収まる範囲で最低限の高さを確保 */
+/* 古い lookbook-container 設定は下記で統一済み */
+
+/* ---------- Lookbook ---------- */
+/* 帯の最小高 = 画像高 + 余白（上下の余白は好みに合わせて） */
+#lookbook .lookbook-container{
+  min-block-size: calc(var(--lookbook-img-h) + 2rem);
 }
 
-.lookbook-track{
+/* 各アイテムの高さを単一トークンに合わせる */
+#lookbook .lookbook-item{
+  height: var(--lookbook-img-h);
+}
+#lookbook .lookbook-item img{
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* 縦中央固定をやめ、上寄せにする */
+#lookbook .lookbook-track{
+  position: absolute;
+  inset-inline: 0;
+  top: 0;              /* ← 50% ではなく上に固定 */
+  transform: none;     /* ← translateY(-50%) を撤廃 */
   display:flex; 
-  align-items:center; 
+  align-items:flex-start; 
   gap:12px; 
   height: auto;
   will-change: transform; 
   cursor:grab; 
   animation: scroll-left var(--lookbook-speed) linear infinite;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
-.lookbook-track img{
-  max-height: var(--lookbook-img-max-h);
-  object-fit: contain;
+/* Lookbook のスクロールは X 方向のみをアニメーション */
+@keyframes lookbook-scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }  /* 実際の幅比に合わせて調整 */
 }
 #lookbook .lookbook-track:active{ cursor:grabbing; }
 #lookbook .lookbook-track.dragging{ 
