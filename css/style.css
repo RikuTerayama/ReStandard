@@ -217,7 +217,7 @@ section {
   .collection-row img,
   .collection-track img, 
   .collection-track a img {
-    max-height: var(--collection-img-max-h-sp);
+    max-height: var(--collection-img-h);
   }
 }
 
@@ -370,7 +370,7 @@ section {
 .lookbook-container { 
   overflow: hidden; 
   position: relative;
-  min-block-size: calc(var(--lookbook-img-max-h) + 2rem);
+  min-block-size: calc(var(--lookbook-img-h) + 2rem);
   padding-block: 1rem;                 /* 画像上下に程よい余白 */
   display: flex;
   align-items: center;
@@ -587,7 +587,7 @@ section {
   width: 100%;
   height: auto;
   object-fit: contain;          /* 全体表示で見切れない */
-  max-height: var(--collection-img-max-h-pc);
+  max-height: var(--collection-img-h);
   border-radius: 0;             /* 「カード感」を出さない */
   box-shadow: none;
   pointer-events: auto;
@@ -621,7 +621,7 @@ section {
 @media (max-width: 768px){
   .collection-track img,
   .lookbook-track img{ 
-    max-height: var(--collection-img-max-h-sp); 
+    max-height: var(--collection-img-h); 
   }
   
   :root {
@@ -787,7 +787,7 @@ section {
   position: absolute;
   top: 0;
   transform: translateX(0);      /* ← 既存の translate3d(0,-50%,0) をやめる */
-  animation: lookbook-scroll 45s linear infinite; /* 速度はお好みで（以前より少し遅く） */
+  animation: lookbook-scroll var(--lookbook-speed) linear infinite;
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -798,7 +798,7 @@ section {
 
 /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
 .lookbook-item{ 
-  height: var(--lookbook-img-h); 
+  height: clamp(240px, 24vw, 280px); /* PC で少し小さめ */
 }
 .lookbook-item img{
   height: 100%;
