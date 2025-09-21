@@ -10,7 +10,10 @@
   
   /* Collection 統一変数 */
   --collection-row-h: clamp(150px, 22vw, 260px);
-  --collection-speed: 25s;
+  --collection-speed: 55s;
+  
+  /* Lookbook 統一変数 */
+  --lookbook-speed: 55s;
   
   /* 共通設定 */
   --main-color: #333333;
@@ -548,7 +551,8 @@ section {
 .lookbook-track img{
   display:block;
   max-width: 100%;
-  height: 250px;  /* PC版の高さ統一 */
+  height: auto;
+  max-height: clamp(220px, 28vw, 360px);
   width: auto;
   object-fit: contain;          /* 画像を絶対に切り取らない */
   border-radius: 10px;
@@ -581,7 +585,12 @@ section {
 /* スマホ版の画像サイズ調整 */
 @media (max-width: 768px){
   .collection-track img,
-  .lookbook-track img{ height: 180px; }
+  .lookbook-track img{ max-height: clamp(180px, 24vw, 280px); }
+  
+  :root {
+    --collection-speed: 45s;
+    --lookbook-speed: 45s;
+  }
 }
 
 .section-inner{
@@ -674,10 +683,10 @@ section {
 
 /* Collection アニメーション確実適用 */
 .collection-track[data-direction="left"]{
-  animation: scroll-left 25s linear infinite !important; /* 左へスクロール */
+  animation: scroll-left var(--collection-speed) linear infinite !important; /* 左へスクロール */
 }
 .collection-track[data-direction="right"]{
-  animation: scroll-right 25s linear infinite !important; /* 右へスクロール */
+  animation: scroll-right var(--collection-speed) linear infinite !important; /* 右へスクロール */
 }
 
 #collection .collection-track.dragging{ 
@@ -735,7 +744,7 @@ section {
   height: auto;
   will-change: transform; 
   cursor:grab; 
-  animation: scroll-left 25s linear infinite;
+  animation: scroll-left var(--lookbook-speed) linear infinite;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
