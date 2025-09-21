@@ -22,10 +22,12 @@ function ensureLoopWidth(track) {
   }
 }
 
-/** スクロールをドラッグ/スワイプ/ホイールで手動制御できるようにする */
+/** スクロールをドラッグ/スワイプ/ホイールで手動制御できるようにする（8px閾値でクリック両立） */
 function attachManualControls(track) {
   let isDown = false;
   let startX = 0;
+  let currentX = 0;
+  let moved = 0;
   let startTx = 0;
 
   const getTx = () => {
@@ -37,25 +39,53 @@ function attachManualControls(track) {
     track.style.transform = `translateX(${px}px)`;
   };
 
-  const pause = () => (track.style.animationPlayState = 'paused');
-  const play  = () => (track.style.animationPlayState = 'running');
+  const pause = () => {
+    track.style.animationPlayState = 'paused';
+    track.classList.add('dragging');
+  };
+  const play  = () => {
+    track.style.animationPlayState = 'running';
+    track.classList.remove('dragging');
+  };
 
-  // マウス/タッチ
-  track.addEventListener('pointerdown', (e) => {
-    e.preventDefault();
+  // マウス/タッチ（8px閾値でクリック両立）
+  const down = (e) => {
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    startX = currentX = x;
+    moved = 0;
     isDown = true;
-    track.setPointerCapture(e.pointerId);
-    startX = e.clientX;
     startTx = getTx();
     pause();
-  });
-  track.addEventListener('pointermove', (e) => {
+  };
+  
+  const move = (e) => {
     if (!isDown) return;
-    const delta = e.clientX - startX;
-    setTx(startTx + delta);
-  });
-  track.addEventListener('pointerup',   () => { isDown = false; play(); });
-  track.addEventListener('pointercancel', () => { isDown = false; play(); });
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const dx = x - currentX;
+    currentX = x;
+    moved += Math.abs(dx);
+    setTx(startTx + (x - startX));
+  };
+  
+  const up = (e) => {
+    if (!isDown) return;
+    isDown = false;
+    play();
+    
+    // 8px未満はクリック、8px以上はドラッグとして処理
+    if (moved >= 8) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+  
+  // マウス・タッチ両対応
+  track.addEventListener('mousedown', down);
+  track.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+  track.addEventListener('touchstart', down, {passive: true});
+  track.addEventListener('touchmove', move, {passive: true});
+  track.addEventListener('touchend', up);
 
   // ホイール横スクロール
   track.addEventListener('wheel', (e) => {
@@ -78,7 +108,7 @@ function pauseWhenOutOfView(track) {
 }
 
 /** 指定トラックに無限ループ & 手動制御 & 自動再生をセットアップ */
-function setupMarquee(track, { direction = 'left', speedSec = 40 } = {}) {
+function setupMarquee(track, { direction = 'left', speedSec = null } = {}) {
   if (!track) return;
 
   // 画像ロード後に幅確定
@@ -86,7 +116,10 @@ function setupMarquee(track, { direction = 'left', speedSec = 40 } = {}) {
   let remain = imgs.length;
   const done = () => {
     ensureLoopWidth(track);
-    track.style.animation = `${direction === 'left' ? 'scroll-left' : 'scroll-right'} ${speedSec}s linear infinite`;
+    // Collection のみ JS でアニメーション設定、Lookbook は CSS 変数に委譲
+    if (track.closest('#collection') && speedSec) {
+      track.style.animation = `${direction === 'left' ? 'scroll-left' : 'scroll-right'} ${speedSec}s linear infinite`;
+    }
     attachManualControls(track);
     pauseWhenOutOfView(track);
   };
@@ -119,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Lookbook（右→左）
+  // Lookbook（右→左、CSS変数で速度管理）
   const lookTrack = document.querySelector('#lookbook .lookbook-track');
   if (lookTrack) {
-    setupMarquee(lookTrack, { direction: 'left', speedSec: 25 });
-    console.log('[INIT] Lookbook track: 右→左 (25s)');
+    setupMarquee(lookTrack, { direction: 'left' }); // speedSec は CSS 変数に委譲
+    console.log('[INIT] Lookbook track: 右→左 (CSS変数で速度管理)');
   } else {
     console.warn('[INIT] Lookbook track not found');
   }
