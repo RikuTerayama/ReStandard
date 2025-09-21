@@ -163,9 +163,10 @@ function setupMarquee(track, { direction = 'left', speedSec = null } = {}) {
   let remain = imgs.length;
   const done = () => {
     ensureLoopWidth(track);
-    // Collection のみ JS でアニメーション設定、Lookbook は CSS 変数に委譲
-    if (track.closest('#collection') && speedSec) {
-      track.style.animation = `${direction === 'left' ? 'scroll-left' : 'scroll-right'} ${speedSec}s linear infinite`;
+    // Collection：画面幅で速度を出し分け（既定 55s）
+    if (track.closest('#collection')) {
+      const sec = getResponsiveSpeedSec( Number(speedSec || 55) );
+      track.style.animation = `${direction === 'left' ? 'scroll-left' : 'scroll-right'} ${sec}s linear infinite`;
     }
     attachManualControls(track);
     pauseWhenOutOfView(track);
@@ -175,6 +176,14 @@ function setupMarquee(track, { direction = 'left', speedSec = null } = {}) {
     if (img.complete) { if (--remain === 0) done(); }
     else img.addEventListener('load', () => { if (--remain === 0) done(); }, { once: true });
   });
+}
+
+// 追加：画面幅から秒数を算出（大→小で少し速く：55s / 45s / 35s）
+function getResponsiveSpeedSec(base=55){
+  const w = window.innerWidth;
+  if (w <= 480) return 35;
+  if (w <= 1024) return 45;
+  return base; // >=1025
 }
 
 /* ===================== init ===================== */
@@ -187,16 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log(`[INIT] Collection tracks found: ${tracks.length}`);
   
   tracks.forEach((track, index) => {
-    const direction = track.getAttribute('data-direction');
+    const direction = track.getAttribute('data-direction') || 'left';
     const speed = track.getAttribute('data-speed') || '55';
-    
-    if (direction === 'left') {
-      setupMarquee(track, { direction: 'left', speedSec: parseInt(speed) });
-      console.log(`[INIT] Track ${index + 1}: 右→左 (${speed}s)`);
-    } else if (direction === 'right') {
-      setupMarquee(track, { direction: 'right', speedSec: parseInt(speed) });
-      console.log(`[INIT] Track ${index + 1}: 左→右 (${speed}s)`);
-    }
+    setupMarquee(track, { direction, speedSec: speed });
+    console.log(`[INIT] Track ${index + 1}: ${direction} (${speed}s)`);
   });
 
   // Lookbook（右→左、CSS変数で速度管理）
@@ -220,6 +223,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
+  });
+  
+  // 画面幅が変わったら再計算（速度だけアップデート）
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      document.querySelectorAll('#collection .collection-track').forEach(track => {
+        const dir = track.getAttribute('data-direction') || 'left';
+        const sec = getResponsiveSpeedSec();
+        track.style.animation = `${dir === 'left' ? 'scroll-left' : 'scroll-right'} ${sec}s linear infinite`;
+      });
+    }, 200);
   });
 });
 
