@@ -11,8 +11,8 @@
   /* === 統一トークン（PC/モバイル両対応のクランプ） === */
   /* Collection の画像高（行と画像の「単一の基準」） */
   --collection-img-h: clamp(240px, 27vw, 360px);
-  /* Lookbook の画像高（同様に単一化） */
-  --lookbook-img-h: clamp(260px, 27vw, 360px);
+  /* === Lookbook: 画像高トークンを少し小さめに === */
+  --lookbook-img-h: clamp(220px, 22vw, 300px);
   
   /* 速度設定 */
   --collection-speed: 55s;
@@ -179,19 +179,19 @@ section {
 }
 
 /* ---------- Collection ---------- */
-/* 行（帯）高 = 画像高 + わずかな余白 */
+/* 行（帯）高 = 画像高 + 余白（12→24pxに拡張） */
 #collection .collection-row{
-  block-size: calc(var(--collection-img-h) + 12px);
+  block-size: calc(var(--collection-img-h) + 24px);
   overflow: hidden;
   position: relative;
 }
 
-/* 画像は"常に"行内に収まる */
+/* 画像は常に行内に収まる（contain） */
 #collection .collection-track img{
   max-height: var(--collection-img-h);
+  object-fit: contain;
   height: auto;
   width: auto;
-  object-fit: contain;
   display: block;
   user-select: none;
   pointer-events: auto;
@@ -772,41 +772,44 @@ section {
 /* 古い lookbook-container 設定は下記で統一済み */
 
 /* ---------- Lookbook ---------- */
-/* 帯の最小高 = 画像高 + 余白（上下の余白は好みに合わせて） */
-#lookbook .lookbook-container{
+/* 帯の最小高 = 画像高 + 余白（上下1rem） */
+.lookbook-container{
   min-block-size: calc(var(--lookbook-img-h) + 2rem);
+  padding-block: 1rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start; /* 上寄せ */
 }
 
-/* 各アイテムの高さを単一トークンに合わせる */
-#lookbook .lookbook-item{
-  height: var(--lookbook-img-h);
+/* トラックは上寄せ・Y方向のtransformを撤廃（Xのみ） */
+.lookbook-track{
+  position: absolute;
+  top: 0;
+  transform: translateX(0);      /* ← 既存の translate3d(0,-50%,0) をやめる */
+  animation: lookbook-scroll 45s linear infinite; /* 速度はお好みで（以前より少し遅く） */
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  height: auto;
+  will-change: transform;
+  cursor: grab;
 }
-#lookbook .lookbook-item img{
+
+/* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
+.lookbook-item{ 
+  height: var(--lookbook-img-h); 
+}
+.lookbook-item img{
   height: 100%;
   width: auto;
   object-fit: contain;
-  display: block;
 }
 
-/* 縦中央固定をやめ、上寄せにする */
-#lookbook .lookbook-track{
-  position: absolute;
-  inset-inline: 0;
-  top: 0;              /* ← 50% ではなく上に固定 */
-  transform: none;     /* ← translateY(-50%) を撤廃 */
-  display:flex; 
-  align-items:flex-start; 
-  gap:12px; 
-  height: auto;
-  will-change: transform; 
-  cursor:grab; 
-  animation: scroll-left var(--lookbook-speed) linear infinite;
-}
-
-/* Lookbook のスクロールは X 方向のみをアニメーション */
-@keyframes lookbook-scroll-left {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }  /* 実際の幅比に合わせて調整 */
+/* 横スクロールはXのみ */
+@keyframes lookbook-scroll{
+  from{ transform: translateX(0); }
+  to  { transform: translateX(-50%); } /* 右→左 */
 }
 #lookbook .lookbook-track:active{ cursor:grabbing; }
 #lookbook .lookbook-track.dragging{ 
