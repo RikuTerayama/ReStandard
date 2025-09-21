@@ -1460,22 +1460,7 @@
       };
     });
   </script>
-  <!-- Collection画像クリックで拡大モーダル表示 -->
-  <div id="image-modal" style="display:none; position:fixed; z-index:10000; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
-    <img id="modal-img" src="" alt="" style="max-width:90vw; max-height:90vh; border-radius:16px; box-shadow:0 8px 32px #000a;">
-    <button id="modal-close" style="position:absolute;top:2vw;right:2vw;font-size:2rem;color:#fff;background:none;border:none;cursor:pointer;">&times;</button>
-  </div>
-  <script>
-// 新しいCollection画像のドラッグ開始を禁止
-(function() {
-  const tracks = document.querySelectorAll('.collection-scroll-top, .collection-scroll-bottom');
-  tracks.forEach(track => {
-    track.querySelectorAll('img').forEach(img => {
-      img.addEventListener('dragstart', e => e.preventDefault());
-    });
-  });
-})();
-  </script>
+  <!-- 旧クラス向けスクリプトとモーダルは削除済み -->
   <script>
 // スマホ背景動画 2.mp4 を常に再生し続ける
 document.addEventListener('DOMContentLoaded', function() {
