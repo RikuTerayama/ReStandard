@@ -70,23 +70,44 @@ function attachManualControls(track) {
     setTx(startTx + (x - startX));
   };
 
+  // Up：ドラッグ後は「止めた位置から」再始動（先頭へ戻さない）
   const up = (e) => {
     if (!isDown) return;
     isDown = false;
 
-    // 8px未満=クリック扱い（リンク遷移を邪魔しない）
+    const getLoopDistance = () => {
+      // アニメが 0%→-50% の往復なので「トラック幅の半分」が1ループ距離
+      return track.scrollWidth * 0.5;
+    };
+    const getDurationSec = () => {
+      // Collection は setupMarquee で明示設定、Lookbook は CSS から取得
+      const dur = parseFloat(getComputedStyle(track).animationDuration);
+      return isNaN(dur) || dur <= 0 ? 55 : dur; // フォールバック
+    };
+    const resumeFromHere = () => {
+      const loop = getLoopDistance();
+      const cur = Math.abs(getTx());       // 現在の移動量(px)
+      const prog = loop > 0 ? (cur % loop) / loop : 0; // 0..1
+      const dur  = getDurationSec();
+
+      // ここが肝：現在位置に相当する「経過時間」を負の delay で与える
+      track.style.animationDelay = `-${prog * dur}s`;
+      track.style.animationPlayState = 'running';
+      track.classList.remove('dragging');
+      delete track.dataset.userPaused;     // 明示停止フラグは下ろす（IOにも再生を許可）
+    };
+
+    // 8px未満=クリック（リンク遷移を邪魔しない: 自動再開も従来どおり継続）
     if (moved < 8) {
-      // クリック → 既存の makeLinkNavigable / data-href ハンドラが動く
-      // 自動再生は「再開しない」= ユーザー停止を保持
-      setUserPaused(true);
+      // ここではフラグを立てない＝自動スクロールは継続
+      play();
       return;
     }
 
-    // 8px以上=ドラッグ → 現在位置で停止（戻らない）
+    // 8px以上=ドラッグ → 現在位置から自動再開
     e.preventDefault();
     e.stopPropagation();
-    setUserPaused(true);  // ← ユーザーが止めた
-    // play() は呼ばない（ここが"戻らない"の核心）
+    resumeFromHere();
   };
 
   // マウス・タッチ両対応
@@ -97,12 +118,25 @@ function attachManualControls(track) {
   track.addEventListener('touchmove', move, { passive: true });
   track.addEventListener('touchend', up);
 
-  // ホイール横スクロール：位置反映＆停止継続（自動再開しない）
+  // ホイール横スクロール：位置反映＆その位置から自動再開
   track.addEventListener('wheel', (e) => {
     if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return; // 横スクロール中心のときだけ
     pause();
     setTx(getTx() - e.deltaX);
-    setUserPaused(true);
+    
+    // ホイール操作後も現在位置から再開
+    clearTimeout(track._wheelTimer);
+    track._wheelTimer = setTimeout(() => {
+      const loop = track.scrollWidth * 0.5;
+      const cur = Math.abs(getTx());
+      const prog = loop > 0 ? (cur % loop) / loop : 0;
+      const dur = parseFloat(getComputedStyle(track).animationDuration) || 55;
+      
+      track.style.animationDelay = `-${prog * dur}s`;
+      track.style.animationPlayState = 'running';
+      track.classList.remove('dragging');
+      delete track.dataset.userPaused;
+    }, 300);
   }, { passive: true });
 
   // 重複するホイールイベントリスナーは上記で統合済み
