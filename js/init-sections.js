@@ -22,124 +22,91 @@ function ensureLoopWidth(track) {
   }
 }
 
-/** スクロールをドラッグ/スワイプ/ホイールで手動制御できるようにする（8px閾値でクリック両立） */
-function attachManualControls(track) {
-  let isDown = false;
+/* トラックへドラッグ操作を付与。離した位置から再開 */
+function attachManualControls(track){
   let startX = 0;
-  let currentX = 0;
-  let moved = 0;
   let startTx = 0;
+  let dragging = false;
+  let moved = 0;
 
-  const getTx = () => {
-    const m = /translateX\((-?\d+(\.\d+)?)px\)/.exec(track.style.transform || "");
-    return m ? parseFloat(m[1]) : 0;
-  };
-  const setTx = (px) => { track.style.transform = `translateX(${px}px)`; };
-
-  const pause = () => {
-    track.style.animationPlayState = 'paused';
-    track.classList.add('dragging');
-  };
-  const play = () => {
-    track.style.animationPlayState = 'running';
-    track.classList.remove('dragging');
-  };
-
-  // --- ユーザー明示停止フラグ（IOが勝手に再生しないように） ---
-  const setUserPaused = (v) => {
-    if (v) { track.dataset.userPaused = '1'; }
-    else   { delete track.dataset.userPaused; }
-  };
-
-  // マウス/タッチ
-  const down = (e) => {
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    startX = currentX = x;
+  const onDown = (ev)=>{
+    dragging = true;
     moved = 0;
-    isDown = true;
-    startTx = getTx();
-    pause();
+    track.classList.add('dragging');
+    track.style.animationPlayState = 'paused';
+    startX = (ev.touches ? ev.touches[0].clientX : ev.clientX);
+    startTx = getTxPx(track);
   };
-
-  const move = (e) => {
-    if (!isDown) return;
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    const dx = x - currentX;
-    currentX = x;
-    moved += Math.abs(dx);
-    setTx(startTx + (x - startX));
+  
+  const onMove = (ev)=>{
+    if(!dragging) return;
+    const x = (ev.touches ? ev.touches[0].clientX : ev.clientX);
+    const dx = x - startX;
+    moved += Math.abs(dx - (moved > 0 ? dx : 0));
+    track.style.transform = `translateX(${startTx + dx}px)`;
+    ev.preventDefault();
   };
+  
+  const onUp = (ev)=>{
+    if(!dragging) return;
+    dragging = false;
 
-  // Up：ドラッグ後は「止めた位置から」再始動（先頭へ戻さない）
-  const up = (e) => {
-    if (!isDown) return;
-    isDown = false;
-
-    const getLoopDistance = () => {
-      // アニメが 0%→-50% の往復なので「トラック幅の半分」が1ループ距離
-      return track.scrollWidth * 0.5;
-    };
-    const getDurationSec = () => {
-      // Collection は setupMarquee で明示設定、Lookbook は CSS から取得
-      const dur = parseFloat(getComputedStyle(track).animationDuration);
-      return isNaN(dur) || dur <= 0 ? 55 : dur; // フォールバック
-    };
-    const resumeFromHere = () => {
-      const loop = getLoopDistance();
-      const cur = Math.abs(getTx());       // 現在の移動量(px)
-      const prog = loop > 0 ? (cur % loop) / loop : 0; // 0..1
-      const dur  = getDurationSec();
-
-      // ここが肝：現在位置に相当する「経過時間」を負の delay で与える
-      track.style.animationDelay = `-${prog * dur}s`;
+    // 8px未満=クリック（リンク遷移を邪魔しない）
+    if (moved < 8) {
+      // クリック → 自動スクロール継続
+      track.style.removeProperty('transform');
       track.style.animationPlayState = 'running';
       track.classList.remove('dragging');
-      delete track.dataset.userPaused;     // 明示停止フラグは下ろす（IOにも再生を許可）
-    };
-
-    // 8px未満=クリック（リンク遷移を邪魔しない: 自動再開も従来どおり継続）
-    if (moved < 8) {
-      // ここではフラグを立てない＝自動スクロールは継続
-      play();
       return;
     }
 
     // 8px以上=ドラッグ → 現在位置から自動再開
-    e.preventDefault();
-    e.stopPropagation();
-    resumeFromHere();
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    // ①現在の位置(px)を取得
+    const nowTx = getTxPx(track);
+
+    // ②ループ幅（= トラック総幅/2）を計算
+    const loop = track.scrollWidth / 2;
+
+    // ③ px を 0..loop に正規化（右→左スクロール想定で正値化）
+    //    ※CSSのkeyframesが 0% -> -50% (＝-loop) の前提
+    let offset = (-nowTx) % loop;
+    if (offset < 0) offset += loop;
+
+    // ④ 進捗率 * 速度 = 負の animation-delay 秒 を再設定
+    const speed = calcSpeedSec(parseFloat(track.dataset.baseSpeed || 55));
+    const progress = offset / loop;         // 0..1
+    const delaySec = progress * speed;      // 開始からの経過時間
+    track.style.animationDelay = `-${delaySec}s`;
+
+    // ⑤ 一時 transform をクリアして再開
+    track.style.removeProperty('transform');
+    track.style.animationPlayState = 'running';
+    track.classList.remove('dragging');
   };
 
-  // マウス・タッチ両対応
-  track.addEventListener('mousedown', down);
-  track.addEventListener('mousemove', move);
-  window.addEventListener('mouseup', up);
-  track.addEventListener('touchstart', down, { passive: true });
-  track.addEventListener('touchmove', move, { passive: true });
-  track.addEventListener('touchend', up);
-
-  // ホイール横スクロール：位置反映＆その位置から自動再開
+  track.addEventListener('pointerdown', onDown, {passive:false});
+  window.addEventListener('pointermove', onMove, {passive:false});
+  window.addEventListener('pointerup', onUp);
+  track.addEventListener('touchstart', onDown, {passive:false});
+  window.addEventListener('touchmove', onMove, {passive:false});
+  window.addEventListener('touchend', onUp);
+  
+  // ホイール横スクロール対応
   track.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return; // 横スクロール中心のときだけ
-    pause();
-    setTx(getTx() - e.deltaX);
+    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+    track.style.animationPlayState = 'paused';
+    track.classList.add('dragging');
+    const currentTx = getTxPx(track);
+    track.style.transform = `translateX(${currentTx - e.deltaX}px)`;
     
-    // ホイール操作後も現在位置から再開
     clearTimeout(track._wheelTimer);
     track._wheelTimer = setTimeout(() => {
-      const loop = track.scrollWidth * 0.5;
-      const cur = Math.abs(getTx());
-      const prog = loop > 0 ? (cur % loop) / loop : 0;
-      const dur = parseFloat(getComputedStyle(track).animationDuration) || 55;
-      
-      track.style.animationDelay = `-${prog * dur}s`;
-      track.style.animationPlayState = 'running';
-      track.classList.remove('dragging');
-      delete track.dataset.userPaused;
+      onUp({ preventDefault: () => {}, stopPropagation: () => {} });
     }, 300);
   }, { passive: true });
-
-  // 重複するホイールイベントリスナーは上記で統合済み
 }
 
 /** IntersectionObserver で画面外は自動停止
@@ -154,62 +121,54 @@ function pauseWhenOutOfView(track) {
   io.observe(track);
 }
 
-/** 指定トラックに無限ループ & 手動制御 & 自動再生をセットアップ */
-function setupMarquee(track, { direction = 'left', speedSec = null } = {}) {
-  if (!track) return;
+/* 初期化時：速度を画面幅で上書き、方向は data-dir */
+function initAutoScroll(track){
+  const dir = (track.dataset.direction || 'left').toLowerCase(); // left=左へ / right=右へ
+  const base = parseFloat(track.dataset.speed || 55);
+  const dur = calcSpeedSec(base);
+  track.dataset.baseSpeed = String(base); // 再計算に使う
 
-  // 画像ロード後に幅確定
-  const imgs = track.querySelectorAll('img');
-  let remain = imgs.length;
-  const done = () => {
-    ensureLoopWidth(track);
-    // Collection：画面幅で速度を出し分け（既定 55s）
-    if (track.closest('#collection')) {
-      const sec = getResponsiveSpeedSec( Number(speedSec || 55) );
-      track.style.animation = `${direction === 'left' ? 'scroll-left' : 'scroll-right'} ${sec}s linear infinite`;
-    }
-    attachManualControls(track);
-    pauseWhenOutOfView(track);
-  };
-  if (remain === 0) done();
-  else imgs.forEach((img) => {
-    if (img.complete) { if (--remain === 0) done(); }
-    else img.addEventListener('load', () => { if (--remain === 0) done(); }, { once: true });
-  });
+  const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
+  track.style.animation = `${key} ${dur}s linear infinite`;
+  track.style.animationPlayState = 'running';
+  track.style.willChange = 'transform';
+  attachManualControls(track);
 }
 
-// 追加：画面幅から秒数を算出（大→小で少し速く：55s / 45s / 35s）
-function getResponsiveSpeedSec(base=55){
+/* ユーティリティ：現在のtranslateX(px)を取得 */
+function getTxPx(el){
+  const m = getComputedStyle(el).transform;
+  if(!m || m === 'none') return 0;
+  const a = m.match(/matrix\(.*?,.*?,.*?,.*?,\s*([\-0-9.]+),\s*([\-0-9.]+)\)/);
+  return a ? parseFloat(a[1]) : 0;
+}
+
+/* 速度を画面幅で段階調整（大きい画面ほどゆっくり） */
+function calcSpeedSec(base=55){
   const w = window.innerWidth;
-  if (w <= 480) return 35;
-  if (w <= 1024) return 45;
-  return base; // >=1025
+  if (w < 480) return Math.max(24, base - 28);   // SP
+  if (w < 992) return Math.max(30, base - 17);   // タブレット
+  return base;                                   // PC
 }
 
 /* ===================== init ===================== */
 document.addEventListener('DOMContentLoaded', () => {
   // DOM存在確認・querySelector修正
-  console.log('[INIT] setupMarquee DOM存在確認開始');
+  console.log('[INIT] Collection/Lookbook 初期化開始');
   
   // Collection 上段・下段（新構造対応）
-  const tracks = document.querySelectorAll('#collection .collection-track');
-  console.log(`[INIT] Collection tracks found: ${tracks.length}`);
+  const tracks = document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track');
+  console.log(`[INIT] Total tracks found: ${tracks.length}`);
   
   tracks.forEach((track, index) => {
-    const direction = track.getAttribute('data-direction') || 'left';
-    const speed = track.getAttribute('data-speed') || '55';
-    setupMarquee(track, { direction, speedSec: speed });
-    console.log(`[INIT] Track ${index + 1}: ${direction} (${speed}s)`);
+    // 幅確保
+    ensureLoopWidth(track);
+    // 自動スクロール初期化
+    initAutoScroll(track);
+    // 画面外一時停止
+    pauseWhenOutOfView(track);
+    console.log(`[INIT] Track ${index + 1}: ${track.dataset.direction || 'left'} (${track.dataset.speed || '55'}s)`);
   });
-
-  // Lookbook（右→左、CSS変数で速度管理）
-  const lookTrack = document.querySelector('#lookbook .lookbook-track');
-  if (lookTrack) {
-    setupMarquee(lookTrack, { direction: 'left' }); // speedSec は CSS 変数に委譲
-    console.log('[INIT] Lookbook track: 右→左 (CSS変数で速度管理)');
-  } else {
-    console.warn('[INIT] Lookbook track not found');
-  }
   
   // href 未設定（# や空）の a は data-href を使って遷移させる
   document.querySelectorAll('#collection a, #lookbook a').forEach(a => {
@@ -230,10 +189,12 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      document.querySelectorAll('#collection .collection-track').forEach(track => {
-        const dir = track.getAttribute('data-direction') || 'left';
-        const sec = getResponsiveSpeedSec();
-        track.style.animation = `${dir === 'left' ? 'scroll-left' : 'scroll-right'} ${sec}s linear infinite`;
+      document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
+        const dir = track.dataset.direction || 'left';
+        const base = parseFloat(track.dataset.baseSpeed || 55);
+        const sec = calcSpeedSec(base);
+        const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
+        track.style.animation = `${key} ${sec}s linear infinite`;
       });
     }, 200);
   });
