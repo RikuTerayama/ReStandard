@@ -160,6 +160,20 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.warn('[INIT] Lookbook track not found');
   }
+  
+  // href 未設定（# や空）の a は data-href を使って遷移させる
+  document.querySelectorAll('#collection a, #lookbook a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (!href || href === '#') {
+        const dh = a.dataset.href;
+        if (dh) { 
+          e.preventDefault(); 
+          window.open(dh, '_blank'); 
+        }
+      }
+    });
+  });
 });
 
 // 見出しJSリセット削除 - CSS制御のみに統一
