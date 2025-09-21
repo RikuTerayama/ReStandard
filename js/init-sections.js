@@ -34,21 +34,24 @@ function attachManualControls(track) {
     const m = /translateX\((-?\d+(\.\d+)?)px\)/.exec(track.style.transform || "");
     return m ? parseFloat(m[1]) : 0;
   };
-
-  const setTx = (px) => {
-    track.style.transform = `translateX(${px}px)`;
-  };
+  const setTx = (px) => { track.style.transform = `translateX(${px}px)`; };
 
   const pause = () => {
     track.style.animationPlayState = 'paused';
     track.classList.add('dragging');
   };
-  const play  = () => {
+  const play = () => {
     track.style.animationPlayState = 'running';
     track.classList.remove('dragging');
   };
 
-  // マウス/タッチ（8px閾値でクリック両立）
+  // --- ユーザー明示停止フラグ（IOが勝手に再生しないように） ---
+  const setUserPaused = (v) => {
+    if (v) { track.dataset.userPaused = '1'; }
+    else   { delete track.dataset.userPaused; }
+  };
+
+  // マウス/タッチ
   const down = (e) => {
     const x = e.touches ? e.touches[0].clientX : e.clientX;
     startX = currentX = x;
@@ -57,7 +60,7 @@ function attachManualControls(track) {
     startTx = getTx();
     pause();
   };
-  
+
   const move = (e) => {
     if (!isDown) return;
     const x = e.touches ? e.touches[0].clientX : e.clientX;
@@ -66,41 +69,51 @@ function attachManualControls(track) {
     moved += Math.abs(dx);
     setTx(startTx + (x - startX));
   };
-  
+
   const up = (e) => {
     if (!isDown) return;
     isDown = false;
-    play();
-    
-    // 8px未満はクリック、8px以上はドラッグとして処理
-    if (moved >= 8) {
-      e.preventDefault();
-      e.stopPropagation();
+
+    // 8px未満=クリック扱い（リンク遷移を邪魔しない）
+    if (moved < 8) {
+      // クリック → 既存の makeLinkNavigable / data-href ハンドラが動く
+      // 自動再生は「再開しない」= ユーザー停止を保持
+      setUserPaused(true);
+      return;
     }
+
+    // 8px以上=ドラッグ → 現在位置で停止（戻らない）
+    e.preventDefault();
+    e.stopPropagation();
+    setUserPaused(true);  // ← ユーザーが止めた
+    // play() は呼ばない（ここが"戻らない"の核心）
   };
-  
+
   // マウス・タッチ両対応
   track.addEventListener('mousedown', down);
   track.addEventListener('mousemove', move);
   window.addEventListener('mouseup', up);
-  track.addEventListener('touchstart', down, {passive: true});
-  track.addEventListener('touchmove', move, {passive: true});
+  track.addEventListener('touchstart', down, { passive: true });
+  track.addEventListener('touchmove', move, { passive: true });
   track.addEventListener('touchend', up);
 
-  // ホイール横スクロール
+  // ホイール横スクロール：位置反映＆停止継続（自動再開しない）
   track.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return; // 主に横のときのみ
+    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return; // 横スクロール中心のときだけ
     pause();
     setTx(getTx() - e.deltaX);
-    clearTimeout(track._wheelTimer);
-    track._wheelTimer = setTimeout(() => play(), 300);
+    setUserPaused(true);
   }, { passive: true });
+
+  // 重複するホイールイベントリスナーは上記で統合済み
 }
 
-/** IntersectionObserver で画面外は自動停止 */
+/** IntersectionObserver で画面外は自動停止
+ *  ただし "ユーザーが止めた（data-user-paused=1）" 場合は何もしない */
 function pauseWhenOutOfView(track) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((ent) => {
+      if (track.dataset.userPaused === '1') return; // ← 勝手に再生しない
       track.style.animationPlayState = ent.isIntersecting ? 'running' : 'paused';
     });
   }, { threshold: 0.1 });
