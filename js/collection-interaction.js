@@ -1,3 +1,7 @@
+// temporary disabled - init-sections.js is the single source of truth
+export {};
+return;
+
 // Collection ドラッグ双方向 + クリック遷移両立・ループ空白解消
 
 document.addEventListener('DOMContentLoaded', function() {
