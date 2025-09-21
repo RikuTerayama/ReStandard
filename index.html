@@ -905,11 +905,12 @@
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
   <!-- Collection Section - 統合済み -->
-  <section id="collection" class="band">
+  <section id="collection">
     <h2 class="section-title">Collection</h2>
-
-    <!-- 上段: 右→左（speed=25s） -->
-    <div class="collection-track" data-direction="left" data-speed="25">
+    
+    <div class="band">
+      <!-- 上段: 右→左（speed=55s） -->
+      <div class="collection-track" data-direction="left" data-speed="55">
         <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener" class="collection-item">
           <img src="image/1.JPG" alt="Collection Item 1" class="collection-image">
         </a>
@@ -970,10 +971,10 @@
         <a href="#" class="collection-item">
           <img src="image/20.JPG" alt="Collection Item 20" class="collection-image">
         </a>
-    </div>
-    
-    <!-- 下段: 左→右（speed=25s） -->
-    <div class="collection-track" data-direction="right" data-speed="25">
+      </div>
+      
+      <!-- 下段: 左→右（speed=55s） -->
+      <div class="collection-track" data-direction="right" data-speed="55">
         <a href="#" class="collection-item">
           <img src="image/32.JPG" alt="Collection Item 32" class="collection-image">
         </a>
@@ -1010,6 +1011,7 @@
         <a href="#" class="collection-item">
           <img src="image/21.JPG" alt="Collection Item 21" class="collection-image">
         </a>
+      </div>
     </div>
   </section>
 
@@ -1145,10 +1147,12 @@
 </section>
 
   <!-- Lookbook Section -->
-  <section id="lookbook" class="band">
+  <section id="lookbook">
     <h2 class="section-title">Lookbook</h2>
-
-    <div class="lookbook-track" data-direction="left" data-speed="25">
+    
+    <div class="band">
+      <div class="lookbook-container">
+        <div class="lookbook-track" data-direction="left" data-speed="55">
         <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
           <a href="#" class="lookbook-item">
           <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400">
@@ -1215,6 +1219,8 @@
           <img src="image/look8.webp" alt="Lookbook Item 8" loading="lazy" width="300" height="400">
             <div class="image-number">8/8</div>
           </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1567,8 +1573,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- セクション初期化スクリプト - 統合済み -->
   <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
   <script src="js/init-sections.js?v=2025-01-18-final"></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-18_FINAL_REQ"></script>
-  <script src="js/collection-interaction.js?v=2025-01-18_FINAL_REQ"></script>
+  <!-- lookbook-interaction.js と collection-interaction.js は init-sections.js に統合済み -->
 
 </body>
 </html>
