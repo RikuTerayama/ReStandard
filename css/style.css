@@ -775,6 +775,45 @@ footer {
   .section-title { margin-top: 5.5rem; } /* 固定ヘッダー分の余白 */
 }
 
+/* PC/SP切替とJA/EN切替の統一ルール */
+.desktop-only { display: block; }
+.mobile-only { display: none; }
+@media (max-width: 600px) {
+  .desktop-only { display: none !important; }
+  .mobile-only { display: inline !important; }
+}
+
+/* 言語切り替えの統一ルール */
+[lang="ja"] .en-content { display: none !important; }
+[lang="en"] .ja-content { display: none !important; }
+html[lang="ja"] .en-content,
+html[lang="ja"] .en-content.desktop-only,
+html[lang="ja"] .en-content.mobile-only {
+  display: none !important;
+}
+html[lang="en"] .ja-content,
+html[lang="en"] .ja-content.desktop-only,
+html[lang="en"] .ja-content.mobile-only {
+  display: none !important;
+}
+
+/* フォントの統一設定 */
+html, body {
+  font-family: var(--body-font, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif);
+}
+h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, 
+.brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
+  font-family: var(--heading-font, 'Noto Serif JP', serif);
+}
+.navbar-brand, .nav-link {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+p, .ja-content, .en-content {
+  font-family: var(--body-font, 'Noto Sans JP', sans-serif);
+  line-height: 1.6;
+}
+
 .section-inner{
   max-width:1200px;
   margin-inline:auto;
