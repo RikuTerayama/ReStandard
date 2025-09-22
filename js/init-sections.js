@@ -52,8 +52,8 @@ function attachManualControls(track){
     dragging = false;
 
     // 8px未満=クリック（リンク遷移を邪魔しない）
-    if (moved < 8) {
-      // クリック → 自動スクロール継続
+    if (Math.abs(moved) < 8) {
+      // クリック扱い：アニメをその場から再開（先頭ジャンプを防ぐ）
       track.style.removeProperty('transform');
       track.style.animationPlayState = 'running';
       track.classList.remove('dragging');
@@ -124,9 +124,12 @@ function pauseWhenOutOfView(track) {
 /* 初期化時：速度を画面幅で上書き、方向は data-dir */
 function initAutoScroll(track){
   const dir = (track.dataset.direction || 'left').toLowerCase(); // left=左へ / right=右へ
-  const base = parseFloat(track.dataset.speed || 55);
-  const dur = calcSpeedSec(base);
-  track.dataset.baseSpeed = String(base); // 再計算に使う
+  let speed = parseInt(track.getAttribute('data-speed') || '55', 10);
+  if (window.innerWidth <= 768)  speed = Math.max(12, speed - 10);
+  if (window.innerWidth <= 480)  speed = Math.max(10, speed - 14);
+  
+  const dur = calcSpeedSec(speed);
+  track.dataset.baseSpeed = String(speed); // 再計算に使う
 
   const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
   track.style.animation = `${key} ${dur}s linear infinite`;
