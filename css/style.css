@@ -9,10 +9,12 @@
   --nav-frost-bg: rgba(255,255,255,0.9);
   
   /* === 統一トークン（PC/モバイル両対応のクランプ） === */
-  /* Collection の画像高（行と画像の「単一の基準」） */
-  --collection-img-h: clamp(240px, 27vw, 360px);
-  /* === Lookbook: 画像高トークンを少し小さめに === */
-  --lookbook-img-h: clamp(220px, 22vw, 300px);
+  /* 画像の最大高さ（行の高さと連動） */
+  --collection-img-h: clamp(170px, 22vw, 320px);
+  --lookbook-img-h: clamp(200px, 24vw, 380px);
+  
+  /* 背景帯の上下余白（小画面で少し浅く） */
+  --band-pad-block: clamp(16px, 3.2vw, 40px);
   
   /* 速度設定 */
   --collection-speed: 55s;
@@ -163,14 +165,14 @@ section {
 
 /* 既存の collection-row 定義は上記で統一済み */
 
-.collection-track {
-  display: flex;
-  gap: min(1.5vw, 12px);
-  will-change: transform;
-  cursor: grab;
-  align-items: center;
+.collection-track,
+.lookbook-track{
   width: max-content;
-  height: 100%;
+  display: flex;
+  gap: 12px;           /* 画像間の隙間は少し */
+  align-items: center;
+  padding-block: 12px; /* 帯から画像がはみ出さない */
+  background: transparent;
 }
 
 .collection-track.dragging {
@@ -187,16 +189,22 @@ section {
 }
 
 /* 画像は常に行内に収まる（contain） */
-#collection .collection-track img{
-  max-height: var(--collection-img-h);
-  object-fit: contain;
-  height: auto;
-  width: auto;
+/* 画像は常に「全体表示」＆高さは変数で統一 */
+.collection-track img,
+.lookbook-track img{
   display: block;
-  user-select: none;
-  pointer-events: auto;
+  width: 100%;
+  height: auto;               /* 縦横比維持 */
+  max-height: var(--collection-img-h);
+  object-fit: contain;        /* 切らない */
   border-radius: 0;
   box-shadow: none;
+  pointer-events: auto;
+  user-select: none;
+}
+@media (min-width: 1024px){
+  /* PCで少しだけ小さく */
+  .lookbook-track img{ max-height: calc(var(--lookbook-img-h) * .92); }
 }
 
 /* 縦位置は上寄せ（中央だと上下が不足時に欠けやすい） */
@@ -213,13 +221,6 @@ section {
 }
 
 /* SP版 */
-@media (max-width: 768px) {
-  .collection-row img,
-  .collection-track img, 
-  .collection-track a img {
-    max-height: var(--collection-img-h);
-  }
-}
 
 .collection-track img:hover {
   transform: translateY(-4px);
@@ -285,15 +286,14 @@ section {
 }
 
 /* Brands - グリッドレイアウト・安定配置 */
-.brands-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  align-items: center;
-  justify-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
+.brands-grid{ 
+  display:grid; 
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: clamp(16px, 2vw, 32px);
+  place-items:center;        /* 中央揃えを強制 */
 }
+.brand-card{ display:grid; place-items:center; }
+.brand-logo{ width:100%; height:auto; object-fit:contain; }
 
 .brand-card {
   aspect-ratio: 1/1;
@@ -547,11 +547,10 @@ section {
 
 /* 横幅いっぱいの背景（1枚だけ使う） */
 .band{
-  /* 画面端まで背景を広げる */
-  margin-inline: calc(50% - 50vw); /* full-bleed */
-  background: var(--nav-frost-bg); /* メニューバーと同じ背景色 */
+  margin-inline: calc(50% - 50vw);      /* full-bleed */
+  background: var(--nav-frost-bg);
   backdrop-filter: blur(6px);
-  padding-block: 2.5rem;
+  padding-block: var(--band-pad-block); /* 端末に応じて縮む */
 }
 
 /* .marquee-band は削除済み */
@@ -619,14 +618,13 @@ section {
 
 /* スマホ版の画像サイズ調整 */
 @media (max-width: 768px){
-  .collection-track img,
-  .lookbook-track img{ 
-    max-height: var(--collection-img-h); 
+  :root { 
+    --lookbook-speed: 45s; 
   }
-  
-  :root {
-    --collection-speed: 45s;
-    --lookbook-speed: 55s;
+}
+@media (max-width: 480px){
+  :root { 
+    --lookbook-speed: 40s; 
   }
 }
 
