@@ -225,15 +225,6 @@
       backdrop-filter: blur(8px);
     }
 
-    html, body {
-      font-family: var(--main-font-family) !important;
-    }
-    * {
-      font-family: inherit !important;
-    }
-    h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
-      font-family: var(--main-font-family) !important;
-    }
 
     body {
       display: flex;
@@ -508,8 +499,8 @@
         <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
       </ul>
       <div class="language-switcher">
-        <button onclick="switchLanguage('ja')" class="active">JA</button>
-        <button onclick="switchLanguage('en')">EN</button>
+        <button data-lang-btn="ja" class="active">JA</button>
+        <button data-lang-btn="en">EN</button>
       </div>
     </div>
   </div>
