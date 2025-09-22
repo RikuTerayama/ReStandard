@@ -1177,3 +1177,53 @@ img[src*="rockmount"] {
   cursor: grabbing !important;
   animation-play-state: paused !important;
 }
+
+/* ====== Global alignment & typography unification ====== */
+/* 見出し・本文とも言語に依存せず中央揃え（必要箇所のみに限定） */
+.vision-title,
+.vision-highlight,
+.location-content,
+.contact-content,
+.about-brands-title {
+  text-align: center;
+}
+
+/* 取扱いBrand タイトルを白に（背景動画上での視認性向上） */
+.about-brands-title,
+.about-brands-title * {
+  color: #fff;
+}
+
+/* 共通：ブランド画像の自然縮尺（Aboutなど） */
+.brand-image {
+  display: block;
+  margin: 0 auto;
+  max-width: clamp(160px, 24vw, 320px);
+  height: auto;
+  object-fit: contain;
+}
+
+/* JA/EN で配色・揃えに差が出ないよう、親で統一 */
+.ja-content, .en-content {
+  color: inherit;
+  text-align: inherit;
+}
+
+/* セクション内ボックスがあるページ用（透明白の流用） */
+.section-box,
+.about-section-box {
+  background: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 32px;
+  margin: 0 auto 24px auto;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Our Vision のサブ見出しが左寄りになっている件の最終ガード */
+.vision-highlight { 
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
