@@ -9,9 +9,10 @@
   --nav-frost-bg: rgba(255,255,255,0.9);
   
   /* === 統一トークン（PC/モバイル両対応のクランプ） === */
-  /* 画像の最大高さ（行の高さと連動） */
-  --collection-img-h: clamp(170px, 22vw, 320px);
-  --lookbook-img-h: clamp(200px, 24vw, 380px);
+  /* 画面幅に追随して高さが変わるように clamp で定義 */
+  --collection-img-h: clamp(160px, 28vw, 320px);
+  --lookbook-img-h: clamp(160px, 28vw, 320px);
+  --collection-gap: clamp(12px, 2vw, 24px);
   
   /* 背景帯の上下余白（小画面で少し浅く） */
   --band-pad-block: clamp(16px, 3.2vw, 40px);
@@ -30,6 +31,7 @@
   --text-reveal-timing: cubic-bezier(0.4, 0, 0.2, 1);
   --heading-font: 'Noto Serif JP', serif;
   --body-font: 'Noto Sans JP', sans-serif;
+  --title-fs: clamp(28px, 5vw, 48px);
 }
 
 /* ========================================
@@ -189,22 +191,28 @@ section {
 }
 
 /* 画像は常に行内に収まる（contain） */
-/* 画像は常に「全体表示」＆高さは変数で統一 */
-.collection-track img,
-.lookbook-track img{
+/* Collection 行 */
+#collection .collection-track img{
+  height: var(--collection-img-h);
+  width: auto;
+  object-fit: contain;
   display: block;
-  width: 100%;
-  height: auto;               /* 縦横比維持 */
-  max-height: var(--collection-img-h);
-  object-fit: contain;        /* 切らない */
   border-radius: 0;
   box-shadow: none;
   pointer-events: auto;
   user-select: none;
 }
-@media (min-width: 1024px){
-  /* PCで少しだけ小さく */
-  .lookbook-track img{ max-height: calc(var(--lookbook-img-h) * .92); }
+
+/* Lookbook 行 */
+#lookbook .lookbook-track img{
+  height: var(--lookbook-img-h);
+  width: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: auto;
+  user-select: none;
 }
 
 /* 縦位置は上寄せ（中央だと上下が不足時に欠けやすい） */
@@ -363,8 +371,15 @@ section {
   overflow: hidden;
 }
 
-#lookbook .band{
-  background: var(--nav-frost-bg);   /* メニューバーと同色の帯で囲う */
+#collection .band, #lookbook .band{
+  width: 100vw; 
+  margin-left: calc(50% - 50vw); 
+  margin-right: calc(50% - 50vw);
+  padding-block: clamp(12px, 2vw, 24px);
+}
+#collection .track-wrap, #lookbook .track-wrap{
+  gap: var(--collection-gap);
+  justify-content: center;
 }
 
 .lookbook-container { 
@@ -377,16 +392,18 @@ section {
 }
 
 .lookbook-track {
-    display: flex;
-  gap: min(1.5vw, 12px);
-  will-change: transform;
-  cursor: grab;
   position: absolute;
-  top: 50%;
-  transform: translate3d(0, -50%, 0); /* Y中央基準 */
+  top: 0;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: paint;
+  display: flex;
+  gap: min(1.5vw, 12px);
+  cursor: grab;
   animation: lookbook-scroll 40s linear infinite;
   height: auto;
-    align-items: center;
+  align-items: center;
 }
 
 .lookbook-track.dragging {
@@ -535,12 +552,12 @@ section {
 
 /* セクション見出しは白字・共通レスポンシブ */
 .section-title{
-  color:#fff;
+  color:#fff; /* 共通で白 */
+  font-size: var(--title-fs);
+  line-height: 1.2;
   text-align:center;
   font-weight:700;
   letter-spacing:.03em;
-  /* 560px〜1600pxで 28〜48px 相当 */
-  font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem);
   margin: 0 0 1.2rem;
   text-shadow: 0 2px 8px rgba(0,0,0,.25);
 }
