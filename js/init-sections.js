@@ -69,21 +69,27 @@ function attachManualControls(track){
     ev.preventDefault();
     ev.stopPropagation();
 
-    // 今の translateX から進捗率を計算して animationDelay を再設定
-    const nowTx = getTxPx(track);
-    const loop = track.scrollWidth / 2;
-    let offset = (-nowTx) % loop;
-    if (offset < 0) offset += loop;
+    // 1) ループ幅を最新スクロール幅から厳密算出
+    const loopWidth = track.scrollWidth / 2; // クローン込みなら /2 で一周相当
 
-    const speed = calcSpeedSec(parseFloat(track.dataset.baseSpeed || 55));
-    const progress = offset / loop;         // 0..1
-    const delaySec = progress * speed;      // 経過秒
-    track.style.animationDelay = `-${delaySec}s`;
+    // 2) 現在 translateX を取得し、0..loopWidth に正規化
+    const m = new DOMMatrix(getComputedStyle(track).transform);
+    let tx = m.m41; // 2D 水平移動
+    tx = ((tx % loopWidth) + loopWidth) % loopWidth; // 常に 0..loopWidth
 
+    // 3) 運動方向（右→左は負、左→右は正）に応じた負の delay 計算
+    const dir = track.dataset.direction === 'rtl' ? -1 : 1;
+    const progress = tx / loopWidth;              // 0..1
+    const delay = -progress * parseFloat(getComputedStyle(track).animationDuration) * 1000; // ms
+
+    // 4) 再適用順：アニメ一旦無効 → reflow → delay 指定 → アニメ有効
+    track.style.animation = 'none';
+    void track.offsetHeight; // reflow
     track.style.removeProperty('transform');
-    track.style.animationPlayState = 'running';
-    track.classList.remove('dragging');
+    track.style.animation = `marquee ${getComputedStyle(track).animationDuration} linear infinite`;
+    track.style.animationDelay = `${delay}ms`;
 
+    track.classList.remove('dragging');
     moved = 0;
   };
 
