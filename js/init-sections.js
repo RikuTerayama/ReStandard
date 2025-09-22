@@ -52,43 +52,39 @@ function attachManualControls(track){
   const onUp = (ev)=>{
     if(!dragging) return;
     dragging = false;
-    track.isDragging = false;
-    moved = 0; // リセット
 
-    // 8px未満=クリック（リンク遷移を邪魔しない）
-    if (Math.abs(moved) < 8) {
-      // クリック扱い：アニメをその場から再開（先頭ジャンプを防ぐ）
+    // moved はここではリセットしない（先に判定に使う）
+    const dragAmount = Math.abs(moved);
+
+    // 8px未満=クリック：リンク遷移は邪魔せず、その場から再開
+    if (dragAmount < 8) {
       track.style.removeProperty('transform');
       track.style.animationPlayState = 'running';
       track.classList.remove('dragging');
+      moved = 0; // ← ここで初めてリセット
       return;
     }
 
-    // 8px以上=ドラッグ → 現在位置から自動再開
+    // 8px以上=ドラッグ → 現在位置から自動再開（ジャンプ防止）
     ev.preventDefault();
     ev.stopPropagation();
 
-    // ①現在の位置(px)を取得
+    // 今の translateX から進捗率を計算して animationDelay を再設定
     const nowTx = getTxPx(track);
-
-    // ②ループ幅（= トラック総幅/2）を計算
     const loop = track.scrollWidth / 2;
-
-    // ③ px を 0..loop に正規化（右→左スクロール想定で正値化）
-    //    ※CSSのkeyframesが 0% -> -50% (＝-loop) の前提
     let offset = (-nowTx) % loop;
     if (offset < 0) offset += loop;
 
-    // ④ 進捗率 * 速度 = 負の animation-delay 秒 を再設定
     const speed = calcSpeedSec(parseFloat(track.dataset.baseSpeed || 55));
     const progress = offset / loop;         // 0..1
-    const delaySec = progress * speed;      // 開始からの経過時間
+    const delaySec = progress * speed;      // 経過秒
     track.style.animationDelay = `-${delaySec}s`;
 
-    // ⑤ 一時 transform をクリアして再開
     track.style.removeProperty('transform');
     track.style.animationPlayState = 'running';
     track.classList.remove('dragging');
+
+    moved = 0;
   };
 
   track.addEventListener('pointerdown', onDown, {passive:false});
@@ -109,33 +105,30 @@ function attachManualControls(track){
     }, true);
   });
   
-  // クリックした画像を起点に移動
-  container.querySelectorAll('img').forEach(img=>{
-    img.addEventListener('click', e=>{
-      if(track.isDragging) return; // ドラッグ中は無視
-      const rect = img.getBoundingClientRect();
-      const cRect = container.getBoundingClientRect();
-      const center = (cRect.width/2) - (rect.width/2);
-      const delta = rect.left - cRect.left - center;
+  // クリックで軽く寄せてから再開（リンク遷移は阻害しない）
+  track.querySelectorAll('a, img').forEach(el => {
+    el.addEventListener('click', (e) => {
+      // ドラッグ中クリックは無視
+      if (track.isDragging) return;
 
-      // 現在の transform を取得して加算
-      const style = getComputedStyle(track);
-      const matrix = new DOMMatrixReadOnly(style.transform);
-      const curX = matrix.m41;
-      const nextX = curX - delta;
+      // 要素の中心をスクリーン中央に少し寄せる（過度に動かさない）
+      const rect = el.getBoundingClientRect();
+      const center = rect.left + rect.width / 2;
+      const screenCenter = window.innerWidth / 2;
+      const delta = center - screenCenter;
 
+      // 現在の transform を取得 → 少しだけ補正
+      const currentTx = getTxPx(track);
       track.style.animation = 'none';
-      track.style.transform = `translateX(${nextX}px)`;
+      track.style.transform = `translateX(${currentTx - delta * 0.5}px)`;
 
-      // 進捗率→animationDelay を再計算
-      requestAnimationFrame(()=>{
+      requestAnimationFrame(() => {
         const nowTx = getTxPx(track);
         const loop = track.scrollWidth / 2;
         let offset = (-nowTx) % loop;
         if (offset < 0) offset += loop;
         const speed = calcSpeedSec(parseFloat(track.dataset.baseSpeed || 55));
-        const progress = offset / loop;
-        const delaySec = progress * speed;
+        const delaySec = (offset / loop) * speed;
         track.style.animationDelay = `-${delaySec}s`;
         track.style.removeProperty('transform');
         track.style.animationPlayState = 'running';
