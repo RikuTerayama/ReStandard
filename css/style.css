@@ -182,20 +182,14 @@ section {
   animation: none !important; /* ドラッグ中はCSSアニメ停止 */
 }
 
-/* ---------- Collection ---------- */
-/* 行（帯）高 = 画像高 + 余白（12→24pxに拡張） */
-#collection .collection-row{
-  block-size: calc(var(--collection-img-h) + 24px);
-  overflow: hidden;
-  position: relative;
-}
 
 /* 画像は常に行内に収まる（contain） */
-/* Collection 行 */
+/* PATCH: Collection 画像の完全表示を徹底 */
 #collection .collection-track img{
-  height: var(--collection-img-h);
-  width: auto;
-  object-fit: contain;
+  height: auto !important;
+  max-height: 100% !important; /* トラックの block-size に追従 */
+  width: auto !important;
+  object-fit: contain !important;
   display: block;
   border-radius: 0;
   box-shadow: none;
@@ -294,12 +288,17 @@ section {
 }
 
 /* Brands - グリッドレイアウト・安定配置 */
-.brands-grid{ 
+/* PATCH: Brands を UL/LI で実装していても bullets を消す */
+.brands-grid{
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
   display:grid; 
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: clamp(16px, 2vw, 32px);
   place-items:center;        /* 中央揃えを強制 */
 }
+.brands-grid > li { list-style: none !important; }
 .brand-card{ display:grid; place-items:center; }
 .brand-logo{ width:100%; height:auto; object-fit:contain; }
 
@@ -643,6 +642,14 @@ section {
   :root { 
     --lookbook-speed: 40s; 
   }
+  /* PATCH: SP で Lookbook の縦余白を軽くする */
+  .lookbook-container{
+    min-block-size: clamp(120px, 32vw, 200px); /* 旧: calc(var(--lookbook-img-h)+2rem) 相当を緩和 */
+  }
+  /* 帯の上下を軽めに */
+  .band{
+    padding-block: clamp(6px, 1.5vw, 14px) !important;
+  }
 }
 
 .section-inner{
@@ -715,16 +722,22 @@ section {
   width: 100% !important;
   max-width: none !important;
 }
+/* PATCH: Collection 行の高さを自動化し見切れ防止 */
 #collection .collection-row{
-  position:relative; overflow:hidden;
-  height: clamp(120px, 18vw, 220px);
-  width: 100% !important; /* 横幅いっぱい */
+  position: relative;
+  /* overflow:hidden;  ← 削除 */
+  /* height: clamp(120px, 18vw, 220px); ← 削除 */
+  height: auto;                 /* 自動 */
+  min-block-size: clamp(160px, 22vw, 340px); /* 下限だけ与える */
+  width: 100% !important;
   max-width: none !important;
-  margin: 0 auto !important; /* 中央揃え徹底 */
+  margin: 0 auto !important;
   text-align: center !important;
+  overflow: visible;            /* 画像が切れない */
 }
 @media (max-width:767px){
-  #collection .collection-row{ height: clamp(96px,28vw,164px); }
+  /* 固定高は撤去。必要なら min-block-size を軽めに */
+  #collection .collection-row{ min-block-size: clamp(140px, 36vw, 260px); }
 }
 #collection .collection-track{
   display:flex; align-items:center; gap: 8px !important; /* 左右スペース調整 */
