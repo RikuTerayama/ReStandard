@@ -31,6 +31,7 @@ function attachManualControls(track){
 
   const onDown = (ev)=>{
     dragging = true;
+    track.isDragging = true;
     moved = 0;
     track.classList.add('dragging');
     track.style.animationPlayState = 'paused';
@@ -42,7 +43,8 @@ function attachManualControls(track){
     if(!dragging) return;
     const x = (ev.touches ? ev.touches[0].clientX : ev.clientX);
     const dx = x - startX;
-    moved += Math.abs(dx - (moved > 0 ? dx : 0));
+    moved += Math.abs(dx);
+    track._lastMoved = moved;
     track.style.transform = `translateX(${startTx + dx}px)`;
     ev.preventDefault();
   };
@@ -50,6 +52,8 @@ function attachManualControls(track){
   const onUp = (ev)=>{
     if(!dragging) return;
     dragging = false;
+    track.isDragging = false;
+    moved = 0; // リセット
 
     // 8px未満=クリック（リンク遷移を邪魔しない）
     if (Math.abs(moved) < 8) {
@@ -93,6 +97,51 @@ function attachManualControls(track){
   track.addEventListener('touchstart', onDown, {passive:false});
   window.addEventListener('touchmove', onMove, {passive:false});
   window.addEventListener('touchend', onUp);
+  
+  // ドラッグ時のリンク遷移を無効化
+  const container = track.parentElement;
+  container.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', e=>{
+      if(track.isDragging || (track._lastMoved && track._lastMoved > 8)){
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+  });
+  
+  // クリックした画像を起点に移動
+  container.querySelectorAll('img').forEach(img=>{
+    img.addEventListener('click', e=>{
+      if(track.isDragging) return; // ドラッグ中は無視
+      const rect = img.getBoundingClientRect();
+      const cRect = container.getBoundingClientRect();
+      const center = (cRect.width/2) - (rect.width/2);
+      const delta = rect.left - cRect.left - center;
+
+      // 現在の transform を取得して加算
+      const style = getComputedStyle(track);
+      const matrix = new DOMMatrixReadOnly(style.transform);
+      const curX = matrix.m41;
+      const nextX = curX - delta;
+
+      track.style.animation = 'none';
+      track.style.transform = `translateX(${nextX}px)`;
+
+      // 進捗率→animationDelay を再計算
+      requestAnimationFrame(()=>{
+        const nowTx = getTxPx(track);
+        const loop = track.scrollWidth / 2;
+        let offset = (-nowTx) % loop;
+        if (offset < 0) offset += loop;
+        const speed = calcSpeedSec(parseFloat(track.dataset.baseSpeed || 55));
+        const progress = offset / loop;
+        const delaySec = progress * speed;
+        track.style.animationDelay = `-${delaySec}s`;
+        track.style.removeProperty('transform');
+        track.style.animationPlayState = 'running';
+      });
+    });
+  });
   
   // ホイール横スクロール対応
   track.addEventListener('wheel', (e) => {
