@@ -82,84 +82,7 @@
   }
   </script>
 
-  <style>
-    /* 背景動画の設定 - スマートフォンのみ */
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-      background: #000;
-      display: none; /* PCでは非表示 */
-    }
 
-    /* スマートフォンでのみ背景動画を表示 */
-    @media (max-width: 768px) {
-      #bg-video {
-        display: block !important;
-      }
-      .navbar-nav .nav-link {
-        padding: 0.5rem 1rem !important;
-        font-size: 0.9rem !important;
-      }
-      .navbar-nav .nav-item {
-        margin: 0 0.5rem !important;
-      }
-    }
-
-    /* index.htmlの.flow-row-bgと同じ設定を適用 */
-    .about-section-box {
-      background: rgba(255,255,255,0.9) !important;
-      border-radius: 12px !important; /* about.htmlと同じ丸角に変更 */
-      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
-      margin: 0 auto 24px auto !important;
-      padding: 36px 32px !important; /* 縦の余白を少し狭く調整 */
-      max-width: 800px !important; /* 横幅をさらに狭く調整 */
-      width: 100% !important;
-    }
-
-    /* 最高優先度で確実に適用 */
-    html body .about-section-box {
-      background: rgba(255,255,255,0.9) !important;
-      border-radius: 12px !important; /* about.htmlと同じ丸角に変更 */
-      box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
-      margin: 0 auto 24px auto !important;
-      padding: 36px 32px !important; /* 縦の余白を少し狭く調整 */
-      max-width: 800px !important; /* 横幅をさらに狭く調整 */
-      width: 100% !important;
-    }
-
-    /* 中心揃えのための追加設定 */
-    .about-section-box {
-      display: block !important;
-      text-align: center !important;
-    }
-
-    /* 内側の要素を全て透明に */
-    html body .about-section-box *,
-    html body .about-section-box p,
-    html body .about-section-box h3,
-    html body .about-section-box h4,
-    html body .about-section-box .ja-content,
-    html body .about-section-box .en-content,
-    html body .about-section-box strong,
-    html body .about-section-box b,
-    html body .about-section-box img,
-    html body .about-section-box a,
-    html body .about-section-box div,
-    html body .about-section-box span {
-      background: transparent !important;
-      backdrop-filter: none !important;
-    }
-
-    /* CSSファイルの競合を完全に排除 */
-    html body .about-section-box {
-      background: rgba(255,255,255,0.9) !important;
-      background-color: rgba(255,255,255,0.9) !important;
-    }
 
     html body .about-section-box *,
     html body .about-section-box a,
@@ -380,34 +303,6 @@
       width: 100% !important;
     }
 
-    /* 中心揃えのための追加設定 */
-    .about-section-box {
-      display: block !important;
-      text-align: center !important;
-    }
-
-    /* 内側の要素を全て透明に */
-    html body .about-section-box *,
-    html body .about-section-box p,
-    html body .about-section-box h3,
-    html body .about-section-box h4,
-    html body .about-section-box .ja-content,
-    html body .about-section-box .en-content,
-    html body .about-section-box strong,
-    html body .about-section-box b,
-    html body .about-section-box img,
-    html body .about-section-box a,
-    html body .about-section-box div,
-    html body .about-section-box span {
-      background: transparent !important;
-      backdrop-filter: none !important;
-    }
-
-    /* CSSファイルの競合を完全に排除 */
-    html body .about-section-box {
-      background: rgba(255,255,255,0.9) !important;
-      background-color: rgba(255,255,255,0.9) !important;
-    }
 
     html body .about-section-box *,
     html body .about-section-box a,
@@ -497,6 +392,7 @@
   
 </head>
 <body>
+<main>
 
 <!-- スマートフォン版背景動画 -->
 <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
@@ -703,6 +599,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+</main>
 
   <!-- Footer -->
   <footer class="py-5 text-center">
