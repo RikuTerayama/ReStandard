@@ -209,11 +209,6 @@
       backdrop-filter: none !important;
     }
 
-    /* タイトルの色設定 */
-    .section-title {
-      color: #fff !important;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
-    }
 
     /* ナビゲーションバーとフッターの透明度統一 */
     .navbar, footer {
@@ -377,15 +372,6 @@
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
     }
 
-    /* スマートフォン版でのsection-titleのフォントサイズ調整 */
-    @media (max-width: 768px) {
-      .section-title {
-        font-size: var(--font-size-4xl) !important;
-      }
-      .section-title span {
-        font-size: var(--font-size-4xl) !important;
-      }
-    }
 
     /* about.htmlと同じ透過ボックス設定 */
     .about-section-box {
@@ -562,10 +548,6 @@
         .about-section-box {
           background: rgba(255,255,255,0.9) !important;
         }
-              .section-title {
-        color: #fff !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
-      }
       
       /* ヘッダー固定の強化 */
       html body .navbar {
