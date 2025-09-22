@@ -117,6 +117,12 @@ function attachManualControls(track){
       // ドラッグ中クリックは無視
       if (track.isDragging) return;
 
+      // href="#" の場合はページジャンプを防ぐ
+      if (el.tagName === 'A' && el.getAttribute('href') === '#') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
       // 要素の中心をスクリーン中央に少し寄せる（過度に動かさない）
       const rect = el.getBoundingClientRect();
       const center = rect.left + rect.width / 2;
