@@ -814,6 +814,21 @@ p, .ja-content, .en-content {
   line-height: 1.6;
 }
 
+/* Brand images (Rockmount ほか) の自然縮尺 */
+.brand-image,
+img[src*="rockmount"] {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* 枠内で自然比率 */
+  margin: 0 auto 1rem auto;
+}
+/* 画像の親に高さ固定がある場合を緩和 */
+.brand-image-wrap, .about-section-box img {
+  height: auto !important;
+}
+
 .section-inner{
   max-width:1200px;
   margin-inline:auto;
