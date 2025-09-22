@@ -404,6 +404,7 @@
   
 </head>
 <body>
+<main>
 
 <!-- スマートフォン版背景動画 -->
 <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
@@ -563,90 +564,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+</main>
 
   <!-- Footer -->
   <footer class="py-5 text-center">
-    <style>
-      /* フッターが浮かないようにする設定 */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-      
-      main {
-        flex: 1;
-      }
-      
-      footer {
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        border-top: 1px solid rgba(204, 204, 204, 0.3);
-        backdrop-filter: blur(8px);
-        margin-top: auto;
-        position: relative;
-        bottom: 0;
-        width: 100%;
-      }
-  
-      footer .nav {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 2rem;
-      }
-  
-      footer .nav-link {
-        color: var(--main-color) !important;
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-        position: relative;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        letter-spacing: 0.02em;
-      }
-  
-      footer .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background-color: var(--main-color);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-      }
-  
-      footer .nav-link:hover::after {
-        width: 70%;
-      }
-  
-      .social-links {
-        margin: 2rem 0;
-      }
-  
-      .social-links a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        margin: 0 10px;
-        border-radius: 50%;
-        background: linear-gradient(45deg, #333, #666);
-        color: white !important;
-        font-size: 1.2rem;
-        transition: all 0.3s ease;
-      }
-  
-  
     <ul class="nav">
       <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
       <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
