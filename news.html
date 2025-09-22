@@ -82,22 +82,6 @@
   }
   </script>
 
-  <style>
-    :root {
-      --main-color: #333333;
-      --accent-color: #888;
-      --hover-bg: #f8f8f8;
-      --gradient-start: #ffffff;
-      --gradient-end:   #dedbd6;
-      --heading-font: 'Noto Serif JP', serif;
-      --body-font: 'Noto Sans JP', sans-serif;
-      --font-size-sm: 0.9rem;
-      --font-size-3xl: 2rem;
-      --font-size-4xl: 2.5rem;
-      --font-size-lg: 1.1rem;
-      --font-size-2xl: 1.5rem;
-      --font-size-xs: 0.8rem;
-    }
 
     /* 背景動画の設定 - スマートフォンのみ */
     #bg-video {
@@ -518,57 +502,6 @@
     }
   </style>
   
-  <style>
-    /* PC版とスマートフォン版で背景動画を切り替え */
-    @media (min-width: 901px) {
-      #desktop-bg-video {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-      #mobile-bg-video {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-    }
-    @media (max-width: 900px) {
-      #desktop-bg-video {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-      #mobile-bg-video {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-    }
-    
-    /* PC版でもスマートフォン版と同様の透過設定を適用 */
-    @media (min-width: 901px) {
-      body {
-        background: #000 !important;
-      }
-      .navbar {
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        backdrop-filter: blur(10px) !important;
-      }
-      .section-title {
-        color: #fff !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
-      }
-      
-      /* ヘッダー固定の強化 */
-      html body .navbar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 1030 !important;
-      }
-    }
-  </style>
   
 </head>
 <body>
@@ -620,157 +553,9 @@
   <script async src="https://note.com/scripts/embed.js" charset="utf-8"></script>
 </div>
 
-<style>
-  /* note記事の埋め込み部分のスタイル調整 */
-  .note-embeds {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 2rem !important;
-    min-height: 120vh !important;
-    padding-bottom: 100px !important;
-    margin-bottom: 50px !important;
-  }
-  
-  /* スマートフォン版でのnote記事調整 */
-  @media (max-width: 768px) {
-    .note-embeds {
-      min-height: 150vh !important;
-      padding-bottom: 150px !important;
-      margin-bottom: 100px !important;
-    }
-  }
-  
-  /* さらに小さい画面でのnote記事調整 */
-  @media (max-width: 480px) {
-    .note-embeds {
-      min-height: 180vh !important;
-      padding-bottom: 200px !important;
-      margin-bottom: 150px !important;
-    }
-  }
-</style>
 
 <!-- Footer -->
 <footer class="py-5 text-center">
-    <style>
-      /* フッターが浮かないようにする設定 */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 150vh;
-      }
-      
-      /* スマートフォン版での縦幅調整 */
-      @media (max-width: 768px) {
-        body {
-          min-height: 200vh !important;
-        }
-        
-        .note-embeds {
-          min-height: 150vh !important;
-          padding-bottom: 150px !important;
-        }
-      }
-      
-      /* さらに小さい画面での調整 */
-      @media (max-width: 480px) {
-        body {
-          min-height: 250vh !important;
-        }
-        
-        .note-embeds {
-          min-height: 180vh !important;
-          padding-bottom: 200px !important;
-        }
-      }
-      
-      main {
-        flex: 1;
-      }
-      
-      footer {
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        border-top: 1px solid rgba(204, 204, 204, 0.3);
-        backdrop-filter: blur(8px);
-        margin-top: auto;
-        position: relative;
-        bottom: 0;
-        width: 100%;
-      }
-  
-      footer .nav {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 2rem;
-      }
-  
-      footer .nav-link {
-        color: var(--main-color) !important;
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-        position: relative;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        letter-spacing: 0.02em;
-      }
-  
-      footer .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background-color: var(--main-color);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-      }
-  
-      footer .nav-link:hover::after {
-        width: 70%;
-      }
-  
-      .social-links {
-        margin: 2rem 0;
-      }
-  
-      .social-links a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        margin: 0 10px;
-        border-radius: 50%;
-        background: linear-gradient(45deg, #333, #666);
-        color: white !important;
-        font-size: 1.2rem;
-        transition: all 0.3s ease;
-      }
-  
-      .social-links a:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        background: linear-gradient(45deg, #444, #777);
-      }
-  
-      .copyright {
-        font-size: 0.9rem;
-        color: var(--accent-color);
-        margin-top: 2rem;
-      }
-    </style>
-  
     <ul class="nav">
       <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
       <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
