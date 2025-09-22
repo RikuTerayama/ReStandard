@@ -731,6 +731,50 @@ section {
   padding-block: clamp(10px, 2.5vw, 24px);
 }
 
+/* === Global Layout: 全ページ統一 === */
+html, body { height: 100%; margin: 0; padding: 0; }
+body {
+  display: flex; flex-direction: column; min-height: 100vh;
+  font-family: var(--body-font, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif);
+}
+main { flex: 1; }
+
+/* Footer（index.html と同一挙動） */
+footer {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid rgba(204, 204, 204, 0.3);
+  backdrop-filter: blur(10px);
+  margin-top: auto; position: relative; bottom: 0; width: 100%;
+}
+
+/* Navbar（index.html と同一の前提） */
+.navbar { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); }
+.navbar .navbar-brand { font-weight: 700; letter-spacing: 0.02em; }
+.navbar .nav-link { font-weight: 500; letter-spacing: 0.02em; }
+.language-switcher button { margin: 0 0.25rem; }
+
+/* Section Title（全ページで白） */
+.section-title span { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+
+/* コンテンツを囲うボックス（ナビと同系の半透明白） */
+.about-section-box {
+  background: rgba(255,255,255,0.90);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
+  margin: 0 auto 24px;
+  max-width: min(1000px, 92vw);
+}
+
+/* 背景動画は常に背面へ */
+#mobile-bg-video, #desktop-bg-video { z-index: -1; }
+
+/* レスポンシブ細部（タイトル・ナビ間隔の統一） */
+@media (max-width: 768px) {
+  .navbar .nav-link { padding: 0.5rem 0.75rem; }
+  .section-title { margin-top: 5.5rem; } /* 固定ヘッダー分の余白 */
+}
+
 .section-inner{
   max-width:1200px;
   margin-inline:auto;
