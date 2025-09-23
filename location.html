@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" translate="no">
 <head>
   <meta charset="utf-8">
+  <meta name="google" content="notranslate">
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
 <script>
@@ -11,7 +12,6 @@
 
   gtag('config', 'G-1W9HVMCW3G');
 </script>
-  <title>Location | アクセス・所在地 | ReStandard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ReStandardの所在地・アクセス情報。地図・住所・最寄り駅・連絡先などをご案内します。ご来社・ご連絡の際はこちらをご覧ください。">
   <meta name="keywords" content="ReStandard, アクセス, 所在地, 地図, 住所, 連絡先, アパレル卸, 会社情報">
@@ -50,9 +50,31 @@
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
   
+  <title>Location | アクセス・所在地 | ReStandard</title>
+  
+  <!-- プリロード -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="preload" href="css/reveal.css" as="style">
+  <link rel="preload" href="css/i18n-visibility.css" as="style">
+  <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
+  <!-- LCP画像のプリロード -->
+  <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
+
+  <link rel="preload" as="image" href="image/12.JPG">
+  <link rel="preload" as="image" href="image/13.JPG">
+  <link rel="preload" as="image" href="image/14.JPG">
+  <link rel="preload" as="image" href="image/15.JPG">
+  <link rel="preload" as="image" href="image/16.JPG">
+  <link rel="preload" as="image" href="image/17.JPG">
+  <link rel="preload" as="image" href="image/18.JPG">
+  <link rel="preload" as="image" href="image/19.JPG">
+  <link rel="preload" as="image" href="image/20.JPG">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -85,7 +107,295 @@
   </script>
 
 
+  <style>
+    :root {
+      --main-color: #333333;
+      --accent-color: #888;
+      --hover-bg: #f8f8f8;
+      --gradient-start: #ffffff;
+      --gradient-end:   #dedbd6;
+      --heading-font: 'Noto Serif JP', serif;
+      --body-font: 'Noto Sans JP', sans-serif;
+      --main-font-family: 'Noto Serif JP', serif;
+      --heading-font-family: 'Noto Serif JP', serif;
+      --rs-header-h: 80px; /* 64px → 80px に増加 */
+    }
 
+    html, body {
+      font-family: var(--main-font-family) !important;
+      overflow-x: hidden;
+    }
+    
+    /* 新しいCollectionセクション用の設定 */
+    * {
+      font-family: inherit !important;
+    }
+    h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
+      font-family: var(--main-font-family) !important;
+    }
+
+    body {
+      font-family: var(--body-font);
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+      color: var(--main-color);
+      text-align: center;
+      line-height: 1.7;
+      font-feature-settings: "palt";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid #ccc;
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar .container-fluid {
+      padding: 0 1.5rem;
+    }
+
+    .navbar-brand {
+      font-family: var(--heading-font);
+      color: var(--main-color) !important;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .navbar-nav {
+      margin-right: 1rem;
+    }
+
+    .navbar-nav .nav-item {
+      margin: 0 0.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--main-color) !important;
+      position: relative;
+      transition: all 0.3s var(--transition-timing);
+    }
+    
+    /* Bootstrapのデフォルト設定を上書き */
+    html body .navbar-nav .nav-link {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.9rem !important;
+    }
+    html body .navbar-nav .nav-item {
+      margin: 0 0.5rem !important;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s var(--transition-timing);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+      width: 70%;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    .nav-link.active {
+      font-weight: 700;
+    }
+
+    .nav-link.active::after {
+      width: 70%;
+    }
+
+    /* 言語切り替えボタンのスタイル */
+    .language-switcher {
+      display: flex;
+      align-items: center;
+      margin-left: 2rem;
+      position: relative;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(51, 51, 51, 0.1);
+      border-radius: 24px;
+      padding: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .language-switcher button {
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: all 0.3s var(--transition-timing);
+      border-radius: 20px;
+      font-family: var(--heading-font);
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .language-switcher button.active {
+      color: #fff;
+      font-weight: 500;
+      background: var(--main-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+
+    /* モバイル対応 */
+    @media (max-width: 991px) {
+      .navbar-nav {
+        margin-right: 0;
+        text-align: center;
+        padding: 1rem 0;
+      }
+
+      .navbar-nav .nav-item {
+        margin: 0.5rem 0;
+      }
+
+      .language-switcher {
+        margin: 1rem auto;
+        width: fit-content;
+      }
+
+      .navbar-brand {
+        font-size: 1.3rem;
+      }
+    }
+
+    footer {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(204, 204, 204, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    footer .nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    footer .nav-link {
+      color: var(--main-color) !important;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      position: relative;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    footer .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    footer .nav-link:hover::after {
+      width: 70%;
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #333, #666);
+      color: white !important;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      background: linear-gradient(45deg, #444, #777);
+    }
+
+    .copyright {
+      font-family: var(--body-font);
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      margin-top: 2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .desktop-only { display: block; }
+    .mobile-only { display: none; }
+    @media (max-width: 600px) {
+      .desktop-only { display: none !important; }
+      .mobile-only { display: inline !important; }
+    }
+
+    a, .internal-link {
+      cursor: pointer;
+    }
+    a:hover, .internal-link:hover {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
+    }
+  </style>
+  <style>
+    /* フッターが浮かないようにする設定 */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    main {
+      flex: 1;
+    }
+    
+    footer {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(204, 204, 204, 0.3);
+      backdrop-filter: blur(10px);
+      margin-top: auto;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
 
 
 
