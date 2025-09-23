@@ -229,10 +229,29 @@ function centerTrack(track) {
   track.style.margin = '0 auto';
 }
 
+/* lazy-load フェードイン処理 */
+function initLazyLoadFadeIn() {
+  const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+  
+  lazyImages.forEach(img => {
+    img.addEventListener('load', () => {
+      img.classList.add('loaded');
+    });
+    
+    // 既に読み込まれている画像の場合
+    if (img.complete) {
+      img.classList.add('loaded');
+    }
+  });
+}
+
 /* ===================== init ===================== */
 document.addEventListener('DOMContentLoaded', () => {
   // DOM存在確認・querySelector修正
   console.log('[INIT] Collection/Lookbook 初期化開始');
+  
+  // lazy-load フェードイン処理を初期化
+  initLazyLoadFadeIn();
   
   // Collection 上段・下段（新構造対応）
   const tracks = document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track');
