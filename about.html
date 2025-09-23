@@ -70,6 +70,14 @@
     });
   </script>
   
+  <!-- Speculation Rules でトップページを先読み -->
+  <script type="speculationrules">
+  {
+    "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }],
+    "prerender": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
+  }
+  </script>
+  
   <!-- プリロード -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
