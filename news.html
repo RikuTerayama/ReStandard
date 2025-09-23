@@ -52,6 +52,24 @@
   
   <title>News | ReStandardからのお知らせ・最新情報</title>
   
+  <!-- Hover/タップ直前でトップを先読み -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      var links = document.querySelectorAll('a[href="/"], a[href="/#brands"]');
+      links.forEach(function(a){
+        a.addEventListener('pointerenter', function(){
+          if(!a.__prefetched){
+            var l = document.createElement('link');
+            l.rel = 'prefetch';
+            l.href = '/';
+            document.head.appendChild(l);
+            a.__prefetched = true;
+          }
+        }, {passive:true});
+      });
+    });
+  </script>
+  
   <!-- プリロード -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -570,5 +588,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<!-- lazy-load フェードイン処理 -->
+<script src="js/init-sections.js?v=2025-01-18-final" defer></script>
 </body>
 </html> 
