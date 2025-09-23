@@ -7,18 +7,24 @@ function initCollectionTracks() {
   const tracks = document.querySelectorAll('.collection-track');
   
   tracks.forEach((track, index) => {
-    // data-seg 属性から 1 周の画像枚数を取得
-    const segmentCount = parseInt(track.dataset.seg) || 16;
-    
-    // 初期化時に子要素を複製して segmentWidth を計算
-    ensureInfiniteLoop(track, segmentCount);
-    
-    // マウスポインタのダウン・ムーブ・アップイベントを拾い、クリックとドラッグを区別
-    attachTrackControls(track);
-    
-    // オートスクロール開始
-    startAutoScroll(track);
+    // 初期化処理
+    initTrack(track);
   });
+}
+
+// .collection-track ごとに初期化処理
+function initTrack(track) {
+  // data-seg から元の子要素数を読み取り
+  const segmentCount = parseInt(track.dataset.seg) || 16;
+  
+  // 子要素を複製して segmentWidth を計算
+  ensureInfiniteLoop(track, segmentCount);
+  
+  // マウスポインタのダウン・ムーブ・アップイベントを拾い、クリックとドラッグを区別
+  attachTrackControls(track);
+  
+  // オートスクロール開始
+  startAutoScroll(track);
 }
 
 // 無限ループのための要素複製
@@ -88,7 +94,7 @@ function attachTrackControls(track) {
     track.classList.remove('dragging');
     track.style.removeProperty('transform');
     
-    // 8px未満=クリック：リンク遷移
+    // 8px未満=クリック：href または data-href に遷移
     if (moved < 8) {
       const link = e.target.closest('a');
       if (link) {
@@ -105,15 +111,15 @@ function attachTrackControls(track) {
       return;
     }
     
-    // 8px以上=ドラッグ：離した位置から自動スクロールを再開
+    // 8px以上=ドラッグ：現在位置から segmentWidth の範囲に正規化して自動スクロールを再開
     e.preventDefault();
     e.stopPropagation();
     
     // 現在位置から再開するための負の animation-delay を計算
-    const loopWidth = track._segmentWidth;
+    const segmentWidth = track._segmentWidth;
     const currentTx = getCurrentTranslateX(track);
-    const normalizedTx = ((currentTx % loopWidth) + loopWidth) % loopWidth;
-    const progress = normalizedTx / loopWidth;
+    const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
+    const progress = normalizedTx / segmentWidth;
     const duration = parseFloat(track.dataset.speed || 55);
     const delay = -progress * duration;
     
@@ -143,10 +149,9 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始
 function startAutoScroll(track) {
-  const direction = track.dataset.direction || 'left';
   const speed = parseFloat(track.dataset.speed || 55);
   
-  // 下段のトラックだけ右から左にスクロールするように、reverse クラスの有無でスクロール方向を制御
+  // reverse クラスが付いているトラックはスクロール方向を逆にして、21.JPG が右端になるよう初期化
   const isReverse = track.classList.contains('reverse');
   const scrollDirection = isReverse ? 'right' : 'left';
   
@@ -188,9 +193,9 @@ function alignTrackStart(track, direction) {
   }
   
   // 負の animation-delay を計算
-  const loopWidth = track._segmentWidth;
-  const normalizedTx = ((desiredTx % loopWidth) + loopWidth) % loopWidth;
-  const progress = normalizedTx / loopWidth;
+  const segmentWidth = track._segmentWidth;
+  const normalizedTx = ((desiredTx % segmentWidth) + segmentWidth) % segmentWidth;
+  const progress = normalizedTx / segmentWidth;
   const duration = parseFloat(track.dataset.speed || 55);
   const delay = -progress * duration;
   
