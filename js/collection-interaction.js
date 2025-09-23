@@ -32,6 +32,13 @@ function ensureInfiniteLoop(track, segmentCount) {
   const children = Array.from(track.children);
   const originalWidth = children.reduce((width, child) => width + child.getBoundingClientRect().width, 0);
   
+  if (originalWidth === 0) {
+    // 画像が読み込まれていない場合のフォールバック
+    const fallbackWidth = children.length * 200;
+    track._segmentWidth = fallbackWidth;
+    return;
+  }
+  
   // オリジナル区間幅を記録
   track._segmentWidth = originalWidth;
   
@@ -45,6 +52,14 @@ function ensureInfiniteLoop(track, segmentCount) {
       track.appendChild(clone);
     });
     currentWidth = Array.from(track.children).reduce((width, child) => width + child.getBoundingClientRect().width, 0);
+  }
+  
+  // 最低でも1セット以上は複製する
+  if (currentWidth === originalWidth) {
+    children.forEach(child => {
+      const clone = child.cloneNode(true);
+      track.appendChild(clone);
+    });
   }
 }
 
@@ -65,7 +80,10 @@ function attachTrackControls(track) {
       startX = e.clientX || e.touches[0].clientX;
       startTx = getCurrentTranslateX(track);
     }, 150);
-    e.preventDefault();
+    // リンク要素の場合はpreventDefaultを避ける
+    if (!e.target.closest('a')) {
+      e.preventDefault();
+    }
   };
   
   const onMove = (e) => {
@@ -88,7 +106,25 @@ function attachTrackControls(track) {
       longPressTimer = null;
     }
     
-    if (!isDragging) return;
+    if (!isDragging) {
+      // ドラッグしていない場合、クリックとして処理
+      const link = e.target.closest('a');
+      if (link) {
+        const href = link.getAttribute('href')?.trim().toLowerCase() || '';
+        const noNav = href === '' || href === '#' || href.startsWith('javascript');
+        if (noNav && link.dataset.href) {
+          e.preventDefault();
+          window.location.href = link.dataset.href;
+          return;
+        } else if (href && href !== '#' && !href.startsWith('javascript')) {
+          // 通常のリンクの場合はそのまま遷移
+          return;
+        }
+      }
+      // 移動量をリセット
+      moved = 0;
+      return;
+    }
     
     isDragging = false;
     track.classList.remove('dragging');
@@ -124,8 +160,8 @@ function attachTrackControls(track) {
     const delay = -progress * duration;
     
     // アニメーション再開
-    track.style.animation = 'none';
-    void track.offsetHeight; // reflow
+    const direction = track.dataset.direction || 'left';
+    track.style.animation = `scroll-${direction} ${duration}s linear infinite`;
     track.style.animationDelay = `${delay}s`;
     track.style.animationPlayState = 'running';
   };
