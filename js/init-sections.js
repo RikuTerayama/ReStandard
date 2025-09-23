@@ -16,7 +16,14 @@ function ensureLoopWidth(track) {
   let guard = 0;
   while (total < maxLoopWidth && guard < 40) {
     const clones = Array.from(track.children).map((n) => n.cloneNode(true));
-    clones.forEach((c) => track.appendChild(c));
+    clones.forEach((c) => {
+      // クローンした画像にloading="lazy"を追加
+      const images = c.querySelectorAll('img');
+      images.forEach(img => {
+        img.setAttribute('loading', 'lazy');
+      });
+      track.appendChild(c);
+    });
     total = Array.from(track.children).reduce((w, el) => w + el.getBoundingClientRect().width, 0);
     guard++;
   }
@@ -208,6 +215,20 @@ function calcSpeedSec(base=55){
   return base;                                   // PC
 }
 
+/* トラックを中央に配置する関数 */
+function centerTrack(track) {
+  // トラックの親要素に中央揃えのスタイルを適用
+  const parent = track.parentElement;
+  if (parent) {
+    parent.style.display = 'flex';
+    parent.style.justifyContent = 'center';
+    parent.style.margin = '0 auto';
+  }
+  
+  // トラック自体にも中央揃えを適用
+  track.style.margin = '0 auto';
+}
+
 /* ===================== init ===================== */
 document.addEventListener('DOMContentLoaded', () => {
   // DOM存在確認・querySelector修正
@@ -220,6 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
   tracks.forEach((track, index) => {
     // 幅確保
     ensureLoopWidth(track);
+    // 中央補正を適用
+    centerTrack(track);
     // 自動スクロール初期化
     initAutoScroll(track);
     // 画面外一時停止
