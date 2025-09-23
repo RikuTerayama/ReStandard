@@ -4,7 +4,7 @@
 
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
-  const maxLoopWidth = track.parentElement.offsetWidth * 3; // 300%
+  const maxLoopWidth = track.parentElement.offsetWidth * 3.5; // 350%（切れ目対策を強化）
   let total = Array.from(track.children).reduce((w, el) => w + el.getBoundingClientRect().width, 0);
 
   // 画像が未ロードだと幅が 0 になるので暫定で幅推定
@@ -229,6 +229,80 @@ function centerTrack(track) {
   track.style.margin = '0 auto';
 }
 
+/* ===== start alignment helpers ===== */
+
+/** src の末尾一致で画像ノードを探す（大文字小文字を無視） */
+function findImageBySuffix(track, suffix) {
+  if (!suffix) return null;
+  const sfx = suffix.toLowerCase();
+  const imgs = track.querySelectorAll('img');
+  return Array.from(imgs).find(img => {
+    try {
+      return new URL(img.src, location.href).pathname.toLowerCase().endsWith(sfx);
+    } catch {
+      return (img.getAttribute('src') || '').toLowerCase().endsWith(sfx);
+    }
+  }) || null;
+}
+
+/** 目的の画像を「左端 or 右端」に揃えたときの希望 translateX(px) を返す */
+function computeDesiredTx(track, target, align = 'left') {
+  const wrap = track.parentElement;                       // .track-wrap
+  const x = target.offsetLeft;                            // 画像の左端（track 左基準）
+  const w = target.getBoundingClientRect().width;
+  if (align === 'right') {
+    // 画像の右端を wrap の右端に合わせる
+    return wrap.clientWidth - (x + w);                    // = 望ましい translateX(px)
+  }
+  // 左端合わせ
+  return -x;
+}
+
+/** 現在の keyframes（left/right）に対して、希望 translateX を満たす負の animation-delay を適用 */
+function applyInitialDelay(track, desiredTxPx) {
+  // ループ一周に相当する距離（scrollWidth/2）と総時間
+  const loop = track.scrollWidth / 2;
+  const durSec = parseFloat(getComputedStyle(track).animationDuration);
+  const dir = (track.dataset.direction || 'left').toLowerCase();
+
+  // 希望位置を keyframes の可動範囲に正規化
+  // left: 0 → -loop, right: -loop → 0 の範囲であれば OK
+  let T = desiredTxPx;
+  if (dir === 'left') {
+    while (T < -loop) T += loop;
+    while (T > 0)     T -= loop;
+    const progress = (-T) / loop;                         // 0..1
+    track.style.animationDelay = `-${(progress * durSec).toFixed(4)}s`;
+  } else {
+    while (T < -loop) T += loop;
+    while (T > 0)     T -= loop;
+    const progress = (T + loop) / loop;                   // 0..1
+    track.style.animationDelay = `-${(progress * durSec).toFixed(4)}s`;
+  }
+}
+
+/** data-start / data-align に従って初期位置を合わせる */
+function alignTrackStart(track) {
+  const start = (track.dataset.start || '').toLowerCase();
+  const align = (track.dataset.align || 'left').toLowerCase();
+  const target = findImageBySuffix(track, start);
+  if (!target) return;
+
+  // 一旦アニメを確実にセット（duration を取得するため）
+  const dir = (track.dataset.direction || 'left').toLowerCase();
+  const base = parseFloat(track.dataset.baseSpeed || 55);
+  const dur  = calcSpeedSec(base);
+  const key  = (dir === 'right') ? 'scroll-right' : 'scroll-left';
+  track.style.animation = `${key} ${dur}s linear infinite`;
+  track.style.animationPlayState = 'paused';
+
+  // 希望 translateX を計算して負の delay を適用 → 再生
+  const desired = computeDesiredTx(track, target, align);
+  applyInitialDelay(track, desired);
+  track.style.animationPlayState = 'running';
+}
+/* ===== /start alignment helpers ===== */
+
 /* lazy-load フェードイン処理 */
 function initLazyLoadFadeIn() {
   const lazyImages = document.querySelectorAll('img[loading="lazy"]');
@@ -264,6 +338,8 @@ document.addEventListener('DOMContentLoaded', () => {
     centerTrack(track);
     // 自動スクロール初期化
     initAutoScroll(track);
+    // ★開始画像に揃える
+    alignTrackStart(track);
     // 画面外一時停止
     pauseWhenOutOfView(track);
     console.log(`[INIT] Track ${index + 1}: ${track.dataset.direction || 'left'} (${track.dataset.speed || '55'}s)`);
