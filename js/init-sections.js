@@ -42,15 +42,20 @@ function attachManualControls(track){
   let startTx = 0;
   let dragging = false;
   let moved = 0;
+  let longPressTimer = null;
 
   const onDown = (ev)=>{
-    dragging = true;
-    track.isDragging = true;
-    moved = 0;
-    track.classList.add('dragging');
-    track.style.animationPlayState = 'paused';
-    startX = (ev.touches ? ev.touches[0].clientX : ev.clientX);
-    startTx = getTxPx(track);
+    // 長押しタイマーを開始（150ms）
+    longPressTimer = setTimeout(() => {
+      dragging = true;
+      track.isDragging = true;
+      moved = 0;
+      track.classList.add('dragging');
+      track.style.animationPlayState = 'paused';
+      startX = (ev.touches ? ev.touches[0].clientX : ev.clientX);
+      startTx = getTxPx(track);
+    }, 150);
+    ev.preventDefault();
   };
   
   const onMove = (ev)=>{
@@ -64,6 +69,12 @@ function attachManualControls(track){
   };
   
   const onUp = (ev)=>{
+    // 長押しタイマーをクリア
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+    
     if(!dragging) return;
     dragging = false;
 
@@ -320,13 +331,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // href 未設定（# や空、javascript:void(0)）の a は data-href を使って遷移させる
   document.querySelectorAll('#collection a, #lookbook a').forEach(a => {
     a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href') || '';
-      const isJsVoid = href.trim().toLowerCase().startsWith('javascript');
-      const noNav = href === '' || href === '#' || isJsVoid;
-      const dh = a.dataset.href;
-      if (noNav && dh) { 
-        e.preventDefault(); 
-        window.open(dh, a.target || '_blank'); 
+      const href = a.getAttribute('href')?.trim().toLowerCase() || '';
+      const noNav = href === '' || href === '#' || href.startsWith('javascript');
+      if (noNav && a.dataset.href) {
+        e.preventDefault();
+        window.location.href = a.dataset.href;
+        return;
       }
     });
   });
