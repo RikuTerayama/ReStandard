@@ -1319,6 +1319,13 @@ img[loading="lazy"].loaded {
   #lookbook   .band { min-height: clamp(280px, 68vw, 420px); }
 }
 
+/* 行高をもう一段だけ詰める（SP） */
+@media (max-width: 480px){
+  .collection .track-wrap,
+  .lookbook .track-wrap{ height: clamp(130px, 30vw, 220px); }
+  .band{ padding-block: clamp(6px, 1.2vw, 12px) !important; }
+}
+
 /* トラックは中央寄せ＆幅は中身に合わせて拡張（無限ループ前提） */
 .track-wrap {
   display: flex;
@@ -1340,4 +1347,16 @@ img[loading="lazy"].loaded {
   height: auto;
   object-fit: contain;
   opacity: 1; /* 何らかの初期 opacity 指定が残っていた場合の上書き */
+}
+
+/* SPフォントサイズを一段小さく */
+@media (max-width: 480px){
+  :root{
+    --font-size-xs: 0.78rem;
+    --font-size-sm: 0.86rem;
+    --font-size-base: 0.94rem; /* 例: 既存より-0.06〜-0.08rem */
+    --font-size-lg: 1.05rem;
+    --font-size-xl: 1.25rem;
+  }
+  .navbar-nav .nav-link{ font-size: var(--font-size-sm) !important; }
 }
