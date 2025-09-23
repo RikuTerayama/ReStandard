@@ -1227,3 +1227,42 @@ img[src*="rockmount"] {
   margin-left: auto; 
   margin-right: auto; 
 }
+
+/* ====== Collection / Lookbook セクションの中央揃えとobject-fit修正 ====== */
+/* Collection セクションの中央揃え */
+.collection-track {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.collection-track img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Lookbook セクションの中央揃え */
+.lookbook-track {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.lookbook-track img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 画像の遅延読み込み対応 */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
