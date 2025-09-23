@@ -1231,36 +1231,45 @@ img[src*="rockmount"] {
 /* ====== Collection / Lookbook セクションの中央揃えとobject-fit修正 ====== */
 /* Collection セクションの中央揃え */
 .collection-track {
-  display: flex;
+  margin-inline: auto;
   justify-content: center;
-  margin: 0 auto;
 }
 
 .collection-track img {
-  object-fit: contain;
-  width: 100%;
+  max-width: 100%;
   height: auto;
+  object-fit: contain;
   display: block;
 }
 
 /* Lookbook セクションの中央揃え */
 .lookbook-track {
-  display: flex;
+  margin-inline: auto;
   justify-content: center;
-  margin: 0 auto;
 }
 
 .lookbook-track img {
-  object-fit: contain;
-  width: 100%;
+  max-width: 100%;
   height: auto;
+  object-fit: contain;
   display: block;
 }
+
+/* about.html のブランド画像表示修正 */
+.brand-card img, 
+.brands-grid img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* .brand-logo の aspect-ratio を削除（空のルールセットを削除） */
 
 /* 画像の遅延読み込み対応 */
 img[loading="lazy"] {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease-in;
 }
 
 img[loading="lazy"].loaded {
