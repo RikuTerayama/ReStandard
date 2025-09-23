@@ -7,18 +7,24 @@ function initLookbookTracks() {
   const tracks = document.querySelectorAll('.lookbook-track');
   
   tracks.forEach((track, index) => {
-    // data-seg で画像枚数を取得
-    const segmentCount = parseInt(track.dataset.seg) || 8;
-    
-    // 初期化時に子要素を複製して segmentWidth を計算
-    ensureInfiniteLoop(track, segmentCount);
-    
-    // マウスポインタのダウン・ムーブ・アップイベントを拾い、クリックとドラッグを区別
-    attachTrackControls(track);
-    
-    // オートスクロール開始（左方向）
-    startAutoScroll(track);
+    // 初期化処理
+    initTrack(track);
   });
+}
+
+// .lookbook-track ごとに初期化処理
+function initTrack(track) {
+  // data-seg で画像枚数を取得
+  const segmentCount = parseInt(track.dataset.seg) || 8;
+  
+  // 子要素を複製して segmentWidth を計算
+  ensureInfiniteLoop(track, segmentCount);
+  
+  // マウスポインタのダウン・ムーブ・アップイベントを拾い、クリックとドラッグを区別
+  attachTrackControls(track);
+  
+  // オートスクロール開始（左方向）
+  startAutoScroll(track);
 }
 
 // 無限ループのための要素複製
@@ -110,10 +116,10 @@ function attachTrackControls(track) {
     e.stopPropagation();
     
     // 現在位置から再開するための負の animation-delay を計算
-    const loopWidth = track._segmentWidth;
+    const segmentWidth = track._segmentWidth;
     const currentTx = getCurrentTranslateX(track);
-    const normalizedTx = ((currentTx % loopWidth) + loopWidth) % loopWidth;
-    const progress = normalizedTx / loopWidth;
+    const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
+    const progress = normalizedTx / segmentWidth;
     const duration = parseFloat(track.dataset.speed || 55);
     const delay = -progress * duration;
     
@@ -153,7 +159,7 @@ function startAutoScroll(track) {
   track.style.animationPlayState = 'running';
 }
 
-// 開始位置の調整
+// 開始位置の調整（画像が常に表示されるよう、初期表示で look1.webp が左端に配置）
 function alignTrackStart(track) {
   const startImage = track.dataset.start;
   const align = track.dataset.align || 'left';
@@ -183,9 +189,9 @@ function alignTrackStart(track) {
   }
   
   // 負の animation-delay を計算
-  const loopWidth = track._segmentWidth;
-  const normalizedTx = ((desiredTx % loopWidth) + loopWidth) % loopWidth;
-  const progress = normalizedTx / loopWidth;
+  const segmentWidth = track._segmentWidth;
+  const normalizedTx = ((desiredTx % segmentWidth) + segmentWidth) % segmentWidth;
+  const progress = normalizedTx / segmentWidth;
   const duration = parseFloat(track.dataset.speed || 55);
   const delay = -progress * duration;
   
