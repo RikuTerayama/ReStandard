@@ -1303,3 +1303,41 @@ img[loading="lazy"].loaded {
   object-fit: contain;
   display: block;
 }
+
+/* === center full-bleed band === */
+.band {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+/* Collection / Lookbook の帯の高さ（PC はやや高く、SP はやや低く） */
+#collection .band { min-height: clamp(420px, 54vw, 860px); }
+#lookbook   .band { min-height: clamp(520px, 62vw, 980px); }
+
+@media (max-width: 768px) {
+  #collection .band { min-height: clamp(300px, 72vw, 460px); }
+  #lookbook   .band { min-height: clamp(280px, 68vw, 420px); }
+}
+
+/* トラックは中央寄せ＆幅は中身に合わせて拡張（無限ループ前提） */
+.track-wrap {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.collection-track,
+.lookbook-track {
+  width: max-content;
+  will-change: transform;
+}
+
+/* ブランド画像の可視化と自然な縮尺 */
+.brands-grid img,
+.brand-card img,
+.brand-logo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  opacity: 1; /* 何らかの初期 opacity 指定が残っていた場合の上書き */
+}
