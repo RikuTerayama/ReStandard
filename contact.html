@@ -83,6 +83,14 @@
       });
     });
   </script>
+  
+  <!-- Speculation Rules でトップページを先読み -->
+  <script type="speculationrules">
+  {
+    "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }],
+    "prerender": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
+  }
+  </script>
 
   <!-- OGP設定 -->
   <meta property="og:title" content="Contact | お問い合わせ | ReStandard">
