@@ -1308,11 +1308,20 @@ img[loading="lazy"].loaded {
 .band {
   width: 100vw;
   margin-left: calc(50% - 50vw);
+  background: var(--navbar-bg, rgba(255,255,255,0.9));
+  backdrop-filter: blur(10px);
+  padding-block: clamp(12px, 3vw, 32px);
 }
 
 /* Collection / Lookbook の帯の高さ（PC はやや高く、SP はやや低く） */
-#collection .band { min-height: clamp(420px, 54vw, 860px); }
-#lookbook   .band { min-height: clamp(520px, 62vw, 980px); }
+#collection .band { 
+  min-height: calc(var(--collection-row-h, 320px) * 2 + var(--row-gap, 20px) * 3);
+  min-height: clamp(420px, 54vw, 860px);
+}
+#lookbook   .band { 
+  min-height: calc(var(--lookbook-row-h, 400px) + var(--row-gap, 20px) * 2);
+  min-height: clamp(520px, 62vw, 980px);
+}
 
 @media (max-width: 768px) {
   #collection .band { min-height: clamp(300px, 72vw, 460px); }
@@ -1330,12 +1339,22 @@ img[loading="lazy"].loaded {
 .track-wrap {
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 .collection-track,
 .lookbook-track {
   width: max-content;
   will-change: transform;
+}
+
+/* 画像の上下切れ防止 */
+.collection-track img,
+.lookbook-track img {
+  object-fit: contain;
+  height: var(--collection-row-h, 320px);
+  width: auto;
+  max-width: 100%;
+  display: block;
 }
 
 /* ブランド画像の可視化と自然な縮尺 */
@@ -1352,9 +1371,9 @@ img[loading="lazy"].loaded {
 /* SPフォントサイズを一段小さく */
 @media (max-width: 480px){
   :root{
-    --font-size-xs: 0.78rem;
-    --font-size-sm: 0.86rem;
-    --font-size-base: 0.94rem; /* 例: 既存より-0.06〜-0.08rem */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.82rem;
+    --font-size-base: 0.9rem;
     --font-size-lg: 1.05rem;
     --font-size-xl: 1.25rem;
   }
