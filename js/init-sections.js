@@ -5,17 +5,24 @@
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
   const maxLoopWidth = track.parentElement.offsetWidth * 3.5; // 350%（切れ目対策を強化）
-  let total = Array.from(track.children).reduce((w, el) => w + el.getBoundingClientRect().width, 0);
-
+  
+  // オリジナル区間幅を記録（1周の定義）
+  const originalChildren = Array.from(track.children);
+  let segmentWidth = originalChildren.reduce((w, el) => w + el.getBoundingClientRect().width, 0);
+  
   // 画像が未ロードだと幅が 0 になるので暫定で幅推定
-  if (total === 0) {
-    const fallback = track.children.length * 200;
-    total = fallback;
+  if (segmentWidth === 0) {
+    const fallback = originalChildren.length * 200;
+    segmentWidth = fallback;
   }
-
+  
+  // オリジナル区間幅を記録
+  track._segmentWidth = segmentWidth;
+  
+  let total = segmentWidth;
   let guard = 0;
   while (total < maxLoopWidth && guard < 40) {
-    const clones = Array.from(track.children).map((n) => n.cloneNode(true));
+    const clones = originalChildren.map((n) => n.cloneNode(true));
     clones.forEach((c) => {
       // クローンした画像にloading="lazy"を追加
       const images = c.querySelectorAll('img');
@@ -76,8 +83,8 @@ function attachManualControls(track){
     ev.preventDefault();
     ev.stopPropagation();
 
-    // 1) ループ幅を最新スクロール幅から厳密算出
-    const loopWidth = track.scrollWidth / 2; // クローン込みなら /2 で一周相当
+    // 1) ループ幅をsegmentWidthから厳密算出
+    const loopWidth = track._segmentWidth || (track.scrollWidth / 2); // オリジナル区間幅を使用
 
     // 2) 現在 translateX を取得し、0..loopWidth に正規化
     const m = new DOMMatrix(getComputedStyle(track).transform);
@@ -118,42 +125,7 @@ function attachManualControls(track){
     }, true);
   });
   
-  // クリックで軽く寄せてから再開（リンク遷移は阻害しない）
-  track.querySelectorAll('a, img').forEach(el => {
-    el.addEventListener('click', (e) => {
-      // ドラッグ中クリックは無視
-      if (track.isDragging) return;
-
-      // href="#" の場合はページジャンプを防ぐ
-      if (el.tagName === 'A' && el.getAttribute('href') === '#') {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      // 要素の中心をスクリーン中央に少し寄せる（過度に動かさない）
-      const rect = el.getBoundingClientRect();
-      const center = rect.left + rect.width / 2;
-      const screenCenter = window.innerWidth / 2;
-      const delta = center - screenCenter;
-
-      // 現在の transform を取得 → 少しだけ補正
-      const currentTx = getTxPx(track);
-      track.style.animation = 'none';
-      track.style.transform = `translateX(${currentTx - delta * 0.5}px)`;
-
-      requestAnimationFrame(() => {
-        const nowTx = getTxPx(track);
-        const loop = track.scrollWidth / 2;
-        let offset = (-nowTx) % loop;
-        if (offset < 0) offset += loop;
-        const speed = calcSpeedSec(parseFloat(track.dataset.baseSpeed || 55));
-        const delaySec = (offset / loop) * speed;
-        track.style.animationDelay = `-${delaySec}s`;
-        track.style.removeProperty('transform');
-        track.style.animationPlayState = 'running';
-      });
-    });
-  });
+  // クリック時の寄せ直しロジックは削除（リンク遷移を阻害しない）
   
   // ホイール横スクロール対応
   track.addEventListener('wheel', (e) => {
@@ -260,8 +232,8 @@ function computeDesiredTx(track, target, align = 'left') {
 
 /** 現在の keyframes（left/right）に対して、希望 translateX を満たす負の animation-delay を適用 */
 function applyInitialDelay(track, desiredTxPx) {
-  // ループ一周に相当する距離（scrollWidth/2）と総時間
-  const loop = track.scrollWidth / 2;
+  // ループ一周に相当する距離（segmentWidth）と総時間
+  const loop = track._segmentWidth || (track.scrollWidth / 2);
   const durSec = parseFloat(getComputedStyle(track).animationDuration);
   const dir = (track.dataset.direction || 'left').toLowerCase();
 
@@ -345,16 +317,16 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(`[INIT] Track ${index + 1}: ${track.dataset.direction || 'left'} (${track.dataset.speed || '55'}s)`);
   });
   
-  // href 未設定（# や空）の a は data-href を使って遷移させる
+  // href 未設定（# や空、javascript:void(0)）の a は data-href を使って遷移させる
   document.querySelectorAll('#collection a, #lookbook a').forEach(a => {
     a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href');
-      if (!href || href === '#') {
-        const dh = a.dataset.href;
-        if (dh) { 
-          e.preventDefault(); 
-          window.open(dh, '_blank'); 
-        }
+      const href = a.getAttribute('href') || '';
+      const isJsVoid = href.trim().toLowerCase().startsWith('javascript');
+      const noNav = href === '' || href === '#' || isJsVoid;
+      const dh = a.dataset.href;
+      if (noNav && dh) { 
+        e.preventDefault(); 
+        window.open(dh, a.target || '_blank'); 
       }
     });
   });
