@@ -30,20 +30,26 @@ function initTrack(track) {
 // 無限ループのための要素複製
 function ensureInfiniteLoop(track, segmentCount) {
   const children = Array.from(track.children);
-  const originalWidth = children.reduce((width, child) => width + child.getBoundingClientRect().width, 0);
+  let originalWidth = children.reduce((width, child) => width + child.getBoundingClientRect().width, 0);
   
+  // 画像が読み込まれていない場合のフォールバック
   if (originalWidth === 0) {
-    // 画像が読み込まれていない場合のフォールバック
-    const fallbackWidth = children.length * 200;
-    track._segmentWidth = fallbackWidth;
-    return;
+    // 各画像に明示的な幅を設定して再計算
+    children.forEach(child => {
+      const img = child.querySelector('img');
+      if (img) {
+        img.style.width = '200px';
+        img.style.height = 'auto';
+      }
+    });
+    originalWidth = children.reduce((width, child) => width + child.getBoundingClientRect().width, 0);
   }
   
   // オリジナル区間幅を記録
   track._segmentWidth = originalWidth;
   
-  // 3周分になるまで複製
-  const targetWidth = track.parentElement.offsetWidth * 3;
+  // 最低でも2セット分は複製する（50%移動でループするため）
+  const targetWidth = Math.max(originalWidth * 2, track.parentElement.offsetWidth * 2);
   let currentWidth = originalWidth;
   
   while (currentWidth < targetWidth) {
@@ -52,14 +58,6 @@ function ensureInfiniteLoop(track, segmentCount) {
       track.appendChild(clone);
     });
     currentWidth = Array.from(track.children).reduce((width, child) => width + child.getBoundingClientRect().width, 0);
-  }
-  
-  // 最低でも1セット以上は複製する
-  if (currentWidth === originalWidth) {
-    children.forEach(child => {
-      const clone = child.cloneNode(true);
-      track.appendChild(clone);
-    });
   }
 }
 
@@ -72,14 +70,9 @@ function attachTrackControls(track) {
   let longPressTimer = null;
   
   const onDown = (e) => {
-    // 長押しタイマーを開始（150ms）
-    longPressTimer = setTimeout(() => {
-      isDragging = true;
-      track.classList.add('dragging');
-      track.style.animationPlayState = 'paused';
-      startX = e.clientX || e.touches[0].clientX;
-      startTx = getCurrentTranslateX(track);
-    }, 150);
+    startX = e.clientX || e.touches[0].clientX;
+    startTx = getCurrentTranslateX(track);
+    moved = 0;
     // リンク要素の場合はpreventDefaultを避ける
     if (!e.target.closest('a')) {
       e.preventDefault();
@@ -87,25 +80,27 @@ function attachTrackControls(track) {
   };
   
   const onMove = (e) => {
-    if (!isDragging) return;
-    
     const currentX = e.clientX || e.touches[0].clientX;
     const dx = currentX - startX;
     moved += Math.abs(dx);
     
-    // ドラッグ中は track._tx を更新してスクロール位置を変更
-    track._tx = startTx + dx;
-    track.style.transform = `translateX(${track._tx}px)`;
-    e.preventDefault();
+    // 8px以上移動したらドラッグ開始
+    if (!isDragging && moved > 8) {
+      isDragging = true;
+      track.isDragging = true;
+      track.classList.add('dragging');
+      track.style.animationPlayState = 'paused';
+    }
+    
+    if (isDragging) {
+      // ドラッグ中は track._tx を更新してスクロール位置を変更
+      track._tx = startTx + dx;
+      track.style.transform = `translateX(${track._tx}px)`;
+      e.preventDefault();
+    }
   };
   
   const onUp = (e) => {
-    // 長押しタイマーをクリア
-    if (longPressTimer) {
-      clearTimeout(longPressTimer);
-      longPressTimer = null;
-    }
-    
     if (!isDragging) {
       // ドラッグしていない場合、クリックとして処理
       const link = e.target.closest('a');
@@ -127,6 +122,7 @@ function attachTrackControls(track) {
     }
     
     isDragging = false;
+    track.isDragging = false; // グローバルフラグもリセット
     track.classList.remove('dragging');
     track.style.removeProperty('transform');
     
@@ -161,7 +157,8 @@ function attachTrackControls(track) {
     
     // アニメーション再開
     const direction = track.dataset.direction || 'left';
-    track.style.animation = `scroll-${direction} ${duration}s linear infinite`;
+    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+    track.style.animation = `${key} ${duration}s linear infinite`;
     track.style.animationDelay = `${delay}s`;
     track.style.animationPlayState = 'running';
   };
