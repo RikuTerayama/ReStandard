@@ -84,8 +84,8 @@ function attachTrackControls(track) {
     const dx = currentX - startX;
     moved += Math.abs(dx);
     
-    // 8px以上移動したらドラッグ開始
-    if (!isDragging && moved > 8) {
+    // 5px以上移動したらドラッグ開始
+    if (!isDragging && moved > 5) {
       isDragging = true;
       track.isDragging = true;
       track.classList.add('dragging');
@@ -121,8 +121,8 @@ function attachTrackControls(track) {
     track.classList.remove('dragging');
     track.style.removeProperty('transform');
     
-    // 8px未満=クリック：リンク遷移
-    if (moved < 8) {
+    // 5px未満=クリック：リンク遷移
+    if (moved < 5) {
       const link = e.target.closest('a');
       if (link) {
         const href = link.getAttribute('href')?.trim().toLowerCase() || '';
