@@ -1481,3 +1481,9 @@ img[loading="lazy"].loaded {
   }
   .navbar-nav .nav-link{ font-size: var(--font-size-sm) !important; }
 }
+
+/* Performance optimization: content-visibility */
+#brands, #collection, #lookbook, #news {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
