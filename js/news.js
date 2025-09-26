@@ -136,20 +136,54 @@ document.addEventListener('DOMContentLoaded', async function() {
       };
       
       img.onload = () => {
+        const computedStyle = window.getComputedStyle(img);
+        const parentStyle = window.getComputedStyle(img.parentElement);
         console.log('✅ Image loaded successfully:', {
           src: img.src,
           naturalWidth: img.naturalWidth,
           naturalHeight: img.naturalHeight,
           articleSlug: article.slug,
-          display: window.getComputedStyle(img).display,
-          visibility: window.getComputedStyle(img).visibility,
-          opacity: window.getComputedStyle(img).opacity,
-          width: window.getComputedStyle(img).width,
-          height: window.getComputedStyle(img).height
+          // 画像自体のスタイル
+          display: computedStyle.display,
+          visibility: computedStyle.visibility,
+          opacity: computedStyle.opacity,
+          width: computedStyle.width,
+          height: computedStyle.height,
+          position: computedStyle.position,
+          zIndex: computedStyle.zIndex,
+          transform: computedStyle.transform,
+          // 親要素のスタイル
+          parentDisplay: parentStyle.display,
+          parentVisibility: parentStyle.visibility,
+          parentOpacity: parentStyle.opacity,
+          parentWidth: parentStyle.width,
+          parentHeight: parentStyle.height,
+          parentOverflow: parentStyle.overflow,
+          parentPosition: parentStyle.position
         });
       };
       
       figure.appendChild(img);
+      
+      // 強制的な表示確保
+      setTimeout(() => {
+        img.style.display = 'block';
+        img.style.visibility = 'visible';
+        img.style.opacity = '1';
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        
+        // 親要素も確認
+        figure.style.display = 'flex';
+        figure.style.alignItems = 'center';
+        figure.style.justifyContent = 'center';
+        figure.style.overflow = 'hidden';
+        figure.style.width = '100%';
+        figure.style.height = '200px';
+        
+        console.log('🔧 Forced image display applied for:', article.slug);
+      }, 100);
     } else {
       console.log('No firstImage for article:', article.slug);
       figure.innerHTML = '<span style="opacity:.55">No image</span>';
