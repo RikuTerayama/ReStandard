@@ -111,16 +111,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       img.decoding = 'async';
       img.alt = decodeEntities(article.title || '');
       
-      // 画像URL解決
-      const base = `/news/${article.slug}/`;
-      const cover = article.firstImage || 'cover.jpg';
-      const imgUrl = resolveUrl(base, cover);
+      // 画像URL解決 - シンプルな絶対URL生成
+      const imgUrl = article.firstImage.startsWith('/') 
+        ? window.location.origin + article.firstImage
+        : window.location.origin + '/' + article.firstImage;
       
       console.log('=== IMAGE DEBUG ===');
       console.log('Article slug:', article.slug);
       console.log('Original firstImage:', article.firstImage);
-      console.log('Base path:', base);
-      console.log('Cover:', cover);
       console.log('Resolved URL:', imgUrl);
       console.log('Current origin:', window.location.origin);
       
