@@ -45,11 +45,11 @@ document.addEventListener('DOMContentLoaded', async function() {
       console.log('normalizeImageUrl: external URL, returning as-is:', url);
       return url;
     }
-    // ルート相対パスに変換し、BASE_PATHを前置
-    let normalized = url.startsWith('/') ? url : '/' + url;
+    
+    // ローカルサーバーでの相対パス解決問題を回避するため、相対パスに統一
+    let normalized = url.startsWith('/') ? url.substring(1) : url;
     const result = BASE_PATH + normalized;
     console.log('normalizeImageUrl:', url, '->', result);
-    
     
     return result;
   }
@@ -81,13 +81,9 @@ document.addEventListener('DOMContentLoaded', async function() {
       console.log('Original firstImage for', article.slug, ':', article.firstImage);
       console.log('Normalized img.src for', article.slug, ':', normalizedSrc);
       
-      // ローカルサーバーでの相対パス解決問題を回避
-      const finalSrc = normalizedSrc.startsWith('/') ? 
-        window.location.origin + normalizedSrc : 
-        normalizedSrc;
-      console.log('Final img.src for', article.slug, ':', finalSrc);
-      
-      img.src = finalSrc;
+      // 相対パスで画像を読み込み
+      console.log('Final img.src for', article.slug, ':', normalizedSrc);
+      img.src = normalizedSrc;
       img.onerror = function() {
         console.error('Image load failed for', article.slug, ':', normalizedSrc);
         this.style.display = 'none';
