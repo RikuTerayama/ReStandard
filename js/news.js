@@ -14,6 +14,12 @@
            typeof article.date === 'string';
   }
   
+  // Normalize image URL (remove leading slash if present)
+  function normalizeImageUrl(url) {
+    if (!url) return '';
+    return url.startsWith('/') ? url.substring(1) : url;
+  }
+  
   // Create article card element
   function createArticleCard(article) {
     const card = document.createElement('a');
@@ -29,7 +35,11 @@
       img.loading = 'lazy';
       img.decoding = 'async';
       img.alt = '';
-      img.src = article.firstImage;
+      img.src = normalizeImageUrl(article.firstImage);
+      img.onerror = function() {
+        this.style.display = 'none';
+        this.parentNode.innerHTML = '<span style="opacity:.55">No image</span>';
+      };
       figure.appendChild(img);
     } else {
       figure.innerHTML = '<span style="opacity:.55">No image</span>';
@@ -90,12 +100,14 @@
   try {
     if (NEWS_LOADING) NEWS_LOADING.remove();
     
+    console.log('Fetching manifest from:', MANIFEST_URL);
     const response = await fetch(MANIFEST_URL, { cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     
     const data = await response.json();
+    console.log('Manifest loaded:', data.length, 'articles');
     
     // Schema guard: check if data is array
     if (!Array.isArray(data)) {
@@ -104,6 +116,7 @@
     
     // Filter valid articles and sort by date
     const validArticles = data.filter(isValidArticle);
+    console.log('Valid articles:', validArticles.length);
     validArticles.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     
     if (validArticles.length === 0) {
@@ -112,9 +125,17 @@
     }
     
     // Render article cards
-    validArticles.forEach(article => {
-      NEWS_GRID.appendChild(createArticleCard(article));
+    validArticles.forEach((article, index) => {
+      try {
+        const card = createArticleCard(article);
+        NEWS_GRID.appendChild(card);
+        console.log(`Card ${index + 1} created for:`, article.title);
+      } catch (cardError) {
+        console.error(`Error creating card for article ${index + 1}:`, cardError, article);
+      }
     });
+    
+    console.log('All cards rendered successfully');
     
   } catch (error) {
     console.error('News manifest loading failed:', error);
