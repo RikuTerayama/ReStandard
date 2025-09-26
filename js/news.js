@@ -49,6 +49,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     let normalized = url.startsWith('/') ? url : '/' + url;
     const result = BASE_PATH + normalized;
     console.log('normalizeImageUrl:', url, '->', result);
+    
+    // ローカルサーバーでの相対パス解決をテスト
+    const testImg = new Image();
+    testImg.onload = function() {
+      console.log('Image load test successful:', result);
+    };
+    testImg.onerror = function() {
+      console.error('Image load test failed:', result);
+      // 相対パスで再試行
+      const relativePath = normalized.substring(1); // 先頭の/を削除
+      console.log('Trying relative path:', relativePath);
+    };
+    testImg.src = result;
+    
     return result;
   }
   
@@ -57,10 +71,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     const card = document.createElement('a');
     card.className = 'news-card';
     const href = LINK_PREFIX + encodeURIComponent(article.slug) + '/';
-    card.href = href;
+    // ローカルサーバーでの相対パス解決問題を回避
+    const fullHref = href.startsWith('/') ? 
+      window.location.origin + href : 
+      href;
+    card.href = fullHref;
     card.setAttribute('aria-label', article.title);
     
     console.log('Created card for', article.slug, 'with href:', href);
+    console.log('Full URL would be:', fullHref);
     
     const figure = document.createElement('div');
     figure.className = 'thumb';
@@ -73,7 +92,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       const normalizedSrc = normalizeImageUrl(article.firstImage);
       console.log('Original firstImage for', article.slug, ':', article.firstImage);
       console.log('Normalized img.src for', article.slug, ':', normalizedSrc);
-      img.src = normalizedSrc;
+      
+      // ローカルサーバーでの相対パス解決問題を回避
+      const finalSrc = normalizedSrc.startsWith('/') ? 
+        window.location.origin + normalizedSrc : 
+        normalizedSrc;
+      console.log('Final img.src for', article.slug, ':', finalSrc);
+      
+      img.src = finalSrc;
       img.onerror = function() {
         console.error('Image load failed for', article.slug, ':', normalizedSrc);
         this.style.display = 'none';
@@ -179,6 +205,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const card = createArticleCard(article);
         NEWS_GRID.appendChild(card);
         console.log(`Card ${index + 1} created for:`, article.title);
+        console.log(`Article ${index + 1} firstImage:`, article.firstImage);
       } catch (cardError) {
         console.error(`Error creating card for article ${index + 1}:`, cardError, article);
       }
