@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     return;
   }
   
-  const MANIFEST_URL = 'news_src/manifest.json';
+  const BASE_PATH = ''; // 例: '/site' で配信する場合は '/site'
+  const MANIFEST_URL = BASE_PATH + '/news_src/manifest.json';
+  console.log('Fetching manifest from:', MANIFEST_URL);
   
   // Schema guard for article data
   function isValidArticle(article) {
@@ -27,17 +29,20 @@ document.addEventListener('DOMContentLoaded', async function() {
            typeof article.date === 'string';
   }
   
-  // Normalize image URL (remove leading slash if present)
+  // Normalize image URL with BASE_PATH
   function normalizeImageUrl(url) {
     if (!url) return '';
-    return url.startsWith('/') ? url.substring(1) : url;
+    if (url.startsWith('/')) {
+      return BASE_PATH + url;
+    }
+    return url;
   }
   
   // Create article card element
   function createArticleCard(article) {
     const card = document.createElement('a');
     card.className = 'news-card';
-    card.href = `/news/${encodeURIComponent(article.slug)}/`;
+    card.href = `${BASE_PATH}/news/${encodeURIComponent(article.slug)}/`;
     card.setAttribute('aria-label', article.title);
     
     const figure = document.createElement('div');
@@ -116,7 +121,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (NEWS_LOADING) NEWS_LOADING.remove();
     
     console.log('Fetching manifest from:', MANIFEST_URL);
+    console.log('Current location:', window.location.href);
+    console.log('BASE_PATH:', BASE_PATH);
+    
     const response = await fetch(MANIFEST_URL, { cache: 'no-store' });
+    console.log('Response status:', response.status, response.statusText);
+    
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
