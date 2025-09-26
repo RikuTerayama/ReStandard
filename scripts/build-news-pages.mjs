@@ -129,6 +129,7 @@ async function main() {
     }
 
     const title = extractTitle(html) || item.title || 'Untitled';
+    const titleDecoded = title.replace(/&amp;amp;/g, '&amp;').replace(/&amp;/g, '&');
     const date  = item.date || extractMeta(html, 'post_date') || extractMeta(html, 'pubDate') || '';
     const dateView = fmtDateView(date);
     const ogImage = withBase(normalizeAsset(item.firstImage || extractFirstImg(html)));
@@ -147,6 +148,7 @@ async function main() {
     const filled = applyTemplate(tpl, {
       BASE_PATH: BASE_PATH,
       TITLE: title,
+      TITLE_DECODED: titleDecoded,
       DESCRIPTION: (content.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()).slice(0, 120),
       CANONICAL: canonical,
       OG_IMAGE: ogImage || withBase('/assets/ogp-default.jpg'),
