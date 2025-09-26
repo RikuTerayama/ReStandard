@@ -50,18 +50,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     const result = BASE_PATH + normalized;
     console.log('normalizeImageUrl:', url, '->', result);
     
-    // ローカルサーバーでの相対パス解決をテスト
-    const testImg = new Image();
-    testImg.onload = function() {
-      console.log('Image load test successful:', result);
-    };
-    testImg.onerror = function() {
-      console.error('Image load test failed:', result);
-      // 相対パスで再試行
-      const relativePath = normalized.substring(1); // 先頭の/を削除
-      console.log('Trying relative path:', relativePath);
-    };
-    testImg.src = result;
     
     return result;
   }
