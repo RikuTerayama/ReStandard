@@ -22,6 +22,9 @@ function normalizeAsset(url) {
   if (!url) return '';
   url = url.split('#')[0].split('?')[0];
   if (/^https?:\/\//i.test(url)) return url;
+  if (url.startsWith('/assets/') && !url.startsWith('/assets/images/')) {
+    url = url.replace('/assets/', '/assets/images/');
+  }
   if (url.startsWith('/assets/')) return url;
   if (url.startsWith('/images/')) return '/assets' + url; // /images → /assets/images
   if (url.startsWith('assets/')) return '/' + url;
