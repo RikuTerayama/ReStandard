@@ -90,6 +90,7 @@ function applyTemplate(tpl, map) {
   return tpl
     .replaceAll('{{BASE_PATH}}', map.BASE_PATH ?? '')
     .replaceAll('{{TITLE}}', map.TITLE ?? '')
+    .replaceAll('{{TITLE_DECODED}}', map.TITLE_DECODED ?? '')
     .replaceAll('{{DESCRIPTION}}', map.DESCRIPTION ?? '')
     .replaceAll('{{CANONICAL}}', map.CANONICAL ?? '')
     .replaceAll('{{OG_IMAGE}}', map.OG_IMAGE ?? '')
