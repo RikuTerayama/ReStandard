@@ -68,6 +68,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     el.innerHTML = str;
     return el.value; // &amp; → &
   }
+  
+  function cleanTitle(title) {
+    if (!title) return '';
+    
+    // 日付パターンを削除（例：10/28, 10/21, 9/30 など）
+    let cleaned = title.replace(/^\d{1,2}\/\d{1,2}\s*/, '');
+    
+    // エンティティをデコード
+    cleaned = decodeEntities(cleaned);
+    
+    return cleaned;
+  }
 
   // Normalize image URL with BASE_PATH
   // manifest.jsonのパスをそのまま使用（変更しない）
@@ -200,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     const h3 = document.createElement('h3');
-    h3.textContent = decodeEntities(article.title || '');
+    h3.textContent = cleanTitle(article.title || '');
     
     meta.appendChild(time);
     meta.appendChild(h3);
