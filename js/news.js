@@ -38,6 +38,22 @@ document.addEventListener('DOMContentLoaded', async function() {
            typeof article.date === 'string';
   }
   
+  // 画像URL解決ユーティリティ
+  function resolveUrl(basePath, p) {
+    if (!p) return null;
+    try {
+      return new URL(p, window.location.origin + basePath).toString();
+    } catch (e) {
+      return p; // 最後の砦
+    }
+  }
+  
+  function decodeEntities(str) {
+    const el = document.createElement('textarea');
+    el.innerHTML = str;
+    return el.value; // &amp; → &
+  }
+
   // Normalize image URL with BASE_PATH
   // manifest.jsonのパスをそのまま使用（変更しない）
   function normalizeImageUrl(url) {
@@ -78,36 +94,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       const img = document.createElement('img');
       img.loading = 'lazy';
       img.decoding = 'async';
-      img.alt = '';
+      img.alt = decodeEntities(article.title || '');
       
-      // 画像パスを直接使用（manifest.jsonのパスをそのまま使用）
-      const imageSrc = article.firstImage;
-      console.log('=== IMAGE DEBUG START ===');
-      console.log('Article slug:', article.slug);
-      console.log('Original firstImage:', article.firstImage);
-      console.log('Using imageSrc directly:', imageSrc);
+      // 画像URL解決
+      const base = `/news/${article.slug}/`;
+      const cover = article.firstImage || 'cover.jpg';
+      const imgUrl = resolveUrl(base, cover);
       
-      img.src = imageSrc;
+      console.log('Image URL resolved:', imgUrl);
+      img.src = imgUrl;
       
-      img.onerror = function() {
-        console.error('Image load failed for', article.slug, 'with src:', imageSrc);
-        console.log('Trying relative path...');
-        // 相対パスで再試行
-        const relativeSrc = imageSrc.startsWith('/') ? imageSrc.substring(1) : imageSrc;
-        console.log('Trying relative src:', relativeSrc);
-        img.src = relativeSrc;
+      img.onerror = () => { 
+        img.removeAttribute('srcset'); 
+        img.src = '/assets/placeholder/cover-fallback.webp'; 
       };
-      
-      img.onload = function() {
-        console.log('Image loaded successfully for', article.slug, 'with src:', img.src);
-      };
-      
-      // 相対パスでも失敗した場合
-      img.addEventListener('error', function() {
-        console.error('Image load failed with relative path for', article.slug);
-        this.style.display = 'none';
-        this.parentNode.innerHTML = '<span style="opacity:.55">No image</span>';
-      });
       
       figure.appendChild(img);
     } else {
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     const h3 = document.createElement('h3');
-    h3.textContent = article.title;
+    h3.textContent = decodeEntities(article.title || '');
     
     meta.appendChild(time);
     meta.appendChild(h3);
@@ -202,16 +202,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     // Render article cards
+    console.log('=== RENDERING CARDS ===');
+    console.log('Total valid articles:', validArticles.length);
+    
     validArticles.forEach((article, index) => {
       try {
+        console.log(`\n--- Creating card ${index + 1} ---`);
+        console.log('Article data:', {
+          slug: article.slug,
+          title: article.title,
+          firstImage: article.firstImage,
+          date: article.date
+        });
+        
         const card = createArticleCard(article);
         NEWS_GRID.appendChild(card);
-        console.log(`Card ${index + 1} created for:`, article.title);
-        console.log(`Article ${index + 1} firstImage:`, article.firstImage);
+        console.log(`✅ Card ${index + 1} created successfully`);
       } catch (cardError) {
-        console.error(`Error creating card for article ${index + 1}:`, cardError, article);
+        console.error(`❌ Error creating card for article ${index + 1}:`, cardError);
+        console.error('Article data:', article);
       }
     });
+    
+    console.log('=== CARD RENDERING COMPLETE ===');
     
     console.log('All cards rendered successfully');
     
