@@ -538,23 +538,6 @@
 
 <script src="js/news.js" defer></script>
 
-<!-- Performance monitoring -->
-<script>
-if ('PerformanceObserver' in window) {
-  // LCP monitoring
-  new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    const lastEntry = entries[entries.length - 1];
-    console.log('LCP:', lastEntry.startTime + 'ms');
-  }).observe({entryTypes: ['largest-contentful-paint']});
-  
-  // TTI approximation (load event)
-  window.addEventListener('load', () => {
-    const loadTime = performance.now();
-    console.log('Approximate TTI:', loadTime + 'ms');
-  });
-}
-</script>
 </main>
 
 <!-- Footer -->
@@ -683,22 +666,5 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- lazy-load フェードイン処理 -->
 <script src="js/init-sections.js?v=2025-01-18-final" defer></script>
 
-<!-- Performance monitoring -->
-<script>
-if ('PerformanceObserver' in window) {
-  // LCP monitoring
-  new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    const lastEntry = entries[entries.length - 1];
-    console.log('LCP:', lastEntry.startTime + 'ms');
-  }).observe({entryTypes: ['largest-contentful-paint']});
-  
-  // TTI approximation (load event)
-  window.addEventListener('load', () => {
-    const loadTime = performance.now();
-    console.log('Approximate TTI:', loadTime + 'ms');
-  });
-}
-</script>
 </body>
 </html> 
