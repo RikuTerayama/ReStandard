@@ -31,11 +31,20 @@ document.addEventListener('DOMContentLoaded', async function() {
   
   // Normalize image URL with BASE_PATH
   function normalizeImageUrl(url) {
-    if (!url) return '';
-    if (url.startsWith('/')) {
-      return BASE_PATH + url;
+    if (!url) {
+      console.log('normalizeImageUrl: empty URL provided');
+      return '';
     }
-    return url;
+    // 外部URLの場合はそのまま返す
+    if (/^https?:\/\//i.test(url)) {
+      console.log('normalizeImageUrl: external URL, returning as-is:', url);
+      return url;
+    }
+    // ルート相対パスに変換し、BASE_PATHを前置
+    let normalized = url.startsWith('/') ? url : '/' + url;
+    const result = BASE_PATH + normalized;
+    console.log('normalizeImageUrl:', url, '->', result);
+    return result;
   }
   
   // Create article card element
@@ -53,10 +62,17 @@ document.addEventListener('DOMContentLoaded', async function() {
       img.loading = 'lazy';
       img.decoding = 'async';
       img.alt = '';
-      img.src = normalizeImageUrl(article.firstImage);
+      const normalizedSrc = normalizeImageUrl(article.firstImage);
+      console.log('Original firstImage for', article.slug, ':', article.firstImage);
+      console.log('Normalized img.src for', article.slug, ':', normalizedSrc);
+      img.src = normalizedSrc;
       img.onerror = function() {
+        console.error('Image load failed for', article.slug, ':', normalizedSrc);
         this.style.display = 'none';
         this.parentNode.innerHTML = '<span style="opacity:.55">No image</span>';
+      };
+      img.onload = function() {
+        console.log('Image loaded successfully for', article.slug, ':', normalizedSrc);
       };
       figure.appendChild(img);
     } else {
