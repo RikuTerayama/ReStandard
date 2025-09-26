@@ -18,7 +18,10 @@ function normalizeImageUrl(src) {
   // すでに絶対URLならそのまま
   if (/^https?:\/\//i.test(src)) return src;
 
-  // ルート相対（/assets/...）はそのまま
+  // ルート相対（/assets/...）は /assets/images/ に修正
+  if (src.startsWith('/assets/') && !src.startsWith('/assets/images/')) {
+    return src.replace('/assets/', '/assets/images/');
+  }
   if (src.startsWith('/assets/')) return src;
 
   // /assets/images/... にある前提の相対指定を救う
