@@ -1329,13 +1329,15 @@ img[loading="lazy"].loaded {
 
 .collection-row:first-child {
   position: absolute;
-  top: 33%;
+  top: 33.33%;
+  transform: translateY(-50%);
   width: 100%;
 }
 
 .collection-row:last-child {
   position: absolute;
-  top: 66%;
+  top: 66.67%;
+  transform: translateY(-50%);
   width: 100%;
 }
 
