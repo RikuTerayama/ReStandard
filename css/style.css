@@ -1321,6 +1321,48 @@ img[loading="lazy"].loaded {
   min-height: calc(var(--lookbook-img-h, 400px) + var(--lookbook-gap, 20px) * 2);
 }
 
+/* === Collection layout guards === */
+.collection-section { 
+  position: relative; 
+  padding: var(--section-pad, 40px) 0; 
+  background: var(--rs-surface, #f7f5f2); 
+}
+.collection-bg { 
+  position: relative; 
+  width: 100%; 
+}
+.collection-tracks {
+  position: relative;
+  height: var(--collection-height, 280px);
+  overflow: hidden; /* はみ出し禁止 */
+}
+
+/* トラック行（上段/下段） */
+.collection-tracks .track {
+  display: flex; 
+  align-items: center; 
+  gap: var(--collection-gap, 16px);
+  will-change: transform;
+}
+
+/* 否定指定：ズレの温床になっている負のオフセットを無効化 */
+.collection-section,
+.collection-tracks,
+.collection-tracks .track,
+.collection-tracks img {
+  top: auto !important; 
+  margin-top: 0 !important; 
+  transform: translateY(0) !important;
+}
+
+/* 画像の縦揃え（切れ防止） */
+.collection-tracks img {
+  height: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
 /* Collection wrapper の定義 */
 .collection-wrapper {
   position: relative;
@@ -1488,4 +1530,18 @@ img[loading="lazy"].loaded {
 #brands, #collection, #lookbook, #news {
   content-visibility: auto;
   contain-intrinsic-size: 800px;
+}
+
+/* News詳細ページの背景統一 */
+body, .news-article-root { 
+  background: var(--rs-surface, #f7f5f2) !important; 
+  color: var(--rs-ink, #222) !important; 
+}
+
+/* Newsカード画像の安定表示 */
+.news-card img { 
+  width: 100%; 
+  aspect-ratio: 4/3; 
+  object-fit: cover; 
+  display: block; 
 }
