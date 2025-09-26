@@ -1,6 +1,11 @@
 // News manifest loader with fallback UI
 document.addEventListener('DOMContentLoaded', async function() {
+  console.log('=== NEWS.JS DEBUG START ===');
   console.log('News.js script started - DOM loaded');
+  console.log('Current URL:', window.location.href);
+  console.log('Protocol:', window.location.protocol);
+  console.log('Host:', window.location.host);
+  console.log('Origin:', window.location.origin);
   
   const NEWS_ROOT = document.getElementById('news-root');
   const NEWS_GRID = document.getElementById('news-grid');
@@ -34,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
   
   // Normalize image URL with BASE_PATH
-  // build-news-manifest.mjs は常に /assets/... 形式を生成する前提
+  // manifest.jsonのパスをそのまま使用（変更しない）
   function normalizeImageUrl(url) {
     if (!url) {
       console.log('normalizeImageUrl: empty URL provided');
@@ -46,12 +51,9 @@ document.addEventListener('DOMContentLoaded', async function() {
       return url;
     }
     
-    // ローカルサーバーでの相対パス解決問題を回避するため、相対パスに統一
-    let normalized = url.startsWith('/') ? url.substring(1) : url;
-    const result = BASE_PATH + normalized;
-    console.log('normalizeImageUrl:', url, '->', result);
-    
-    return result;
+    // manifest.jsonのパスをそのまま使用（BASE_PATHは空なので変更なし）
+    console.log('normalizeImageUrl: returning original URL:', url);
+    return url;
   }
   
   // Create article card element
@@ -77,23 +79,39 @@ document.addEventListener('DOMContentLoaded', async function() {
       img.loading = 'lazy';
       img.decoding = 'async';
       img.alt = '';
-      const normalizedSrc = normalizeImageUrl(article.firstImage);
-      console.log('Original firstImage for', article.slug, ':', article.firstImage);
-      console.log('Normalized img.src for', article.slug, ':', normalizedSrc);
       
-      // 相対パスで画像を読み込み
-      console.log('Final img.src for', article.slug, ':', normalizedSrc);
-      img.src = normalizedSrc;
+      // 画像パスを直接使用（manifest.jsonのパスをそのまま使用）
+      const imageSrc = article.firstImage;
+      console.log('=== IMAGE DEBUG START ===');
+      console.log('Article slug:', article.slug);
+      console.log('Original firstImage:', article.firstImage);
+      console.log('Using imageSrc directly:', imageSrc);
+      
+      img.src = imageSrc;
+      
       img.onerror = function() {
-        console.error('Image load failed for', article.slug, ':', normalizedSrc);
+        console.error('Image load failed for', article.slug, 'with src:', imageSrc);
+        console.log('Trying relative path...');
+        // 相対パスで再試行
+        const relativeSrc = imageSrc.startsWith('/') ? imageSrc.substring(1) : imageSrc;
+        console.log('Trying relative src:', relativeSrc);
+        img.src = relativeSrc;
+      };
+      
+      img.onload = function() {
+        console.log('Image loaded successfully for', article.slug, 'with src:', img.src);
+      };
+      
+      // 相対パスでも失敗した場合
+      img.addEventListener('error', function() {
+        console.error('Image load failed with relative path for', article.slug);
         this.style.display = 'none';
         this.parentNode.innerHTML = '<span style="opacity:.55">No image</span>';
-      };
-      img.onload = function() {
-        console.log('Image loaded successfully for', article.slug, ':', normalizedSrc);
-      };
+      });
+      
       figure.appendChild(img);
     } else {
+      console.log('No firstImage for article:', article.slug);
       figure.innerHTML = '<span style="opacity:.55">No image</span>';
     }
     
