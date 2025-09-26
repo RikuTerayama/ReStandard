@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   console.log('Fetching manifest from:', MANIFEST_URL);
   console.log('Current location:', window.location.href);
   console.log('BASE_PATH:', BASE_PATH);
+  console.log('Full manifest URL would be:', window.location.origin + MANIFEST_URL);
   
   // Schema guard for article data
   function isValidArticle(article) {
@@ -42,15 +43,22 @@ document.addEventListener('DOMContentLoaded', async function() {
   function resolveUrl(basePath, p) {
     if (!p) return null;
     
+    console.log('resolveUrl called with:', { basePath, p });
+    
     // 絶対パス（/で始まる）の場合はそのまま使用
     if (p.startsWith('/')) {
-      return window.location.origin + p;
+      const result = window.location.origin + p;
+      console.log('Absolute path resolved to:', result);
+      return result;
     }
     
     // 相対パスの場合はbasePathと組み合わせ
     try {
-      return new URL(p, window.location.origin + basePath).toString();
+      const result = new URL(p, window.location.origin + basePath).toString();
+      console.log('Relative path resolved to:', result);
+      return result;
     } catch (e) {
+      console.log('URL resolution failed, returning original:', p);
       return p; // 最後の砦
     }
   }
@@ -118,9 +126,24 @@ document.addEventListener('DOMContentLoaded', async function() {
       
       img.src = imgUrl;
       
-      img.onerror = () => { 
+      img.onerror = (e) => { 
+        console.error('❌ Image load failed:', {
+          originalSrc: img.src,
+          error: e,
+          articleSlug: article.slug,
+          firstImage: article.firstImage
+        });
         img.removeAttribute('srcset'); 
         img.src = '/assets/placeholder/cover-fallback.webp'; 
+      };
+      
+      img.onload = () => {
+        console.log('✅ Image loaded successfully:', {
+          src: img.src,
+          naturalWidth: img.naturalWidth,
+          naturalHeight: img.naturalHeight,
+          articleSlug: article.slug
+        });
       };
       
       figure.appendChild(img);
