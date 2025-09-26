@@ -210,7 +210,7 @@ section {
 
 /* 縦位置は上寄せ（中央だと上下が不足時に欠けやすい） */
 #collection .collection-track{
-  align-items: flex-start;
+  align-items: center;
 }
 
 /* 個々の画像カード化を撤去（白背景・影を無効化） */
@@ -413,7 +413,7 @@ section {
 
 .lookbook-item { 
   flex-shrink: 0;
-  height: clamp(240px, 26vw, 320px);
+  height: clamp(240px, 26vw, 400px);
   width: auto;
   background: transparent;
   box-shadow: none;
@@ -872,7 +872,7 @@ img[src*="rockmount"] {
 }
 #collection .collection-rows{
   display:grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: clamp(8px,1.6vw,12px);
   width: 100% !important;
   max-width: none !important;
@@ -981,7 +981,7 @@ img[src*="rockmount"] {
 
 /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
 .lookbook-item{ 
-  height: clamp(240px, 24vw, 280px); /* PC で少し小さめ */
+  height: clamp(240px, 26vw, 400px); /* PC で400pxまで拡大 */
 }
 .lookbook-item img{
   height: 100%;
