@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   
   const BASE_PATH = ''; // 例: '/site' で配信する場合は '/site'
   const MANIFEST_URL = BASE_PATH + '/news_src/manifest.json';
+  const LINK_PREFIX = BASE_PATH + '/news/'; // /news/<slug>/ に遷移
+  
   console.log('Fetching manifest from:', MANIFEST_URL);
+  console.log('Current location:', window.location.href);
+  console.log('BASE_PATH:', BASE_PATH);
   
   // Schema guard for article data
   function isValidArticle(article) {
@@ -30,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
   
   // Normalize image URL with BASE_PATH
+  // build-news-manifest.mjs は常に /assets/... 形式を生成する前提
   function normalizeImageUrl(url) {
     if (!url) {
       console.log('normalizeImageUrl: empty URL provided');
@@ -51,8 +56,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   function createArticleCard(article) {
     const card = document.createElement('a');
     card.className = 'news-card';
-    card.href = `${BASE_PATH}/news/${encodeURIComponent(article.slug)}/`;
+    const href = LINK_PREFIX + encodeURIComponent(article.slug) + '/';
+    card.href = href;
     card.setAttribute('aria-label', article.title);
+    
+    console.log('Created card for', article.slug, 'with href:', href);
     
     const figure = document.createElement('div');
     figure.className = 'thumb';
