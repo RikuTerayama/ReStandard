@@ -1,8 +1,21 @@
 // News manifest loader with fallback UI
-(async function() {
+document.addEventListener('DOMContentLoaded', async function() {
+  console.log('News.js script started - DOM loaded');
+  
   const NEWS_ROOT = document.getElementById('news-root');
   const NEWS_GRID = document.getElementById('news-grid');
   const NEWS_LOADING = document.getElementById('news-loading');
+  
+  console.log('Elements found:', {
+    newsRoot: !!NEWS_ROOT,
+    newsGrid: !!NEWS_GRID,
+    newsLoading: !!NEWS_LOADING
+  });
+  
+  if (!NEWS_GRID) {
+    console.error('NEWS_GRID element not found!');
+    return;
+  }
   
   const MANIFEST_URL = 'news_src/manifest.json';
   
@@ -78,11 +91,13 @@
   }
   
   // Render fallback UI with retry button
-  function renderFallback() {
+  function renderFallback(error) {
+    console.error('Rendering fallback UI due to error:', error);
     NEWS_GRID.innerHTML = `
       <div class="news-empty" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
         <h3>読み込みに失敗しました</h3>
         <p>記事の読み込み中にエラーが発生しました。</p>
+        <p style="font-size: 0.8rem; color: #666; margin: 10px 0;">エラー詳細: ${error.message || 'Unknown error'}</p>
         <button onclick="location.reload()" style="
           background: #333; 
           color: white; 
@@ -139,6 +154,6 @@
     
   } catch (error) {
     console.error('News manifest loading failed:', error);
-    renderFallback();
+    renderFallback(error);
   }
-})();
+});
