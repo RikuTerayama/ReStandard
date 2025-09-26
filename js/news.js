@@ -41,6 +41,13 @@ document.addEventListener('DOMContentLoaded', async function() {
   // 画像URL解決ユーティリティ
   function resolveUrl(basePath, p) {
     if (!p) return null;
+    
+    // 絶対パス（/で始まる）の場合はそのまま使用
+    if (p.startsWith('/')) {
+      return window.location.origin + p;
+    }
+    
+    // 相対パスの場合はbasePathと組み合わせ
     try {
       return new URL(p, window.location.origin + basePath).toString();
     } catch (e) {
@@ -101,7 +108,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       const cover = article.firstImage || 'cover.jpg';
       const imgUrl = resolveUrl(base, cover);
       
-      console.log('Image URL resolved:', imgUrl);
+      console.log('=== IMAGE DEBUG ===');
+      console.log('Article slug:', article.slug);
+      console.log('Original firstImage:', article.firstImage);
+      console.log('Base path:', base);
+      console.log('Cover:', cover);
+      console.log('Resolved URL:', imgUrl);
+      console.log('Current origin:', window.location.origin);
+      
       img.src = imgUrl;
       
       img.onerror = () => { 
