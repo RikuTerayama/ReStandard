@@ -140,7 +140,12 @@ document.addEventListener('DOMContentLoaded', async function() {
           src: img.src,
           naturalWidth: img.naturalWidth,
           naturalHeight: img.naturalHeight,
-          articleSlug: article.slug
+          articleSlug: article.slug,
+          display: window.getComputedStyle(img).display,
+          visibility: window.getComputedStyle(img).visibility,
+          opacity: window.getComputedStyle(img).opacity,
+          width: window.getComputedStyle(img).width,
+          height: window.getComputedStyle(img).height
         });
       };
       
