@@ -61,9 +61,9 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
-  <link rel="preload" href="css/style.css" as="style">
-  <link rel="preload" href="css/reveal.css" as="style">
-  <link rel="preload" href="css/i18n-visibility.css" as="style">
+  <link rel="preload" href="{{BASE_PATH}}/css/style.css" as="style">
+  <link rel="preload" href="{{BASE_PATH}}/css/reveal.css" as="style">
+  <link rel="preload" href="{{BASE_PATH}}/css/i18n-visibility.css" as="style">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
@@ -71,9 +71,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="{{BASE_PATH}}/css/reveal.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="{{BASE_PATH}}/css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="{{BASE_PATH}}/css/style.css?v=2025-01-18_FINAL_REQ">
 
   <style>
     :root {
@@ -477,8 +477,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="js/reveal.js?v=2025-01-18-final"></script>
-  <script src="js/lang-toggle.js?v=2025-01-18-final"></script>
+  <script src="{{BASE_PATH}}/js/reveal.js?v=2025-01-18-final"></script>
+  <script src="{{BASE_PATH}}/js/lang-toggle.js?v=2025-01-18-final"></script>
   <script>
   // 背景動画の読み込みと再生を確実にする
   document.addEventListener('DOMContentLoaded', function() {
@@ -553,6 +553,6 @@
   </script>
 
   <!-- lazy-load フェードイン処理 -->
-  <script src="js/init-sections.js?v=2025-01-18-final" defer></script>
+  <script src="{{BASE_PATH}}/js/init-sections.js?v=2025-01-18-final" defer></script>
 </body>
 </html>
