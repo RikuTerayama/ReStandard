@@ -804,17 +804,17 @@
       }
     }
     
-    // DOMContentLoadedで動画初期化を開始（タイムアウト付き）
+    // DOMContentLoadedで動画初期化を開始（軽量化版）
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOMContentLoaded - 動画初期化開始');
       
-      // タイムアウトを設定して重い処理を防ぐ
+      // タイムアウトを短縮して重い処理を防ぐ
       const initTimeout = setTimeout(function() {
         console.log('動画初期化タイムアウト');
         if (!videoInitialized) {
           videoInitialized = true; // フラグを設定して重複実行を防ぐ
         }
-      }, 5000); // 5秒でタイムアウト
+      }, 2000); // 5秒から2秒に短縮
       
       // 即座に実行せず、他の初期化処理を優先
       requestAnimationFrame(function() {
@@ -826,7 +826,7 @@
             console.error('動画初期化エラー:', error);
             clearTimeout(initTimeout);
           }
-        }, 50);
+        }, 10); // 50msから10msに短縮
       });
     });
     
@@ -1388,17 +1388,17 @@
       }, true);
     }
     
-    // DOMContentLoadedでスプラッシュ初期化（タイムアウト付き）
+    // DOMContentLoadedでスプラッシュ初期化（軽量化版）
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOMContentLoaded - スプラッシュ初期化開始');
       
-      // タイムアウトを設定して重い処理を防ぐ
+      // タイムアウトを短縮して重い処理を防ぐ
       const splashTimeout = setTimeout(function() {
         console.log('スプラッシュ初期化タイムアウト');
         if (!splashInitialized) {
           splashInitialized = true; // フラグを設定して重複実行を防ぐ
         }
-      }, 3000); // 3秒でタイムアウト
+      }, 1500); // 3秒から1.5秒に短縮
       
       // 他の初期化処理を優先してからスプラッシュを実行
       requestAnimationFrame(function() {
@@ -1410,7 +1410,7 @@
             console.error('スプラッシュ初期化エラー:', error);
             clearTimeout(splashTimeout);
           }
-        }, 100);
+        }, 50); // 100msから50msに短縮
       });
     });
   </script>
