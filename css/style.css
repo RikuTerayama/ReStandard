@@ -394,7 +394,7 @@ section {
   padding-block: 1rem;                 /* 画像上下に程よい余白 */
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(8px);
   border-radius: 12px;
   margin: 8px 0;
@@ -964,7 +964,7 @@ img[src*="rockmount"] {
 }
 #lookbook{ 
   padding: clamp(40px,6vw,80px) 0; 
-  background: transparent;
+  background: none;
   text-align: center !important; /* 中央揃え */
   width: 100% !important; /* 横幅100% */
   max-width: none !important;
@@ -1366,9 +1366,9 @@ img[loading="lazy"].loaded {
   background: var(--rs-surface, #f7f5f2); 
 }
 
-/* Collectionセクションの背景色をナビバーと同じに設定 */
+/* Collectionセクションの背景を削除 */
 #collection {
-  background: transparent;
+  background: none;
   position: relative;
   z-index: 1;
 }
@@ -1415,9 +1415,9 @@ img[loading="lazy"].loaded {
   margin-top: 4rem; /* タイトルとの間隔をさらに確保 */
 }
 
-/* Collection行に背景を設定 */
+/* Collection行にナビバーと同じ背景を設定 */
 .collection-row {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(8px);
   border-radius: 12px;
   margin: 8px 0;
