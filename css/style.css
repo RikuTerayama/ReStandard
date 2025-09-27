@@ -140,7 +140,7 @@ section {
 
 /* Collection タイトル - 白フォント・中央揃え */
 #collection h2 {
-  color: #333 !important;
+  color: white !important;
   font-size: 2rem;
   text-align: center;
   margin-bottom: 2rem;
@@ -394,6 +394,10 @@ section {
   padding-block: 1rem;                 /* 画像上下に程よい余白 */
   display: flex;
   align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  margin: 8px 0;
 }
 
 .lookbook-track {
@@ -960,8 +964,7 @@ img[src*="rockmount"] {
 }
 #lookbook{ 
   padding: clamp(40px,6vw,80px) 0; 
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+  background: transparent;
   text-align: center !important; /* 中央揃え */
   width: 100% !important; /* 横幅100% */
   max-width: none !important;
@@ -1359,8 +1362,7 @@ img[loading="lazy"].loaded {
 
 /* Collectionセクションの背景色をナビバーと同じに設定 */
 #collection {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+  background: transparent;
   position: relative;
   z-index: 1;
 }
@@ -1407,16 +1409,24 @@ img[loading="lazy"].loaded {
   margin-top: 3rem; /* タイトルとの間隔を確保 */
 }
 
+/* Collection行に背景を設定 */
+.collection-row {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  margin: 8px 0;
+}
+
 .collection-row:first-child {
   position: absolute;
-  top: 33.33%;
+  top: 40%;
   transform: translateY(-50%);
   width: 100%;
 }
 
 .collection-row:last-child {
   position: absolute;
-  top: 66.67%;
+  top: 70%;
   transform: translateY(-50%);
   width: 100%;
 }
