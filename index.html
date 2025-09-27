@@ -142,7 +142,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
   <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-19-fix">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -198,6 +198,18 @@
     }
     
     /* Collection画像の表示を強制 */
+    .collection-track {
+      min-width: 3200px !important; /* 16枚 × 200px */
+    }
+    
+    /* Collectionセクションの間隔調整 */
+    .collection-wrapper {
+      margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
+    }
+    
+    .collection-row {
+      margin: 2rem 0 !important; /* 行間の間隔を拡大 */
+    }
     .collection-track img {
       display: block !important;
       visibility: visible !important;
@@ -205,9 +217,13 @@
       width: 200px !important;
       height: 250px !important;
       object-fit: cover !important;
+      flex-shrink: 0 !important;
     }
     
     /* Lookbook画像の表示を強制 */
+    .lookbook-track {
+      min-width: 2400px !important; /* 8枚 × 300px */
+    }
     .lookbook-track img {
       display: block !important;
       visibility: visible !important;
@@ -215,6 +231,7 @@
       width: 300px !important;
       height: 400px !important;
       object-fit: contain !important;
+      flex-shrink: 0 !important;
     }
     h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
       font-family: var(--main-font-family) !important;
@@ -512,23 +529,26 @@
     }
 
     .social-links a {
-      display: inline-flex;
+      display: inline-flex !important;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin: 0 10px;
+      width: 50px;
+      height: 50px;
+      margin: 0 15px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(204, 204, 204, 0.3);
+      background: #fff !important;
+      border: 2px solid #333 !important;
       color: #333 !important;
       font-size: 1.2rem;
       transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-
+    
     .social-links a:hover {
+      background: #333 !important;
+      color: #fff !important;
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     .copyright {
@@ -969,10 +989,20 @@
       collectionTracks.forEach((track, i) => {
         const speed = track.getAttribute('data-speed');
         console.log(`✅ Collection Track ${i+1} 速度:`, speed, 's (30sであるべき)');
+        console.log(`🔍 Collection Track ${i+1} dataset.speed:`, track.dataset.speed);
       });
       lookbookTracks.forEach((track, i) => {
         const speed = track.getAttribute('data-speed');
         console.log(`✅ Lookbook Track ${i+1} 速度:`, speed, 's (32sであるべき)');
+        console.log(`🔍 Lookbook Track ${i+1} dataset.speed:`, track.dataset.speed);
+      });
+      
+      // 6. 画像表示確認
+      collectionImgs.forEach((img, i) => {
+        console.log(`🖼️ Collection Image ${i+1}:`, img.src, 'display:', getComputedStyle(img).display);
+      });
+      lookbookImgs.forEach((img, i) => {
+        console.log(`🖼️ Lookbook Image ${i+1}:`, img.src, 'display:', getComputedStyle(img).display);
       });
       
       // 6. 見出し統一確認
@@ -1618,10 +1648,10 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
   
   <!-- セクション初期化スクリプト（defer付きで最適化） -->
-  <script src="js/init-sections.js?v=2025-01-18-final" defer></script>
+  <script src="js/init-sections.js?v=2025-01-19-fix" defer></script>
   <!-- Collection と Lookbook の個別インタラクション（defer付きで最適化） -->
-  <script src="js/collection-interaction.js?v=2025-01-18-final" defer></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-18-final" defer></script>
+  <script src="js/collection-interaction.js?v=2025-01-19-fix" defer></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-19-fix" defer></script>
 
 </body>
 </html>
