@@ -1363,7 +1363,7 @@ img[loading="lazy"].loaded {
 .collection-section { 
   position: relative; 
   padding: var(--section-pad, 40px) 0; 
-  background: var(--rs-surface, #f7f5f2); 
+  background: none; 
 }
 
 /* Collectionセクションの背景を削除 */
@@ -1412,7 +1412,7 @@ img[loading="lazy"].loaded {
 .collection-wrapper {
   position: relative;
   min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
-  margin-top: 4rem; /* タイトルとの間隔をさらに確保 */
+  margin-top: 6rem; /* タイトルとの間隔をさらに拡大 */
 }
 
 /* Collection行にナビバーと同じ背景を設定 */
@@ -1588,7 +1588,7 @@ img[loading="lazy"].loaded {
 
 /* News詳細ページの背景統一 */
 body, .news-article-root { 
-  background: var(--rs-surface, #f7f5f2) !important; 
+  background: none !important; 
   color: var(--rs-ink, #222) !important; 
 }
 
