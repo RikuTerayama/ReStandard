@@ -196,6 +196,26 @@
     * {
       font-family: inherit !important;
     }
+    
+    /* Collection画像の表示を強制 */
+    .collection-track img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 200px !important;
+      height: 250px !important;
+      object-fit: cover !important;
+    }
+    
+    /* Lookbook画像の表示を強制 */
+    .lookbook-track img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 300px !important;
+      height: 400px !important;
+      object-fit: contain !important;
+    }
     h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
       font-family: var(--main-font-family) !important;
     }
@@ -499,7 +519,9 @@
       height: 40px;
       margin: 0 10px;
       border-radius: 50%;
-      color: white !important;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(204, 204, 204, 0.3);
+      color: #333 !important;
       font-size: 1.2rem;
       transition: all 0.3s ease;
     }
@@ -770,9 +792,9 @@
             console.log('スマートフォン版背景動画が読み込まれました');
             mobileVideo.play().catch(function(error) {
               console.log('スマートフォン版動画の自動再生に失敗:', error);
-            });
           });
-          
+        });
+        
           mobileVideo.addEventListener('error', function(e) {
             console.error('スマートフォン版動画の読み込みエラー:', e);
           });
@@ -789,16 +811,16 @@
           mobileVideo.style.display = 'none';
           mobileVideo.removeAttribute('src');
         }
-        if (desktopVideo) {
+      if (desktopVideo) {
           desktopVideo.addEventListener('canplay', function() {
-            console.log('PC版背景動画が読み込まれました');
-            desktopVideo.play().catch(function(error) {
-              console.log('PC版動画の自動再生に失敗:', error);
-            });
+          console.log('PC版背景動画が読み込まれました');
+          desktopVideo.play().catch(function(error) {
+            console.log('PC版動画の自動再生に失敗:', error);
           });
-          
-          desktopVideo.addEventListener('error', function(e) {
-            console.error('PC版動画の読み込みエラー:', e);
+        });
+        
+        desktopVideo.addEventListener('error', function(e) {
+          console.error('PC版動画の読み込みエラー:', e);
           });
         }
       }
@@ -827,9 +849,9 @@
             clearTimeout(initTimeout);
           }
         }, 10); // 50msから10msに短縮
-      });
-    });
-    
+          });
+        });
+        
     // ページ読み込み完了時にも確認（タイムアウト付き）
     window.addEventListener('load', function() {
       console.log('Window load - 動画最終確認');
@@ -870,8 +892,8 @@
       <div class="collection-wrapper">
       <!-- 上段：右→左 -->
       <div class="collection-row">
-          <div class="collection-track" data-direction="left" data-speed="55" data-start="1.jpg" data-align="left" data-seg="16">
-            <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener"><img src="image/1.JPG" alt="1" loading="lazy" fetchpriority="high" width="200" height="250" decoding="async"></a>
+          <div class="collection-track" data-direction="left" data-speed="30" data-start="1.jpg" data-align="left" data-seg="16">
+            <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener"><img src="image/1.JPG" alt="1" loading="lazy" fetchpriority="high" width="200" height="250" decoding="async" style="display: block !important; visibility: visible !important; opacity: 1 !important;"></a>
             <a href="#" target="_blank" rel="noopener" data-href="https://restandard.stores.jp/"><img src="image/2.JPG" alt="2" loading="lazy" width="200" height="250" decoding="async"></a>
             <a href="#" target="_blank" rel="noopener" data-href="https://restandard.stores.jp/"><img src="image/3.JPG" alt="3" loading="lazy" width="200" height="250" decoding="async"></a>
             <a href="#" target="_blank" rel="noopener" data-href="https://restandard.stores.jp/"><img src="image/4.JPG" alt="4" loading="lazy" width="200" height="250" decoding="async"></a>
@@ -890,7 +912,7 @@
       
       <!-- 下段：左→右 -->
       <div class="collection-row">
-          <div class="collection-track reverse" data-direction="right" data-speed="55" data-start="21.jpg" data-align="right" data-seg="12">
+          <div class="collection-track reverse" data-direction="right" data-speed="30" data-start="21.jpg" data-align="right" data-seg="12">
             <a href="#" target="_blank" rel="noopener" data-href="https://restandard.stores.jp/"><img src="image/21.JPG" alt="21" loading="lazy" width="200" height="250" decoding="async"></a>
             <a href="#" target="_blank" rel="noopener" data-href="https://restandard.stores.jp/"><img src="image/22.JPG" alt="22" loading="lazy" width="200" height="250" decoding="async"></a>
             <a href="#" target="_blank" rel="noopener" data-href="https://restandard.stores.jp/"><img src="image/23.JPG" alt="23" loading="lazy" width="200" height="250" decoding="async"></a>
@@ -1046,7 +1068,7 @@
     
     <div class="band">
       <div class="lookbook-container">
-        <div class="lookbook-track" data-direction="left" data-speed="55" data-start="look1.webp" data-align="left" data-seg="8">
+        <div class="lookbook-track" data-direction="left" data-speed="32" data-start="look1.webp" data-align="left" data-seg="8">
         <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
           <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
           <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400" decoding="async">
@@ -1428,47 +1450,47 @@
       
       console.log('ページ初期化開始');
       
-      // ハンバーガーメニューの外をクリックした時に閉じる機能
-      const navbarToggler = document.querySelector('.navbar-toggler');
-      const navbarCollapse = document.querySelector('.navbar-collapse');
-      
+// ハンバーガーメニューの外をクリックした時に閉じる機能
+  const navbarToggler = document.querySelector('.navbar-toggler');
+  const navbarCollapse = document.querySelector('.navbar-collapse');
+  
       if (navbarToggler && navbarCollapse) {
-        document.addEventListener('click', function(event) {
-          if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
-            return;
-          }
-          
-          if (navbarCollapse.classList.contains('show')) {
-            navbarToggler.click();
-          }
-        });
+  document.addEventListener('click', function(event) {
+    if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
+      return;
+    }
+    
+    if (navbarCollapse.classList.contains('show')) {
+      navbarToggler.click();
+    }
+  });
       }
       
       // Collection セクション用のギャップ調整
-      function applyGap() {
+    function applyGap() {
         const header = document.querySelector('header, .site-header, nav');
         const h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
         const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         const gap = vw >= 1024 ? 72 : 96;
 
         const spacer = document.querySelector('.rs-header-spacer');
-        if (spacer) {
-          spacer.style.setProperty('height', (h + gap) + 'px', 'important');
-          spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
-        }
+      if (spacer) {
+        spacer.style.setProperty('height', (h + gap) + 'px', 'important');
+        spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
       }
+    }
       
       // 初回実行
       applyGap();
       
       // リサイズ時実行
-      window.addEventListener('resize', applyGap);
+    window.addEventListener('resize', applyGap);
       
       console.log('ページ初期化完了');
     }
     
     // DOMContentLoadedで初期化（タイムアウト付き）
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
       // タイムアウトを設定して重い処理を防ぐ
       const pageTimeout = setTimeout(function() {
         console.log('ページ初期化タイムアウト');
@@ -1548,7 +1570,7 @@
         }, 200);
       });
     });
-  </script>
+</script>
   
   <!-- 外部スクリプトの読み込み -->
   <script src="js/reveal.js?v=2025-01-18-final" defer></script>
@@ -1561,7 +1583,7 @@
       if (layoutInitialized) return;
       layoutInitialized = true;
       
-      // 1.JPGと25.JPGのインラインスタイルを削除
+    // 1.JPGと25.JPGのインラインスタイルを削除
       document.querySelectorAll('img[src$="/1.JPG"], img[src$="/1.jpg"], img[src$="/25.JPG"], img[src$="/25.jpg"]').forEach(el => {
         el.removeAttribute('style');
         const card = el.closest('.item, .card, div');
