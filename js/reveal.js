@@ -3,7 +3,7 @@
  * 診断ログ付きで確実に反映されるテキストアニメーション
  */
 
-export function initReveal(root = document) {
+function initReveal(root = document) {
   const url = new URL(window.location.href);
   const debug = url.searchParams.get('reveal-debug') === '1';
   const force = url.searchParams.get('reveal-force') === '1';
