@@ -235,7 +235,7 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始
 function startAutoScroll(track) {
-  const speed = parseFloat(track.dataset.speed || 80); // 55から80に変更（より遅く）
+        const speed = parseFloat(track.dataset.speed || 30); // 30秒に変更
   
   // reverse クラスが付いているトラックはスクロール方向を逆にして、21.JPG が右端になるよう初期化
   const isReverse = track.classList.contains('reverse');
