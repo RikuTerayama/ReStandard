@@ -202,7 +202,6 @@
 
     body {
       font-family: var(--body-font);
-      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
       color: var(--main-color);
       text-align: center;
       line-height: 1.7;
@@ -296,8 +295,6 @@
       align-items: center;
       margin-left: 2rem;
       position: relative;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(51, 51, 51, 0.1);
       border-radius: 24px;
       padding: 4px;
       transition: all 0.3s ease;
@@ -369,7 +366,6 @@
       justify-content: center;
       align-items: center;
       height: 500px;
-      background-color: #fff;
       transition: transform 1s ease-in-out, opacity 1s ease-in-out;
     }
 
@@ -386,7 +382,6 @@
 
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
-      background-color: rgba(0, 0, 0, 0.5);
       border-radius: 50%;
       padding: 20px;
     }
@@ -408,7 +403,6 @@
       width: 40px;
       height: 6px;
       margin: 6px 4px;
-      background-color: #000 !important;
       opacity: 0.4;
       transition: opacity 0.3s;
       border: none;
@@ -456,9 +450,7 @@
     }
 
     footer {
-      background-color: rgba(255, 255, 255, 0.95);
       border-top: 1px solid rgba(204, 204, 204, 0.3);
-      backdrop-filter: blur(10px);
     }
 
     footer .nav {
@@ -507,7 +499,6 @@
       height: 40px;
       margin: 0 10px;
       border-radius: 50%;
-      background: linear-gradient(45deg, #333, #666);
       color: white !important;
       font-size: 1.2rem;
       transition: all 0.3s ease;
@@ -516,7 +507,6 @@
     .social-links a:hover {
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      background: linear-gradient(45deg, #444, #777);
     }
 
     .copyright {
@@ -637,9 +627,7 @@
     }
     
     footer {
-      background-color: rgba(255, 255, 255, 0.95);
       border-top: 1px solid rgba(204, 204, 204, 0.3);
-      backdrop-filter: blur(10px);
       margin-top: auto;
       position: relative;
       bottom: 0;
@@ -758,29 +746,26 @@
       });
     }
     
-    // 動画の最適化された読み込みと再生
-    document.addEventListener('DOMContentLoaded', function() {
-      // 動画の読み込みを遅延させる
-      setTimeout(function() {
-        const heroVideo = document.getElementById('hero-video');
-        const desktopVideo = document.getElementById('desktop-bg-video');
-        const mobileVideo = document.getElementById('mobile-bg-video');
-        
-        // ヒーロー動画の処理（存在する場合のみ）
-        if (heroVideo) {
-          heroVideo.addEventListener('canplay', function() {
-            console.log('Hero video loaded');
-            heroVideo.play().catch(function(error) {
-              console.log('Hero video autoplay failed:', error);
-            });
-          });
+    // 動画の最適化された読み込みと再生（根本的な改善）
+    let videoInitialized = false;
+    
+    function initializeVideos() {
+      if (videoInitialized) return;
+      videoInitialized = true;
+      
+      const desktopVideo = document.getElementById('desktop-bg-video');
+      const mobileVideo = document.getElementById('mobile-bg-video');
+      const isMobile = window.innerWidth <= 900;
+      
+      console.log('動画初期化開始 - モバイル:', isMobile);
+      
+      // 不要な動画を非表示にしてリソースを節約
+      if (isMobile) {
+        if (desktopVideo) {
+          desktopVideo.style.display = 'none';
+          desktopVideo.removeAttribute('src');
         }
-        
-        // 画面サイズに応じて適切な動画のみを読み込む
-        const isMobile = window.innerWidth <= 900;
-        
-        if (isMobile && mobileVideo) {
-          // モバイル版のみ読み込み
+        if (mobileVideo) {
           mobileVideo.addEventListener('canplay', function() {
             console.log('スマートフォン版背景動画が読み込まれました');
             mobileVideo.play().catch(function(error) {
@@ -798,8 +783,13 @@
               mobileVideo.play().catch(()=>{});
             }
           });
-        } else if (!isMobile && desktopVideo) {
-          // PC版のみ読み込み
+        }
+      } else {
+        if (mobileVideo) {
+          mobileVideo.style.display = 'none';
+          mobileVideo.removeAttribute('src');
+        }
+        if (desktopVideo) {
           desktopVideo.addEventListener('canplay', function() {
             console.log('PC版背景動画が読み込まれました');
             desktopVideo.play().catch(function(error) {
@@ -811,16 +801,24 @@
             console.error('PC版動画の読み込みエラー:', e);
           });
         }
-        
-        // ページ読み込み完了後に動画の再生を確実にする
-        window.addEventListener('load', function() {
-          if (isMobile && mobileVideo && mobileVideo.paused) {
-            mobileVideo.play().catch(()=>{});
-          } else if (!isMobile && desktopVideo && desktopVideo.paused) {
-            desktopVideo.play().catch(()=>{});
-          }
-        });
-      }, 100); // 100ms遅延でページの初期化を優先
+      }
+    }
+    
+    // DOMContentLoadedで動画初期化を開始
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOMContentLoaded - 動画初期化開始');
+      // 即座に実行せず、他の初期化処理を優先
+      requestAnimationFrame(function() {
+        setTimeout(initializeVideos, 50);
+      });
+    });
+    
+    // ページ読み込み完了時にも確認
+    window.addEventListener('load', function() {
+      console.log('Window load - 動画最終確認');
+      if (!videoInitialized) {
+        initializeVideos();
+      }
     });
   </script>
 
