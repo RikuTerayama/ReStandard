@@ -651,7 +651,7 @@
 
   <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
   <div id="splash-video-wrapper" style="display: none;">
-    <video id="splash-video" src="5.mov" autoplay playsinline muted></video>
+    <video id="splash-video" src="5.mov" autoplay playsinline muted preload="metadata"></video>
     <!-- <div id="splash-loading">Loading...</div> -->
   </div>
   <!-- 1.mov モーダル -->
@@ -683,8 +683,8 @@
 
   <!-- 単一背景動画 - PC/SP自動切替 -->
   <div id="background-video-container">
-  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
-    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
+  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
   </div>
   
   <style>
@@ -758,67 +758,69 @@
       });
     }
     
-    // ヒーロー動画の自動再生確実化
+    // 動画の最適化された読み込みと再生
     document.addEventListener('DOMContentLoaded', function() {
-      const heroVideo = document.getElementById('hero-video');
-      
-      if (heroVideo) {
-        heroVideo.addEventListener('loadeddata', function() {
-          console.log('Hero video loaded');
-          heroVideo.play().catch(function(error) {
-            console.log('Hero video autoplay failed:', error);
-          });
-        });
+      // 動画の読み込みを遅延させる
+      setTimeout(function() {
+        const heroVideo = document.getElementById('hero-video');
+        const desktopVideo = document.getElementById('desktop-bg-video');
+        const mobileVideo = document.getElementById('mobile-bg-video');
         
-        // リトライ機能
-        setTimeout(function() {
-          if (heroVideo.paused) {
+        // ヒーロー動画の処理（存在する場合のみ）
+        if (heroVideo) {
+          heroVideo.addEventListener('canplay', function() {
+            console.log('Hero video loaded');
             heroVideo.play().catch(function(error) {
-              console.log('Hero video retry failed:', error);
+              console.log('Hero video autoplay failed:', error);
             });
-          }
-        }, 1000);
-      }
-      
-      const desktopVideo = document.getElementById('desktop-bg-video');
-      const mobileVideo = document.getElementById('mobile-bg-video');
-      
-      // PC版動画の読み込みと再生
-      if (desktopVideo) {
-        desktopVideo.addEventListener('loadeddata', function() {
-          console.log('PC版背景動画が読み込まれました');
-          desktopVideo.play().catch(function(error) {
-            console.log('PC版動画の自動再生に失敗:', error);
           });
-        });
+        }
         
-        desktopVideo.addEventListener('error', function(e) {
-          console.error('PC版動画の読み込みエラー:', e);
-        });
+        // 画面サイズに応じて適切な動画のみを読み込む
+        const isMobile = window.innerWidth <= 900;
         
-        // 動画が再生されていない場合は再試行
-        setTimeout(function() {
-          if (desktopVideo.paused && window.innerWidth >= 901) {
+        if (isMobile && mobileVideo) {
+          // モバイル版のみ読み込み
+          mobileVideo.addEventListener('canplay', function() {
+            console.log('スマートフォン版背景動画が読み込まれました');
+            mobileVideo.play().catch(function(error) {
+              console.log('スマートフォン版動画の自動再生に失敗:', error);
+            });
+          });
+          
+          mobileVideo.addEventListener('error', function(e) {
+            console.error('スマートフォン版動画の読み込みエラー:', e);
+          });
+          
+          // タブ復帰時の再生
+          document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && mobileVideo.paused) {
+              mobileVideo.play().catch(()=>{});
+            }
+          });
+        } else if (!isMobile && desktopVideo) {
+          // PC版のみ読み込み
+          desktopVideo.addEventListener('canplay', function() {
+            console.log('PC版背景動画が読み込まれました');
             desktopVideo.play().catch(function(error) {
-              console.log('PC版動画の再試行に失敗:', error);
+              console.log('PC版動画の自動再生に失敗:', error);
             });
-          }
-        }, 1000);
-      }
-      
-      // スマートフォン版動画の読み込みと再生
-      if (mobileVideo) {
-        mobileVideo.addEventListener('loadeddata', function() {
-          console.log('スマートフォン版背景動画が読み込まれました');
-          mobileVideo.play().catch(function(error) {
-            console.log('スマートフォン版動画の自動再生に失敗:', error);
           });
-        });
+          
+          desktopVideo.addEventListener('error', function(e) {
+            console.error('PC版動画の読み込みエラー:', e);
+          });
+        }
         
-        mobileVideo.addEventListener('error', function(e) {
-          console.error('スマートフォン版動画の読み込みエラー:', e);
+        // ページ読み込み完了後に動画の再生を確実にする
+        window.addEventListener('load', function() {
+          if (isMobile && mobileVideo && mobileVideo.paused) {
+            mobileVideo.play().catch(()=>{});
+          } else if (!isMobile && desktopVideo && desktopVideo.paused) {
+            desktopVideo.play().catch(()=>{});
+          }
         });
-      }
+      }, 100); // 100ms遅延でページの初期化を優先
     });
   </script>
 
@@ -1273,41 +1275,37 @@
       document.body.classList.add('splash-active');
       splash.style.display = 'flex';
       // loading.style.display = 'block';
-      video.oncanplay = function() {
-        // loading.style.display = 'none';
-        video.play();
-      };
+      video.addEventListener('canplay', function() {
+        console.log('スプラッシュ動画の準備完了');
+        video.play().catch(function(error) {
+          console.log('スプラッシュ動画の再生に失敗:', error);
+          // 再生に失敗した場合はスプラッシュをスキップ
+          splash.classList.add('hide');
+          setTimeout(function() {
+            splash.style.display = 'none';
+            document.body.classList.remove('splash-active');
+          }, 100);
+        });
+      });
       splash.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); }, true);
       window.addEventListener('keydown', function(e) {
         e.preventDefault();
         e.stopPropagation();
         return false;
       }, true);
-      video.onended = function() {
+      video.addEventListener('ended', function() {
+        console.log('スプラッシュ動画終了');
         splash.classList.add('hide');
         setTimeout(function() {
           splash.style.display = 'none';
           document.body.classList.remove('splash-active');
         }, 500);
-      };
+      });
     });
   </script>
   <!-- 旧クラス向けスクリプトとモーダルは削除済み -->
   <script>
-// スマホ背景動画 2.mp4 を常に再生し続ける
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileVideo = document.getElementById('mobile-bg-video');
-  if (mobileVideo) {
-    // ページ表示時
-    mobileVideo.play().catch(()=>{});
-    // タブ復帰時
-    document.addEventListener('visibilitychange', function() {
-      if (!document.hidden) {
-        mobileVideo.play().catch(()=>{});
-      }
-    });
-  }
-});
+// スマホ背景動画の処理は上記の最適化されたコードに統合済み
 </script>
   <script>
 // ハンバーガーメニューの外をクリックした時に閉じる機能
