@@ -4,8 +4,8 @@
 
 // 重複読み込み防止
 if (typeof window.initCollectionTracks === 'function') {
-  return;
-}
+  // 既に読み込まれている場合は何もしない
+} else {
 
 // 各 collection-track で無限スクロールのロジックを実装
 function initCollectionTracks() {
@@ -252,3 +252,5 @@ document.head.appendChild(style);
 
 // 初期化
 document.addEventListener('DOMContentLoaded', initCollectionTracks);
+
+} // 重複読み込み防止の閉じ括弧
