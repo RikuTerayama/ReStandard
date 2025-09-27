@@ -2,6 +2,11 @@
    Collection Interaction Handler 2025-01-18
    ========================================================= */
 
+// 重複読み込み防止
+if (typeof window.initCollectionTracks === 'function') {
+  return;
+}
+
 // 各 collection-track で無限スクロールのロジックを実装
 function initCollectionTracks() {
   const tracks = document.querySelectorAll('.collection-track');
@@ -21,7 +26,7 @@ function initTrack(track) {
   ensureInfiniteLoop(track, segmentCount);
   
   // マウスポインタのダウン・ムーブ・アップイベントを拾い、クリックとドラッグを区別
-  attachTrackControls(track);
+  // attachTrackControls(track); // スクロール機能を削除
   
   // オートスクロール開始
   startAutoScroll(track);
@@ -48,8 +53,9 @@ function ensureInfiniteLoop(track, segmentCount) {
   // オリジナル区間幅を記録
   track._segmentWidth = originalWidth;
   
-  // 最低でも2セット分は複製する（50%移動でループするため）
-  const targetWidth = Math.max(originalWidth * 2, track.parentElement.offsetWidth * 2);
+  // 画面幅の3倍以上の幅になるまで複製（確実に無限ループ）
+  const viewportWidth = window.innerWidth;
+  const targetWidth = Math.max(originalWidth * 3, viewportWidth * 3);
   let currentWidth = originalWidth;
   
   while (currentWidth < targetWidth) {
