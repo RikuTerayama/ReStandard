@@ -53,6 +53,46 @@ function fixAssetPaths(html) {
     .replace(/(<a\b[^>]*\bhref\s*=\s*["'])(\/?(?:assets|images)\/[^"']+)(["'])/gi, (m, a, href, z) => a + withBase(normalizeAsset(href)) + z);
 }
 
+function normalizeArticleHtml(html, pageTitle) {
+  if (!html) return html;
+
+  // 画像パス：/assets/ → /assets/images/
+  html = html.replace(/src="\/assets\/(?!images\/)/g, 'src="/assets/images/');
+
+  // 本文先頭の重複見出しを削除（最初の <h1> または <h2> が pageTitle と一致/近似）
+  try {
+    const hMatch = html.match(/<(h1|h2)[^>]*>([\s\S]*?)<\/\1>/i);
+    if (hMatch) {
+      const inner = hMatch[2].replace(/<[^>]+>/g, '').trim();
+      const norm = s => (s || '').replace(/\s+/g, '');
+      if (!pageTitle || norm(inner) === norm(pageTitle) || norm(inner).includes(norm(pageTitle))) {
+        html = html.replace(hMatch[0], '');
+      }
+    }
+  } catch (_) {}
+
+  // 箇条書き（ul/ol→段落、行頭記号削除）
+  html = html
+    .replace(/<ul[^>]*>([\s\S]*?)<\/ul>/gi, (_, body) =>
+      body.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, li) => `<p>${li.replace(/^[\s•・\-*]+/, '').trim()}</p>`))
+    .replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (_, body) =>
+      body.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, li) => `<p>${li.replace(/^[\s•・\-*]+/, '').trim()}</p>`))
+    .replace(/<p>([\s•・\-*]+)([^<]*)<\/p>/gi, (_, __, text) => `<p>${text.trim()}</p>`);
+
+  // お問い合わせ直下のハッシュタグ段落削除
+  html = html.replace(/(<p>[^<]*お問い合わせ[^<]*<\/p>)([\s\S]*?)(?=<h\d|$)/i, (m, head, tail) => {
+    const cleaned = tail.replace(/<p>[\s#＃]+[^<]*<\/p>/gi, '');
+    return head + cleaned;
+  });
+
+  return html;
+}
+
+function stripLeadingDate(title) {
+  if (!title) return title;
+  return title.replace(/^\s*\d{1,2}[\/\-]\d{1,2}\s+/, '');
+}
+
 function fixContentFormatting(html) {
   // 箇条書きをプレーンテキスト形式に変更
   // HTMLエンティティをデコード
@@ -166,7 +206,7 @@ async function main() {
     }
 
     const title = extractTitle(html) || item.title || 'Untitled';
-    const titleDecoded = title.replace(/&amp;amp;/g, '&amp;').replace(/&amp;/g, '&');
+    const titleDecoded = stripLeadingDate(title.replace(/&amp;amp;/g, '&amp;').replace(/&amp;/g, '&'));
     const date  = item.date || extractMeta(html, 'post_date') || extractMeta(html, 'pubDate') || '';
     const dateView = fmtDateView(date);
     const ogImage = withBase(normalizeAsset(item.firstImage || extractFirstImg(html)));
@@ -175,6 +215,7 @@ async function main() {
     // 本文（article内）を抽出し、画像・リンクのassetsパスを補正
     let content = extractArticleContent(html);
     content = fixAssetPaths(content);
+    content = normalizeArticleHtml(content, titleDecoded);
     content = fixContentFormatting(content);
 
     // Prev / Next
