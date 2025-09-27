@@ -555,5 +555,97 @@
 
   <!-- lazy-load フェードイン処理 -->
   <script src="{{BASE_PATH}}/js/init-sections.js?v=2025-01-18-final" defer></script>
+  
+  <!-- 記事詳細ページ専用の修正スクリプト -->
+  <script>
+(function () {
+  const root = document.querySelector('.news-article') || document.querySelector('main');
+  if (!root) return;
+
+  // 1) タイトル重複の2番目を削除
+  const pageTitleEl = document.querySelector('h1');
+  const pageTitle = pageTitleEl?.textContent?.trim() || '';
+  
+  // 本文先頭の見出し（h1/h2）がページタイトルと同一/近似なら削除
+  const hEls = root.querySelectorAll('h1, h2');
+  if (hEls.length >= 2) {
+    const firstH = hEls[1]; // 2番目の見出し（本文側）
+    const hText = (firstH.textContent || '').trim();
+    const norm = s => (s || '').replace(/\s+/g, '');
+    if (!pageTitle || norm(hText) === norm(pageTitle) || norm(hText).includes(norm(pageTitle))) {
+      firstH.remove();
+    }
+  }
+
+  // 2) 画像 src の修復（/assets/ → /assets/images/、相対 → 絶対）
+  root.querySelectorAll('img').forEach(img => {
+    const orig = img.getAttribute('src') || '';
+    if (!orig) return;
+
+    // /assets/xxx → /assets/images/xxx に正規化
+    if (/^\/assets\/(?!images\/)/.test(orig)) {
+      img.src = orig.replace(/^\/assets\//, '/assets/images/');
+    }
+    // ルート/プロトコルなしの相対パスは詳細ページ基準だと 404 になるので絶対化
+    else if (!/^(https?:)?\/\//.test(orig) && !orig.startsWith('/')) {
+      try {
+        img.src = new URL(orig, window.location.origin + window.location.pathname).toString();
+      } catch (_) { /* noop */ }
+    }
+
+    // フォールバック（万一 404 の場合）
+    img.addEventListener('error', () => {
+      if (!img.dataset._triedFallback) {
+        img.dataset._triedFallback = '1';
+        const fixed = img.src.replace(/\/assets\/(?!images\/)/, '/assets/images/');
+        if (fixed !== img.src) { img.src = fixed; return; }
+        img.src = '/assets/placeholder/cover-fallback.webp';
+      }
+    });
+  });
+
+  // 3) 箇条書き → 通常改行（行頭記号を削除、リストを段落化）
+  // 3-1) ul/ol を <p> 群に置換
+  root.querySelectorAll('ul, ol').forEach(list => {
+    const frag = document.createDocumentFragment();
+    list.querySelectorAll('li').forEach(li => {
+      const p = document.createElement('p');
+      p.textContent = (li.textContent || '').replace(/^[\s•・\-*]+/, '').trim();
+      if (p.textContent) frag.appendChild(p);
+    });
+    list.replaceWith(frag);
+  });
+  
+  // 3-2) 段落先頭の「・」「•」「-」「*」を除去
+  root.querySelectorAll('p').forEach(p => {
+    const text = p.textContent || '';
+    if (/^[\s•・\-*]/.test(text)) {
+      p.textContent = text.replace(/^[\s•・\-*]+\s*/, '').trim();
+    }
+  });
+
+  // 4) タイトル先頭の「日付」を除去（例: "10/28 " や "10-28 "）
+  if (pageTitleEl) {
+    pageTitleEl.textContent = pageTitleEl.textContent.replace(/^\s*\d{1,2}[\/\-]\d{1,2}\s+/, '');
+  }
+
+  // 5) 「お問い合わせ」直下のハッシュタグ群を削除
+  const contactAnchor = Array.from(root.querySelectorAll('h1,h2,h3,h4,h5,h6,p,strong,b,span'))
+    .find(el => /お問い合わせ/.test(el.textContent || ''));
+  if (contactAnchor) {
+    let el = contactAnchor.nextElementSibling;
+    const isHeading = el => /^h\d$/.test(el.tagName?.toLowerCase() || '');
+    while (el && !isHeading(el)) {
+      const txt = (el.textContent || '').trim();
+      const hashCount = (txt.match(/[#＃][^\s#＃]+/g) || []).length;
+      // ハッシュタグ行/塊と判断
+      if (hashCount >= 1 && txt.replace(/[#＃\s]/g, '').length <= (txt.length * 0.7)) {
+        const rm = el; el = el.nextElementSibling; rm.remove(); continue;
+      }
+      el = el.nextElementSibling;
+    }
+  }
+})();
+</script>
 </body>
 </html>
