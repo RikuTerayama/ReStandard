@@ -52,6 +52,20 @@ function fixAssetPaths(html) {
     // a href（assets配下の静的ファイルっぽい場合のみ補正）
     .replace(/(<a\b[^>]*\bhref\s*=\s*["'])(\/?(?:assets|images)\/[^"']+)(["'])/gi, (m, a, href, z) => a + withBase(normalizeAsset(href)) + z);
 }
+
+function fixContentFormatting(html) {
+  // 「・」を改行に変更
+  // HTMLエンティティをデコード
+  return html
+    .replace(/&amp;amp;/g, '&amp;')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/・/g, '<br>')
+    // 連続する改行を整理
+    .replace(/(<br>\s*){3,}/g, '<br><br>');
+}
 function extractBetween(str, startRe, endRe) {
   const s = str.search(startRe);
   if (s === -1) return '';
@@ -154,6 +168,7 @@ async function main() {
     // 本文（article内）を抽出し、画像・リンクのassetsパスを補正
     let content = extractArticleContent(html);
     content = fixAssetPaths(content);
+    content = fixContentFormatting(content);
 
     // Prev / Next
     const prev = manifest[i+1];
