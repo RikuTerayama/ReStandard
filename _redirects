@@ -1,0 +1,13 @@
+# Netlify redirects for proper path resolution
+# Handle CSS and JS files
+/css/* /css/:splat 200
+/js/* /js/:splat 200
+
+# Handle assets
+/assets/* /assets/:splat 200
+
+# Handle news detail pages
+/news/* /news/:splat 200
+
+# Handle root files
+/* /:splat 200
