@@ -39,7 +39,7 @@ function ensureInfiniteLoop(track, segmentCount) {
   // 安全チェック
   if (children.length === 0) {
     console.warn('Collection track has no children');
-    return;
+return;
   }
   
   let originalWidth = 0;
@@ -235,7 +235,7 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始
 function startAutoScroll(track) {
-  const speed = parseFloat(track.dataset.speed || 55);
+  const speed = parseFloat(track.dataset.speed || 80); // 55から80に変更（より遅く）
   
   // reverse クラスが付いているトラックはスクロール方向を逆にして、21.JPG が右端になるよう初期化
   const isReverse = track.classList.contains('reverse');
