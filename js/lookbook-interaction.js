@@ -32,38 +32,81 @@ function initTrack(track) {
   startAutoScroll(track);
 }
 
-// 無限ループのための要素複製
+// 無限ループのための要素複製（安全な実装）
 function ensureInfiniteLoop(track, segmentCount) {
   const children = Array.from(track.children);
-  let originalWidth = children.reduce((width, child) => width + child.getBoundingClientRect().width, 0);
   
-  // 画像が読み込まれていない場合のフォールバック
-  if (originalWidth === 0) {
-    // 各画像に明示的な幅を設定して再計算
-    children.forEach(child => {
-      const img = child.querySelector('img');
-      if (img) {
-        img.style.width = '300px';
-        img.style.height = 'auto';
+  // 安全チェック
+  if (children.length === 0) {
+    console.warn('Lookbook track has no children');
+    return;
+  }
+  
+  let originalWidth = 0;
+  let attempts = 0;
+  const maxAttempts = 3;
+  
+  // 幅の計算を安全に実行
+  while (originalWidth === 0 && attempts < maxAttempts) {
+    originalWidth = children.reduce((width, child) => {
+      const rect = child.getBoundingClientRect();
+      return width + (rect.width || 300); // フォールバック値
+    }, 0);
+    
+    if (originalWidth === 0) {
+      // 画像が読み込まれていない場合のフォールバック
+      children.forEach(child => {
+        const img = child.querySelector('img');
+        if (img) {
+          img.style.width = '300px';
+          img.style.height = 'auto';
+        }
+      });
+      attempts++;
+      
+      // DOM更新を待つ
+      if (attempts < maxAttempts) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            ensureInfiniteLoop(track, segmentCount);
+            resolve();
+          }, 100);
+        });
       }
-    });
-    originalWidth = children.reduce((width, child) => width + child.getBoundingClientRect().width, 0);
+    }
   }
   
   // オリジナル区間幅を記録
   track._segmentWidth = originalWidth;
   
-  // 画面幅の3倍以上の幅になるまで複製（確実に無限ループ）
+  // 安全な複製処理
   const viewportWidth = window.innerWidth;
-  const targetWidth = Math.max(originalWidth * 3, viewportWidth * 3);
+  const targetWidth = Math.max(originalWidth * 2, viewportWidth * 2); // 3倍から2倍に削減
   let currentWidth = originalWidth;
+  let cloneCount = 0;
+  const maxClones = 40; // 最大複製数を制限（Lookbookは少なめ）
   
-  while (currentWidth < targetWidth) {
+  // 無限ループ防止のための安全なwhile文
+  while (currentWidth < targetWidth && cloneCount < maxClones) {
     children.forEach(child => {
-      const clone = child.cloneNode(true);
-      track.appendChild(clone);
+      if (cloneCount < maxClones) {
+        const clone = child.cloneNode(true);
+        track.appendChild(clone);
+        cloneCount++;
+      }
     });
-    currentWidth = Array.from(track.children).reduce((width, child) => width + child.getBoundingClientRect().width, 0);
+    
+    // 現在の幅を再計算（安全に）
+    currentWidth = Array.from(track.children).reduce((width, child) => {
+      const rect = child.getBoundingClientRect();
+      return width + (rect.width || 300);
+    }, 0);
+    
+    // 進捗がない場合は安全のため終了
+    if (cloneCount >= maxClones) {
+      console.log('Lookbook track clone limit reached');
+      break;
+    }
   }
 }
 
