@@ -63,6 +63,7 @@ body {
   letter-spacing: 0.02em;
   line-height: 1.7;
   overflow-x: hidden;
+  padding-top: 80px; /* 固定ヘッダー分の余白 */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -142,11 +143,7 @@ section {
   color: #333 !important;
   font-size: 2rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 1rem 2rem;
-  border-radius: 12px;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .collection-title {
@@ -381,8 +378,7 @@ section {
   margin-left: calc(50% - 50vw); 
   margin-right: calc(50% - 50vw);
   padding-block: clamp(12px, 2vw, 24px);
-  background: rgba(220, 220, 220, 0.4);
-  backdrop-filter: blur(8px);
+  background: transparent;
   position: relative;
   z-index: 1;
 }
@@ -738,7 +734,11 @@ footer {
 .navbar { 
   background: rgba(255, 255, 255, 0.85); 
   backdrop-filter: blur(8px);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
 }
 .navbar .navbar-brand { font-weight: 700; letter-spacing: 0.02em; }
@@ -960,7 +960,8 @@ img[src*="rockmount"] {
 }
 #lookbook{ 
   padding: clamp(40px,6vw,80px) 0; 
-  background:transparent; 
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
   text-align: center !important; /* 中央揃え */
   width: 100% !important; /* 横幅100% */
   max-width: none !important;
@@ -1043,7 +1044,8 @@ img[src*="rockmount"] {
   object-fit: contain !important; /* 上下切れ防止 */
   max-height: 100% !important; /* 画像見切れ防止 */
   width: auto !important;
-  border-radius:8px; 
+  border-radius:8px;
+  max-width: 100%;
 }
 #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; }
 
@@ -1129,9 +1131,9 @@ img[src*="rockmount"] {
   block-size: clamp(180px, 24vw, 340px) !important;
 }
 
-/* --- Lookbook の行高：PCは少し小さめ（SPはclamp下限に寄る） --- */
+/* --- Lookbook の行高：PCでも画像全体が表示されるように調整 --- */
 #lookbook .lookbook-track{
-  block-size: clamp(180px, 22vw, 300px) !important;
+  block-size: clamp(200px, 25vw, 400px) !important;
 }
 
 /* カード：余白のみ。白いカード背景は無し */
@@ -1355,13 +1357,12 @@ img[loading="lazy"].loaded {
   background: var(--rs-surface, #f7f5f2); 
 }
 
-/* Collectionセクションの背景色を明確に設定 */
+/* Collectionセクションの背景色をナビバーと同じに設定 */
 #collection {
-  background: linear-gradient(to bottom, rgba(240, 240, 240, 0.8), rgba(230, 230, 230, 0.6));
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
   position: relative;
   z-index: 1;
-  border-top: 2px solid rgba(200, 200, 200, 0.3);
-  border-bottom: 2px solid rgba(200, 200, 200, 0.3);
 }
 .collection-bg { 
   position: relative; 
@@ -1403,6 +1404,7 @@ img[loading="lazy"].loaded {
 .collection-wrapper {
   position: relative;
   min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
+  margin-top: 3rem; /* タイトルとの間隔を確保 */
 }
 
 .collection-row:first-child {
