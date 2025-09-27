@@ -1245,9 +1245,10 @@
       }
 
       // 保存された言語設定を読み込む
-      const savedLang = localStorage.getItem('preferred-language');
+      const savedLang = localStorage.getItem('rs-lang');
       if (savedLang) {
-        switchLanguage(savedLang, false);
+        // 言語切替機能はlang-toggle.jsで処理される
+        console.log('Saved language:', savedLang);
       }
     });
 
