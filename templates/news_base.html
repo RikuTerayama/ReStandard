@@ -626,9 +626,9 @@
           return;
         }
         
-        // 戦略3: フォールバック画像
-        console.log('Using fallback image');
-        img.src = '/assets/placeholder/cover-fallback.webp';
+               // 戦略3: フォールバック画像
+               console.log('Using fallback image');
+               img.src = '{{BASE_PATH}}/assets/placeholder/cover-fallback.webp';
       }
     });
 
@@ -637,16 +637,16 @@
       console.log('✅ Image loaded successfully:', img.src);
     });
 
-    // 画像読み込みのタイムアウト処理
-    setTimeout(() => {
-      if (img.complete === false || img.naturalHeight === 0) {
-        console.log('Image load timeout for:', img.src);
-        if (!img.dataset._triedFallback) {
-          img.dataset._triedFallback = '1';
-          img.src = '/assets/placeholder/cover-fallback.webp';
-        }
-      }
-    }, 5000); // 5秒でタイムアウト
+           // 画像読み込みのタイムアウト処理
+           setTimeout(() => {
+             if (img.complete === false || img.naturalHeight === 0) {
+               console.log('Image load timeout for:', img.src);
+               if (!img.dataset._triedFallback) {
+                 img.dataset._triedFallback = '1';
+                 img.src = '{{BASE_PATH}}/assets/placeholder/cover-fallback.webp';
+               }
+             }
+           }, 5000); // 5秒でタイムアウト
   });
 
   // 3) 箇条書き → 通常改行（行頭記号を削除、リストを段落化）
