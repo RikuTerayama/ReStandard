@@ -44,7 +44,7 @@ function ensureInfiniteLoop(track, segmentCount) {
   
   let originalWidth = 0;
   let attempts = 0;
-  const maxAttempts = 3;
+  const maxAttempts = 5; // 試行回数を増加
   
   // 幅の計算を安全に実行
   while (originalWidth === 0 && attempts < maxAttempts) {
@@ -58,19 +58,23 @@ function ensureInfiniteLoop(track, segmentCount) {
       children.forEach(child => {
         const img = child.querySelector('img');
         if (img) {
+          // 画像の表示を強制
+          img.style.display = 'block';
           img.style.width = '300px';
           img.style.height = 'auto';
+          img.style.visibility = 'visible';
+          img.style.opacity = '1';
         }
       });
       attempts++;
       
-      // DOM更新を待つ
+      // DOM更新を待つ（時間を延長）
       if (attempts < maxAttempts) {
         return new Promise(resolve => {
           setTimeout(() => {
             ensureInfiniteLoop(track, segmentCount);
             resolve();
-          }, 100);
+          }, 200); // 100msから200msに延長
         });
       }
     }
@@ -84,7 +88,7 @@ function ensureInfiniteLoop(track, segmentCount) {
   const targetWidth = Math.max(originalWidth * 2, viewportWidth * 2); // 3倍から2倍に削減
   let currentWidth = originalWidth;
   let cloneCount = 0;
-  const maxClones = 40; // 最大複製数を制限（Lookbookは少なめ）
+  const maxClones = 80; // 最大複製数を増加（Lookbook）
   
   // 無限ループ防止のための安全なwhile文
   while (currentWidth < targetWidth && cloneCount < maxClones) {
