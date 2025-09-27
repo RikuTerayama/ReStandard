@@ -54,15 +54,22 @@ function fixAssetPaths(html) {
 }
 
 function fixContentFormatting(html) {
-  // 「・」を改行に変更
+  // 箇条書きをプレーンテキスト形式に変更
   // HTMLエンティティをデコード
+  // 重複タイトル（Published: を含む行）を削除
   return html
     .replace(/&amp;amp;/g, '&amp;')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
-    .replace(/・/g, '<br>')
+    .replace(/Published:\s*\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/g, '')
+    // 箇条書き記号を削除して改行に
+    .replace(/・/g, '')
+    .replace(/-\s*/g, '')
+    .replace(/\*\s*/g, '')
+    .replace(/•\s*/g, '')
+    .replace(/\d+\.\s*/g, '')
     // 連続する改行を整理
     .replace(/(<br>\s*){3,}/g, '<br><br>');
 }
