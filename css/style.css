@@ -376,6 +376,10 @@ section {
   margin-left: calc(50% - 50vw); 
   margin-right: calc(50% - 50vw);
   padding-block: clamp(12px, 2vw, 24px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 1;
 }
 #collection .track-wrap, #lookbook .track-wrap{
   gap: var(--collection-gap);
@@ -726,7 +730,12 @@ footer {
 }
 
 /* Navbar（index.html と同一の前提） */
-.navbar { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); }
+.navbar { 
+  background: rgba(255, 255, 255, 0.85); 
+  backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 1000;
+}
 .navbar .navbar-brand { font-weight: 700; letter-spacing: 0.02em; }
 .navbar .nav-link { font-weight: 500; letter-spacing: 0.02em; }
 .language-switcher button { margin: 0 0.25rem; }
@@ -746,6 +755,18 @@ footer {
 
 /* 背景動画は常に背面へ */
 #mobile-bg-video, #desktop-bg-video { z-index: -1; }
+
+/* Collection/Lookbookセクションのz-index調整 */
+#collection, #lookbook {
+  position: relative;
+  z-index: 1;
+}
+
+/* Collection/Lookbookの背景帯を確実に表示 */
+#collection .band, #lookbook .band {
+  position: relative;
+  z-index: 1;
+}
 
 /* レスポンシブ細部（タイトル・ナビ間隔の統一） */
 @media (max-width: 768px) {
@@ -860,9 +881,11 @@ img[src*="rockmount"] {
 /* ====== Collection ====== */
 #collection{ 
   padding: clamp(40px,6vw,80px) 0; 
-  background: transparent; 
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)); 
   width: 100% !important;
   max-width: none !important;
+  position: relative;
+  z-index: 1;
 }
 #collection .band-frost{ 
   display:grid; 
@@ -1326,6 +1349,13 @@ img[loading="lazy"].loaded {
   position: relative; 
   padding: var(--section-pad, 40px) 0; 
   background: var(--rs-surface, #f7f5f2); 
+}
+
+/* Collectionセクションの背景色を明確に設定 */
+#collection {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  position: relative;
+  z-index: 1;
 }
 .collection-bg { 
   position: relative; 
