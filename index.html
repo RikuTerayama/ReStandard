@@ -1256,48 +1256,115 @@
   </script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // スプラッシュ動画演出（外部サイトからの遷移・直接アクセス時のみ表示）
+    // スプラッシュ動画の最適化された処理
+    let splashInitialized = false;
+    
+    function initializeSplash() {
+      if (splashInitialized) return;
+      splashInitialized = true;
+      
       const splash = document.getElementById('splash-video-wrapper');
       const video = document.getElementById('splash-video');
-      // const loading = document.getElementById('splash-loading');
-      // 自サイト判定
-      const isInternal = document.referrer && document.referrer.includes(window.location.hostname);
-      if (isInternal) {
-        // サイト内遷移ならスプラッシュ非表示
-        document.body.classList.remove('splash-active');
-        if (splash) splash.style.display = 'none';
+      
+      if (!splash || !video) {
+        console.log('スプラッシュ動画要素が見つかりません');
         return;
       }
-      // 外部からの遷移 or 直接アクセス時のみスプラッシュ表示
+      
+      console.log('スプラッシュ動画初期化開始');
+      
+      // 自サイト判定（より厳密に）
+      const isInternal = document.referrer && 
+                        (document.referrer.includes(window.location.hostname) || 
+                         document.referrer.includes('localhost') ||
+                         document.referrer.includes('127.0.0.1'));
+      
+      if (isInternal) {
+        console.log('サイト内遷移 - スプラッシュ非表示');
+        document.body.classList.remove('splash-active');
+        splash.style.display = 'none';
+        return;
+      }
+      
+      console.log('外部アクセス - スプラッシュ表示');
+      
+      // スプラッシュ表示
       document.body.classList.add('splash-active');
       splash.style.display = 'flex';
-      // loading.style.display = 'block';
-      video.addEventListener('canplay', function() {
-        console.log('スプラッシュ動画の準備完了');
-        video.play().catch(function(error) {
+      
+      // 動画の読み込みと再生を最適化
+      let videoLoaded = false;
+      let playAttempted = false;
+      
+      function attemptPlay() {
+        if (playAttempted || !videoLoaded) return;
+        playAttempted = true;
+        
+        console.log('スプラッシュ動画再生試行');
+        video.play().then(() => {
+          console.log('スプラッシュ動画再生成功');
+        }).catch(function(error) {
           console.log('スプラッシュ動画の再生に失敗:', error);
           // 再生に失敗した場合はスプラッシュをスキップ
-          splash.classList.add('hide');
-          setTimeout(function() {
-            splash.style.display = 'none';
-            document.body.classList.remove('splash-active');
-          }, 100);
+          hideSplash();
         });
+      }
+      
+      function hideSplash() {
+        console.log('スプラッシュ非表示');
+        splash.classList.add('hide');
+        setTimeout(function() {
+          splash.style.display = 'none';
+          document.body.classList.remove('splash-active');
+        }, 300);
+      }
+      
+      // 動画の読み込み完了を待つ
+      video.addEventListener('canplay', function() {
+        console.log('スプラッシュ動画の準備完了');
+        videoLoaded = true;
+        attemptPlay();
       });
-      splash.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); }, true);
+      
+      // 動画の終了処理
+      video.addEventListener('ended', function() {
+        console.log('スプラッシュ動画終了');
+        hideSplash();
+      });
+      
+      // エラー処理
+      video.addEventListener('error', function(e) {
+        console.error('スプラッシュ動画エラー:', e);
+        hideSplash();
+      });
+      
+      // タイムアウト処理（5秒で強制終了）
+      setTimeout(function() {
+        if (splash.style.display !== 'none') {
+          console.log('スプラッシュ動画タイムアウト - 強制終了');
+          hideSplash();
+        }
+      }, 5000);
+      
+      // ユーザーインタラクション防止
+      splash.addEventListener('click', function(e) { 
+        e.stopPropagation(); 
+        e.preventDefault(); 
+      }, true);
+      
       window.addEventListener('keydown', function(e) {
         e.preventDefault();
         e.stopPropagation();
         return false;
       }, true);
-      video.addEventListener('ended', function() {
-        console.log('スプラッシュ動画終了');
-        splash.classList.add('hide');
-        setTimeout(function() {
-          splash.style.display = 'none';
-          document.body.classList.remove('splash-active');
-        }, 500);
+    }
+    
+    // DOMContentLoadedでスプラッシュ初期化
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOMContentLoaded - スプラッシュ初期化開始');
+      // 他の初期化処理を優先してからスプラッシュを実行
+      requestAnimationFrame(function() {
+        setTimeout(initializeSplash, 100);
       });
     });
   </script>
@@ -1306,107 +1373,139 @@
 // スマホ背景動画の処理は上記の最適化されたコードに統合済み
 </script>
   <script>
-// ハンバーガーメニューの外をクリックした時に閉じる機能
-document.addEventListener('DOMContentLoaded', function() {
-  const navbarToggler = document.querySelector('.navbar-toggler');
-  const navbarCollapse = document.querySelector('.navbar-collapse');
-  
-  // メニューの外をクリックした時の処理
-  document.addEventListener('click', function(event) {
-    // ハンバーガーボタンまたはメニュー内をクリックした場合は何もしない
-    if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
-      return;
+    // 統合されたページ初期化スクリプト
+    let pageInitialized = false;
+    
+    function initializePage() {
+      if (pageInitialized) return;
+      pageInitialized = true;
+      
+      console.log('ページ初期化開始');
+      
+      // ハンバーガーメニューの外をクリックした時に閉じる機能
+      const navbarToggler = document.querySelector('.navbar-toggler');
+      const navbarCollapse = document.querySelector('.navbar-collapse');
+      
+      if (navbarToggler && navbarCollapse) {
+        document.addEventListener('click', function(event) {
+          if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
+            return;
+          }
+          
+          if (navbarCollapse.classList.contains('show')) {
+            navbarToggler.click();
+          }
+        });
+      }
+      
+      // Collection セクション用のギャップ調整
+      function applyGap() {
+        const header = document.querySelector('header, .site-header, nav');
+        const h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
+        const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        const gap = vw >= 1024 ? 72 : 96;
+
+        const spacer = document.querySelector('.rs-header-spacer');
+        if (spacer) {
+          spacer.style.setProperty('height', (h + gap) + 'px', 'important');
+          spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
+        }
+      }
+      
+      // 初回実行
+      applyGap();
+      
+      // リサイズ時実行
+      window.addEventListener('resize', applyGap);
+      
+      console.log('ページ初期化完了');
     }
     
-    // メニューが開いている場合のみ閉じる
-    if (navbarCollapse.classList.contains('show')) {
-      navbarToggler.click();
-    }
-  });
-});
-</script>
+    // DOMContentLoadedで初期化
+    document.addEventListener('DOMContentLoaded', function() {
+      // 他の初期化処理を優先
+      requestAnimationFrame(function() {
+        setTimeout(initializePage, 50);
+      });
+    });
+  </script>
+
+  <!-- 最適化されたパフォーマンス監視とテキスト演出 -->
   <script>
-// 新しいCollectionセクション用のJavaScript（簡略化）
-</script>
-
-<!-- Collection セクション用のギャップ調整スクリプト -->
-<script>
-  (function() {
-    function applyGap() {
-      var header = document.querySelector('header, .site-header, nav');
-      var gap = 0, base = 96;
-      var h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
-      var vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      gap = vw >= 1024 ? 72 : 96;
-
-      var spacer = document.querySelector('.rs-header-spacer');
-      if (spacer) {
-        spacer.style.setProperty('height', (h + gap) + 'px', 'important');
-        spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
+    // パフォーマンス監視（軽量化）
+    if ('PerformanceObserver' in window) {
+      try {
+        new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          console.log('LCP:', lastEntry.startTime + 'ms');
+        }).observe({entryTypes: ['largest-contentful-paint']});
+        
+        window.addEventListener('load', () => {
+          const loadTime = performance.now();
+          console.log('Approximate TTI:', loadTime + 'ms');
+        });
+      } catch (e) {
+        console.log('Performance monitoring failed:', e);
       }
     }
-    window.addEventListener('load', applyGap, { once:true });
-    window.addEventListener('resize', applyGap);
-})();
-  </script>
-
-  <!-- Performance monitoring -->
-  <script>
-  if ('PerformanceObserver' in window) {
-    // LCP monitoring
-    new PerformanceObserver((list) => {
-      const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1];
-      console.log('LCP:', lastEntry.startTime + 'ms');
-    }).observe({entryTypes: ['largest-contentful-paint']});
     
-    // TTI approximation (load event)
-    window.addEventListener('load', () => {
-      const loadTime = performance.now();
-      console.log('Approximate TTI:', loadTime + 'ms');
-    });
-  }
-  </script>
-
-<!-- テキスト演出スクリプト -->
-<script src="js/reveal.js?v=2025-01-18-final"></script>
-<script src="js/lang-toggle.js?v=2025-01-18-final"></script>
-  <!-- 統合済み: flowing-fix.js の内容を index.html 内のスクリプトに統合 -->
-  <!-- Duplicate removed: 競合を避けるため、外部JSファイルを削除 -->
-  <script>
-  // DOM完成後にテキスト演出を有効化
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof initReveal === 'function') {
-      initReveal();
-  }
-});
-
-  // Collection インライン固定指定削除済み - style.css の --collection-row-h で統一管理
-
-  // Collection 固定指定削除済み - CSS変数で自動管理
-  
-  // ページ読み込み完了後の固定指定も削除済み
-
-  // 遅延実行の固定指定も削除済み
-</script>
-  <script>
-    // モバイルレイアウト修正のためのJavaScriptガード
-    // 1.JPGと25.JPGのインラインスタイルを削除
+    // テキスト演出の初期化（最適化）
+    let revealInitialized = false;
+    
+    function initializeReveal() {
+      if (revealInitialized) return;
+      revealInitialized = true;
+      
+      if (typeof initReveal === 'function') {
+        console.log('テキスト演出初期化');
+        initReveal();
+      }
+    }
+    
+    // DOMContentLoadedでテキスト演出初期化
     document.addEventListener('DOMContentLoaded', function() {
+      // 他の初期化処理を優先
+      requestAnimationFrame(function() {
+        setTimeout(initializeReveal, 200);
+      });
+    });
+  </script>
+  
+  <!-- 外部スクリプトの読み込み -->
+  <script src="js/reveal.js?v=2025-01-18-final" defer></script>
+  <script src="js/lang-toggle.js?v=2025-01-18-final" defer></script>
+  <script>
+    // モバイルレイアウト修正のためのJavaScriptガード（最適化）
+    let layoutInitialized = false;
+    
+    function initializeLayout() {
+      if (layoutInitialized) return;
+      layoutInitialized = true;
+      
+      // 1.JPGと25.JPGのインラインスタイルを削除
       document.querySelectorAll('img[src$="/1.JPG"], img[src$="/1.jpg"], img[src$="/25.JPG"], img[src$="/25.jpg"]').forEach(el => {
         el.removeAttribute('style');
         const card = el.closest('.item, .card, div');
         if (card) card.removeAttribute('style');
       });
+      
+      console.log('レイアウト初期化完了');
+    }
+    
+    // DOMContentLoadedでレイアウト初期化
+    document.addEventListener('DOMContentLoaded', function() {
+      requestAnimationFrame(function() {
+        setTimeout(initializeLayout, 300);
+      });
     });
   </script>
   
-  <!-- セクション初期化スクリプト - 統合済み -->
-  <!-- Duplicate removed: 個別のmarquee初期化スクリプトをinit-sections.jsに統合 -->
-  <script src="js/init-sections.js?v=2025-01-18-final"></script>
-  <!-- Collection と Lookbook の個別インタラクション -->
-  <script src="js/collection-interaction.js?v=2025-01-18-final"></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-18-final"></script>
+  <!-- セクション初期化スクリプト（defer付きで最適化） -->
+  <script src="js/init-sections.js?v=2025-01-18-final" defer></script>
+  <!-- Collection と Lookbook の個別インタラクション（defer付きで最適化） -->
+  <script src="js/collection-interaction.js?v=2025-01-18-final" defer></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-18-final" defer></script>
 
 </body>
 </html>
