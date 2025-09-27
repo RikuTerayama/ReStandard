@@ -4,8 +4,8 @@
 
 // 重複読み込み防止
 if (typeof window.initLookbookTracks === 'function') {
-  return;
-}
+  // 既に読み込まれている場合は何もしない
+} else {
 
 // Lookbook トラックでも Collection と同様の無限スクロールとクリック/ドラッグ判定を実装
 function initLookbookTracks() {
@@ -239,3 +239,5 @@ document.head.appendChild(style);
 
 // 初期化
 document.addEventListener('DOMContentLoaded', initLookbookTracks);
+
+} // 重複読み込み防止の閉じ括弧
