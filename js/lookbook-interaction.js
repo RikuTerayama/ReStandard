@@ -226,7 +226,7 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始（左方向）
 function startAutoScroll(track) {
-  const speed = parseFloat(track.dataset.speed || 80); // 55から80に変更（より遅く）
+        const speed = parseFloat(track.dataset.speed || 32); // 32秒に変更
   
   // 開始位置の調整
   alignTrackStart(track);
