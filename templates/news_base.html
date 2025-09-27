@@ -582,25 +582,42 @@
     const orig = img.getAttribute('src') || '';
     if (!orig) return;
 
+    console.log('Original image src:', orig);
+
     // /assets/xxx → /assets/images/xxx に正規化
     if (/^\/assets\/(?!images\/)/.test(orig)) {
-      img.src = orig.replace(/^\/assets\//, '/assets/images/');
+      const newSrc = orig.replace(/^\/assets\//, '/assets/images/');
+      console.log('Normalized image src:', newSrc);
+      img.src = newSrc;
     }
     // ルート/プロトコルなしの相対パスは詳細ページ基準だと 404 になるので絶対化
     else if (!/^(https?:)?\/\//.test(orig) && !orig.startsWith('/')) {
       try {
-        img.src = new URL(orig, window.location.origin + window.location.pathname).toString();
+        const newSrc = new URL(orig, window.location.origin + window.location.pathname).toString();
+        console.log('Absolute image src:', newSrc);
+        img.src = newSrc;
       } catch (_) { /* noop */ }
     }
 
     // フォールバック（万一 404 の場合）
     img.addEventListener('error', () => {
+      console.log('Image load error for:', img.src);
       if (!img.dataset._triedFallback) {
         img.dataset._triedFallback = '1';
         const fixed = img.src.replace(/\/assets\/(?!images\/)/, '/assets/images/');
-        if (fixed !== img.src) { img.src = fixed; return; }
+        if (fixed !== img.src) { 
+          console.log('Trying fixed src:', fixed);
+          img.src = fixed; 
+          return; 
+        }
+        console.log('Using fallback image');
         img.src = '/assets/placeholder/cover-fallback.webp';
       }
+    });
+
+    // 画像読み込み成功のログ
+    img.addEventListener('load', () => {
+      console.log('✅ Image loaded successfully:', img.src);
     });
   });
 
