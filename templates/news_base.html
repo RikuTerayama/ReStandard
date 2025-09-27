@@ -629,23 +629,62 @@
     pageTitleEl.textContent = pageTitleEl.textContent.replace(/^\s*\d{1,2}[\/\-]\d{1,2}\s+/, '');
   }
 
-  // 5) 「お問い合わせ」直下のハッシュタグ群を削除
-  const contactAnchor = Array.from(root.querySelectorAll('h1,h2,h3,h4,h5,h6,p,strong,b,span'))
-    .find(el => /お問い合わせ/.test(el.textContent || ''));
-  if (contactAnchor) {
-    let el = contactAnchor.nextElementSibling;
-    const isHeading = el => /^h\d$/.test(el.tagName?.toLowerCase() || '');
-    while (el && !isHeading(el)) {
-      const txt = (el.textContent || '').trim();
-      const hashCount = (txt.match(/[#＃][^\s#＃]+/g) || []).length;
-      // ハッシュタグ行/塊と判断
-      if (hashCount >= 1 && txt.replace(/[#＃\s]/g, '').length <= (txt.length * 0.7)) {
-        const rm = el; el = el.nextElementSibling; rm.remove(); continue;
-      }
-      el = el.nextElementSibling;
-    }
-  }
-})();
+   // 5) 「お問い合わせ」直下のハッシュタグ群を削除
+   const contactAnchor = Array.from(root.querySelectorAll('h1,h2,h3,h4,h5,h6,p,strong,b,span'))
+     .find(el => /お問い合わせ/.test(el.textContent || ''));
+   if (contactAnchor) {
+     let el = contactAnchor.nextElementSibling;
+     const isHeading = el => /^h\d$/.test(el.tagName?.toLowerCase() || '');
+     while (el && !isHeading(el)) {
+       const txt = (el.textContent || '').trim();
+       const hashCount = (txt.match(/[#＃][^\s#＃]+/g) || []).length;
+       // ハッシュタグ行/塊と判断
+       if (hashCount >= 1 && txt.replace(/[#＃\s]/g, '').length <= (txt.length * 0.7)) {
+         const rm = el; el = el.nextElementSibling; rm.remove(); continue;
+       }
+       el = el.nextElementSibling;
+     }
+   }
+
+   // 6) HTML整形の適用（読みやすくする）
+   function formatElementHtml(element) {
+     if (!element) return;
+     
+     // 要素の内容を取得
+     let html = element.innerHTML;
+     
+     // タグの間に改行を挿入
+     html = html.replace(/></g, '>\n<');
+     
+     // インデントを追加
+     const lines = html.split('\n');
+     let indentLevel = 0;
+     const indentedLines = lines.map(line => {
+       const trimmed = line.trim();
+       if (!trimmed) return '';
+       
+       // 閉じタグの場合はインデントレベルを減らしてから出力
+       if (trimmed.startsWith('</')) {
+         indentLevel = Math.max(0, indentLevel - 1);
+         return '  '.repeat(indentLevel) + trimmed;
+       }
+       
+       // 開始タグの場合は出力してからインデントレベルを増やす
+       const result = '  '.repeat(indentLevel) + trimmed;
+       if (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.endsWith('/>')) {
+         indentLevel++;
+       }
+       
+       return result;
+     });
+     
+     // 整形されたHTMLを適用
+     element.innerHTML = indentedLines.filter(line => line.length > 0).join('\n');
+   }
+   
+   // コンテンツ部分を整形
+   formatElementHtml(root);
+ })();
 </script>
 </body>
 </html>
