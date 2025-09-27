@@ -5,7 +5,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const BASE_PATH   = ''; // 例: '/site' で配信する場合は '/site'
+const BASE_PATH   = process.env.BASE_PATH || ''; // 環境変数から取得、デフォルトは空文字列
 const OUT_ROOT    = path.resolve('news'); // 出力ルート
 const HTML_DIR    = path.resolve('assets/restandard_note_split_html');
 const MANIFEST    = path.resolve('news_src/manifest.json');
@@ -22,13 +22,25 @@ function normalizeAsset(url) {
   if (!url) return '';
   url = url.split('#')[0].split('?')[0];
   if (/^https?:\/\//i.test(url)) return url;
+  
+  // /assets/ パスを /assets/images/ に正規化
   if (url.startsWith('/assets/') && !url.startsWith('/assets/images/')) {
     url = url.replace('/assets/', '/assets/images/');
   }
   if (url.startsWith('/assets/')) return url;
-  if (url.startsWith('/images/')) return '/assets' + url; // /images → /assets/images
+  
+  // /images/ パスを /assets/images/ に正規化
+  if (url.startsWith('/images/')) return '/assets' + url;
+  
+  // 相対パスを絶対パスに変換
   if (url.startsWith('assets/')) return '/' + url;
   if (url.startsWith('images/')) return '/assets/' + url;
+  
+  // ファイル名のみの場合は /assets/images/ を付与
+  if (!url.startsWith('/') && !url.includes('/')) {
+    return '/assets/images/' + url;
+  }
+  
   if (!url.startsWith('/')) return '/' + url;
   return url;
 }
