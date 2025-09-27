@@ -1139,6 +1139,12 @@ img[src*="rockmount"] {
   block-size: clamp(200px, 25vw, 400px) !important;
 }
 
+#lookbook .lookbook-item img {
+  max-height: 100% !important;
+  object-fit: contain !important;
+  width: auto !important;
+}
+
 /* カード：余白のみ。白いカード背景は無し */
 .collection-item,
 .lookbook-item{
@@ -1406,7 +1412,7 @@ img[loading="lazy"].loaded {
 .collection-wrapper {
   position: relative;
   min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
-  margin-top: 3rem; /* タイトルとの間隔を確保 */
+  margin-top: 4rem; /* タイトルとの間隔をさらに確保 */
 }
 
 /* Collection行に背景を設定 */
@@ -1419,14 +1425,14 @@ img[loading="lazy"].loaded {
 
 .collection-row:first-child {
   position: absolute;
-  top: 40%;
+  top: 45%;
   transform: translateY(-50%);
   width: 100%;
 }
 
 .collection-row:last-child {
   position: absolute;
-  top: 70%;
+  top: 75%;
   transform: translateY(-50%);
   width: 100%;
 }
