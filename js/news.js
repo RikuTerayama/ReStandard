@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // 日付パターンを削除（例：10/28, 10/21, 9/30 など）
     let cleaned = title.replace(/^\d{1,2}\/\d{1,2}\s*/, '');
     
-    // エンティティをデコード
+    // エンティティをデコード（&amp; → &）
     cleaned = decodeEntities(cleaned);
     
     return cleaned;
