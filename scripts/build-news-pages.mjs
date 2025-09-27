@@ -53,8 +53,48 @@ function fixAssetPaths(html) {
     .replace(/(<a\b[^>]*\bhref\s*=\s*["'])(\/?(?:assets|images)\/[^"']+)(["'])/gi, (m, a, href, z) => a + withBase(normalizeAsset(href)) + z);
 }
 
+function formatHtmlForReadability(html) {
+  if (!html) return html;
+  
+  // HTMLを整形して読みやすくする - より強力なアプローチ
+  let formatted = html
+    // すべてのタグの間に改行を挿入
+    .replace(/></g, '>\n<')
+    // 自己終了タグの後に改行を追加
+    .replace(/<(br|hr|img|input|meta|link)\b[^>]*\/?>/gi, (match) => match + '\n')
+    // 連続する改行を整理
+    .replace(/\n{3,}/g, '\n\n');
+  
+  // インデントを追加
+  const lines = formatted.split('\n');
+  let indentLevel = 0;
+  const indentedLines = lines.map(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return '';
+    
+    // 閉じタグの場合はインデントレベルを減らしてから出力
+    if (trimmed.startsWith('</')) {
+      indentLevel = Math.max(0, indentLevel - 1);
+      return '  '.repeat(indentLevel) + trimmed;
+    }
+    
+    // 開始タグの場合は出力してからインデントレベルを増やす
+    const result = '  '.repeat(indentLevel) + trimmed;
+    if (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.endsWith('/>')) {
+      indentLevel++;
+    }
+    
+    return result;
+  });
+  
+  return indentedLines.filter(line => line.length > 0).join('\n');
+}
+
 function normalizeArticleHtml(html, pageTitle) {
   if (!html) return html;
+
+  // まずHTMLを整形してから処理
+  html = formatHtmlForReadability(html);
 
   // 画像パス：/assets/ → /assets/images/
   html = html.replace(/src="\/assets\/(?!images\/)/g, 'src="/assets/images/');
