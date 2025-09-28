@@ -577,7 +577,7 @@
     }
   }
 
-  // 2) 画像 src の修復（強化版）
+  // 2) 画像 src の修復（改善版）
   root.querySelectorAll('img').forEach(img => {
     const orig = img.getAttribute('src') || '';
     if (!orig) return;
@@ -589,7 +589,13 @@
     img.style.visibility = 'visible';
     img.style.opacity = '1';
 
-    // /assets/xxx → /assets/images/xxx に正規化
+    // 既に正しいパス（/assets/images/で始まる）の場合は何もしない
+    if (orig.startsWith('/assets/images/')) {
+      console.log('Image path already correct:', orig);
+      return;
+    }
+
+    // /assets/xxx → /assets/images/xxx に正規化（/assets/images/でない場合のみ）
     if (/^\/assets\/(?!images\/)/.test(orig)) {
       const newSrc = orig.replace(/^\/assets\//, '/assets/images/');
       console.log('Normalized image src:', newSrc);
