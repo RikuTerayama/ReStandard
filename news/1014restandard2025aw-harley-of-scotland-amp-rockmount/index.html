@@ -666,6 +666,16 @@
   console.log('現在のURL:', window.location.href);
   console.log('タイムスタンプ:', new Date().toISOString());
   
+  // 即座にキャッシュをクリア
+  if ('caches' in window) {
+    caches.keys().then(function(names) {
+      for (let name of names) {
+        caches.delete(name);
+        console.log('即座にキャッシュ削除:', name);
+      }
+    });
+  }
+  
   // 強制的にキャッシュをクリア
   if ('caches' in window) {
     caches.keys().then(function(names) {
@@ -852,9 +862,18 @@
         img.setAttribute('src', newPath);
         img.setAttribute('data-corrected', 'true');
         img.setAttribute('data-timestamp', new Date().toISOString());
+        img.setAttribute('data-version', 'v8.0');
+        
+        // 画像の表示を強制
+        img.style.display = 'block';
+        img.style.visibility = 'visible';
+        img.style.opacity = '1';
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
         
         console.log(`[${index}] ✅ 画像パス修正完了:`, newPath);
         console.log(`[${index}] 最終的なsrc属性:`, img.src);
+        console.log(`[${index}] 画像の表示状態:`, img.style.display, img.style.visibility, img.style.opacity);
         return;
       }
     }
