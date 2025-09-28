@@ -8,5 +8,22 @@
   to = "/index.html"
   status = 200
 
+# キャッシュ制御ヘッダー
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+    Last-Modified = "Wed, 19 Jan 2025 17:00:00 GMT"
+
+[[headers]]
+  for = "/news/*.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+    Last-Modified = "Wed, 19 Jan 2025 17:00:00 GMT"
+
 [build.environment]
   NODE_VERSION = "18"
