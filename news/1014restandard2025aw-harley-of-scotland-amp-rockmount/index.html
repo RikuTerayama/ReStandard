@@ -661,7 +661,7 @@
   <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script>
   // ページ読み込み開始
-  console.log('=== ページ読み込み開始 v7.0 ===');
+  console.log('=== ページ読み込み開始 v8.0 ===');
   console.log('ナビゲーションタイプ:', performance.navigation.type);
   console.log('現在のURL:', window.location.href);
   console.log('タイムスタンプ:', new Date().toISOString());
@@ -677,10 +677,10 @@
   }
   
   // 古いキャッシュを検出したら強制リロード
-  if (!window.location.search.includes('v7=7.0')) {
-    console.log('古いキャッシュを検出 - 強制リロード v7.0');
+  if (!window.location.search.includes('v8=8.0')) {
+    console.log('古いキャッシュを検出 - 強制リロード v8.0');
     console.log('現在のURL:', window.location.href);
-    console.log('リダイレクト先:', window.location.href + (window.location.search ? '&' : '?') + 'v7=7.0');
+    console.log('リダイレクト先:', window.location.href + (window.location.search ? '&' : '?') + 'v8=8.0');
     
     // 強制的にキャッシュをクリア
     if ('caches' in window) {
@@ -692,7 +692,18 @@
       });
     }
     
-    window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'v7=7.0';
+    // より強力なキャッシュクリア
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+          console.log('Service Worker 削除:', registration);
+        }
+      });
+    }
+    
+    // 強制的にリロード
+    window.location.replace(window.location.href + (window.location.search ? '&' : '?') + 'v8=8.0');
     return;
   }
   
@@ -799,7 +810,7 @@
   }
 
     // 2) 画像パスの設定（Netlify対応版）
-    console.log('=== 画像パス設定開始 v6.0 ===');
+    console.log('=== 画像パス設定開始 v8.0 ===');
     console.log('現在時刻:', new Date().toISOString());
     console.log('ページURL:', window.location.href);
     console.log('Netlify対応: 絶対URL使用');
