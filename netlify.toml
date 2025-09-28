@@ -2,17 +2,43 @@
   publish = "."
   command = "node scripts/build-news-pages.mjs"
 
-# 画像ファイルの直接配信
-[[headers]]
-  for = "/assets/images/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000"
-
-# 画像ファイルは直接配信
+# 画像ファイルの直接配信（最優先設定）
 [[redirects]]
-  from = "/assets/images/*"
+  from = "/assets/images/*.png"
   to = "/assets/images/:splat"
   status = 200
+  force = true
+
+[[redirects]]
+  from = "/assets/images/*.jpg"
+  to = "/assets/images/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/assets/images/*.jpeg"
+  to = "/assets/images/:splat"
+  status = 200
+  force = true
+
+# 画像ファイルのヘッダー設定
+[[headers]]
+  for = "/assets/images/*.png"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/assets/images/*.jpg"
+  [headers.values]
+    Content-Type = "image/jpeg"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/assets/images/*.jpeg"
+  [headers.values]
+    Content-Type = "image/jpeg"
+    Cache-Control = "public, max-age=31536000"
 
 # SPA fallback for client-side routing (画像以外)
 [[redirects]]
