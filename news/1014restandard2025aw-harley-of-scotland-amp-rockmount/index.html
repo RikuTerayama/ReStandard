@@ -16,7 +16,10 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="canonical" href="https://restandard-2025.netlify.app/news/1014restandard2025aw-harley-of-scotland-amp-rockmount/?v=2025-01-19-final">
+  <meta name="cache-buster" content="2025-01-19-15-30-00">
+  <meta name="version" content="2025-01-19-15-30-00">
+  <meta name="build-time" content="1737282600">
+  <link rel="canonical" href="https://restandard-2025.netlify.app/news/1014restandard2025aw-harley-of-scotland-amp-rockmount/?v=2025-01-19-final&t=1737282600">
   <title>10/14【ReStandard別注】2025AW 新作アイテム紹介：Harley of Scotlandセーター & Rockmountスカート | ReStandard</title>
   <meta name="description" content="10/14【ReStandard別注】2025AW 新作アイテム紹介：Harley of Scotlandセーター & Rockmountスカート 冬を彩る赤とブラックウォッチ 季節の始まりに、一枚で“品よく決まる”2アイテムをセレクト。ス">
   <meta name="keywords" content="ReStandard, ニュース, お知らせ, note, 最新情報, イベント, アパレル卸">
@@ -660,8 +663,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="/js/reveal.js?v=2025-01-19-cache-bust"></script>
-  <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust"></script>
+  <script src="/js/reveal.js?v=2025-01-19-cache-bust&t=1737282600"></script>
+  <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust&t=1737282600"></script>
   <script>
   // 背景動画の読み込みと再生を確実にする
   document.addEventListener('DOMContentLoaded', function() {
@@ -736,7 +739,7 @@
   </script>
 
   <!-- lazy-load フェードイン処理 -->
-  <script src="/js/init-sections.js?v=2025-01-19-cache-bust" defer></script>
+  <script src="/js/init-sections.js?v=2025-01-19-cache-bust&t=1737282600" defer></script>
   
   <!-- 記事詳細ページ専用の修正スクリプト -->
   <script>
@@ -760,11 +763,16 @@
   }
 
   // 2) 画像 src の修復（改善版）
-  root.querySelectorAll('img').forEach(img => {
+  console.log('=== 画像修復スクリプト開始 ===');
+  console.log('現在時刻:', new Date().toISOString());
+  console.log('ページURL:', window.location.href);
+  
+  root.querySelectorAll('img').forEach((img, index) => {
     const orig = img.getAttribute('src') || '';
     if (!orig) return;
 
-    console.log('Original image src:', orig);
+    console.log(`[${index}] Original image src:`, orig);
+    console.log(`[${index}] Image element:`, img);
 
     // 画像の表示を強制
     img.style.display = 'block';
