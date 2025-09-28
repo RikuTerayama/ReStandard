@@ -661,9 +661,27 @@
   <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script>
   // ページ読み込み開始
-  console.log('=== ページ読み込み開始 ===');
+  console.log('=== ページ読み込み開始 v6.0 ===');
   console.log('ナビゲーションタイプ:', performance.navigation.type);
   console.log('現在のURL:', window.location.href);
+  console.log('タイムスタンプ:', new Date().toISOString());
+  
+  // 強制的にキャッシュをクリア
+  if ('caches' in window) {
+    caches.keys().then(function(names) {
+      for (let name of names) {
+        caches.delete(name);
+        console.log('キャッシュ削除:', name);
+      }
+    });
+  }
+  
+  // 古いキャッシュを検出したら強制リロード
+  if (!window.location.search.includes('v6=6.0')) {
+    console.log('古いキャッシュを検出 - 強制リロード v6.0');
+    window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'v6=6.0';
+    return;
+  }
   
   if (performance.navigation.type === 1) {
     console.log('ページがリロードされました');
@@ -768,20 +786,27 @@
   }
 
     // 2) 画像パスの設定（Netlify対応版）
-    console.log('=== 画像パス設定開始 ===');
+    console.log('=== 画像パス設定開始 v6.0 ===');
     console.log('現在時刻:', new Date().toISOString());
     console.log('ページURL:', window.location.href);
     console.log('Netlify対応: 絶対URL使用');
     console.log('ベースURL:', 'https://restandard-2025.netlify.app');
+    console.log('画像要素数:', root.querySelectorAll('img').length);
   
   root.querySelectorAll('img').forEach((img, index) => {
     const orig = img.getAttribute('src') || '';
     if (!orig) return;
 
+    console.log(`[${index}] Original image src:`, orig);
+    console.log(`[${index}] 画像要素:`, img);
+    console.log(`[${index}] 画像の表示状態:`, img.style.display, img.style.visibility, img.style.opacity);
+
     // 画像の表示を強制
     img.style.display = 'block';
     img.style.visibility = 'visible';
     img.style.opacity = '1';
+    img.style.maxWidth = '100%';
+    img.style.height = 'auto';
 
     // 画像パスを絶対URLに設定（Netlify対応版）
     const baseUrl = 'https://restandard-2025.netlify.app';
@@ -795,14 +820,17 @@
     // 正しいパスに直接設定
     for (const [oldPath, newPath] of Object.entries(correctPaths)) {
       if (orig.includes(oldPath)) {
-        console.log('古いパス検出:', orig);
-        console.log('正しいパスに設定:', newPath);
+        console.log(`[${index}] 古いパス検出:`, orig);
+        console.log(`[${index}] 正しいパスに設定:`, newPath);
         
         // 強制的にパスを設定
         img.src = newPath;
         img.setAttribute('src', newPath);
+        img.setAttribute('data-corrected', 'true');
+        img.setAttribute('data-timestamp', new Date().toISOString());
         
-        console.log('✅ 画像パス修正完了:', newPath);
+        console.log(`[${index}] ✅ 画像パス修正完了:`, newPath);
+        console.log(`[${index}] 最終的なsrc属性:`, img.src);
         return;
       }
     }
