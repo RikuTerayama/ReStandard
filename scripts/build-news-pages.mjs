@@ -141,8 +141,8 @@ function normalizeArticleHtml(html, pageTitle) {
   // まずHTMLを整形してから処理
   html = formatHtmlForReadability(html);
 
-  // 画像パス：/assets/ → /assets/images/
-  html = html.replace(/src="\/assets\/(?!images\/)/g, 'src="/assets/images/');
+  // 画像パス：/assets/ → /assets/images/（画像ファイル名は変更しない）
+  html = html.replace(/src="\/assets\/(?!images\/)([^"]+)"/g, 'src="/assets/images/$1"');
 
   // 本文先頭の重複見出しを削除（最初の <h1> または <h2> が pageTitle と一致/近似）
   try {
@@ -182,14 +182,24 @@ function fixContentFormatting(html) {
   // 箇条書きをプレーンテキスト形式に変更
   // HTMLエンティティをデコード
   // 重複タイトル（Published: を含む行）を削除
-  return html
+  
+  // 画像パスを一時的に保護
+  const imagePlaceholders = [];
+  let protectedHtml = html.replace(/<img[^>]*src=["']([^"']+)["'][^>]*>/gi, (match, src) => {
+    const placeholder = `__IMAGE_PLACEHOLDER_${imagePlaceholders.length}__`;
+    imagePlaceholders.push(src);
+    return match.replace(src, placeholder);
+  });
+  
+  // 通常の処理を実行
+  protectedHtml = protectedHtml
     .replace(/&amp;amp;/g, '&amp;')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/Published:\s*\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/g, '')
-    // 箇条書き記号を削除して改行に
+    // 箇条書き記号を削除して改行に（画像パスは保護済み）
     .replace(/・/g, '')
     .replace(/-\s*/g, '')
     .replace(/\*\s*/g, '')
@@ -197,6 +207,13 @@ function fixContentFormatting(html) {
     .replace(/\d+\.\s*/g, '')
     // 連続する改行を整理
     .replace(/(<br>\s*){3,}/g, '<br><br>');
+  
+  // 画像パスを復元
+  imagePlaceholders.forEach((src, index) => {
+    protectedHtml = protectedHtml.replace(`__IMAGE_PLACEHOLDER_${index}__`, src);
+  });
+  
+  return protectedHtml;
 }
 function extractBetween(str, startRe, endRe) {
   const s = str.search(startRe);
@@ -299,6 +316,7 @@ async function main() {
 
     // 本文（article内）を抽出し、画像・リンクのassetsパスを補正
     let content = extractArticleContent(html);
+    
     content = normalizeArticleHtml(content, titleDecoded);
     content = fixContentFormatting(content);
     content = fixAssetPaths(content);
