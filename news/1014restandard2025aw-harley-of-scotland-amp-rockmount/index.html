@@ -670,14 +670,16 @@
   <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script>
   // 強制リフレッシュ（キャッシュ問題の回避）
-  console.log('=== ページ読み込み開始 v3.0 ===');
+  console.log('=== ページ読み込み開始 v4.0 ===');
   console.log('ナビゲーションタイプ:', performance.navigation.type);
-  console.log('キャッシュバージョン: v3.0');
+  console.log('キャッシュバージョン: v4.0');
+  console.log('現在のURL:', window.location.href);
+  console.log('URLパラメータ:', window.location.search);
   
   // 古いキャッシュを強制的にクリア
-  if (!window.location.search.includes('v3=3.0')) {
-    console.log('古いキャッシュを検出 - 強制リロード');
-    window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'v3=3.0';
+  if (!window.location.search.includes('v4=4.0')) {
+    console.log('古いキャッシュを検出 - 強制リロード v4.0');
+    window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'v4=4.0';
     return;
   }
   
@@ -812,13 +814,20 @@
     // 正しいパスに直接設定（強化版）
     for (const [oldPath, newPath] of Object.entries(correctPaths)) {
       if (orig.includes(oldPath)) {
-        console.log('古いパス検出:', orig);
-        console.log('正しいパスに設定:', newPath);
+        console.log('🔍 古いパス検出:', orig);
+        console.log('🔧 正しいパスに設定:', newPath);
+        console.log('📝 画像要素:', img);
+        console.log('🌐 ベースURL:', baseUrl);
+        
+        // 強制的にパスを設定
         img.src = newPath;
         img.setAttribute('src', newPath);
         img.setAttribute('data-original-src', orig);
         img.setAttribute('data-corrected-src', newPath);
+        img.setAttribute('data-cache-version', 'v4.0');
+        
         console.log('✅ 画像パス修正完了:', newPath);
+        console.log('✅ 最終的なsrc属性:', img.src);
         return;
       }
     }
