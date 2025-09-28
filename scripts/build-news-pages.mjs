@@ -280,16 +280,103 @@ function applyAdditionalFixes(html) {
   result = result.replace(/※商品リンクの埋め込み/g, '');
   result = result.replace(/※商品リンク埋め込み/g, '');
   
-  // 4) Original linkをクリック可能にする
-  result = result.replace(
-    /Original link: (https:\/\/note\.com\/restandard_2025\/n\/[a-zA-Z0-9]+)/g,
-    'Original link: <a href="$1" target="_blank" rel="nofollow noopener">$1</a>'
-  );
+  // 4) Original linkをカード形式に変換
+  result = convertOriginalLinksToCards(result);
   
   // 5) STORESのURLをカード形式に変換
   result = convertStoresUrlsToCards(result);
   
   return result;
+}
+
+function convertOriginalLinksToCards(html) {
+  if (!html) return html;
+  
+  // Original linkのパターンを検出してカード形式に変換
+  const originalLinkRegex = /Original link:\s*<a[^>]*href="(https:\/\/note\.com\/restandard_2025\/n\/[a-zA-Z0-9]+)"[^>]*>[^<]*<\/a>/g;
+  
+  return html.replace(originalLinkRegex, (match, url) => {
+    return `
+<div class="original-link-card" style="
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+">
+  <div style="
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  ">
+    <div style="
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #00c851 0%, #007e33 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      flex-shrink: 0;
+    ">
+      n
+    </div>
+    <div style="flex: 1;">
+      <h3 style="
+        margin: 0 0 8px 0;
+        color: #333;
+        font-size: 18px;
+        font-weight: 600;
+      ">
+        note で元記事を確認
+      </h3>
+      <p style="
+        margin: 0 0 12px 0;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+      ">
+        この記事の元となったnoteの記事をご確認いただけます
+      </p>
+      <div style="
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #00c851;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background 0.3s ease;
+      ">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+        元記事へ
+      </div>
+    </div>
+  </div>
+  <div style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 1;
+  " onclick="window.open('${url}', '_blank', 'noopener,noreferrer')"></div>
+</div>`;
+  });
 }
 
 function convertStoresUrlsToCards(html) {
