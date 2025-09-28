@@ -661,7 +661,7 @@
   <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script>
   // ページ読み込み開始
-  console.log('=== ページ読み込み開始 v6.0 ===');
+  console.log('=== ページ読み込み開始 v7.0 ===');
   console.log('ナビゲーションタイプ:', performance.navigation.type);
   console.log('現在のURL:', window.location.href);
   console.log('タイムスタンプ:', new Date().toISOString());
@@ -677,9 +677,22 @@
   }
   
   // 古いキャッシュを検出したら強制リロード
-  if (!window.location.search.includes('v6=6.0')) {
-    console.log('古いキャッシュを検出 - 強制リロード v6.0');
-    window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'v6=6.0';
+  if (!window.location.search.includes('v7=7.0')) {
+    console.log('古いキャッシュを検出 - 強制リロード v7.0');
+    console.log('現在のURL:', window.location.href);
+    console.log('リダイレクト先:', window.location.href + (window.location.search ? '&' : '?') + 'v7=7.0');
+    
+    // 強制的にキャッシュをクリア
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) {
+          caches.delete(name);
+          console.log('キャッシュ削除:', name);
+        }
+      });
+    }
+    
+    window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'v7=7.0';
     return;
   }
   
