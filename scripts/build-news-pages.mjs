@@ -216,6 +216,9 @@ function fixContentFormatting(html) {
   // ハッシュタグ段落を削除
   protectedHtml = removeHashtagParagraphs(protectedHtml);
   
+  // 追加の修正処理
+  protectedHtml = applyAdditionalFixes(protectedHtml);
+  
   return protectedHtml;
 }
 
@@ -252,6 +255,36 @@ function removeHashtagParagraphs(html) {
   
   // 連続する空行を整理
   result = result.replace(/\n\s*\n\s*\n/g, '\n\n');
+  
+  return result;
+}
+
+function applyAdditionalFixes(html) {
+  if (!html) return html;
+  
+  let result = html;
+  
+  // 1) restandardnetlify.appをrestandard-2025.netlify.appに置換
+  result = result.replace(/https:\/\/restandardnetlify\.app\//g, 'https://restandard-2025.netlify.app/');
+  
+  // 2) タイトルやprev/nextから日付を削除
+  // より包括的な日付削除パターン
+  result = result.replace(/(\d{1,2}\/\d{1,2})【([^】]+)】/g, '【$2】');
+  
+  // 日付パターンを複数回適用（重複パターンに対応）
+  for (let i = 0; i < 3; i++) {
+    result = result.replace(/(\d{1,2}\/\d{1,2})【([^】]+)】/g, '【$2】');
+  }
+  
+  // 3) ※商品リンクの埋め込みを削除
+  result = result.replace(/※商品リンクの埋め込み/g, '');
+  result = result.replace(/※商品リンク埋め込み/g, '');
+  
+  // 4) Original linkをクリック可能にする
+  result = result.replace(
+    /Original link: (https:\/\/note\.com\/restandard_2025\/n\/[a-zA-Z0-9]+)/g,
+    'Original link: <a href="$1" target="_blank" rel="nofollow noopener">$1</a>'
+  );
   
   return result;
 }
@@ -348,8 +381,8 @@ async function main() {
       html = await fs.readFile(path.join(HTML_DIR, match), 'utf-8');
     }
 
-    const title = extractTitle(html) || item.title || 'Untitled';
-    const titleDecoded = stripLeadingDate(title.replace(/&amp;amp;/g, '&amp;').replace(/&amp;/g, '&'));
+    let title = extractTitle(html) || item.title || 'Untitled';
+    let titleDecoded = stripLeadingDate(title.replace(/&amp;amp;/g, '&amp;').replace(/&amp;/g, '&'));
     const date  = item.date || extractMeta(html, 'post_date') || extractMeta(html, 'pubDate') || '';
     const dateView = fmtDateView(date);
     const ogImage = withBase(normalizeAsset(item.firstImage || extractFirstImg(html)));
@@ -361,12 +394,18 @@ async function main() {
     content = normalizeArticleHtml(content, titleDecoded);
     content = fixContentFormatting(content);
     content = fixAssetPaths(content);
+    
+    // タイトルとメタタグ、prev/nextリンクも修正
+    title = applyAdditionalFixes(title);
+    titleDecoded = applyAdditionalFixes(titleDecoded);
 
     // Prev / Next
     const prev = manifest[i+1];
     const next = manifest[i-1];
-    const prevLink = prev ? `<a href="${withBase(`${BASE_PATH}/news/${encodeURIComponent(prev.slug)}/`)}" rel="prev" aria-label="${prev.title}">← ${prev.title}</a>` : '';
-    const nextLink = next ? `<a href="${withBase(`${BASE_PATH}/news/${encodeURIComponent(next.slug)}/`)}" rel="next" aria-label="${next.title}">${next.title} →</a>` : '';
+    const prevTitle = prev ? applyAdditionalFixes(prev.title) : '';
+    const nextTitle = next ? applyAdditionalFixes(next.title) : '';
+    const prevLink = prev ? `<a href="${withBase(`${BASE_PATH}/news/${encodeURIComponent(prev.slug)}/`)}" rel="prev" aria-label="${prevTitle}">← ${prevTitle}</a>` : '';
+    const nextLink = next ? `<a href="${withBase(`${BASE_PATH}/news/${encodeURIComponent(next.slug)}/`)}" rel="next" aria-label="${nextTitle}">${nextTitle} →</a>` : '';
 
     const filled = applyTemplate(tpl, {
       BASE_PATH: BASE_PATH,
