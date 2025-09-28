@@ -13,9 +13,9 @@
   gtag('config', 'G-1W9HVMCW3G');
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{TITLE_DECODED}} | ReStandard</title>
+  <title>{{TITLE}} | ReStandard</title>
   <meta name="description" content="{{DESCRIPTION}}">
-  <meta name="keywords" content="ReStandard, ニュース, お知らせ, note, 最新情報, イベント, アパレル卸">
+  <meta name="keywords" content="{{KEYWORDS}}">
   <meta name="author" content="ReStandard">
   <meta name="robots" content="index, follow">
   
@@ -33,27 +33,74 @@
   ]
 }
 </script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "{{TITLE}}",
+  "description": "{{DESCRIPTION}}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{CANONICAL_ABS}}"
+  },
+  "image": [{
+    "@type": "ImageObject",
+    "url": "{{OG_IMAGE_ABS}}",
+    "width": {{OG_IMAGE_W}},
+    "height": {{OG_IMAGE_H}}
+  }],
+  "datePublished": "{{DATE_PUBLISHED}}",
+  "dateModified": "{{DATE_MODIFIED}}",
+  "author": { "@type": "Organization", "name": "ReStandard" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ReStandard",
+    "logo": { "@type": "ImageObject", "url": "https://restandard-2025.netlify.app/assets/images/logo.png" }
+  },
+  "articleSection": "{{SECTION}}",
+  "keywords": "{{KEYWORDS}}"
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://restandard-2025.netlify.app/" },
+    { "@type": "ListItem", "position": 2, "name": "News", "item": "https://restandard-2025.netlify.app/news/" },
+    { "@type": "ListItem", "position": 3, "name": "{{TITLE}}", "item": "{{CANONICAL_ABS}}" }
+  ]
+}
+</script>
   
   <!-- OGP設定 -->
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="ReStandard">
-  <meta property="og:title" content="{{TITLE_DECODED}}">
+  <meta property="og:title" content="{{TITLE}}">
   <meta property="og:description" content="{{DESCRIPTION}}">
-  <meta property="og:url" content="{{CANONICAL}}">
-  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:url" content="{{CANONICAL_ABS}}">
+  <meta property="og:image" content="{{OG_IMAGE_ABS}}">
+  <meta property="og:image:width" content="{{OG_IMAGE_W}}">
+  <meta property="og:image:height" content="{{OG_IMAGE_H}}">
+  <meta property="og:image:alt" content="{{OG_IMAGE_ALT}}">
+  <meta property="og:locale" content="ja_JP">
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{TITLE_DECODED}}">
+  <meta name="twitter:site" content="@ReStandard_jp">
+  <meta name="twitter:title" content="{{TITLE}}">
   <meta name="twitter:description" content="{{DESCRIPTION}}">
-  <meta name="twitter:image" content="{{OG_IMAGE}}">
+  <meta name="twitter:image" content="{{OG_IMAGE_ABS}}">
+  <meta name="twitter:image:alt" content="{{OG_IMAGE_ALT}}">
   
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
   
-  <link rel="canonical" href="{{CANONICAL}}">
-  <link rel="alternate" href="{{CANONICAL}}" hreflang="ja" />
-  <link rel="alternate" href="{{CANONICAL}}" hreflang="en" />
+  <link rel="canonical" href="{{CANONICAL_ABS}}">
+  <link rel="alternate" href="{{CANONICAL_ABS}}" hreflang="ja" />
+  <link rel="alternate" href="{{CANONICAL_ABS}}" hreflang="x-default" />
   
   <!-- プリロード -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,9 +108,6 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
-  <link rel="preload" href="{{BASE_PATH}}/css/style.css" as="style">
-  <link rel="preload" href="{{BASE_PATH}}/css/reveal.css" as="style">
-  <link rel="preload" href="{{BASE_PATH}}/css/i18n-visibility.css" as="style">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
@@ -428,11 +472,129 @@
 
     {{CONTENT}}
 
+    <!-- 関連記事ブロック -->
+    <section class="related-articles mt-5">
+      <h2>関連記事</h2>
+      <div class="row">
+        {{RELATED_ARTICLES}}
+      </div>
+    </section>
+
+    <!-- パンくずリスト（HTML版） -->
+    <nav aria-label="breadcrumb" class="mt-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{BASE_PATH}}/">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{BASE_PATH}}/news.html">News</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{TITLE}}</li>
+      </ol>
+    </nav>
+
     <nav class="prev-next" aria-label="pagination">
       <span class="prev">{{PREV_LINK}}</span>
       <span class="next">{{NEXT_LINK}}</span>
     </nav>
   </main>
+
+  <!-- 画像最適化スクリプト -->
+  <script>
+  (function() {
+    // 画像の最適化処理
+    function optimizeImages() {
+      const images = document.querySelectorAll('img');
+      let firstImageProcessed = false;
+      
+      images.forEach((img, index) => {
+        // 基本的な最適化属性を追加
+        if (!img.hasAttribute('loading')) {
+          // 最初の画像（ファーストビュー）にはfetchpriority="high"を設定
+          if (!firstImageProcessed && isFirstViewImage(img)) {
+            img.setAttribute('fetchpriority', 'high');
+            firstImageProcessed = true;
+          } else {
+            img.setAttribute('loading', 'lazy');
+          }
+        }
+        
+        // 非同期デコード
+        if (!img.hasAttribute('decoding')) {
+          img.setAttribute('decoding', 'async');
+        }
+        
+        // alt属性の自動補完
+        if (!img.hasAttribute('alt') || img.getAttribute('alt') === '') {
+          img.setAttribute('alt', generateAltText(img));
+        }
+        
+        // サイズ属性の設定（可能な場合）
+        if (!img.hasAttribute('width') && !img.hasAttribute('height')) {
+          setImageDimensions(img);
+        }
+      });
+    }
+    
+    // ファーストビューの画像かどうかを判定
+    function isFirstViewImage(img) {
+      const rect = img.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      return rect.top < viewportHeight * 0.5; // ビューポートの上半分にある画像
+    }
+    
+    // alt属性を自動生成
+    function generateAltText(img) {
+      // キャプションを探す
+      const figcaption = img.closest('figure')?.querySelector('figcaption');
+      if (figcaption && figcaption.textContent.trim()) {
+        return figcaption.textContent.trim();
+      }
+      
+      // 記事タイトルから生成
+      const title = document.querySelector('h1')?.textContent || '';
+      const filename = img.src.split('/').pop().split('.')[0];
+      
+      // ファイル名から意味のある部分を抽出
+      const cleanFilename = filename.replace(/^[a-z0-9]+_/, '').replace(/[_-]/g, ' ');
+      
+      return `${title} - ${cleanFilename}`;
+    }
+    
+    // 画像のサイズを設定（可能な場合）
+    function setImageDimensions(img) {
+      // 既存のwidth/height属性がある場合はそれを使用
+      const existingWidth = img.getAttribute('width');
+      const existingHeight = img.getAttribute('height');
+      
+      if (existingWidth && existingHeight) {
+        return; // 既に設定済み
+      }
+      
+      // 一般的なアスペクト比を推測して設定
+      const src = img.src;
+      if (src.includes('width="620"') && src.includes('height="620"')) {
+        img.setAttribute('width', '620');
+        img.setAttribute('height', '620');
+      } else if (src.includes('width="') && src.includes('height="')) {
+        // src属性からwidth/heightを抽出
+        const widthMatch = src.match(/width="(\d+)"/);
+        const heightMatch = src.match(/height="(\d+)"/);
+        if (widthMatch && heightMatch) {
+          img.setAttribute('width', widthMatch[1]);
+          img.setAttribute('height', heightMatch[1]);
+        }
+      } else {
+        // デフォルトサイズを設定
+        img.setAttribute('width', '800');
+        img.setAttribute('height', '600');
+      }
+    }
+    
+    // DOMContentLoadedで実行
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', optimizeImages);
+    } else {
+      optimizeImages();
+    }
+  })();
+  </script>
 
   <!-- Footer -->
   <footer class="py-5 text-center">
