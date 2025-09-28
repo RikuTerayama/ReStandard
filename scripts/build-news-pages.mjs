@@ -213,8 +213,49 @@ function fixContentFormatting(html) {
     protectedHtml = protectedHtml.replace(`__IMAGE_PLACEHOLDER_${index}__`, src);
   });
   
+  // ハッシュタグ段落を削除
+  protectedHtml = removeHashtagParagraphs(protectedHtml);
+  
   return protectedHtml;
 }
+
+function removeHashtagParagraphs(html) {
+  if (!html) return html;
+  
+  // ハッシュタグのみを含む段落を削除
+  // パターン1: <p>#ハッシュタグ1 #ハッシュタグ2 ...</p>
+  // パターン2: <p>#ハッシュタグ1 #ハッシュタグ2<br>#ハッシュタグ3 #ハッシュタグ4</p>
+  // パターン3: 連続するハッシュタグ段落
+  
+  // まず、ハッシュタグのみを含む段落を特定
+  const hashtagParagraphRegex = /<p[^>]*>[\s\S]*?#[^\s<]+[\s\S]*?<\/p>/gi;
+  
+  // 段落内のテキストを抽出してハッシュタグのみかどうかを判定
+  const paragraphs = html.match(/<p[^>]*>[\s\S]*?<\/p>/gi) || [];
+  
+  let result = html;
+  
+  paragraphs.forEach(paragraph => {
+    // 段落内のテキストを抽出（HTMLタグを除去）
+    const textContent = paragraph.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    
+    // ハッシュタグのみを含む段落かどうかを判定
+    // テキストが#で始まり、空白または#で区切られた文字列のみの場合
+    const isHashtagOnly = /^#[\w\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF\s#]+$/.test(textContent) && 
+                         textContent.split(/\s+/).every(word => word.startsWith('#') || word === '');
+    
+    if (isHashtagOnly) {
+      // ハッシュタグのみの段落を削除
+      result = result.replace(paragraph, '');
+    }
+  });
+  
+  // 連続する空行を整理
+  result = result.replace(/\n\s*\n\s*\n/g, '\n\n');
+  
+  return result;
+}
+
 function extractBetween(str, startRe, endRe) {
   const s = str.search(startRe);
   if (s === -1) return '';
