@@ -113,7 +113,16 @@ function fixAssetPaths(html) {
     'nfcafa06fb104_1757411081uK43Vz1H59XyCh8dDJljcLtx.png': 'nfcafa06fb104_1757411081-uK43Vz1H59XyCh8dDJljcLtx.png',
     'nfcafa06fb104_1757411085OJ5X1ZFxMPs4hdAbQE28DKvpng': 'nfcafa06fb104_1757411085-OJ5X1ZFxMPs4hdAbQE28DKv3.png',
     'nfcafa06fb104_1757411097kDJrpEKLCw6oReH9dm0ublWS.png': 'nfcafa06fb104_1757411097-kDJrpEKLCw6oReH9dm0ublWS.png',
-    'nfcafa06fb104_1757411103CPlOIBVwhESctyJZ6qkof21L.png': 'nfcafa06fb104_1757411103-CPlOIBVwhESctyJZ6qkof21L.png'
+    'nfcafa06fb104_1757411103CPlOIBVwhESctyJZ6qkof21L.png': 'nfcafa06fb104_1757411103-CPlOIBVwhESctyJZ6qkof21L.png',
+    
+    // n80e1f060f0ec シリーズ（1028-2025aw-eribe-amp-restandardrockmount）
+    'n80e1f060f0ec_9b2a9ae99074c09f1d31ee60b6ada5apng': 'n80e1f060f0ec_9b2a9ae99074c09f1d31ee60b6ada5a6.png',
+    'n80e1f060f0ec_1757416568qOy9gH0RSBMojLfF4Jtb3zpng': 'n80e1f060f0ec_1757416568-qOy9gH0RSBMojLfF4Jtb3z51.png',
+    'n80e1f060f0ec_1757416580KTma2ZUAnQRyNsXChPDB5zol.png': 'n80e1f060f0ec_1757416580-KTma2ZUAnQRyNsXChPDB5zol.png',
+    'n80e1f060f0ec_1757416590yJir7CDoFjaeGLW936MxEsBpng': 'n80e1f060f0ec_1757416590-yJir7CDoFjaeGLW936MxEsB5.png',
+    'n80e1f060f0ec_1757416573MCZ2BgdGT1ouz4xnYDAre6lf.png': 'n80e1f060f0ec_1757416573-MCZ2BgdGT1ouz4xnYDAre6lf.png',
+    'n80e1f060f0ec_1757416597AV17WgzrZPO6y8xGiBDluHtI.png': 'n80e1f060f0ec_1757416597-AV17WgzrZPO6y8xGiBDluHtI.png',
+    'n80e1f060f0ec_1757416605E29WkZwjLfX50YPcoNty34zS.png': 'n80e1f060f0ec_1757416605-E29WkZwjLfX50YPcoNty34zS.png'
   };
 
   // 画像パス修正を適用（単純な文字列置換）
