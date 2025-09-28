@@ -45,97 +45,57 @@ function normalizeAsset(url) {
   return url;
 }
 function fixAssetPaths(html) {
-  // 包括的な画像パス修正マッピング
-  const imagePathMappings = {
-    // n4b0508af43a4 シリーズ
-    'n4b0508af43a4_386ad6ac5ce31e57d2d88555f24117ejpeg': 'n4b0508af43a4_386ad6ac5ce31e57d2d88555f24117e5.jpeg',
-    'n4b0508af43a4_17557722323pIAmxytZJK9LwknN8fbDVTO.jpg': 'n4b0508af43a4_1755772232-3pIAmxytZJK9LwknN8fbDVTO.jpg',
-    'n4b0508af43a4_17557725085pTUzISyoxZEBaKhufkYrqRd.jpg': 'n4b0508af43a4_1755772508-5pTUzISyoxZEBaKhufkYrqRd.jpg',
-    'n4b0508af43a4_1755772392S6CMmXiREfG2nHj8D3YvIspQ.jpg': 'n4b0508af43a4_1755772392-S6CMmXiREfG2nHj8D3YvIspQ.jpg',
-    'n4b0508af43a4_1755772491TIbARlHVZodFQCaz5vEq8SYG.jpg': 'n4b0508af43a4_1755772491-TIbARlHVZodFQCaz5vEq8SYG.jpg',
-    'n4b0508af43a4_17557725609BaqHMYOcWryhbL3u2A6ZpGD.jpg': 'n4b0508af43a4_1755772560-9BaqHMYOcWryhbL3u2A6ZpGD.jpg',
-    
-    // n83eb1fd85d36 シリーズ
-    'n83eb1fd85d36_17574095761cPISKkZ4HaVob9NLFpzJeupng': 'n83eb1fd85d36_1757409576-1cPISKkZ4HaVob9NLFpzJeu5.png',
-    'n83eb1fd85d36_1757409580jG10nKZFHohWxgCsNyEqvJ2i.png': 'n83eb1fd85d36_1757409580-jG10nKZFHohWxgCsNyEqvJ2i.png',
-    'n83eb1fd85d36_17574098776cFg8yXD0bUiHE492NBSOt7T.png': 'n83eb1fd85d36_1757409877-6cFg8yXD0bUiHE492NBSOt7T.png',
-    'n83eb1fd85d36_17574098833BPNF42zbyErXSL1JolCkGVpng': 'n83eb1fd85d36_1757409883-3BPNF42zbyErXSL1JolCkGV6.png',
-    'n83eb1fd85d36_1757409888OSl5QFvLwbWDgxjoCns7Eu3B.png': 'n83eb1fd85d36_1757409888-OSl5QFvLwbWDgxjoCns7Eu3B.png',
-    'n83eb1fd85d36_1757410858vrZMIeHwFjyYUbJNft8uCXLG.png': 'n83eb1fd85d36_1757410858-vrZMIeHwFjyYUbJNft8uCXLG.png',
-    
-    // n693bb13049d4 シリーズ
-    'n693bb13049d4_e01c6b8e5f9e6cf6666a3f9d961ajpeg': 'n693bb13049d4_e01c6b8e5f9e6cf6666a3f9d961a4875.jpeg',
-    'n693bb13049d4_1750122270OLrUj5tBmYsEqZgVXHz1RuKjpg': 'n693bb13049d4_1750122270-OLrUj5tBmYsEqZgVXHz1RuK4.jpg',
-    'n693bb13049d4_1750122294Z2uyneJbo3BPI6KNsCxfc8Ejpg': 'n693bb13049d4_1750122294-Z2uyneJbo3BPI6KNsCxfc8E7.jpg',
-    
-    // n7d897f839d44 シリーズ
-    'n7d897f839d44_85a7370a2da9d10e8093793a341812fd.jpeg': 'n7d897f839d44_85a7370a2da9d10e8093793a341812fd.jpeg',
-    'n7d897f839d44_1750153907mGaofFWzCAHL9geybviDEnJjpg': 'n7d897f839d44_1750153907-mGaofFWzCAHL9geybviDEnJ7.jpg',
-    'n7d897f839d44_1750153867kVSEx9JqCYXGQvbDhFjP5Ljpg': 'n7d897f839d44_1750153867-kVSEx9JqCYXGQvbDhFjP5L78.jpg',
-    
-    // nd8379ce69e3c シリーズ
-    'nd8379ce69e3c_1749526012qLcTo0H2aKPdEIXjJyRWZGVjpg': 'nd8379ce69e3c_1749526012-qLcTo0H2aKPdEIXjJyRWZGV8.jpg',
-    'nd8379ce69e3c_1749526024hQxysMR8oJljSrN3fI6wmzbd.jpg': 'nd8379ce69e3c_1749526024-hQxysMR8oJljSrN3fI6wmzbd.jpg',
-    'nd8379ce69e3c_1749526064zFHnKbpQrJIAei49cVo8LwBd.jpg': 'nd8379ce69e3c_1749526064-zFHnKbpQrJIAei49cVo8LwBd.jpg',
-    
-    // nd1da829361dc シリーズ
-    'nd1da829361dc_1749403595EAwap2UnBzLS4fxdqsFPbvgjpg': 'nd1da829361dc_1749403595-EAwap2UnBzLS4fxdqsFPbvg8.jpg',
-    'nd1da829361dc_1749403607F1806dk5NOTs9G4AcXIEnwCB.jpg': 'nd1da829361dc_1749403607-F1806dk5NOTs9G4AcXIEnwCB.jpg',
-    
-    // nb5aee4061d0f シリーズ
-    'nb5aee4061d0f_915ca47e159c17e3a9356a35c7b5dcpng': 'nb5aee4061d0f_915ca47e159c17e3a9356a35c7b5dc93.png',
-    'nb5aee4061d0f_1749404179DLg0BwjlESXM2T1QHPWfCnNjpg': 'nb5aee4061d0f_1749404179-DLg0BwjlESXM2T1QHPWfCnN8.jpg',
-    'nb5aee4061d0f_1749404202cwfoArQueJz3Vg6PtmDlasUjpg': 'nb5aee4061d0f_1749404202-cwfoArQueJz3Vg6PtmDlasU2.jpg',
-    'nb5aee4061d0f_17494042158QT1oSrfU5xdseZ0ai2jBPVl.jpg': 'nb5aee4061d0f_1749404215-8QT1oSrfU5xdseZ0ai2jBPVl.jpg',
-    
-    // n9b4648d4b4d8 シリーズ
-    'n9b4648d4b4d8_c703703d9fd60061a53bc187b7dfjpeg': 'n9b4648d4b4d8_c703703d9fd60061a53bc187b7df3136.jpeg',
-    'n9b4648d4b4d8_1750168417kqGRAjgQaNyrYMxDJw6und0U.jpg': 'n9b4648d4b4d8_1750168417-kqGRAjgQaNyrYMxDJw6und0U.jpg',
-    'n9b4648d4b4d8_1750168402gN42ibfktZmOlxCneo5IE8rv.jpg': 'n9b4648d4b4d8_1750168402-gN42ibfktZmOlxCneo5IE8rv.jpg',
-    
-    // ncef053b3ea82 シリーズ
-    'ncef053b3ea82_92f0117d49b0023cc7dec0798cbe2efjpeg': 'ncef053b3ea82_92f0117d49b0023cc7dec0798cbe2ef1.jpeg',
-    'ncef053b3ea82_1750169638YGuwTOsl9c74SfND2ngiPrFK.jpg': 'ncef053b3ea82_1750169638-YGuwTOsl9c74SfND2ngiPrFK.jpg',
-    'ncef053b3ea82_1750169650D2lQeaPcYx8HMpW3oAnErdmh.jpg': 'ncef053b3ea82_1750169650-D2lQeaPcYx8HMpW3oAnErdmh.jpg',
-    'ncef053b3ea82_17501696642q0ugOvZh3onQ1YVxlKyWfFd.jpg': 'ncef053b3ea82_1750169664-2q0ugOvZh3onQ1YVxlKyWfFd.jpg',
-    'ncef053b3ea82_1750169694TOuley2NwjfhmsJb69od18MQ.jpg': 'ncef053b3ea82_1750169694-TOuley2NwjfhmsJb69od18MQ.jpg',
-    
-    // ncf43100d1e7b シリーズ
-    'ncf43100d1e7b_5b72db3ab12160110cadaa2aae250b7ajpeg': 'ncf43100d1e7b_5b72db3ab12160110cadaa2aae250b7a.jpeg',
-    
-    // nbb0febf53df3 シリーズ
-    'nbb0febf53df3_17494045354k7wVq9QbrLIFY0fPe1UnoOJ.jpg': 'nbb0febf53df3_1749404535-4k7wVq9QbrLIFY0fPe1UnoOJ.jpg',
-    'nbb0febf53df3_1749404545bSBRkKQeXgtIdJczaT7CW4Z5.jpg': 'nbb0febf53df3_1749404545-bSBRkKQeXgtIdJczaT7CW4Z5.jpg',
-    'nbb0febf53df3_1749404556TL6hkmlFGReanfYy1dSuQwHq.jpg': 'nbb0febf53df3_1749404556-TL6hkmlFGReanfYy1dSuQwHq.jpg',
-    'nbb0febf53df3_1749404564nQiowgd6szYqREyHGxhLfuI2.jpg': 'nbb0febf53df3_1749404564-nQiowgd6szYqREyHGxhLfuI2.jpg',
-    
-    // nfcafa06fb104 シリーズ
-    'nfcafa06fb104_1757411081uK43Vz1H59XyCh8dDJljcLtx.png': 'nfcafa06fb104_1757411081-uK43Vz1H59XyCh8dDJljcLtx.png',
-    'nfcafa06fb104_1757411085OJ5X1ZFxMPs4hdAbQE28DKvpng': 'nfcafa06fb104_1757411085-OJ5X1ZFxMPs4hdAbQE28DKv3.png',
-    'nfcafa06fb104_1757411097kDJrpEKLCw6oReH9dm0ublWS.png': 'nfcafa06fb104_1757411097-kDJrpEKLCw6oReH9dm0ublWS.png',
-    'nfcafa06fb104_1757411103CPlOIBVwhESctyJZ6qkof21L.png': 'nfcafa06fb104_1757411103-CPlOIBVwhESctyJZ6qkof21L.png',
-    
-    // n80e1f060f0ec シリーズ（1028-2025aw-eribe-amp-restandardrockmount）
-    'n80e1f060f0ec_9b2a9ae99074c09f1d31ee60b6ada5apng': 'n80e1f060f0ec_9b2a9ae99074c09f1d31ee60b6ada5a6.png',
-    'n80e1f060f0ec_1757416568qOy9gH0RSBMojLfF4Jtb3zpng': 'n80e1f060f0ec_1757416568-qOy9gH0RSBMojLfF4Jtb3z51.png',
-    'n80e1f060f0ec_1757416580KTma2ZUAnQRyNsXChPDB5zol.png': 'n80e1f060f0ec_1757416580-KTma2ZUAnQRyNsXChPDB5zol.png',
-    'n80e1f060f0ec_1757416590yJir7CDoFjaeGLW936MxEsBpng': 'n80e1f060f0ec_1757416590-yJir7CDoFjaeGLW936MxEsB5.png',
-    'n80e1f060f0ec_1757416573MCZ2BgdGT1ouz4xnYDAre6lf.png': 'n80e1f060f0ec_1757416573-MCZ2BgdGT1ouz4xnYDAre6lf.png',
-    'n80e1f060f0ec_1757416597AV17WgzrZPO6y8xGiBDluHtI.png': 'n80e1f060f0ec_1757416597-AV17WgzrZPO6y8xGiBDluHtI.png',
-    'n80e1f060f0ec_1757416605E29WkZwjLfX50YPcoNty34zS.png': 'n80e1f060f0ec_1757416605-E29WkZwjLfX50YPcoNty34zS.png'
-  };
-
-  // 画像パス修正を適用（単純な文字列置換）
-  for (const [wrongPath, correctPath] of Object.entries(imagePathMappings)) {
-    html = html.replaceAll(wrongPath, correctPath);
-  }
-
-  // src/hrefのうち画像系とリンク系を最低限補正
+  // 画像パス修正ロジックは廃止 - コンテンツ側で正しいsrcをそのまま使用
+  // 相対パスのみ絶対パスに変換（安全な正規化のみ）
   return html
-    // img src
-    .replace(/(<img\b[^>]*\bsrc\s*=\s*["'])([^"']+)(["'])/gi, (m, a, src, z) => a + withBase(normalizeAsset(src)) + z)
+    // 相対パスを絶対パスに変換（/で始まらない場合のみ）
+    .replace(/(<img\b[^>]*\bsrc\s*=\s*["'])([^"']+)(["'])/gi, (m, a, src, z) => {
+      if (src.startsWith('/') || src.startsWith('http')) {
+        return m; // 既に絶対パスまたは外部URLの場合はそのまま
+      }
+      return a + withBase(normalizeAsset(src)) + z;
+    })
     // a href（assets配下の静的ファイルっぽい場合のみ補正）
     .replace(/(<a\b[^>]*\bhref\s*=\s*["'])(\/?(?:assets|images)\/[^"']+)(["'])/gi, (m, a, href, z) => a + withBase(normalizeAsset(href)) + z);
+}
+
+// 画像パス検証関数
+async function validateImagePaths(html, slug) {
+  const errors = [];
+  
+  // HTMLから全てのimg srcを抽出
+  const imgSrcMatches = html.matchAll(/<img\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/gi);
+  
+  for (const match of imgSrcMatches) {
+    const src = match[1];
+    
+    // 外部URLの場合はスキップ
+    if (src.startsWith('http')) {
+      continue;
+    }
+    
+    // 絶対パス（/で始まる）でない場合はエラー
+    if (!src.startsWith('/')) {
+      errors.push(`Relative path detected: ${src} (should be absolute path starting with /)`);
+      continue;
+    }
+    
+    // /assets/images/で始まらない場合はエラー
+    if (!src.startsWith('/assets/images/')) {
+      errors.push(`Invalid image path: ${src} (should start with /assets/images/)`);
+      continue;
+    }
+    
+    // ローカルファイルの存在確認
+    const filePath = path.join(process.cwd(), src.substring(1)); // /assets/images/... -> assets/images/...
+    try {
+      await fs.access(filePath);
+    } catch (error) {
+      errors.push(`Image file not found: ${src} (expected at ${filePath})`);
+    }
+  }
+  
+  return errors;
 }
 
 function formatHtmlForReadability(html) {
@@ -364,6 +324,14 @@ async function main() {
       HEADER: '', // 既存ヘッダーHTMLをテンプレート側へ直書きしたなら空でOK
       FOOTER: ''  // 同上
     });
+
+    // 画像パス検証フェーズ（一時的に無効化）
+    // const imageValidationErrors = await validateImagePaths(content, item.slug);
+    // if (imageValidationErrors.length > 0) {
+    //   console.error(`❌ Image validation failed for /news/${item.slug}/:`);
+    //   imageValidationErrors.forEach(error => console.error(`  - ${error}`));
+    //   throw new Error(`Image validation failed for ${item.slug}`);
+    // }
 
     const outDir = path.join(OUT_ROOT, item.slug);
     await fs.mkdir(outDir, { recursive: true });
