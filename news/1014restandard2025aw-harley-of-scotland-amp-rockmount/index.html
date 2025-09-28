@@ -13,17 +13,7 @@
   gtag('config', 'G-1W9HVMCW3G');
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta name="cache-buster" content="2025-01-19-15-30-00">
-  <meta name="version" content="2025-01-19-15-30-00">
-  <meta name="build-time" content="1737282600">
-  <meta name="force-refresh" content="2025-01-19-16-30-00">
-  <meta name="cache-version" content="v5.0">
-  <meta http-equiv="refresh" content="0; url=?v5=5.0">
-  <meta name="force-cache-clear" content="2025-01-19-17-00-00">
-  <link rel="canonical" href="https://restandard-2025.netlify.app/news/1014restandard2025aw-harley-of-scotland-amp-rockmount/?v=2025-01-19-final&t=1737282600&f=2025-01-19-16-30-00&v2=2.0&v3=3.0&v4=4.0&v5=5.0">
+  <link rel="canonical" href="https://restandard-2025.netlify.app/news/1014restandard2025aw-harley-of-scotland-amp-rockmount/">
   <title>10/14【ReStandard別注】2025AW 新作アイテム紹介：Harley of Scotlandセーター & Rockmountスカート | ReStandard</title>
   <meta name="description" content="10/14【ReStandard別注】2025AW 新作アイテム紹介：Harley of Scotlandセーター & Rockmountスカート 冬を彩る赤とブラックウォッチ 季節の始まりに、一枚で“品よく決まる”2アイテムをセレクト。ス">
   <meta name="keywords" content="ReStandard, ニュース, お知らせ, note, 最新情報, イベント, アパレル卸">
@@ -670,31 +660,10 @@
   <script src="/js/reveal.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script>
-  // 強制リフレッシュ（キャッシュ問題の回避）
-  console.log('=== ページ読み込み開始 v5.0 ===');
+  // ページ読み込み開始
+  console.log('=== ページ読み込み開始 ===');
   console.log('ナビゲーションタイプ:', performance.navigation.type);
-  console.log('キャッシュバージョン: v5.0');
   console.log('現在のURL:', window.location.href);
-  console.log('URLパラメータ:', window.location.search);
-  
-  // 古いキャッシュを強制的にクリア
-  if (!window.location.search.includes('v5=5.0')) {
-    console.log('古いキャッシュを検出 - 強制リロード v5.0');
-    console.log('現在のURL:', window.location.href);
-    console.log('リダイレクト先:', window.location.href + (window.location.search ? '&' : '?') + 'v5=5.0');
-    
-    // 強制的にキャッシュをクリア
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        for (let name of names) {
-          caches.delete(name);
-        }
-      });
-    }
-    
-    window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'v5=5.0';
-    return;
-  }
   
   if (performance.navigation.type === 1) {
     console.log('ページがリロードされました');
@@ -799,10 +768,9 @@
   }
 
     // 2) 画像パスの設定（Netlify対応版）
-    console.log('=== 画像パス設定開始 v5.0 (Netlify対応) ===');
+    console.log('=== 画像パス設定開始 ===');
     console.log('現在時刻:', new Date().toISOString());
     console.log('ページURL:', window.location.href);
-    console.log('キャッシュバージョン: v5.0');
     console.log('Netlify対応: 絶対URL使用');
     console.log('ベースURL:', 'https://restandard-2025.netlify.app');
   
@@ -824,23 +792,17 @@
       'nfcafa06fb104_1757411103CPlOIBVwhESctyJZ6qkof21L.png': baseUrl + '/assets/images/nfcafa06fb104_1757411103-CPlOIBVwhESctyJZ6qkof21L.png'
     };
     
-    // 正しいパスに直接設定（強化版）
+    // 正しいパスに直接設定
     for (const [oldPath, newPath] of Object.entries(correctPaths)) {
       if (orig.includes(oldPath)) {
-        console.log('🔍 古いパス検出:', orig);
-        console.log('🔧 正しいパスに設定:', newPath);
-        console.log('📝 画像要素:', img);
-        console.log('🌐 ベースURL:', baseUrl);
+        console.log('古いパス検出:', orig);
+        console.log('正しいパスに設定:', newPath);
         
         // 強制的にパスを設定
         img.src = newPath;
         img.setAttribute('src', newPath);
-        img.setAttribute('data-original-src', orig);
-        img.setAttribute('data-corrected-src', newPath);
-        img.setAttribute('data-cache-version', 'v4.0');
         
         console.log('✅ 画像パス修正完了:', newPath);
-        console.log('✅ 最終的なsrc属性:', img.src);
         return;
       }
     }
