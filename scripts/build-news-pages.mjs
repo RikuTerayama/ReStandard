@@ -560,30 +560,6 @@ function validateHeadingStructure(html) {
   return true;
 }
 
-function generateRelatedArticles(articles, currentSlug, limit = 3) {
-  const related = articles
-    .filter(article => article.slug !== currentSlug)
-    .slice(0, limit);
-  
-  if (related.length === 0) return '';
-  
-  return related.map(article => `
-    <div class="col-md-4 mb-3">
-      <div class="card h-100">
-        <img src="${article.ogImage || '/assets/images/default-news.jpg'}" 
-             class="card-img-top" 
-             alt="${article.title}"
-             loading="lazy"
-             width="300" height="200">
-        <div class="card-body">
-          <h5 class="card-title">${article.title}</h5>
-          <p class="card-text">${article.description || ''}</p>
-          <a href="/news/${article.slug}/" class="btn btn-outline-primary">記事を読む</a>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
 async function readTemplate() {
   return fs.readFile(TEMPLATE, 'utf-8');
 }
@@ -679,8 +655,7 @@ async function main() {
     const datePublished = date || new Date().toISOString();
     const dateModified = date || new Date().toISOString();
     
-    // 関連記事を生成
-    const relatedArticles = generateRelatedArticles(manifest, item.slug, 3);
+    // 関連記事生成は削除
     
     // Hタグ構造を検証
     try {
@@ -708,7 +683,6 @@ async function main() {
       DATE: date || '',
       DATE_VIEW: dateView || '',
       CONTENT: content,
-      RELATED_ARTICLES: relatedArticles,
       PREV_LINK: prevLink,
       NEXT_LINK: nextLink,
       HEADER: '', // 既存ヘッダーHTMLをテンプレート側へ直書きしたなら空でOK
