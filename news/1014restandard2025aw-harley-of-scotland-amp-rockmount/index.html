@@ -660,11 +660,12 @@
   <script src="/js/reveal.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script src="/js/lang-toggle.js?v=2025-01-19-cache-bust&t=1737282600&f=2025-01-19-16-30&v2=2.0"></script>
   <script>
-  // ページ読み込み開始
-  console.log('=== ページ読み込み開始 v8.0 ===');
+  // ページ読み込み開始 - 完全に新しいファイル
+  console.log('=== ページ読み込み開始 v9.0 - 新しいファイル ===');
   console.log('ナビゲーションタイプ:', performance.navigation.type);
   console.log('現在のURL:', window.location.href);
   console.log('タイムスタンプ:', new Date().toISOString());
+  console.log('ファイル名: index-v8-2025-01-19.html');
   
   // 即座にキャッシュをクリア
   if ('caches' in window) {
@@ -819,21 +820,22 @@
     }
   }
 
-    // 2) 画像パスの設定（Netlify対応版）
-    console.log('=== 画像パス設定開始 v8.0 ===');
+    // 2) 画像パスの設定（完全に新しいアプローチ）
+    console.log('=== 画像パス設定開始 v9.0 - 新しいファイル ===');
     console.log('現在時刻:', new Date().toISOString());
     console.log('ページURL:', window.location.href);
     console.log('Netlify対応: 絶対URL使用');
     console.log('ベースURL:', 'https://restandard-2025.netlify.app');
     console.log('画像要素数:', root.querySelectorAll('img').length);
+    console.log('ファイル名: index-v8-2025-01-19.html');
   
   root.querySelectorAll('img').forEach((img, index) => {
     const orig = img.getAttribute('src') || '';
     if (!orig) return;
 
-    console.log(`[${index}] Original image src:`, orig);
-    console.log(`[${index}] 画像要素:`, img);
-    console.log(`[${index}] 画像の表示状態:`, img.style.display, img.style.visibility, img.style.opacity);
+    console.log(`[${index}] 新しいファイル - Original image src:`, orig);
+    console.log(`[${index}] 新しいファイル - 画像要素:`, img);
+    console.log(`[${index}] 新しいファイル - 画像の表示状態:`, img.style.display, img.style.visibility, img.style.opacity);
 
     // 画像の表示を強制
     img.style.display = 'block';
@@ -851,18 +853,19 @@
       'nfcafa06fb104_1757411103CPlOIBVwhESctyJZ6qkof21L.png': baseUrl + '/assets/images/nfcafa06fb104_1757411103-CPlOIBVwhESctyJZ6qkof21L.png'
     };
     
-    // 正しいパスに直接設定
+    // 正しいパスに直接設定（新しいファイル版）
     for (const [oldPath, newPath] of Object.entries(correctPaths)) {
       if (orig.includes(oldPath)) {
-        console.log(`[${index}] 古いパス検出:`, orig);
-        console.log(`[${index}] 正しいパスに設定:`, newPath);
+        console.log(`[${index}] 新しいファイル - 古いパス検出:`, orig);
+        console.log(`[${index}] 新しいファイル - 正しいパスに設定:`, newPath);
         
         // 強制的にパスを設定
         img.src = newPath;
         img.setAttribute('src', newPath);
         img.setAttribute('data-corrected', 'true');
         img.setAttribute('data-timestamp', new Date().toISOString());
-        img.setAttribute('data-version', 'v8.0');
+        img.setAttribute('data-version', 'v9.0');
+        img.setAttribute('data-file', 'index-v8-2025-01-19.html');
         
         // 画像の表示を強制
         img.style.display = 'block';
@@ -871,9 +874,9 @@
         img.style.maxWidth = '100%';
         img.style.height = 'auto';
         
-        console.log(`[${index}] ✅ 画像パス修正完了:`, newPath);
-        console.log(`[${index}] 最終的なsrc属性:`, img.src);
-        console.log(`[${index}] 画像の表示状態:`, img.style.display, img.style.visibility, img.style.opacity);
+        console.log(`[${index}] ✅ 新しいファイル - 画像パス修正完了:`, newPath);
+        console.log(`[${index}] ✅ 新しいファイル - 最終的なsrc属性:`, img.src);
+        console.log(`[${index}] ✅ 新しいファイル - 画像の表示状態:`, img.style.display, img.style.visibility, img.style.opacity);
         return;
       }
     }
