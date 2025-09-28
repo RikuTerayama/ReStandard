@@ -10,6 +10,7 @@ const OUT_ROOT    = path.resolve('news'); // 出力ルート
 const HTML_DIR    = path.resolve('assets/restandard_note_split_html');
 const MANIFEST    = path.resolve('news_src/manifest.json');
 const TEMPLATE    = path.resolve('templates/news_base.html');
+const SITE_URL    = 'https://restandard-2025.netlify.app'; // サイトの絶対URL
 
 // 画像URLやルート相対URLを補正
 function withBase(url) {
@@ -517,6 +518,72 @@ function slugFromFilename(filename) {
   const m = base.match(/^\d{3}_(.+)$/);
   return m ? m[1] : base;
 }
+
+// SEO関連のヘルパー関数
+function generateAbsoluteUrl(relativePath) {
+  if (!relativePath) return SITE_URL;
+  if (relativePath.startsWith('http')) return relativePath;
+  return SITE_URL + (relativePath.startsWith('/') ? relativePath : '/' + relativePath);
+}
+
+function extractImageDimensions(imgSrc) {
+  // 画像ファイルからサイズを推測（実際のファイルサイズを取得する場合はsharp等を使用）
+  // ここでは一般的なサイズを返す
+  if (imgSrc.includes('width="620"') && imgSrc.includes('height="620"')) {
+    return { width: 620, height: 620 };
+  }
+  return { width: 800, height: 600 }; // デフォルトサイズ
+}
+
+function generateImageAlt(imgSrc, title) {
+  const filename = path.basename(imgSrc, path.extname(imgSrc));
+  const cleanFilename = filename.replace(/^[a-z0-9]+_/, '').replace(/[_-]/g, ' ');
+  return `${title} - ${cleanFilename}`;
+}
+
+function validateHeadingStructure(html) {
+  const h1Count = (html.match(/<h1[^>]*>/gi) || []).length;
+  if (h1Count === 0) {
+    throw new Error('H1タグが見つかりません');
+  }
+  if (h1Count > 1) {
+    throw new Error(`H1タグが${h1Count}個見つかりました。1つにしてください`);
+  }
+  
+  // H2の前にH1があることを確認
+  const h1Index = html.indexOf('<h1');
+  const h2Index = html.indexOf('<h2');
+  if (h2Index !== -1 && h2Index < h1Index) {
+    throw new Error('H2タグがH1タグより前にあります');
+  }
+  
+  return true;
+}
+
+function generateRelatedArticles(articles, currentSlug, limit = 3) {
+  const related = articles
+    .filter(article => article.slug !== currentSlug)
+    .slice(0, limit);
+  
+  if (related.length === 0) return '';
+  
+  return related.map(article => `
+    <div class="col-md-4 mb-3">
+      <div class="card h-100">
+        <img src="${article.ogImage || '/assets/images/default-news.jpg'}" 
+             class="card-img-top" 
+             alt="${article.title}"
+             loading="lazy"
+             width="300" height="200">
+        <div class="card-body">
+          <h5 class="card-title">${article.title}</h5>
+          <p class="card-text">${article.description || ''}</p>
+          <a href="/news/${article.slug}/" class="btn btn-outline-primary">記事を読む</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
 async function readTemplate() {
   return fs.readFile(TEMPLATE, 'utf-8');
 }
@@ -527,10 +594,20 @@ function applyTemplate(tpl, map) {
     .replaceAll('{{TITLE_DECODED}}', map.TITLE_DECODED ?? '')
     .replaceAll('{{DESCRIPTION}}', map.DESCRIPTION ?? '')
     .replaceAll('{{CANONICAL}}', map.CANONICAL ?? '')
+    .replaceAll('{{CANONICAL_ABS}}', map.CANONICAL_ABS ?? '')
     .replaceAll('{{OG_IMAGE}}', map.OG_IMAGE ?? '')
+    .replaceAll('{{OG_IMAGE_ABS}}', map.OG_IMAGE_ABS ?? '')
+    .replaceAll('{{OG_IMAGE_W}}', map.OG_IMAGE_W ?? '800')
+    .replaceAll('{{OG_IMAGE_H}}', map.OG_IMAGE_H ?? '600')
+    .replaceAll('{{OG_IMAGE_ALT}}', map.OG_IMAGE_ALT ?? '')
+    .replaceAll('{{KEYWORDS}}', map.KEYWORDS ?? '')
+    .replaceAll('{{SECTION}}', map.SECTION ?? '')
+    .replaceAll('{{DATE_PUBLISHED}}', map.DATE_PUBLISHED ?? '')
+    .replaceAll('{{DATE_MODIFIED}}', map.DATE_MODIFIED ?? '')
     .replaceAll('{{DATE}}', map.DATE ?? '')
     .replaceAll('{{DATE_VIEW}}', map.DATE_VIEW ?? '')
     .replaceAll('{{CONTENT}}', map.CONTENT ?? '')
+    .replaceAll('{{RELATED_ARTICLES}}', map.RELATED_ARTICLES ?? '')
     .replaceAll('{{PREV_LINK}}', map.PREV_LINK ?? '')
     .replaceAll('{{NEXT_LINK}}', map.NEXT_LINK ?? '')
     .replaceAll('{{HEADER}}', map.HEADER ?? '')
@@ -592,16 +669,46 @@ async function main() {
     const prevLink = prev ? `<a href="${withBase(`${BASE_PATH}/news/${encodeURIComponent(prev.slug)}/`)}" rel="prev" aria-label="${prevTitle}">← ${prevTitle}</a>` : '';
     const nextLink = next ? `<a href="${withBase(`${BASE_PATH}/news/${encodeURIComponent(next.slug)}/`)}" rel="next" aria-label="${nextTitle}">${nextTitle} →</a>` : '';
 
+    // SEO関連のデータを準備
+    const canonicalAbs = generateAbsoluteUrl(canonical);
+    const ogImageAbs = ogImage ? generateAbsoluteUrl(ogImage) : generateAbsoluteUrl('/assets/ogp-default.jpg');
+    const imageDims = extractImageDimensions(ogImage || '');
+    const imageAlt = generateImageAlt(ogImage || '', title);
+    const keywords = 'ReStandard, ニュース, お知らせ, note, 最新情報, イベント, アパレル卸';
+    const section = 'News';
+    const datePublished = date || new Date().toISOString();
+    const dateModified = date || new Date().toISOString();
+    
+    // 関連記事を生成
+    const relatedArticles = generateRelatedArticles(manifest, item.slug, 3);
+    
+    // Hタグ構造を検証
+    try {
+      validateHeadingStructure(content);
+    } catch (error) {
+      console.warn(`⚠️  Heading structure warning for /news/${item.slug}/: ${error.message}`);
+    }
+
     const filled = applyTemplate(tpl, {
       BASE_PATH: BASE_PATH,
       TITLE: title,
       TITLE_DECODED: titleDecoded,
       DESCRIPTION: (content.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()).slice(0, 120),
       CANONICAL: canonical,
+      CANONICAL_ABS: canonicalAbs,
       OG_IMAGE: ogImage || withBase('/assets/ogp-default.jpg'),
+      OG_IMAGE_ABS: ogImageAbs,
+      OG_IMAGE_W: imageDims.width,
+      OG_IMAGE_H: imageDims.height,
+      OG_IMAGE_ALT: imageAlt,
+      KEYWORDS: keywords,
+      SECTION: section,
+      DATE_PUBLISHED: datePublished,
+      DATE_MODIFIED: dateModified,
       DATE: date || '',
       DATE_VIEW: dateView || '',
       CONTENT: content,
+      RELATED_ARTICLES: relatedArticles,
       PREV_LINK: prevLink,
       NEXT_LINK: nextLink,
       HEADER: '', // 既存ヘッダーHTMLをテンプレート側へ直書きしたなら空でOK
@@ -621,7 +728,54 @@ async function main() {
     await fs.writeFile(path.join(outDir, 'index.html'), filled, 'utf-8');
     console.log('✔ built', `/news/${item.slug}/`);
   }
+  
+  // sitemap.xmlとrobots.txtを生成
+  await generateSitemap(manifest);
+  await generateRobotsTxt();
+  
   console.log('All done.');
+}
+
+// sitemap.xmlを生成
+async function generateSitemap(manifest) {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${SITE_URL}/</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${SITE_URL}/news/</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+${manifest.map(item => {
+  const lastmod = item.date ? new Date(item.date).toISOString() : new Date().toISOString();
+  return `  <url>
+    <loc>${SITE_URL}/news/${item.slug}/</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`;
+}).join('\n')}
+</urlset>`;
+
+  await fs.writeFile('sitemap.xml', sitemap, 'utf-8');
+  console.log('✔ generated sitemap.xml');
+}
+
+// robots.txtを生成
+async function generateRobotsTxt() {
+  const robots = `User-agent: *
+Allow: /
+
+Sitemap: ${SITE_URL}/sitemap.xml`;
+
+  await fs.writeFile('robots.txt', robots, 'utf-8');
+  console.log('✔ generated robots.txt');
 }
 
 main().catch(err => {
