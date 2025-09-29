@@ -19,8 +19,8 @@ function ensureLoopWidth(track) {
   // オリジナル区間幅を記録
   track._segmentWidth = segmentWidth;
   
-  // 最低12回はクローンして確実にループを保証（Lookbook用に大幅増加）
-  const minClones = track.classList.contains('lookbook-track') ? 12 : 3;
+  // 最低16回はクローンして確実にループを保証（Lookbook用に大幅増加）
+  const minClones = track.classList.contains('lookbook-track') ? 16 : 3;
   let total = segmentWidth;
   let guard = 0;
   
