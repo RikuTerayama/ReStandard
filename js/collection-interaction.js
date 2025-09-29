@@ -123,8 +123,8 @@ function attachTrackControls(track) {
   let longPressTimer = null;
   
   const onDown = (e) => {
-    // PC版ではマウスイベントを無視してアニメーションを継続
-    if (e.type === 'mousedown' || e.type === 'pointerdown') {
+    // PC版ではマウスイベントを完全に無視してアニメーションを継続
+    if (e.type === 'mousedown' || e.type === 'pointerdown' || e.type === 'mouseenter' || e.type === 'mouseleave') {
       return;
     }
     
@@ -132,13 +132,13 @@ function attachTrackControls(track) {
     startTx = getCurrentTranslateX(track);
     moved = 0;
     
-    // 長押しタイマーを開始（300msに延長）
+    // 長押しタイマーを開始（500msに延長してより明確に識別）
     longPressTimer = setTimeout(() => {
       isDragging = true;
       track.isDragging = true;
       track.classList.add('dragging');
       track.style.animationPlayState = 'paused';
-    }, 300);
+    }, 500);
     
     // リンク要素の場合はpreventDefaultを避ける
     if (!e.target.closest('a')) {
@@ -147,12 +147,17 @@ function attachTrackControls(track) {
   };
   
   const onMove = (e) => {
+    // PC版ではマウスイベントを完全に無視
+    if (e.type === 'mousemove' || e.type === 'pointermove') {
+      return;
+    }
+    
     const currentX = e.clientX || e.touches[0].clientX;
     const dx = currentX - startX;
     moved += Math.abs(dx);
     
-    // 5px以上移動したらドラッグ開始
-    if (!isDragging && moved > 5) {
+    // 10px以上移動したらドラッグ開始（より明確な識別）
+    if (!isDragging && moved > 10) {
       isDragging = true;
       track.isDragging = true;
       track.classList.add('dragging');
@@ -168,6 +173,11 @@ function attachTrackControls(track) {
   };
   
   const onUp = (e) => {
+    // PC版ではマウスイベントを完全に無視
+    if (e.type === 'mouseup' || e.type === 'pointerup') {
+      return;
+    }
+    
     if (!isDragging) {
       // ドラッグしていない場合、クリックとして処理
       const link = e.target.closest('a');
