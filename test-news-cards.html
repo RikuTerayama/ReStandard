@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Cards Test</title>
+    <style>
+        .news-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            align-items: start;
+            padding: 20px;
+        }
+        .news-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .news-card .thumb {
+            width: 100% !important;
+            height: 200px !important;
+            overflow: hidden !important;
+            background: #f5f5f5 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+        .news-card .thumb img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+        .news-card .meta {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .news-card .meta h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            line-height: 1.4;
+            color: #333;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .news-card .meta time {
+            font-size: 0.875rem;
+            color: #666;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>News Cards Test</h1>
+    <div id="news-grid" class="news-grid"></div>
+
+    <script>
+        // テスト用の記事データ
+        const testArticles = [
+            {
+                slug: "restandard2025aw-harley-of-scotland-pink-amp-rockmount-black-stewart",
+                title: "【ReStandard別注】2025AW 新作アイテム紹介：Harley of Scotlandセーター（Pink） & Rockmountスカート（Black Stewart）",
+                date: "2025-09-23T20:07:54",
+                firstImage: "/assets/images/nc03bbfc68e90_ace2ca2fd5e3aaa3c570274c7ae74173.png"
+            },
+            {
+                slug: "restandard2025aw-harley-of-scotland-amp-rockmount",
+                title: "【ReStandard別注】2025AW 新作アイテム紹介：Harley of Scotlandセーター & Rockmountスカート",
+                date: "2025-09-16T20:11:34",
+                firstImage: "/assets/images/n9510b5ccba2e_35bce66aa0d2428db7174eb234a82b00.jpeg"
+            }
+        ];
+
+        function createArticleCard(article) {
+            const card = document.createElement('a');
+            card.className = 'news-card';
+            const href = '/news/' + encodeURIComponent(article.slug) + '/';
+            card.href = href;
+            card.setAttribute('aria-label', article.title);
+            
+            console.log('Creating card for:', article.slug, 'href:', href);
+            
+            const figure = document.createElement('div');
+            figure.className = 'thumb';
+            
+            if (article.firstImage) {
+                const img = document.createElement('img');
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                img.alt = article.title;
+                img.src = article.firstImage;
+                figure.appendChild(img);
+            }
+            
+            const meta = document.createElement('div');
+            meta.className = 'meta';
+            
+            const h3 = document.createElement('h3');
+            h3.textContent = article.title;
+            meta.appendChild(h3);
+            
+            const time = document.createElement('time');
+            time.textContent = new Date(article.date).toLocaleDateString('ja-JP');
+            meta.appendChild(time);
+            
+            card.appendChild(figure);
+            card.appendChild(meta);
+            
+            return card;
+        }
+
+        // カードを生成して表示
+        const newsGrid = document.getElementById('news-grid');
+        testArticles.forEach(article => {
+            const card = createArticleCard(article);
+            newsGrid.appendChild(card);
+            console.log('Card added for:', article.slug);
+        });
+    </script>
+</body>
+</html>
