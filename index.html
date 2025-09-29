@@ -26,6 +26,26 @@
   }
   </script>
   
+  <!-- Collection画像のプリロード -->
+  <link rel="preload" as="image" href="image/1.JPG" fetchpriority="high">
+  <link rel="preload" as="image" href="image/2.JPG">
+  <link rel="preload" as="image" href="image/3.JPG">
+  <link rel="preload" as="image" href="image/4.JPG">
+  <link rel="preload" as="image" href="image/5.JPG">
+  <link rel="preload" as="image" href="image/6.JPG">
+  <link rel="preload" as="image" href="image/7.JPG">
+  <link rel="preload" as="image" href="image/8.JPG">
+  
+  <!-- Lookbook画像のプリロード -->
+  <link rel="preload" as="image" href="image/look1.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="image/look2.webp">
+  <link rel="preload" as="image" href="image/look3.webp">
+  <link rel="preload" as="image" href="image/look4.webp">
+  <link rel="preload" as="image" href="image/look5.webp">
+  <link rel="preload" as="image" href="image/look6.webp">
+  <link rel="preload" as="image" href="image/look7.webp">
+  <link rel="preload" as="image" href="image/look8.webp">
+  
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -210,6 +230,30 @@
     .collection-row {
       margin: 2rem 0 !important; /* 行間の間隔を拡大 */
     }
+    
+    /* Collectionセクションの背景設定 */
+    #collection .band {
+      background: rgba(0, 0, 0, 0.8) !important;
+      backdrop-filter: none !important;
+      position: relative;
+    }
+    
+    /* 上段の背景：下部分のみ角丸 */
+    .collection-row:first-child .band {
+      border-radius: 0 0 20px 20px !important;
+    }
+    
+    /* 下段の背景：上部分のみ角丸 */
+    .collection-row:last-child .band {
+      border-radius: 20px 20px 0 0 !important;
+    }
+    
+    /* モザイク背景の削除 */
+    .collection-row::before,
+    .collection-row::after {
+      display: none !important;
+    }
+    
     .collection-track img {
       display: block !important;
       visibility: visible !important;
@@ -218,6 +262,13 @@
       height: 250px !important;
       object-fit: cover !important;
       flex-shrink: 0 !important;
+      border-radius: 8px !important;
+      margin: 0 8px !important;
+      transition: transform 0.3s ease !important;
+    }
+    
+    .collection-track img:hover {
+      transform: scale(1.05) !important;
     }
     
     /* Lookbook画像の表示を強制 */
@@ -551,26 +602,23 @@
     }
 
     .social-links a {
-      display: inline-flex !important;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
-      margin: 0 15px;
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
       border-radius: 50%;
-      background: #fff !important;
-      border: 2px solid #333 !important;
-      color: #333 !important;
+      background: linear-gradient(45deg, #333, #666);
+      color: white !important;
       font-size: 1.2rem;
       transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    
+
     .social-links a:hover {
-      background: #333 !important;
-      color: #fff !important;
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      background: linear-gradient(45deg, #444, #777);
     }
 
     .copyright {
