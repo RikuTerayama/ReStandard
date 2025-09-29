@@ -231,21 +231,11 @@
       margin: 2rem 0 !important; /* 行間の間隔を拡大 */
     }
     
-    /* Collectionセクションの背景設定 */
+    /* Collectionセクションの背景設定 - 背景を削除 */
     #collection .band {
-      background: rgba(0, 0, 0, 0.8) !important;
+      background: transparent !important;
       backdrop-filter: none !important;
       position: relative;
-    }
-    
-    /* 上段の背景：下部分のみ角丸 */
-    .collection-row:first-child .band {
-      border-radius: 0 0 20px 20px !important;
-    }
-    
-    /* 下段の背景：上部分のみ角丸 */
-    .collection-row:last-child .band {
-      border-radius: 20px 20px 0 0 !important;
     }
     
     /* モザイク背景の削除 */
