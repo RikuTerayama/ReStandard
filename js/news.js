@@ -326,30 +326,36 @@ document.addEventListener('DOMContentLoaded', async function() {
           // ピンクのカードに特別なスタイルを適用してデバッグ
           card.style.border = '3px solid #ff69b4';
           card.style.backgroundColor = '#fff0f5';
+          card.style.position = 'relative';
+          card.style.zIndex = '9999';
+          card.style.display = 'block';
+          card.style.visibility = 'visible';
+          card.style.opacity = '1';
+          card.style.width = '100%';
+          card.style.height = '350px';
+          card.style.minHeight = '350px';
           console.log('🎀 PINK CARD STYLE APPLIED');
           
-          // DOM要素の詳細情報をログ出力
-          setTimeout(() => {
-            const rect = card.getBoundingClientRect();
-            const computedStyle = window.getComputedStyle(card);
-            console.log('🎀 PINK CARD DOM INFO:', {
-              offsetWidth: card.offsetWidth,
-              offsetHeight: card.offsetHeight,
-              clientWidth: card.clientWidth,
-              clientHeight: card.clientHeight,
-              rect: {
-                width: rect.width,
-                height: rect.height,
-                top: rect.top,
-                left: rect.left
-              },
-              display: computedStyle.display,
-              visibility: computedStyle.visibility,
-              opacity: computedStyle.opacity,
-              position: computedStyle.position,
-              zIndex: computedStyle.zIndex
-            });
-          }, 100);
+          // 即座にDOM要素の詳細情報をログ出力
+          const rect = card.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(card);
+          console.log('🎀 PINK CARD DOM INFO (IMMEDIATE):', {
+            offsetWidth: card.offsetWidth,
+            offsetHeight: card.offsetHeight,
+            clientWidth: card.clientWidth,
+            clientHeight: card.clientHeight,
+            rect: {
+              width: rect.width,
+              height: rect.height,
+              top: rect.top,
+              left: rect.left
+            },
+            display: computedStyle.display,
+            visibility: computedStyle.visibility,
+            opacity: computedStyle.opacity,
+            position: computedStyle.position,
+            zIndex: computedStyle.zIndex
+          });
         }
       } catch (cardError) {
         console.error(`❌ Error creating card for article ${index + 1}:`, cardError);
@@ -368,6 +374,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       clientWidth: NEWS_GRID.clientWidth,
       clientHeight: NEWS_GRID.clientHeight
     });
+    
+    // ピンクのカードを特別に確認
+    const pinkCard = NEWS_GRID.querySelector('a[href*="pink"]');
+    if (pinkCard) {
+      console.log('🎀 PINK CARD FOUND IN DOM:', pinkCard.href);
+      console.log('🎀 PINK CARD PARENT:', pinkCard.parentElement);
+    } else {
+      console.log('❌ PINK CARD NOT FOUND IN DOM');
+    }
     
     console.log('All cards rendered successfully');
     
