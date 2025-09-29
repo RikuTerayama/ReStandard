@@ -123,9 +123,23 @@ function attachTrackControls(track) {
   let longPressTimer = null;
   
   const onDown = (e) => {
+    // PC版ではマウスイベントを無視してアニメーションを継続
+    if (e.type === 'mousedown' || e.type === 'pointerdown') {
+      return;
+    }
+    
     startX = e.clientX || e.touches[0].clientX;
     startTx = getCurrentTranslateX(track);
     moved = 0;
+    
+    // 長押しタイマーを開始（300msに延長）
+    longPressTimer = setTimeout(() => {
+      isDragging = true;
+      track.isDragging = true;
+      track.classList.add('dragging');
+      track.style.animationPlayState = 'paused';
+    }, 300);
+    
     // リンク要素の場合はpreventDefaultを避ける
     if (!e.target.closest('a')) {
       e.preventDefault();
