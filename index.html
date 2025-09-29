@@ -225,6 +225,7 @@
     /* Collectionセクションの間隔調整 */
     .collection-wrapper {
       margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
+      background: transparent !important; /* 黒い半透明背景を削除 */
     }
     
     .collection-row {
@@ -248,9 +249,9 @@
       border-radius: 20px 20px 0 0 !important;
     }
     
-    /* Lookbookセクションの背景設定 - ナビバー色の背景を復活 */
+    /* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
     #lookbook .band {
-      background: rgba(0, 0, 0, 0.8) !important;
+      background: rgba(0, 0, 0, 0.8) !important; /* ナビバーと同じ色 */
       backdrop-filter: none !important;
       position: relative;
     }
@@ -292,15 +293,22 @@
       visibility: visible !important;
       opacity: 1 !important;
       width: 300px !important;
-      height: 400px !important;
+      height: 100vh !important; /* 全画面の高さに設定 */
       object-fit: cover !important;
       flex-shrink: 0 !important;
+    }
+    
+    /* モバイル版でのLookbook画像の高さ調整 */
+    @media (max-width: 767px) {
+      .lookbook-track img {
+        height: 80vh !important; /* モバイルでは80%の高さ */
+      }
     }
     
     /* PC版でのLookbook画像の高さ調整 */
     @media (min-width: 768px) {
       .lookbook-track img {
-        height: 450px !important;
+        height: 100vh !important; /* PC版でも全画面の高さ */
       }
     }
     h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
