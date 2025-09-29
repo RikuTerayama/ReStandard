@@ -378,7 +378,7 @@ section {
   margin-left: calc(50% - 50vw); 
   margin-right: calc(50% - 50vw);
   padding-block: clamp(12px, 2vw, 24px);
-  background: transparent;
+  background: transparent !important;
   position: relative;
   z-index: 1;
 }
