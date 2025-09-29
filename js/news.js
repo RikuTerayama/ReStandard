@@ -114,6 +114,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('Created card for', article.slug, 'with href:', href);
     console.log('Full URL would be:', fullHref);
     
+    // ピンクの記事のカード作成を特別にログ出力
+    if (article.slug.includes('pink')) {
+      console.log('🎀 CREATING PINK CARD:', {
+        slug: article.slug,
+        href: href,
+        fullHref: fullHref,
+        title: article.title
+      });
+    }
+    
     const figure = document.createElement('div');
     figure.className = 'thumb';
     
@@ -301,9 +311,19 @@ document.addEventListener('DOMContentLoaded', async function() {
           date: article.date
         });
         
+        // ピンクの記事かどうかを特別にログ出力
+        if (article.slug.includes('pink')) {
+          console.log('🎀 PINK ARTICLE DETECTED:', article.slug);
+        }
+        
         const card = createArticleCard(article);
         NEWS_GRID.appendChild(card);
         console.log(`✅ Card ${index + 1} created successfully`);
+        
+        // ピンクの記事のカードが作成されたかチェック
+        if (article.slug.includes('pink')) {
+          console.log('🎀 PINK CARD ADDED TO DOM:', card.href);
+        }
       } catch (cardError) {
         console.error(`❌ Error creating card for article ${index + 1}:`, cardError);
         console.error('Article data:', article);
