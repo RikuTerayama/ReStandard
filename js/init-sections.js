@@ -19,12 +19,12 @@ function ensureLoopWidth(track) {
   // オリジナル区間幅を記録
   track._segmentWidth = segmentWidth;
   
-  // 最低3回はクローンして確実にループを保証
-  const minClones = 3;
+  // 最低5回はクローンして確実にループを保証（Lookbook用に増加）
+  const minClones = track.classList.contains('lookbook-track') ? 5 : 3;
   let total = segmentWidth;
   let guard = 0;
   
-  while ((total < maxLoopWidth || guard < minClones) && guard < 50) {
+  while ((total < maxLoopWidth || guard < minClones) && guard < 60) {
     const clones = originalChildren.map((n) => n.cloneNode(true));
     clones.forEach((c) => {
       // クローンした画像にloading="lazy"を追加
@@ -39,7 +39,6 @@ function ensureLoopWidth(track) {
   }
   
   console.log(`[LOOP] Track width: ${total}px (${Math.round(total / track.parentElement.offsetWidth * 100)}% of viewport)`);
-}
 }
 
 /* トラックへドラッグ操作を付与。離した位置から再開 */
