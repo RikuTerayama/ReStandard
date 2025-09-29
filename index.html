@@ -276,15 +276,15 @@
       visibility: visible !important;
       opacity: 1 !important;
       width: 300px !important;
-      height: 500px !important; /* PC版で高さを増加 */
-      object-fit: contain !important; /* coverからcontainに変更 */
+      height: 400px !important; /* 統一の高さに設定 */
+      object-fit: contain !important; /* containで見切れ防止 */
       flex-shrink: 0 !important;
     }
     
     /* モバイル版でのLookbook画像の高さ調整 */
     @media (max-width: 767px) {
       .lookbook-track img {
-        height: 400px !important; /* モバイルでは適切な高さ */
+        height: 350px !important; /* モバイルでは少し小さく */
         object-fit: contain !important;
       }
     }
@@ -292,7 +292,7 @@
     /* PC版でのLookbook画像の高さ調整 */
     @media (min-width: 768px) {
       .lookbook-track img {
-        height: 500px !important; /* PC版で高さを増加 */
+        height: 400px !important; /* PC版でも適切な高さ */
         object-fit: contain !important;
       }
     }
