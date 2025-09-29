@@ -178,6 +178,12 @@ function attachTrackControls(track) {
       return;
     }
     
+    // 長押しタイマーをクリア
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+    
     if (!isDragging) {
       // ドラッグしていない場合、クリックとして処理
       const link = e.target.closest('a');
@@ -224,12 +230,15 @@ function attachTrackControls(track) {
     e.preventDefault();
     e.stopPropagation();
     
+    // アニメーションを即座に再開
+    track.style.animationPlayState = 'running';
+    
     // 現在位置から再開するための負の animation-delay を計算
     const segmentWidth = track._segmentWidth;
     const currentTx = getCurrentTranslateX(track);
     const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
     const progress = normalizedTx / segmentWidth;
-    const duration = parseFloat(track.dataset.speed || 55);
+    const duration = parseFloat(track.dataset.speed || 30);
     const delay = -progress * duration;
     
     // アニメーション再開
