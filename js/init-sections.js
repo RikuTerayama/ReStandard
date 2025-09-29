@@ -4,7 +4,7 @@
 
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
-  const maxLoopWidth = track.parentElement.offsetWidth * 4.0; // 400%に増加（切れ目対策を強化）
+  const maxLoopWidth = track.parentElement.offsetWidth * (track.classList.contains('lookbook-track') ? 6.0 : 4.0); // Lookbook用に600%に増加
   
   // オリジナル区間幅を記録（1周の定義）
   const originalChildren = Array.from(track.children);
@@ -19,12 +19,12 @@ function ensureLoopWidth(track) {
   // オリジナル区間幅を記録
   track._segmentWidth = segmentWidth;
   
-  // 最低5回はクローンして確実にループを保証（Lookbook用に増加）
-  const minClones = track.classList.contains('lookbook-track') ? 5 : 3;
+  // 最低8回はクローンして確実にループを保証（Lookbook用に大幅増加）
+  const minClones = track.classList.contains('lookbook-track') ? 8 : 3;
   let total = segmentWidth;
   let guard = 0;
   
-  while ((total < maxLoopWidth || guard < minClones) && guard < 60) {
+  while ((total < maxLoopWidth || guard < minClones) && guard < 80) {
     const clones = originalChildren.map((n) => n.cloneNode(true));
     clones.forEach((c) => {
       // クローンした画像にloading="lazy"を追加
