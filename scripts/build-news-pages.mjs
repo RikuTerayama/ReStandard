@@ -179,16 +179,16 @@ function stripLeadingDate(title) {
   return title.replace(/^\s*\d{1,2}[\/\-]\d{1,2}\s+/, '');
 }
 
-function fixContentFormatting(html) {
+function fixContentFormatting(html, title = '') {
   // 箇条書きをプレーンテキスト形式に変更
   // HTMLエンティティをデコード
   // 重複タイトル（Published: を含む行）を削除
   
-  // 画像パスを一時的に保護
+  // 画像パスを一時的に保護し、alt属性を改善
   const imagePlaceholders = [];
-  let protectedHtml = html.replace(/<img[^>]*src=["']([^"']+)["'][^>]*>/gi, (match, src) => {
+  let protectedHtml = html.replace(/<img([^>]*?)src=["']([^"']+)["']([^>]*?)>/gi, (match, before, src, after) => {
     const placeholder = `__IMAGE_PLACEHOLDER_${imagePlaceholders.length}__`;
-    imagePlaceholders.push(src);
+    imagePlaceholders.push({ src, before, after });
     return match.replace(src, placeholder);
   });
   
@@ -209,9 +209,25 @@ function fixContentFormatting(html) {
     // 連続する改行を整理
     .replace(/(<br>\s*){3,}/g, '<br><br>');
   
-  // 画像パスを復元
-  imagePlaceholders.forEach((src, index) => {
+  // 画像パスを復元し、alt属性を改善
+  imagePlaceholders.forEach((imgData, index) => {
+    const { src, before, after } = imgData;
     protectedHtml = protectedHtml.replace(`__IMAGE_PLACEHOLDER_${index}__`, src);
+  });
+  
+  // 画像のalt属性を改善
+  protectedHtml = protectedHtml.replace(/<img([^>]*?)src=["']([^"']+)["']([^>]*?)>/gi, (match, before, src, after) => {
+    // 既存のalt属性をチェック
+    const altMatch = match.match(/alt=["']([^"']*)["']/i);
+    const currentAlt = altMatch ? altMatch[1] : '';
+    
+    // 空のalt属性または数字のみのalt属性を改善
+    if (!currentAlt || currentAlt === '' || /^[0-9]+$/.test(currentAlt)) {
+      const newAlt = generateImageAlt(src, title, 'product');
+      return match.replace(/alt=["'][^"']*["']/i, `alt="${newAlt}"`);
+    }
+    
+    return match;
   });
   
   // ハッシュタグ段落を削除
@@ -535,10 +551,26 @@ function extractImageDimensions(imgSrc) {
   return { width: 800, height: 600 }; // デフォルトサイズ
 }
 
-function generateImageAlt(imgSrc, title) {
+function generateImageAlt(imgSrc, title, context = '') {
   const filename = path.basename(imgSrc, path.extname(imgSrc));
-  const cleanFilename = filename.replace(/^[a-z0-9]+_/, '').replace(/[_-]/g, ' ');
-  return `${title} - ${cleanFilename}`;
+  
+  // ファイル名から意味のある部分を抽出
+  let cleanFilename = filename.replace(/^[a-z0-9]+_/, '').replace(/[_-]/g, ' ');
+  
+  // 記事タイトルから主要キーワードを抽出
+  const titleKeywords = title.match(/[A-Za-z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+/g) || [];
+  const mainKeywords = titleKeywords.slice(0, 3).join(' ');
+  
+  // コンテキストに基づいてalt属性を生成
+  if (context.includes('product') || context.includes('item')) {
+    return `${mainKeywords} 商品画像 - ${cleanFilename}`;
+  } else if (context.includes('collection') || context.includes('gallery')) {
+    return `${mainKeywords} コレクション画像 - ${cleanFilename}`;
+  } else if (context.includes('lookbook') || context.includes('style')) {
+    return `${mainKeywords} スタイル画像 - ${cleanFilename}`;
+  } else {
+    return `${mainKeywords} 画像 - ${cleanFilename}`;
+  }
 }
 
 function validateHeadingStructure(html) {
@@ -630,7 +662,7 @@ async function main() {
     let content = extractArticleContent(html);
     
     content = normalizeArticleHtml(content, titleDecoded);
-    content = fixContentFormatting(content);
+    content = fixContentFormatting(content, titleDecoded);
     content = fixAssetPaths(content);
     
     // タイトルとメタタグ、prev/nextリンクも修正
