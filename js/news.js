@@ -323,6 +323,33 @@ document.addEventListener('DOMContentLoaded', async function() {
         // ピンクの記事のカードが作成されたかチェック
         if (article.slug.includes('pink')) {
           console.log('🎀 PINK CARD ADDED TO DOM:', card.href);
+          // ピンクのカードに特別なスタイルを適用してデバッグ
+          card.style.border = '3px solid #ff69b4';
+          card.style.backgroundColor = '#fff0f5';
+          console.log('🎀 PINK CARD STYLE APPLIED');
+          
+          // DOM要素の詳細情報をログ出力
+          setTimeout(() => {
+            const rect = card.getBoundingClientRect();
+            const computedStyle = window.getComputedStyle(card);
+            console.log('🎀 PINK CARD DOM INFO:', {
+              offsetWidth: card.offsetWidth,
+              offsetHeight: card.offsetHeight,
+              clientWidth: card.clientWidth,
+              clientHeight: card.clientHeight,
+              rect: {
+                width: rect.width,
+                height: rect.height,
+                top: rect.top,
+                left: rect.left
+              },
+              display: computedStyle.display,
+              visibility: computedStyle.visibility,
+              opacity: computedStyle.opacity,
+              position: computedStyle.position,
+              zIndex: computedStyle.zIndex
+            });
+          }, 100);
         }
       } catch (cardError) {
         console.error(`❌ Error creating card for article ${index + 1}:`, cardError);
@@ -331,6 +358,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
     
     console.log('=== CARD RENDERING COMPLETE ===');
+    
+    // NEWS_GRIDの状態を確認
+    console.log('NEWS_GRID INFO:', {
+      children: NEWS_GRID.children.length,
+      innerHTML: NEWS_GRID.innerHTML.length,
+      offsetWidth: NEWS_GRID.offsetWidth,
+      offsetHeight: NEWS_GRID.offsetHeight,
+      clientWidth: NEWS_GRID.clientWidth,
+      clientHeight: NEWS_GRID.clientHeight
+    });
     
     console.log('All cards rendered successfully');
     
