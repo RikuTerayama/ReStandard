@@ -123,9 +123,23 @@ function attachTrackControls(track) {
   let longPressTimer = null;
   
   const onDown = (e) => {
+    // PC版ではマウスイベントを完全に無視してアニメーションを継続
+    if (e.type === 'mousedown' || e.type === 'pointerdown' || e.type === 'mouseenter' || e.type === 'mouseleave') {
+      return;
+    }
+    
     startX = e.clientX || e.touches[0].clientX;
     startTx = getCurrentTranslateX(track);
     moved = 0;
+    
+    // 長押しタイマーを開始（500msに延長してより明確に識別）
+    longPressTimer = setTimeout(() => {
+      isDragging = true;
+      track.isDragging = true;
+      track.classList.add('dragging');
+      track.style.animationPlayState = 'paused';
+    }, 500);
+    
     // リンク要素の場合はpreventDefaultを避ける
     if (!e.target.closest('a')) {
       e.preventDefault();
@@ -133,12 +147,17 @@ function attachTrackControls(track) {
   };
   
   const onMove = (e) => {
+    // PC版ではマウスイベントを完全に無視
+    if (e.type === 'mousemove' || e.type === 'pointermove') {
+      return;
+    }
+    
     const currentX = e.clientX || e.touches[0].clientX;
     const dx = currentX - startX;
     moved += Math.abs(dx);
     
-    // 5px以上移動したらドラッグ開始
-    if (!isDragging && moved > 5) {
+    // 10px以上移動したらドラッグ開始（より明確な識別）
+    if (!isDragging && moved > 10) {
       isDragging = true;
       track.isDragging = true;
       track.classList.add('dragging');
@@ -154,6 +173,17 @@ function attachTrackControls(track) {
   };
   
   const onUp = (e) => {
+    // PC版ではマウスイベントを完全に無視
+    if (e.type === 'mouseup' || e.type === 'pointerup') {
+      return;
+    }
+    
+    // 長押しタイマーをクリア
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+    
     if (!isDragging) {
       // ドラッグしていない場合、クリックとして処理
       const link = e.target.closest('a');
@@ -193,12 +223,15 @@ function attachTrackControls(track) {
     e.preventDefault();
     e.stopPropagation();
     
+    // アニメーションを即座に再開
+    track.style.animationPlayState = 'running';
+    
     // 現在位置から再開するための負の animation-delay を計算
     const segmentWidth = track._segmentWidth;
     const currentTx = getCurrentTranslateX(track);
     const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
     const progress = normalizedTx / segmentWidth;
-    const duration = parseFloat(track.dataset.speed || 55);
+    const duration = parseFloat(track.dataset.speed || 32);
     const delay = -progress * duration;
     
     // アニメーション再開
