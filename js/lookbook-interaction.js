@@ -26,7 +26,7 @@ function initTrack(track) {
   ensureInfiniteLoop(track, segmentCount);
   
   // マウスポインタのダウン・ムーブ・アップイベントを拾い、クリックとドラッグを区別
-  // attachTrackControls(track); // スクロール機能を削除
+  attachTrackControls(track); // スクロール機能を有効化
   
   // オートスクロール開始（左方向）
   startAutoScroll(track);
