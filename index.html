@@ -451,39 +451,26 @@
 
     /* brand-section-title削除 - .section-titleで統一 */
 
-    /* Main Heading Styles */
-    .main-heading-section {
-      padding: 60px 0 40px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      margin-bottom: 40px;
+    /* Screen Reader Only - SEO用の非表示要素 */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
     }
     
-    .main-heading {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #2c3e50;
-      margin-bottom: 20px;
-      line-height: 1.3;
-    }
-    
-    .main-description {
-      font-size: 1.2rem;
-      color: #5a6c7d;
-      max-width: 800px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-    
-    @media (max-width: 768px) {
-      .main-heading {
-        font-size: 2rem;
-      }
-      .main-description {
-        font-size: 1.1rem;
-        padding: 0 20px;
-      }
+    /* スクリーンリーダーでは読み上げられるが、視覚的には非表示 */
+    .sr-only h1,
+    .sr-only p {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: transparent;
+      background: transparent;
     }
 
     /* Brands グリッド重複スタイル削除 */
@@ -940,12 +927,10 @@
   
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
-  <!-- Main Heading -->
-  <section class="main-heading-section">
-    <div class="container">
-      <h1 class="main-heading">ReStandard - 欧米アパレルブランド卸のパートナーシップ</h1>
-      <p class="main-description">高品質な欧米ブランドを日本市場へ。Rockmount、Harley of Scotland、William Lockieなど、厳選されたブランドをお客様にご提案します。</p>
-    </div>
+  <!-- Main Heading - SEO用の非表示H1 -->
+  <section class="sr-only">
+    <h1>ReStandard - 欧米アパレルブランド卸のパートナーシップ</h1>
+    <p>高品質な欧米ブランドを日本市場へ。Rockmount、Harley of Scotland、William Lockieなど、厳選されたブランドをお客様にご提案します。</p>
   </section>
 
   <!-- Collection Section - 統合済み -->
