@@ -4,7 +4,7 @@
 
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
-  const maxLoopWidth = track.parentElement.offsetWidth * 3.5; // 350%（切れ目対策を強化）
+  const maxLoopWidth = track.parentElement.offsetWidth * 4.0; // 400%に増加（切れ目対策を強化）
   
   // オリジナル区間幅を記録（1周の定義）
   const originalChildren = Array.from(track.children);
@@ -12,16 +12,19 @@ function ensureLoopWidth(track) {
   
   // 画像が未ロードだと幅が 0 になるので暫定で幅推定
   if (segmentWidth === 0) {
-    const fallback = originalChildren.length * 200;
+    const fallback = originalChildren.length * (track.classList.contains('lookbook-track') ? 300 : 200);
     segmentWidth = fallback;
   }
   
   // オリジナル区間幅を記録
   track._segmentWidth = segmentWidth;
   
+  // 最低3回はクローンして確実にループを保証
+  const minClones = 3;
   let total = segmentWidth;
   let guard = 0;
-  while (total < maxLoopWidth && guard < 40) {
+  
+  while ((total < maxLoopWidth || guard < minClones) && guard < 50) {
     const clones = originalChildren.map((n) => n.cloneNode(true));
     clones.forEach((c) => {
       // クローンした画像にloading="lazy"を追加
@@ -34,6 +37,9 @@ function ensureLoopWidth(track) {
     total = Array.from(track.children).reduce((w, el) => w + el.getBoundingClientRect().width, 0);
     guard++;
   }
+  
+  console.log(`[LOOP] Track width: ${total}px (${Math.round(total / track.parentElement.offsetWidth * 100)}% of viewport)`);
+}
 }
 
 /* トラックへドラッグ操作を付与。離した位置から再開 */
@@ -77,6 +83,19 @@ function attachManualControls(track){
     
     if(!dragging) return;
     dragging = false;
+    
+    // アニメーションを再開（現在の位置から継続）
+    track.style.animationPlayState = 'running';
+    
+    // 現在の位置を記録してアニメーションを調整
+    const currentTx = getTxPx(track);
+    const segmentWidth = track._segmentWidth || 0;
+    
+    // セグメント幅の倍数に調整してスムーズなループを保証
+    if (segmentWidth > 0) {
+      const adjustedTx = Math.round(currentTx / segmentWidth) * segmentWidth;
+      track.style.transform = `translateX(${adjustedTx}px)`;
+    }
 
     // moved はここではリセットしない（先に判定に使う）
     const dragAmount = Math.abs(moved);
