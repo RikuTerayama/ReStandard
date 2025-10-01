@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
   
   const BASE_PATH = ''; // 例: '/site' で配信する場合は '/site'
-  const MANIFEST_URL = BASE_PATH + '/news_src/manifest.json';
+  const MANIFEST_URL = BASE_PATH + '/news_src/manifest.json?v=' + Date.now();
   const LINK_PREFIX = BASE_PATH + '/news/'; // /news/<slug>/ に遷移
   
   // Schema guard for article data
@@ -50,6 +50,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       href;
     card.href = fullHref;
     card.setAttribute('aria-label', article.title);
+    
+    // デバッグ用ログ（Harley of Scotlandの記事の場合）
+    if (article.slug === 'harley-of-scotland') {
+      console.log('🎯 Harley of Scotland card created:', {
+        title: article.title,
+        slug: article.slug,
+        href: fullHref
+      });
+    }
     
     const figure = document.createElement('div');
     figure.className = 'thumb';
@@ -140,7 +149,13 @@ document.addEventListener('DOMContentLoaded', async function() {
   try {
     if (NEWS_LOADING) NEWS_LOADING.remove();
     
-    const response = await fetch(MANIFEST_URL, { cache: 'no-store' });
+    const response = await fetch(MANIFEST_URL, { 
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
+      }
+    });
     
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
