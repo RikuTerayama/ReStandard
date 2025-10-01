@@ -729,6 +729,15 @@
       display: none;
     }
     /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
+    
+    /* Brandsロゴサイズ修正 */
+    .brand-logo {
+      aspect-ratio: 1 / 1;
+      width: 100% !important;
+      height: auto !important;
+      max-width: 200px !important;
+      object-fit: contain !important;
+    }
   </style>
   <style>
     /* フッターが浮かないようにする設定 */
@@ -769,18 +778,18 @@
   <nav class="fixed-top navbar navbar-expand-lg">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
-      <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+      <a class="navbar-brand mx-auto" href="/index.html">ReStandard</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link active" href="#brands">Brands</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
-          <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
-          <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/#brands">Brands</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/vision.html">Vision</a></li>
+          <li class="nav-item"><a class="nav-link" href="/news.html">News</a></li>
+          <li class="nav-item"><a class="nav-link" href="/location.html">Location</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
         </ul>
         <div class="language-switcher">
@@ -1325,12 +1334,12 @@
   <!-- Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 -->
 
   <ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
-    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-    <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
-    <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
-    <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
-    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    <li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
+    <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
+    <li class="nav-item"><a class="nav-link" href="/vision.html">Vision</a></li>
+    <li class="nav-item"><a class="nav-link" href="/news.html">News</a></li>
+    <li class="nav-item"><a class="nav-link" href="/location.html">Location</a></li>
+    <li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
     <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
   </ul>
 
