@@ -3,14 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="google" content="notranslate">
-  <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) - 最適化 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-1W9HVMCW3G');
+  gtag('config', 'G-1W9HVMCW3G', {
+    'anonymize_ip': true,
+    'cookie_flags': 'SameSite=None;Secure'
+  });
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
@@ -18,17 +20,15 @@
   <meta name="author" content="ReStandard">
   <meta name="robots" content="index, follow">
   
-  <!-- Speculation Rules で高速化 -->
+  <!-- Speculation Rules で高速化（最適化） -->
   <script type="speculationrules">
   {
-    "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }],
-    "prerender": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
+    "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
   }
   </script>
   
-  <!-- 重要な画像のみプリロード -->
-  <link rel="preload" as="image" href="image/1-640w.jpg" fetchpriority="high">
-  <link rel="preload" as="image" href="image/look1.webp" fetchpriority="high">
+  <!-- 重要な画像のみプリロード（最適化） -->
+  <link rel="preload" as="image" href="image/1.JPG" fetchpriority="high">
   
   <script type="application/ld+json">
 {
@@ -124,28 +124,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">`n  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://restandard.stores.jp">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
   <link rel="preload" href="css/style.css" as="style">
   <link rel="preload" href="css/reveal.css" as="style">
   <link rel="preload" href="css/i18n-visibility.css" as="style">
   <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
-  <!-- LCP画像のプリロード -->
+  <!-- LCP画像のプリロード（最適化） -->
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
 
   <!-- Collection/Lookbook画像のプリロードを削除（lazy-loadに変更） -->
   
   <!-- スタイルシート -->
-  <link href="https://cdn.jsdelivr.net"/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net"/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-20-BOOTSTRAP-ONLY">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-20-BOOTSTRAP-ONLY">
-  <!-- Bootstrapの上書きを防ぐためstyle.cssを一時的に無効化 -->
-  <!-- <link rel="stylesheet" href="css/style.css?v=2025-01-20-COMPLETE-COPY"> -->
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-19-fix">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -332,9 +332,32 @@
       font-weight: 700;
     }
 
-    /* ナビゲーションスタイル（最小限） */
+    .navbar-nav {
+      margin-right: 1rem;
+    }
+
+    .navbar-nav .nav-item {
+      margin: 0 0.5rem;
+    }
+
     .navbar-nav .nav-link {
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
       color: var(--main-color) !important;
+      position: relative;
+      transition: all 0.3s var(--transition-timing);
+    }
+    
+    /* Bootstrapのデフォルト設定を上書き */
+    html body .navbar-nav .nav-link {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.9rem !important;
+    }
+    html body .navbar-nav .nav-item {
+      margin: 0 0.5rem !important;
     }
 
     .nav-link::after {
@@ -365,10 +388,15 @@
       width: 70%;
     }
 
-    /* 言語切り替えボタンのスタイル（最小限） */
+    /* 言語切り替えボタンのスタイル */
     .language-switcher {
       display: flex;
       align-items: center;
+      margin-left: 2rem;
+      position: relative;
+      border-radius: 24px;
+      padding: 4px;
+      transition: all 0.3s ease;
     }
 
     .language-switcher button {
@@ -394,40 +422,26 @@
       transform: scale(1.05);
     }
 
-    /* Bootstrapのデフォルト動作を維持 */
-    
-    /* Collection/Lookbookの必要最小限のスタイル */
-    .collection-track, .lookbook-track {
-      display: flex !important;
-      align-items: center !important;
-      gap: 12px !important;
-      padding: 20px 0 !important;
-    }
-    
-    .collection-item, .lookbook-item {
-      flex: 0 0 auto !important;
-    }
-    
-    .collection-item img, .lookbook-item img {
-      width: 200px !important;
-      height: 250px !important;
-      object-fit: cover !important;
-    }
-    
-    .section-title {
-      color: #fff !important;
-      text-align: center !important;
-      margin: 2rem auto !important;
-    }
-    
-    /* ブランド画像のサイズ調整 */
-    .brand-logo {
-      width: 100% !important;
-      height: auto !important;
-      max-width: 250px !important;
-      min-width: 180px !important;
-      object-fit: contain !important;
-      aspect-ratio: 1 / 1;
+    /* モバイル対応 */
+    @media (max-width: 991px) {
+      .navbar-nav {
+        margin-right: 0;
+        text-align: center;
+        padding: 1rem 0;
+      }
+
+      .navbar-nav .nav-item {
+        margin: 0.5rem 0;
+      }
+
+      .language-switcher {
+        margin: 1rem auto;
+        width: fit-content;
+      }
+
+      .navbar-brand {
+        font-size: 1.3rem;
+      }
     }
 
     .brand-name-caption {
@@ -556,9 +570,42 @@
       transform: translate(-50%, -110%) scale(1);
     }
 
-    /* フッタースタイル（最小限） */
+    footer {
+      border-top: 1px solid rgba(204, 204, 204, 0.3);
+    }
+
+    footer .nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
     footer .nav-link {
       color: var(--main-color) !important;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      position: relative;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    footer .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    footer .nav-link:hover::after {
+      width: 70%;
     }
 
     .social-links {
@@ -683,44 +730,6 @@
       display: none;
     }
     /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
-    
-    /* Brandsロゴサイズ修正（強制適用） */
-    .brand-logo {
-      aspect-ratio: 1 / 1 !important;
-      width: 100% !important;
-      height: auto !important;
-      max-width: 250px !important;
-      min-width: 180px !important;
-      object-fit: contain !important;
-    }
-    
-    .brands-grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
-      gap: 30px !important;
-    }
-    
-    .brand-card {
-      min-height: 250px !important;
-      padding: 20px !important;
-    }
-    
-    /* モバイル対応 */
-    @media (max-width: 768px) {
-      .brands-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 20px !important;
-      }
-      
-      .brand-logo {
-        max-width: 200px !important;
-        min-width: 150px !important;
-      }
-      
-      .brand-card {
-        min-height: 200px !important;
-        padding: 15px !important;
-      }
-    }
   </style>
   <style>
     /* フッターが浮かないようにする設定 */
@@ -753,7 +762,7 @@
 
   <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
   <div id="splash-video-wrapper" style="display: none;">
-    <video id="splash-video" src="5.mov" autoplay playsinline muted preload="metadata"></video>
+    <video id="splash-video" autoplay playsinline muted preload="none"></video>
     <!-- <div id="splash-loading">Loading...</div> -->
   </div>
   <!-- 1.mov モーダル -->
@@ -767,7 +776,7 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link active" href="/#brands">Brands</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#brands">Brands</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
           <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
@@ -783,10 +792,10 @@
     </div>
   </nav>
 
-  <!-- 単一背景動画 - PC/SP自動切替 -->
+  <!-- 単一背景動画 - PC/SP自動切替（最適化） -->
   <div id="background-video-container">
-  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
-    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
+  <video id="desktop-bg-video" autoplay loop muted playsinline preload="none" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <video id="mobile-bg-video" autoplay loop muted playsinline preload="none" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
   </div>
   
   <style>
@@ -877,9 +886,10 @@
       if (isMobile) {
         if (desktopVideo) {
           desktopVideo.style.display = 'none';
-          desktopVideo.removeAttribute('src');
         }
         if (mobileVideo) {
+          // 遅延読み込み
+          mobileVideo.src = '2.mp4';
           mobileVideo.addEventListener('canplay', function() {
             console.log('スマートフォン版背景動画が読み込まれました');
             mobileVideo.play().catch(function(error) {
@@ -901,9 +911,10 @@
       } else {
         if (mobileVideo) {
           mobileVideo.style.display = 'none';
-          mobileVideo.removeAttribute('src');
         }
       if (desktopVideo) {
+          // 遅延読み込み
+          desktopVideo.src = '7.mp4';
           desktopVideo.addEventListener('canplay', function() {
           console.log('PC版背景動画が読み込まれました');
           desktopVideo.play().catch(function(error) {
@@ -928,7 +939,7 @@
         if (!videoInitialized) {
           videoInitialized = true; // フラグを設定して重複実行を防ぐ
         }
-      }, 2000); // 5秒から2秒に短縮
+      }, 1000); // 2秒から1秒に短縮
       
       // 即座に実行せず、他の初期化処理を優先
       requestAnimationFrame(function() {
@@ -940,7 +951,7 @@
             console.error('動画初期化エラー:', error);
             clearTimeout(initTimeout);
           }
-        }, 10); // 50msから10msに短縮
+        }, 100); // 10msから100msに変更（他の処理を優先）
           });
         });
         
@@ -992,46 +1003,47 @@
       <div class="collection-row">
           <div class="collection-track" data-direction="left" data-speed="30" data-start="1.jpg" data-align="left" data-seg="16">
             <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener"><img src="image/1.JPG" alt="ReStandard コレクション 商品画像 1" loading="lazy" fetchpriority="high" width="200" height="250" decoding="async" style="display: block !important; visibility: visible !important; opacity: 1 !important;"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/2.JPG" alt="ReStandard コレクション 商品画像 2" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/3.JPG" alt="ReStandard コレクション 商品画像 3" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/4.JPG" alt="ReStandard コレクション 商品画像 4" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/5.JPG" alt="ReStandard コレクション 商品画像 5" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/6.JPG" alt="ReStandard コレクション 商品画像 6" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/7.JPG" alt="ReStandard コレクション 商品画像 7" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/8.JPG" alt="ReStandard コレクション 商品画像 8" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/9.JPG" alt="ReStandard コレクション 商品画像 9" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/10.JPG" alt="ReStandard コレクション 商品画像 10" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/12.JPG" alt="ReStandard コレクション 商品画像 12" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/13.JPG" alt="ReStandard コレクション 商品画像 13" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/15.JPG" alt="ReStandard コレクション 商品画像 15" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/16.JPG" alt="ReStandard コレクション 商品画像 16" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/2.JPG" alt="ReStandard コレクション 商品画像 2" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/3.JPG" alt="ReStandard コレクション 商品画像 3" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/4.JPG" alt="ReStandard コレクション 商品画像 4" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/5.JPG" alt="ReStandard コレクション 商品画像 5" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/6.JPG" alt="ReStandard コレクション 商品画像 6" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/7.JPG" alt="ReStandard コレクション 商品画像 7" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/8.JPG" alt="ReStandard コレクション 商品画像 8" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/9.JPG" alt="ReStandard コレクション 商品画像 9" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/10.JPG" alt="ReStandard コレクション 商品画像 10" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/12.JPG" alt="ReStandard コレクション 商品画像 12" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/13.JPG" alt="ReStandard コレクション 商品画像 13" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/15.JPG" alt="ReStandard コレクション 商品画像 15" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/16.JPG" alt="ReStandard コレクション 商品画像 16" loading="lazy" width="200" height="250" decoding="async"></a>
         </div>
       </div>
       
       <!-- 下段：左→右 -->
       <div class="collection-row">
           <div class="collection-track reverse" data-direction="right" data-speed="30" data-start="21.jpg" data-align="right" data-seg="12">
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/21.JPG" alt="ReStandard コレクション 商品画像 21" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/22.JPG" alt="ReStandard コレクション 商品画像 22" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/23.JPG" alt="ReStandard コレクション 商品画像 23" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/24.JPG" alt="ReStandard コレクション 商品画像 24" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener"><img src="image/25.JPG" alt="ReStandard コレクション 商品画像 25" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/26.JPG" alt="ReStandard コレクション 商品画像 26" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener"><img src="image/27.JPG" alt="ReStandard コレクション 商品画像 27" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/28.JPG" alt="ReStandard コレクション 商品画像 28" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener"><img src="image/29.JPG" alt="ReStandard コレクション 商品画像 29" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/30.JPG" alt="ReStandard コレクション 商品画像 30" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/31.JPG" alt="ReStandard コレクション 商品画像 31" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/32.JPG" alt="ReStandard コレクション 商品画像 32" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/21.JPG" alt="ReStandard コレクション 商品画像 21" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/22.JPG" alt="ReStandard コレクション 商品画像 22" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/23.JPG" alt="ReStandard コレクション 商品画像 23" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/24.JPG" alt="ReStandard コレクション 商品画像 24" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener"><img src="image/25.JPG" alt="ReStandard コレクション 商品画像 25" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/26.JPG" alt="ReStandard コレクション 商品画像 26" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener"><img src="image/27.JPG" alt="ReStandard コレクション 商品画像 27" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/28.JPG" alt="ReStandard コレクション 商品画像 28" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener"><img src="image/29.JPG" alt="ReStandard コレクション 商品画像 29" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/30.JPG" alt="ReStandard コレクション 商品画像 30" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/31.JPG" alt="ReStandard コレクション 商品画像 31" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/32.JPG" alt="ReStandard コレクション 商品画像 32" loading="lazy" width="200" height="250" decoding="async"></a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 最終QAチェック用JavaScript -->
+  <!-- 最終QAチェック用JavaScript（最適化） -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // 遅延実行でパフォーマンスを向上
+    setTimeout(function() {
       console.log('=== 最終QAチェック ===');
       
       // 1. 背景1レイヤ確認
@@ -1040,17 +1052,7 @@
       console.log('✅ Collection背景レイヤ数:', collectionBands.length, '(1であるべき)');
       console.log('✅ Lookbook背景レイヤ数:', lookbookBands.length, '(1であるべき)');
       
-      // 2. 画像全体表示確認
-      const collectionImgs = document.querySelectorAll('.collection-track img');
-      const lookbookImgs = document.querySelectorAll('.lookbook-track img');
-      collectionImgs.forEach(img => {
-        const styles = getComputedStyle(img);
-        if (styles.objectFit !== 'contain') {
-          console.warn('⚠️ Collection画像object-fit:', styles.objectFit, '(containであるべき)');
-        }
-      });
-      
-      // 3. ループ空白なし確認
+      // 2. ループ空白なし確認
       const collectionTracks = document.querySelectorAll('.collection-track');
       const lookbookTracks = document.querySelectorAll('.lookbook-track');
       collectionTracks.forEach((track, i) => {
@@ -1059,37 +1061,23 @@
         console.log(`✅ Collection Track ${i+1} 幅:`, width, 'vs 画面幅:', screenWidth, '(300%以上:', width >= screenWidth * 3, ')');
       });
       
-      // 4. ドラッグクリック確認
-      console.log('✅ Collection tracks:', collectionTracks.length);
-      console.log('✅ Lookbook tracks:', lookbookTracks.length);
-      
-      // 5. 速度確認
+      // 3. 速度確認
       collectionTracks.forEach((track, i) => {
         const speed = track.getAttribute('data-speed');
         console.log(`✅ Collection Track ${i+1} 速度:`, speed, 's (30sであるべき)');
-        console.log(`🔍 Collection Track ${i+1} dataset.speed:`, track.dataset.speed);
       });
       lookbookTracks.forEach((track, i) => {
         const speed = track.getAttribute('data-speed');
         console.log(`✅ Lookbook Track ${i+1} 速度:`, speed, 's (32sであるべき)');
-        console.log(`🔍 Lookbook Track ${i+1} dataset.speed:`, track.dataset.speed);
       });
       
-      // 6. 画像表示確認
-      collectionImgs.forEach((img, i) => {
-        console.log(`🖼️ Collection Image ${i+1}:`, img.src, 'display:', getComputedStyle(img).display);
-      });
-      lookbookImgs.forEach((img, i) => {
-        console.log(`🖼️ Lookbook Image ${i+1}:`, img.src, 'display:', getComputedStyle(img).display);
-      });
-      
-      // 6. 見出し統一確認
+      // 4. 見出し統一確認
       const titles = document.querySelectorAll('.section-title');
       titles.forEach((title, i) => {
         const styles = getComputedStyle(title);
         console.log(`✅ Title ${i+1} 色:`, styles.color, 'サイズ:', styles.fontSize);
       });
-    });
+    }, 1000); // 1秒後に実行
   </script>
 
   <!-- Brands Section -->
@@ -1099,71 +1087,71 @@
     <div class="brands-grid">
       <figure class="brand-card" data-hover="image/rockmount-hover.webp">
         <a href="https://rockmount.com/" target="_blank" rel="noopener">
-          <img src="image/rockmount.webp" alt="Rockmount" class="brand-logo" loading="lazy" width="819" height="407" decoding="async">
-          <img src="image/rockmount3.webp" alt="Rockmount Hover" class="brand-hover" loading="lazy" width="1418" height="1090" decoding="async">
+          <img src="image/rockmount.webp" alt="Rockmount" class="brand-logo" loading="lazy">
+          <img src="image/rockmount3.webp" alt="Rockmount Hover" class="brand-hover" loading="lazy">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/Harley-hover.webp">
         <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
-          <img src="image/Harley.webp" alt="Harley of Scotland" loading="lazy" class="brand-logo" width="2048" height="2048" decoding="async">
-          <img src="image/Harley1.webp" alt="Harley of Scotland Hover" loading="lazy" class="brand-hover" width="967" height="1480" decoding="async">
+          <img src="image/Harley.webp" alt="Harley of Scotland" loading="lazy" class="brand-logo">
+          <img src="image/Harley1.webp" alt="Harley of Scotland Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/william lockie-hover.webp">
         <a href="https://williamlockie.com/" target="_blank" rel="noopener">
-          <img src="image/william lockie.webp" alt="William Lockie" loading="lazy" class="brand-logo" width="600" height="600" decoding="async">
-          <img src="image/william2.webp" alt="William Lockie Hover" loading="lazy" class="brand-hover" width="665" height="828" decoding="async">
+          <img src="image/william lockie.webp" alt="William Lockie" loading="lazy" class="brand-logo">
+          <img src="image/william2.webp" alt="William Lockie Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/eribe-hover.svg">
         <a href="https://www.eribe.com/" target="_blank" rel="noopener">
-          <img src="image/eribe.svg" alt="Eribe" loading="lazy" class="brand-logo" width="1200" height="628" decoding="async">
-          <img src="image/eribe.webp" alt="Eribe Hover" loading="lazy" class="brand-hover" width="1536" height="1024" decoding="async">
+          <img src="image/eribe.svg" alt="Eribe" loading="lazy" class="brand-logo">
+          <img src="image/eribe.webp" alt="Eribe Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/glen prince-hover.webp">
         <a href="https://www.glenprince.com/" target="_blank" rel="noopener">
-          <img src="image/glen prince.webp" alt="Glen Prince" loading="lazy" class="brand-logo" width="2083" height="1250" decoding="async">
-          <img src="image/glenprince2.webp" alt="Glen Prince Hover" loading="lazy" class="brand-hover" width="1632" height="2174" decoding="async">
+          <img src="image/glen prince.webp" alt="Glen Prince" loading="lazy" class="brand-logo">
+          <img src="image/glenprince2.webp" alt="Glen Prince Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/athena designs-hover.webp">
         <a href="https://www.athenaknitwear.com/" target="_blank" rel="noopener">
-          <img src="image/athena designs.webp" alt="Athena Designs" loading="lazy" class="brand-logo" width="380" height="266" decoding="async">
-          <img src="image/athenadesigns.webp" alt="Athena Designs Hover" loading="lazy" class="brand-hover" width="2726" height="1320" decoding="async">
+          <img src="image/athena designs.webp" alt="Athena Designs" loading="lazy" class="brand-logo">
+          <img src="image/athenadesigns.webp" alt="Athena Designs Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/kopka-hover.webp">
         <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener">
-          <img src="image/kopka.webp" alt="Kopka Accessories" loading="lazy" class="brand-logo" width="640" height="480" decoding="async">
-          <img src="image/kopka2.webp" alt="Kopka Accessories Hover" loading="lazy" class="brand-hover" width="1280" height="960" decoding="async">
+          <img src="image/kopka.webp" alt="Kopka Accessories" loading="lazy" class="brand-logo">
+          <img src="image/kopka2.webp" alt="Kopka Accessories Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/leminor-hover.webp">
         <a href="https://leminor.fr/en" target="_blank" rel="noopener">
-          <img src="image/leminor.webp" alt="Le Minor" loading="lazy" class="brand-logo" width="450" height="450" decoding="async">
-          <img src="image/leminor2.webp" alt="Le Minor Hover" loading="lazy" class="brand-hover" width="1080" height="1619" decoding="async">
+          <img src="image/leminor.webp" alt="Le Minor" loading="lazy" class="brand-logo">
+          <img src="image/leminor2.webp" alt="Le Minor Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card">
         <a href="https://sans-arcidet.fr/" target="_blank" rel="noopener">
-          <img src="image/san arcident.webp" alt="Sans Arcidet" loading="lazy" class="brand-logo" width="1200" height="628" decoding="async">
-          <img src="image/sansarcident.webp" alt="Sans Arcident Hover" loading="lazy" class="brand-hover" width="2854" height="1416" decoding="async">
+          <img src="image/san arcident.webp" alt="Sans Arcidet" loading="lazy" class="brand-logo">
+          <img src="image/sansarcident.webp" alt="Sans Arcident Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/hat attack-hover.webp">
         <a href="https://hatattack.com/" target="_blank" rel="noopener">
-          <img src="image/hat attack.webp" alt="Hat Attack" loading="lazy" class="brand-logo" width="225" height="225" decoding="async">
-          <img src="image/hatattack.webp" alt="Hat Attack Hover" loading="lazy" class="brand-hover" width="2870" height="1180" decoding="async">
+          <img src="image/hat attack.webp" alt="Hat Attack" loading="lazy" class="brand-logo">
+          <img src="image/hatattack.webp" alt="Hat Attack Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       </div>
@@ -1317,7 +1305,7 @@
   <!-- Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 -->
 
   <ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
+    <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
     <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
     <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
@@ -1387,22 +1375,20 @@
       const brandsSection = document.getElementById('brands');
       const brandsLink = document.querySelector('a[href="#brands"]');
       
-      if (brandsSection && brandsLink) {
-        const brandsObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              brandsLink.classList.add('active');
-            } else {
-              brandsLink.classList.remove('active');
-            }
-          });
-        }, {
-          threshold: 0.2
+      const brandsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            brandsLink.classList.add('active');
+          } else {
+            brandsLink.classList.remove('active');
+          }
         });
+      }, {
+        threshold: 0.2
+      });
 
-        if (brandsSection) {
-          brandsObserver.observe(brandsSection);
-        }
+      if (brandsSection) {
+        brandsObserver.observe(brandsSection);
       }
 
       // 保存された言語設定を読み込む
@@ -1481,6 +1467,7 @@
       }
       
       // 動画の読み込み完了を待つ
+      video.src = '5.mov';
       video.addEventListener('canplay', function() {
         console.log('スプラッシュ動画の準備完了');
         videoLoaded = true;
@@ -1533,7 +1520,7 @@
         if (!splashInitialized) {
           splashInitialized = true; // フラグを設定して重複実行を防ぐ
         }
-      }, 1500); // 3秒から1.5秒に短縮
+      }, 800); // 1.5秒から0.8秒に短縮
       
       // 他の初期化処理を優先してからスプラッシュを実行
       requestAnimationFrame(function() {
@@ -1545,7 +1532,7 @@
             console.error('スプラッシュ初期化エラー:', error);
             clearTimeout(splashTimeout);
           }
-        }, 50); // 100msから50msに短縮
+        }, 200); // 50msから200msに変更（他の処理を優先）
       });
     });
   </script>
@@ -1610,7 +1597,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!pageInitialized) {
           pageInitialized = true; // フラグを設定して重複実行を防ぐ
         }
-      }, 2000); // 2秒でタイムアウト
+      }, 1000); // 2秒から1秒に短縮
       
       // 他の初期化処理を優先
       requestAnimationFrame(function() {
@@ -1622,7 +1609,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('ページ初期化エラー:', error);
             clearTimeout(pageTimeout);
           }
-        }, 50);
+        }, 300); // 50msから300msに変更（他の処理を優先）
       });
     });
   </script>
@@ -1668,7 +1655,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!revealInitialized) {
           revealInitialized = true; // フラグを設定して重複実行を防ぐ
         }
-      }, 1000); // 1秒でタイムアウト
+      }, 500); // 1秒から0.5秒に短縮
       
       // 他の初期化処理を優先
       requestAnimationFrame(function() {
@@ -1680,14 +1667,14 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('テキスト演出初期化エラー:', error);
             clearTimeout(revealTimeout);
           }
-        }, 200);
+        }, 400); // 200msから400msに変更（他の処理を優先）
       });
     });
 </script>
   
   <!-- 外部スクリプトの読み込み -->
-  <script src="js/reveal.js?v=2025-01-20-BOOTSTRAP-ONLY" defer></script>
-  <script src="js/lang-toggle.js?v=2025-01-20-BOOTSTRAP-ONLY" defer></script>
+  <script src="js/reveal.js?v=2025-01-18-final" defer></script>
+  <script src="js/lang-toggle.js?v=2025-01-18-final" defer></script>
   <script>
     // モバイルレイアウト修正のためのJavaScriptガード（最適化）
     let layoutInitialized = false;
@@ -1714,7 +1701,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!layoutInitialized) {
           layoutInitialized = true; // フラグを設定して重複実行を防ぐ
         }
-      }, 1000); // 1秒でタイムアウト
+      }, 500); // 1秒から0.5秒に短縮
       
       requestAnimationFrame(function() {
         setTimeout(function() {
@@ -1725,16 +1712,16 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('レイアウト初期化エラー:', error);
             clearTimeout(layoutTimeout);
           }
-        }, 300);
+        }, 500); // 300msから500msに変更（他の処理を優先）
       });
     });
   </script>
   
   <!-- セクション初期化スクリプト（defer付きで最適化） -->
-  <script src="js/init-sections.js?v=2025-01-20-BOOTSTRAP-ONLY" defer></script>
+  <script src="js/init-sections.js?v=2025-01-19-fix" defer></script>
   <!-- Collection と Lookbook の個別インタラクション（defer付きで最適化） -->
-  <script src="js/collection-interaction.js?v=2025-01-20-BOOTSTRAP-ONLY" defer></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-20-BOOTSTRAP-ONLY" defer></script>
+  <script src="js/collection-interaction.js?v=2025-01-19-fix" defer></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-19-fix" defer></script>
 
 </body>
 </html>
