@@ -795,7 +795,7 @@
   <!-- 単一背景動画 - PC/SP自動切替（最適化） -->
   <div id="background-video-container">
   <video id="desktop-bg-video" autoplay loop muted playsinline preload="none" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
-    <video id="mobile-bg-video" autoplay loop muted playsinline preload="none" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
+    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
   </div>
   
   <style>
@@ -822,6 +822,7 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        background: #000 !important;
       }
     }
     
@@ -888,15 +889,14 @@
           desktopVideo.style.display = 'none';
         }
         if (mobileVideo) {
-          // 遅延読み込み
-          mobileVideo.src = '2.mp4';
+          // src属性は既に設定されているので、再生のみ実行
           mobileVideo.addEventListener('canplay', function() {
             console.log('スマートフォン版背景動画が読み込まれました');
             mobileVideo.play().catch(function(error) {
               console.log('スマートフォン版動画の自動再生に失敗:', error);
+            });
           });
-        });
-        
+          
           mobileVideo.addEventListener('error', function(e) {
             console.error('スマートフォン版動画の読み込みエラー:', e);
           });
