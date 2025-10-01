@@ -3,14 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="google" content="notranslate">
-  <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) - 最適化 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-1W9HVMCW3G');
+  // 3rd-party cookie警告抑制
+  gtag('consent', 'default', {
+    'analytics_storage': 'granted'
+  });
+  
+  gtag('config', 'G-1W9HVMCW3G', {
+    'cookie_flags': 'SameSite=None;Secure'
+  });
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
@@ -26,9 +33,8 @@
   }
   </script>
   
-  <!-- 重要な画像のみプリロード -->
+  <!-- LCP画像のみプリロード -->
   <link rel="preload" as="image" href="image/1.JPG" fetchpriority="high">
-  <link rel="preload" as="image" href="image/look1.webp" fetchpriority="high">
   
   <script type="application/ld+json">
 {
@@ -120,20 +126,20 @@
   
   <title>ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ</title>
   
-  <!-- プリロード -->
+  <!-- プリロード（最適化：4つ以下） -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="preconnect" href="https://restandard.stores.jp">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://restandard.stores.jp">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
   <link rel="preload" href="css/style.css" as="style">
   <link rel="preload" href="css/reveal.css" as="style">
   <link rel="preload" href="css/i18n-visibility.css" as="style">
   <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
-  <!-- LCP画像のプリロード -->
+  <!-- LCP画像のプリロード（最適化） -->
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
 
   <!-- Collection/Lookbook画像のプリロードを削除（lazy-loadに変更） -->
   
@@ -793,10 +799,10 @@
     </div>
   </nav>
 
-  <!-- 単一背景動画 - PC/SP自動切替 -->
+  <!-- 単一背景動画 - PC/SP自動切替（最適化） -->
   <div id="background-video-container">
-  <video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
-    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
+  <video id="desktop-bg-video" poster="image/poster-desktop.jpg" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <video id="mobile-bg-video" poster="image/poster-mobile.jpg" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
   </div>
   
   <style>
@@ -831,7 +837,26 @@
       .navbar {
         background-color: rgba(255, 255, 255, 0.9) !important;
         backdrop-filter: blur(10px) !important;
-        margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
+        margin-bottom: 0 !important; /* CLS解消のため先取り配置に変更 */
+      }
+      
+      /* CLS解消：先取り高さ設定 */
+      .rs-header-spacer {
+        block-size: 500px !important;
+        min-height: 500px !important;
+      }
+      
+      /* 下層セクションのCLS予防 */
+      #brands, #about-restandard {
+        content-visibility: auto;
+        contain-intrinsic-size: 800px 1000px;
+      }
+      
+      /* BrandsロゴのCLS防止 */
+      .brand-logo {
+        aspect-ratio: 1 / 1;
+        width: 156px;
+        height: auto;
       }
        /* 旧flowing-images系削除済み - Collection新設計で統一 */
       
@@ -1001,47 +1026,206 @@
       <!-- 上段：右→左 -->
       <div class="collection-row">
           <div class="collection-track" data-direction="left" data-speed="30" data-start="1.jpg" data-align="left" data-seg="16">
-            <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener"><img src="image/1.JPG" alt="ReStandard コレクション 商品画像 1" loading="lazy" fetchpriority="high" width="200" height="250" decoding="async" style="display: block !important; visibility: visible !important; opacity: 1 !important;"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/2.JPG" alt="ReStandard コレクション 商品画像 2" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/3.JPG" alt="ReStandard コレクション 商品画像 3" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/4.JPG" alt="ReStandard コレクション 商品画像 4" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/5.JPG" alt="ReStandard コレクション 商品画像 5" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/6.JPG" alt="ReStandard コレクション 商品画像 6" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/7.JPG" alt="ReStandard コレクション 商品画像 7" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/8.JPG" alt="ReStandard コレクション 商品画像 8" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/9.JPG" alt="ReStandard コレクション 商品画像 9" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/10.JPG" alt="ReStandard コレクション 商品画像 10" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/12.JPG" alt="ReStandard コレクション 商品画像 12" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/13.JPG" alt="ReStandard コレクション 商品画像 13" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/15.JPG" alt="ReStandard コレクション 商品画像 15" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/16.JPG" alt="ReStandard コレクション 商品画像 16" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/1_200.avif 1x, image/thumbs/1_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/1_200.webp 1x, image/thumbs/1_400.webp 2x">
+                <img src="image/1.JPG" alt="ReStandard コレクション 商品画像 1" loading="lazy" fetchpriority="high" width="200" height="250" decoding="async" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/2_200.avif 1x, image/thumbs/2_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/2_200.webp 1x, image/thumbs/2_400.webp 2x">
+                <img src="image/2.JPG" alt="ReStandard コレクション 商品画像 2" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/3_200.avif 1x, image/thumbs/3_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/3_200.webp 1x, image/thumbs/3_400.webp 2x">
+                <img src="image/3.JPG" alt="ReStandard コレクション 商品画像 3" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/4_200.avif 1x, image/thumbs/4_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/4_200.webp 1x, image/thumbs/4_400.webp 2x">
+                <img src="image/4.JPG" alt="ReStandard コレクション 商品画像 4" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/5_200.avif 1x, image/thumbs/5_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/5_200.webp 1x, image/thumbs/5_400.webp 2x">
+                <img src="image/5.JPG" alt="ReStandard コレクション 商品画像 5" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/6_200.avif 1x, image/thumbs/6_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/6_200.webp 1x, image/thumbs/6_400.webp 2x">
+                <img src="image/6.JPG" alt="ReStandard コレクション 商品画像 6" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/7_200.avif 1x, image/thumbs/7_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/7_200.webp 1x, image/thumbs/7_400.webp 2x">
+                <img src="image/7.JPG" alt="ReStandard コレクション 商品画像 7" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/8_200.avif 1x, image/thumbs/8_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/8_200.webp 1x, image/thumbs/8_400.webp 2x">
+                <img src="image/8.JPG" alt="ReStandard コレクション 商品画像 8" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/9_200.avif 1x, image/thumbs/9_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/9_200.webp 1x, image/thumbs/9_400.webp 2x">
+                <img src="image/9.JPG" alt="ReStandard コレクション 商品画像 9" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/10_200.avif 1x, image/thumbs/10_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/10_200.webp 1x, image/thumbs/10_400.webp 2x">
+                <img src="image/10.JPG" alt="ReStandard コレクション 商品画像 10" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/12_200.avif 1x, image/thumbs/12_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/12_200.webp 1x, image/thumbs/12_400.webp 2x">
+                <img src="image/12.JPG" alt="ReStandard コレクション 商品画像 12" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/13_200.avif 1x, image/thumbs/13_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/13_200.webp 1x, image/thumbs/13_400.webp 2x">
+                <img src="image/13.JPG" alt="ReStandard コレクション 商品画像 13" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/15_200.avif 1x, image/thumbs/15_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/15_200.webp 1x, image/thumbs/15_400.webp 2x">
+                <img src="image/15.JPG" alt="ReStandard コレクション 商品画像 15" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/16_200.avif 1x, image/thumbs/16_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/16_200.webp 1x, image/thumbs/16_400.webp 2x">
+                <img src="image/16.JPG" alt="ReStandard コレクション 商品画像 16" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
         </div>
       </div>
       
       <!-- 下段：左→右 -->
       <div class="collection-row">
           <div class="collection-track reverse" data-direction="right" data-speed="30" data-start="21.jpg" data-align="right" data-seg="12">
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/21.JPG" alt="ReStandard コレクション 商品画像 21" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/22.JPG" alt="ReStandard コレクション 商品画像 22" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/23.JPG" alt="ReStandard コレクション 商品画像 23" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/24.JPG" alt="ReStandard コレクション 商品画像 24" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener"><img src="image/25.JPG" alt="ReStandard コレクション 商品画像 25" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/26.JPG" alt="ReStandard コレクション 商品画像 26" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener"><img src="image/27.JPG" alt="ReStandard コレクション 商品画像 27" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/28.JPG" alt="ReStandard コレクション 商品画像 28" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener"><img src="image/29.JPG" alt="ReStandard コレクション 商品画像 29" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/30.JPG" alt="ReStandard コレクション 商品画像 30" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/31.JPG" alt="ReStandard コレクション 商品画像 31" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener"><img src="image/32.JPG" alt="ReStandard コレクション 商品画像 32" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/21_200.avif 1x, image/thumbs/21_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/21_200.webp 1x, image/thumbs/21_400.webp 2x">
+                <img src="image/21.JPG" alt="ReStandard コレクション 商品画像 21" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/22_200.avif 1x, image/thumbs/22_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/22_200.webp 1x, image/thumbs/22_400.webp 2x">
+                <img src="image/22.JPG" alt="ReStandard コレクション 商品画像 22" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/23_200.avif 1x, image/thumbs/23_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/23_200.webp 1x, image/thumbs/23_400.webp 2x">
+                <img src="image/23.JPG" alt="ReStandard コレクション 商品画像 23" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/24_200.avif 1x, image/thumbs/24_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/24_200.webp 1x, image/thumbs/24_400.webp 2x">
+                <img src="image/24.JPG" alt="ReStandard コレクション 商品画像 24" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/25_200.avif 1x, image/thumbs/25_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/25_200.webp 1x, image/thumbs/25_400.webp 2x">
+                <img src="image/25.JPG" alt="ReStandard コレクション 商品画像 25" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/26_200.avif 1x, image/thumbs/26_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/26_200.webp 1x, image/thumbs/26_400.webp 2x">
+                <img src="image/26.JPG" alt="ReStandard コレクション 商品画像 26" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/27_200.avif 1x, image/thumbs/27_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/27_200.webp 1x, image/thumbs/27_400.webp 2x">
+                <img src="image/27.JPG" alt="ReStandard コレクション 商品画像 27" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/28_200.avif 1x, image/thumbs/28_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/28_200.webp 1x, image/thumbs/28_400.webp 2x">
+                <img src="image/28.JPG" alt="ReStandard コレクション 商品画像 28" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/29_200.avif 1x, image/thumbs/29_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/29_200.webp 1x, image/thumbs/29_400.webp 2x">
+                <img src="image/29.JPG" alt="ReStandard コレクション 商品画像 29" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/30_200.avif 1x, image/thumbs/30_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/30_200.webp 1x, image/thumbs/30_400.webp 2x">
+                <img src="image/30.JPG" alt="ReStandard コレクション 商品画像 30" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/31_200.avif 1x, image/thumbs/31_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/31_200.webp 1x, image/thumbs/31_400.webp 2x">
+                <img src="image/31.JPG" alt="ReStandard コレクション 商品画像 31" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="image/thumbs/32_200.avif 1x, image/thumbs/32_400.avif 2x">
+                <source type="image/webp" srcset="image/thumbs/32_200.webp 1x, image/thumbs/32_400.webp 2x">
+                <img src="image/32.JPG" alt="ReStandard コレクション 商品画像 32" loading="lazy" fetchpriority="low" width="200" height="250" decoding="async">
+              </picture>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 最終QAチェック用JavaScript -->
+  <!-- 最終QAチェック用JavaScript（本番時無効化） -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // デバッグモード時のみ実行
+      if (!location.search.includes('debug')) return;
+      
       console.log('=== 最終QAチェック ===');
       
       // 1. 背景1レイヤ確認
