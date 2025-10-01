@@ -1,5 +1,4 @@
 [
-  // Updated: 2025-01-20 16:00 - Fixed slug mapping for Harley of Scotland (v2)
   {
     "slug": "restandard2025aw-harley-of-scotland-amp-rockmount",
     "title": "【ReStandard別注】2025AW 新作アイテム紹介：Harley of Scotlandセーター & Rockmountスカート",
@@ -122,7 +121,7 @@
   },
   {
     "slug": "harley-of-scotland",
-    "title": ""軽やかで、暖かく、そして美しい。"——そんなニットが、本当に存在するのだろうか。",
+    "title": "\"軽やかで、暖かく、そして美しい。\"——そんなニットが、本当に存在するのだろうか。",
     "date": "2025-07-01T19:59:47",
     "firstImage": "/assets/images/nd1da829361dc_26df80d396d91670838300ac1797f8fa.png",
     "postId": "2",
