@@ -5,15 +5,20 @@
   <meta name="google" content="notranslate">
   <!-- Google tag (gtag.js) - 最適化 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-1W9HVMCW3G', {
-    'anonymize_ip': true,
-    'cookie_flags': 'SameSite=None;Secure'
-  });
-</script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1W9HVMCW3G', {
+      'anonymize_ip': true,
+      'cookie_flags': 'SameSite=None;Secure'
+    });
+
+    // 省データ回線対応
+    if ('connection' in navigator && navigator.connection.saveData) {
+      document.documentElement.classList.add('save-data');
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
   <meta name="keywords" content="ReStandard, アパレル卸, 欧米ブランド, Rockmount, Harley of Scotland, William Lockie, 定番, パートナーシップ, セレクトシップ">
@@ -27,8 +32,14 @@
   }
   </script>
   
-  <!-- 重要な画像のみプリロード（最適化） -->
-  <link rel="preload" as="image" href="image/1.JPG" fetchpriority="high">
+  <!-- Hero画像のLCP最適化（可変サイズ対応） -->
+  <link rel="preload" as="image" 
+        imagesrcset="
+          /.netlify/images?url=/image/1.JPG&w=960&h=1440&fit=inside&fm=avif&q=50 960w,
+          /.netlify/images?url=/image/1.JPG&w=1280&h=1920&fit=inside&fm=avif&q=50 1280w,
+          /.netlify/images?url=/image/1.JPG&w=1920&h=2880&fit=inside&fm=avif&q=50 1920w"
+        imagesizes="(max-width: 480px) 96vw, (max-width: 1280px) 92vw, 1280px"
+        fetchpriority="high">
   
   <script type="application/ld+json">
 {
@@ -442,6 +453,29 @@
       .navbar-brand {
         font-size: 1.3rem;
       }
+    }
+
+    /* CLS防止と画像最適化 */
+    .collection-item img,
+    .brand-logo {
+      aspect-ratio: 93 / 140;
+      object-fit: cover;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .brand-logo {
+      aspect-ratio: 1 / 1;
+    }
+
+    /* レイアウトのブレ防止 */
+    img[width][height] {
+      height: auto;
+    }
+
+    /* 省データ回線向け */
+    .save-data img {
+      image-rendering: -webkit-optimize-contrast;
     }
 
     .brand-name-caption {
@@ -1002,36 +1036,421 @@
       <!-- 上段：右→左 -->
       <div class="collection-row">
           <div class="collection-track" data-direction="left" data-speed="30" data-start="1.jpg" data-align="left" data-seg="16">
-            <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener"><img src="image/1.JPG" alt="ReStandard コレクション 商品画像 1" loading="lazy" fetchpriority="high" width="200" height="250" decoding="async" style="display: block !important; visibility: visible !important; opacity: 1 !important;"></a>
-            <a href="https://restandard.stores.jp/items/68adcae3d7091d455a98a86c" target="_blank" rel="noopener"><img src="image/3.JPG" alt="ReStandard コレクション 商品画像 3" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68ae993a50f81d005d082408" target="_blank" rel="noopener"><img src="image/4.JPG" alt="ReStandard コレクション 商品画像 4" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b168fc16b4e9332e268ad1" target="_blank" rel="noopener"><img src="image/15.JPG" alt="ReStandard コレクション 商品画像 15" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b089a53fed3c22dc1a6683" target="_blank" rel="noopener"><img src="image/5.JPG" alt="ReStandard コレクション 商品画像 5" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b155e685f93411bc87861d" target="_blank" rel="noopener"><img src="image/10.JPG" alt="ReStandard コレクション 商品画像 10" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b15163c49f18004ad13ce2" target="_blank" rel="noopener"><img src="image/9.JPG" alt="ReStandard コレクション 商品画像 9" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b145631c3f4f005e1e13f7" target="_blank" rel="noopener"><img src="image/8.JPG" alt="ReStandard コレクション 商品画像 8" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b10c2e3ffd8e02a5496586" target="_blank" rel="noopener"><img src="image/6.JPG" alt="ReStandard コレクション 商品画像 6" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b13955ff050400856e0b34" target="_blank" rel="noopener"><img src="image/7.JPG" alt="ReStandard コレクション 商品画像 7" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68ac80478b0406e84acd6892" target="_blank" rel="noopener"><img src="image/2.JPG" alt="ReStandard コレクション 商品画像 2" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b16bf36c5f9e33ecab5706" target="_blank" rel="noopener"><img src="image/16.JPG" alt="ReStandard コレクション 商品画像 16" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/1.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/1.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/1.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/1.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 1"
+                     style="display: block !important; visibility: visible !important; opacity: 1 !important;">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68adcae3d7091d455a98a86c" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/3.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/3.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/3.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/3.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/3.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/3.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/3.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 3">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ae993a50f81d005d082408" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/4.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/4.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/4.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/4.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/4.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/4.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/4.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 4">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b168fc16b4e9332e268ad1" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/15.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/15.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/15.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/15.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/15.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/15.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/15.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 15">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b089a53fed3c22dc1a6683" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/5.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/5.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/5.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/5.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/5.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/5.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/5.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 5">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b155e685f93411bc87861d" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/10.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/10.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/10.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/10.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/10.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/10.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/10.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 10">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b15163c49f18004ad13ce2" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/9.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/9.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/9.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/9.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/9.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/9.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/9.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 9">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b145631c3f4f005e1e13f7" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/8.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/8.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/8.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/8.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/8.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/8.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/8.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 8">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b10c2e3ffd8e02a5496586" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/6.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/6.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/6.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/6.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/6.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/6.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/6.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 6">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b13955ff050400856e0b34" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/7.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/7.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/7.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/7.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/7.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/7.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/7.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 7">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ac80478b0406e84acd6892" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/2.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/2.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/2.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/2.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/2.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/2.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/2.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 2">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b16bf36c5f9e33ecab5706" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/16.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/16.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/16.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/16.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/16.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/16.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/16.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 16">
+              </picture>
+            </a>
         </div>
       </div>
       
       <!-- 下段：左→右 -->
       <div class="collection-row">
           <div class="collection-track reverse" data-direction="right" data-speed="30" data-start="21.jpg" data-align="right" data-seg="12">
-            <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener"><img src="image/25.JPG" alt="ReStandard コレクション 商品画像 25" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68ac83b759de6b1729a87a95" target="_blank" rel="noopener"><img src="image/31.JPG" alt="ReStandard コレクション 商品画像 31" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b12cbcefd70e2ccc94c52d" target="_blank" rel="noopener"><img src="image/32.JPG" alt="ReStandard コレクション 商品画像 32" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b166b1c65008386f2b4691" target="_blank" rel="noopener"><img src="image/28.JPG" alt="ReStandard コレクション 商品画像 28" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b1e6c79183256d5c6e2afb" target="_blank" rel="noopener"><img src="image/26.JPG" alt="ReStandard コレクション 商品画像 26" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b08a3e615df64765fea6fe" target="_blank" rel="noopener"><img src="image/21.JPG" alt="ReStandard コレクション 商品画像 21" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b13e18c5bd30004acb874a" target="_blank" rel="noopener"><img src="image/30.JPG" alt="ReStandard コレクション 商品画像 30" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener"><img src="image/29.JPG" alt="ReStandard コレクション 商品画像 29" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener"><img src="image/27.JPG" alt="ReStandard コレクション 商品画像 27" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b1e2379183254a766e2ae0" target="_blank" rel="noopener"><img src="image/24.JPG" alt="ReStandard コレクション 商品画像 24" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68ae9d7fc6799300589e49f6" target="_blank" rel="noopener"><img src="image/22.JPG" alt="ReStandard コレクション 商品画像 22" loading="lazy" width="200" height="250" decoding="async"></a>
-            <a href="https://restandard.stores.jp/items/68b146bce14cf811f9f1c9bf" target="_blank" rel="noopener"><img src="image/23.JPG" alt="ReStandard コレクション 商品画像 23" loading="lazy" width="200" height="250" decoding="async"></a>
+            <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/25.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/25.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/25.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/25.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/25.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/25.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/25.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 25">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ac83b759de6b1729a87a95" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/31.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/31.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/31.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/31.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/31.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/31.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/31.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 31">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b12cbcefd70e2ccc94c52d" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/32.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/32.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/32.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/32.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/32.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/32.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/32.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 32">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b166b1c65008386f2b4691" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/28.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/28.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/28.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/28.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/28.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/28.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/28.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 28">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b1e6c79183256d5c6e2afb" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/26.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/26.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/26.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/26.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/26.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/26.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/26.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 26">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b08a3e615df64765fea6fe" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/21.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/21.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/21.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/21.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/21.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/21.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/21.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 21">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b13e18c5bd30004acb874a" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/30.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/30.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/30.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/30.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/30.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/30.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/30.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 30">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/29.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/29.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/29.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/29.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/29.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/29.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/29.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 29">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/27.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/27.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/27.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/27.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/27.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/27.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/27.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 27">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b1e2379183254a766e2ae0" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/24.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/24.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/24.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/24.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/24.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/24.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/24.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 24">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ae9d7fc6799300589e49f6" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/22.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/22.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/22.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/22.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/22.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/22.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/22.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 22">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b146bce14cf811f9f1c9bf" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/23.JPG&w=186&h=280&fit=cover&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/23.JPG&w=279&h=420&fit=cover&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/23.JPG&w=186&h=280&fit=cover&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/23.JPG&w=279&h=420&fit=cover&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/23.JPG&w=186&h=280&fit=cover&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/23.JPG&w=186&h=280&fit=cover&q=72 186w,
+                       /.netlify/images?url=/image/23.JPG&w=279&h=420&fit=cover&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 23">
+              </picture>
+            </a>
           </div>
         </div>
       </div>
@@ -1083,72 +1502,212 @@
     <h2 class="section-title rs-reveal" data-reveal="line">Brands</h2>
     <div class="section-inner">
     <div class="brands-grid">
-      <figure class="brand-card" data-hover="image/rockmount-hover.webp">
-        <a href="https://rockmount.com/" target="_blank" rel="noopener">
-          <img src="image/rockmount.webp" alt="Rockmount" class="brand-logo" loading="lazy">
-          <img src="image/rockmount3.webp" alt="Rockmount Hover" class="brand-hover" loading="lazy">
-        </a>
-      </figure>
+        <figure class="brand-card" data-hover="image/rockmount-hover.webp">
+          <a href="https://rockmount.com/" target="_blank" rel="noopener">
+            <picture>
+              <source type="image/avif" srcset="
+                /.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+                /.netlify/images?url=/image/rockmount.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+              <source type="image/webp" srcset="
+                /.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+                /.netlify/images?url=/image/rockmount.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+              <img src="/.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=cover&q=72"
+                   srcset="
+                     /.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=cover&q=72 156w,
+                     /.netlify/images?url=/image/rockmount.webp&w=312&h=312&fit=cover&q=72 312w"
+                   sizes="156px"
+                   width="156" height="156"
+                   class="brand-logo" loading="lazy" decoding="async" alt="Rockmount">
+            </picture>
+            <img src="image/rockmount3.webp" alt="Rockmount Hover" class="brand-hover" loading="lazy">
+          </a>
+        </figure>
       
-      <figure class="brand-card" data-hover="image/Harley-hover.webp">
-        <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
-          <img src="image/Harley.webp" alt="Harley of Scotland" loading="lazy" class="brand-logo">
-          <img src="image/Harley1.webp" alt="Harley of Scotland Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
+        <figure class="brand-card" data-hover="image/Harley-hover.webp">
+          <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
+            <picture>
+              <source type="image/avif" srcset="
+                /.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+                /.netlify/images?url=/image/Harley.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+              <source type="image/webp" srcset="
+                /.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+                /.netlify/images?url=/image/Harley.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+              <img src="/.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=cover&q=72"
+                   srcset="
+                     /.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=cover&q=72 156w,
+                     /.netlify/images?url=/image/Harley.webp&w=312&h=312&fit=cover&q=72 312w"
+                   sizes="156px"
+                   width="156" height="156"
+                   class="brand-logo" loading="lazy" decoding="async" alt="Harley of Scotland">
+            </picture>
+            <img src="image/Harley1.webp" alt="Harley of Scotland Hover" loading="lazy" class="brand-hover">
+          </a>
+        </figure>
       
-      <figure class="brand-card" data-hover="image/william lockie-hover.webp">
-        <a href="https://williamlockie.com/" target="_blank" rel="noopener">
-          <img src="image/william lockie.webp" alt="William Lockie" loading="lazy" class="brand-logo">
-          <img src="image/william2.webp" alt="William Lockie Hover" loading="lazy" class="brand-hover">
-        </a>
-      </figure>
+        <figure class="brand-card" data-hover="image/william lockie-hover.webp">
+          <a href="https://williamlockie.com/" target="_blank" rel="noopener">
+            <picture>
+              <source type="image/avif" srcset="
+                /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+                /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+              <source type="image/webp" srcset="
+                /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+                /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+              <img src="/.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=cover&q=72"
+                   srcset="
+                     /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=cover&q=72 156w,
+                     /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=cover&q=72 312w"
+                   sizes="156px"
+                   width="156" height="156"
+                   class="brand-logo" loading="lazy" decoding="async" alt="William Lockie">
+            </picture>
+            <img src="image/william2.webp" alt="William Lockie Hover" loading="lazy" class="brand-hover">
+          </a>
+        </figure>
       
       <figure class="brand-card" data-hover="image/eribe-hover.svg">
         <a href="https://www.eribe.com/" target="_blank" rel="noopener">
-          <img src="image/eribe.svg" alt="Eribe" loading="lazy" class="brand-logo">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/eribe.svg&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/eribe.svg&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=cover&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=cover&q=72 156w,
+                   /.netlify/images?url=/image/eribe.svg&w=312&h=312&fit=cover&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Eribe">
+          </picture>
           <img src="image/eribe.webp" alt="Eribe Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/glen prince-hover.webp">
         <a href="https://www.glenprince.com/" target="_blank" rel="noopener">
-          <img src="image/glen prince.webp" alt="Glen Prince" loading="lazy" class="brand-logo">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=cover&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=cover&q=72 156w,
+                   /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=cover&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Glen Prince">
+          </picture>
           <img src="image/glenprince2.webp" alt="Glen Prince Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/athena designs-hover.webp">
         <a href="https://www.athenaknitwear.com/" target="_blank" rel="noopener">
-          <img src="image/athena designs.webp" alt="Athena Designs" loading="lazy" class="brand-logo">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=cover&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=cover&q=72 156w,
+                   /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=cover&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Athena Designs">
+          </picture>
           <img src="image/athenadesigns.webp" alt="Athena Designs Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/kopka-hover.webp">
         <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener">
-          <img src="image/kopka.webp" alt="Kopka Accessories" loading="lazy" class="brand-logo">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/kopka.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/kopka.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=cover&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=cover&q=72 156w,
+                   /.netlify/images?url=/image/kopka.webp&w=312&h=312&fit=cover&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Kopka Accessories">
+          </picture>
           <img src="image/kopka2.webp" alt="Kopka Accessories Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/leminor-hover.webp">
         <a href="https://leminor.fr/en" target="_blank" rel="noopener">
-          <img src="image/leminor.webp" alt="Le Minor" loading="lazy" class="brand-logo">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/leminor.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/leminor.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=cover&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=cover&q=72 156w,
+                   /.netlify/images?url=/image/leminor.webp&w=312&h=312&fit=cover&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Le Minor">
+          </picture>
           <img src="image/leminor2.webp" alt="Le Minor Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card">
         <a href="https://sans-arcidet.fr/" target="_blank" rel="noopener">
-          <img src="image/san arcident.webp" alt="Sans Arcidet" loading="lazy" class="brand-logo">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=cover&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=cover&q=72 156w,
+                   /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=cover&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Sans Arcidet">
+          </picture>
           <img src="image/sansarcident.webp" alt="Sans Arcident Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
       
       <figure class="brand-card" data-hover="image/hat attack-hover.webp">
         <a href="https://hatattack.com/" target="_blank" rel="noopener">
-          <img src="image/hat attack.webp" alt="Hat Attack" loading="lazy" class="brand-logo">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=cover&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=cover&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=cover&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=cover&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=cover&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=cover&q=72 156w,
+                   /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=cover&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Hat Attack">
+          </picture>
           <img src="image/hatattack.webp" alt="Hat Attack Hover" loading="lazy" class="brand-hover">
         </a>
       </figure>
