@@ -156,7 +156,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
   <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-19-fix">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-20-BRAND-SIZE-FIX">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -456,8 +456,7 @@
     }
 
     /* CLS防止と画像最適化 */
-    .collection-item img,
-    .brand-logo {
+    .collection-item img {
       aspect-ratio: 93 / 140;
       object-fit: cover;
       max-width: 100%;
@@ -466,6 +465,34 @@
 
     .brand-logo {
       aspect-ratio: 1 / 1;
+      object-fit: contain;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+    }
+
+    /* Brand画像のコンテナサイズ制限 */
+    .brand-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 156px;
+      height: 156px;
+      margin: 0 auto;
+    }
+
+    /* モバイル表示でのBrand画像調整 */
+    @media (max-width: 768px) {
+      .brand-card {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .brand-logo {
+        max-width: 120px;
+        max-height: 120px;
+      }
     }
 
     /* レイアウトのブレ防止 */
