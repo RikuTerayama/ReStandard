@@ -1,73 +1,13 @@
-[build]
-  publish = "."
-  command = "node scripts/build-news-pages.mjs"
-
-# 画像ファイルの直接配信（最優先設定）
-[[redirects]]
-  from = "/assets/images/*.png"
-  to = "/assets/images/:splat"
-  status = 200
-  force = true
-  headers = {X-From = "netlify-redirect"}
-
-[[redirects]]
-  from = "/assets/images/*.jpg"
-  to = "/assets/images/:splat"
-  status = 200
-  force = true
-  headers = {X-From = "netlify-redirect"}
-
-[[redirects]]
-  from = "/assets/images/*.jpeg"
-  to = "/assets/images/:splat"
-  status = 200
-  force = true
-  headers = {X-From = "netlify-redirect"}
-
-# 画像ファイルのヘッダー設定
 [[headers]]
-  for = "/assets/images/*.png"
+  for = "/news/untitled/*"
   [headers.values]
-    Content-Type = "image/png"
-    Cache-Control = "public, max-age=31536000"
-    X-Content-Type-Options = "nosniff"
-
-[[headers]]
-  for = "/assets/images/*.jpg"
-  [headers.values]
-    Content-Type = "image/jpeg"
-    Cache-Control = "public, max-age=31536000"
-    X-Content-Type-Options = "nosniff"
-
-[[headers]]
-  for = "/assets/images/*.jpeg"
-  [headers.values]
-    Content-Type = "image/jpeg"
-    Cache-Control = "public, max-age=31536000"
-    X-Content-Type-Options = "nosniff"
-
-# SPA fallback for client-side routing (画像以外)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# キャッシュ制御ヘッダー
-[[headers]]
-  for = "*.html"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
     Pragma = "no-cache"
     Expires = "0"
-    Last-Modified = "Wed, 19 Jan 2025 17:00:00 GMT"
+    Last-Modified = "Mon, 20 Jan 2025 15:30:00 GMT"
+    ETag = "glen-prince-v3-force-refresh"
 
 [[headers]]
-  for = "/news/*.html"
+  for = "/*.html"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
-    Last-Modified = "Wed, 19 Jan 2025 17:00:00 GMT"
-
-[build.environment]
-  NODE_VERSION = "18"
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
