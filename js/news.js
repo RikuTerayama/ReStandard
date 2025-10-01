@@ -51,9 +51,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     card.href = fullHref;
     card.setAttribute('aria-label', article.title);
     
-    // デバッグ用ログ（Harley of Scotlandの記事の場合）
+    // デバッグ用ログ（特定の記事の場合）
     if (article.slug === 'harley-of-scotland') {
       console.log('🎯 Harley of Scotland card created:', {
+        title: article.title,
+        slug: article.slug,
+        href: fullHref
+      });
+    }
+    
+    if (article.slug === 'restandard2025aw-harley-of-scotland-pink-amp-rockmount-black-stewart') {
+      console.log('🎯 9/23 Article card created:', {
         title: article.title,
         slug: article.slug,
         href: fullHref
