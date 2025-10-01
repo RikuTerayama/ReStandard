@@ -142,9 +142,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-19-fix">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-20-BRANDS-FIX">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-20-BRANDS-FIX">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-20-BRANDS-FIX">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -730,13 +730,42 @@
     }
     /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
     
-    /* Brandsロゴサイズ修正 */
+    /* Brandsロゴサイズ修正（強制適用） */
     .brand-logo {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1 / 1 !important;
       width: 100% !important;
       height: auto !important;
-      max-width: 200px !important;
+      max-width: 250px !important;
+      min-width: 180px !important;
       object-fit: contain !important;
+    }
+    
+    .brands-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+      gap: 30px !important;
+    }
+    
+    .brand-card {
+      min-height: 250px !important;
+      padding: 20px !important;
+    }
+    
+    /* モバイル対応 */
+    @media (max-width: 768px) {
+      .brands-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+      }
+      
+      .brand-logo {
+        max-width: 200px !important;
+        min-width: 150px !important;
+      }
+      
+      .brand-card {
+        min-height: 200px !important;
+        padding: 15px !important;
+      }
     }
   </style>
   <style>
@@ -1701,8 +1730,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
   
   <!-- 外部スクリプトの読み込み -->
-  <script src="js/reveal.js?v=2025-01-18-final" defer></script>
-  <script src="js/lang-toggle.js?v=2025-01-18-final" defer></script>
+  <script src="js/reveal.js?v=2025-01-20-BRANDS-FIX" defer></script>
+  <script src="js/lang-toggle.js?v=2025-01-20-BRANDS-FIX" defer></script>
   <script>
     // モバイルレイアウト修正のためのJavaScriptガード（最適化）
     let layoutInitialized = false;
@@ -1746,10 +1775,10 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
   
   <!-- セクション初期化スクリプト（defer付きで最適化） -->
-  <script src="js/init-sections.js?v=2025-01-19-fix" defer></script>
+  <script src="js/init-sections.js?v=2025-01-20-BRANDS-FIX" defer></script>
   <!-- Collection と Lookbook の個別インタラクション（defer付きで最適化） -->
-  <script src="js/collection-interaction.js?v=2025-01-19-fix" defer></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-19-fix" defer></script>
+  <script src="js/collection-interaction.js?v=2025-01-20-BRANDS-FIX" defer></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-20-BRANDS-FIX" defer></script>
 
 </body>
 </html>
