@@ -142,9 +142,9 @@
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
-  <link rel="stylesheet" href="css/reveal.css?v=2025-01-20-BOOTSTRAP-CLEAN">
-  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-20-BOOTSTRAP-CLEAN">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-20-BOOTSTRAP-CLEAN">
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-20-FINAL-FIX">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-20-FINAL-FIX">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-20-FINAL-FIX">
   <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
   <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
 
@@ -334,7 +334,6 @@
     /* ナビゲーションスタイル（最小限） */
     .navbar-nav .nav-link {
       color: var(--main-color) !important;
-      font-weight: 500;
     }
 
     .nav-link::after {
@@ -365,15 +364,10 @@
       width: 70%;
     }
 
-    /* 言語切り替えボタンのスタイル */
+    /* 言語切り替えボタンのスタイル（最小限） */
     .language-switcher {
       display: flex;
       align-items: center;
-      margin-left: 2rem;
-      position: relative;
-      border-radius: 24px;
-      padding: 4px;
-      transition: all 0.3s ease;
     }
 
     .language-switcher button {
@@ -1655,8 +1649,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
   
   <!-- 外部スクリプトの読み込み -->
-  <script src="js/reveal.js?v=2025-01-20-BOOTSTRAP-CLEAN" defer></script>
-  <script src="js/lang-toggle.js?v=2025-01-20-BOOTSTRAP-CLEAN" defer></script>
+  <script src="js/reveal.js?v=2025-01-20-FINAL-FIX" defer></script>
+  <script src="js/lang-toggle.js?v=2025-01-20-FINAL-FIX" defer></script>
   <script>
     // モバイルレイアウト修正のためのJavaScriptガード（最適化）
     let layoutInitialized = false;
@@ -1700,10 +1694,10 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
   
   <!-- セクション初期化スクリプト（defer付きで最適化） -->
-  <script src="js/init-sections.js?v=2025-01-20-BOOTSTRAP-CLEAN" defer></script>
+  <script src="js/init-sections.js?v=2025-01-20-FINAL-FIX" defer></script>
   <!-- Collection と Lookbook の個別インタラクション（defer付きで最適化） -->
-  <script src="js/collection-interaction.js?v=2025-01-20-BOOTSTRAP-CLEAN" defer></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-20-BOOTSTRAP-CLEAN" defer></script>
+  <script src="js/collection-interaction.js?v=2025-01-20-FINAL-FIX" defer></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-20-FINAL-FIX" defer></script>
 
 </body>
 </html>
