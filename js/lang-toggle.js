@@ -2,6 +2,9 @@
    Language Toggle Control
    ======================================== */
 
+import { createRafScheduler } from './dom-scheduler.js';
+const raf = createRafScheduler();
+
 (function() {
   'use strict';
 
@@ -41,13 +44,15 @@
   function checkCSSChanges() {
     console.log('Checking CSS changes...');
     
-    // 現在のCSS設定を確認
-    const brandsSection = document.querySelector('#brands, .section-brands');
-    if (brandsSection) {
-      const computedStyle = window.getComputedStyle(brandsSection);
-      console.log('Brands section current margin-top:', computedStyle.marginTop);
-      console.log('Brands section current margin-bottom:', computedStyle.marginBottom);
-    }
+    // 現在のCSS設定を確認（RAFでバッチ処理）
+    raf.read(() => {
+      const brandsSection = document.querySelector('#brands, .section-brands');
+      if (brandsSection) {
+        const computedStyle = window.getComputedStyle(brandsSection);
+        console.log('Brands section current margin-top:', computedStyle.marginTop);
+        console.log('Brands section current margin-bottom:', computedStyle.marginBottom);
+      }
+    });
     
     // PC版での追加マージン確認
     if (window.innerWidth >= 768) {
