@@ -1267,8 +1267,8 @@
 /* #brands セクションでは新しいスタイルを優先 */
 #brands .brand-card img,
 #brands .brands-grid img {
-  max-width: 75% !important;  /* 画像を小さく */
-  height: 75% !important;     /* 画像を小さく */
+  max-width: 65% !important;  /* 画像を小さく（-10%調整） */
+  height: 65% !important;     /* 画像を小さく（-10%調整） */
   object-fit: contain !important;
   display: block !important;
 }
@@ -1572,8 +1572,8 @@
 #brands .brand-card img,
 #brands .brand-logo img {
   display: block !important;
-  max-width: 75% !important;  /* 画像を小さく */
-  height: 75% !important;     /* 画像を小さく */
+  max-width: 65% !important;  /* 画像を小さく（-10%調整） */
+  height: 65% !important;     /* 画像を小さく（-10%調整） */
   object-fit: contain !important;
   opacity: 1 !important;
 }
@@ -1650,10 +1650,10 @@
 /* Ensure logos fit entirely inside square without cropping */
 #brands .brand-logo,
 #brands .brand-hover {
-  width: 75% !important;              /* 正方形より小さくして余白を作る */
-  height: 75% !important;             /* 正方形より小さくして余白を作る */
-  max-width: 75% !important;
-  max-height: 75% !important;
+  width: 65% !important;              /* 正方形より小さくして余白を作る（-10%調整） */
+  height: 65% !important;             /* 正方形より小さくして余白を作る（-10%調整） */
+  max-width: 65% !important;
+  max-height: 65% !important;
   object-fit: contain !important;     /* show full logo/image */
   object-position: center center !important;
   display: block !important;
@@ -1669,7 +1669,7 @@
   inset: 0 !important;
   display: grid !important;
   place-items: center !important;
-  padding: clamp(15px,3.5vw,28px) !important;  /* パディングを増やして画像を小さく */
+  padding: clamp(18px,4vw,32px) !important;  /* パディングを増やして画像を小さく（-10%調整対応） */
 }
 #brands .brand-card:hover .brand-logo { 
   opacity: 0 !important; 
@@ -1683,9 +1683,13 @@
   #brands .brands-grid {
     grid-template-columns: repeat(5, 1fr) !important;
     justify-items: center !important;  /* 中央揃え */
+    align-items: center !important;    /* 縦方向も中央揃え */
   }
   #brands .brand-card { 
     --brand-size: clamp(121px, 17.6vw, 154px) !important;  /* 10% larger */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
 
@@ -1694,9 +1698,13 @@
   #brands .brands-grid {
     grid-template-columns: repeat(5, 1fr) !important;
     justify-items: center !important;  /* 中央揃え */
+    align-items: center !important;    /* 縦方向も中央揃え */
   }
   #brands .brand-card { 
     --brand-size: clamp(176px, 13.2vw, 220px) !important;  /* 10% larger */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
 
