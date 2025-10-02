@@ -2,46 +2,80 @@
    Marquee initializer (Collection / Lookbook 共通) 2025-01-18
    ========================================================= */
 
+import { createRafScheduler, debounce } from './dom-scheduler.js';
+const raf = createRafScheduler();
+
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
-  const maxLoopWidth = track.parentElement.offsetWidth * (track.classList.contains('lookbook-track') ? 6.0 : 4.0); // Lookbook用に600%に増加
+  let parentWidth, itemWidths, segmentWidth;
   
-  // オリジナル区間幅を記録（1周の定義）
-  const originalChildren = Array.from(track.children);
-  let segmentWidth = originalChildren.reduce((w, el) => w + el.getBoundingClientRect().width, 0);
-  
-  // 画像が未ロードだと幅が 0 になるので暫定で幅推定
-  if (segmentWidth === 0) {
-    const fallback = originalChildren.length * (track.classList.contains('lookbook-track') ? 300 : 200);
-    segmentWidth = fallback;
-  }
-  
-  // オリジナル区間幅を記録
-  track._segmentWidth = segmentWidth;
-  
-  // 最低16回はクローンして確実にループを保証（Lookbook用に大幅増加）
-  const minClones = track.classList.contains('lookbook-track') ? 16 : 3;
-  let total = segmentWidth;
-  let guard = 0;
-  
-  while ((total < maxLoopWidth || guard < minClones) && guard < 80) {
-    const clones = originalChildren.map((n) => n.cloneNode(true));
-    clones.forEach((c) => {
-      // クローンした画像にloading="lazy"を追加
-      const images = c.querySelectorAll('img');
-      images.forEach(img => {
-        img.setAttribute('loading', 'lazy');
-      });
-      track.appendChild(c);
-    });
-    total = Array.from(track.children).reduce((w, el) => w + el.getBoundingClientRect().width, 0);
-    guard++;
-  }
-  
-  console.log(`[LOOP] Track width: ${total}px (${Math.round(total / track.parentElement.offsetWidth * 100)}% of viewport)`);
-}
+  // READ phase - collect all layout measurements
+  raf.read(() => {
+    parentWidth = track.parentElement?.offsetWidth || track.offsetWidth || 1;
+    const multiplier = track.classList.contains('lookbook-track') ? 6.0 : 4.0;
+    const maxLoopWidth = parentWidth * multiplier;
 
-/* トラックへドラッグ操作を付与。離した位置から再開 */
+    const originals = Array.from(track.children);
+    if (originals.length === 0) {
+      return;
+    }
+
+    const fallbackItemWidth = track.classList.contains('lookbook-track') ? 300 : 200;
+    itemWidths = originals.map((node) => {
+      const rect = node.getBoundingClientRect();
+      if (!rect.width) {
+        return fallbackItemWidth;
+      }
+      const styles = window.getComputedStyle(node);
+      const margin = parseFloat(styles.marginLeft || '0') + parseFloat(styles.marginRight || '0');
+      return rect.width + margin;
+    });
+
+    segmentWidth = itemWidths.reduce((sum, value) => sum + value, 0);
+    if (!Number.isFinite(segmentWidth) || segmentWidth <= 0) {
+      segmentWidth = originals.length * fallbackItemWidth;
+    }
+    segmentWidth = Math.max(segmentWidth, 1);
+  });
+
+  // WRITE phase - apply DOM mutations
+  raf.write(() => {
+    track._segmentWidth = segmentWidth;
+
+    const minClones = track.classList.contains('lookbook-track') ? 16 : 3;
+    let clonesAdded = 0;
+    let totalWidth = segmentWidth;
+
+    const needsMoreContent = () => totalWidth < (parentWidth * (track.classList.contains('lookbook-track') ? 6.0 : 4.0)) || clonesAdded < minClones;
+
+    while (needsMoreContent() && clonesAdded < 80) {
+      const fragment = document.createDocumentFragment();
+      const originals = Array.from(track.children);
+      originals.forEach((node) => {
+        const clone = node.cloneNode(true);
+        clone.querySelectorAll('img').forEach((img) => {
+          if (!img.hasAttribute('loading')) {
+            img.setAttribute('loading', 'lazy');
+          }
+          if (img.hasAttribute('fetchpriority')) {
+            img.removeAttribute('fetchpriority');
+          }
+        });
+        fragment.appendChild(clone);
+      });
+      track.appendChild(fragment);
+      totalWidth += segmentWidth;
+      clonesAdded++;
+    }
+
+    // Final measurement after DOM changes
+    raf.read(() => {
+      const finalWidth = track.scrollWidth;
+      const viewportRatio = parentWidth ? Math.round((finalWidth / parentWidth) * 100) : 0;
+      console.log(`[LOOP] Track width: ${finalWidth}px (${viewportRatio}% of viewport) clones=${clonesAdded}`);
+    });
+  });
+}
 function attachManualControls(track){
   let startX = 0;
   let startTx = 0;
@@ -69,7 +103,11 @@ function attachManualControls(track){
     const dx = x - startX;
     moved += Math.abs(dx);
     track._lastMoved = moved;
-    track.style.transform = `translateX(${startTx + dx}px)`;
+    
+    // Use RAF to batch transform updates
+    raf.write(() => {
+      track.style.transform = `translateX(${startTx + dx}px)`;
+    });
     ev.preventDefault();
   };
   
@@ -87,14 +125,20 @@ function attachManualControls(track){
     track.style.animationPlayState = 'running';
     
     // 現在の位置を記録してアニメーションを調整
-    const currentTx = getTxPx(track);
-    const segmentWidth = track._segmentWidth || 0;
+    let currentTx, segmentWidth;
     
-    // セグメント幅の倍数に調整してスムーズなループを保証
-    if (segmentWidth > 0) {
-      const adjustedTx = Math.round(currentTx / segmentWidth) * segmentWidth;
-      track.style.transform = `translateX(${adjustedTx}px)`;
-    }
+    raf.read(() => {
+      currentTx = getTxPx(track);
+      segmentWidth = track._segmentWidth || 0;
+    });
+    
+    raf.write(() => {
+      // セグメント幅の倍数に調整してスムーズなループを保証
+      if (segmentWidth > 0) {
+        const adjustedTx = Math.round(currentTx / segmentWidth) * segmentWidth;
+        track.style.transform = `translateX(${adjustedTx}px)`;
+      }
+    });
 
     // moved はここではリセットしない（先に判定に使う）
     const dragAmount = Math.abs(moved);
@@ -136,12 +180,12 @@ function attachManualControls(track){
     moved = 0;
   };
 
-  track.addEventListener('pointerdown', onDown, {passive:false});
-  window.addEventListener('pointermove', onMove, {passive:false});
-  window.addEventListener('pointerup', onUp);
-  track.addEventListener('touchstart', onDown, {passive:false});
-  window.addEventListener('touchmove', onMove, {passive:false});
-  window.addEventListener('touchend', onUp);
+  track.addEventListener('pointerdown', onDown, {passive:true});
+  window.addEventListener('pointermove', onMove, {passive:false}); // needs preventDefault
+  window.addEventListener('pointerup', onUp, {passive:true});
+  track.addEventListener('touchstart', onDown, {passive:true});
+  window.addEventListener('touchmove', onMove, {passive:false}); // needs preventDefault
+  window.addEventListener('touchend', onUp, {passive:true});
   
   // ドラッグ時のリンク遷移を無効化
   const container = track.parentElement;
@@ -360,10 +404,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // 画面幅が変わったら再計算（速度だけアップデート）
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
+  const remeasure = debounce(() => {
+    raf.write(() => {
       document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
         const dir = track.dataset.direction || 'left';
         const base = parseFloat(track.dataset.baseSpeed || 55);
@@ -371,8 +413,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
         track.style.animation = `${key} ${sec}s linear infinite`;
       });
-    }, 200);
-  });
+    });
+  }, 200);
+  
+  window.addEventListener('resize', remeasure, { passive: true });
+  
+  // Optional: ResizeObserver for container size changes
+  const trackContainer = document.querySelector('#collection, #lookbook');
+  if (trackContainer) {
+    new ResizeObserver(debounce(remeasure, 100)).observe(trackContainer);
+  }
 });
 
 // 見出しJSリセット削除 - CSS制御のみに統一
