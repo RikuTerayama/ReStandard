@@ -144,6 +144,8 @@
   <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
   <!-- LCP画像のプリロード（最適化） -->
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
+  <!-- スプラッシュ動画のposter画像をプリロード -->
+  <link rel="preload" as="image" href="/image/splash-poster.webp" fetchpriority="high">
 
   <!-- Collection/Lookbook画像のプリロードを削除（lazy-loadに変更） -->
   
@@ -729,44 +731,20 @@
     #lp-movie-modal .close-btn {
       position: absolute; top: 2vw; right: 2vw; font-size: 2rem; color: #fff; background: none; border: none; cursor: pointer;
     }
-    /* スプラッシュ動画用スタイル */
-    body.splash-active > *:not(#splash-video-wrapper) {
-      display: none !important;
-    }
+    /* スプラッシュ動画用スタイル - LCP汚染防止版 */
+    /* ページは描画されたまま、動画はオーバーレイとして重ねる */
     #splash-video-wrapper {
       position: fixed;
+      inset: 0;
       z-index: 99999;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #fff;
-      display: flex;
+      display: none;       /* 初期は非表示 */
       align-items: center;
       justify-content: center;
+      background: #fff;    /* 必要に応じて半透明にしてもよい */
       transition: opacity 0.5s;
     }
-    #splash-video-wrapper.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-    #splash-video {
-      max-width: 100vw;
-      max-height: 100vh;
-      border-radius: 0;
-      box-shadow: none;
-      background: transparent;
-    }
-    /* スプラッシュ動画用スタイル（洗練・強制再生・スキップ不可） */
-    body.splash-active > *:not(#splash-video-wrapper) {
-      display: none !important;
-    }
-    #splash-video-wrapper {
-      position: fixed;
-      z-index: 99999;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.5s;
+    body.splash-active #splash-video-wrapper { 
+      display: flex; 
     }
     #splash-video-wrapper.hide {
       opacity: 0;
@@ -821,11 +799,22 @@
 </head>
 <body>
 
-  <!-- スプラッシュ動画ラッパー（洗練・強制再生・スキップ不可） -->
-  <div id="splash-video-wrapper" style="display: none;">
-    <video id="splash-video" autoplay playsinline muted preload="none"></video>
+  <!-- スプラッシュ動画ラッパー（LCP汚染防止版） -->
+  <div id="splash-video-wrapper">
+    <video id="splash-video" autoplay playsinline muted preload="none" poster="/image/splash-poster.webp"></video>
     <!-- <div id="splash-loading">Loading...</div> -->
   </div>
+  
+  <!-- LCP最適化用のヒーロー画像（Above the Fold） -->
+  <div id="hero-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden;">
+    <img src="image/rockmount3.webp" 
+         alt="ReStandard Hero Image" 
+         style="width: 100%; height: 100%; object-fit: cover; opacity: 0.1;"
+         fetchpriority="high" 
+         decoding="async"
+         loading="eager">
+  </div>
+  
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
   <nav class="fixed-top navbar navbar-expand-lg">
@@ -2019,9 +2008,11 @@
       
       console.log('外部アクセス - スプラッシュ表示');
       
-      // スプラッシュ表示
-      document.body.classList.add('splash-active');
-      splash.style.display = 'flex';
+      // 初回ペイント後にスプラッシュを表示
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          // スプラッシュ表示
+          splash.style.display = 'flex';
       
       // 動画の読み込みと再生を最適化
       let videoLoaded = false;
@@ -2050,48 +2041,35 @@
         }, 300);
       }
       
-      // 動画の読み込み完了を待つ
-      video.src = '5.mov';
-      video.addEventListener('canplay', function() {
-        console.log('スプラッシュ動画の準備完了');
-        videoLoaded = true;
-        attemptPlay();
+          // 動画の読み込み完了を待つ（初回ペイント後）
+          video.src = '5.mov';
+          video.addEventListener('canplay', function() {
+            console.log('スプラッシュ動画の準備完了');
+            videoLoaded = true;
+            attemptPlay();
+          });
+      
+          // 動画の終了処理
+          video.addEventListener('ended', function() {
+            console.log('スプラッシュ動画終了');
+            hideSplash();
+          });
+          
+          // エラー処理
+          video.addEventListener('error', function(e) {
+            console.error('スプラッシュ動画エラー:', e);
+            hideSplash();
+          });
+          
+          // タイムアウト処理（3秒で強制終了）
+          setTimeout(function() {
+            if (splash.style.display !== 'none') {
+              console.log('スプラッシュ動画タイムアウト - 強制終了');
+              hideSplash();
+            }
+          }, 3000);
+        }, 0);
       });
-      
-      // 動画の終了処理
-      video.addEventListener('ended', function() {
-        console.log('スプラッシュ動画終了');
-        hideSplash();
-      });
-      
-      // エラー処理
-      video.addEventListener('error', function(e) {
-        console.error('スプラッシュ動画エラー:', e);
-        hideSplash();
-      });
-      
-      // タイムアウト処理（3秒で強制終了）
-      setTimeout(function() {
-        if (splash.style.display !== 'none') {
-          console.log('スプラッシュ動画タイムアウト - 強制終了');
-          hideSplash();
-        }
-      }, 3000);
-      
-      // ユーザーインタラクション防止
-      splash.addEventListener('click', function(e) { 
-        e.stopPropagation(); 
-        e.preventDefault(); 
-      }, true);
-      
-      window.addEventListener('keydown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }, true);
-      
-      // 即座に再生を試行（より積極的に）
-      setTimeout(attemptPlay, 100);
     }
     
     // DOMContentLoadedでスプラッシュ初期化（軽量化版）
