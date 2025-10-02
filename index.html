@@ -4,12 +4,27 @@
   <meta charset="utf-8">
   <meta name="google" content="notranslate">
   <!-- Google tag (gtag.js) - 最適化 -->
+  <script>
+    // Default: deny ad/analytics until explicit consent; avoids 3rd-party cookies in audits
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
+    });
+    // Prevent accidental debug/remarketing flags
+    gtag('set', 'ads_data_redaction', true);
+  </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-1W9HVMCW3G', {
+      'allow_google_signals': false,
+      'allow_ad_personalization_signals': false,
       'anonymize_ip': true,
       'cookie_flags': 'SameSite=None;Secure'
     });
