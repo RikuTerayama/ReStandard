@@ -2150,3 +2150,18 @@ h2.section-title {
   /* minimal darkening; visually almost identical */
   color: #111111 !important; /* previously #fff or lighter */
 }
+
+/* Accessibility: Darken footer text for AA contrast */
+footer.py-5.text-center {
+  color: #595959; /* subtle increase from #6x/#7x tones; AA on #fff/#f7f7f7 */
+}
+
+footer.py-5.text-center a {
+  color: inherit;              /* keep brand harmony */
+  text-decoration-color: currentColor;  /* underline stays visible with new color */
+}
+
+/* Accessibility: Darken copyright text for AA contrast */
+div.copyright {
+  color: #666666;   /* safe AA on white / light gray backgrounds */
+}
