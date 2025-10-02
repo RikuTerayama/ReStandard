@@ -274,14 +274,11 @@ function attachTrackControls(track) {
   };
   
   // イベントリスナーを追加
-  // パフォーマンス最適化: passive listeners when enabled
-  const usePassive = window.__PERF_FLAGS?.passiveListeners !== false;
-  
   track.addEventListener('pointerdown', onDown);
   track.addEventListener('pointermove', onMove);
   track.addEventListener('pointerup', onUp);
-  track.addEventListener('touchstart', onDown, { passive: usePassive ? true : false });
-  track.addEventListener('touchmove', onMove, { passive: usePassive ? true : false });
+  track.addEventListener('touchstart', onDown, { passive: false });
+  track.addEventListener('touchmove', onMove, { passive: false });
   track.addEventListener('touchend', onUp);
   
   // 画像のドラッグを無効化
