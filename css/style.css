@@ -4,17 +4,6 @@
 /* ========================================
    共通トークンとベース - Single Source
    ======================================== */
-
-/* Performance optimization: CSS containment for scrolling tracks */
-.collection-track, .lookbook-track {
-  will-change: transform;
-  contain: layout paint size; /* limits reflow blast radius */
-}
-
-.collection-track .item,
-.lookbook-track .item {
-  will-change: transform;
-}
    :root {
     /* Nav frost 背景 */
     --nav-frost-bg: rgba(255,255,255,0.9);
