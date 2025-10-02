@@ -32,3 +32,13 @@
   [headers.values]
     Cache-Control = "public, max-age=3600"
     Vary = "Accept-Encoding"
+
+# セキュリティヘッダー（全ページ適用）
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Set-Cookie = "Path=/; SameSite=Lax"
