@@ -46,6 +46,7 @@ function ensureLoopWidth(track) {
     originals.forEach((node) => {
       const clone = node.cloneNode(true);
       clone.querySelectorAll('img').forEach((img) => {
+        if (img.hasAttribute('data-lcp')) return; // skip LCP
         if (!img.hasAttribute('loading')) {
           img.setAttribute('loading', 'lazy');
         }
@@ -340,6 +341,7 @@ function initLazyLoadFadeIn() {
   const lazyImages = document.querySelectorAll('img[loading="lazy"]');
   
   lazyImages.forEach(img => {
+    if (img.hasAttribute('data-lcp')) return; // skip LCP
     img.addEventListener('load', () => {
       img.classList.add('loaded');
     });
