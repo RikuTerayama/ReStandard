@@ -2232,5 +2232,24 @@ document.addEventListener('DOMContentLoaded', function() {
   })();
   </script>
 
+  <!-- Lightweight diagnostics (log-only) -->
+  <script>
+  (function(){
+    // Log Netlify Images that still 400
+    document.addEventListener('error', function(e){
+      const t = e.target;
+      if (t && t.tagName === 'IMG' && String(t.src).includes('/.netlify/images')) {
+        console.warn('[img-400?]', t.src);
+      }
+    }, true);
+
+    // Warn if GA is loaded with ar_debug or similar
+    const qs = location.search;
+    if (/[?&](ar_debug|ga_debug|gtm_debug)=1/.test(qs)) {
+      console.warn('[ga-debug-flag] Debug param detected in URL:', qs);
+    }
+  })();
+  </script>
+
 </body>
 </html>
