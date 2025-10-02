@@ -108,7 +108,9 @@ return;
     
     // 進捗がない場合は安全のため終了
     if (cloneCount >= maxClones) {
-      console.log('Lookbook track clone limit reached');
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('Lookbook track clone limit reached');
+      }
       break;
     }
   }
