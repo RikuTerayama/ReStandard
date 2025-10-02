@@ -139,12 +139,13 @@ function attachManualControls(track){
 
     // READ all layout properties first
     const loopWidth = track._segmentWidth || (track.scrollWidth / 2); // オリジナル区間幅を使用
-    const m = new DOMMatrix(getComputedStyle(track).transform);
+    const computedStyle = getComputedStyle(track);
+    const m = new DOMMatrix(computedStyle.transform);
     let tx = m.m41; // 2D 水平移動
     tx = ((tx % loopWidth) + loopWidth) % loopWidth; // 常に 0..loopWidth
     const dir = track.dataset.direction === 'rtl' ? -1 : 1;
     const progress = tx / loopWidth;              // 0..1
-    const animationDuration = getComputedStyle(track).animationDuration;
+    const animationDuration = computedStyle.animationDuration;
     const delay = -progress * parseFloat(animationDuration) * 1000; // ms
 
     // WRITE all properties after reads
