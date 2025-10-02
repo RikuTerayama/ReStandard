@@ -2,79 +2,64 @@
    Marquee initializer (Collection / Lookbook 共通) 2025-01-18
    ========================================================= */
 
-import { createRafScheduler, debounce } from './dom-scheduler.js';
-const raf = createRafScheduler();
-
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
-  let parentWidth, itemWidths, segmentWidth;
-  
-  // READ phase - collect all layout measurements
-  raf.read(() => {
-    parentWidth = track.parentElement?.offsetWidth || track.offsetWidth || 1;
-    const multiplier = track.classList.contains('lookbook-track') ? 6.0 : 4.0;
-    const maxLoopWidth = parentWidth * multiplier;
+  const parentWidth = track.parentElement?.offsetWidth || track.offsetWidth || 1;
+  const multiplier = track.classList.contains('lookbook-track') ? 6.0 : 4.0;
+  const maxLoopWidth = parentWidth * multiplier;
 
-    const originals = Array.from(track.children);
-    if (originals.length === 0) {
-      return;
+  const originals = Array.from(track.children);
+  if (originals.length === 0) {
+    return;
+  }
+
+  const fallbackItemWidth = track.classList.contains('lookbook-track') ? 300 : 200;
+  const itemWidths = originals.map((node) => {
+    const rect = node.getBoundingClientRect();
+    if (!rect.width) {
+      return fallbackItemWidth;
     }
-
-    const fallbackItemWidth = track.classList.contains('lookbook-track') ? 300 : 200;
-    itemWidths = originals.map((node) => {
-      const rect = node.getBoundingClientRect();
-      if (!rect.width) {
-        return fallbackItemWidth;
-      }
-      const styles = window.getComputedStyle(node);
-      const margin = parseFloat(styles.marginLeft || '0') + parseFloat(styles.marginRight || '0');
-      return rect.width + margin;
-    });
-
-    segmentWidth = itemWidths.reduce((sum, value) => sum + value, 0);
-    if (!Number.isFinite(segmentWidth) || segmentWidth <= 0) {
-      segmentWidth = originals.length * fallbackItemWidth;
-    }
-    segmentWidth = Math.max(segmentWidth, 1);
+    const styles = window.getComputedStyle(node);
+    const margin = parseFloat(styles.marginLeft || '0') + parseFloat(styles.marginRight || '0');
+    return rect.width + margin;
   });
 
-  // WRITE phase - apply DOM mutations
-  raf.write(() => {
-    track._segmentWidth = segmentWidth;
+  let segmentWidth = itemWidths.reduce((sum, value) => sum + value, 0);
+  if (!Number.isFinite(segmentWidth) || segmentWidth <= 0) {
+    segmentWidth = originals.length * fallbackItemWidth;
+  }
+  segmentWidth = Math.max(segmentWidth, 1);
 
-    const minClones = track.classList.contains('lookbook-track') ? 16 : 3;
-    let clonesAdded = 0;
-    let totalWidth = segmentWidth;
+  track._segmentWidth = segmentWidth;
 
-    const needsMoreContent = () => totalWidth < (parentWidth * (track.classList.contains('lookbook-track') ? 6.0 : 4.0)) || clonesAdded < minClones;
+  const minClones = track.classList.contains('lookbook-track') ? 16 : 3;
+  let clonesAdded = 0;
+  let totalWidth = segmentWidth;
 
-    while (needsMoreContent() && clonesAdded < 80) {
-      const fragment = document.createDocumentFragment();
-      const originals = Array.from(track.children);
-      originals.forEach((node) => {
-        const clone = node.cloneNode(true);
-        clone.querySelectorAll('img').forEach((img) => {
-          if (!img.hasAttribute('loading')) {
-            img.setAttribute('loading', 'lazy');
-          }
-          if (img.hasAttribute('fetchpriority')) {
-            img.removeAttribute('fetchpriority');
-          }
-        });
-        fragment.appendChild(clone);
+  const needsMoreContent = () => totalWidth < maxLoopWidth || clonesAdded < minClones;
+
+  while (needsMoreContent() && clonesAdded < 80) {
+    const fragment = document.createDocumentFragment();
+    originals.forEach((node) => {
+      const clone = node.cloneNode(true);
+      clone.querySelectorAll('img').forEach((img) => {
+        if (!img.hasAttribute('loading')) {
+          img.setAttribute('loading', 'lazy');
+        }
+        if (img.hasAttribute('fetchpriority')) {
+          img.removeAttribute('fetchpriority');
+        }
       });
-      track.appendChild(fragment);
-      totalWidth += segmentWidth;
-      clonesAdded++;
-    }
-
-    // Final measurement after DOM changes
-    raf.read(() => {
-      const finalWidth = track.scrollWidth;
-      const viewportRatio = parentWidth ? Math.round((finalWidth / parentWidth) * 100) : 0;
-      console.log(`[LOOP] Track width: ${finalWidth}px (${viewportRatio}% of viewport) clones=${clonesAdded}`);
+      fragment.appendChild(clone);
     });
-  });
+    track.appendChild(fragment);
+    totalWidth += segmentWidth;
+    clonesAdded++;
+  }
+
+  const finalWidth = track.scrollWidth;
+  const viewportRatio = parentWidth ? Math.round((finalWidth / parentWidth) * 100) : 0;
+  console.log(`[LOOP] Track width: ${finalWidth}px (${viewportRatio}% of viewport) clones=${clonesAdded}`);
 }
 function attachManualControls(track){
   let startX = 0;
@@ -103,11 +88,7 @@ function attachManualControls(track){
     const dx = x - startX;
     moved += Math.abs(dx);
     track._lastMoved = moved;
-    
-    // Use RAF to batch transform updates
-    raf.write(() => {
-      track.style.transform = `translateX(${startTx + dx}px)`;
-    });
+    track.style.transform = `translateX(${startTx + dx}px)`;
     ev.preventDefault();
   };
   
@@ -125,20 +106,14 @@ function attachManualControls(track){
     track.style.animationPlayState = 'running';
     
     // 現在の位置を記録してアニメーションを調整
-    let currentTx, segmentWidth;
+    const currentTx = getTxPx(track);
+    const segmentWidth = track._segmentWidth || 0;
     
-    raf.read(() => {
-      currentTx = getTxPx(track);
-      segmentWidth = track._segmentWidth || 0;
-    });
-    
-    raf.write(() => {
-      // セグメント幅の倍数に調整してスムーズなループを保証
-      if (segmentWidth > 0) {
-        const adjustedTx = Math.round(currentTx / segmentWidth) * segmentWidth;
-        track.style.transform = `translateX(${adjustedTx}px)`;
-      }
-    });
+    // セグメント幅の倍数に調整してスムーズなループを保証
+    if (segmentWidth > 0) {
+      const adjustedTx = Math.round(currentTx / segmentWidth) * segmentWidth;
+      track.style.transform = `translateX(${adjustedTx}px)`;
+    }
 
     // moved はここではリセットしない（先に判定に使う）
     const dragAmount = Math.abs(moved);
@@ -180,12 +155,12 @@ function attachManualControls(track){
     moved = 0;
   };
 
-  track.addEventListener('pointerdown', onDown, {passive:true});
-  window.addEventListener('pointermove', onMove, {passive:false}); // needs preventDefault
-  window.addEventListener('pointerup', onUp, {passive:true});
-  track.addEventListener('touchstart', onDown, {passive:true});
-  window.addEventListener('touchmove', onMove, {passive:false}); // needs preventDefault
-  window.addEventListener('touchend', onUp, {passive:true});
+  track.addEventListener('pointerdown', onDown, {passive:false});
+  window.addEventListener('pointermove', onMove, {passive:false});
+  window.addEventListener('pointerup', onUp);
+  track.addEventListener('touchstart', onDown, {passive:false});
+  window.addEventListener('touchmove', onMove, {passive:false});
+  window.addEventListener('touchend', onUp);
   
   // ドラッグ時のリンク遷移を無効化
   const container = track.parentElement;
@@ -404,8 +379,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // 画面幅が変わったら再計算（速度だけアップデート）
-  const remeasure = debounce(() => {
-    raf.write(() => {
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
       document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
         const dir = track.dataset.direction || 'left';
         const base = parseFloat(track.dataset.baseSpeed || 55);
@@ -413,16 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
         track.style.animation = `${key} ${sec}s linear infinite`;
       });
-    });
-  }, 200);
-  
-  window.addEventListener('resize', remeasure, { passive: true });
-  
-  // Optional: ResizeObserver for container size changes
-  const trackContainer = document.querySelector('#collection, #lookbook');
-  if (trackContainer) {
-    new ResizeObserver(debounce(remeasure, 100)).observe(trackContainer);
-  }
+    }, 200);
+  });
 });
 
 // 見出しJSリセット削除 - CSS制御のみに統一
