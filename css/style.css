@@ -1077,18 +1077,8 @@
   @keyframes scroll-left{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
   @keyframes scroll-right{ from{ transform: translateX(-50%);} to{ transform: translateX(0);} }
   
-  /* ====== Brands（中央中央＆ホバー時のみ入替） ====== */
-  .brands-grid{ display:grid; gap: clamp(12px,2vw,20px); grid-template-columns: repeat(5,1fr); }
-  @media (max-width:1024px){ .brands-grid{ grid-template-columns: repeat(4,1fr); } }
-  @media (max-width:767px){ .brands-grid{ grid-template-columns: repeat(2,1fr); } }
-  
-  .brand-card{ position:relative; aspect-ratio:1/1; border-radius:18px; background:#fff; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.08); }
-  .brand-media,.brand-hover{ position:absolute; inset:0; display:grid; place-items:center; padding: clamp(8px,2.5vw,18px); }
-  .brand-media img,.brand-hover img{ max-width:90%; max-height:90%; object-fit:contain; display:block; }
-  .brand-card .brand-logo{ opacity:1; }
-  .brand-card .brand-hover{ opacity:0; }
-  .brand-card:hover .brand-logo{ opacity:0; }
-  .brand-card:hover .brand-hover{ opacity:1; }
+/* ====== Brands（中央中央＆ホバー時のみ入替） ====== */
+/* このセクションは #brands スコープの新しいスタイルに置き換えられました */
   
   /* =========================
      Collection / Lookbook v7 - 完全統一
@@ -1265,14 +1255,23 @@
     display: block;
   }
   
-  /* about.html のブランド画像表示修正 */
-  .brand-card img, 
-  .brands-grid img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-  }
+/* about.html のブランド画像表示修正 */
+.brand-card img, 
+.brands-grid img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* #brands セクションでは新しいスタイルを優先 */
+#brands .brand-card img,
+#brands .brands-grid img {
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
   
   /* .brand-logo の aspect-ratio を削除（空のルールセットを削除） */
   
@@ -1557,16 +1556,27 @@
     100% { transform: translateX(0); }
   }
   
-  /* ブランド画像の可視化と自然な縮尺 */
-  .brands-grid img,
-  .brand-card img,
-  .brand-logo img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    opacity: 1; /* 何らかの初期 opacity 指定が残っていた場合の上書き */
-  }
+/* ブランド画像の可視化と自然な縮尺 */
+.brands-grid img,
+.brand-card img,
+.brand-logo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  opacity: 1; /* 何らかの初期 opacity 指定が残っていた場合の上書き */
+}
+
+/* #brands セクションでは新しいスタイルを優先 */
+#brands .brands-grid img,
+#brands .brand-card img,
+#brands .brand-logo img {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+}
   
   /* SPフォントサイズを一段小さく */
   @media (max-width: 480px){
@@ -1602,25 +1612,39 @@
 
 /* === Brands section responsive grid & square images (scoped) === */
 #brands .brands-grid {
-  display: grid;
+  display: grid !important;
   /* Base (tablet-ish): responsive auto-fit columns */
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;                 /* keep modest spacing */
-  justify-items: center;
-  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+  gap: 1rem !important;                 /* keep modest spacing */
+  justify-items: center !important;
+  align-items: center !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 /* Square card: slightly larger than before, but responsive */
 #brands .brand-card {
   /* Use a CSS variable with sensible bounds */
   --brand-size: clamp(132px, 14vw, 180px);
-  width: var(--brand-size);
-  height: var(--brand-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  /* keep any existing radius/shadow from global styles */
+  width: var(--brand-size) !important;
+  height: var(--brand-size) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  position: relative !important;
+  aspect-ratio: 1/1 !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+#brands .brand-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
 }
 
 /* Ensure logos fit entirely inside square without cropping */
@@ -1628,24 +1652,48 @@
 #brands .brand-hover {
   width: 100% !important;
   height: 100% !important;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 100% !important;
+  max-height: 100% !important;
   object-fit: contain !important;     /* show full logo/image */
-  object-position: center center;
+  object-position: center center !important;
+  display: block !important;
+  opacity: 1 !important;
+}
+
+#brands .brand-card .brand-logo { 
+  opacity: 1 !important; 
+}
+#brands .brand-card .brand-hover { 
+  opacity: 0 !important; 
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: clamp(8px,2.5vw,18px) !important;
+}
+#brands .brand-card:hover .brand-logo { 
+  opacity: 0 !important; 
+}
+#brands .brand-card:hover .brand-hover { 
+  opacity: 1 !important; 
 }
 
 /* Mobile: exactly 5 columns (results in 5x2 for first 10 items) */
 @media (max-width: 600px) {
   #brands .brands-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr) !important;
   }
-  #brands .brand-card { --brand-size: clamp(110px, 16vw, 140px); }
+  #brands .brand-card { 
+    --brand-size: clamp(110px, 16vw, 140px) !important; 
+  }
 }
 
 /* Desktop: exactly 2 columns (2 x N; typically 2x5) */
 @media (min-width: 1024px) {
   #brands .brands-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
-  #brands .brand-card { --brand-size: clamp(160px, 12vw, 200px); }
+  #brands .brand-card { 
+    --brand-size: clamp(160px, 12vw, 200px) !important; 
+  }
 }
