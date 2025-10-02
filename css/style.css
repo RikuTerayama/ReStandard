@@ -2148,7 +2148,13 @@ html body[lang="en"] #brands .only-ja {
 /* Accessibility: Ensure all section titles are white for consistency */
 #brands h2,
 #lookbook h2,
-#about h2 {
+#about h2,
+#brands .section-title,
+#lookbook .section-title,
+#about .section-title,
+#brands .section-title span,
+#lookbook .section-title span,
+#about .section-title span {
   color: white !important;
 }
 
