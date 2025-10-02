@@ -1673,3 +1673,82 @@
 #collection .collection-track {
   touch-action: pan-y !important;
 }
+
+/* === 強力な上書きルール - キャッシュ対策 === */
+/* ブラウザキャッシュを無視して確実に適用 */
+#brands .brands-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+  gap: 1rem !important;
+  justify-items: center !important;
+  align-items: center !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#brands .brand-card {
+  --brand-size: clamp(145px, 15.4vw, 198px) !important;
+  width: var(--brand-size) !important;
+  height: var(--brand-size) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  position: relative !important;
+  aspect-ratio: 1/1 !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+#brands .brand-logo,
+#brands .brand-hover,
+#brands .brand-card img,
+#brands .brands-grid img {
+  width: 50% !important;
+  height: 50% !important;
+  max-width: 50% !important;
+  max-height: 50% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+  opacity: 1 !important;
+  margin: 0 auto !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* モバイル: 5列 */
+@media (max-width: 600px) {
+  #brands .brands-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+    justify-items: center !important;
+    align-items: center !important;
+  }
+  #brands .brand-card { 
+    --brand-size: clamp(121px, 17.6vw, 154px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* デスクトップ: 5列 */
+@media (min-width: 1024px) {
+  #brands .brands-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+    justify-items: center !important;
+    align-items: center !important;
+  }
+  #brands .brand-card { 
+    --brand-size: clamp(176px, 13.2vw, 220px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
