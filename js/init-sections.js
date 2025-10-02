@@ -155,11 +155,14 @@ function attachManualControls(track){
     moved = 0;
   };
 
+  // パフォーマンス最適化: passive listeners when enabled
+  const usePassive = window.__PERF_FLAGS?.passiveListeners !== false;
+  
   track.addEventListener('pointerdown', onDown, {passive:false});
   window.addEventListener('pointermove', onMove, {passive:false});
   window.addEventListener('pointerup', onUp);
-  track.addEventListener('touchstart', onDown, {passive:false});
-  window.addEventListener('touchmove', onMove, {passive:false});
+  track.addEventListener('touchstart', onDown, {passive: usePassive ? true : false});
+  window.addEventListener('touchmove', onMove, {passive: usePassive ? true : false});
   window.addEventListener('touchend', onUp);
   
   // ドラッグ時のリンク遷移を無効化
@@ -187,7 +190,7 @@ function attachManualControls(track){
     track._wheelTimer = setTimeout(() => {
       onUp({ preventDefault: () => {}, stopPropagation: () => {} });
     }, 300);
-  }, { passive: true });
+  }, { passive: usePassive ? true : false });
 }
 
 /** IntersectionObserver で画面外は自動停止
