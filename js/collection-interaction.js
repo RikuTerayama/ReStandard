@@ -7,6 +7,40 @@ if (typeof window.initCollectionTracks === 'function') {
   // 既に読み込まれている場合は何もしない
 } else {
 
+// デバッグ用のヘルパー関数
+window.__DEBUG_COLLECTION__ = true; // デバッグモードを有効化
+
+function debugCollectionTap(e) {
+  if (!window.__DEBUG_COLLECTION__) return;
+  
+  const x = e.clientX || e.touches?.[0]?.clientX;
+  const y = e.clientY || e.touches?.[0]?.clientY;
+  
+  if (x && y) {
+    const element = document.elementFromPoint(x, y);
+    console.log('=== Collection Tap Debug ===');
+    console.log('Event type:', e.type);
+    console.log('Coordinates:', { x, y });
+    console.log('Hit element:', element);
+    console.log('Is <a> tag:', element?.tagName === 'A');
+    console.log('Closest <a>:', element?.closest('a'));
+    
+    // CSS プロパティ確認
+    const link = element?.closest('a');
+    if (link) {
+      const styles = getComputedStyle(link);
+      console.log('Link CSS properties:', {
+        pointerEvents: styles.pointerEvents,
+        zIndex: styles.zIndex,
+        position: styles.position,
+        transform: styles.transform,
+        opacity: styles.opacity,
+        visibility: styles.visibility
+      });
+    }
+  }
+}
+
 // 各 collection-track で無限スクロールのロジックを実装
 function initCollectionTracks() {
   const tracks = document.querySelectorAll('.collection-track');
@@ -117,10 +151,13 @@ return;
 // トラックコントロールの実装
 function attachTrackControls(track) {
   let startX = 0;
+  let startY = 0;
   let startTx = 0;
+  let isPointerDown = false;
   let isDragging = false;
   let moved = 0;
   let longPressTimer = null;
+  const DRAG_THRESHOLD = 6; // ドラッグ判定の閾値（6px）
   
   const onDown = (e) => {
     // PC版ではマウスイベントを完全に無視してアニメーションを継続
@@ -128,9 +165,15 @@ function attachTrackControls(track) {
       return;
     }
     
+    // デバッグ情報を出力
+    debugCollectionTap(e);
+    
     startX = e.clientX || e.touches[0].clientX;
+    startY = e.clientY || e.touches[0].clientY;
     startTx = getCurrentTranslateX(track);
     moved = 0;
+    isPointerDown = true;
+    isDragging = false;
     
     // 長押しタイマーを開始（500msに延長してより明確に識別）
     longPressTimer = setTimeout(() => {
@@ -140,10 +183,8 @@ function attachTrackControls(track) {
       track.style.animationPlayState = 'paused';
     }, 500);
     
-    // リンク要素の場合はpreventDefaultを避ける
-    if (!e.target.closest('a')) {
-      e.preventDefault();
-    }
+    // タップの場合はpreventDefaultしない（リンクナビゲーションを許可）
+    // ドラッグ判定はonMoveで行う
   };
   
   const onMove = (e) => {
@@ -152,23 +193,33 @@ function attachTrackControls(track) {
       return;
     }
     
-    const currentX = e.clientX || e.touches[0].clientX;
-    const dx = currentX - startX;
-    moved += Math.abs(dx);
+    if (!isPointerDown) return;
     
-    // 10px以上移動したらドラッグ開始（より明確な識別）
-    if (!isDragging && moved > 10) {
+    const currentX = e.clientX || e.touches[0].clientX;
+    const currentY = e.clientY || e.touches[0].clientY;
+    const dx = currentX - startX;
+    const dy = currentY - startY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    // 閾値を超えたらドラッグ開始
+    if (!isDragging && distance > DRAG_THRESHOLD) {
       isDragging = true;
       track.isDragging = true;
       track.classList.add('dragging');
       track.style.animationPlayState = 'paused';
+      
+      // 長押しタイマーをクリア
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
     }
     
     if (isDragging) {
       // ドラッグ中は track._tx を更新してスクロール位置を変更
       track._tx = startTx + dx;
       track.style.transform = `translateX(${track._tx}px)`;
-      e.preventDefault();
+      e.preventDefault(); // ドラッグ時のみpreventDefault
     }
   };
   
@@ -184,49 +235,22 @@ function attachTrackControls(track) {
       longPressTimer = null;
     }
     
+    isPointerDown = false;
+    
     if (!isDragging) {
-      // ドラッグしていない場合、クリックとして処理
-      const link = e.target.closest('a');
-      if (link) {
-        const href = link.getAttribute('href')?.trim().toLowerCase() || '';
-        const noNav = href === '' || href === '#' || href.startsWith('javascript');
-        if (noNav && link.dataset.href) {
-          e.preventDefault();
-          window.location.href = link.dataset.href;
-          return;
-        } else if (href && href !== '#' && !href.startsWith('javascript')) {
-          // 通常のリンクの場合はそのまま遷移
-          return;
-        }
-      }
-      // 移動量をリセット
-      moved = 0;
+      // ドラッグしていない場合、タップとして処理
+      // ブラウザのデフォルトクリック動作を許可（リンクナビゲーション）
+      console.log('Collection tap detected - allowing default navigation');
       return;
     }
     
+    // ドラッグが発生していた場合の処理
     isDragging = false;
-    track.isDragging = false; // グローバルフラグもリセット
+    track.isDragging = false;
     track.classList.remove('dragging');
     track.style.removeProperty('transform');
     
-    // 5px未満=クリック：href または data-href に遷移
-    if (moved < 5) {
-      const link = e.target.closest('a');
-      if (link) {
-        const href = link.getAttribute('href')?.trim().toLowerCase() || '';
-        const noNav = href === '' || href === '#' || href.startsWith('javascript');
-        if (noNav && link.dataset.href) {
-          e.preventDefault();
-          window.location.href = link.dataset.href;
-          return;
-        }
-      }
-      track.style.animationPlayState = 'running';
-      moved = 0;
-      return;
-    }
-    
-    // 8px以上=ドラッグ：現在位置から segmentWidth の範囲に正規化して自動スクロールを再開
+    // ドラッグ後のアニメーション再開処理
     e.preventDefault();
     e.stopPropagation();
     
@@ -256,6 +280,24 @@ function attachTrackControls(track) {
   track.addEventListener('touchstart', onDown, { passive: false });
   track.addEventListener('touchmove', onMove, { passive: false });
   track.addEventListener('touchend', onUp);
+  
+  // 画像のドラッグを無効化
+  track.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+    img.style.userSelect = 'none';
+    img.style.webkitUserDrag = 'none';
+  });
+  
+  // リンクのクリック処理（念のため）
+  track.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      // タップの場合はデフォルトナビゲーションを許可
+      if (!isDragging) {
+        console.log('Collection link clicked - allowing navigation');
+        // preventDefaultしない
+      }
+    }, { passive: true });
+  });
 }
 
 // 現在の translateX 値を取得
