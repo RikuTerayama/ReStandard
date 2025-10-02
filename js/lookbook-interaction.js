@@ -2,6 +2,9 @@
    Lookbook Interaction Handler 2025-01-18
    ========================================================= */
 
+import { createRafScheduler, debounce } from './dom-scheduler.js';
+const raf = createRafScheduler();
+
 // 重複読み込み防止
 if (typeof window.initLookbookTracks === 'function') {
   // 既に読み込まれている場合は何もしない
@@ -46,13 +49,31 @@ return;
   let attempts = 0;
   const maxAttempts = 5; // 試行回数を増加
   
-  // 幅の計算を安全に実行
-  while (originalWidth === 0 && attempts < maxAttempts) {
-    originalWidth = children.reduce((width, child) => {
-      const rect = child.getBoundingClientRect();
-      return width + (rect.width || 300); // フォールバック値
-    }, 0);
-    
+  // 幅の計算を安全に実行（RAFでバッチ処理）
+  raf.read(() => {
+    while (originalWidth === 0 && attempts < maxAttempts) {
+      originalWidth = children.reduce((width, child) => {
+        const rect = child.getBoundingClientRect();
+        return width + (rect.width || 300); // フォールバック値
+      }, 0);
+      
+      if (originalWidth === 0) {
+        attempts++;
+        
+        // DOM更新を待つ（時間を延長）
+        if (attempts < maxAttempts) {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              ensureInfiniteLoop(track, segmentCount);
+              resolve();
+            }, 200); // 100msから200msに延長
+          });
+        }
+      }
+    }
+  });
+  
+  raf.write(() => {
     if (originalWidth === 0) {
       // 画像が読み込まれていない場合のフォールバック
       children.forEach(child => {
@@ -66,52 +87,50 @@ return;
           img.style.opacity = '1';
         }
       });
-      attempts++;
-      
-      // DOM更新を待つ（時間を延長）
-      if (attempts < maxAttempts) {
-        return new Promise(resolve => {
-          setTimeout(() => {
-            ensureInfiniteLoop(track, segmentCount);
-            resolve();
-          }, 200); // 100msから200msに延長
-        });
-      }
     }
-  }
+  });
   
   // オリジナル区間幅を記録
   track._segmentWidth = originalWidth;
   
-  // 安全な複製処理
-  const viewportWidth = window.innerWidth;
-  const targetWidth = Math.max(originalWidth * 2, viewportWidth * 2); // 3倍から2倍に削減
-  let currentWidth = originalWidth;
-  let cloneCount = 0;
-  const maxClones = 80; // 最大複製数を増加（Lookbook）
+  // 安全な複製処理（RAFでバッチ処理）
+  let viewportWidth, targetWidth, currentWidth, cloneCount;
   
-  // 無限ループ防止のための安全なwhile文
-  while (currentWidth < targetWidth && cloneCount < maxClones) {
-    children.forEach(child => {
-      if (cloneCount < maxClones) {
-        const clone = child.cloneNode(true);
-        track.appendChild(clone);
-        cloneCount++;
+  raf.read(() => {
+    viewportWidth = window.innerWidth;
+    targetWidth = Math.max(originalWidth * 2, viewportWidth * 2); // 3倍から2倍に削減
+    currentWidth = originalWidth;
+    cloneCount = 0;
+  });
+  
+  raf.write(() => {
+    const maxClones = 80; // 最大複製数を増加（Lookbook）
+    
+    // 無限ループ防止のための安全なwhile文
+    while (currentWidth < targetWidth && cloneCount < maxClones) {
+      children.forEach(child => {
+        if (cloneCount < maxClones) {
+          const clone = child.cloneNode(true);
+          track.appendChild(clone);
+          cloneCount++;
+        }
+      });
+      
+      // 現在の幅を再計算（安全に）
+      raf.read(() => {
+        currentWidth = Array.from(track.children).reduce((width, child) => {
+          const rect = child.getBoundingClientRect();
+          return width + (rect.width || 300);
+        }, 0);
+      });
+      
+      // 進捗がない場合は安全のため終了
+      if (cloneCount >= maxClones) {
+        console.log('Lookbook track clone limit reached');
+        break;
       }
-    });
-    
-    // 現在の幅を再計算（安全に）
-    currentWidth = Array.from(track.children).reduce((width, child) => {
-      const rect = child.getBoundingClientRect();
-      return width + (rect.width || 300);
-    }, 0);
-    
-    // 進捗がない場合は安全のため終了
-    if (cloneCount >= maxClones) {
-      console.log('Lookbook track clone limit reached');
-      break;
     }
-  }
+  });
 }
 
 // トラックコントロールの実装
@@ -167,7 +186,11 @@ function attachTrackControls(track) {
     if (isDragging) {
       // ドラッグ中は track._tx を更新してスクロール位置を変更
       track._tx = startTx + dx;
-      track.style.transform = `translateX(${track._tx}px)`;
+      
+      // Use RAF to batch transform updates
+      raf.write(() => {
+        track.style.transform = `translateX(${track._tx}px)`;
+      });
       e.preventDefault();
     }
   };
@@ -240,13 +263,13 @@ function attachTrackControls(track) {
     track.style.animationPlayState = 'running';
   };
   
-  // イベントリスナーを追加
-  track.addEventListener('pointerdown', onDown);
-  track.addEventListener('pointermove', onMove);
-  track.addEventListener('pointerup', onUp);
-  track.addEventListener('touchstart', onDown, { passive: false });
-  track.addEventListener('touchmove', onMove, { passive: false });
-  track.addEventListener('touchend', onUp);
+  // イベントリスナーを追加（passive listeners for performance）
+  track.addEventListener('pointerdown', onDown, { passive: true });
+  track.addEventListener('pointermove', onMove, { passive: false }); // needs preventDefault
+  track.addEventListener('pointerup', onUp, { passive: true });
+  track.addEventListener('touchstart', onDown, { passive: true });
+  track.addEventListener('touchmove', onMove, { passive: false }); // needs preventDefault
+  track.addEventListener('touchend', onUp, { passive: true });
 }
 
 // 現在の translateX 値を取得
