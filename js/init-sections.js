@@ -59,7 +59,9 @@ function ensureLoopWidth(track) {
 
   const finalWidth = track.scrollWidth;
   const viewportRatio = parentWidth ? Math.round((finalWidth / parentWidth) * 100) : 0;
-  console.log(`[LOOP] Track width: ${finalWidth}px (${viewportRatio}% of viewport) clones=${clonesAdded}`);
+  if (window.__QA_MEASURE_LOGS__) {
+    console.log(`[LOOP] Track width: ${finalWidth}px (${viewportRatio}% of viewport) clones=${clonesAdded}`);
+  }
 }
 function attachManualControls(track){
   let startX = 0;
@@ -345,14 +347,18 @@ function initLazyLoadFadeIn() {
 /* ===================== init ===================== */
 document.addEventListener('DOMContentLoaded', () => {
   // DOM存在確認・querySelector修正
-  console.log('[INIT] Collection/Lookbook 初期化開始');
+  if (window.__QA_MEASURE_LOGS__) {
+    console.log('[INIT] Collection/Lookbook 初期化開始');
+  }
   
   // lazy-load フェードイン処理を初期化
   initLazyLoadFadeIn();
   
   // Collection 上段・下段（新構造対応）
   const tracks = document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track');
-  console.log(`[INIT] Total tracks found: ${tracks.length}`);
+  if (window.__QA_MEASURE_LOGS__) {
+    console.log(`[INIT] Total tracks found: ${tracks.length}`);
+  }
   
   tracks.forEach((track, index) => {
     // 幅確保
@@ -365,7 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
     alignTrackStart(track);
     // 画面外一時停止
     pauseWhenOutOfView(track);
-    console.log(`[INIT] Track ${index + 1}: ${track.dataset.direction || 'left'} (${track.dataset.speed || '55'}s)`);
+    if (window.__QA_MEASURE_LOGS__) {
+      console.log(`[INIT] Track ${index + 1}: ${track.dataset.direction || 'left'} (${track.dataset.speed || '55'}s)`);
+    }
   });
   
   // href 未設定（# や空、javascript:void(0)）の a は data-href を使って遷移させる
@@ -398,4 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 見出しJSリセット削除 - CSS制御のみに統一
-console.log('[INIT] 見出し制御はCSS (.section-title) に完全委譲');
+if (window.__QA_MEASURE_LOGS__) {
+  console.log('[INIT] 見出し制御はCSS (.section-title) に完全委譲');
+}
