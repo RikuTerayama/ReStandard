@@ -11,7 +11,9 @@
   
   // 言語切替の初期化
   function initLangToggle() {
-    console.log('Language toggle initializing...');
+    if (window.__QA_MEASURE_LOGS__) {
+      console.log('Language toggle initializing...');
+    }
     
     // 保存された言語設定を取得、またはデフォルト言語を使用
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -26,12 +28,16 @@
         e.preventDefault();
         const lang = btn.getAttribute('data-lang-btn') === 'en' ? 'en' : 'ja';
         setLang(lang);
-        console.log('Language changed to:', lang);
+        if (window.__QA_MEASURE_LOGS__) {
+          console.log('Language changed to:', lang);
+        }
       });
     });
     
     // 初期化完了ログ
-    console.log('Language toggle initialized with:', initial);
+    if (window.__QA_MEASURE_LOGS__) {
+      console.log('Language toggle initialized with:', initial);
+    }
     
     // CSS変更の反映確認
     checkCSSChanges();
@@ -39,20 +45,26 @@
   
   // CSS変更の反映確認
   function checkCSSChanges() {
-    console.log('Checking CSS changes...');
+    if (window.__QA_MEASURE_LOGS__) {
+      console.log('Checking CSS changes...');
+    }
     
     // 現在のCSS設定を確認
     const brandsSection = document.querySelector('#brands, .section-brands');
     if (brandsSection) {
       const computedStyle = window.getComputedStyle(brandsSection);
-      console.log('Brands section current margin-top:', computedStyle.marginTop);
-      console.log('Brands section current margin-bottom:', computedStyle.marginBottom);
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('Brands section current margin-top:', computedStyle.marginTop);
+        console.log('Brands section current margin-bottom:', computedStyle.marginBottom);
+      }
     }
     
     // PC版での追加マージン確認
     if (window.innerWidth >= 768) {
       const expectedMargin = 'calc(clamp(200px, 20vw, 400px) + 50px)';
-      console.log('PC version - Expected margin-top:', expectedMargin);
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('PC version - Expected margin-top:', expectedMargin);
+      }
     }
   }
   
@@ -97,14 +109,16 @@
       const deviceClass = shouldShowPc ? 'only-pc' : 'only-sp';
       
       // 表示状態をログ出力
-      console.log('Visibility validation:', {
-        lang,
-        device: isMobile ? 'mobile' : 'desktop',
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('Visibility validation:', {
+          lang,
+          device: isMobile ? 'mobile' : 'desktop',
         targetClass,
         deviceClass,
         aboutVisible: aboutSection.querySelector(`.${targetClass}.${deviceClass}`)?.style.display !== 'none',
         brandsVisible: brandsSection.querySelector(`.${targetClass}.${deviceClass}`)?.style.display !== 'none'
-      });
+        });
+      }
     }
   }
   
