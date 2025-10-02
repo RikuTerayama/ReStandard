@@ -2191,5 +2191,29 @@ document.addEventListener('DOMContentLoaded', function() {
   <script src="js/collection-interaction.js?v=2025-01-19-fix" defer></script>
   <script src="js/lookbook-interaction.js?v=2025-01-19-fix" defer></script>
 
+  <!-- LCP Detector (temporary) -->
+  <script>
+  (function(){
+    if (!('PerformanceObserver' in window)) return;
+    try {
+      const po = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (entry.entryType === 'largest-contentful-paint' && entry.element && entry.element.tagName === 'IMG') {
+            const img = entry.element;
+            console.log('[LCP IMG]', {
+              src: img.currentSrc || img.src,
+              class: img.className,
+              id: img.id,
+              loading: img.getAttribute('loading'),
+              fetchpriority: img.getAttribute('fetchpriority')
+            });
+          }
+        }
+      });
+      po.observe({type:'largest-contentful-paint', buffered:true});
+    } catch(e){}
+  })();
+  </script>
+
 </body>
 </html>
