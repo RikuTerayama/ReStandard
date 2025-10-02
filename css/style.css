@@ -1607,10 +1607,11 @@
   opacity: 1 !important; 
 }
 
-/* Mobile: exactly 5 columns (results in 5x2 for first 10 items) */
+/* Mobile: exactly 2 columns (results in 2x5 for first 10 items) */
 @media (max-width: 600px) {
   #brands .brands-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(5, 1fr) !important;
     justify-items: center !important;  /* 中央揃え */
     align-items: center !important;    /* 縦方向も中央揃え */
   }
@@ -1622,10 +1623,26 @@
   }
 }
 
+/* Tablet: responsive auto-fit */
+@media (min-width: 601px) and (max-width: 1023px) {
+  #brands .brands-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    justify-items: center !important;  /* 中央揃え */
+    align-items: center !important;    /* 縦方向も中央揃え */
+  }
+  #brands .brand-card { 
+    --brand-size: clamp(145px, 15.4vw, 198px) !important;  /* 10% larger */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
 /* Desktop: exactly 5 columns (5 x 2 for first 10 items) */
 @media (min-width: 1024px) {
   #brands .brands-grid {
     grid-template-columns: repeat(5, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
     justify-items: center !important;  /* 中央揃え */
     align-items: center !important;    /* 縦方向も中央揃え */
   }
@@ -1723,10 +1740,11 @@
   transform: translate(-50%, -50%) !important;
 }
 
-/* モバイル: 5列 */
+/* モバイル: 2列×5行 */
 @media (max-width: 600px) {
   #brands .brands-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(5, 1fr) !important;
     justify-items: center !important;
     align-items: center !important;
   }
@@ -1738,10 +1756,26 @@
   }
 }
 
-/* デスクトップ: 5列 */
+/* タブレット: レスポンシブ対応 */
+@media (min-width: 601px) and (max-width: 1023px) {
+  #brands .brands-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    justify-items: center !important;
+    align-items: center !important;
+  }
+  #brands .brand-card { 
+    --brand-size: clamp(145px, 15.4vw, 198px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* デスクトップ: 5列×2行 */
 @media (min-width: 1024px) {
   #brands .brands-grid {
     grid-template-columns: repeat(5, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
     justify-items: center !important;
     align-items: center !important;
   }
