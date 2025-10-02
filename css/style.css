@@ -1,1770 +1,2191 @@
-/* BUILD_STAMP: 2025-01-18_FINAL_REQUIREMENTS_COMPLETE */
-/* 最終要件完全実装: 新設計DOM統一・8px閾値・ポインターイベント・90%中央配置・transform統一・競合解消 */
+<!DOCTYPE html>
+<html lang="ja" translate="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="google" content="notranslate">
+  <!-- Google tag (gtag.js) - 最適化 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1W9HVMCW3G', {
+      'anonymize_ip': true,
+      'cookie_flags': 'SameSite=None;Secure'
+    });
 
-/* ========================================
-   共通トークンとベース - Single Source
-   ======================================== */
-   :root {
-    /* Nav frost 背景 */
-    --nav-frost-bg: rgba(255,255,255,0.9);
-    --navbar-bg: rgba(255,255,255,0.9);
-    
-    /* === 統一トークン（PC/モバイル両対応のクランプ） === */
-    /* 画面幅に追随して高さが変わるように clamp で定義 */
-    --collection-img-h: clamp(160px, 28vw, 320px);
-    --lookbook-img-h: clamp(160px, 28vw, 320px);
-    --collection-gap: clamp(12px, 2vw, 24px);
-    
-    /* 背景帯の上下余白（小画面で少し浅く） */
-    --band-pad-block: clamp(16px, 3.2vw, 40px);
-    
-    /* 速度設定 */
-    --collection-speed: 55s;
-    --lookbook-speed: 75s;
-    --loop: 45s;
-    
-    /* 共通設定 */
-    --main-color: #333333;
-    --accent-color: #888;
-    --background-color: #f8f8f8;
-    --text-reveal-timing: cubic-bezier(0.4, 0, 0.2, 1);
-    --heading-font: 'Noto Serif JP', serif;
-    --body-font: 'Noto Sans JP', sans-serif;
-    --title-fs: clamp(1.25rem, 2.5vw, 2rem);
-  }
-  
-  /* ========================================
-     基本リセット・フォント設定
-     ======================================== */
-  * {
-    font-family: inherit;
-  }
-  
-  html {
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--main-color);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "palt";
-    letter-spacing: 0.02em;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-  
-  body {
-    font-family: var(--body-font);
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--main-color);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "palt";
-    letter-spacing: 0.02em;
-    line-height: 1.7;
-    overflow-x: hidden;
-    padding-top: 80px; /* 固定ヘッダー分の余白 */
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--heading-font);
-    letter-spacing: 0.05em;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-  }
-  
-  /* ========================================
-     セクション共通スタイル
-     ======================================== */
-  section {
-    padding: 80px 20px;
-    margin-bottom: 30px;
-  }
-  
-  .section-spacing {
-    margin-top: clamp(100px, 12vw, 150px);
-    margin-bottom: clamp(50px, 6vw, 80px);
-  }
-  
-  /* 旧定義削除 - Layout core で統一 */
-  
-  /* ========================================
-     背景用全幅ラッパー
-     ======================================== */
-  .fullbleed-bg {
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    width: 100vw;
-  }
-  
-  /* Collection と Lookbook の背景設定は .band に統一 */
-  
-  /* 共通フルブリード背景帯 */
-  .section-bg {
-    position: relative;
-    left: 50%;
-    right: auto;
-    width: 100vw;
-    transform: translateX(-50%);
-    background: var(--nav-frost-bg, rgba(0,0,0,0.8));
-  }
-  
-  /* 共通コンテンツ幅中央化 */
-  .section-inner {
-    max-width: clamp(960px, 92vw, 1400px);
-    margin-inline: auto;
-    padding-inline: clamp(16px, 2vw, 24px);
-  }
-  
-  /* ドラッグ中の共通制御 */
-  .dragging {
-    animation-play-state: paused !important;
-    cursor: grabbing !important;
-  }
-  
-  /* ========================================
-     Collection - フルブリード・ドラッグ&クリック両立
-     ======================================== */
-  
-  /* Collection - 安定動作・横幅一杯背景は.bandに統一 */
-  .collection-section {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Collection タイトル - 白フォント・中央揃え */
-  #collection h2 {
-    color: white !important;
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .collection-title {
-    color: #fff;
-    font-weight: 600;
-    line-height: 1.2;
-    font-size: clamp(18px, 2.5vw, 28px);
-    background: transparent;
-    text-align: center;
-    margin-bottom: clamp(16px, 2vw, 24px);
-    font-family: var(--heading-font);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  }
-  
-  /* rows-wrapper の背景設定を削除、.band に統一 */
-  .collection-rows-wrapper {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 8px;
-    background: transparent;
-  }
-  
-  /* 既存の collection-row 定義は上記で統一済み */
-  
-  .collection-track,
-  .lookbook-track{
-    width: max-content;
-    display: flex;
-    gap: 12px;           /* 画像間の隙間は少し */
-    align-items: center;
-    padding-block: 12px; /* 帯から画像がはみ出さない */
-    background: transparent;
-  }
-  
-  .collection-track.dragging {
-    cursor: grabbing;
-    animation: none !important; /* ドラッグ中はCSSアニメ停止 */
-  }
-  
-  
-  /* 画像は常に行内に収まる（contain） */
-  /* PATCH: Collection 画像の完全表示を徹底 */
-  #collection .collection-track img{
-    height: auto !important;
-    max-height: 100% !important; /* トラックの block-size に追従 */
-    width: auto !important;
-    object-fit: contain !important;
-    display: block;
-    border-radius: 0;
-    box-shadow: none;
-    pointer-events: auto;
-    user-select: none;
-  }
-  
-  /* Lookbook 行 */
-  #lookbook .lookbook-track img{
-    height: var(--lookbook-img-h);
-    width: auto;
-    object-fit: contain;
-    display: block;
-    border-radius: 0;
-    box-shadow: none;
-    pointer-events: auto;
-    user-select: none;
-  }
-  
-  /* 縦位置は上寄せ（中央だと上下が不足時に欠けやすい） */
-  #collection .collection-track{
-    align-items: center;
-  }
-  
-  /* 個々の画像カード化を撤去（白背景・影を無効化） */
-  #collection .collection-track a{
-    background: transparent !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    padding: 0 var(--collection-gap, 12px);
-  }
-  
-  /* SP版 */
-  
-  .collection-track img:hover {
-    transform: translateY(-4px);
-  }
-  
-  .collection-track a {
-      display: block;
-    flex-shrink: 0;
-  }
-  
-  /* 上下段のわずかな間隔 */
-  .collection-row + .collection-row { 
-    margin-top: clamp(8px, 1.5vh, 16px); 
-  }
-  
-  /* Collection アニメーション */
-  @keyframes scroll-right-to-left { 
-    from { transform: translateX(0); } 
-    to { transform: translateX(-50%); } 
-  }
-  
-  @keyframes scroll-left-to-right { 
-    from { transform: translateX(-50%); } 
-    to { transform: translateX(0); } 
-  }
-  
-  .collection-scroll-top  { 
-    animation: scroll-right-to-left var(--collection-speed) linear infinite; 
-  }
-  
-  .collection-scroll-bottom { 
-    animation: scroll-left-to-right var(--collection-speed) linear infinite; 
-  }
-  
-  /* クリック可視性確保 */
-  .collection-track {
-    touch-action: pan-y; /* スクロール操作向け */
-    pointer-events: auto; /* クリック可視性 */
-  }
-  
-  /* ホバー一時停止 */
-  @media (hover: hover) {
-    .collection-row:hover .collection-track { 
-    animation-play-state: paused;
+    // 省データ回線対応
+    if ('connection' in navigator && navigator.connection.saveData) {
+      document.documentElement.classList.add('save-data');
     }
-  }
-  
-  /* prefers-reduced-motion */
-  @media (prefers-reduced-motion: reduce) {
-    .collection-track { 
-      animation: none !important; 
-    }
-  }
-  
-  /* ========================================
-     Brands - 正方形・中央揃え・ホバー制御
-     ======================================== */
-  /* Brands - 背景透明・正方形レスポンシブグリッド */
-  #brands {
-    background: none;
-    padding: clamp(60px, 8vw, 80px) clamp(16px, 3vw, 20px);
-    text-align: center;
-  }
-  
-  /* Brands - グリッドレイアウト・安定配置 */
-  /* === Brands: モバイルでもロゴが必ず見える・中央整列 === */
-  /* 古いbrand-cardスタイルは削除 - #brandsスコープで管理 */
-  .carousel-indicators, .swiper-pagination { 
-    display:none !important; 
-  }
-  
-  /* === Brands: 箇条点を消し、画像を中央に === */
-  /* 古いbrands-gridスタイルは削除 - #brandsスコープで管理 */
-  
-  /* 古いbrand-card関連スタイルは削除 - #brandsスコープで管理 */
-  
-  /* 削除：古いセレクタのため */
-  
-  /* ========================================
-     Lookbook - 双方向ドラッグとアニメ両立
-     ======================================== */
-  /* Lookbook - 横幅一杯背景は.bandに統一 */
-  .lookbook-section {
-    width: 100%;
-    padding: 0;
-    overflow: hidden;
-    background: transparent;
-  }
-  
-  .lookbook {
-    padding: 0;
-    background: transparent;
-    overflow: hidden;
-  }
-  
-  #collection .band, #lookbook .band{
-    width: 100vw; 
-    margin-left: calc(50% - 50vw); 
-    margin-right: calc(50% - 50vw);
-    padding-block: clamp(12px, 2vw, 24px);
-    background: transparent !important;
-    position: relative;
-    z-index: 1;
-  }
-  #collection .track-wrap, #lookbook .track-wrap{
-    gap: var(--collection-gap);
-    justify-content: center;
-  }
-  
-  .lookbook-container { 
-    overflow: hidden; 
-    position: relative;
-    min-block-size: calc(var(--lookbook-img-h) + 2rem);
-    padding-block: 1rem;                 /* 画像上下に程よい余白 */
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    margin: 8px 0;
-  }
-  
-  .lookbook-track {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-    contain: paint;
-    display: flex;
-    gap: min(1.5vw, 12px);
-    cursor: grab;
-    animation: lookbook-scroll 40s linear infinite;
-    height: auto;
-    align-items: center;
-  }
-  
-  .lookbook-track.dragging {
-    cursor: grabbing;
-    animation: none !important; /* ドラッグ中は必ず停止 */
-  }
-  
-  .lookbook-item { 
-    flex-shrink: 0;
-    height: clamp(240px, 26vw, 400px);
-    width: auto;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
-  
-  .lookbook-item:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Lookbook 画像 - レスポンシブ対応 */
-  .lookbook-row img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 400px;
-  }
-  
-  @media (max-width: 768px) {
-    .lookbook-row img {
-      max-height: 250px;
-    }
-  }
-  
-  .lookbook-item img {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-    background: transparent;
-    box-shadow: none;
-  }
-  
-  /* 画像番号非表示 */
-  .image-number { 
-    display: none !important; 
-  }
-  
-  /* Lookbook アニメーション - Y中央維持 */
-  @keyframes lookbook-scroll {
-    0% { 
-      transform: translate3d(0, -50%, 0); 
-    }
-    100% {
-      transform: translate3d(-50%, -50%, 0); 
-    }
-  }
-  
-  /* ホバー一時停止 */
-  @media (hover: hover) {
-    .lookbook-container:hover .lookbook-track {
-      animation-play-state: paused;
-    }
-  }
-  
-  /* prefers-reduced-motion */
-  @media (prefers-reduced-motion: reduce) {
-    .collection-track,
-    .lookbook-track { 
-      animation: none !important; 
-    }
-  }
-  
-  /* ========================================
-     About セクション
-     ======================================== */
-  .about-inner {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
-    color: var(--main-color);
-  }
-  
-  .about-inner h2 {
-    color: var(--main-color);
-    margin-bottom: 20px;
-  }
-  
-  .about-inner p {
-    color: var(--main-color);
-  }
-  
-  /* ========================================
-     レスポンシブ対応 - Single Source
-     ======================================== */
-  @media (max-width: 1024px) {
-    :root {
-      --collection-row-h: clamp(140px, 24vw, 200px);
-      --collection-speed: 45s;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    :root {
-      --collection-row-h: clamp(150px, 28vw, 220px); /* SP判読性向上 */
-      --collection-speed: 35s;
-    }
-    
-    .lookbook-item img {
-      height: clamp(220px, 28vw, 300px);
-    }
-  }
-  
-  /* ========================================
-     フォーム・マップコンテナ
-     ======================================== */
-  .map-container {
-    width: 100%;
-    max-width: 900px;
-    min-width: 0;
-    margin: 0 auto;
-    padding-left: 0;
-    padding-right: 0;
-    box-sizing: border-box;
-    overflow-x: visible;
-  }
-  
-    .form-container iframe,
-    .map-container iframe {
-    width: 100%;
-    max-width: 900px;
-    min-width: 0;
-    margin: 0 auto;
-    display: block;
-      box-sizing: border-box;
-    }
-  
-  /* 重複ブロック削除済み - 最終定義のみ残す */
-  
-  /* ====== 共通レイアウト ====== */
-  
-  /* === Section titles: 統一 === */
-  .section-title{
-    color:#fff !important;                /* 全ページ統一 */
-    font-size: clamp(1.25rem, 2.5vw, 2rem);
-    line-height:1.2;
-    letter-spacing:.02em;
-    background: transparent !important;   /* タイトル背後の帯は禁止 */
-    margin: 0 0 clamp(12px, 2vw, 24px) 0;
-    text-align:center;
-    font-weight:700;
-    text-shadow: 0 2px 8px rgba(0,0,0,.25);
-  }
-  
-  /* === 帯（バンド）背景の共通 === */
-  /* 削除：重複定義のため */
-  
-  /* .marquee-band は削除済み */
-  
-  /* .marquee-row は削除済み */
-  
-  /* ====== 画像カード ====== */
-  
-  .collection-track a,
-  .lookbook-track a{
-    display: inline-block;
-    padding: 0 8px; /* 画像間のスペーシング */
-    flex-shrink: 0;
-    pointer-events: auto;
-    cursor: pointer;
-  }
-  
-  /* ==== Collection / Lookbook 画像の「カード」装飾を確実に無効化 ==== */
-  #collection .collection-track a,
-  #collection .collection-track .collection-item,
-  #lookbook  .lookbook-track a,
-  #lookbook  .lookbook-track .lookbook-item {
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    border: 0 !important;
-  }
-  
-  /* === Collection/Lookbook：見切れゼロ & 中央配置 & 再開位置継続 === */
-  #collection, #lookbook { 
-    width:100%; 
-    max-width:none; 
-    margin:0 auto; 
-  }
-  .section-title { 
-    color:#fff !important; 
-  }
-  
-  /* 行は可変高。中身に追従（見切れ防止） */
-  #collection .collection-row,
-  #lookbook .lookbook-row {
-    position:relative;
-    height:auto;
-    min-block-size:clamp(160px,22vw,340px); /* PC下限 */
-    overflow:visible;
-  }
-  @media (max-width: 767px){
-    #collection .collection-row,
-    #lookbook .lookbook-row { 
-      min-block-size:clamp(140px,36vw,260px); 
-    }
-  }
-  
-  /* トラックと画像：見切れゼロ */
-  .collection-track, .lookbook-track {
-    display:flex; 
-    align-items:center; 
-    gap:12px;
-    width:max-content; 
-    will-change:transform;
-  }
-  .collection-track img, .lookbook-track img {
-    height:100%; 
-    max-height:100%;
-    width:auto; 
-    object-fit:contain; 
-    display:block;
-    border-radius: 0;
-    box-shadow: none;
-    pointer-events: auto;
-    user-select: none;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-  }
-  
-  /* === トラックの高さ：画面幅に比例（PC/タブ/SP） === */
-  .collection .track-wrap,
-  .lookbook .track-wrap{
-    height: clamp(140px, 22vw, 260px);   /* PCで大きすぎない／SPで過少にならない */
-  }
-  @media (min-width:1024px){
-    .collection .track-wrap,
-    .lookbook .track-wrap{ height: clamp(160px, 18vw, 240px);}
-  }
-  
-  /* === スライド同士の隙間・左右余白 === */
-  .collection .slide,
-  .lookbook .slide{
-    padding-inline: clamp(4px, 1.2vw, 10px);
-  }
-  
-  /* ====== アニメーション ====== */
-  
-  /* アニメーション設定は個別に定義 */
-  
-  /* 行アニメ（左/右） */
-  @keyframes marquee-l{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  @keyframes marquee-r{ from{transform:translateX(-50%)} to{transform:translateX(0)} }
-  
-  /* Collection 上段・下段の方向指定 */
-  .collection .collection-row:nth-child(1) .collection-track{ 
-    animation: marquee-l var(--loop,45s) linear infinite; 
-  }
-  .collection .collection-row:nth-child(2) .collection-track{ 
-    animation: marquee-r var(--loop,45s) linear infinite; 
-  }
-  
-  /* ドラッグ中はCSSアニメを一時停止（JSが .dragging を付与） */
-  .collection-track.dragging,
-  .lookbook-track.dragging{
-    animation-play-state: paused !important;
-  }
-  
-  /* 見出しの余白調整（行が食い込むのを防ぐ） */
-  #collection .section-title,
-  #lookbook   .section-title{
-    margin-top: .5rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* スマホ版の画像サイズ調整 */
-  @media (max-width: 768px){
-    :root { 
-      --lookbook-speed: 45s; 
-    }
-  }
-  @media (max-width: 480px){
-    :root { 
-      --lookbook-speed: 40s; 
-    }
-    /* PATCH: SP で Lookbook の縦余白を軽くする */
-    .lookbook-container{
-      min-block-size: clamp(120px, 32vw, 200px); /* 旧: calc(var(--lookbook-img-h)+2rem) 相当を緩和 */
-    }
-    /* 帯の上下を軽めに */
-    .band{
-      padding-block: clamp(6px, 1.5vw, 14px) !important;
-    }
-  }
-  
-  /* === スマホで帯が長すぎる問題の予防（Lookbook/Collection帯にだけ適用） === */
-  .collection .band, .lookbook .band{
-    padding-block: clamp(10px, 2.5vw, 24px);
-  }
-  
-  /* === Global Layout: 全ページ統一 === */
-  html, body { height: 100%; margin: 0; padding: 0; }
-  body {
-    display: flex; flex-direction: column; min-height: 100vh;
-    font-family: var(--body-font, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif);
-  }
-  main { flex: 1; }
-  
-  /* Footer（index.html と同一挙動） */
-  footer {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-top: 1px solid rgba(204, 204, 204, 0.3);
-    backdrop-filter: blur(10px);
-    margin-top: auto; position: relative; bottom: 0; width: 100%;
-  }
-  
-  /* Navbar（index.html と同一の前提） */
-  .navbar { 
-    background: rgba(255, 255, 255, 0.85); 
-    backdrop-filter: blur(8px);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  .navbar .navbar-brand { font-weight: 700; letter-spacing: 0.02em; }
-  .navbar .nav-link { font-weight: 500; letter-spacing: 0.02em; }
-  .language-switcher button { margin: 0 0.25rem; }
-  
-  /* Section Title（全ページで白） */
-  .section-title span { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-  
-  /* コンテンツを囲うボックス（ナビと同系の半透明白） */
-  .about-section-box {
-    background: rgba(255,255,255,0.90);
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-    padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
-    margin: 0 auto 24px;
-    max-width: min(1000px, 92vw);
-  }
-  
-  /* 背景動画は常に背面へ */
-  #mobile-bg-video, #desktop-bg-video { z-index: -1; }
-  
-  /* Collection/Lookbookセクションのz-index調整 */
-  #collection, #lookbook {
-    position: relative;
-    z-index: 1;
-  }
-  
-  /* Collection/Lookbookの背景帯を確実に表示 */
-  #collection .band, #lookbook .band {
-    position: relative;
-    z-index: 1;
-  }
-  
-  /* レスポンシブ細部（タイトル・ナビ間隔の統一） */
-  @media (max-width: 768px) {
-    .navbar .nav-link { padding: 0.5rem 0.75rem; }
-    .section-title { margin-top: 5.5rem; } /* 固定ヘッダー分の余白 */
-  }
-  
-  /* PC/SP切替とJA/EN切替の統一ルール */
-  .desktop-only { display: block; }
-  .mobile-only { display: none; }
-  @media (max-width: 600px) {
-    .desktop-only { display: none !important; }
-    .mobile-only { display: inline !important; }
-  }
-  
-  /* 言語切り替えの統一ルール */
-  [lang="ja"] .en-content { display: none !important; }
-  [lang="en"] .ja-content { display: none !important; }
-  html[lang="ja"] .en-content,
-  html[lang="ja"] .en-content.desktop-only,
-  html[lang="ja"] .en-content.mobile-only {
-    display: none !important;
-  }
-  html[lang="en"] .ja-content,
-  html[lang="en"] .ja-content.desktop-only,
-  html[lang="en"] .ja-content.mobile-only {
-    display: none !important;
-  }
-  
-  /* フォントの統一設定 */
-  html, body {
-    font-family: var(--body-font, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif);
-  }
-  h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, 
-  .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
-    font-family: var(--heading-font, 'Noto Serif JP', serif);
-  }
-  .navbar-brand, .nav-link {
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-  p, .ja-content, .en-content {
-    font-family: var(--body-font, 'Noto Sans JP', sans-serif);
-    line-height: 1.6;
-  }
-  
-  /* Brand images (Rockmount ほか) の自然縮尺 */
-  .brand-image,
-  img[src*="rockmount"] {
-    display: block;
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    object-fit: contain; /* 枠内で自然比率 */
-    margin: 0 auto 1rem auto;
-  }
-  /* 画像の親に高さ固定がある場合を緩和 */
-  .brand-image-wrap, .about-section-box img {
-    height: auto !important;
-  }
-  
-  .section-inner{
-    max-width:1200px;
-    margin-inline:auto;
-    padding-inline: clamp(12px,3vw,24px);
-  }
-  
-  /* Collection と Lookbook の track は画面端から端まで */
-  .collection-track {
-    width: max-content;
-    margin-inline: 0;
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: transparent;
-  }
-  
-  .lookbook-track {
-    width: max-content;
-    margin-inline: 0;
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: transparent;
-  }
-  
-  /* 全幅背景（ヘッダー色と同系の帯）: 統一背景・横幅100% */
-  .fullbleed-bg{
-    position:relative;
-    left:50%;
-    margin-left:-50vw;
-    width:100vw;
-    max-width: none !important; /* 制約解除 */
-    background: var(--nav-frost-bg) !important; /* メニューバー同色・統一背景 */
-    backdrop-filter: blur(8px) !important;
-  }
-  
-  /* 帯の見た目（背景は.fullbleed-bgに統一）- 横幅一杯・margin削除 */
-  .band-frost{
-    background: transparent !important; /* 背景は.fullbleed-bgに統一 */
-    border-radius:16px;
-    padding: clamp(16px,2.5vw,24px);
-    box-shadow:0 4px 20px rgba(0,0,0,.10);
-    backdrop-filter: none !important; /* 重複削除 */
-    margin: 0 !important; /* margin削除で横幅いっぱい */
-    max-width: none !important; /* 制約解除 */
-    width: 100% !important;
-  }
-  
-  /* ====== Collection ====== */
-  #collection{ 
-    padding: clamp(40px,6vw,80px) 0; 
-    width: 100% !important;
-    max-width: none !important;
-    position: relative;
-    z-index: 1;
-  }
-  #collection .band-frost{ 
-    display:grid; 
-    gap: clamp(10px,2vw,16px); 
-    width: 100% !important;
-    max-width: none !important;
-  }
-  #collection .collection-rows{
-    display:grid;
-    grid-template-rows: auto auto;
-    gap: clamp(8px,1.6vw,12px);
-    width: 100% !important;
-    max-width: none !important;
-  }
-  /* PATCH: Collection 行の高さを自動化し見切れ防止 */
-  #collection .collection-row{
-    position: relative;
-    /* overflow:hidden;  ← 削除 */
-    /* height: clamp(120px, 18vw, 220px); ← 削除 */
-    height: auto;                 /* 自動 */
-    min-block-size: clamp(160px, 22vw, 340px); /* 下限だけ与える */
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-    overflow: visible;            /* 画像が切れない */
-  }
-  @media (max-width:767px){
-    /* 固定高は撤去。必要なら min-block-size を軽めに */
-    #collection .collection-row{ min-block-size: clamp(140px, 36vw, 260px); }
-  }
-  #collection .collection-track{
-    display:flex; align-items:center; gap: 8px !important; /* 左右スペース調整 */
-    will-change: transform; width: max-content !important; height:100%; cursor: grab;
-    margin: 0 !important;
-    text-align: center !important;
-  }
-  
-  /* Collection アニメーション確実適用 */
-  .collection-track[data-direction="left"]{
-    animation: scroll-left var(--collection-speed) linear infinite !important; /* 左へスクロール */
-  }
-  .collection-track[data-direction="right"]{
-    animation: scroll-right var(--collection-speed) linear infinite !important; /* 右へスクロール */
-  }
-  
-  #collection .collection-track.dragging{ 
-    cursor:grabbing; 
-    animation:none !important; /* ドラッグ中のみ停止 */
-  }
-  #collection .collection-item{ flex:0 0 auto; height:100%; aspect-ratio:4/5;
-    border-radius:12px; overflow:hidden; background:#fff; }
-  #collection .collection-item img{ 
-    width:100%; 
-    height:100%; 
-    max-height: 40vh !important; /* レスポンシブ対応 */
-    width: auto !important;
-    object-fit: contain !important; /* cover→contain変更 */
-    display:block; 
-  }
-  
-  /* ====== Lookbook ====== */
-  /* Lookbook 横幅100%・高さ柔軟化 */
-  .lookbook-section{ 
-    width: 100% !important; /* 横幅100% */
-    max-width: none !important;
-    text-align: center !important; /* 中央揃え */
-  }
-  #lookbook{ 
-    padding: clamp(40px,6vw,80px) 0; 
-    background: none;
-    text-align: center !important; /* 中央揃え */
-    width: 100% !important; /* 横幅100% */
-    max-width: none !important;
-  }
-  /* セクションコンテナ統一設定 */
-  .collection-container,
-  .lookbook-container{ 
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow: hidden !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    position: relative !important;
-    height: auto !important;
-    min-height: clamp(280px,30vw,360px) !important;
-  }
-  /* Lookbook 画像見切れ修正・高さ自動調整 */
-  /* 古い lookbook-container 設定は下記で統一済み */
-  
-  /* ---------- Lookbook ---------- */
-  /* 帯の最小高 = 画像高 + 余白（上下1rem） */
-  .lookbook-container{
-    min-block-size: calc(var(--lookbook-img-h) + 2rem);
-    padding-block: 1rem;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-start; /* 上寄せ */
-  }
-  
-  /* トラックは上寄せ・Y方向のtransformを撤廃（Xのみ） */
-  .lookbook-track{
-    position: absolute;
-    top: 0;
-    transform: translateX(0);      /* ← 既存の translate3d(0,-50%,0) をやめる */
-    animation: lookbook-scroll var(--lookbook-speed) linear infinite;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    height: auto;
-    will-change: transform;
-    cursor: grab;
-  }
-  
-  /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
-  .lookbook-item{ 
-    height: clamp(240px, 26vw, 400px); /* PC で400pxまで拡大 */
-  }
-  .lookbook-item img{
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-  }
-  
-  /* 横スクロールはXのみ */
-  @keyframes lookbook-scroll{
-    from{ transform: translateX(0); }
-    to  { transform: translateX(-50%); } /* 右→左 */
-  }
-  #lookbook .lookbook-track:active{ cursor:grabbing; }
-  #lookbook .lookbook-track.dragging{ 
-    animation:none !important; /* ドラッグ中のみ停止 */
-  }
-  #lookbook .lookbook-item{ 
-    flex:0 0 auto; 
-    height: auto !important; /* 高さ柔軟化 */
-    width:auto; 
-    background:transparent; 
-    border-radius:8px; 
-    overflow:visible !important; /* 画像切れ防止 */
-  }
-  .lookbook-track img{ 
-    object-fit: contain !important; /* 上下切れ防止 */
-    max-height: 100% !important; /* 画像見切れ防止 */
-    width: auto !important;
-  }
-  #lookbook .lookbook-item img{ 
-    height: auto !important; /* 高さ柔軟化 */
-    object-fit: contain !important; /* 上下切れ防止 */
-    max-height: 100% !important; /* 画像見切れ防止 */
-    width: auto !important;
-    border-radius:8px;
-    max-width: 100%;
-  }
-  #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; }
-  
-  /* 全般レスポンシブ画像対応 */
-  .collection-track img,
-  .lookbook-track img {
-    max-width: 100% !important;
-    height: auto !important;
-  }
-  
-  /* PC大きく・SP小さく調整 */
-  @media (min-width: 769px) {
-    .collection-track img,
-    .lookbook-track img {
-      max-width: clamp(200px, 20vw, 300px) !important; /* PC: 大きめ */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .collection-track img,
-    .lookbook-track img {
-      max-width: clamp(120px, 25vw, 200px) !important; /* SP: 小さめ */
-    }
-  }
-  
-  @keyframes scroll-left{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
-  @keyframes scroll-right{ from{ transform: translateX(-50%);} to{ transform: translateX(0);} }
-  
-/* ====== Brands（中央中央＆ホバー時のみ入替） ====== */
-/* このセクションは #brands スコープの新しいスタイルに置き換えられました */
-  
-  /* =========================
-     Collection / Lookbook v7 - 完全統一
-     ========================= */
-  
-  /* 共通トークン */
-  :root{
-    --band-bg: rgba(255,255,255,0.90); /* .navbar と同等の見た目に合わせる */
-    --gap: clamp(10px, 1.6vw, 20px);
-    --radius: 12px;
-    --shadow: 0 4px 12px rgba(0,0,0,.06);
-    --title-fs: clamp(28px, 4.2vw, 56px);
-  }
-  
-  /* セクションタイトル：白文字・背景無し（中央揃え） */
-  .section-title{
-    color:#fff !important;
-    font-size:var(--title-fs) !important;
-    margin: clamp(20px, 3vw, 32px) auto !important;
-    font-weight: 700 !important;
-    text-align: center !important;
-    background: transparent !important;
-  }
-  
-  /* 背景の帯（ナビと同系色。横幅いっぱい、上下はclampで可変） */
-  /* 削除：重複定義のため */
-  
-  /* トラック（横並び・端の余白は少し） */
-  .collection-track,
-  .lookbook-track{
-    display: flex !important;
-    align-items: center !important;
-    gap: var(--gap) !important;
-    will-change: transform !important;
-    user-select: none !important;
-    touch-action: pan-y !important;
-    cursor: grab !important;
-    padding-inline: clamp(8px, 2vw, 16px) !important;
-  }
-  
-  /* --- Collection の行高（上下2段同値） --- */
-  #collection .collection-track{
-    block-size: clamp(180px, 24vw, 340px) !important;
-  }
-  
-  /* --- Lookbook の行高：PCでも画像全体が表示されるように調整 --- */
-  #lookbook .lookbook-track{
-    block-size: clamp(200px, 25vw, 400px) !important;
-  }
-  
-  #lookbook .lookbook-item img {
-    max-height: 100% !important;
-    object-fit: contain !important;
-    width: auto !important;
-  }
-  
-  /* カード：余白のみ。白いカード背景は無し */
-  .collection-item,
-  .lookbook-item{
-    inline-size: auto !important;
-    block-size: 100% !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    overflow: visible !important; /* 切れ防止 */
-  }
-  
-  /* 画像（リンク内の <img>）は割合を保って必ず全部見せる */
-  .collection-track a,
-  .lookbook-track a{
-    display:block !important;
-    inline-size: auto !important;
-    block-size: 100% !important;
-    pointer-events: auto !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-  }
-  
-  .collection-track img,
-  .lookbook-track img{
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;   /* 全体を表示（切らない） */
-    display: block !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    user-select: none !important;
-    pointer-events: auto !important;
-  }
-  
-  /* ドラッグ中はアニメ止め & カーソル */
-  .collection-track.dragging,
-  .lookbook-track.dragging{
-    cursor: grabbing !important;
-    animation-play-state: paused !important;
-  }
-  
-  /* ====== Global alignment & typography unification ====== */
-  /* 見出し・本文とも言語に依存せず中央揃え（必要箇所のみに限定） */
-  .vision-title,
-  .vision-highlight,
-  .location-content,
-  .contact-content,
-  .about-brands-title {
-    text-align: center;
-  }
-  
-  /* 取扱いBrand タイトルを白に（背景動画上での視認性向上） */
-  .about-brands-title,
-  .about-brands-title * {
-    color: #fff;
-  }
-  
-  /* 共通：ブランド画像の自然縮尺（Aboutなど） */
-  .brand-image {
-    display: block;
-    margin: 0 auto;
-    max-width: clamp(160px, 24vw, 320px);
-    height: auto;
-    object-fit: contain;
-  }
-  
-  /* JA/EN で配色・揃えに差が出ないよう、親で統一 */
-  .ja-content, .en-content {
-    color: inherit;
-    text-align: inherit;
-  }
-  
-  /* セクション内ボックスがあるページ用（透明白の流用） */
-  .section-box,
-  .about-section-box {
-    background: rgba(255,255,255,0.9);
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-    padding: 32px;
-    margin: 0 auto 24px auto;
-    max-width: 800px;
-    width: 100%;
-  }
-  
-  /* Our Vision のサブ見出しが左寄りになっている件の最終ガード */
-  .vision-highlight { 
-    display: block; 
-    margin-left: auto; 
-    margin-right: auto; 
-  }
-  
-  /* ====== Collection / Lookbook セクションの中央揃えとobject-fit修正 ====== */
-  /* Collection セクションの中央揃え */
-  .collection-track {
-    margin-inline: auto;
-    justify-content: center;
-  }
-  
-  .collection-track img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-  }
-  
-  /* Lookbook セクションの中央揃え */
-  .lookbook-track {
-    margin-inline: auto;
-    justify-content: center;
-  }
-  
-  .lookbook-track img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-  }
-  
-/* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
-
-/* #brands セクションでは新しいスタイルを優先 */
-#brands .brand-card img,
-#brands .brands-grid img {
-  max-width: 70% !important;  /* 画像を適切なサイズに */
-  height: 70% !important;     /* 画像を適切なサイズに */
-  object-fit: contain !important;
-  display: block !important;
-  margin: 0 auto !important;  /* 中央揃えを確実に */
-  position: absolute !important;      /* 絶対配置で中央揃えを確実に */
-  top: 50% !important;                /* 垂直中央 */
-  left: 50% !important;               /* 水平中央 */
-  transform: translate(-50%, -50%) !important; /* 完全中央配置 */
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
+  <meta name="keywords" content="ReStandard, アパレル卸, 欧米ブランド, Rockmount, Harley of Scotland, William Lockie, 定番, パートナーシップ, セレクトシップ">
+  <meta name="author" content="ReStandard">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Speculation Rules で高速化（最適化） -->
+  <script type="speculationrules">
+  {
+    "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
+  }
+  </script>
+  
+  <!-- Hero画像のLCP最適化（可変サイズ対応） -->
+  <link rel="preload" as="image" 
+        imagesrcset="
+          /.netlify/images?url=/image/1.JPG&w=960&h=1440&fit=inside&fm=avif&q=50 960w,
+          /.netlify/images?url=/image/1.JPG&w=1280&h=1920&fit=inside&fm=avif&q=50 1280w,
+          /.netlify/images?url=/image/1.JPG&w=1920&h=2880&fit=inside&fm=avif&q=50 1920w"
+        imagesizes="(max-width: 480px) 96vw, (max-width: 1280px) 92vw, 1280px"
+        fetchpriority="high">
+  
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ReStandard",
+  "url": "https://restandard-2025.netlify.app",
+  "description": "欧米アパレルブランドの卸売",
+  "sameAs": [
+    "https://www.instagram.com/restandard_jp",  
+    "https://www.facebook.com/restandard_jp",
+    "https://x.com/ReStandard_jp"
+  ]
 }
+</script>
   
-  /* .brand-logo の aspect-ratio を削除（空のルールセットを削除） */
-  
-  /* 画像の遅延読み込み対応 */
-  img[loading="lazy"] {
-    opacity: 0;
-    transition: opacity 0.3s ease-in;
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "ReStandard",
+  "description": "欧米アパレルブランドの卸売・セレクトショップ",
+  "url": "https://restandard-2025.netlify.app",
+  "telephone": "+81-3-1234-5678",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "練馬区",
+    "addressRegion": "東京都",
+    "addressCountry": "JP"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.769975972558676,
+    "longitude": 139.64144777579176
+  },
+  "openingHours": "Mo-Fr 09:00-18:00",
+  "priceRange": "¥¥",
+  "sameAs": [
+    "https://www.instagram.com/restandard_jp",
+    "https://www.facebook.com/restandard_jp",
+    "https://x.com/ReStandard_jp"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "アパレルブランド",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Brand",
+          "name": "Rockmount"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Brand",
+          "name": "Harley of Scotland"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Brand",
+          "name": "William Lockie"
+        }
+      }
+    ]
   }
+}
+</script>
   
-  img[loading="lazy"].loaded {
-    opacity: 1;
-  }
+  <!-- OGP設定 -->
+  <meta property="og:title" content="ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://restandard-2025.netlify.app">
+  <meta property="og:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
+  <meta property="og:site_name" content="ReStandard">
+  <meta property="og:description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
   
-  /* ====== 正規化ルール（重複削除後の統一版） ====== */
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ">
+  <meta name="twitter:description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
+  <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
   
-  /* 1. 背景帯（band）の正規化 */
-  .band {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    background: var(--navbar-bg, rgba(255,255,255,0.9));
-    backdrop-filter: blur(10px);
-    padding-block: clamp(12px, 3vw, 32px);
-  }
+  <!-- Google Search Console -->
+  <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
   
-  /* 古いbrand関連ホバースタイルは削除 - #brandsスコープで管理 */
+  <title>ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ</title>
   
-  /* 3. トラックの中央化・relative化 */
-  #collection .track-wrap,
-  #lookbook .track-wrap {
-    display: flex;
-    justify-content: center;
-    overflow: visible;
-  }
+  <!-- プリロード -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://restandard.stores.jp">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style">
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="preload" href="css/reveal.css" as="style">
+  <link rel="preload" href="css/i18n-visibility.css" as="style">
+  <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
+  <!-- LCP画像のプリロード（最適化） -->
+  <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
+
+  <!-- Collection/Lookbook画像のプリロードを削除（lazy-loadに変更） -->
   
-  .collection-track,
-  .lookbook-track {
-    width: max-content;
-    margin: 0 auto;
-    position: relative;
-    left: auto;
-    right: auto;
+  <!-- スタイルシート -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
+  <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-20-BRAND-FINAL-FIX">
+  <!-- 統合済み: collection-fixes.css, lookbook-fixes.css, site-fixes.css, mobile-fixes.css の内容を style.css に統合 -->
+  <!-- Duplicate removed: 競合を避けるため、style.css のみを使用 -->
+
+  <link rel="canonical" href="https://restandard-2025.netlify.app/">
+  <link rel="alternate" href="https://restandard-2025.netlify.app/" hreflang="ja" />
+  <link rel="alternate" href="https://restandard-2025.netlify.app/en/" hreflang="en" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ReStandard",
+    "url": "https://restandard-2025.netlify.app/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://restandard-2025.netlify.app/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   }
-  
-  /* 4. 画像の見切れ抑止 */
-  .collection-track img,
-  .lookbook-track img {
-    height: var(--collection-row-h, 320px);
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    display: block;
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://restandard-2025.netlify.app/"}
+    ]
   }
-  
-  /* === center full-bleed band === */
-  .band {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    background: var(--navbar-bg, rgba(255,255,255,0.9));
-    backdrop-filter: blur(10px);
-    padding-block: clamp(12px, 3vw, 32px);
-  }
-  
-  /* Collection / Lookbook の帯の高さ（PC はやや高く、SP はやや低く） */
-  #collection .band { 
-    min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
-  }
-  #lookbook   .band { 
-    min-height: calc(var(--lookbook-img-h, 400px) + var(--lookbook-gap, 20px) * 2);
-  }
-  
-  /* === Collection layout guards === */
-  .collection-section { 
-    position: relative; 
-    padding: var(--section-pad, 40px) 0; 
-    background: none; 
-  }
-  
-  /* Collectionセクションの背景を削除 */
-  #collection {
-    background: none;
-    position: relative;
-    z-index: 1;
-  }
-  .collection-bg { 
-    position: relative; 
-    width: 100%; 
-  }
-  .collection-tracks {
-    position: relative;
-    height: var(--collection-height, 280px);
-    overflow: hidden; /* はみ出し禁止 */
-  }
-  
-  /* トラック行（上段/下段） */
-  .collection-tracks .track {
-    display: flex; 
-    align-items: center; 
-    gap: var(--collection-gap, 16px);
-    will-change: transform;
-  }
-  
-  /* 否定指定：ズレの温床になっている負のオフセットを無効化 */
-  .collection-section,
-  .collection-tracks,
-  .collection-tracks .track,
-  .collection-tracks img {
-    top: auto !important; 
-    margin-top: 0 !important; 
-    transform: translateY(0) !important;
-  }
-  
-  /* 画像の縦揃え（切れ防止） */
-  .collection-tracks img {
-    height: 100%;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    flex: 0 0 auto;
-  }
-  
-  /* Collection wrapper の定義 */
-  .collection-wrapper {
-    position: relative;
-    min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
-    margin-top: 6rem; /* タイトルとの間隔をさらに拡大 */
-  }
-  
-  /* Collection行にナビバーと同じ背景を設定 */
-  .collection-row {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    margin: 8px 0;
-  }
-  
-  .collection-row:first-child {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    width: 100%;
-  }
-  
-  .collection-row:last-child {
-    position: absolute;
-    top: 75%;
-    transform: translateY(-50%);
-    width: 100%;
-  }
-  
-  /* 行の高さと間隔のカスタムプロパティ */
-  :root {
-    --collection-img-h: 320px;
-    --collection-gap: 20px;
-    --lookbook-img-h: 400px;
-    --lookbook-gap: 20px;
-    --look-height-desktop: 400px;
-    --look-height-mobile: 300px;
-  }
-  
-  /* ナビバーのフォントサイズ調整 */
-  .navbar-brand {
-    font-size: 2rem !important;
-  }
-  
-  .navbar-nav .nav-link {
-    font-size: 1.1rem !important;
-  }
-  
-  @media (max-width: 768px) {
-    /* スマホ版でのカスタムプロパティ調整 */
+  </script>
+
+
+  <style>
     :root {
-      --collection-img-h: 240px;
-      --collection-gap: 15px;
-      --lookbook-img-h: 300px;
-      --lookbook-gap: 15px;
+      --main-color: #333333;
+      --accent-color: #888;
+      --hover-bg: #f8f8f8;
+      --gradient-start: #ffffff;
+      --gradient-end:   #dedbd6;
+      --heading-font: 'Noto Serif JP', serif;
+      --body-font: 'Noto Sans JP', sans-serif;
+      --main-font-family: 'Noto Serif JP', serif;
+      --heading-font-family: 'Noto Serif JP', serif;
+      --rs-header-h: 80px; /* 64px → 80px に増加 */
     }
-    
-    /* モバイル版の高さは計算値で自動調整 */
-    
-    /* スマホ版のフォントサイズ調整（10%縮小） */
-    html { font-size: 14.4px; }
-    
-    /* ナビバーのフォントサイズ調整（スマホ） - PC版と同じサイズを維持 */
-    .navbar-brand {
-      font-size: 2rem !important;
-    }
-    
-    .navbar-nav .nav-link {
-      font-size: 1.1rem !important;
-    }
-  }
-  
-  /* 行高をもう一段だけ詰める（SP） */
-  @media (max-width: 480px){
-    /* 480px以下でのカスタムプロパティ調整 */
-    :root {
-      --collection-img-h: 200px;
-      --collection-gap: 12px;
-      --lookbook-img-h: 250px;
-      --lookbook-gap: 12px;
-    }
-    
-    .collection .track-wrap,
-    .lookbook .track-wrap{ 
-      height: calc(var(--collection-img-h, 200px) + 2rem);
+
+    html, body {
+      font-family: var(--main-font-family) !important;
       overflow-x: hidden;
-      overflow-y: visible;
-    }
-    .band{ padding-block: clamp(6px, 1.2vw, 12px) !important; }
-    
-    /* スマホ版のフォントサイズをさらに小さく（10%縮小） */
-    html { font-size: 12.8px; }
-    
-    /* ナビバーのフォントサイズ調整（小画面スマホ） - PC版と同じサイズを維持 */
-    .navbar-brand {
-      font-size: 2rem !important;
     }
     
-    .navbar-nav .nav-link {
-      font-size: 1.1rem !important;
+    /* 新しいCollectionセクション用の設定 */
+    * {
+      font-family: inherit !important;
     }
-  }
-  
-  /* トラックは中央寄せ＆幅は中身に合わせて拡張（無限ループ前提） */
-  .track-wrap {
-    display: flex;
-    justify-content: center;
-    overflow: visible;
-  }
-  .collection-track,
-  .lookbook-track {
-    width: max-content;
-    will-change: transform;
-  }
-  
-  /* 画像の上下切れ防止 */
-  .collection-track img {
-    object-fit: contain;
-    height: var(--collection-img-h, 320px);
-    width: auto;
-    max-width: 100%;
-    display: block;
-  }
-  
-  .lookbook-track img {
-    object-fit: contain;
-    height: var(--lookbook-img-h, 400px);
-    width: auto;
-    max-width: 100%;
-    display: block;
-  }
-  
-  @media (max-width: 768px) {
+    
+    /* Collection画像の表示を強制 */
+    .collection-track {
+      min-width: 3200px !important; /* 16枚 × 200px */
+    }
+    
+    /* Collectionセクションの間隔調整 */
+    .collection-wrapper {
+      margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
+    }
+    
+    .collection-row {
+      margin: 2rem 0 !important; /* 行間の間隔を拡大 */
+    }
+    
+    /* Collectionセクションの背景設定 - 透明に変更 */
+    #collection .band {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      position: relative;
+    }
+    
+    /* 上段の背景：下部分のみ角丸 */
+    .collection-row:first-child .band {
+      border-radius: 0 0 20px 20px !important;
+    }
+    
+    /* 下段の背景：上部分のみ角丸 */
+    .collection-row:last-child .band {
+      border-radius: 20px 20px 0 0 !important;
+    }
+    
+    /* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
+    #lookbook .band {
+      background: rgba(255, 255, 255, 0.85) !important; /* ナビバーと同じ色 */
+      backdrop-filter: none !important;
+      position: relative;
+    }
+    
+    /* Lookbookコンテナの背景は透明のまま */
+    .lookbook-container {
+      background: transparent !important;
+    }
+    
+    /* モザイク背景の削除 */
+    .collection-row::before,
+    .collection-row::after {
+      display: none !important;
+    }
+    
+    .collection-track img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 200px !important;
+      height: 250px !important;
+      object-fit: cover !important;
+      flex-shrink: 0 !important;
+      border-radius: 8px !important;
+      margin: 0 8px !important;
+      transition: transform 0.3s ease !important;
+    }
+    
+    .collection-track img:hover {
+      transform: scale(1.05) !important;
+    }
+    
+    /* Lookbook画像の表示を強制 */
+    .lookbook-track {
+      min-width: 2400px !important; /* 8枚 × 300px */
+    }
     .lookbook-track img {
-      height: var(--lookbook-img-h, 300px);
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 300px !important;
+      height: 400px !important; /* 統一の高さに設定 */
+      object-fit: contain !important; /* containで見切れ防止 */
+      flex-shrink: 0 !important;
     }
-  }
-  
-  /* スクロールアニメーションのキーフレーム */
-  @keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  
-  @keyframes scroll-right {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-  
-/* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
-
-/* #brands セクションでは新しいスタイルを優先 */
-#brands .brands-grid img,
-#brands .brand-card img,
-#brands .brand-logo img {
-  display: block !important;
-  max-width: 70% !important;  /* 画像を適切なサイズに */
-  height: 70% !important;     /* 画像を適切なサイズに */
-  object-fit: contain !important;
-  opacity: 1 !important;
-  margin: 0 auto !important;  /* 中央揃えを確実に */
-  position: absolute !important;      /* 絶対配置で中央揃えを確実に */
-  top: 50% !important;                /* 垂直中央 */
-  left: 50% !important;               /* 水平中央 */
-  transform: translate(-50%, -50%) !important; /* 完全中央配置 */
-}
-  
-  /* SPフォントサイズを一段小さく */
-  @media (max-width: 480px){
-    :root{
-      --font-size-xs: 0.75rem;
-      --font-size-sm: 0.82rem;
-      --font-size-base: 0.9rem;
-      --font-size-lg: 1.05rem;
-      --font-size-xl: 1.25rem;
+    
+    /* モバイル版でのLookbook画像の高さ調整 */
+    @media (max-width: 767px) {
+      .lookbook-track img {
+        height: 350px !important; /* モバイルでは少し小さく */
+        object-fit: contain !important;
+      }
     }
-    .navbar-nav .nav-link{ font-size: var(--font-size-sm) !important; }
-  }
+    
+    /* PC版でのLookbook画像の高さ調整 */
+    @media (min-width: 768px) {
+      .lookbook-track img {
+        height: 400px !important; /* PC版でも適切な高さ */
+        object-fit: contain !important;
+      }
+    }
+    h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
+      font-family: var(--main-font-family) !important;
+    }
+
+    body {
+      font-family: var(--body-font);
+      color: var(--main-color);
+      text-align: center;
+      line-height: 1.7;
+      font-feature-settings: "palt";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .navbar, footer {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid #ccc;
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar .container-fluid {
+      padding: 0 1.5rem;
+    }
+
+    .navbar-brand {
+      font-family: var(--heading-font);
+      color: var(--main-color) !important;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .navbar-nav {
+      margin-right: 1rem;
+    }
+
+    .navbar-nav .nav-item {
+      margin: 0 0.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--main-color) !important;
+      position: relative;
+      transition: all 0.3s var(--transition-timing);
+    }
+    
+    /* Bootstrapのデフォルト設定を上書き */
+    html body .navbar-nav .nav-link {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.9rem !important;
+    }
+    html body .navbar-nav .nav-item {
+      margin: 0 0.5rem !important;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s var(--transition-timing);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+      width: 70%;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-color) !important;
+    }
+
+    .nav-link.active {
+      font-weight: 700;
+    }
+
+    .nav-link.active::after {
+      width: 70%;
+    }
+
+    /* 言語切り替えボタンのスタイル */
+    .language-switcher {
+      display: flex;
+      align-items: center;
+      margin-left: 2rem;
+      position: relative;
+      border-radius: 24px;
+      padding: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .language-switcher button {
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: all 0.3s var(--transition-timing);
+      border-radius: 20px;
+      font-family: var(--heading-font);
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .language-switcher button.active {
+      color: #fff;
+      font-weight: 500;
+      background: var(--main-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+
+    /* モバイル対応 */
+    @media (max-width: 991px) {
+      .navbar-nav {
+        margin-right: 0;
+        text-align: center;
+        padding: 1rem 0;
+      }
+
+      .navbar-nav .nav-item {
+        margin: 0.5rem 0;
+      }
+
+      .language-switcher {
+        margin: 1rem auto;
+        width: fit-content;
+      }
+
+      .navbar-brand {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* CLS防止と画像最適化 */
+    .collection-item img {
+      aspect-ratio: 93 / 140;
+      object-fit: cover;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Brands関連のスタイルはstyle.cssで管理 */
+
+    /* レイアウトのブレ防止 */
+    img[width][height] {
+      height: auto;
+    }
+
+    /* 省データ回線向け */
+    .save-data img {
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .brand-name-caption {
+      font-size: var(--font-size-3xl);
+      font-weight: bold;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    .carousel-container {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+    #homeCarousel .carousel-inner {
+      height: 500px;
+      align-items: center;
+      justify-content: center;
+    }
+    #homeCarousel .carousel-item {
+      justify-content: center;
+      align-items: center;
+      height: 500px;
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    }
+
+    #homeCarousel .carousel-item img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      object-fit: contain;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      border-radius: 50%;
+      padding: 20px;
+    }
+
+    .carousel-indicators-line {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      padding-left: 0;
+      margin: 0;
+      list-style: none;
+      z-index: 10;
+    }
+
+    .carousel-indicators-line button {
+      width: 40px;
+      height: 6px;
+      margin: 6px 4px;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+      border: none;
+    }
+
+    .carousel-indicators-line .active {
+      opacity: 1;
+    }
+
+    /* brand-section-title削除 - .section-titleで統一 */
+
+    /* Screen Reader Only - SEO用の非表示要素 */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    
+    /* スクリーンリーダーでは読み上げられるが、視覚的には非表示 */
+    .sr-only h1,
+    .sr-only p {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: transparent;
+      background: transparent;
+    }
+
+    /* Brands グリッド重複スタイル削除 */
+    /* Duplicate removed: 重複するBrands設定をstyle.cssのsections専用ブロックに統合 */
+
+    /* Brandlogo 重複スタイル削除 */
+    /* Duplicate removed: 重複するbrandlogo設定をstyle.cssのsections専用ブロックに統合 */
+
+    .preview {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -100%) scale(0.95);
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 10;
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      width: 250px;
+    }
+
+    .preview img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      filter: none;
+    }
+
+    .brandlogo:hover .preview {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -110%) scale(1);
+    }
+
+    footer {
+      border-top: 1px solid rgba(204, 204, 204, 0.3);
+    }
+
+    footer .nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    footer .nav-link {
+      color: var(--main-color) !important;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      position: relative;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    footer .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--main-color);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    footer .nav-link:hover::after {
+      width: 70%;
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #333, #666);
+      color: white !important;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      background: linear-gradient(45deg, #444, #777);
+    }
+
+    .copyright {
+      font-family: var(--body-font);
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      margin-top: 2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .desktop-only { display: block; }
+    .mobile-only { display: none; }
+    @media (max-width: 600px) {
+      .desktop-only { display: none !important; }
+      .mobile-only { display: inline !important; }
+    }
+
+    a, .internal-link {
+      cursor: pointer;
+    }
+    a:hover, .internal-link:hover {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
+    }
+
+    /* 1.mov用モーダルの簡易スタイル */
+    #lp-movie-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      align-items: center; justify-content: center;
+    }
+    #lp-movie-modal.active { display: flex; }
+    #lp-movie-modal video { max-width: 90vw; max-height: 80vh; border-radius: 12px; box-shadow: 0 4px 32px #0008; }
+    #lp-movie-modal .close-btn {
+      position: absolute; top: 2vw; right: 2vw; font-size: 2rem; color: #fff; background: none; border: none; cursor: pointer;
+    }
+    /* スプラッシュ動画用スタイル（無効化済み） */
+    #splash-video-wrapper {
+      display: none !important;
+      visibility: hidden !important;
+    }
+    #splash-video {
+      display: none !important;
+    }
+    /* スプラッシュ動画関連のスタイルは削除済み */
+    /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
+  </style>
+  <style>
+    /* フッターが浮かないようにする設定 */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    main {
+      flex: 1;
+    }
+    
+    footer {
+      border-top: 1px solid rgba(204, 204, 204, 0.3);
+      margin-top: auto;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- スプラッシュ動画ラッパー（無効化済み） -->
+  <div id="splash-video-wrapper" style="display: none !important; visibility: hidden !important;">
+    <video id="splash-video" autoplay playsinline muted preload="none" style="display: none !important;"></video>
+    <!-- <div id="splash-loading">Loading...</div> -->
+  </div>
+  <!-- 1.mov モーダル -->
+  <!-- （このブロックを削除） -->
+  <nav class="fixed-top navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <div class="d-lg-none" style="width: 40px;"></div>
+      <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#brands">Brands</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+          <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
+          <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
+        </ul>
+        <div class="language-switcher">
+          <button data-lang-btn="ja" class="active">JA</button>
+          <button data-lang-btn="en">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 単一背景動画 - PC/SP自動切替（最適化） -->
+  <div id="background-video-container">
+  <video id="desktop-bg-video" autoplay loop muted playsinline preload="none" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
+  </div>
   
-  /* Performance optimization: content-visibility */
-  #brands, #collection, #lookbook, #news {
-    content-visibility: auto;
-    contain-intrinsic-size: 800px;
-  }
+  <style>
+    /* PC版とスマートフォン版で背景動画を切り替え */
+    @media (min-width: 901px) {
+      #desktop-bg-video {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      #mobile-bg-video {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+    }
+    @media (max-width: 900px) {
+      #desktop-bg-video {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      #mobile-bg-video {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        background: #000 !important;
+      }
+    }
+    
+    /* PC版でもスマートフォン版と同様の透過設定を適用 */
+    @media (min-width: 901px) {
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(10px) !important;
+        margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
+      }
+       /* 旧flowing-images系削除済み - Collection新設計で統一 */
+      
+      /* 競合スタイル削除 */
+      /* Duplicate removed: 位置調整設定をstyle.cssのsections専用ブロックに統合 */
+      
+      /* Brands セクション重複スタイル削除 */
+      /* Duplicate removed: Brands位置調整設定をstyle.cssのsections専用ブロックに統合 */
+      
+      /* Overview セクション重複スタイル削除 */
+      /* Duplicate removed: Overview設定をstyle.cssのsections専用ブロックに統合 */
+      
+      
+      /* Footer 重複スタイル削除 */
+      /* Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 */
+      
+      /* ヘッダー固定の強化 */
+      html body .navbar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1030 !important;
+      }
+    }
+  </style>
+
+  <script>
+    // Service Worker アンレジスター（キャッシュ問題解決）
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        registrations.forEach(function(registration) {
+          registration.unregister();
+          console.log('Service Worker unregistered:', registration);
+        });
+      });
+    }
+    
+    // 動画の最適化された読み込みと再生（根本的な改善）
+    let videoInitialized = false;
+    
+    function initializeVideos() {
+      if (videoInitialized) return;
+      videoInitialized = true;
+      
+      const desktopVideo = document.getElementById('desktop-bg-video');
+      const mobileVideo = document.getElementById('mobile-bg-video');
+      const isMobile = window.innerWidth <= 900;
+      
+      console.log('動画初期化開始 - モバイル:', isMobile);
+      
+      // 不要な動画を非表示にしてリソースを節約
+      if (isMobile) {
+        if (desktopVideo) {
+          desktopVideo.style.display = 'none';
+        }
+        if (mobileVideo) {
+          // src属性は既に設定されているので、再生のみ実行
+          mobileVideo.addEventListener('canplay', function() {
+            console.log('スマートフォン版背景動画が読み込まれました');
+            mobileVideo.play().catch(function(error) {
+              console.log('スマートフォン版動画の自動再生に失敗:', error);
+            });
+          });
+          
+          mobileVideo.addEventListener('error', function(e) {
+            console.error('スマートフォン版動画の読み込みエラー:', e);
+          });
+          
+          // タブ復帰時の再生
+          document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && mobileVideo.paused) {
+              mobileVideo.play().catch(()=>{});
+            }
+          });
+        }
+      } else {
+        if (mobileVideo) {
+          mobileVideo.style.display = 'none';
+        }
+      if (desktopVideo) {
+          // 遅延読み込み
+          desktopVideo.src = '7.mp4';
+          desktopVideo.addEventListener('canplay', function() {
+          console.log('PC版背景動画が読み込まれました');
+          desktopVideo.play().catch(function(error) {
+            console.log('PC版動画の自動再生に失敗:', error);
+          });
+        });
+        
+        desktopVideo.addEventListener('error', function(e) {
+          console.error('PC版動画の読み込みエラー:', e);
+          });
+        }
+      }
+    }
+    
+    // DOMContentLoadedで動画初期化を開始（軽量化版）
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOMContentLoaded - 動画初期化開始');
+      
+      // タイムアウトを短縮して重い処理を防ぐ
+      const initTimeout = setTimeout(function() {
+        console.log('動画初期化タイムアウト');
+        if (!videoInitialized) {
+          videoInitialized = true; // フラグを設定して重複実行を防ぐ
+        }
+      }, 1000); // 2秒から1秒に短縮
+      
+      // 即座に実行せず、他の初期化処理を優先
+      requestAnimationFrame(function() {
+        setTimeout(function() {
+          try {
+            initializeVideos();
+            clearTimeout(initTimeout);
+          } catch (error) {
+            console.error('動画初期化エラー:', error);
+            clearTimeout(initTimeout);
+          }
+        }, 100); // 10msから100msに変更（他の処理を優先）
+          });
+        });
+        
+    // ページ読み込み完了時にも確認（タイムアウト付き）
+    window.addEventListener('load', function() {
+      console.log('Window load - 動画最終確認');
+      
+      const loadTimeout = setTimeout(function() {
+        console.log('動画最終確認タイムアウト');
+        videoInitialized = true;
+      }, 3000); // 3秒でタイムアウト
+      
+      try {
+        if (!videoInitialized) {
+          initializeVideos();
+          clearTimeout(loadTimeout);
+        }
+      } catch (error) {
+        console.error('動画最終確認エラー:', error);
+        clearTimeout(loadTimeout);
+      }
+    });
+  </script>
+
+
+  <!-- スマートフォン用カルーセル - 動画は上部の単一コンテナに統合済み -->
+  <section id="home-mobile" class="mb-5" aria-label="ブランドカルーセル（スマートフォン）">
+      <!-- 背景動画削除 - 単一コンテナに統合済み -->
+  </section>
+
+  <!-- ヘッダーとのギャップ確保用スペーサー -->
+  <div class="rs-header-spacer" aria-hidden="true"></div>
   
-  /* News詳細ページの背景統一 */
-  body, .news-article-root { 
-    background: none !important; 
-    color: var(--rs-ink, #222) !important; 
-  }
   
-/* Newsカード画像の安定表示 */
-.news-card img { 
-  width: 100%; 
-  aspect-ratio: 4/3; 
-  object-fit: cover; 
-  display: block; 
-}
+  <!-- Hero Video削除 - 背景動画に統合済み -->
+    
+  <!-- Main Heading - SEO用の非表示H1 -->
+  <section class="sr-only">
+    <h1>ReStandard - 欧米アパレルブランド卸のパートナーシップ</h1>
+    <p>高品質な欧米ブランドを日本市場へ。Rockmount、Harley of Scotland、William Lockieなど、厳選されたブランドをお客様にご提案します。</p>
+  </section>
 
-/* === Brands section responsive grid & square images (scoped) === */
-#brands .brands-grid {
-  display: grid !important;
-  /* Base (tablet-ish): responsive auto-fit columns */
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-  gap: 1rem !important;                 /* keep modest spacing */
-  justify-items: center !important;
-  align-items: center !important;
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
+  <!-- Collection Section - 統合済み -->
+  <section id="collection">
+    <h2 class="section-title">Collection</h2>
+    <div class="band">
+      <div class="collection-wrapper">
+      <!-- 上段：右→左 -->
+      <div class="collection-row">
+          <div class="collection-track" data-direction="left" data-speed="30" data-start="1.jpg" data-align="left" data-seg="16">
+            <a href="https://restandard.stores.jp/items/68a3416c225fded5de0dfb82" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/1.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/1.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/1.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/1.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 1"
+                     style="display: block !important; visibility: visible !important; opacity: 1 !important;">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68adcae3d7091d455a98a86c" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/3.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/3.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/3.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/3.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/3.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/3.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/3.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 3">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ae993a50f81d005d082408" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/4.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/4.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/4.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/4.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/4.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/4.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/4.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 4">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b168fc16b4e9332e268ad1" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/15.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/15.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/15.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/15.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/15.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/15.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/15.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 15">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b089a53fed3c22dc1a6683" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/5.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/5.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/5.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/5.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/5.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/5.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/5.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 5">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b155e685f93411bc87861d" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/10.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/10.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/10.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/10.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/10.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/10.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/10.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 10">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b15163c49f18004ad13ce2" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/9.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/9.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/9.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/9.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/9.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/9.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/9.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 9">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b145631c3f4f005e1e13f7" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/8.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/8.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/8.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/8.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/8.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/8.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/8.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 8">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b10c2e3ffd8e02a5496586" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/6.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/6.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/6.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/6.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/6.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/6.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/6.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 6">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b13955ff050400856e0b34" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/7.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/7.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/7.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/7.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/7.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/7.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/7.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 7">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ac80478b0406e84acd6892" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/2.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/2.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/2.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/2.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/2.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/2.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/2.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 2">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b16bf36c5f9e33ecab5706" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/16.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/16.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/16.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/16.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/16.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/16.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/16.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 16">
+              </picture>
+            </a>
+        </div>
+      </div>
+      
+      <!-- 下段：左→右 -->
+      <div class="collection-row">
+          <div class="collection-track reverse" data-direction="right" data-speed="30" data-start="21.jpg" data-align="right" data-seg="12">
+            <a href="https://restandard.stores.jp/items/68a346549b5b820cfb8b08f5" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/25.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/25.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/25.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/25.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/25.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/25.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/25.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 25">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ac83b759de6b1729a87a95" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/31.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/31.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/31.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/31.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/31.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/31.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/31.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 31">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b12cbcefd70e2ccc94c52d" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/32.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/32.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/32.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/32.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/32.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/32.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/32.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 32">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b166b1c65008386f2b4691" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/28.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/28.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/28.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/28.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/28.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/28.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/28.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 28">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b1e6c79183256d5c6e2afb" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/26.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/26.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/26.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/26.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/26.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/26.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/26.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 26">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b08a3e615df64765fea6fe" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/21.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/21.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/21.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/21.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/21.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/21.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/21.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 21">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b13e18c5bd30004acb874a" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/30.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/30.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/30.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/30.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/30.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/30.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/30.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 30">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/29.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/29.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/29.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/29.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/29.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/29.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/29.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 29">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/27.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/27.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/27.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/27.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/27.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/27.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/27.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 27">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b1e2379183254a766e2ae0" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/24.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/24.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/24.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/24.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/24.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/24.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/24.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 24">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68ae9d7fc6799300589e49f6" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/22.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/22.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/22.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/22.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/22.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/22.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/22.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 22">
+              </picture>
+            </a>
+            <a href="https://restandard.stores.jp/items/68b146bce14cf811f9f1c9bf" target="_blank" rel="noopener">
+              <picture>
+                <source type="image/avif" srcset="
+                  /.netlify/images?url=/image/23.JPG&w=186&h=280&fit=contain&fm=avif&q=50 186w,
+                  /.netlify/images?url=/image/23.JPG&w=279&h=420&fit=contain&fm=avif&q=50 279w">
+                <source type="image/webp" srcset="
+                  /.netlify/images?url=/image/23.JPG&w=186&h=280&fit=contain&fm=webp&q=65 186w,
+                  /.netlify/images?url=/image/23.JPG&w=279&h=420&fit=contain&fm=webp&q=65 279w">
+                <img src="/.netlify/images?url=/image/23.JPG&w=186&h=280&fit=contain&q=72"
+                     srcset="
+                       /.netlify/images?url=/image/23.JPG&w=186&h=280&fit=contain&q=72 186w,
+                       /.netlify/images?url=/image/23.JPG&w=279&h=420&fit=contain&q=72 279w"
+                     sizes="93px"
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 23">
+              </picture>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-/* Square card: 10% larger than before, but responsive */
-#brands .brand-card {
-  /* Use a CSS variable with sensible bounds - 10% larger */
-  --brand-size: clamp(145px, 15.4vw, 198px);  /* 10% larger than before */
-  width: var(--brand-size) !important;
-  height: var(--brand-size) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 auto !important;
-  position: relative !important;
-  aspect-ratio: 1/1 !important;
-  border-radius: 18px !important;
-  background: #fff !important;
-  overflow: hidden !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,.08) !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-}
+  <!-- 最終QAチェック用JavaScript（最適化） -->
+  <script>
+    // 遅延実行でパフォーマンスを向上
+    setTimeout(function() {
+      console.log('=== 最終QAチェック ===');
+      
+      // 1. 背景1レイヤ確認
+      const collectionBands = document.querySelectorAll('#collection .band, #collection .marquee-band');
+      const lookbookBands = document.querySelectorAll('#lookbook .band, #lookbook .marquee-band');
+      console.log('✅ Collection背景レイヤ数:', collectionBands.length, '(1であるべき)');
+      console.log('✅ Lookbook背景レイヤ数:', lookbookBands.length, '(1であるべき)');
+      
+      // 2. ループ空白なし確認
+      const collectionTracks = document.querySelectorAll('.collection-track');
+      const lookbookTracks = document.querySelectorAll('.lookbook-track');
+      collectionTracks.forEach((track, i) => {
+        const width = track.scrollWidth;
+        const screenWidth = window.innerWidth;
+        console.log(`✅ Collection Track ${i+1} 幅:`, width, 'vs 画面幅:', screenWidth, '(300%以上:', width >= screenWidth * 3, ')');
+      });
+      
+      // 3. 速度確認
+      collectionTracks.forEach((track, i) => {
+        const speed = track.getAttribute('data-speed');
+        console.log(`✅ Collection Track ${i+1} 速度:`, speed, 's (30sであるべき)');
+      });
+      lookbookTracks.forEach((track, i) => {
+        const speed = track.getAttribute('data-speed');
+        console.log(`✅ Lookbook Track ${i+1} 速度:`, speed, 's (32sであるべき)');
+      });
+      
+      // 4. 見出し統一確認
+      const titles = document.querySelectorAll('.section-title');
+      titles.forEach((title, i) => {
+        const styles = getComputedStyle(title);
+        console.log(`✅ Title ${i+1} 色:`, styles.color, 'サイズ:', styles.fontSize);
+      });
+    }, 1000); // 1秒後に実行
+  </script>
 
-#brands .brand-card:hover {
-  transform: translateY(-5px) !important;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-}
+  <!-- Brands Section -->
+  <section id="brands" class="restandard-section">
+    <h2 class="section-title rs-reveal" data-reveal="line">Brands</h2>
+    <div class="section-inner">
+    <div class="brands-grid">
+        <figure class="brand-card">
+          <a href="https://rockmount.com/" target="_blank" rel="noopener">
+            <picture>
+              <source type="image/avif" srcset="
+                /.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+                /.netlify/images?url=/image/rockmount.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+              <source type="image/webp" srcset="
+                /.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+                /.netlify/images?url=/image/rockmount.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+              <img src="/.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=contain&q=72"
+                   srcset="
+                     /.netlify/images?url=/image/rockmount.webp&w=156&h=156&fit=contain&q=72 156w,
+                     /.netlify/images?url=/image/rockmount.webp&w=312&h=312&fit=contain&q=72 312w"
+                   sizes="156px"
+                   width="156" height="156"
+                   class="brand-logo" loading="lazy" decoding="async" alt="Rockmount">
+            </picture>
+          </a>
+        </figure>
+      
+        <figure class="brand-card">
+          <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
+            <picture>
+              <source type="image/avif" srcset="
+                /.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+                /.netlify/images?url=/image/Harley.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+              <source type="image/webp" srcset="
+                /.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+                /.netlify/images?url=/image/Harley.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+              <img src="/.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=contain&q=72"
+                   srcset="
+                     /.netlify/images?url=/image/Harley.webp&w=156&h=156&fit=contain&q=72 156w,
+                     /.netlify/images?url=/image/Harley.webp&w=312&h=312&fit=contain&q=72 312w"
+                   sizes="156px"
+                   width="156" height="156"
+                   class="brand-logo" loading="lazy" decoding="async" alt="Harley of Scotland">
+            </picture>
+          </a>
+        </figure>
+      
+        <figure class="brand-card" image/william lockie-hover.webp">
+          <a href="https://williamlockie.com/" target="_blank" rel="noopener">
+            <picture>
+              <source type="image/avif" srcset="
+                /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+                /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+              <source type="image/webp" srcset="
+                /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+                /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+              <img src="/.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&q=72"
+                   srcset="
+                     /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&q=72 156w,
+                     /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=contain&q=72 312w"
+                   sizes="156px"
+                   width="156" height="156"
+                   class="brand-logo" loading="lazy" decoding="async" alt="William Lockie">
+            </picture>
+          </a>
+        </figure>
+      
+      <figure class="brand-card">
+        <a href="https://www.eribe.com/" target="_blank" rel="noopener">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/eribe.svg&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/eribe.svg&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=contain&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/eribe.svg&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/eribe.svg&w=312&h=312&fit=contain&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Eribe">
+          </picture>
+        </a>
+      </figure>
+      
+      <figure class="brand-card">
+        <a href="https://www.glenprince.com/" target="_blank" rel="noopener">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=contain&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Glen Prince">
+          </picture>
+        </a>
+      </figure>
+      
+      <figure class="brand-card">
+        <a href="https://www.athenaknitwear.com/" target="_blank" rel="noopener">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=contain&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Athena Designs">
+          </picture>
+        </a>
+      </figure>
+      
+      <figure class="brand-card">
+        <a href="https://www.kopka-accessories.com/" target="_blank" rel="noopener">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/kopka.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/kopka.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=contain&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/kopka.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/kopka.webp&w=312&h=312&fit=contain&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Kopka Accessories">
+          </picture>
+        </a>
+      </figure>
+      
+      <figure class="brand-card">
+        <a href="https://leminor.fr/en" target="_blank" rel="noopener">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/leminor.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/leminor.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=contain&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/leminor.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/leminor.webp&w=312&h=312&fit=contain&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Le Minor">
+          </picture>
+        </a>
+      </figure>
+      
+      <figure class="brand-card">
+        <a href="https://sans-arcidet.fr/" target="_blank" rel="noopener">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=contain&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Sans Arcidet">
+          </picture>
+        </a>
+      </figure>
+      
+      <figure class="brand-card">
+        <a href="https://hatattack.com/" target="_blank" rel="noopener">
+          <picture>
+            <source type="image/avif" srcset="
+              /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+            <source type="image/webp" srcset="
+              /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&q=72"
+                 srcset="
+                   /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=contain&q=72 312w"
+                 sizes="156px"
+                 width="156" height="156"
+                 class="brand-logo" loading="lazy" decoding="async" alt="Hat Attack">
+          </picture>
+        </a>
+      </figure>
+      </div>
+  </div>
+</section>
 
-/* Ensure logos fit entirely inside square without cropping */
-#brands .brand-logo {
-  width: 70% !important;              /* 正方形より小さくして余白を作る */
-  height: 70% !important;             /* 正方形より小さくして余白を作る */
-  max-width: 70% !important;
-  max-height: 70% !important;
-  object-fit: contain !important;     /* show full logo/image */
-  object-position: center center !important;
-  display: block !important;
-  opacity: 1 !important;
-  margin: 0 auto !important;          /* 中央揃えを確実に */
-  position: absolute !important;      /* 絶対配置で中央揃えを確実に */
-  top: 50% !important;                /* 垂直中央 */
-  left: 50% !important;               /* 水平中央 */
-  transform: translate(-50%, -50%) !important; /* 完全中央配置 */
-}
+  <!-- Lookbook Section -->
+  <section id="lookbook">
+    <h2 class="section-title">Lookbook</h2>
+    
+    <div class="band">
+      <div class="lookbook-container">
+        <div class="lookbook-track" data-direction="left" data-speed="32" data-start="look1.webp" data-align="left" data-seg="8">
+        <!-- 画像リストを2周分並べる（ループ途切れ防止） -->
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">1/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look2.webp" alt="Lookbook Item 2" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">2/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look3.webp" alt="Lookbook Item 3" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">3/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look4.webp" alt="Lookbook Item 4" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">4/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look5.webp" alt="Lookbook Item 5" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">5/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look6.webp" alt="Lookbook Item 6" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">6/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look7.webp" alt="Lookbook Item 7" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">7/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look8.webp" alt="Lookbook Item 8" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">8/8</div>
+          </a>
+        <!-- 2周目 -->
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look1.webp" alt="Lookbook Item 1" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">1/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look2.webp" alt="Lookbook Item 2" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">2/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look3.webp" alt="Lookbook Item 3" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">3/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look4.webp" alt="Lookbook Item 4" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">4/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look5.webp" alt="Lookbook Item 5" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">5/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look6.webp" alt="Lookbook Item 6" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">6/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look7.webp" alt="Lookbook Item 7" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">7/8</div>
+          </a>
+          <a href="https://restandard.stores.jp/" target="_blank" rel="noopener" class="lookbook-item">
+          <img src="image/look8.webp" alt="Lookbook Item 8" loading="lazy" width="300" height="400" decoding="async">
+            <div class="image-number">8/8</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-/* ホバー画像関連のスタイルは削除済み */
+  <!-- About ReStandard Section -->
+  <section id="about-restandard" class="section-about restandard-section section-spacing" data-role="about-restandard">
+    <h2 class="section-title">About ReStandard</h2>
+    <!-- PC用（md以上） -->
+    <div class="about-inner only-pc restandard-body">
+      <!-- 日本語版 -->
+      <div class="only-ja">
+        <p class="about-text">
+            欧米の厳選されたアパレルブランドを日本に紹介するディストリビューター。<br>
+          RockmountやHarleyをはじめとする<b>欧米の厳選ブランドとの取引を32年間継続</b>しており、<br>
+          現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。<br>
+          私たちの<a href="about.html" class="internal-link">理念</a>や<a href="vision.html" class="internal-link">ビジョン</a>については、それぞれのページで詳しくご紹介しています。<br>
+          最新の<a href="news.html" class="internal-link">ニュース</a>や<a href="location.html" class="internal-link">アクセス情報</a>、<br>
+          そして<a href="contact.html" class="internal-link">お問い合わせ</a>については、ぜひ各ページをご覧ください。
+        </p>
+      </div>
+      
+      <!-- 英語版 -->
+      <div class="only-en">
+        <p class="about-text">
+            ReStandard is a distributor that introduces carefully selected European and American apparel brands to Japan.<br>
+            We have maintained <b>trading relationships with carefully selected European and American brands such as Rockmount and Harley for 32 years</b>,<br>
+            and have established partnerships with <b>more than 25 manufacturers</b> to date.<br>
+            For details about our <a href="about.html" class="internal-link">philosophy</a> and <a href="vision.html" class="internal-link">vision</a>, please see each page.<br>
+            For the latest <a href="news.html" class="internal-link">news</a>, <a href="location.html" class="internal-link">access information</a>,<br>
+            and <a href="contact.html" class="internal-link">inquiries</a>, please visit each page.
+        </p>
+      </div>
+    </div>
+    
+    <!-- SP用（md未満） -->
+    <div class="about-inner only-sp restandard-body">
+      <!-- 日本語版 -->
+      <div class="only-ja">
+        <p class="about-text">
+          欧米の厳選されたアパレルブランドを<br>
+          日本のセレクトショップへ卸す<br>
+            ディストリビューター。<br>
+          RockmountやHarleyなど<br>
+          <b>計25メーカーと32年の取引実績</b>。<br>
+          <a href="about.html" class="internal-link">理念</a>・<a href="vision.html" class="internal-link">ビジョン</a>・<a href="news.html" class="internal-link">ニュース</a>・<a href="location.html" class="internal-link"><br>
+            アクセス</a>・<a href="contact.html" class="internal-link">お問い合わせ</a>はこちら。
+        </p>
+      </div>
+      
+      <!-- 英語版 -->
+      <div class="only-en">
+        <p class="about-text">
+            ReStandard is a distributor<br>
+            that introduces carefully selected<br>
+            European and American apparel brands<br>
+            to select shops in Japan.<br>
+            Rockmount, Harley and others<br>
+            <b>32 years of trading with 25+ manufacturers</b>.<br>
+            <a href="about.html" class="internal-link">Philosophy</a>・<a href="vision.html" class="internal-link">Vision</a>・<a href="news.html" class="internal-link">News</a>・<a href="location.html" class="internal-link"><br>
+              Access</a>・<a href="contact.html" class="internal-link">Contact</a> here.
+      </p>
+    </div>
+  </div>
+</section>
 
-/* Mobile: exactly 2 columns (results in 2x5 for first 10 items) */
-@media (max-width: 600px) {
-  #brands .brands-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    grid-template-rows: repeat(5, 1fr) !important;
-    justify-items: center !important;  /* 中央揃え */
-    align-items: center !important;    /* 縦方向も中央揃え */
-  }
-  #brands .brand-card { 
-    --brand-size: clamp(121px, 17.6vw, 154px) !important;  /* 10% larger */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-}
 
-/* Tablet: responsive auto-fit */
-@media (min-width: 601px) and (max-width: 1023px) {
-  #brands .brands-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-    justify-items: center !important;  /* 中央揃え */
-    align-items: center !important;    /* 縦方向も中央揃え */
-  }
-  #brands .brand-card { 
-    --brand-size: clamp(145px, 15.4vw, 198px) !important;  /* 10% larger */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-}
 
-/* Desktop: exactly 5 columns (5 x 2 for first 10 items) */
-@media (min-width: 1024px) {
-  #brands .brands-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
-    grid-template-rows: repeat(2, 1fr) !important;
-    justify-items: center !important;  /* 中央揃え */
-    align-items: center !important;    /* 縦方向も中央揃え */
-  }
-  #brands .brand-card { 
-    --brand-size: clamp(176px, 13.2vw, 220px) !important;  /* 10% larger */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-}
+  <!-- Footer -->
+<footer class="py-5 text-center">
+  <!-- Footer 重複スタイル削除 -->
+  <!-- Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 -->
 
-/* === Collection: make links reliably tappable on mobile === */
-#collection .collection-track a {
-  display: block !important;                 /* full-rect hit area */
-  pointer-events: auto !important;           /* ensure tappable */
-  position: relative !important;             /* allow z-index */
-  z-index: 2 !important;
-  -webkit-tap-highlight-color: rgba(0,0,0,0); /* nicer tap UX */
-  text-decoration: none !important;
-  color: inherit !important;
-}
+  <ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+    <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
+    <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
+    <li class="nav-item"><a class="nav-link" href="location.html">Location</a></li>
+    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    <li class="nav-item"><a class="nav-link" href="https://restandard.stores.jp/" target="_blank" rel="noopener">Online Store</a></li>
+  </ul>
 
-#collection .collection-track img {
-  pointer-events: auto !important;
-  user-select: none !important;
-  -webkit-user-drag: none !important;
-  display: block !important;
-}
+  <div class="social-links">
+    <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+      <!-- Instagram モノトーンSVG -->
+      <svg width="24" height="24" viewBox="0 0 448 448" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="32" y="32" width="384" height="384" rx="96" fill="#fff"/>
+        <rect x="32" y="32" width="384" height="384" rx="96" stroke="#222" stroke-width="32"/>
+        <circle cx="224" cy="224" r="80" fill="none" stroke="#222" stroke-width="32"/>
+        <circle cx="320" cy="128" r="24" fill="#222"/>
+      </svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" aria-label="Facebook">
+      <!-- Facebook 公式SVG -->
+      <svg width="24" height="24" viewBox="0 0 320 512" fill="#1877F3" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91V127.91c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h100.2V288z" fill="#1877F3"/><path d="M202.66 512V288h69.56l10.42-92.66h-79.98v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h98.3z" fill="#fff"/></svg>
+    </a>
+    <a href="https://x.com/restandard_2025" target="_blank" aria-label="X (Twitter)">
+      <!-- X 公式風モノトーンSVG（大きめ中央） -->
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.5 4H20L14.5 11.5L20.5 20H16L12 14.5L8.1 20H4L10 12.5L4.5 4H9L12.7 9.1L17.5 4ZM15.7 18.5H17.2L9.7 6.7H8.2L15.7 18.5Z" fill="#fff"/>
+      </svg>
+    </a>
+    <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
+      <!-- note 白抜きn文字SVG（さらに大きめ・完全中心中央揃え） -->
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="12" y="12" font-size="26" font-family="Arial Black, Arial, sans-serif" fill="#fff" font-weight="bold" text-anchor="middle" dominant-baseline="middle">n</text>
+      </svg>
+    </a>
+  </div>
+  
+  <div class="copyright">©2025 Restandard Inc. All Rights Reserved.</div>
+</footer>
 
-#collection .collection-track,
-#collection .collection-row,
-#collection .band {
-  pointer-events: auto !important;
-}
 
-/* 万一の覆いかぶさり対策：装飾疑似要素はクリックを通す */
-#collection .collection-row::before,
-#collection .collection-row::after,
-#collection .band::before,
-#collection .band::after {
-  pointer-events: none !important;
-}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // スクロールアニメーション
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
 
-/* タッチジェスチャの既定動作：縦スクロールは許可、タップも妨げない */
-#collection .collection-track {
-  touch-action: pan-y !important;
-}
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, options);
 
-/* === 強力な上書きルール - キャッシュ対策 === */
-/* ブラウザキャッシュを無視して確実に適用 */
-#brands .brands-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-  gap: 1rem !important;
-  justify-items: center !important;
-  align-items: center !important;
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
+      // アニメーション対象の要素を監視
+      document.querySelectorAll('.scroll-fade, .text-block').forEach(el => {
+        observer.observe(el);
+      });
 
-#brands .brand-card {
-  --brand-size: clamp(145px, 15.4vw, 198px) !important;
-  width: var(--brand-size) !important;
-  height: var(--brand-size) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 auto !important;
-  position: relative !important;
-  aspect-ratio: 1/1 !important;
-  border-radius: 18px !important;
-  background: #fff !important;
-  overflow: hidden !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,.08) !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-}
+      // Brandsセクションのアクティブ状態管理
+      const brandsSection = document.getElementById('brands');
+      const brandsLink = document.querySelector('a[href="#brands"]');
+      
+      const brandsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            brandsLink.classList.add('active');
+          } else {
+            brandsLink.classList.remove('active');
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
 
-#brands .brand-logo,
-#brands .brand-card img,
-#brands .brands-grid img {
-  width: 70% !important;
-  height: 70% !important;
-  max-width: 70% !important;
-  max-height: 70% !important;
-  object-fit: contain !important;
-  object-position: center center !important;
-  display: block !important;
-  opacity: 1 !important;
-  margin: 0 auto !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-}
+      if (brandsSection) {
+        brandsObserver.observe(brandsSection);
+      }
 
-/* モバイル: 2列×5行 */
-@media (max-width: 600px) {
-  #brands .brands-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    grid-template-rows: repeat(5, 1fr) !important;
-    justify-items: center !important;
-    align-items: center !important;
-  }
-  #brands .brand-card { 
-    --brand-size: clamp(121px, 17.6vw, 154px) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-}
+      // 保存された言語設定を読み込む
+      const savedLang = localStorage.getItem('rs-lang');
+      if (savedLang) {
+        // 言語切替機能はlang-toggle.jsで処理される
+        console.log('Saved language:', savedLang);
+      }
+    });
 
-/* タブレット: レスポンシブ対応 */
-@media (min-width: 601px) and (max-width: 1023px) {
-  #brands .brands-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-    justify-items: center !important;
-    align-items: center !important;
-  }
-  #brands .brand-card { 
-    --brand-size: clamp(145px, 15.4vw, 198px) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-}
+    // 言語切り替え機能は lang-toggle.js で管理
+  </script>
 
-/* デスクトップ: 5列×2行 */
-@media (min-width: 1024px) {
-  #brands .brands-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
-    grid-template-rows: repeat(2, 1fr) !important;
-    justify-items: center !important;
-    align-items: center !important;
-  }
-  #brands .brand-card { 
-    --brand-size: clamp(176px, 13.2vw, 220px) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-}
+  <script>
+    // スプラッシュ動画の最適化された処理
+    let splashInitialized = false;
+    
+    function initializeSplash() {
+      if (splashInitialized) return;
+      splashInitialized = true;
+      
+      const splash = document.getElementById('splash-video-wrapper');
+      const video = document.getElementById('splash-video');
+      
+      if (!splash || !video) {
+        console.log('スプラッシュ動画要素が見つかりません');
+        return;
+      }
+      
+      console.log('スプラッシュ動画は無効化されています');
+      
+      // スプラッシュ動画を完全に無効化
+      document.body.classList.remove('splash-active');
+      splash.style.display = 'none';
+      return;
+      
+      // 動画の読み込みと再生を最適化
+      let videoLoaded = false;
+      let playAttempted = false;
+      
+      function attemptPlay() {
+        if (playAttempted || !videoLoaded) return;
+        playAttempted = true;
+        
+        console.log('スプラッシュ動画再生試行');
+        video.play().then(() => {
+          console.log('スプラッシュ動画再生成功');
+        }).catch(function(error) {
+          console.log('スプラッシュ動画の再生に失敗:', error);
+          // 再生に失敗した場合はスプラッシュをスキップ
+          hideSplash();
+        });
+      }
+      
+      function hideSplash() {
+        console.log('スプラッシュ非表示');
+        splash.classList.add('hide');
+        setTimeout(function() {
+          splash.style.display = 'none';
+          document.body.classList.remove('splash-active');
+        }, 300);
+      }
+      
+      // 動画の読み込み完了を待つ
+      video.src = '5.mov';
+      video.addEventListener('canplay', function() {
+        console.log('スプラッシュ動画の準備完了');
+        videoLoaded = true;
+        attemptPlay();
+      });
+      
+      // 動画の終了処理
+      video.addEventListener('ended', function() {
+        console.log('スプラッシュ動画終了');
+        hideSplash();
+      });
+      
+      // エラー処理
+      video.addEventListener('error', function(e) {
+        console.error('スプラッシュ動画エラー:', e);
+        hideSplash();
+      });
+      
+      // タイムアウト処理（3秒で強制終了）
+      setTimeout(function() {
+        if (splash.style.display !== 'none') {
+          console.log('スプラッシュ動画タイムアウト - 強制終了');
+          hideSplash();
+        }
+      }, 3000);
+      
+      // ユーザーインタラクション防止
+      splash.addEventListener('click', function(e) { 
+        e.stopPropagation(); 
+        e.preventDefault(); 
+      }, true);
+      
+      window.addEventListener('keydown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+      
+      // 即座に再生を試行（より積極的に）
+      setTimeout(attemptPlay, 100);
+    }
+    
+    // DOMContentLoadedでスプラッシュ初期化（軽量化版）
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOMContentLoaded - スプラッシュ初期化開始');
+      
+      // スプラッシュ動画を即座に無効化（読み込み速度向上）
+      try {
+        initializeSplash();
+      } catch (error) {
+        console.error('スプラッシュ初期化エラー:', error);
+      }
+    });
+  </script>
+  <!-- 旧クラス向けスクリプトとモーダルは削除済み -->
+  <script>
+// スマホ背景動画の処理は上記の最適化されたコードに統合済み
+</script>
+  <script>
+    // 統合されたページ初期化スクリプト
+    let pageInitialized = false;
+    
+    function initializePage() {
+      if (pageInitialized) return;
+      pageInitialized = true;
+      
+      console.log('ページ初期化開始');
+      
+// ハンバーガーメニューの外をクリックした時に閉じる機能
+  const navbarToggler = document.querySelector('.navbar-toggler');
+  const navbarCollapse = document.querySelector('.navbar-collapse');
+  
+      if (navbarToggler && navbarCollapse) {
+  document.addEventListener('click', function(event) {
+    if (navbarToggler.contains(event.target) || navbarCollapse.contains(event.target)) {
+      return;
+    }
+    
+    if (navbarCollapse.classList.contains('show')) {
+      navbarToggler.click();
+    }
+  });
+      }
+      
+      // Collection セクション用のギャップ調整
+    function applyGap() {
+        const header = document.querySelector('header, .site-header, nav');
+        const h = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
+        const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        const gap = vw >= 1024 ? 72 : 96;
+
+        const spacer = document.querySelector('.rs-header-spacer');
+      if (spacer) {
+        spacer.style.setProperty('height', (h + gap) + 'px', 'important');
+        spacer.style.setProperty('min-height', (h + gap) + 'px', 'important');
+      }
+    }
+      
+      // 初回実行
+      applyGap();
+      
+      // リサイズ時実行
+    window.addEventListener('resize', applyGap);
+      
+      console.log('ページ初期化完了');
+    }
+    
+    // DOMContentLoadedで初期化（タイムアウト付き）
+document.addEventListener('DOMContentLoaded', function() {
+      // タイムアウトを設定して重い処理を防ぐ
+      const pageTimeout = setTimeout(function() {
+        console.log('ページ初期化タイムアウト');
+        if (!pageInitialized) {
+          pageInitialized = true; // フラグを設定して重複実行を防ぐ
+        }
+      }, 1000); // 2秒から1秒に短縮
+      
+      // 他の初期化処理を優先
+      requestAnimationFrame(function() {
+        setTimeout(function() {
+          try {
+            initializePage();
+            clearTimeout(pageTimeout);
+          } catch (error) {
+            console.error('ページ初期化エラー:', error);
+            clearTimeout(pageTimeout);
+          }
+        }, 300); // 50msから300msに変更（他の処理を優先）
+      });
+    });
+  </script>
+
+  <!-- 最適化されたパフォーマンス監視とテキスト演出 -->
+  <script>
+    // パフォーマンス監視（軽量化）
+    if ('PerformanceObserver' in window) {
+      try {
+        new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          console.log('LCP:', lastEntry.startTime + 'ms');
+        }).observe({entryTypes: ['largest-contentful-paint']});
+        
+        window.addEventListener('load', () => {
+          const loadTime = performance.now();
+          console.log('Approximate TTI:', loadTime + 'ms');
+        });
+      } catch (e) {
+        console.log('Performance monitoring failed:', e);
+      }
+    }
+    
+    // テキスト演出の初期化（最適化）
+    let revealInitialized = false;
+    
+    function initializeReveal() {
+      if (revealInitialized) return;
+      revealInitialized = true;
+      
+      if (typeof initReveal === 'function') {
+        console.log('テキスト演出初期化');
+        initReveal();
+      }
+    }
+    
+    // DOMContentLoadedでテキスト演出初期化（タイムアウト付き）
+    document.addEventListener('DOMContentLoaded', function() {
+      // タイムアウトを設定して重い処理を防ぐ
+      const revealTimeout = setTimeout(function() {
+        console.log('テキスト演出初期化タイムアウト');
+        if (!revealInitialized) {
+          revealInitialized = true; // フラグを設定して重複実行を防ぐ
+        }
+      }, 500); // 1秒から0.5秒に短縮
+      
+      // 他の初期化処理を優先
+      requestAnimationFrame(function() {
+        setTimeout(function() {
+          try {
+            initializeReveal();
+            clearTimeout(revealTimeout);
+          } catch (error) {
+            console.error('テキスト演出初期化エラー:', error);
+            clearTimeout(revealTimeout);
+          }
+        }, 400); // 200msから400msに変更（他の処理を優先）
+      });
+    });
+</script>
+  
+  <!-- 外部スクリプトの読み込み -->
+  <script src="js/reveal.js?v=2025-01-18-final" defer></script>
+  <script src="js/lang-toggle.js?v=2025-01-18-final" defer></script>
+  <script>
+    // モバイルレイアウト修正のためのJavaScriptガード（最適化）
+    let layoutInitialized = false;
+    
+    function initializeLayout() {
+      if (layoutInitialized) return;
+      layoutInitialized = true;
+      
+    // 1.JPGと25.JPGのインラインスタイルを削除
+      document.querySelectorAll('img[src$="/1.JPG"], img[src$="/1.jpg"], img[src$="/25.JPG"], img[src$="/25.jpg"]').forEach(el => {
+        el.removeAttribute('style');
+        const card = el.closest('.item, .card, div');
+        if (card) card.removeAttribute('style');
+      });
+      
+      console.log('レイアウト初期化完了');
+    }
+    
+    // DOMContentLoadedでレイアウト初期化（タイムアウト付き）
+    document.addEventListener('DOMContentLoaded', function() {
+      // タイムアウトを設定して重い処理を防ぐ
+      const layoutTimeout = setTimeout(function() {
+        console.log('レイアウト初期化タイムアウト');
+        if (!layoutInitialized) {
+          layoutInitialized = true; // フラグを設定して重複実行を防ぐ
+        }
+      }, 500); // 1秒から0.5秒に短縮
+      
+      requestAnimationFrame(function() {
+        setTimeout(function() {
+          try {
+            initializeLayout();
+            clearTimeout(layoutTimeout);
+          } catch (error) {
+            console.error('レイアウト初期化エラー:', error);
+            clearTimeout(layoutTimeout);
+          }
+        }, 500); // 300msから500msに変更（他の処理を優先）
+      });
+    });
+  </script>
+  
+  <!-- セクション初期化スクリプト（defer付きで最適化） -->
+  <script src="js/init-sections.js?v=2025-01-19-fix" defer></script>
+  <!-- Collection と Lookbook の個別インタラクション（defer付きで最適化） -->
+  <script src="js/collection-interaction.js?v=2025-01-19-fix" defer></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-19-fix" defer></script>
+
+</body>
+</html>
