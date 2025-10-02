@@ -463,33 +463,7 @@
       height: auto;
     }
 
-    .brand-logo {
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
-      max-width: 65% !important;  /* style.cssと統一 */
-      max-height: 65% !important; /* style.cssと統一 */
-      width: 65% !important;      /* style.cssと統一 */
-      height: 65% !important;     /* style.cssと統一 */
-    }
-
-    /* Brand画像のコンテナサイズ制限 */
-    .brand-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 156px;
-      height: 156px;
-      margin: 0 auto;
-      /* style.cssの設定を優先するため、固定サイズを削除 */
-    }
-
-    /* モバイル表示でのBrand画像調整 */
-    @media (max-width: 768px) {
-      .brand-logo {
-        max-width: 65% !important;  /* style.cssと統一 */
-        max-height: 65% !important; /* style.cssと統一 */
-      }
-    }
+    /* Brands関連のスタイルはstyle.cssで管理 */
 
     /* レイアウトのブレ防止 */
     img[width][height] {
