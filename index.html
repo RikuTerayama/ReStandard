@@ -466,10 +466,10 @@
     .brand-logo {
       aspect-ratio: 1 / 1;
       object-fit: contain;
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
+      max-width: 65% !important;  /* style.cssと統一 */
+      max-height: 65% !important; /* style.cssと統一 */
+      width: 65% !important;      /* style.cssと統一 */
+      height: 65% !important;     /* style.cssと統一 */
     }
 
     /* Brand画像のコンテナサイズ制限 */
@@ -480,18 +480,14 @@
       width: 156px;
       height: 156px;
       margin: 0 auto;
+      /* style.cssの設定を優先するため、固定サイズを削除 */
     }
 
     /* モバイル表示でのBrand画像調整 */
     @media (max-width: 768px) {
-      .brand-card {
-        width: 120px;
-        height: 120px;
-      }
-      
       .brand-logo {
-        max-width: 120px;
-        max-height: 120px;
+        max-width: 65% !important;  /* style.cssと統一 */
+        max-height: 65% !important; /* style.cssと統一 */
       }
     }
 
