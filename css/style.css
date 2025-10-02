@@ -290,69 +290,15 @@
   
   /* Brands - グリッドレイアウト・安定配置 */
   /* === Brands: モバイルでもロゴが必ず見える・中央整列 === */
-  .brand-card { 
-    display:flex; 
-    justify-content:center; 
-    align-items:center; 
-  }
-  .brand-card img { 
-    height:clamp(40px,8vw,72px); 
-    width:auto; 
-    object-fit:contain; 
-  }
+  /* 古いbrand-cardスタイルは削除 - #brandsスコープで管理 */
   .carousel-indicators, .swiper-pagination { 
     display:none !important; 
   }
   
   /* === Brands: 箇条点を消し、画像を中央に === */
-  .brands-grid{ 
-    list-style:none; 
-    padding:0; 
-    margin:0;
-    display:grid; 
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: clamp(8px, 2vw, 16px); 
-    align-items:center; 
-    justify-items:center;
-  }
-  .brands-grid img{ 
-    display:block; 
-    max-width:100%; 
-    height:auto; 
-  }
-  .brand-logo{ width:100%; height:auto; object-fit:contain; }
+  /* 古いbrands-gridスタイルは削除 - #brandsスコープで管理 */
   
-  .brand-card {
-    aspect-ratio: 1/1;
-    position: relative;
-    overflow: hidden;
-    background: #fff;
-    border-radius: 12px;
-    padding: clamp(8px, 1.5vw, 16px);
-    box-shadow: 0 4px 12px rgba(0,0,0,.10);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .brand-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  }
-  
-  /* Brands - 正方形画像・aspect-ratio統一 */
-  .brands-grid img {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: contain;
-  }
-  
-  /* ブランドロゴ・ホバーオーバーレイ中央配置 */
-  .brand-logo {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 1 / 1;
-  }
+  /* 古いbrand-card関連スタイルは削除 - #brandsスコープで管理 */
   
   /* 削除：古いセレクタのため */
   
@@ -1255,23 +1201,20 @@
     display: block;
   }
   
-/* about.html のブランド画像表示修正 */
-.brand-card img, 
-.brands-grid img {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
+/* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
 
 /* #brands セクションでは新しいスタイルを優先 */
 #brands .brand-card img,
 #brands .brands-grid img {
-  max-width: 55% !important;  /* 画像を小さく（さらに縮小） */
-  height: 55% !important;     /* 画像を小さく（さらに縮小） */
+  max-width: 50% !important;  /* 画像を小さく（さらに縮小） */
+  height: 50% !important;     /* 画像を小さく（さらに縮小） */
   object-fit: contain !important;
   display: block !important;
   margin: 0 auto !important;  /* 中央揃えを確実に */
+  position: absolute !important;      /* 絶対配置で中央揃えを確実に */
+  top: 50% !important;                /* 垂直中央 */
+  left: 50% !important;               /* 水平中央 */
+  transform: translate(-50%, -50%) !important; /* 完全中央配置 */
 }
   
   /* .brand-logo の aspect-ratio を削除（空のルールセットを削除） */
@@ -1297,23 +1240,7 @@
     padding-block: clamp(12px, 3vw, 32px);
   }
   
-  /* 2. Brands のホバー画像を .brand-hover に統一 */
-  .brand-card .brand-hover,
-  .brand-logo .brand-hover {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .25s ease, visibility .25s ease;
-  }
-  
-  .brand-card:hover .brand-hover,
-  .brand-logo:hover .brand-hover {
-    opacity: 1;
-    visibility: visible;
-  }
+  /* 古いbrand関連ホバースタイルは削除 - #brandsスコープで管理 */
   
   /* 3. トラックの中央化・relative化 */
   #collection .track-wrap,
@@ -1557,27 +1484,22 @@
     100% { transform: translateX(0); }
   }
   
-/* ブランド画像の可視化と自然な縮尺 */
-.brands-grid img,
-.brand-card img,
-.brand-logo img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  opacity: 1; /* 何らかの初期 opacity 指定が残っていた場合の上書き */
-}
+/* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
 
 /* #brands セクションでは新しいスタイルを優先 */
 #brands .brands-grid img,
 #brands .brand-card img,
 #brands .brand-logo img {
   display: block !important;
-  max-width: 55% !important;  /* 画像を小さく（さらに縮小） */
-  height: 55% !important;     /* 画像を小さく（さらに縮小） */
+  max-width: 50% !important;  /* 画像を小さく（さらに縮小） */
+  height: 50% !important;     /* 画像を小さく（さらに縮小） */
   object-fit: contain !important;
   opacity: 1 !important;
   margin: 0 auto !important;  /* 中央揃えを確実に */
+  position: absolute !important;      /* 絶対配置で中央揃えを確実に */
+  top: 50% !important;                /* 垂直中央 */
+  left: 50% !important;               /* 水平中央 */
+  transform: translate(-50%, -50%) !important; /* 完全中央配置 */
 }
   
   /* SPフォントサイズを一段小さく */
@@ -1652,15 +1574,19 @@
 /* Ensure logos fit entirely inside square without cropping */
 #brands .brand-logo,
 #brands .brand-hover {
-  width: 55% !important;              /* 正方形より小さくして余白を作る（さらに縮小） */
-  height: 55% !important;             /* 正方形より小さくして余白を作る（さらに縮小） */
-  max-width: 55% !important;
-  max-height: 55% !important;
+  width: 50% !important;              /* 正方形より小さくして余白を作る（さらに縮小） */
+  height: 50% !important;             /* 正方形より小さくして余白を作る（さらに縮小） */
+  max-width: 50% !important;
+  max-height: 50% !important;
   object-fit: contain !important;     /* show full logo/image */
   object-position: center center !important;
   display: block !important;
   opacity: 1 !important;
   margin: 0 auto !important;          /* 中央揃えを確実に */
+  position: absolute !important;      /* 絶対配置で中央揃えを確実に */
+  top: 50% !important;                /* 垂直中央 */
+  left: 50% !important;               /* 水平中央 */
+  transform: translate(-50%, -50%) !important; /* 完全中央配置 */
 }
 
 #brands .brand-card .brand-logo { 
@@ -1672,7 +1598,7 @@
   inset: 0 !important;
   display: grid !important;
   place-items: center !important;
-  padding: clamp(22px,5vw,36px) !important;  /* パディングを増やして画像を小さく（55%対応） */
+  padding: clamp(25px,6vw,40px) !important;  /* パディングを増やして画像を小さく（50%対応） */
 }
 #brands .brand-card:hover .brand-logo { 
   opacity: 0 !important; 
