@@ -48,13 +48,14 @@ return;
   
   // 幅の計算を安全に実行
   while (originalWidth === 0 && attempts < maxAttempts) {
+    // READ all layout properties first
     originalWidth = children.reduce((width, child) => {
       const rect = child.getBoundingClientRect();
       return width + (rect.width || 300); // フォールバック値
     }, 0);
     
     if (originalWidth === 0) {
-      // 画像が読み込まれていない場合のフォールバック
+      // WRITE all style properties after reads
       children.forEach(child => {
         const img = child.querySelector('img');
         if (img) {
@@ -92,6 +93,7 @@ return;
   
   // 無限ループ防止のための安全なwhile文
   while (currentWidth < targetWidth && cloneCount < maxClones) {
+    // WRITE all DOM modifications first
     children.forEach(child => {
       if (cloneCount < maxClones) {
         const clone = child.cloneNode(true);
@@ -100,7 +102,7 @@ return;
       }
     });
     
-    // 現在の幅を再計算（安全に）
+    // READ layout properties after all writes
     currentWidth = Array.from(track.children).reduce((width, child) => {
       const rect = child.getBoundingClientRect();
       return width + (rect.width || 300);
@@ -289,11 +291,14 @@ function alignTrackStart(track) {
   
   if (!targetImage) return;
   
-  // 画像の位置を計算
+  // READ all layout properties first
   const imageLeft = targetImage.offsetLeft;
   const imageWidth = targetImage.getBoundingClientRect().width;
   const trackWidth = track.parentElement.offsetWidth;
+  const segmentWidth = track._segmentWidth;
+  const duration = parseFloat(track.dataset.speed || 55);
   
+  // Calculate desired position
   let desiredTx;
   if (align === 'right') {
     // 画像の右端をトラックの右端に合わせる
@@ -304,12 +309,11 @@ function alignTrackStart(track) {
   }
   
   // 負の animation-delay を計算
-  const segmentWidth = track._segmentWidth;
   const normalizedTx = ((desiredTx % segmentWidth) + segmentWidth) % segmentWidth;
   const progress = normalizedTx / segmentWidth;
-  const duration = parseFloat(track.dataset.speed || 55);
   const delay = -progress * duration;
   
+  // WRITE after all reads
   track.style.animationDelay = `${delay}s`;
 }
 
