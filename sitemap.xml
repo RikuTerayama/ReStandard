@@ -2,38 +2,128 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://restandard-2025.netlify.app/</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2025-09-29T11:33:32.576Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://restandard-2025.netlify.app/about.html</loc>
-    <lastmod>2025-01-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://restandard-2025.netlify.app/vision.html</loc>
-    <lastmod>2025-01-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://restandard-2025.netlify.app/news.html</loc>
-    <lastmod>2025-01-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://restandard-2025.netlify.app/news/</loc>
+    <lastmod>2025-09-29T11:33:32.577Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://restandard-2025.netlify.app/location.html</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://restandard-2025.netlify.app/news/restandard2025aw-harley-of-scotland-pink-amp-rockmount-black-stewart/</loc>
+    <lastmod>2025-09-23T11:07:54.000Z</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://restandard-2025.netlify.app/contact.html</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://restandard-2025.netlify.app/news/restandard2025aw-harley-of-scotland-amp-rockmount/</loc>
+    <lastmod>2025-09-16T11:11:34.000Z</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
-</urlset> 
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/1028-2025aw-eribe-amp-restandardrockmount/</loc>
+    <lastmod>2025-09-09T09:57:30.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/1021restandard2025aw-harley-of-scotland-amp-rockmount/</loc>
+    <lastmod>2025-09-09T09:48:18.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/1014restandard2025aw-harley-of-scotland-amp-rockmount/</loc>
+    <lastmod>2025-09-09T09:41:37.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/107restandard2025aw-harley-of-scotland-amp-rockmount/</loc>
+    <lastmod>2025-09-09T09:14:18.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/930restandard2025aw-harley-of-scotland-amp-rockmount/</loc>
+    <lastmod>2025-09-09T09:00:49.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/923restandard2025aw-harley-of-scotland-amp-rockmount/</loc>
+    <lastmod>2025-09-09T08:47:25.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/2025aw-eribe-amp-rockmount/</loc>
+    <lastmod>2025-09-02T11:01:41.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/2025aw-harley-of-scotland-amp-rockmount/</loc>
+    <lastmod>2025-08-26T11:37:32.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/2025-fw-new-arrival-rockmount/</loc>
+    <lastmod>2025-08-19T11:47:57.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/2025-fw-new-arrival-rockmount/</loc>
+    <lastmod>2025-07-29T11:11:45.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/2025fw-new-arrivalharley-of-scotland/</loc>
+    <lastmod>2025-07-23T11:12:32.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/untitled/</loc>
+    <lastmod>2025-07-15T10:45:22.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/eribe/</loc>
+    <lastmod>2025-07-08T11:03:28.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/untitled/</loc>
+    <lastmod>2025-07-01T10:59:47.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/2025-fw-lookbookrockmount-quotcolor-amp-texturequot/</loc>
+    <lastmod>2025-06-24T11:02:30.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/2025-fw-new-arrivalrockmount/</loc>
+    <lastmod>2025-06-17T02:58:27.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://restandard-2025.netlify.app/news/rockmount/</loc>
+    <lastmod>2025-06-10T03:29:34.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>
