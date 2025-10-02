@@ -18,25 +18,29 @@ function debugCollectionTap(e) {
   
   if (x && y) {
     const element = document.elementFromPoint(x, y);
-    console.log('=== Collection Tap Debug ===');
-    console.log('Event type:', e.type);
-    console.log('Coordinates:', { x, y });
-    console.log('Hit element:', element);
-    console.log('Is <a> tag:', element?.tagName === 'A');
-    console.log('Closest <a>:', element?.closest('a'));
+    if (window.__QA_MEASURE_LOGS__) {
+      console.log('=== Collection Tap Debug ===');
+      console.log('Event type:', e.type);
+      console.log('Coordinates:', { x, y });
+      console.log('Hit element:', element);
+      console.log('Is <a> tag:', element?.tagName === 'A');
+      console.log('Closest <a>:', element?.closest('a'));
+    }
     
     // CSS プロパティ確認
     const link = element?.closest('a');
     if (link) {
       const styles = getComputedStyle(link);
-      console.log('Link CSS properties:', {
-        pointerEvents: styles.pointerEvents,
-        zIndex: styles.zIndex,
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('Link CSS properties:', {
+          pointerEvents: styles.pointerEvents,
+          zIndex: styles.zIndex,
         position: styles.position,
         transform: styles.transform,
         opacity: styles.opacity,
         visibility: styles.visibility
-      });
+        });
+      }
     }
   }
 }
@@ -142,7 +146,9 @@ return;
     
     // 進捗がない場合は安全のため終了
     if (cloneCount >= maxClones) {
-      console.log('Collection track clone limit reached');
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('Collection track clone limit reached');
+      }
       break;
     }
   }
@@ -240,7 +246,9 @@ function attachTrackControls(track) {
     if (!isDragging) {
       // ドラッグしていない場合、タップとして処理
       // ブラウザのデフォルトクリック動作を許可（リンクナビゲーション）
-      console.log('Collection tap detected - allowing default navigation');
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('Collection tap detected - allowing default navigation');
+      }
       return;
     }
     
@@ -293,7 +301,9 @@ function attachTrackControls(track) {
     link.addEventListener('click', (e) => {
       // タップの場合はデフォルトナビゲーションを許可
       if (!isDragging) {
-        console.log('Collection link clicked - allowing navigation');
+        if (window.__QA_MEASURE_LOGS__) {
+          console.log('Collection link clicked - allowing navigation');
+        }
         // preventDefaultしない
       }
     }, { passive: true });
