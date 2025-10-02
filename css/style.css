@@ -2145,10 +2145,11 @@ html body[lang="en"] #brands .only-ja {
   display: none !important; 
 } 
 
-/* Accessibility: Darken section-title text for AA contrast */
-h2.section-title {
-  /* minimal darkening; visually almost identical */
-  color: #111111 !important; /* previously #fff or lighter */
+/* Accessibility: Ensure all section titles are white for consistency */
+#brands h2,
+#lookbook h2,
+#about h2 {
+  color: white !important;
 }
 
 /* Accessibility: Darken footer text for AA contrast */
