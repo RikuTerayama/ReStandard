@@ -73,7 +73,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     if (article.firstImage) {
       const img = document.createElement('img');
-      img.loading = 'lazy';
+      if (!img.hasAttribute('data-lcp')) { // skip LCP
+        img.loading = 'lazy';
+      }
       img.decoding = 'async';
       img.alt = decodeEntities(article.title || '');
       
