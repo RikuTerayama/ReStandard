@@ -144,6 +144,7 @@
   <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
   <!-- LCP画像のプリロード（最適化） -->
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="/.netlify/images?url=/image/1.JPG&w=186&h=280&fit=contain&q=72" fetchpriority="high">
 
   <!-- Collection/Lookbook画像のプリロードを削除（lazy-loadに変更） -->
   
@@ -996,9 +997,9 @@
                        /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
                      width="93" height="140"
-                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 1"
+                     decoding="async" alt="ReStandard コレクション 商品画像 1"
                      style="display: block !important; visibility: visible !important; opacity: 1 !important;"
-                     data-lcp="true">
+                     data-lcp="true" fetchpriority="high">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68adcae3d7091d455a98a86c" target="_blank" rel="noopener">
