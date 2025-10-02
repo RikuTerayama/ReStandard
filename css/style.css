@@ -1697,3 +1697,40 @@
     --brand-size: clamp(160px, 12vw, 200px) !important; 
   }
 }
+
+/* === Collection: make links reliably tappable on mobile === */
+#collection .collection-track a {
+  display: block !important;                 /* full-rect hit area */
+  pointer-events: auto !important;           /* ensure tappable */
+  position: relative !important;             /* allow z-index */
+  z-index: 2 !important;
+  -webkit-tap-highlight-color: rgba(0,0,0,0); /* nicer tap UX */
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+#collection .collection-track img {
+  pointer-events: auto !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+  display: block !important;
+}
+
+#collection .collection-track,
+#collection .collection-row,
+#collection .band {
+  pointer-events: auto !important;
+}
+
+/* 万一の覆いかぶさり対策：装飾疑似要素はクリックを通す */
+#collection .collection-row::before,
+#collection .collection-row::after,
+#collection .band::before,
+#collection .band::after {
+  pointer-events: none !important;
+}
+
+/* タッチジェスチャの既定動作：縦スクロールは許可、タップも妨げない */
+#collection .collection-track {
+  touch-action: pan-y !important;
+}
