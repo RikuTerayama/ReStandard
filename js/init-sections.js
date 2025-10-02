@@ -4,8 +4,10 @@
 
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
+  // READ all layout properties first
   const parentWidth = track.parentElement?.offsetWidth || track.offsetWidth || 1;
-  const multiplier = track.classList.contains('lookbook-track') ? 6.0 : 4.0;
+  const isLookbookTrack = track.classList.contains('lookbook-track');
+  const multiplier = isLookbookTrack ? 6.0 : 4.0;
   const maxLoopWidth = parentWidth * multiplier;
 
   const originals = Array.from(track.children);
@@ -13,7 +15,7 @@ function ensureLoopWidth(track) {
     return;
   }
 
-  const fallbackItemWidth = track.classList.contains('lookbook-track') ? 300 : 200;
+  const fallbackItemWidth = isLookbookTrack ? 300 : 200;
   const itemWidths = originals.map((node) => {
     const rect = node.getBoundingClientRect();
     if (!rect.width) {
@@ -30,9 +32,10 @@ function ensureLoopWidth(track) {
   }
   segmentWidth = Math.max(segmentWidth, 1);
 
+  // WRITE properties after all reads
   track._segmentWidth = segmentWidth;
 
-  const minClones = track.classList.contains('lookbook-track') ? 16 : 3;
+  const minClones = isLookbookTrack ? 16 : 3;
   let clonesAdded = 0;
   let totalWidth = segmentWidth;
 
@@ -57,6 +60,7 @@ function ensureLoopWidth(track) {
     clonesAdded++;
   }
 
+  // READ final width after all writes
   const finalWidth = track.scrollWidth;
   const viewportRatio = parentWidth ? Math.round((finalWidth / parentWidth) * 100) : 0;
   if (window.__QA_MEASURE_LOGS__) {
@@ -133,24 +137,21 @@ function attachManualControls(track){
     ev.preventDefault();
     ev.stopPropagation();
 
-    // 1) ループ幅をsegmentWidthから厳密算出
+    // READ all layout properties first
     const loopWidth = track._segmentWidth || (track.scrollWidth / 2); // オリジナル区間幅を使用
-
-    // 2) 現在 translateX を取得し、0..loopWidth に正規化
     const m = new DOMMatrix(getComputedStyle(track).transform);
     let tx = m.m41; // 2D 水平移動
     tx = ((tx % loopWidth) + loopWidth) % loopWidth; // 常に 0..loopWidth
-
-    // 3) 運動方向（右→左は負、左→右は正）に応じた負の delay 計算
     const dir = track.dataset.direction === 'rtl' ? -1 : 1;
     const progress = tx / loopWidth;              // 0..1
-    const delay = -progress * parseFloat(getComputedStyle(track).animationDuration) * 1000; // ms
+    const animationDuration = getComputedStyle(track).animationDuration;
+    const delay = -progress * parseFloat(animationDuration) * 1000; // ms
 
-    // 4) 再適用順：アニメ一旦無効 → reflow → delay 指定 → アニメ有効
+    // WRITE all properties after reads
     track.style.animation = 'none';
     void track.offsetHeight; // reflow
     track.style.removeProperty('transform');
-    track.style.animation = `marquee ${getComputedStyle(track).animationDuration} linear infinite`;
+    track.style.animation = `marquee ${animationDuration} linear infinite`;
     track.style.animationDelay = `${delay}ms`;
 
     track.classList.remove('dragging');
@@ -272,12 +273,15 @@ function findImageBySuffix(track, suffix) {
 
 /** 目的の画像を「左端 or 右端」に揃えたときの希望 translateX(px) を返す */
 function computeDesiredTx(track, target, align = 'left') {
+  // READ all layout properties first
   const wrap = track.parentElement;                       // .track-wrap
   const x = target.offsetLeft;                            // 画像の左端（track 左基準）
   const w = target.getBoundingClientRect().width;
+  const wrapWidth = wrap.clientWidth;
+  
   if (align === 'right') {
     // 画像の右端を wrap の右端に合わせる
-    return wrap.clientWidth - (x + w);                    // = 望ましい translateX(px)
+    return wrapWidth - (x + w);                           // = 望ましい translateX(px)
   }
   // 左端合わせ
   return -x;
@@ -285,7 +289,7 @@ function computeDesiredTx(track, target, align = 'left') {
 
 /** 現在の keyframes（left/right）に対して、希望 translateX を満たす負の animation-delay を適用 */
 function applyInitialDelay(track, desiredTxPx) {
-  // ループ一周に相当する距離（segmentWidth）と総時間
+  // READ all layout properties first
   const loop = track._segmentWidth || (track.scrollWidth / 2);
   const durSec = parseFloat(getComputedStyle(track).animationDuration);
   const dir = (track.dataset.direction || 'left').toLowerCase();
@@ -293,17 +297,19 @@ function applyInitialDelay(track, desiredTxPx) {
   // 希望位置を keyframes の可動範囲に正規化
   // left: 0 → -loop, right: -loop → 0 の範囲であれば OK
   let T = desiredTxPx;
+  let progress;
   if (dir === 'left') {
     while (T < -loop) T += loop;
     while (T > 0)     T -= loop;
-    const progress = (-T) / loop;                         // 0..1
-    track.style.animationDelay = `-${(progress * durSec).toFixed(4)}s`;
+    progress = (-T) / loop;                               // 0..1
   } else {
     while (T < -loop) T += loop;
     while (T > 0)     T -= loop;
-    const progress = (T + loop) / loop;                   // 0..1
-    track.style.animationDelay = `-${(progress * durSec).toFixed(4)}s`;
+    progress = (T + loop) / loop;                         // 0..1
   }
+  
+  // WRITE after all reads
+  track.style.animationDelay = `-${(progress * durSec).toFixed(4)}s`;
 }
 
 /** data-start / data-align に従って初期位置を合わせる */
@@ -313,16 +319,16 @@ function alignTrackStart(track) {
   const target = findImageBySuffix(track, start);
   if (!target) return;
 
-  // 一旦アニメを確実にセット（duration を取得するため）
+  // READ all layout properties first
   const dir = (track.dataset.direction || 'left').toLowerCase();
   const base = parseFloat(track.dataset.baseSpeed || 55);
   const dur  = calcSpeedSec(base);
   const key  = (dir === 'right') ? 'scroll-right' : 'scroll-left';
+  const desired = computeDesiredTx(track, target, align);
+
+  // WRITE all properties after reads
   track.style.animation = `${key} ${dur}s linear infinite`;
   track.style.animationPlayState = 'paused';
-
-  // 希望 translateX を計算して負の delay を適用 → 再生
-  const desired = computeDesiredTx(track, target, align);
   applyInitialDelay(track, desired);
   track.style.animationPlayState = 'running';
 }
