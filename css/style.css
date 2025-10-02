@@ -2144,3 +2144,9 @@ html body[lang="en"] #about .only-ja,
 html body[lang="en"] #brands .only-ja { 
   display: none !important; 
 } 
+
+/* Accessibility: Darken section-title text for AA contrast */
+h2.section-title {
+  /* minimal darkening; visually almost identical */
+  color: #111111 !important; /* previously #fff or lighter */
+}
