@@ -2147,6 +2147,31 @@ html body[lang="en"] #brands .only-ja {
   display: none !important; 
 } 
 
+/* ========================================
+   Collection/Brands overlap fix (2025-01)
+   ======================================== */
+
+/* === FIX: Collection × Brands overlap (2025-01) === */
+/* 高さ上限とはみ出しカットを無効化して下段が正しく収まるようにする */
+#collection,
+#collection .band {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* 見出しとの間隔調整に使っていた負のマージンを撤回（食い込み抑止） */
+#collection .collection-wrapper {
+  margin-top: 0 !important;
+}
+
+/* 念のため：セクション間の余白は既存で確保済みだが、
+   端末差で詰まるケース向けの軽いボトム余白を保険として付与 */
+#collection {
+  padding-bottom: clamp(24px, 3vw, 40px) !important;
+}
+
+/* 既存の Brands 側余白はそのまま活かす（変更なし） */
+
 /* Accessibility: Ensure all section titles are white for consistency */
 #brands h2,
 #lookbook h2,
