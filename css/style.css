@@ -201,7 +201,13 @@ section {
     }
     
     #brands {
-      margin-top: 80px !important; /* モバイルで大幅な間隔確保 */
+      margin-top: 150px !important; /* モバイルで大幅な間隔確保 */
+    }
+    
+    /* モバイルでCollectionセクションの余白をさらに拡大 */
+    #collection {
+      padding-bottom: clamp(80px, 12vw, 120px) !important;
+      margin-bottom: clamp(40px, 10vw, 80px) !important;
     }
     
     /* Collection-wrapperの高さをモバイルで確保 */
@@ -348,7 +354,7 @@ section {
     /* Collectionセクションとの重なり防止 */
     position: relative;
     z-index: 1;
-    margin-top: 120px; /* Collectionセクションとの間隔を大幅に確保 */
+    margin-top: 200px; /* Collectionセクションとの間隔を大幅に確保 */
 }
 
 /* Brands - グリッドレイアウト・安定配置 */
@@ -2175,7 +2181,8 @@ html body[lang="en"] #brands .only-ja {
 /* 念のため：セクション間の余白は既存で確保済みだが、
    端末差で詰まるケース向けの軽いボトム余白を保険として付与 */
 #collection {
-  padding-bottom: clamp(24px, 3vw, 40px) !important;
+  padding-bottom: clamp(100px, 10vw, 150px) !important; /* 大幅に拡大 */
+  margin-bottom: clamp(50px, 8vw, 100px) !important; /* 追加のマージン */
 }
 
 /* 既存の Brands 側余白はそのまま活かす（変更なし） */
@@ -2217,6 +2224,55 @@ html body[lang="en"] #brands .only-ja {
   transform: none !important; /* 変形を無効化 */
   top: auto !important; /* 位置をリセット */
   left: auto !important; /* 位置をリセット */
+}
+
+/* Collectionセクション全体の表示を強制 */
+#collection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 600px !important; /* 十分な高さを確保 */
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Collection-wrapperの表示を強制 */
+#collection .collection-wrapper {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 500px !important; /* 2行分の高さを確保 */
+  grid-template-rows: 1fr 1fr !important; /* 2行を強制表示 */
+  gap: 30px !important; /* 行間の間隔を確保 */
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Collection-rowの表示を強制 */
+#collection .collection-row {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 200px !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* 上段も強制表示 */
+#collection .collection-row:nth-child(1) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 200px !important;
+  background: rgba(0, 255, 0, 0.3) !important; /* 緑背景で可視化 */
+  border: 3px solid green !important;
+  position: relative !important;
+  z-index: 999 !important;
 }
 
 /* Accessibility: Ensure all section titles are white for consistency */
