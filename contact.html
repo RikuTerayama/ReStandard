@@ -44,15 +44,15 @@
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
   <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
 
-  <link rel="preload" as="image" href="image/12.JPG">
-  <link rel="preload" as="image" href="image/13.JPG">
-  <link rel="preload" as="image" href="image/14.JPG">
-  <link rel="preload" as="image" href="image/15.JPG">
-  <link rel="preload" as="image" href="image/16.JPG">
-  <link rel="preload" as="image" href="image/17.JPG">
-  <link rel="preload" as="image" href="image/18.JPG">
-  <link rel="preload" as="image" href="image/19.JPG">
-  <link rel="preload" as="image" href="image/20.JPG">
+  <link rel="preload" as="image" href="image/optimized/12-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/13-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/14-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/15-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/16-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/17-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/18-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/19-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/20-640w.jpg">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
@@ -125,6 +125,29 @@
       {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://restandard-2025.netlify.app/"},
       {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://restandard-2025.netlify.app/contact.html"}
     ]
+  }
+  </script>
+
+  <!-- 動画の構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "ReStandard Contact - お問い合わせ",
+    "description": "ReStandardのお問い合わせページを紹介する動画です。商品に関するご相談、お打ち合わせのご予約など、お気軽にお問い合わせください。",
+    "thumbnailUrl": "https://restandard-2025.netlify.app/image/video-thumbnail.webp",
+    "uploadDate": "2025-01-20",
+    "duration": "PT30S",
+    "contentUrl": "https://restandard-2025.netlify.app/7.mp4",
+    "embedUrl": "https://restandard-2025.netlify.app/contact.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ReStandard",
+      "url": "https://restandard-2025.netlify.app"
+    },
+    "keywords": "ReStandard, お問い合わせ, ご相談, お打ち合わせ, 予約, アパレル卸",
+    "inLanguage": "ja",
+    "isAccessibleForFree": true
   }
   </script>
 
@@ -435,11 +458,38 @@
 <body>
 <main>
 
-<!-- スマートフォン版背景動画 -->
-<video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
+<!-- Mobile版背景動画 -->
+<video 
+  id="mobile-bg-video" 
+  src="2.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardのContactを紹介するMobile用背景動画"
+  title="ReStandard Contact (Mobile)"
+  poster="image/video-thumbnail.webp"
+  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:block; background:#000;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
 
 <!-- PC版背景動画 -->
-<video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+<video 
+  id="desktop-bg-video" 
+  src="7.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardのContactを紹介するPC用背景動画"
+  title="ReStandard Contact (PC)"
+  poster="image/video-thumbnail.webp"
+  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
+
 
 <!-- ナビゲーションバー -->
   <nav class="fixed-top navbar navbar-expand-lg">
