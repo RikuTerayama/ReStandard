@@ -35,17 +35,30 @@
   
   <!-- OGP設定 -->
   <meta property="og:title" content="Location | アクセス・所在地 | ReStandard">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="video.other">
   <meta property="og:url" content="https://restandard-2025.netlify.app/location.html">
-  <meta property="og:image" content="https://restandard-2025.netlify.app/image/ogp.jpg" loading="lazy">
+  <meta property="og:image" content="https://restandard-2025.netlify.app/image/video-thumbnail.webp" loading="lazy">
   <meta property="og:site_name" content="ReStandard">
   <meta property="og:description" content="ReStandardの所在地・アクセス情報。地図・住所・最寄り駅・連絡先などをご案内します。ご来社・ご連絡の際はこちらをご覧ください。">
   
+  <!-- 動画専用OGP設定 -->
+  <meta property="og:video" content="https://restandard-2025.netlify.app/7.mp4">
+  <meta property="og:video:type" content="video/mp4">
+  <meta property="og:video:width" content="1920">
+  <meta property="og:video:height" content="1080">
+  <meta property="og:video:duration" content="30">
+  <meta property="og:video:secure_url" content="https://restandard-2025.netlify.app/7.mp4">
+  
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="player">
   <meta name="twitter:title" content="Location | アクセス・所在地 | ReStandard">
   <meta name="twitter:description" content="ReStandardの所在地・アクセス情報。地図・住所・最寄り駅・連絡先などをご案内します。ご来社・ご連絡の際はこちらをご覧ください。">
-  <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/ogp.jpg" loading="lazy">
+  <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/video-thumbnail.webp" loading="lazy">
+  <meta name="twitter:player" content="https://restandard-2025.netlify.app/location.html">
+  <meta name="twitter:player:width" content="1920">
+  <meta name="twitter:player:height" content="1080">
+  <meta name="twitter:player:stream" content="https://restandard-2025.netlify.app/7.mp4">
+  <meta name="twitter:player:stream:content_type" content="video/mp4">
   
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
@@ -91,6 +104,13 @@
   <!-- LCP画像のプリロード -->
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
   <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
+  
+  <!-- 動画サムネイルのプリロード -->
+  <link rel="preload" as="image" href="image/video-thumbnail.webp" fetchpriority="high">
+  
+  <!-- 動画のプリロード -->
+  <link rel="preload" as="video" href="7.mp4" media="(min-width: 901px)" fetchpriority="high">
+  <link rel="preload" as="video" href="2.mp4" media="(max-width: 900px)" fetchpriority="high">
 
   <link rel="preload" as="image" href="image/12.JPG">
   <link rel="preload" as="image" href="image/13.JPG">
@@ -119,6 +139,29 @@
     "@type": "WebPage",
     "name": "ReStandard | アクセスマップ・練馬区のオフィス情報",
     "url": "https://restandard-2025.netlify.app/location.html"
+  }
+  </script>
+  
+  <!-- 動画の構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "ReStandard Location - アクセス・所在地",
+    "description": "ReStandardの所在地・アクセス情報を紹介する動画です。東京都練馬区北町近辺のオフィスと地下鉄赤塚駅からのアクセス方法をご案内します。",
+    "thumbnailUrl": "https://restandard-2025.netlify.app/image/video-thumbnail.webp",
+    "uploadDate": "2025-01-20",
+    "duration": "PT30S",
+    "contentUrl": "https://restandard-2025.netlify.app/7.mp4",
+    "embedUrl": "https://restandard-2025.netlify.app/location.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ReStandard",
+      "url": "https://restandard-2025.netlify.app"
+    },
+    "keywords": "ReStandard, アクセス, 所在地, 練馬区, 地下鉄赤塚駅, オフィス, アパレル卸",
+    "inLanguage": "ja",
+    "isAccessibleForFree": true
   }
   </script>
   <script type="application/ld+json">
@@ -483,10 +526,36 @@
 <main>
 
 <!-- スマートフォン版背景動画 -->
-<video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
+<video 
+  id="mobile-bg-video" 
+  src="2.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardの所在地・アクセス情報を紹介するスマートフォン用背景動画"
+  title="ReStandard Location - アクセス・所在地 (Mobile)"
+  poster="image/video-thumbnail.webp"
+  style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
 
 <!-- PC版背景動画 -->
-<video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+<video 
+  id="desktop-bg-video" 
+  src="7.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardの所在地・アクセス情報を紹介するPC用背景動画"
+  title="ReStandard Location - アクセス・所在地 (Desktop)"
+  poster="image/video-thumbnail.webp"
+  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
 
 <!-- ▼ ナビゲーションバー（共通） -->
   <nav class="fixed-top navbar navbar-expand-lg">
@@ -743,18 +812,36 @@ document.addEventListener('DOMContentLoaded', function() {
   const desktopVideo = document.getElementById('desktop-bg-video');
   const mobileVideo = document.getElementById('mobile-bg-video');
   
-  // PC版動画の読み込みと再生
+  // 動画の読み込み成功時の処理
+  function handleVideoLoad(video, videoName) {
+    console.log(`${videoName}が読み込まれました`);
+    video.play().catch(function(error) {
+      console.log(`${videoName}の自動再生に失敗:`, error);
+      // 自動再生に失敗した場合はユーザーインタラクションを待つ
+      document.addEventListener('click', function playVideo() {
+        video.play().catch(console.error);
+        document.removeEventListener('click', playVideo);
+      }, { once: true });
+    });
+  }
+  
+  // 動画のエラー処理
+  function handleVideoError(video, videoName) {
+    console.error(`${videoName}の読み込みエラー`);
+    // エラー時は背景画像を表示
+    video.style.display = 'none';
+    const fallbackDiv = document.createElement('div');
+    fallbackDiv.style.cssText = video.style.cssText;
+    fallbackDiv.style.backgroundImage = 'url(image/video-thumbnail.webp)';
+    fallbackDiv.style.backgroundSize = 'cover';
+    fallbackDiv.style.backgroundPosition = 'center';
+    video.parentNode.insertBefore(fallbackDiv, video);
+  }
+  
+  // PC版動画の処理
   if (desktopVideo) {
-    desktopVideo.addEventListener('loadeddata', function() {
-      console.log('PC版背景動画が読み込まれました');
-      desktopVideo.play().catch(function(error) {
-        console.log('PC版動画の自動再生に失敗:', error);
-      });
-    });
-    
-    desktopVideo.addEventListener('error', function(e) {
-      console.error('PC版動画の読み込みエラー:', e);
-    });
+    desktopVideo.addEventListener('loadeddata', () => handleVideoLoad(desktopVideo, 'PC版背景動画'));
+    desktopVideo.addEventListener('error', () => handleVideoError(desktopVideo, 'PC版背景動画'));
     
     // 動画が再生されていない場合は再試行
     setTimeout(function() {
@@ -766,18 +853,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
   }
   
-  // スマートフォン版動画の読み込みと再生
+  // スマートフォン版動画の処理
   if (mobileVideo) {
-    mobileVideo.addEventListener('loadeddata', function() {
-      console.log('スマートフォン版背景動画が読み込まれました');
-      mobileVideo.play().catch(function(error) {
-        console.log('スマートフォン版動画の自動再生に失敗:', error);
-      });
-    });
-    
-    mobileVideo.addEventListener('error', function(e) {
-      console.error('スマートフォン版動画の読み込みエラー:', e);
-    });
+    mobileVideo.addEventListener('loadeddata', () => handleVideoLoad(mobileVideo, 'スマートフォン版背景動画'));
+    mobileVideo.addEventListener('error', () => handleVideoError(mobileVideo, 'スマートフォン版背景動画'));
     
     // 動画が再生されていない場合は再試行
     setTimeout(function() {
