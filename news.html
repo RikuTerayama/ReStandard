@@ -133,6 +133,29 @@
   }
   </script>
 
+  <!-- 動画の構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "ReStandard News - お知らせ・最新情報",
+    "description": "ReStandardのお知らせ・最新情報を紹介する動画です。新商品の入荷情報、ブランド情報、イベント情報などをお届けします。",
+    "thumbnailUrl": "https://restandard-2025.netlify.app/image/video-thumbnail.webp",
+    "uploadDate": "2025-01-20",
+    "duration": "PT30S",
+    "contentUrl": "https://restandard-2025.netlify.app/7.mp4",
+    "embedUrl": "https://restandard-2025.netlify.app/news.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ReStandard",
+      "url": "https://restandard-2025.netlify.app"
+    },
+    "keywords": "ReStandard, お知らせ, 最新情報, 新商品, ブランド情報, イベント, アパレル卸",
+    "inLanguage": "ja",
+    "isAccessibleForFree": true
+  }
+  </script>
+
 
   <style>
     :root {
@@ -440,11 +463,38 @@
 <body>
 <main>
 
-<!-- スマートフォン版背景動画 -->
-<video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
+<!-- Mobile版背景動画 -->
+<video 
+  id="mobile-bg-video" 
+  src="2.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardのNewsを紹介するMobile用背景動画"
+  title="ReStandard News (Mobile)"
+  poster="image/video-thumbnail.webp"
+  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:block; background:#000;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
 
 <!-- PC版背景動画 -->
-<video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+<video 
+  id="desktop-bg-video" 
+  src="7.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardのNewsを紹介するPC用背景動画"
+  title="ReStandard News (PC)"
+  poster="image/video-thumbnail.webp"
+  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
+
 
 <!-- ナビゲーションバー -->
 <nav class="fixed-top navbar navbar-expand-lg">
