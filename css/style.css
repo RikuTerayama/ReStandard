@@ -2178,3 +2178,37 @@ div.copyright {
   html { font-size: max(12px, 100%); }  /* default 16pxなら実質無変更 */
   body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 }
+
+/* === CLS hardening for Collection (UI unchanged) === */
+
+/* 画像だけを包む a 要素が hover/focus で border を足すと1px分ズレるので、
+   初期状態から透明ボーダーを持たせて"ズレゼロ"にする */
+#collection .collection-track a {
+  border: 1px solid transparent !important;
+  /* 画像のみを含む a のベースライン起因のズレ防止 */
+  line-height: 0 !important;
+}
+
+/* 既存デザインの hover が border を使っている場合でもレイアウトは不変 */
+#collection .collection-track a:hover,
+#collection .collection-track a:focus-visible {
+  border-color: currentColor !important; /* 既存色に合わせてOK。見た目は維持 */
+  outline: none !important;              /* 既存で outline を使っていれば削ってよい */
+}
+
+/* 画像の"確保サイズ"を先に宣言（※UI変更なし）
+   - aspect-ratio を与えるだけ。幅/高さは既存CSSに完全依存。
+   - 2:3（縦長）の想定。もしコレクションが別比率なら値だけ差し替え。 */
+#collection .collection-track img {
+  aspect-ratio: 2 / 3 !important;/* ★確保比率（全画像が同比率ならこのままでOK） */
+  /* 既存 object-fit を使っているならそのまま。未指定なら触らない（UI不変） */
+}
+
+/* セクション全体の初期高さをわずかに確保
+   - 画像の lazy 読み込み中にセクション高さが伸びて動くのを抑える
+   - 既存の余白/行高に合わせて小さめの安全マージンを確保するだけ */
+#collection {
+  min-height: clamp(320px, 40vh, 560px) !important;
+  /* 既存トランジション等で位置がブレないように箱を安定化 */
+  overflow: hidden !important; /* 既存で必要なら外してOK（UIが変わる場合は削除） */
+}
