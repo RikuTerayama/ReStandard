@@ -143,7 +143,7 @@
     color: white !important;
     font-size: 2rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: clamp(8px, 1vw, 16px) !important; /* 上段との間隔を大幅に縮小 */
   }
   
   .collection-title {
@@ -329,6 +329,9 @@
     background: transparent !important;
     position: relative;
     z-index: 1;
+    /* 重なり防止: セクション境界内に制限 */
+    overflow: hidden;
+    max-height: 80vh; /* 最大高さを制限 */
   }
   #collection .track-wrap, #lookbook .track-wrap{
     gap: var(--collection-gap);
@@ -1272,6 +1275,9 @@
     background: none;
     position: relative;
     z-index: 1;
+    /* セクション境界を明確化 */
+    overflow: hidden;
+    max-height: 90vh; /* セクション全体の高さを制限 */
   }
   .collection-bg { 
     position: relative; 
@@ -2153,17 +2159,7 @@ div.copyright {
   aspect-ratio: 2 / 3 !important; /* 2:3の縦長比率を確保 */
 }
 
-/* デバッグ用: Collection Track 2の表示確認 */
-#collection .collection-row:nth-child(2) {
-  background: rgba(255, 0, 0, 0.1) !important; /* 薄い赤背景で表示確認 */
-  border: 2px solid red !important; /* 赤い枠線で表示確認 */
-  min-height: 200px !important; /* 最小高さを確保 */
-}
-
-#collection .collection-row:nth-child(2) .collection-track {
-  background: rgba(0, 255, 0, 0.1) !important; /* 薄い緑背景で表示確認 */
-  border: 2px solid green !important; /* 緑の枠線で表示確認 */
-}
+/* Collection Track 2の表示確認 - デバッグ用CSS削除済み */
 
 /* セクション全体の初期高さをわずかに確保
    - 画像の lazy 読み込み中にセクション高さが伸びて動くのを抑える
