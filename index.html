@@ -88,10 +88,33 @@
         
         // 位置調整: collection-wrapperを適切な位置に移動
         if (wrapper) {
-          wrapper.style.marginTop = '-20px';
+          wrapper.style.marginTop = '0px';
           wrapper.style.position = 'relative';
           wrapper.style.zIndex = '2';
+          wrapper.style.display = 'grid';
+          wrapper.style.gridTemplateRows = '1fr 1fr';
+          wrapper.style.gap = '30px';
+          wrapper.style.minHeight = '500px';
         }
+        
+        // Collection-rowの強制表示
+        rows.forEach((row, index) => {
+          row.style.display = 'block';
+          row.style.visibility = 'visible';
+          row.style.opacity = '1';
+          row.style.height = 'auto';
+          row.style.minHeight = '200px';
+          row.style.position = 'relative';
+          row.style.zIndex = '3';
+          
+          if (index === 0) {
+            row.style.background = 'rgba(0, 255, 0, 0.3)';
+            row.style.border = '3px solid green';
+          } else if (index === 1) {
+            row.style.background = 'rgba(255, 0, 0, 0.3)';
+            row.style.border = '3px solid red';
+          }
+        });
       });
       
       tracks.forEach((track, index) => {
