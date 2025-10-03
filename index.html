@@ -97,7 +97,7 @@
           wrapper.style.minHeight = '500px';
         }
         
-        // Collection-rowの強制表示
+        // Collection-rowの正常表示（デバッグ色を削除）
         rows.forEach((row, index) => {
           row.style.display = 'block';
           row.style.visibility = 'visible';
@@ -106,14 +106,9 @@
           row.style.minHeight = '200px';
           row.style.position = 'relative';
           row.style.zIndex = '3';
-          
-          if (index === 0) {
-            row.style.background = 'rgba(0, 255, 0, 0.3)';
-            row.style.border = '3px solid green';
-          } else if (index === 1) {
-            row.style.background = 'rgba(255, 0, 0, 0.3)';
-            row.style.border = '3px solid red';
-          }
+          // デバッグ色を削除して正常な表示に戻す
+          row.style.background = '';
+          row.style.border = '';
         });
       });
       
