@@ -890,7 +890,7 @@
     cursor:grabbing; 
     animation:none !important; /* ドラッグ中のみ停止 */
   }
-  #collection .collection-item{ flex:0 0 auto; height:100%; aspect-ratio:4/5;
+  #collection .collection-item{ flex:0 0 auto; height:100%;
     border-radius:12px; overflow:hidden; background:#fff; }
   #collection .collection-item img{ 
     width:100%; 
@@ -1217,7 +1217,6 @@
   transform: translate(-50%, -50%) !important; /* 完全中央配置 */
 }
   
-  /* .brand-logo の aspect-ratio を削除（空のルールセットを削除） */
   
   /* 画像の遅延読み込み対応 */
   img[loading="lazy"] {
@@ -1330,7 +1329,6 @@
   /* 画像の縦揃え（切れ防止） */
   .collection-tracks img {
     height: 100%;
-    aspect-ratio: 3 / 4;
     object-fit: cover;
     flex: 0 0 auto;
   }
@@ -1529,7 +1527,6 @@
 /* Newsカード画像の安定表示 */
 .news-card img { 
   width: 100%; 
-  aspect-ratio: 4/3; 
   object-fit: cover; 
   display: block; 
 }
@@ -1558,7 +1555,6 @@
   justify-content: center !important;
   margin: 0 auto !important;
   position: relative !important;
-  aspect-ratio: 1/1 !important;
   border-radius: 18px !important;
   background: #fff !important;
   overflow: hidden !important;
@@ -1696,7 +1692,6 @@
   justify-content: center !important;
   margin: 0 auto !important;
   position: relative !important;
-  aspect-ratio: 1/1 !important;
   border-radius: 18px !important;
   background: #fff !important;
   overflow: hidden !important;
