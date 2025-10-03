@@ -24,12 +24,12 @@
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G';
       s.async = true;
       document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'G-1W9HVMCW3G', {
+    gtag('js', new Date());
+    gtag('config', 'G-1W9HVMCW3G', {
         allow_google_signals:false,
         allow_ad_personalization_signals:false,
         anonymize_ip:true
-      });
+    });
     }
 
     if ('requestIdleCallback' in window) {
@@ -303,31 +303,15 @@
       min-width: 3200px !important; /* 16枚 × 200px */
     }
     
-    /* Collectionセクションの間隔調整 */
-    .collection-wrapper {
-      margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
-    }
+    /* Collectionセクションの間隔調整 - 削除済み */
     
-    .collection-row {
-      margin: 2rem 0 !important; /* 行間の間隔を拡大 */
-    }
+    /* collection-row の間隔調整 - 削除済み */
     
-    /* Collectionセクションの背景設定 - 透明に変更 */
-    #collection .band {
-      background: transparent !important;
-      backdrop-filter: none !important;
-      position: relative;
-    }
+    /* Collectionセクションの背景設定 - 削除済み */
     
-    /* 上段の背景：下部分のみ角丸 */
-    .collection-row:first-child .band {
-      border-radius: 0 0 20px 20px !important;
-    }
+    /* 上段の背景設定 - 削除済み */
     
-    /* 下段の背景：上部分のみ角丸 */
-    .collection-row:last-child .band {
-      border-radius: 20px 20px 0 0 !important;
-    }
+    /* 下段の背景設定 - 削除済み */
     
     /* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
     #lookbook .band {
@@ -2001,9 +1985,9 @@
       console.log('スプラッシュ動画は無効化されています');
       
       // スプラッシュ動画を完全に無効化
-      document.body.classList.remove('splash-active');
-      splash.style.display = 'none';
-      return;
+        document.body.classList.remove('splash-active');
+        splash.style.display = 'none';
+        return;
       
       // 動画の読み込みと再生を最適化
       let videoLoaded = false;
@@ -2081,11 +2065,11 @@
       console.log('DOMContentLoaded - スプラッシュ初期化開始');
       
       // スプラッシュ動画を即座に無効化（読み込み速度向上）
-      try {
-        initializeSplash();
-      } catch (error) {
-        console.error('スプラッシュ初期化エラー:', error);
-      }
+          try {
+            initializeSplash();
+          } catch (error) {
+            console.error('スプラッシュ初期化エラー:', error);
+          }
     });
   </script>
   <!-- 旧クラス向けスクリプトとモーダルは削除済み -->
