@@ -92,15 +92,15 @@
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
   <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
 
-  <link rel="preload" as="image" href="image/12.JPG">
-  <link rel="preload" as="image" href="image/13.JPG">
-  <link rel="preload" as="image" href="image/14.JPG">
-  <link rel="preload" as="image" href="image/15.JPG">
-  <link rel="preload" as="image" href="image/16.JPG">
-  <link rel="preload" as="image" href="image/17.JPG">
-  <link rel="preload" as="image" href="image/18.JPG">
-  <link rel="preload" as="image" href="image/19.JPG">
-  <link rel="preload" as="image" href="image/20.JPG">
+  <link rel="preload" as="image" href="image/optimized/12-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/13-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/14-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/15-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/16-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/17-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/18-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/19-640w.jpg">
+  <link rel="preload" as="image" href="image/optimized/20-640w.jpg">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -129,6 +129,29 @@
       {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://restandard-2025.netlify.app/"},
       {"@type": "ListItem", "position": 2, "name": "About", "item": "https://restandard-2025.netlify.app/about.html"}
     ]
+  }
+  </script>
+
+  <!-- 動画の構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "ReStandard About - 会社概要",
+    "description": "ReStandardの会社概要を紹介する動画です。32年間の取引実績と25社以上のメーカーとのパートナーシップについてご紹介します。",
+    "thumbnailUrl": "https://restandard-2025.netlify.app/image/video-thumbnail.webp",
+    "uploadDate": "2025-01-20",
+    "duration": "PT30S",
+    "contentUrl": "https://restandard-2025.netlify.app/7.mp4",
+    "embedUrl": "https://restandard-2025.netlify.app/about.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ReStandard",
+      "url": "https://restandard-2025.netlify.app"
+    },
+    "keywords": "ReStandard, 会社概要, 取引実績, パートナーシップ, メーカー, アパレル卸",
+    "inLanguage": "ja",
+    "isAccessibleForFree": true
   }
   </script>
 
@@ -453,11 +476,38 @@
 <body>
 <main>
 
-<!-- スマートフォン版背景動画 -->
-<video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;"></video>
+<!-- Mobile版背景動画 -->
+<video 
+  id="mobile-bg-video" 
+  src="2.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardのAboutを紹介するMobile用背景動画"
+  title="ReStandard About (Mobile)"
+  poster="image/video-thumbnail.webp"
+  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:block; background:#000;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
 
 <!-- PC版背景動画 -->
-<video id="desktop-bg-video" src="7.mp4" autoplay loop muted playsinline style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+<video 
+  id="desktop-bg-video" 
+  src="7.mp4" 
+  autoplay 
+  loop 
+  muted 
+  playsinline 
+  preload="metadata"
+  aria-label="ReStandardのAboutを紹介するPC用背景動画"
+  title="ReStandard About (PC)"
+  poster="image/video-thumbnail.webp"
+  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;">
+  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
+</video>
+
 
 <!-- ナビゲーションバー -->
   <nav class="fixed-top navbar navbar-expand-lg">
@@ -594,7 +644,7 @@
     <div class="about-section-box">
     <div class="text-block delay-2 text-center">
       <a href="https://rockmount.com/" target="_blank" rel="noopener">
-          <img src="image/rockmount.webp" alt="Rockmount Mfg. Co." class="brand-image" loading="lazy">
+          <img src="image/rockmount.webp" alt="Rockmount Mfg. Co." class="brand-image" loading="lazy" width="819" height="407" decoding="async">
       </a><br>
       <strong>Rockmount Mfg. Co. (USA)</strong><br>
       <!-- PC版専用の改行 -->
@@ -634,7 +684,7 @@
 
     <div class="about-section-box delay-3 text-center">
       <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
-          <img src="image/Harley.webp" alt="Harley" class="brand-image" loading="lazy">
+          <img src="image/Harley.webp" alt="Harley" class="brand-image" loading="lazy" width="2048" height="2048" decoding="async">
       </a><br>
       <strong>Harley of Scotland</strong><br>
       <!-- PC版専用の改行 -->
@@ -672,7 +722,7 @@
 
     <div class="about-section-box delay-4 text-center">
       <a href="https://www.eribe.com/" target="_blank" rel="noopener">
-          <img src="image/eribe.svg" alt="Eribe" class="brand-image" loading="lazy">
+          <img src="image/eribe.svg" alt="Eribe" class="brand-image" loading="lazy" width="1200" height="628" decoding="async">
       </a><br>
       <strong>Eribe Knitwear (Scotland)</strong><br>
       <!-- PC版専用の改行 -->
@@ -706,7 +756,7 @@
 
     <div class="about-section-box delay-5 text-center">
       <a href="https://leminor.fr/en" target="_blank" rel="noopener">
-          <img src="image/leminor.webp" alt="Le Minor" class="brand-image" loading="lazy">
+          <img src="image/leminor.webp" alt="Le Minor" class="brand-image" loading="lazy" width="450" height="450" decoding="async">
       </a><br>
       <strong>Le Minor (France/Grammatico)</strong><br>
       <!-- PC版専用の改行 -->
