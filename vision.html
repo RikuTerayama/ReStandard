@@ -37,7 +37,7 @@
   <meta property="og:title" content="Vision | ReStandardのビジョン・ものづくり・パートナーシップ">
   <meta property="og:type" content="video.other">
   <meta property="og:url" content="https://restandard-2025.netlify.app/vision.html">
-  <meta property="og:image" content="https://restandard-2025.netlify.app/image/ogp.jpg" loading="lazy">
+  <meta property="og:image" content="https://restandard-2025.netlify.app/image/video-thumbnail.webp" loading="lazy">
   <meta property="og:site_name" content="ReStandard">
   <meta property="og:description" content="ReStandardのビジョン・こだわりのものづくり・新しい基準の提案・パートナーシップ・今後の展望についてご紹介します。欧米ブランドと共に歩む未来を描きます。">
   
@@ -53,7 +53,7 @@
   <meta name="twitter:card" content="player">
   <meta name="twitter:title" content="Vision | ReStandardのビジョン・ものづくり・パートナーシップ">
   <meta name="twitter:description" content="ReStandardのビジョン・こだわりのものづくり・新しい基準の提案・パートナーシップ・今後の展望についてご紹介します。欧米ブランドと共に歩む未来を描きます。">
-  <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/ogp.jpg" loading="lazy">
+  <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/video-thumbnail.webp" loading="lazy">
   <meta name="twitter:player" content="https://restandard-2025.netlify.app/vision.html">
   <meta name="twitter:player:width" content="1920">
   <meta name="twitter:player:height" content="1080">
@@ -105,6 +105,9 @@
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
   <link rel="preload" as="image" href="image/rockmount2.webp" media="(max-width: 768px)" fetchpriority="high">
   
+  <!-- 動画サムネイルのプリロード -->
+  <link rel="preload" as="image" href="image/video-thumbnail.webp" fetchpriority="high">
+  
   <!-- 動画のプリロード -->
   <link rel="preload" as="video" href="7.mp4" media="(min-width: 901px)" fetchpriority="high">
   <link rel="preload" as="video" href="2.mp4" media="(max-width: 900px)" fetchpriority="high">
@@ -146,7 +149,7 @@
     "@type": "VideoObject",
     "name": "ReStandard Vision - 定番の再定義",
     "description": "ReStandardのビジョン・こだわりのものづくり・新しい基準の提案・パートナーシップ・今後の展望についてご紹介する動画です。欧米ブランドと共に歩む未来を描きます。",
-    "thumbnailUrl": "https://restandard-2025.netlify.app/image/ogp.jpg",
+    "thumbnailUrl": "https://restandard-2025.netlify.app/image/video-thumbnail.webp",
     "uploadDate": "2025-01-20",
     "duration": "PT30S",
     "contentUrl": "https://restandard-2025.netlify.app/7.mp4",
@@ -490,7 +493,7 @@
   preload="metadata"
   aria-label="ReStandardのビジョンを紹介するスマートフォン用背景動画"
   title="ReStandard Vision - 定番の再定義 (Mobile)"
-  poster="image/ogp.jpg"
+  poster="image/video-thumbnail.webp"
   style="display:block; position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; background:#000;">
   <p>お使いのブラウザは動画の再生をサポートしていません。</p>
 </video>
@@ -506,7 +509,7 @@
   preload="metadata"
   aria-label="ReStandardのビジョンを紹介するPC用背景動画"
   title="ReStandard Vision - 定番の再定義 (Desktop)"
-  poster="image/ogp.jpg"
+  poster="image/video-thumbnail.webp"
   style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;">
   <p>お使いのブラウザは動画の再生をサポートしていません。</p>
 </video>
@@ -846,7 +849,7 @@ document.addEventListener('DOMContentLoaded', function() {
     video.style.display = 'none';
     const fallbackDiv = document.createElement('div');
     fallbackDiv.style.cssText = video.style.cssText;
-    fallbackDiv.style.backgroundImage = 'url(image/ogp.jpg)';
+    fallbackDiv.style.backgroundImage = 'url(image/video-thumbnail.webp)';
     fallbackDiv.style.backgroundSize = 'cover';
     fallbackDiv.style.backgroundPosition = 'center';
     video.parentNode.insertBefore(fallbackDiv, video);
