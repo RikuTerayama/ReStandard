@@ -2175,5 +2175,6 @@ div.copyright {
 
 /* Font-size floor for small screens */
 @media (max-width: 480px) {
-  html { font-size: max(12px, 100%); } /* 既定が16pxなら実質無変更 */
+  html { font-size: max(12px, 100%); }  /* default 16pxなら実質無変更 */
+  body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 }
