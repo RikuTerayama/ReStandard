@@ -209,29 +209,6 @@
     ]
   }
   </script>
-  
-  <!-- 動画の構造化データ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "name": "ReStandard Home - 欧米アパレルブランド卸",
-    "description": "ReStandardのホームページを紹介する動画です。高品質な欧米アパレルブランドを日本市場へ紹介するディストリビューターとして、厳選されたブランドをお客様にご提案します。",
-    "thumbnailUrl": "https://restandard-2025.netlify.app/image/video-thumbnail.webp",
-    "uploadDate": "2025-01-20",
-    "duration": "PT30S",
-    "contentUrl": "https://restandard-2025.netlify.app/7.mp4",
-    "embedUrl": "https://restandard-2025.netlify.app/",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ReStandard",
-      "url": "https://restandard-2025.netlify.app"
-    },
-    "keywords": "ReStandard, 欧米アパレルブランド, 卸売, セレクトショップ, ディストリビューター, アパレル",
-    "inLanguage": "ja",
-    "isAccessibleForFree": true
-  }
-  </script>
 
 
   <style>
@@ -820,34 +797,8 @@
 
   <!-- 単一背景動画 - PC/SP自動切替（最適化） -->
   <div id="background-video-container">
-  <video 
-    id="desktop-bg-video" 
-    src="7.mp4"
-    autoplay 
-    loop 
-    muted 
-    playsinline 
-    preload="metadata"
-    aria-label="ReStandardのホームページを紹介するPC用背景動画"
-    title="ReStandard Home - 欧米アパレルブランド卸 (Desktop)"
-    poster="image/video-thumbnail.webp"
-    style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;">
-    <p>お使いのブラウザは動画の再生をサポートしていません。</p>
-  </video>
-    <video 
-      id="mobile-bg-video" 
-      src="2.mp4" 
-      autoplay 
-      loop 
-      muted 
-      playsinline 
-      preload="metadata"
-      aria-label="ReStandardのホームページを紹介するスマートフォン用背景動画"
-      title="ReStandard Home - 欧米アパレルブランド卸 (Mobile)"
-      poster="image/video-thumbnail.webp"
-      style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;">
-      <p>お使いのブラウザは動画の再生をサポートしていません。</p>
-    </video>
+  <video id="desktop-bg-video" autoplay loop muted playsinline preload="none" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;"></video>
+    <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
   </div>
   
   <style>
