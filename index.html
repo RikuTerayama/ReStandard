@@ -5,40 +5,31 @@
   <meta name="google" content="notranslate">
   <!-- Google tag (gtag.js) - 最適化 -->
   <script>
-    // Prevent accidental debug/remarketing flags
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
+
+    // Consent Mode defaults: block ads/analytics cookies by default
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    });
+
+    // Safety: no debug / no signals
     gtag('set', 'ads_data_redaction', true);
   </script>
-<script>
-  // Keep dataLayer early
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  // Consent defaults (keep existing values if already present)
-  gtag('consent', 'default', {
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    analytics_storage: 'denied'
-  });
-
-  function loadGA(){
-    if (window.__GA_LOADED__) return; window.__GA_LOADED__ = true;
-    var s = document.createElement('script');
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G';
-    s.async = true;
-    document.head.appendChild(s);
-    // config after loader tag
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-1W9HVMCW3G', { allow_google_signals:false, allow_ad_personalization_signals:false, anonymize_ip:true, cookie_flags: 'SameSite=None;Secure' });
-  }
-
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(loadGA, { timeout: 4000 });
-  } else {
-    window.addEventListener('load', loadGA, { once:true });
-  }
-</script>
+    gtag('config', 'G-1W9HVMCW3G', {
+      debug_mode: false,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+      anonymize_ip: true
+    });
+  </script>
 
     // 省データ回線対応
     if ('connection' in navigator && navigator.connection.saveData) {
