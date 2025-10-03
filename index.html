@@ -2,183 +2,40 @@
 <html lang="ja" translate="no">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google" content="notranslate">
   <!-- Google tag (gtag.js) - 最適化 -->
   <script>
-    // keep dataLayer early
+    // Default: deny ad/analytics until explicit consent; avoids 3rd-party cookies in audits
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
-
-    // consent defaults to avoid 3rd-party cookies in audits（値は既存を尊重）
     gtag('consent', 'default', {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied'
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
     });
-
-    function loadGA(){
-      if (window.__GA_LOADED__) return; window.__GA_LOADED__ = true;
-      var s = document.createElement('script');
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G';
-      s.async = true;
-      document.head.appendChild(s);
+    // Prevent accidental debug/remarketing flags
+    gtag('set', 'ads_data_redaction', true);
+  </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1W9HVMCW3G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-1W9HVMCW3G', {
-        allow_google_signals:false,
-        allow_ad_personalization_signals:false,
-        anonymize_ip:true
+      'allow_google_signals': false,
+      'allow_ad_personalization_signals': false,
+      'anonymize_ip': true,
+      'cookie_flags': 'SameSite=None;Secure'
     });
-    }
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadGA, { timeout: 4000 });
-    } else {
-      window.addEventListener('load', loadGA, { once:true });
-    }
     // 省データ回線対応
     if ('connection' in navigator && navigator.connection.saveData) {
       document.documentElement.classList.add('save-data');
     }
   </script>
   <script>window.__QA_MEASURE_LOGS__ = false;</script>
-  
-  <!-- Collection デバッグスクリプト -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const wrapper = document.querySelector('.collection-wrapper');
-      const rows = document.querySelectorAll('.collection-row');
-      const tracks = document.querySelectorAll('.collection-track');
-      
-      console.log('=== Collection Debug ===');
-      console.log('Wrapper found:', !!wrapper);
-      console.log('Rows count:', rows.length);
-      console.log('Tracks count:', tracks.length);
-      
-      if (wrapper) {
-        const wrapperRect = wrapper.getBoundingClientRect();
-        console.log('Wrapper dimensions:', {
-          height: wrapperRect.height,
-          width: wrapperRect.width,
-          top: wrapperRect.top,
-          left: wrapperRect.left
-        });
-      }
-      
-      rows.forEach((row, index) => {
-        const rect = row.getBoundingClientRect();
-        const computedStyle = getComputedStyle(row);
-        console.log(`Row ${index + 1}:`, {
-          visible: rect.height > 0,
-          height: rect.height,
-          width: rect.width,
-          top: rect.top,
-          left: rect.left,
-          computedStyle: {
-            display: computedStyle.display,
-            position: computedStyle.position,
-            minHeight: computedStyle.minHeight,
-            background: computedStyle.background,
-            border: computedStyle.border,
-            boxShadow: computedStyle.boxShadow,
-            zIndex: computedStyle.zIndex
-          }
-        });
-        
-        // 位置調整: collection-wrapperを適切な位置に移動
-        if (wrapper) {
-          wrapper.style.marginTop = '80px'; // タイトルとの間隔を大幅確保
-          wrapper.style.position = 'relative';
-          wrapper.style.zIndex = '2';
-          wrapper.style.display = 'grid';
-          wrapper.style.gridTemplateRows = '1fr 1fr';
-          wrapper.style.gap = '30px';
-          wrapper.style.minHeight = '500px';
-        }
-        
-        // Collection-rowの正常表示（デバッグ色を削除）
-        rows.forEach((row, index) => {
-          row.style.display = 'block';
-          row.style.visibility = 'visible';
-          row.style.opacity = '1';
-          row.style.height = 'auto';
-          row.style.minHeight = '200px';
-          row.style.position = 'relative';
-          row.style.zIndex = '3';
-          row.style.overflow = 'visible';
-          // デバッグ色を削除して正常な表示に戻す
-          row.style.background = '';
-          row.style.border = '';
-        });
-        
-        // Collection-trackの表示を強制
-        tracks.forEach((track, index) => {
-          track.style.display = 'flex';
-          track.style.alignItems = 'center';
-          track.style.gap = '8px';
-          track.style.width = 'max-content';
-          track.style.height = '100%';
-          track.style.willChange = 'transform';
-          track.style.position = 'relative';
-          track.style.zIndex = '4';
-          track.style.overflow = 'visible';
-          track.style.background = 'transparent';
-          
-          // 画像の表示を強制
-          const images = track.querySelectorAll('img');
-          images.forEach(img => {
-            img.style.display = 'block';
-            img.style.visibility = 'visible';
-            img.style.opacity = '1';
-            img.style.position = 'relative';
-            img.style.zIndex = '5';
-            img.style.height = 'clamp(200px, 20vw, 350px)';
-            img.style.width = 'auto';
-            img.style.maxWidth = '100%';
-            img.style.objectFit = 'contain';
-            img.style.background = 'transparent';
-            img.style.border = 'none';
-            
-            // 画像の読み込みを強制
-            if (img.src) {
-              img.onload = function() {
-                this.style.display = 'block';
-                this.style.visibility = 'visible';
-                this.style.opacity = '1';
-              };
-              img.onerror = function() {
-                console.log('画像読み込みエラー:', this.src);
-              };
-            }
-          });
-          
-          // アニメーションを強制適用
-          if (index === 0) {
-            track.style.animation = 'marquee-l 45s linear infinite';
-          } else if (index === 1) {
-            track.style.animation = 'marquee-r 45s linear infinite';
-          }
-        });
-      });
-      
-      tracks.forEach((track, index) => {
-        const rect = track.getBoundingClientRect();
-        console.log(`Track ${index + 1}:`, {
-          visible: rect.height > 0,
-          height: rect.height,
-          width: rect.width,
-          top: rect.top,
-          left: rect.left,
-          computedStyle: {
-            display: getComputedStyle(track).display,
-            width: getComputedStyle(track).width,
-            height: getComputedStyle(track).height
-          }
-        });
-      });
-    });
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
   <meta name="keywords" content="ReStandard, アパレル卸, 欧米ブランド, Rockmount, Harley of Scotland, William Lockie, 定番, パートナーシップ, セレクトシップ">
   <meta name="author" content="ReStandard">
@@ -297,8 +154,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://www.google-analytics.com">
   <link rel="dns-prefetch" href="https://restandard.stores.jp">
-  <link rel="preload" as="style" href="css/style.css?v=2025-01-20-COLLECTION-FIX-FINAL-v4">
-  <link rel="stylesheet" href="css/style.css?v=2025-01-20-COLLECTION-FIX-FINAL-v4">
+  <link rel="preload" as="style" href="css/style.css?v=2025-01-20-BRAND-FINAL-FIX">
+  <link rel="stylesheet" href="css/style.css?v=2025-01-20-BRAND-FINAL-FIX">
   <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
   <!-- LCP画像のプリロード（最適化） -->
   <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
@@ -311,8 +168,8 @@
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap"></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="preload" as="style" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
   <link rel="stylesheet" href="css/reveal.css?v=2025-01-18_FINAL_REQ">
   <link rel="preload" as="style" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
@@ -376,15 +233,31 @@
       min-width: 3200px !important; /* 16枚 × 200px */
     }
     
-    /* Collectionセクションの間隔調整 - 削除済み */
+    /* Collectionセクションの間隔調整 */
+    .collection-wrapper {
+      margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
+    }
     
-    /* collection-row の間隔調整 - 削除済み */
+    .collection-row {
+      margin: 2rem 0 !important; /* 行間の間隔を拡大 */
+    }
     
-    /* Collectionセクションの背景設定 - 削除済み */
+    /* Collectionセクションの背景設定 - 透明に変更 */
+    #collection .band {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      position: relative;
+    }
     
-    /* 上段の背景設定 - 削除済み */
+    /* 上段の背景：下部分のみ角丸 */
+    .collection-row:first-child .band {
+      border-radius: 0 0 20px 20px !important;
+    }
     
-    /* 下段の背景設定 - 削除済み */
+    /* 下段の背景：上部分のみ角丸 */
+    .collection-row:last-child .band {
+      border-radius: 20px 20px 0 0 !important;
+    }
     
     /* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
     #lookbook .band {
@@ -1138,8 +1011,8 @@
                        /.netlify/images?url=/image/1.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/1.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="eager" decoding="async" alt="ReStandard コレクション 商品画像 1"
+                     width="93" height="140"
+                     decoding="async" alt="ReStandard コレクション 商品画像 1"
                      style="display: block !important; visibility: visible !important; opacity: 1 !important;"
                      data-lcp="true" fetchpriority="high">
               </picture>
@@ -1157,8 +1030,8 @@
                        /.netlify/images?url=/image/3.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/3.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 3">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 3">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68ae993a50f81d005d082408" target="_blank" rel="noopener">
@@ -1174,8 +1047,8 @@
                        /.netlify/images?url=/image/4.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/4.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 4">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 4">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b168fc16b4e9332e268ad1" target="_blank" rel="noopener">
@@ -1191,8 +1064,8 @@
                        /.netlify/images?url=/image/15.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/15.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 15">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 15">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b089a53fed3c22dc1a6683" target="_blank" rel="noopener">
@@ -1208,8 +1081,8 @@
                        /.netlify/images?url=/image/5.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/5.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 5">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 5">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b155e685f93411bc87861d" target="_blank" rel="noopener">
@@ -1225,8 +1098,8 @@
                        /.netlify/images?url=/image/10.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/10.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 10">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 10">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b15163c49f18004ad13ce2" target="_blank" rel="noopener">
@@ -1242,8 +1115,8 @@
                        /.netlify/images?url=/image/9.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/9.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 9">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 9">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b145631c3f4f005e1e13f7" target="_blank" rel="noopener">
@@ -1259,8 +1132,8 @@
                        /.netlify/images?url=/image/8.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/8.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 8">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 8">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b10c2e3ffd8e02a5496586" target="_blank" rel="noopener">
@@ -1276,8 +1149,8 @@
                        /.netlify/images?url=/image/6.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/6.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 6">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 6">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b13955ff050400856e0b34" target="_blank" rel="noopener">
@@ -1293,8 +1166,8 @@
                        /.netlify/images?url=/image/7.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/7.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 7">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 7">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68ac80478b0406e84acd6892" target="_blank" rel="noopener">
@@ -1310,8 +1183,8 @@
                        /.netlify/images?url=/image/2.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/2.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 2">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 2">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b16bf36c5f9e33ecab5706" target="_blank" rel="noopener">
@@ -1327,8 +1200,8 @@
                        /.netlify/images?url=/image/16.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/16.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 16">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 16">
               </picture>
             </a>
         </div>
@@ -1350,8 +1223,8 @@
                        /.netlify/images?url=/image/25.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/25.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 25">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 25">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68ac83b759de6b1729a87a95" target="_blank" rel="noopener">
@@ -1367,8 +1240,8 @@
                        /.netlify/images?url=/image/31.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/31.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 31">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 31">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b12cbcefd70e2ccc94c52d" target="_blank" rel="noopener">
@@ -1384,8 +1257,8 @@
                        /.netlify/images?url=/image/32.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/32.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 32">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 32">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b166b1c65008386f2b4691" target="_blank" rel="noopener">
@@ -1401,8 +1274,8 @@
                        /.netlify/images?url=/image/28.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/28.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 28">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 28">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b1e6c79183256d5c6e2afb" target="_blank" rel="noopener">
@@ -1418,8 +1291,8 @@
                        /.netlify/images?url=/image/26.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/26.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 26">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 26">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b08a3e615df64765fea6fe" target="_blank" rel="noopener">
@@ -1435,8 +1308,8 @@
                        /.netlify/images?url=/image/21.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/21.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 21">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 21">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b13e18c5bd30004acb874a" target="_blank" rel="noopener">
@@ -1452,8 +1325,8 @@
                        /.netlify/images?url=/image/30.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/30.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 30">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 30">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68add0cfd7091d99d698a8dc" target="_blank" rel="noopener">
@@ -1469,8 +1342,8 @@
                        /.netlify/images?url=/image/29.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/29.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 29">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 29">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b1ea569183258f8a6e2ae2" target="_blank" rel="noopener">
@@ -1486,8 +1359,8 @@
                        /.netlify/images?url=/image/27.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/27.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 27">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 27">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b1e2379183254a766e2ae0" target="_blank" rel="noopener">
@@ -1503,8 +1376,8 @@
                        /.netlify/images?url=/image/24.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/24.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 24">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 24">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68ae9d7fc6799300589e49f6" target="_blank" rel="noopener">
@@ -1520,8 +1393,8 @@
                        /.netlify/images?url=/image/22.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/22.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 22">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 22">
               </picture>
             </a>
             <a href="https://restandard.stores.jp/items/68b146bce14cf811f9f1c9bf" target="_blank" rel="noopener">
@@ -1537,8 +1410,8 @@
                        /.netlify/images?url=/image/23.JPG&w=186&h=280&fit=contain&q=72 186w,
                        /.netlify/images?url=/image/23.JPG&w=279&h=420&fit=contain&q=72 279w"
                      sizes="93px"
-                     width="2000" height="3000"
-                     loading="lazy" decoding="async" fetchpriority="low" alt="ReStandard コレクション 商品画像 23">
+                     width="93" height="140"
+                     loading="lazy" decoding="async" alt="ReStandard コレクション 商品画像 23">
               </picture>
             </a>
           </div>
@@ -1636,15 +1509,15 @@
           <a href="https://williamlockie.com/" target="_blank" rel="noopener">
             <picture>
               <source type="image/avif" srcset="
-                /.netlify/images?url=/image/william%20lockie.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
-                /.netlify/images?url=/image/william%20lockie.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+                /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+                /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
               <source type="image/webp" srcset="
-                /.netlify/images?url=/image/william%20lockie.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
-                /.netlify/images?url=/image/william%20lockie.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
-              <img src="/.netlify/images?url=/image/william%20lockie.webp&w=156&h=156&fit=contain&q=72"
+                /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+                /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+              <img src="/.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&q=72"
                    srcset="
-                     /.netlify/images?url=/image/william%20lockie.webp&w=156&h=156&fit=contain&q=72 156w,
-                     /.netlify/images?url=/image/william%20lockie.webp&w=312&h=312&fit=contain&q=72 312w"
+                     /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&q=72 156w,
+                     /.netlify/images?url=/image/william lockie.webp&w=312&h=312&fit=contain&q=72 312w"
                    sizes="156px"
                    width="156" height="156"
                    class="brand-logo" loading="lazy" decoding="async" alt="William Lockie">
@@ -1676,15 +1549,15 @@
         <a href="https://www.glenprince.com/" target="_blank" rel="noopener">
           <picture>
             <source type="image/avif" srcset="
-              /.netlify/images?url=/image/glen%20prince.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
-              /.netlify/images?url=/image/glen%20prince.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+              /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
             <source type="image/webp" srcset="
-              /.netlify/images?url=/image/glen%20prince.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
-              /.netlify/images?url=/image/glen%20prince.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
-            <img src="/.netlify/images?url=/image/glen%20prince.webp&w=156&h=156&fit=contain&q=72"
+              /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&q=72"
                  srcset="
-                   /.netlify/images?url=/image/glen%20prince.webp&w=156&h=156&fit=contain&q=72 156w,
-                   /.netlify/images?url=/image/glen%20prince.webp&w=312&h=312&fit=contain&q=72 312w"
+                   /.netlify/images?url=/image/glen prince.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/glen prince.webp&w=312&h=312&fit=contain&q=72 312w"
                  sizes="156px"
                  width="156" height="156"
                  class="brand-logo" loading="lazy" decoding="async" alt="Glen Prince">
@@ -1696,15 +1569,15 @@
         <a href="https://www.athenaknitwear.com/" target="_blank" rel="noopener">
           <picture>
             <source type="image/avif" srcset="
-              /.netlify/images?url=/image/athena%20designs.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
-              /.netlify/images?url=/image/athena%20designs.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+              /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
             <source type="image/webp" srcset="
-              /.netlify/images?url=/image/athena%20designs.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
-              /.netlify/images?url=/image/athena%20designs.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
-            <img src="/.netlify/images?url=/image/athena%20designs.webp&w=156&h=156&fit=contain&q=72"
+              /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&q=72"
                  srcset="
-                   /.netlify/images?url=/image/athena%20designs.webp&w=156&h=156&fit=contain&q=72 156w,
-                   /.netlify/images?url=/image/athena%20designs.webp&w=312&h=312&fit=contain&q=72 312w"
+                   /.netlify/images?url=/image/athena designs.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/athena designs.webp&w=312&h=312&fit=contain&q=72 312w"
                  sizes="156px"
                  width="156" height="156"
                  class="brand-logo" loading="lazy" decoding="async" alt="Athena Designs">
@@ -1756,15 +1629,15 @@
         <a href="https://sans-arcidet.fr/" target="_blank" rel="noopener">
           <picture>
             <source type="image/avif" srcset="
-              /.netlify/images?url=/image/san%20arcident.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
-              /.netlify/images?url=/image/san%20arcident.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+              /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
             <source type="image/webp" srcset="
-              /.netlify/images?url=/image/san%20arcident.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
-              /.netlify/images?url=/image/san%20arcident.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
-            <img src="/.netlify/images?url=/image/san%20arcident.webp&w=156&h=156&fit=contain&q=72"
+              /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&q=72"
                  srcset="
-                   /.netlify/images?url=/image/san%20arcident.webp&w=156&h=156&fit=contain&q=72 156w,
-                   /.netlify/images?url=/image/san%20arcident.webp&w=312&h=312&fit=contain&q=72 312w"
+                   /.netlify/images?url=/image/san arcident.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/san arcident.webp&w=312&h=312&fit=contain&q=72 312w"
                  sizes="156px"
                  width="156" height="156"
                  class="brand-logo" loading="lazy" decoding="async" alt="Sans Arcidet">
@@ -1776,15 +1649,15 @@
         <a href="https://hatattack.com/" target="_blank" rel="noopener">
           <picture>
             <source type="image/avif" srcset="
-              /.netlify/images?url=/image/hat%20attack.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
-              /.netlify/images?url=/image/hat%20attack.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
+              /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
+              /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=contain&fm=avif&q=50 312w">
             <source type="image/webp" srcset="
-              /.netlify/images?url=/image/hat%20attack.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
-              /.netlify/images?url=/image/hat%20attack.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
-            <img src="/.netlify/images?url=/image/hat%20attack.webp&w=156&h=156&fit=contain&q=72"
+              /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&fm=webp&q=65 156w,
+              /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=contain&fm=webp&q=65 312w">
+            <img src="/.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&q=72"
                  srcset="
-                   /.netlify/images?url=/image/hat%20attack.webp&w=156&h=156&fit=contain&q=72 156w,
-                   /.netlify/images?url=/image/hat%20attack.webp&w=312&h=312&fit=contain&q=72 312w"
+                   /.netlify/images?url=/image/hat attack.webp&w=156&h=156&fit=contain&q=72 156w,
+                   /.netlify/images?url=/image/hat attack.webp&w=312&h=312&fit=contain&q=72 312w"
                  sizes="156px"
                  width="156" height="156"
                  class="brand-logo" loading="lazy" decoding="async" alt="Hat Attack">
@@ -2058,9 +1931,9 @@
       console.log('スプラッシュ動画は無効化されています');
       
       // スプラッシュ動画を完全に無効化
-        document.body.classList.remove('splash-active');
-        splash.style.display = 'none';
-        return;
+      document.body.classList.remove('splash-active');
+      splash.style.display = 'none';
+      return;
       
       // 動画の読み込みと再生を最適化
       let videoLoaded = false;
@@ -2138,11 +2011,11 @@
       console.log('DOMContentLoaded - スプラッシュ初期化開始');
       
       // スプラッシュ動画を即座に無効化（読み込み速度向上）
-          try {
-            initializeSplash();
-          } catch (error) {
-            console.error('スプラッシュ初期化エラー:', error);
-          }
+      try {
+        initializeSplash();
+      } catch (error) {
+        console.error('スプラッシュ初期化エラー:', error);
+      }
     });
   </script>
   <!-- 旧クラス向けスクリプトとモーダルは削除済み -->
@@ -2282,8 +2155,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
   
   <!-- 外部スクリプトの読み込み -->
-  <script src="js/reveal.js?v=2025-01-18-final-vp" defer></script>
-  <script src="js/lang-toggle.js?v=2025-01-18-final-vp" defer></script>
+  <script src="js/reveal.js?v=2025-01-18-final" defer></script>
+  <script src="js/lang-toggle.js?v=2025-01-18-final" defer></script>
   <script>
     // モバイルレイアウト修正のためのJavaScriptガード（最適化）
     let layoutInitialized = false;
@@ -2330,10 +2203,10 @@ document.addEventListener('DOMContentLoaded', function() {
   <script>window.__PERF_FLAGS = window.__PERF_FLAGS || {};</script>
   
   <!-- セクション初期化スクリプト（defer付きで最適化） -->
-  <script src="js/init-sections.js?v=2025-01-19-fix-vp" defer></script>
+  <script src="js/init-sections.js?v=2025-01-19-fix" defer></script>
   <!-- Collection と Lookbook の個別インタラクション（defer付きで最適化） -->
-  <script src="js/collection-interaction.js?v=2025-01-19-fix-vp" defer></script>
-  <script src="js/lookbook-interaction.js?v=2025-01-19-fix-vp" defer></script>
+  <script src="js/collection-interaction.js?v=2025-01-19-fix" defer></script>
+  <script src="js/lookbook-interaction.js?v=2025-01-19-fix" defer></script>
 
   <!-- LCP Detector (temporary) -->
   <script>
