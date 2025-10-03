@@ -695,10 +695,10 @@ section {
 
 /* Collection 上段・下段の方向指定 */
 #collection .collection-row:nth-child(1) .collection-track{ 
-  animation: marquee-l 45s linear infinite !important; 
+  animation: marquee-l 30s linear infinite !important; 
 }
 #collection .collection-row:nth-child(2) .collection-track{ 
-  animation: marquee-r 45s linear infinite !important; 
+  animation: marquee-r 30s linear infinite !important; 
 }
 
 /* アニメーションの確実な適用 */
@@ -1386,7 +1386,7 @@ img[loading="lazy"].loaded {
 #collection .band { 
     /* 重なり防止: 適切な高さに制限 */
     min-height: auto;
-    max-height: 400px !important; /* 固定の最大高さに制限 */
+    max-height: 600px !important; /* 最大高さを600pxに緩和 */
     overflow: hidden; /* はみ出し防止 */
     height: auto !important; /* 高さを自動調整 */
 }
@@ -2229,14 +2229,7 @@ html body[lang="en"] #brands .only-ja {
    ======================================== */
 
 /* === FIX: Collection × Brands overlap (2025-01) === */
-/* 高さ上限とはみ出しカットを無効化して下段が正しく収まるようにする */
-#collection,
-#collection .band {
-  max-height: none !important;
-  overflow: visible !important;
-  height: auto !important; /* 高さを自動調整 */
-  min-height: 400px !important; /* 最小高さを確保 */
-}
+/* 重複削除済み - 統合されたルールを使用 */
 
 /* 見出しとの間隔調整に使っていた負のマージンを撤回（食い込み抑止） */
 #collection .collection-wrapper {
@@ -2278,8 +2271,8 @@ html body[lang="en"] #brands .only-ja {
   visibility: visible !important;
   opacity: 1 !important;
   height: auto !important;
-  min-height: 300px !important; /* 2行分の高さを適切に制限 */
-  max-height: 350px !important; /* 最大高さを制限 */
+  min-height: 400px !important; /* 2行分の高さを400pxに増やす */
+  max-height: 500px !important; /* 最大高さを500pxに増やす */
   grid-template-rows: 1fr 1fr !important; /* 2行を強制表示 */
   gap: 20px !important; /* 行間の間隔を適切に調整 */
   position: relative !important;
