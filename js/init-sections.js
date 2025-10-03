@@ -61,7 +61,7 @@ function ensureLoopWidth(track) {
     clonesAdded++;
   }
 
-  // READ final width after all writes
+  // READ final width after all writes (moved to avoid reflow)
   const finalWidth = track.scrollWidth;
   const viewportRatio = parentWidth ? Math.round((finalWidth / parentWidth) * 100) : 0;
   if (window.__QA_MEASURE_LOGS__) {
@@ -78,13 +78,16 @@ function attachManualControls(track){
   const onDown = (ev)=>{
     // 長押しタイマーを開始（150ms）
     longPressTimer = setTimeout(() => {
+      // READ all layout properties first
+      startX = (ev.touches ? ev.touches[0].clientX : ev.clientX);
+      startTx = getTxPx(track);
+      
+      // WRITE all properties after reads
       dragging = true;
       track.isDragging = true;
       moved = 0;
       track.classList.add('dragging');
       track.style.animationPlayState = 'paused';
-      startX = (ev.touches ? ev.touches[0].clientX : ev.clientX);
-      startTx = getTxPx(track);
     }, 150);
     ev.preventDefault();
   };
@@ -109,21 +112,19 @@ function attachManualControls(track){
     if(!dragging) return;
     dragging = false;
     
-    // アニメーションを再開（現在の位置から継続）
-    track.style.animationPlayState = 'running';
-    
-    // 現在の位置を記録してアニメーションを調整
+    // READ all layout properties first
     const currentTx = getTxPx(track);
     const segmentWidth = track._segmentWidth || 0;
+    const dragAmount = Math.abs(moved);
+    
+    // WRITE all properties after reads
+    track.style.animationPlayState = 'running';
     
     // セグメント幅の倍数に調整してスムーズなループを保証
     if (segmentWidth > 0) {
       const adjustedTx = Math.round(currentTx / segmentWidth) * segmentWidth;
       track.style.transform = `translateX(${adjustedTx}px)`;
     }
-
-    // moved はここではリセットしない（先に判定に使う）
-    const dragAmount = Math.abs(moved);
 
     // 8px未満=クリック：リンク遷移は邪魔せず、その場から再開
     if (dragAmount < 8) {
@@ -186,9 +187,13 @@ function attachManualControls(track){
   // ホイール横スクロール対応
   track.addEventListener('wheel', (e) => {
     if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+    
+    // READ all layout properties first
+    const currentTx = getTxPx(track);
+    
+    // WRITE all properties after reads
     track.style.animationPlayState = 'paused';
     track.classList.add('dragging');
-    const currentTx = getTxPx(track);
     track.style.transform = `translateX(${currentTx - e.deltaX}px)`;
     
     clearTimeout(track._wheelTimer);
