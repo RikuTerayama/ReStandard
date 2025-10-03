@@ -156,39 +156,32 @@ section {
     background: transparent !important;
     width: 100% !important;
     max-width: none !important;
-    /* 位置調整: タイトルとの間隔を大幅に縮小 */
-    margin-top: -80px !important; /* 大幅に上に移動 */
+    /* 位置調整: タイトルとの間隔を適切に調整（統合済み） */
+    /* margin-top: -60px !important; 統合されたセレクタで管理 */
     /* 2行目表示のための追加設定 */
     min-height: 400px !important; /* 最小高さを確保 */
     position: relative !important;
     z-index: 2 !important; /* Brandsセクションより上に表示 */
   }
   
-  /* より強力なセレクタで確実に適用 */
-  section#collection .collection-wrapper {
-    margin-top: -80px !important;
-  }
-  
-  /* 最強のセレクタで確実に適用 */
-  html body section#collection .band .collection-wrapper {
-    margin-top: -80px !important;
-  }
-  
-  /* さらに強力なセレクタで確実に適用 */
-  html body section#collection div.band div.collection-wrapper {
-    margin-top: -80px !important;
-  }
-  
-  /* 最強のセレクタ（属性セレクタ使用） */
-  html body section[id="collection"] div[class="band"] div[class="collection-wrapper"] {
-    margin-top: -80px !important;
-  }
-  
-  /* 最終手段: 最も詳細度の高いセレクタ */
+  /* 統合されたCollection-wrapper位置調整（最強のセレクタ） */
   html[lang] body[class] section#collection div.band div.collection-wrapper {
-    margin-top: -80px !important;
-    transform: translateY(-20px) !important; /* 追加の移動 */
-}
+    margin-top: -60px !important;
+    transform: translateY(-10px) !important; /* 10%下に調整 */
+  }
+
+  /* 統合されたセクション間隔設定（1か所で管理） */
+  #brands {
+    margin-top: 60px !important; /* Collectionセクションとの間隔 */
+  }
+  
+  #lookbook {
+    margin-top: 40px !important; /* Brandsセクションとの間隔 */
+  }
+  
+  #about, #about-restandard {
+    margin-top: 40px !important; /* Lookbookセクションとの間隔 */
+  }
 
 /* 既存の collection-row 定義は上記で統一済み */
 
@@ -305,16 +298,16 @@ section {
 /* ========================================
    Brands - 正方形・中央揃え・ホバー制御
    ======================================== */
-/* Brands - 背景透明・正方形レスポンシブグリッド */
-#brands {
-  background: none;
-  padding: clamp(60px, 8vw, 80px) clamp(16px, 3vw, 20px);
-  text-align: center;
+  /* Brands - 背景透明・正方形レスポンシブグリッド */
+  #brands {
+    background: none;
+    padding: clamp(60px, 8vw, 80px) clamp(16px, 3vw, 20px);
+    text-align: center;
     /* Collectionセクションとの重なり防止 */
     position: relative;
     z-index: 1;
-    margin-top: 20px; /* Collectionセクションとの間隔を確保 */
-}
+    /* セクション間隔は統合設定で管理 */
+  }
 
 /* Brands - グリッドレイアウト・安定配置 */
 /* === Brands: モバイルでもロゴが必ず見える・中央整列 === */
@@ -877,7 +870,7 @@ img[src*="rockmount"] {
   width: 100% !important;
   max-width: none !important;
 }
-  /* collection-wrapper の設定は上記の統一ルールに統合済み */
+  /* collection-wrapper の設定は統合済み */
 #collection .collection-track{
   display:flex; align-items:center; gap: 8px !important; /* 左右スペース調整 */
   will-change: transform; width: max-content !important; height:100%; cursor: grab;
@@ -921,6 +914,7 @@ img[src*="rockmount"] {
   text-align: center !important; /* 中央揃え */
   width: 100% !important; /* 横幅100% */
   max-width: none !important;
+  /* セクション間隔は統合設定で管理 */
 }
 /* セクションコンテナ統一設定 */
 .collection-container,
