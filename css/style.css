@@ -694,11 +694,11 @@ section {
 @keyframes marquee-r{ from{transform:translateX(-50%)} to{transform:translateX(0)} }
 
 /* Collection 上段・下段の方向指定 */
-.collection .collection-row:nth-child(1) .collection-track{ 
-  animation: marquee-l var(--loop,45s) linear infinite; 
+#collection .collection-row:nth-child(1) .collection-track{ 
+  animation: marquee-l var(--loop,45s) linear infinite !important; 
 }
-.collection .collection-row:nth-child(2) .collection-track{ 
-  animation: marquee-r var(--loop,45s) linear infinite; 
+#collection .collection-row:nth-child(2) .collection-track{ 
+  animation: marquee-r var(--loop,45s) linear infinite !important; 
 }
 
 /* ドラッグ中はCSSアニメを一時停止（JSが .dragging を付与） */
@@ -2213,21 +2213,16 @@ html body[lang="en"] #brands .only-ja {
   gap: 20px !important; /* 行間の間隔を確保 */
 }
 
-/* より強力な下段表示の強制設定 */
+/* 下段の正常表示（デバッグ色を削除） */
 #collection .collection-row:nth-child(2) {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
   height: auto !important;
   min-height: 200px !important;
-  background: rgba(255, 0, 0, 0.3) !important; /* 赤背景で可視化 */
-  border: 3px solid red !important;
   position: relative !important;
-  z-index: 999 !important;
-  margin-top: 20px !important; /* 上段との間隔を強制確保 */
-  transform: none !important; /* 変形を無効化 */
-  top: auto !important; /* 位置をリセット */
-  left: auto !important; /* 位置をリセット */
+  z-index: 3 !important;
+  margin-top: 20px !important; /* 上段との間隔を確保 */
 }
 
 /* Collectionセクション全体の表示を強制 */
@@ -2266,17 +2261,15 @@ html body[lang="en"] #brands .only-ja {
   z-index: 3 !important;
 }
 
-/* 上段も強制表示 */
+/* 上段の正常表示（デバッグ色を削除） */
 #collection .collection-row:nth-child(1) {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
   height: auto !important;
   min-height: 200px !important;
-  background: rgba(0, 255, 0, 0.3) !important; /* 緑背景で可視化 */
-  border: 3px solid green !important;
   position: relative !important;
-  z-index: 999 !important;
+  z-index: 3 !important;
   margin-top: 0 !important; /* 上段の上マージンをリセット */
 }
 
@@ -2348,6 +2341,8 @@ div.copyright {
   object-fit: contain !important;
   display: block !important;
   aspect-ratio: 2 / 3 !important; /* 2:3の縦長比率を確保 */
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Collection Track 2の表示確認 - デバッグ用CSS削除済み */
