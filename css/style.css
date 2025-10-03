@@ -2172,3 +2172,8 @@ footer.py-5.text-center a {
 div.copyright {
   color: #666666;   /* safe AA on white / light gray backgrounds */
 }
+
+/* Font-size floor for small screens */
+@media (max-width: 480px) {
+  html { font-size: max(12px, 100%); } /* 既定が16pxなら実質無変更 */
+}
