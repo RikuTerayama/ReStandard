@@ -2230,39 +2230,9 @@ html body[lang="en"] #brands .only-ja {
 
 /* 既存の Brands 側余白はそのまま活かす（変更なし） */
 
-/* 緊急診断: 下段表示の強制テスト */
-#collection .collection-row:nth-child(2) {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: auto !important;
-  min-height: 200px !important;
-  background: rgba(255, 0, 0, 0.3) !important; /* 赤背景で可視化 */
-  border: 3px solid red !important;
-  position: relative !important;
-  z-index: 999 !important;
-  margin-top: 20px !important; /* 上段との間隔を強制確保 */
-}
+/* 重複削除済み */
 
-/* Collection-wrapperの高さを強制確保 */
-#collection .collection-wrapper {
-  min-height: 400px !important; /* 2行分の高さを確保 */
-  display: grid !important;
-  grid-template-rows: 1fr 1fr !important; /* 2行を強制表示 */
-  gap: 20px !important; /* 行間の間隔を確保 */
-}
-
-/* 下段の正常表示（デバッグ色を削除） */
-#collection .collection-row:nth-child(2) {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: auto !important;
-  min-height: 200px !important;
-  position: relative !important;
-  z-index: 3 !important;
-  margin-top: 20px !important; /* 上段との間隔を確保 */
-}
+/* 重複削除済み - 統合されたルールを使用 */
 
 /* Collectionセクション全体の表示を強制 */
 #collection {
@@ -2398,18 +2368,7 @@ div.copyright {
   z-index: 4 !important;
 }
 
-/* Collection-rowの表示を強制 */
-#collection .collection-row {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: auto !important;
-  min-height: 200px !important;
-  position: relative !important;
-  z-index: 3 !important;
-  overflow: visible !important;
-  background: transparent !important; /* 背景を透明に */
-}
+/* 重複削除済み - 統合されたルールを使用 */
 
 /* Collection-row内の画像コンテナを強制表示 */
 #collection .collection-row .collection-track {
