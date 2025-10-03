@@ -724,7 +724,7 @@ section {
   padding: 0 !important;
 }
 
-/* Collection-rowの最終的な強制設定 */
+/* === Collection-row 統合ルール（重複削除済み） === */
 #collection .collection-row {
   display: block !important;
   visibility: visible !important;
@@ -737,6 +737,16 @@ section {
   background: transparent !important;
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* 上段の特別設定 */
+#collection .collection-row:nth-child(1) {
+  margin-top: 0 !important;
+}
+
+/* 下段の特別設定 */
+#collection .collection-row:nth-child(2) {
+  margin-top: 20px !important;
 }
 
 /* ドラッグ中はCSSアニメを一時停止（JSが .dragging を付与） */
@@ -2259,28 +2269,9 @@ html body[lang="en"] #brands .only-ja {
   z-index: 2 !important;
 }
 
-/* Collection-rowの表示を強制 */
-#collection .collection-row {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: auto !important;
-  min-height: 200px !important;
-  position: relative !important;
-  z-index: 3 !important;
-}
+/* 重複削除済み - 統合されたルールを使用 */
 
-/* 上段の正常表示（デバッグ色を削除） */
-#collection .collection-row:nth-child(1) {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: auto !important;
-  min-height: 200px !important;
-  position: relative !important;
-  z-index: 3 !important;
-  margin-top: 0 !important; /* 上段の上マージンをリセット */
-}
+/* 重複削除済み - 統合されたルールを使用 */
 
 /* 重なり解消のための追加設定 */
 #collection {
