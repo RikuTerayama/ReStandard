@@ -706,6 +706,39 @@ section {
   animation-play-state: running !important;
 }
 
+/* 画像表示の最終的な強制設定 */
+#collection .collection-track img,
+#collection .collection-row .collection-track img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: clamp(200px, 20vw, 350px) !important;
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  position: relative !important;
+  z-index: 5 !important;
+  background: transparent !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Collection-rowの最終的な強制設定 */
+#collection .collection-row {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 200px !important;
+  position: relative !important;
+  z-index: 3 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* ドラッグ中はCSSアニメを一時停止（JSが .dragging を付与） */
 .collection-track.dragging,
 .lookbook-track.dragging{
@@ -2185,6 +2218,7 @@ html body[lang="en"] #brands .only-ja {
 /* 見出しとの間隔調整に使っていた負のマージンを撤回（食い込み抑止） */
 #collection .collection-wrapper {
   margin-top: 80px !important; /* タイトルとの間隔を大幅に確保 */
+  margin-bottom: 100px !important; /* Brandsセクションとの間隔を確保 */
 }
 
 /* 念のため：セクション間の余白は既存で確保済みだが、
@@ -2374,6 +2408,35 @@ div.copyright {
   position: relative !important;
   z-index: 3 !important;
   overflow: visible !important;
+  background: transparent !important; /* 背景を透明に */
+}
+
+/* Collection-row内の画像コンテナを強制表示 */
+#collection .collection-row .collection-track {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: max-content !important;
+  height: 100% !important;
+  will-change: transform !important;
+  position: relative !important;
+  z-index: 4 !important;
+  overflow: visible !important;
+  background: transparent !important; /* 背景を透明に */
+}
+
+/* Collection-row内の画像を強制表示 */
+#collection .collection-row .collection-track img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: clamp(200px, 20vw, 350px) !important;
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  position: relative !important;
+  z-index: 5 !important;
+  background: transparent !important; /* 背景を透明に */
 }
 
 /* Collection Track 2の表示確認 - デバッグ用CSS削除済み */
