@@ -695,10 +695,15 @@ section {
 
 /* Collection 上段・下段の方向指定 */
 #collection .collection-row:nth-child(1) .collection-track{ 
-  animation: marquee-l var(--loop,45s) linear infinite !important; 
+  animation: marquee-l 45s linear infinite !important; 
 }
 #collection .collection-row:nth-child(2) .collection-track{ 
-  animation: marquee-r var(--loop,45s) linear infinite !important; 
+  animation: marquee-r 45s linear infinite !important; 
+}
+
+/* アニメーションの確実な適用 */
+.collection-track {
+  animation-play-state: running !important;
 }
 
 /* ドラッグ中はCSSアニメを一時停止（JSが .dragging を付与） */
@@ -2343,6 +2348,32 @@ div.copyright {
   aspect-ratio: 2 / 3 !important; /* 2:3の縦長比率を確保 */
   visibility: visible !important;
   opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* Collection-trackの表示を強制 */
+#collection .collection-track {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: max-content !important;
+  height: 100% !important;
+  will-change: transform !important;
+  position: relative !important;
+  z-index: 4 !important;
+}
+
+/* Collection-rowの表示を強制 */
+#collection .collection-row {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 200px !important;
+  position: relative !important;
+  z-index: 3 !important;
+  overflow: visible !important;
 }
 
 /* Collection Track 2の表示確認 - デバッグ用CSS削除済み */
