@@ -708,7 +708,9 @@ section {
 
 /* 画像表示の最終的な強制設定 */
 #collection .collection-track img,
-#collection .collection-row .collection-track img {
+#collection .collection-row .collection-track img,
+#collection .collection-track picture,
+#collection .collection-row .collection-track picture {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -722,6 +724,14 @@ section {
   border: none !important;
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* source要素も強制表示 */
+#collection .collection-track source,
+#collection .collection-row .collection-track source {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* === Collection-row 統合ルール（重複削除済み） === */
@@ -2228,7 +2238,9 @@ html body[lang="en"] #brands .only-ja {
 /* 見出しとの間隔調整に使っていた負のマージンを撤回（食い込み抑止） */
 #collection .collection-wrapper {
   margin-top: 80px !important; /* タイトルとの間隔を大幅に確保 */
-  margin-bottom: 100px !important; /* Brandsセクションとの間隔を確保 */
+  margin-bottom: 150px !important; /* Brandsセクションとの間隔を大幅に確保 */
+  position: relative !important;
+  z-index: 2 !important;
 }
 
 /* 念のため：セクション間の余白は既存で確保済みだが、
@@ -2254,6 +2266,8 @@ html body[lang="en"] #brands .only-ja {
   overflow: visible !important;
   position: relative !important;
   z-index: 1 !important;
+  background: rgba(255, 255, 255, 0.85) !important; /* ナビバーと同じ色 */
+  backdrop-filter: blur(8px) !important; /* ナビバーと同じ効果 */
 }
 
 /* Collection-wrapperの表示を強制 */
@@ -2283,6 +2297,7 @@ html body[lang="en"] #brands .only-ja {
   position: relative !important;
   z-index: 0 !important; /* Collectionより下に配置 */
   clear: both !important; /* フロートをクリア */
+  margin-top: 200px !important; /* Collectionセクションとの間隔を確保 */
 }
 
 /* Accessibility: Ensure all section titles are white for consistency */
