@@ -86,7 +86,12 @@
           }
         });
         
-        // デバッグ用コード削除済み
+        // 位置調整: collection-wrapperを上に移動
+        if (wrapper) {
+          wrapper.style.marginTop = '-80px';
+          wrapper.style.position = 'relative';
+          wrapper.style.zIndex = '2';
+        }
       });
       
       tracks.forEach((track, index) => {
