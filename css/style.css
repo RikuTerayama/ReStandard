@@ -158,12 +158,14 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   }
   
-  /* rows-wrapper の背景設定を削除、.band に統一 */
-  .collection-rows-wrapper {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 8px;
+  /* collection-wrapper のグリッドレイアウト設定 */
+  .collection-wrapper {
+    display: grid !important;
+    grid-template-rows: 1fr 1fr !important;
+    gap: clamp(8px, 1.6vw, 12px) !important;
     background: transparent;
+    width: 100% !important;
+    max-width: none !important;
   }
   
   /* 既存の collection-row 定義は上記で統一済み */
@@ -560,15 +562,17 @@
   /* 行は可変高。中身に追従（見切れ防止） */
   #collection .collection-row,
   #lookbook .lookbook-row {
-    position:relative;
-    height:auto;
-    min-block-size:clamp(160px,22vw,340px); /* PC下限 */
-    overflow:visible;
+    position: relative;
+    height: auto;
+    min-height: clamp(200px, 25vw, 400px); /* 十分な高さを確保 */
+    overflow: visible;
+    display: flex;
+    align-items: center;
   }
   @media (max-width: 767px){
     #collection .collection-row,
     #lookbook .lookbook-row { 
-      min-block-size:clamp(140px,36vw,260px); 
+      min-height: clamp(180px, 30vw, 300px); 
     }
   }
   
@@ -847,30 +851,8 @@
     width: 100% !important;
     max-width: none !important;
   }
-  #collection .collection-rows{
-    display:grid;
-    grid-template-rows: 1fr 1fr;
-    gap: clamp(8px,1.6vw,12px);
-    width: 100% !important;
-    max-width: none !important;
-  }
-  /* PATCH: Collection 行の高さを自動化し見切れ防止 */
-  #collection .collection-row{
-    position: relative;
-    /* overflow:hidden;  ← 削除 */
-    /* height: clamp(120px, 18vw, 220px); ← 削除 */
-    height: auto;                 /* 自動 */
-    min-block-size: clamp(160px, 22vw, 340px); /* 下限だけ与える */
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-    overflow: visible;            /* 画像が切れない */
-  }
-  @media (max-width:767px){
-    /* 固定高は撤去。必要なら min-block-size を軽めに */
-    #collection .collection-row{ min-block-size: clamp(140px, 36vw, 260px); }
-  }
+  /* collection-wrapper の設定は上記の統一ルールに統合済み */
+  /* Collection 行の高さ設定は上記の統一ルールに統合済み */
   #collection .collection-track{
     display:flex; align-items:center; gap: 8px !important; /* 左右スペース調整 */
     will-change: transform; width: max-content !important; height:100%; cursor: grab;
@@ -1259,15 +1241,7 @@
     right: auto;
   }
   
-  /* 4. 画像の見切れ抑止 */
-  .collection-track img,
-  .lookbook-track img {
-    height: var(--collection-row-h, 320px);
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    display: block;
-  }
+  /* 4. 画像の見切れ抑止 - 統一ルールに統合済み */
   
   /* === center full-bleed band === */
   .band {
@@ -1335,12 +1309,7 @@
     flex: 0 0 auto;
   }
   
-  /* Collection wrapper の定義 */
-  .collection-wrapper {
-    position: relative;
-    min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
-    margin-top: 6rem; /* タイトルとの間隔をさらに拡大 */
-  }
+  /* Collection wrapper の定義 - グリッドレイアウトに統合済み */
   
   /* Collection行にナビバーと同じ背景を設定 */
   .collection-row {
@@ -1350,19 +1319,7 @@
     margin: 8px 0;
   }
   
-  .collection-row:first-child {
-    position: relative;
-    top: auto;
-    transform: none;
-    width: 100%;
-  }
-
-  .collection-row:last-child {
-    position: relative;
-    top: auto;
-    transform: none;
-    width: 100%;
-  }
+  /* collection-row の設定は上記の統一ルールに統合済み */
   
   /* 行の高さと間隔のカスタムプロパティ */
   :root {
@@ -1450,14 +1407,7 @@
     will-change: transform;
   }
   
-  /* 画像の上下切れ防止 */
-  .collection-track img {
-    object-fit: contain;
-    height: var(--collection-img-h, 320px);
-    width: auto;
-    max-width: 100%;
-    display: block;
-  }
+  /* 画像の上下切れ防止 - 統一ルールに統合済み */
   
   .lookbook-track img {
     object-fit: contain;
@@ -2181,27 +2131,38 @@ div.copyright {
 
 /* === CLS hardening for Collection (UI unchanged) === */
 
-/* 画像だけを包む a 要素が hover/focus で border を足すと1px分ズレるので、
-   初期状態から透明ボーダーを持たせて"ズレゼロ"にする */
+/* 画像だけを包む a 要素のベースライン起因のズレ防止 */
 #collection .collection-track a {
-  border: 1px solid transparent !important;
   /* 画像のみを含む a のベースライン起因のズレ防止 */
   line-height: 0 !important;
 }
 
-/* 既存デザインの hover が border を使っている場合でもレイアウトは不変 */
+/* ホバー時のボーダーアニメーションを完全削除 */
 #collection .collection-track a:hover,
 #collection .collection-track a:focus-visible {
-  border-color: rgba(255, 255, 255, 0.3) !important; /* 白い半透明ボーダーに変更 */
-  outline: none !important;              /* 既存で outline を使っていれば削ってよい */
+  outline: none !important;
 }
 
-/* 画像の"確保サイズ"を先に宣言（※UI変更なし）
-   - aspect-ratio を与えるだけ。幅/高さは既存CSSに完全依存。
-   - 2:3（縦長）の想定。もしコレクションが別比率なら値だけ差し替え。 */
+  /* Collection 画像の統一設定 */
 #collection .collection-track img {
-  aspect-ratio: 2 / 3 !important;/* ★確保比率（全画像が同比率ならこのままでOK） */
-  /* 既存 object-fit を使っているならそのまま。未指定なら触らない（UI不変） */
+  height: clamp(200px, 20vw, 350px) !important; /* 十分なサイズを確保 */
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+  aspect-ratio: 2 / 3 !important; /* 2:3の縦長比率を確保 */
+}
+
+/* デバッグ用: Collection Track 2の表示確認 */
+#collection .collection-row:nth-child(2) {
+  background: rgba(255, 0, 0, 0.1) !important; /* 薄い赤背景で表示確認 */
+  border: 2px solid red !important; /* 赤い枠線で表示確認 */
+  min-height: 200px !important; /* 最小高さを確保 */
+}
+
+#collection .collection-row:nth-child(2) .collection-track {
+  background: rgba(0, 255, 0, 0.1) !important; /* 薄い緑背景で表示確認 */
+  border: 2px solid green !important; /* 緑の枠線で表示確認 */
 }
 
 /* セクション全体の初期高さをわずかに確保
