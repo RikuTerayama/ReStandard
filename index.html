@@ -68,6 +68,7 @@
       
       rows.forEach((row, index) => {
         const rect = row.getBoundingClientRect();
+        const computedStyle = getComputedStyle(row);
         console.log(`Row ${index + 1}:`, {
           visible: rect.height > 0,
           height: rect.height,
@@ -75,11 +76,26 @@
           top: rect.top,
           left: rect.left,
           computedStyle: {
-            display: getComputedStyle(row).display,
-            position: getComputedStyle(row).position,
-            minHeight: getComputedStyle(row).minHeight
+            display: computedStyle.display,
+            position: computedStyle.position,
+            minHeight: computedStyle.minHeight,
+            background: computedStyle.background,
+            border: computedStyle.border,
+            boxShadow: computedStyle.boxShadow,
+            zIndex: computedStyle.zIndex
           }
         });
+        
+        // デバッグ用: 要素に直接スタイルを適用
+        if (index === 0) {
+          row.style.border = '5px solid #00ff00';
+          row.style.background = 'rgba(0, 255, 0, 0.3)';
+          row.style.boxShadow = '0 0 15px #00ff00';
+        } else if (index === 1) {
+          row.style.border = '5px solid #ff0000';
+          row.style.background = 'rgba(255, 0, 0, 0.3)';
+          row.style.boxShadow = '0 0 15px #ff0000';
+        }
       });
       
       tracks.forEach((track, index) => {
