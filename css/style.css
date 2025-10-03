@@ -143,7 +143,7 @@ section {
   color: white !important;
   font-size: 2rem;
   text-align: center;
-    margin-bottom: clamp(8px, 1vw, 16px) !important; /* 上段との間隔を大幅に縮小 */
+  margin-bottom: clamp(20px, 3vw, 40px) !important; /* 適切な間隔を確保 */
   }
   
   /* collection-title クラスは削除済み - #collection h2 に統合 */
@@ -156,8 +156,8 @@ section {
     background: transparent !important;
     width: 100% !important;
     max-width: none !important;
-    /* 位置調整: タイトルとの間隔を大幅に縮小 */
-    margin-top: -80px !important; /* 大幅に上に移動 */
+    /* 位置調整: タイトルとの間隔を適切に調整 */
+    margin-top: -20px !important; /* 適切な間隔を確保 */
     /* 2行目表示のための追加設定 */
     min-height: 400px !important; /* 最小高さを確保 */
     position: relative !important;
@@ -166,29 +166,58 @@ section {
   
   /* より強力なセレクタで確実に適用 */
   section#collection .collection-wrapper {
-    margin-top: -80px !important;
+    margin-top: -20px !important;
   }
   
   /* 最強のセレクタで確実に適用 */
   html body section#collection .band .collection-wrapper {
-    margin-top: -80px !important;
+    margin-top: -20px !important;
   }
   
   /* さらに強力なセレクタで確実に適用 */
   html body section#collection div.band div.collection-wrapper {
-    margin-top: -80px !important;
+    margin-top: -20px !important;
   }
   
   /* 最強のセレクタ（属性セレクタ使用） */
   html body section[id="collection"] div[class="band"] div[class="collection-wrapper"] {
-    margin-top: -80px !important;
+    margin-top: -20px !important;
   }
   
   /* 最終手段: 最も詳細度の高いセレクタ */
   html[lang] body[class] section#collection div.band div.collection-wrapper {
-    margin-top: -80px !important;
-    transform: translateY(-20px) !important; /* 追加の移動 */
-}
+    margin-top: -20px !important;
+    transform: none !important; /* 追加の移動を削除 */
+  }
+
+  /* レスポンシブ対応: 画面サイズに応じた間隔調整 */
+  @media (max-width: 768px) {
+    #collection h2 {
+      margin-bottom: clamp(15px, 4vw, 30px) !important; /* モバイルでより大きな間隔 */
+    }
+    
+    .collection-wrapper {
+      margin-top: -10px !important; /* モバイルでより小さな上移動 */
+    }
+    
+    #brands {
+      margin-top: 40px !important; /* モバイルで適切な間隔 */
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    #collection h2 {
+      margin-bottom: clamp(30px, 4vw, 50px) !important; /* デスクトップでより大きな間隔 */
+    }
+    
+    .collection-wrapper {
+      margin-top: -30px !important; /* デスクトップでより大きな上移動 */
+    }
+    
+    #brands {
+      margin-top: 80px !important; /* デスクトップでより大きな間隔 */
+    }
+  }
 
 /* 既存の collection-row 定義は上記で統一済み */
 
@@ -313,7 +342,7 @@ section {
     /* Collectionセクションとの重なり防止 */
     position: relative;
     z-index: 1;
-    margin-top: 20px; /* Collectionセクションとの間隔を確保 */
+    margin-top: 60px; /* Collectionセクションとの間隔を大幅に確保 */
 }
 
 /* Brands - グリッドレイアウト・安定配置 */
