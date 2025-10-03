@@ -2,6 +2,8 @@
 <html lang="ja" translate="no">
 <head>
   <meta charset="utf-8">
+  <!-- VP_CANARY v1 -->
+  <meta id="vp-candidate" name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google" content="notranslate">
   <!-- Google tag (gtag.js) - 最適化 -->
   <script>
@@ -2252,6 +2254,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   })();
   </script>
+
+<script>
+  (function(){
+    var vp = document.querySelector('meta[name="viewport"]');
+    console.log('[viewport:present]', !!vp, vp ? vp.getAttribute('content') : null);
+    var heads = document.getElementsByTagName('head');
+    console.log('[head:count]', heads.length); // should be 1
+  })();
+</script>
 
 </body>
 </html>
