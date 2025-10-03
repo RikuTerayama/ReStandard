@@ -153,15 +153,25 @@
     display: grid !important;
     grid-template-rows: 1fr 1fr !important;
     gap: clamp(8px, 1.6vw, 12px) !important;
-    background: transparent;
+    background: transparent !important;
     width: 100% !important;
     max-width: none !important;
-    /* 位置調整: タイトルとの間隔を縮小 */
-    margin-top: -20px !important; /* 上に移動 */
+    /* 位置調整: タイトルとの間隔を大幅に縮小 */
+    margin-top: -40px !important; /* より上に移動 */
     /* 2行目表示のための追加設定 */
     min-height: 400px !important; /* 最小高さを確保 */
     position: relative !important;
     z-index: 2 !important; /* Brandsセクションより上に表示 */
+  }
+  
+  /* より強力なセレクタで確実に適用 */
+  section#collection .collection-wrapper {
+    margin-top: -40px !important;
+  }
+  
+  /* 最強のセレクタで確実に適用 */
+  html body section#collection .band .collection-wrapper {
+    margin-top: -40px !important;
   }
   
   /* 既存の collection-row 定義は上記で統一済み */
