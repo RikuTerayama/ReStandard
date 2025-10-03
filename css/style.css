@@ -193,15 +193,21 @@ section {
   /* レスポンシブ対応: 画面サイズに応じた間隔調整 */
   @media (max-width: 768px) {
     #collection h2 {
-      margin-bottom: clamp(15px, 4vw, 30px) !important; /* モバイルでより大きな間隔 */
+      margin-bottom: clamp(30px, 6vw, 50px) !important; /* モバイルで大幅な間隔確保 */
     }
     
     .collection-wrapper {
-      margin-top: -10px !important; /* モバイルでより小さな上移動 */
+      margin-top: 0 !important; /* モバイルで上移動を無効化 */
     }
     
     #brands {
-      margin-top: 40px !important; /* モバイルで適切な間隔 */
+      margin-top: 80px !important; /* モバイルで大幅な間隔確保 */
+    }
+    
+    /* Collection-wrapperの高さをモバイルで確保 */
+    #collection .collection-wrapper {
+      min-height: 300px !important; /* モバイルで2行分の高さ確保 */
+      gap: 15px !important; /* モバイルで行間の間隔確保 */
     }
   }
   
@@ -342,7 +348,7 @@ section {
     /* Collectionセクションとの重なり防止 */
     position: relative;
     z-index: 1;
-    margin-top: 60px; /* Collectionセクションとの間隔を大幅に確保 */
+    margin-top: 120px; /* Collectionセクションとの間隔を大幅に確保 */
 }
 
 /* Brands - グリッドレイアウト・安定配置 */
@@ -2157,6 +2163,8 @@ html body[lang="en"] #brands .only-ja {
 #collection .band {
   max-height: none !important;
   overflow: visible !important;
+  height: auto !important; /* 高さを自動調整 */
+  min-height: 400px !important; /* 最小高さを確保 */
 }
 
 /* 見出しとの間隔調整に使っていた負のマージンを撤回（食い込み抑止） */
@@ -2183,6 +2191,32 @@ html body[lang="en"] #brands .only-ja {
   border: 3px solid red !important;
   position: relative !important;
   z-index: 999 !important;
+  margin-top: 20px !important; /* 上段との間隔を強制確保 */
+}
+
+/* Collection-wrapperの高さを強制確保 */
+#collection .collection-wrapper {
+  min-height: 400px !important; /* 2行分の高さを確保 */
+  display: grid !important;
+  grid-template-rows: 1fr 1fr !important; /* 2行を強制表示 */
+  gap: 20px !important; /* 行間の間隔を確保 */
+}
+
+/* より強力な下段表示の強制設定 */
+#collection .collection-row:nth-child(2) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 200px !important;
+  background: rgba(255, 0, 0, 0.3) !important; /* 赤背景で可視化 */
+  border: 3px solid red !important;
+  position: relative !important;
+  z-index: 999 !important;
+  margin-top: 20px !important; /* 上段との間隔を強制確保 */
+  transform: none !important; /* 変形を無効化 */
+  top: auto !important; /* 位置をリセット */
+  left: auto !important; /* 位置をリセット */
 }
 
 /* Accessibility: Ensure all section titles are white for consistency */
