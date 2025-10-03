@@ -146,17 +146,7 @@
     margin-bottom: clamp(8px, 1vw, 16px) !important; /* 上段との間隔を大幅に縮小 */
   }
   
-  .collection-title {
-    color: #fff;
-    font-weight: 600;
-    line-height: 1.2;
-    font-size: clamp(18px, 2.5vw, 28px);
-    background: transparent;
-    text-align: center;
-    margin-bottom: clamp(16px, 2vw, 24px);
-    font-family: var(--heading-font);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  }
+  /* collection-title クラスは削除済み - #collection h2 に統合 */
   
   /* collection-wrapper のグリッドレイアウト設定 */
   .collection-wrapper {
@@ -166,6 +156,8 @@
     background: transparent;
     width: 100% !important;
     max-width: none !important;
+    /* 位置調整: タイトルとの間隔を縮小 */
+    margin-top: -20px !important; /* 上に移動 */
     /* 2行目表示のための追加設定 */
     min-height: 400px !important; /* 最小高さを確保 */
     position: relative !important;
@@ -300,17 +292,9 @@
   
   /* Brands - グリッドレイアウト・安定配置 */
   /* === Brands: モバイルでもロゴが必ず見える・中央整列 === */
-  /* 古いbrand-cardスタイルは削除 - #brandsスコープで管理 */
   .carousel-indicators, .swiper-pagination { 
     display:none !important; 
   }
-  
-  /* === Brands: 箇条点を消し、画像を中央に === */
-  /* 古いbrands-gridスタイルは削除 - #brandsスコープで管理 */
-  
-  /* 古いbrand-card関連スタイルは削除 - #brandsスコープで管理 */
-  
-  /* 削除：古いセレクタのため */
   
   /* ========================================
      Lookbook - 双方向ドラッグとアニメ両立
@@ -868,7 +852,6 @@
     max-width: none !important;
   }
   /* collection-wrapper の設定は上記の統一ルールに統合済み */
-  /* Collection 行の高さ設定は上記の統一ルールに統合済み */
   #collection .collection-track{
     display:flex; align-items:center; gap: 8px !important; /* 左右スペース調整 */
     will-change: transform; width: max-content !important; height:100%; cursor: grab;
@@ -1199,8 +1182,6 @@
     display: block;
   }
   
-/* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
-
 /* #brands セクションでは新しいスタイルを優先 */
 #brands .brand-card img,
 #brands .brands-grid img {
@@ -1238,7 +1219,6 @@
     padding-block: clamp(12px, 3vw, 32px);
   }
   
-  /* 古いbrand関連ホバースタイルは削除 - #brandsスコープで管理 */
   
   /* 3. トラックの中央化・relative化 */
   #collection .track-wrap,
@@ -1453,8 +1433,6 @@
     100% { transform: translateX(0); }
   }
   
-/* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
-
 /* #brands セクションでは新しいスタイルを優先 */
 #brands .brands-grid img,
 #brands .brand-card img,
