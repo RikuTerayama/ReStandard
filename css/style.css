@@ -2172,6 +2172,19 @@ html body[lang="en"] #brands .only-ja {
 
 /* 既存の Brands 側余白はそのまま活かす（変更なし） */
 
+/* 緊急診断: 下段表示の強制テスト */
+#collection .collection-row:nth-child(2) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 200px !important;
+  background: rgba(255, 0, 0, 0.3) !important; /* 赤背景で可視化 */
+  border: 3px solid red !important;
+  position: relative !important;
+  z-index: 999 !important;
+}
+
 /* Accessibility: Ensure all section titles are white for consistency */
 #brands h2,
 #lookbook h2,
