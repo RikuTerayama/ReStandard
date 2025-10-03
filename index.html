@@ -106,9 +106,36 @@
           row.style.minHeight = '200px';
           row.style.position = 'relative';
           row.style.zIndex = '3';
+          row.style.overflow = 'visible';
           // デバッグ色を削除して正常な表示に戻す
           row.style.background = '';
           row.style.border = '';
+        });
+        
+        // Collection-trackの表示を強制
+        tracks.forEach((track, index) => {
+          track.style.display = 'flex';
+          track.style.alignItems = 'center';
+          track.style.gap = '8px';
+          track.style.width = 'max-content';
+          track.style.height = '100%';
+          track.style.willChange = 'transform';
+          track.style.position = 'relative';
+          track.style.zIndex = '4';
+          
+          // 画像の表示を強制
+          const images = track.querySelectorAll('img');
+          images.forEach(img => {
+            img.style.display = 'block';
+            img.style.visibility = 'visible';
+            img.style.opacity = '1';
+            img.style.position = 'relative';
+            img.style.zIndex = '5';
+            img.style.height = 'clamp(200px, 20vw, 350px)';
+            img.style.width = 'auto';
+            img.style.maxWidth = '100%';
+            img.style.objectFit = 'contain';
+          });
         });
       });
       
