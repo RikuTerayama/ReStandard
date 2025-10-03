@@ -744,9 +744,11 @@ section {
   position: relative !important;
   z-index: 3 !important;
   overflow: visible !important;
-  background: transparent !important;
+  background: rgba(255, 255, 255, 0.85) !important; /* ナビバーと同じ色をcollection-rowのみに適用 */
+  backdrop-filter: blur(8px) !important; /* ナビバーと同じ効果 */
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 20px !important; /* 内側の余白を追加 */
+  border-radius: 12px !important; /* 角丸を追加 */
 }
 
 /* 上段の特別設定 */
@@ -1384,8 +1386,9 @@ img[loading="lazy"].loaded {
 #collection .band { 
     /* 重なり防止: 適切な高さに制限 */
     min-height: auto;
-    max-height: 60vh; /* 画面高さの60%に制限 */
+    max-height: 400px !important; /* 固定の最大高さに制限 */
     overflow: hidden; /* はみ出し防止 */
+    height: auto !important; /* 高さを自動調整 */
 }
 #lookbook   .band { 
   min-height: calc(var(--lookbook-img-h, 400px) + var(--lookbook-gap, 20px) * 2);
@@ -2266,8 +2269,7 @@ html body[lang="en"] #brands .only-ja {
   overflow: visible !important;
   position: relative !important;
   z-index: 1 !important;
-  background: rgba(255, 255, 255, 0.85) !important; /* ナビバーと同じ色 */
-  backdrop-filter: blur(8px) !important; /* ナビバーと同じ効果 */
+  background: transparent !important; /* 背景を透明に */
 }
 
 /* Collection-wrapperの表示を強制 */
@@ -2276,14 +2278,14 @@ html body[lang="en"] #brands .only-ja {
   visibility: visible !important;
   opacity: 1 !important;
   height: auto !important;
-  min-height: 500px !important; /* 2行分の高さを確保 */
+  min-height: 300px !important; /* 2行分の高さを適切に制限 */
+  max-height: 350px !important; /* 最大高さを制限 */
   grid-template-rows: 1fr 1fr !important; /* 2行を強制表示 */
-  gap: 30px !important; /* 行間の間隔を確保 */
+  gap: 20px !important; /* 行間の間隔を適切に調整 */
   position: relative !important;
   z-index: 2 !important;
+  overflow: hidden !important; /* はみ出し防止 */
 }
-
-/* 重複削除済み - 統合されたルールを使用 */
 
 /* 重複削除済み - 統合されたルールを使用 */
 
@@ -2297,7 +2299,7 @@ html body[lang="en"] #brands .only-ja {
   position: relative !important;
   z-index: 0 !important; /* Collectionより下に配置 */
   clear: both !important; /* フロートをクリア */
-  margin-top: 200px !important; /* Collectionセクションとの間隔を確保 */
+  margin-top: 300px !important; /* Collectionセクションとの間隔を大幅に確保 */
 }
 
 /* Accessibility: Ensure all section titles are white for consistency */
