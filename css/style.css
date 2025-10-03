@@ -166,6 +166,10 @@
     background: transparent;
     width: 100% !important;
     max-width: none !important;
+    /* 2行目表示のための追加設定 */
+    min-height: 400px !important; /* 最小高さを確保 */
+    position: relative !important;
+    z-index: 2 !important; /* Brandsセクションより上に表示 */
   }
   
   /* 既存の collection-row 定義は上記で統一済み */
@@ -288,6 +292,10 @@
     background: none;
     padding: clamp(60px, 8vw, 80px) clamp(16px, 3vw, 20px);
     text-align: center;
+    /* Collectionセクションとの重なり防止 */
+    position: relative;
+    z-index: 1;
+    margin-top: 20px; /* Collectionセクションとの間隔を確保 */
   }
   
   /* Brands - グリッドレイアウト・安定配置 */
@@ -329,9 +337,9 @@
     background: transparent !important;
     position: relative;
     z-index: 1;
-    /* 重なり防止: セクション境界内に制限 */
-    overflow: hidden;
-    max-height: 80vh; /* 最大高さを制限 */
+    /* 2行目表示のため高さ制限を緩和 */
+    overflow: visible;
+    min-height: auto; /* 最小高さを自動調整 */
   }
   #collection .track-wrap, #lookbook .track-wrap{
     gap: var(--collection-gap);
@@ -567,10 +575,15 @@
   #lookbook .lookbook-row {
     position: relative;
     height: auto;
-    min-height: clamp(200px, 25vw, 400px); /* 十分な高さを確保 */
-    overflow: visible;
-    display: flex;
-    align-items: center;
+    min-height: clamp(200px, 25vw, 400px) !important; /* 十分な高さを確保 */
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    /* 2行目表示のための追加設定 */
+    z-index: 3 !important; /* 確実に表示 */
+    background: rgba(255, 255, 255, 0.1) !important; /* 薄い背景で視認性向上 */
+    border-radius: 8px !important;
+    margin: 4px 0 !important; /* 行間の余白 */
   }
   @media (max-width: 767px){
     #collection .collection-row,
@@ -1275,9 +1288,8 @@
     background: none;
     position: relative;
     z-index: 1;
-    /* セクション境界を明確化 */
-    overflow: hidden;
-    max-height: 90vh; /* セクション全体の高さを制限 */
+    /* 2行目表示のため高さ制限を削除 */
+    overflow: visible;
   }
   .collection-bg { 
     position: relative; 
@@ -2159,7 +2171,16 @@ div.copyright {
   aspect-ratio: 2 / 3 !important; /* 2:3の縦長比率を確保 */
 }
 
-/* Collection Track 2の表示確認 - デバッグ用CSS削除済み */
+/* Collection Track 2の表示確認 - デバッグ用CSS */
+#collection .collection-row:nth-child(1) {
+  border: 2px solid #00ff00 !important; /* 上段を緑枠で表示確認 */
+  background: rgba(0, 255, 0, 0.1) !important;
+}
+
+#collection .collection-row:nth-child(2) {
+  border: 2px solid #ff0000 !important; /* 下段を赤枠で表示確認 */
+  background: rgba(255, 0, 0, 0.1) !important;
+}
 
 /* セクション全体の初期高さをわずかに確保
    - 画像の lazy 読み込み中にセクション高さが伸びて動くのを抑える
