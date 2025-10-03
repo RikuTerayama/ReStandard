@@ -26,12 +26,27 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# HTMLファイルは短いキャッシュ（更新対応）
+# HTMLファイルは短いキャッシュ（更新対応）+ テキスト圧縮
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600"
     Vary = "Accept-Encoding"
+    Content-Encoding = "gzip"
+
+# CSSファイルのテキスト圧縮
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Encoding = "gzip"
+
+# JSファイルのテキスト圧縮
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Encoding = "gzip"
 
 # セキュリティヘッダー（全ページ適用）
 [[headers]]
