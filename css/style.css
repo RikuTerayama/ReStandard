@@ -1329,13 +1329,7 @@
   
   /* Collection wrapper の定義 - グリッドレイアウトに統合済み */
   
-  /* Collection行にナビバーと同じ背景を設定 */
-  .collection-row {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    margin: 8px 0;
-  }
+  /* Collection行にナビバーと同じ背景を設定 - 競合回避のため削除 */
   
   /* collection-row の設定は上記の統一ルールに統合済み */
   
@@ -2171,15 +2165,34 @@ div.copyright {
   aspect-ratio: 2 / 3 !important; /* 2:3の縦長比率を確保 */
 }
 
-/* Collection Track 2の表示確認 - デバッグ用CSS */
-#collection .collection-row:nth-child(1) {
-  border: 2px solid #00ff00 !important; /* 上段を緑枠で表示確認 */
-  background: rgba(0, 255, 0, 0.1) !important;
+/* Collection Track 2の表示確認 - デバッグ用CSS（最高詳細度） */
+section#collection .collection-wrapper .collection-row:nth-child(1) {
+  border: 3px solid #00ff00 !important; /* 上段を緑枠で表示確認 */
+  background: rgba(0, 255, 0, 0.2) !important;
+  box-shadow: 0 0 10px #00ff00 !important; /* 光る効果で確実に表示 */
 }
 
-#collection .collection-row:nth-child(2) {
-  border: 2px solid #ff0000 !important; /* 下段を赤枠で表示確認 */
-  background: rgba(255, 0, 0, 0.1) !important;
+section#collection .collection-wrapper .collection-row:nth-child(2) {
+  border: 3px solid #ff0000 !important; /* 下段を赤枠で表示確認 */
+  background: rgba(255, 0, 0, 0.2) !important;
+  box-shadow: 0 0 10px #ff0000 !important; /* 光る効果で確実に表示 */
+}
+
+/* さらに強力なデバッグCSS（最優先適用） */
+html body section#collection .collection-wrapper .collection-row:nth-child(1) {
+  border: 5px solid #00ff00 !important;
+  background: rgba(0, 255, 0, 0.3) !important;
+  box-shadow: 0 0 15px #00ff00, inset 0 0 15px #00ff00 !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+html body section#collection .collection-wrapper .collection-row:nth-child(2) {
+  border: 5px solid #ff0000 !important;
+  background: rgba(255, 0, 0, 0.3) !important;
+  box-shadow: 0 0 15px #ff0000, inset 0 0 15px #ff0000 !important;
+  position: relative !important;
+  z-index: 9999 !important;
 }
 
 /* セクション全体の初期高さをわずかに確保
