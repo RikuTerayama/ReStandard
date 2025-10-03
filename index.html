@@ -122,6 +122,8 @@
           track.style.willChange = 'transform';
           track.style.position = 'relative';
           track.style.zIndex = '4';
+          track.style.overflow = 'visible';
+          track.style.background = 'transparent';
           
           // 画像の表示を強制
           const images = track.querySelectorAll('img');
@@ -135,7 +137,28 @@
             img.style.width = 'auto';
             img.style.maxWidth = '100%';
             img.style.objectFit = 'contain';
+            img.style.background = 'transparent';
+            img.style.border = 'none';
+            
+            // 画像の読み込みを強制
+            if (img.src) {
+              img.onload = function() {
+                this.style.display = 'block';
+                this.style.visibility = 'visible';
+                this.style.opacity = '1';
+              };
+              img.onerror = function() {
+                console.log('画像読み込みエラー:', this.src);
+              };
+            }
           });
+          
+          // アニメーションを強制適用
+          if (index === 0) {
+            track.style.animation = 'marquee-l 45s linear infinite';
+          } else if (index === 1) {
+            track.style.animation = 'marquee-r 45s linear infinite';
+          }
         });
       });
       
