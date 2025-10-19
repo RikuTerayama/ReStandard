@@ -165,11 +165,18 @@ function attachTrackControls(track) {
   let isDragging = false;
   let moved = 0;
   let longPressTimer = null;
-  const DRAG_THRESHOLD = 6; // ドラッグ判定の閾値（6px）
+  // スマホでのドラッグ判定閾値を調整
+  const isMobile = window.innerWidth <= 900;
+  const DRAG_THRESHOLD = isMobile ? 10 : 6; // スマホでは10px、PCでは6px
   
   const onDown = (e) => {
     // PC版ではマウスイベントを完全に無視してアニメーションを継続
     if (e.type === 'mousedown' || e.type === 'pointerdown' || e.type === 'mouseenter' || e.type === 'mouseleave') {
+      return;
+    }
+    
+    // リンク要素がクリックされた場合は即座にナビゲーションを許可
+    if (e.target.closest('a')) {
       return;
     }
     
@@ -183,13 +190,16 @@ function attachTrackControls(track) {
     isPointerDown = true;
     isDragging = false;
     
-    // 長押しタイマーを開始（500msに延長してより明確に識別）
+    // スマホでの長押しタイマーを短縮（300ms）してより敏感に反応
+    const isMobile = window.innerWidth <= 900;
+    const longPressDelay = isMobile ? 300 : 500;
+    
     longPressTimer = setTimeout(() => {
       isDragging = true;
       track.isDragging = true;
       track.classList.add('dragging');
       track.style.animationPlayState = 'paused';
-    }, 500);
+    }, longPressDelay);
     
     // タップの場合はpreventDefaultしない（リンクナビゲーションを許可）
     // ドラッグ判定はonMoveで行う
@@ -283,13 +293,30 @@ function attachTrackControls(track) {
     track.style.animationPlayState = 'running';
   };
   
-  // イベントリスナーを追加
+  // イベントリスナーを追加（スマホ対応強化）
   track.addEventListener('pointerdown', onDown);
   track.addEventListener('pointermove', onMove);
   track.addEventListener('pointerup', onUp);
   track.addEventListener('touchstart', onDown, { passive: false });
   track.addEventListener('touchmove', onMove, { passive: false });
   track.addEventListener('touchend', onUp);
+  
+  // スマホでの追加イベント処理
+  if (isMobile) {
+    track.addEventListener('touchcancel', onUp);
+    track.addEventListener('touchend', onUp);
+    
+    // スマホでのスクロール終了時のアニメーション復帰
+    let scrollEndTimer;
+    track.addEventListener('touchmove', function() {
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(function() {
+        if (!track.isDragging && !track.classList.contains('dragging')) {
+          track.style.animationPlayState = 'running';
+        }
+      }, 150); // 150ms後にアニメーション復帰
+    }, { passive: true });
+  }
   
   // 画像のドラッグを無効化
   track.querySelectorAll('img').forEach(img => {
@@ -323,7 +350,7 @@ function getCurrentTranslateX(track) {
 // オートスクロール開始
 function startAutoScroll(track) {
         const speed = parseFloat(track.dataset.speed || 30); // 30秒に変更
-  
+
   // reverse クラスが付いているトラックはスクロール方向を逆にして、21.JPG が右端になるよう初期化
   const isReverse = track.classList.contains('reverse');
   const scrollDirection = isReverse ? 'right' : 'left';
@@ -334,6 +361,65 @@ function startAutoScroll(track) {
   // アニメーション開始
   track.style.animation = `scroll-${scrollDirection} ${speed}s linear infinite`;
   track.style.animationPlayState = 'running';
+  
+  // スクロール後の継続性を確保（スマホ対応強化）
+  track.addEventListener('animationiteration', function() {
+    if (!track.isDragging && !track.classList.contains('dragging')) {
+      track.style.animationPlayState = 'running';
+    }
+  });
+  
+  // スマホでの可視性チェックとアニメーション復帰（強化版）
+  const isMobileDevice = window.innerWidth <= 900;
+  if (isMobileDevice) {
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
+          // 画面内に入ったらアニメーションを強制的に再開
+          track.style.animationPlayState = 'running';
+          // アニメーションを完全にリセット
+          const currentAnimation = track.style.animation;
+          track.style.animation = 'none';
+          track.offsetHeight; // リフローを強制
+          track.style.animation = currentAnimation;
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    visibilityObserver.observe(track);
+    
+    // スマホでのページ可視性変更時の処理
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden && !track.isDragging && !track.classList.contains('dragging')) {
+        track.style.animationPlayState = 'running';
+      }
+    });
+    
+    // スマホでのスクロール終了検知（強化版）
+    let scrollTimer;
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', function() {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+        
+        // Collectionセクションが画面内にある場合、アニメーションを確実に再開
+        const collectionSection = document.getElementById('collection');
+        if (collectionSection) {
+          const rect = collectionSection.getBoundingClientRect();
+          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+          
+          if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
+            track.style.animationPlayState = 'running';
+            console.log('スクロール終了後、Collectionアニメーション再開');
+          }
+        }
+        
+        lastScrollTop = currentScrollTop;
+      }, 150);
+    }, { passive: true });
+  }
 }
 
 // 開始位置の調整
