@@ -87,10 +87,10 @@ return;
   
   // 安全な複製処理（ループ完璧性を確保）
   const viewportWidth = window.innerWidth;
-  const targetWidth = Math.max(originalWidth * 3, viewportWidth * 3); // 3倍に戻して完璧なループを確保
+  const targetWidth = Math.max(originalWidth * 4, viewportWidth * 4); // 4倍に増加して完璧なループを確保
   let currentWidth = originalWidth;
   let cloneCount = 0;
-  const maxClones = 120; // 最大複製数を増加（Lookbook）
+  const maxClones = 150; // 最大複製数を増加（Lookbook）
   
   // 無限ループ防止のための安全なwhile文
   while (currentWidth < targetWidth && cloneCount < maxClones) {
@@ -279,7 +279,7 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始（左方向）
 function startAutoScroll(track) {
-        const speed = parseFloat(track.dataset.speed || 32); // 32秒に変更
+        const speed = parseFloat(track.dataset.speed || 28); // 28秒に短縮してスムーズな流れを実現
 
   // 開始位置の調整
   alignTrackStart(track);
@@ -295,20 +295,27 @@ function startAutoScroll(track) {
     }
   });
   
-  // Lookbookの可視性チェックとアニメーション復帰
+  // Lookbookの可視性チェックとアニメーション復帰（強化版）
   const visibilityObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
         // 画面内に入ったらアニメーションを強制的に再開
         track.style.animationPlayState = 'running';
-        // アニメーションを完全にリセット
+        // アニメーションを完全にリセットして連続性を確保
         const currentAnimation = track.style.animation;
         track.style.animation = 'none';
         track.offsetHeight; // リフローを強制
         track.style.animation = currentAnimation;
+        
+        // 追加: スマホでの連続表示を強化
+        if (window.innerWidth <= 900) {
+          setTimeout(() => {
+            track.style.animationPlayState = 'running';
+          }, 100);
+        }
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05 }); // 閾値を下げてより敏感に反応
   
   visibilityObserver.observe(track);
   
