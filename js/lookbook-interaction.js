@@ -59,10 +59,11 @@ return;
       children.forEach(child => {
         const img = child.querySelector('img');
         if (img) {
-          // 画像の表示を強制
+          // 画像の表示を強制（統一サイズ）
           img.style.display = 'block';
           img.style.width = '300px';
-          img.style.height = 'auto';
+          img.style.height = '400px';
+          img.style.objectFit = 'contain';
           img.style.visibility = 'visible';
           img.style.opacity = '1';
         }
@@ -84,12 +85,12 @@ return;
   // オリジナル区間幅を記録
   track._segmentWidth = originalWidth;
   
-  // 安全な複製処理
+  // 安全な複製処理（ループ完璧性を確保）
   const viewportWidth = window.innerWidth;
-  const targetWidth = Math.max(originalWidth * 2, viewportWidth * 2); // 3倍から2倍に削減
+  const targetWidth = Math.max(originalWidth * 3, viewportWidth * 3); // 3倍に戻して完璧なループを確保
   let currentWidth = originalWidth;
   let cloneCount = 0;
-  const maxClones = 80; // 最大複製数を増加（Lookbook）
+  const maxClones = 120; // 最大複製数を増加（Lookbook）
   
   // 無限ループ防止のための安全なwhile文
   while (currentWidth < targetWidth && cloneCount < maxClones) {
@@ -97,6 +98,13 @@ return;
     children.forEach(child => {
       if (cloneCount < maxClones) {
         const clone = child.cloneNode(true);
+        // 複製された画像のサイズも統一
+        const clonedImg = clone.querySelector('img');
+        if (clonedImg) {
+          clonedImg.style.width = '300px';
+          clonedImg.style.height = '400px';
+          clonedImg.style.objectFit = 'contain';
+        }
         track.appendChild(clone);
         cloneCount++;
       }
@@ -129,6 +137,11 @@ function attachTrackControls(track) {
   const onDown = (e) => {
     // PC版ではマウスイベントを完全に無視してアニメーションを継続
     if (e.type === 'mousedown' || e.type === 'pointerdown' || e.type === 'mouseenter' || e.type === 'mouseleave') {
+      return;
+    }
+    
+    // リンク要素がクリックされた場合は即座にナビゲーションを許可
+    if (e.target.closest('a')) {
       return;
     }
     
@@ -267,13 +280,44 @@ function getCurrentTranslateX(track) {
 // オートスクロール開始（左方向）
 function startAutoScroll(track) {
         const speed = parseFloat(track.dataset.speed || 32); // 32秒に変更
-  
+
   // 開始位置の調整
   alignTrackStart(track);
   
   // アニメーション開始（左方向）
   track.style.animation = `scroll-left ${speed}s linear infinite`;
   track.style.animationPlayState = 'running';
+  
+  // スクロール後の継続性を確保（Lookbook強化版）
+  track.addEventListener('animationiteration', function() {
+    if (!track.isDragging && !track.classList.contains('dragging')) {
+      track.style.animationPlayState = 'running';
+    }
+  });
+  
+  // Lookbookの可視性チェックとアニメーション復帰
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
+        // 画面内に入ったらアニメーションを強制的に再開
+        track.style.animationPlayState = 'running';
+        // アニメーションを完全にリセット
+        const currentAnimation = track.style.animation;
+        track.style.animation = 'none';
+        track.offsetHeight; // リフローを強制
+        track.style.animation = currentAnimation;
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  visibilityObserver.observe(track);
+  
+  // ページ可視性変更時の処理
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && !track.isDragging && !track.classList.contains('dragging')) {
+      track.style.animationPlayState = 'running';
+    }
+  });
 }
 
 // 開始位置の調整（画像が常に表示されるよう、初期表示で look1.webp が左端に配置）
