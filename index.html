@@ -158,8 +158,8 @@
   <link rel="stylesheet" href="css/style.css?v=2025-01-20-ASPECT-RATIO-FIX">
   <!-- 削除済み: site-fixes.css, mobile-fixes.css をstyle.cssに統合 -->
   <!-- LCP画像のプリロード（最適化） -->
-  <link rel="preload" as="image" href="image/rockmount3.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="/.netlify/images?url=/image/1.JPG&w=186&h=280&fit=contain&q=72" fetchpriority="high">
+  <!-- rockmount3.webpのプリロードを削除（使用されていないため） -->
+  <!-- 1.JPGのプリロードはimagesrcsetで既に処理済み -->
 
   <!-- Collection/Lookbook画像のプリロードを削除（lazy-loadに変更） -->
   
@@ -714,13 +714,24 @@
     #lp-movie-modal .close-btn {
       position: absolute; top: 2vw; right: 2vw; font-size: 2rem; color: #fff; background: none; border: none; cursor: pointer;
     }
-    /* スプラッシュ動画用スタイル（無効化済み） */
+    /* スプラッシュ動画用スタイル */
     #splash-video-wrapper {
-      display: none !important;
-      visibility: hidden !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     #splash-video {
-      display: none !important;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
     }
     /* スプラッシュ動画関連のスタイルは削除済み */
     /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
@@ -754,9 +765,9 @@
 </head>
 <body>
 
-  <!-- スプラッシュ動画ラッパー（無効化済み） -->
-  <div id="splash-video-wrapper" style="display: none !important; visibility: hidden !important;">
-    <video id="splash-video" autoplay playsinline muted preload="none" style="display: none !important;"></video>
+  <!-- スプラッシュ動画ラッパー -->
+  <div id="splash-video-wrapper">
+    <video id="splash-video" autoplay playsinline muted preload="none"></video>
     <!-- <div id="splash-loading">Loading...</div> -->
   </div>
   <!-- 1.mov モーダル -->
@@ -799,6 +810,7 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        z-index: -1 !important;
       }
       #mobile-bg-video {
         display: none !important;
@@ -817,6 +829,7 @@
         visibility: visible !important;
         opacity: 1 !important;
         background: #000 !important;
+        z-index: -1 !important;
       }
     }
     
@@ -875,15 +888,15 @@
       const mobileVideo = document.getElementById('mobile-bg-video');
       const isMobile = window.innerWidth <= 900;
       
-      console.log('動画初期化開始 - モバイル:', isMobile);
+      console.log('背景動画初期化開始 - モバイル:', isMobile);
       
-      // 不要な動画を非表示にしてリソースを節約
+      // 背景動画の初期化（内部リンク遷移でも常に表示）
       if (isMobile) {
         if (desktopVideo) {
           desktopVideo.style.display = 'none';
         }
         if (mobileVideo) {
-          // src属性は既に設定されているので、再生のみ実行
+          // スマホ版背景動画の再生
           mobileVideo.addEventListener('canplay', function() {
             console.log('スマートフォン版背景動画が読み込まれました');
             mobileVideo.play().catch(function(error) {
@@ -906,66 +919,61 @@
         if (mobileVideo) {
           mobileVideo.style.display = 'none';
         }
-      if (desktopVideo) {
-          // 遅延読み込み
+        if (desktopVideo) {
+          // PC版背景動画の遅延読み込み
           desktopVideo.src = '7.mp4';
           desktopVideo.addEventListener('canplay', function() {
-          console.log('PC版背景動画が読み込まれました');
-          desktopVideo.play().catch(function(error) {
-            console.log('PC版動画の自動再生に失敗:', error);
+            console.log('PC版背景動画が読み込まれました');
+            desktopVideo.play().catch(function(error) {
+              console.log('PC版動画の自動再生に失敗:', error);
+            });
           });
-        });
-        
-        desktopVideo.addEventListener('error', function(e) {
-          console.error('PC版動画の読み込みエラー:', e);
+          
+          desktopVideo.addEventListener('error', function(e) {
+            console.error('PC版動画の読み込みエラー:', e);
+          });
+          
+          // タブ復帰時の再生
+          document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && desktopVideo.paused) {
+              desktopVideo.play().catch(()=>{});
+            }
           });
         }
       }
     }
     
-    // DOMContentLoadedで動画初期化を開始（軽量化版）
+    // DOMContentLoadedで動画初期化を開始（背景動画は常に表示）
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOMContentLoaded - 動画初期化開始');
+      console.log('DOMContentLoaded - 背景動画初期化開始');
       
-      // タイムアウトを短縮して重い処理を防ぐ
-      const initTimeout = setTimeout(function() {
-        console.log('動画初期化タイムアウト');
-        if (!videoInitialized) {
-          videoInitialized = true; // フラグを設定して重複実行を防ぐ
-        }
-      }, 1000); // 2秒から1秒に短縮
-      
-      // 即座に実行せず、他の初期化処理を優先
-      requestAnimationFrame(function() {
-        setTimeout(function() {
-          try {
-            initializeVideos();
-            clearTimeout(initTimeout);
-          } catch (error) {
-            console.error('動画初期化エラー:', error);
-            clearTimeout(initTimeout);
-          }
-        }, 100); // 10msから100msに変更（他の処理を優先）
-          });
-        });
+      // 背景動画は即座に初期化（内部リンク遷移でも表示）
+      try {
+        initializeVideos();
+      } catch (error) {
+        console.error('背景動画初期化エラー:', error);
+      }
+    });
         
-    // ページ読み込み完了時にも確認（タイムアウト付き）
+    // ページ読み込み完了時にも背景動画を確認
     window.addEventListener('load', function() {
-      console.log('Window load - 動画最終確認');
-      
-      const loadTimeout = setTimeout(function() {
-        console.log('動画最終確認タイムアウト');
-        videoInitialized = true;
-      }, 3000); // 3秒でタイムアウト
+      console.log('Window load - 背景動画最終確認');
       
       try {
-        if (!videoInitialized) {
-          initializeVideos();
-          clearTimeout(loadTimeout);
+        // 背景動画が表示されていない場合は再初期化
+        const desktopVideo = document.getElementById('desktop-bg-video');
+        const mobileVideo = document.getElementById('mobile-bg-video');
+        const isMobile = window.innerWidth <= 900;
+        
+        if (isMobile && mobileVideo && mobileVideo.paused) {
+          console.log('スマホ背景動画が停止しているため再開');
+          mobileVideo.play().catch(()=>{});
+        } else if (!isMobile && desktopVideo && desktopVideo.paused) {
+          console.log('PC背景動画が停止しているため再開');
+          desktopVideo.play().catch(()=>{});
         }
       } catch (error) {
-        console.error('動画最終確認エラー:', error);
-        clearTimeout(loadTimeout);
+        console.error('背景動画最終確認エラー:', error);
       }
     });
   </script>
@@ -1503,8 +1511,8 @@
           </a>
         </figure>
       
-        <figure class="brand-card" image/william lockie-hover.webp">
-          <a href="https://williamlockie.com/" target="_blank" rel="noopener">
+      <figure class="brand-card">
+        <a href="https://williamlockie.com/" target="_blank" rel="noopener">
             <picture>
               <source type="image/avif" srcset="
                 /.netlify/images?url=/image/william lockie.webp&w=156&h=156&fit=contain&fm=avif&q=50 156w,
@@ -1908,6 +1916,19 @@
     });
 
     // 言語切り替え機能は lang-toggle.js で管理
+    
+    // 内部リンククリック時にセッションストレージを設定
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (link && link.href) {
+        const url = new URL(link.href);
+        // 同じドメイン内のリンクの場合
+        if (url.hostname === window.location.hostname || 
+            url.hostname.includes('restandard')) {
+          sessionStorage.setItem('rs-internal-nav', 'true');
+        }
+      }
+    });
   </script>
 
   <script>
@@ -1926,12 +1947,32 @@
         return;
       }
       
-      console.log('スプラッシュ動画は無効化されています');
+      // 内部リンクからの遷移かどうかをチェック
+      const isInternalNavigation = document.referrer && 
+        (document.referrer.includes(window.location.hostname) || 
+         document.referrer.includes('restandard'));
       
-      // スプラッシュ動画を完全に無効化
-      document.body.classList.remove('splash-active');
-      splash.style.display = 'none';
-      return;
+      // セッションストレージでも内部遷移をチェック
+      const hasInternalSession = sessionStorage.getItem('rs-internal-nav') === 'true';
+      
+      // 内部リンクからの遷移の場合はスプラッシュ動画を無効化
+      if (isInternalNavigation || hasInternalSession) {
+        console.log('内部リンクからの遷移のため、スプラッシュ動画を無効化');
+        document.body.classList.remove('splash-active');
+        splash.style.display = 'none';
+        return;
+      }
+      
+      // 外部からの遷移の場合、セッションストレージをクリア
+      sessionStorage.removeItem('rs-internal-nav');
+      
+      console.log('スプラッシュ動画を外部流入時に表示');
+      
+      // 初期状態でメインコンテンツを少し透明に
+      const mainContent = document.querySelector('main, .navbar, #collection, #brands, #lookbook');
+      if (mainContent) {
+        mainContent.style.opacity = '0.3';
+      }
       
       // 動画の読み込みと再生を最適化
       let videoLoaded = false;
@@ -1952,12 +1993,38 @@
       }
       
       function hideSplash() {
-        console.log('スプラッシュ非表示');
-        splash.classList.add('hide');
+        console.log('スプラッシュ非表示 - 滑らかな遷移開始');
+        
+        // フェードアウト効果を追加
+        splash.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+        splash.style.opacity = '0';
+        splash.style.transform = 'scale(0.95)';
+        
+        // 背景動画をフェードイン
+        const desktopVideo = document.getElementById('desktop-bg-video');
+        const mobileVideo = document.getElementById('mobile-bg-video');
+        const isMobile = window.innerWidth <= 900;
+        
+        if (isMobile && mobileVideo) {
+          mobileVideo.style.transition = 'opacity 0.8s ease-in';
+          mobileVideo.style.opacity = '1';
+        } else if (!isMobile && desktopVideo) {
+          desktopVideo.style.transition = 'opacity 0.8s ease-in';
+          desktopVideo.style.opacity = '1';
+        }
+        
+        // メインコンテンツをフェードイン
+        const mainContent = document.querySelector('main, .navbar, #collection, #brands, #lookbook');
+        if (mainContent) {
+          mainContent.style.transition = 'opacity 0.8s ease-in';
+          mainContent.style.opacity = '1';
+        }
+        
         setTimeout(function() {
           splash.style.display = 'none';
           document.body.classList.remove('splash-active');
-        }, 300);
+          console.log('スプラッシュ動画遷移完了');
+        }, 800); // 0.8秒の遷移時間
       }
       
       // 動画の読み込み完了を待つ
