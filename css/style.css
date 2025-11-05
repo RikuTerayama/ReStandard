@@ -350,7 +350,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    transform: translate3d(0, 0, 0);
+    transform: translateX(0);
     will-change: transform;
     contain: paint;
     display: flex;
@@ -682,7 +682,7 @@
   
   /* Navbar（index.html と同一の前提） */
   .navbar { 
-    background: rgba(255, 255, 255, 0.85); 
+    background: rgba(255, 255, 255, 0.9) !important; 
     backdrop-filter: blur(8px);
     position: fixed;
     top: 0;
@@ -690,6 +690,7 @@
     right: 0;
     width: 100%;
     z-index: 1000;
+    border-bottom: 1px solid #ccc;
   }
   .navbar .navbar-brand { font-weight: 700; letter-spacing: 0.02em; }
   .navbar .nav-link { font-weight: 500; letter-spacing: 0.02em; }
@@ -1337,7 +1338,7 @@
   .collection-wrapper {
     position: relative;
     min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
-    margin-top: 6rem; /* タイトルとの間隔をさらに拡大 */
+    margin-top: 8rem; /* タイトルとの間隔をさらに拡大（重複を避ける） */
   }
   
   /* Collection行にナビバーと同じ背景を設定 */
@@ -2166,4 +2167,303 @@ footer.py-5.text-center a {
 /* Accessibility: Darken copyright text for AA contrast */
 div.copyright {
   color: #666666;   /* safe AA on white / light gray backgrounds */
+}
+
+/* ========================================
+   index.html インラインスタイルの外部化
+   ======================================== */
+/* index.htmlから移動: 追加のCSS変数とルート設定 */
+:root {
+  --rs-header-h: 80px; /* 64px → 80px に増加 */
+}
+
+/* index.htmlから移動: Collectionセクション用の設定 */
+.collection-track {
+  min-width: 3200px !important; /* 16枚 × 200px */
+}
+
+.collection-wrapper {
+  margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
+}
+
+.collection-row {
+  margin: 2rem 0 !important; /* 行間の間隔を拡大 */
+}
+
+/* Collection画像の読み込み最適化 - スマホ表示安定化 */
+@media (max-width: 900px) {
+  .collection-track img {
+    loading: eager !important; /* スマホでは遅延読み込みを無効化 */
+    decoding: sync !important; /* 同期デコードで表示を安定化 */
+  }
+}
+
+/* Collectionセクションの背景設定 - 透明に変更 */
+#collection .band {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  position: relative;
+}
+
+/* 上段の背景：下部分のみ角丸 */
+.collection-row:first-child .band {
+  border-radius: 0 0 20px 20px !important;
+}
+
+/* 下段の背景：上部分のみ角丸 */
+.collection-row:last-child .band {
+  border-radius: 20px 20px 0 0 !important;
+}
+
+/* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
+#lookbook .band {
+  background: rgba(255, 255, 255, 0.85) !important; /* ナビバーと同じ色 */
+  backdrop-filter: none !important;
+  position: relative;
+}
+
+/* Lookbookコンテナの背景は透明のまま */
+.lookbook-container {
+  background: transparent !important;
+}
+
+/* スマホ表示におけるLookbook背景の縦の長さを短縮 */
+@media (max-width: 900px) {
+  #lookbook .band {
+    padding-top: 12px !important; /* 上側の余白を削減 */
+    padding-bottom: 12px !important; /* 下側の余白を削減 */
+  }
+  
+  .lookbook-container {
+    min-height: 280px !important; /* 高さを削減 */
+    padding: 8px 0 !important; /* 上下のパディングを削減 */
+  }
+}
+
+/* モザイク背景の削除 */
+.collection-row::before,
+.collection-row::after {
+  display: none !important;
+}
+
+.collection-track img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 200px !important;
+  height: 250px !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+  border-radius: 8px !important;
+  margin: 0 8px !important;
+  transition: transform 0.3s ease !important;
+}
+
+.collection-track img:hover {
+  transform: scale(1.05) !important;
+}
+
+/* Lookbook画像の表示を強制 */
+.lookbook-track {
+  min-width: 2400px !important; /* 8枚 × 300px */
+}
+
+.lookbook-track img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 300px !important;
+  height: 400px !important; /* 統一の高さに設定 */
+  object-fit: contain !important; /* containで見切れ防止 */
+  flex-shrink: 0 !important;
+}
+
+/* モバイル版でのLookbook画像の高さ調整 */
+@media (max-width: 767px) {
+  .lookbook-track img {
+    height: 350px !important; /* モバイルでは少し小さく */
+    object-fit: contain !important;
+  }
+}
+
+/* PC版でのLookbook画像の高さ調整 */
+@media (min-width: 768px) {
+  .lookbook-track img {
+    height: 400px !important; /* PC版でも適切な高さ */
+    object-fit: contain !important;
+  }
+}
+
+/* index.htmlから移動: フッターが浮かないようにする設定 */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-top: 1px solid rgba(204, 204, 204, 0.3);
+  backdrop-filter: blur(10px);
+  margin-top: auto;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* index.htmlから移動: PC版とスマートフォン版で背景動画を切り替え */
+@media (min-width: 901px) {
+  #desktop-bg-video {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: -1 !important;
+  }
+  #mobile-bg-video {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+@media (max-width: 900px) {
+  #desktop-bg-video {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  #mobile-bg-video {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: #000 !important;
+    z-index: -1 !important;
+  }
+}
+
+/* PC版でもスマートフォン版と同様の透過設定を適用 */
+@media (min-width: 901px) {
+  .navbar {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
+  }
+  
+  /* ヘッダー固定の強化 */
+  html body .navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1030 !important;
+  }
+}
+
+/* index.htmlから移動: スプラッシュ動画用スタイル */
+#splash-video-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff !important;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+#splash-video {
+  background: #ffffff !important;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  transition: opacity 1.4s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.splash-transition-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.95) 100%);
+  z-index: 9998;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.2s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.splash-transition-layer.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.splash-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--heading-font);
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 700;
+  color: var(--main-color);
+  opacity: 0;
+  letter-spacing: 0.1em;
+  z-index: 10000;
+  transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.splash-logo.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.03);
+}
+
+/* index.htmlから移動: 1.mov用モーダルの簡易スタイル */
+#lp-movie-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  align-items: center;
+  justify-content: center;
+}
+
+#lp-movie-modal.active {
+  display: flex;
+}
+
+#lp-movie-modal video {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+}
+
+#lp-movie-modal .close-btn {
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  font-size: 2rem;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
