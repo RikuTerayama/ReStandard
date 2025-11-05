@@ -410,15 +410,7 @@
     display: none !important; 
   }
   
-  /* Lookbook アニメーション - Y中央維持 */
-  @keyframes lookbook-scroll {
-    0% { 
-      transform: translate3d(0, -50%, 0); 
-    }
-    100% {
-      transform: translate3d(-50%, -50%, 0); 
-    }
-  }
+  /* Lookbook アニメーションは970行目付近の定義を使用（重複削除） */
   
   /* ホバー一時停止 */
   @media (hover: hover) {
@@ -2305,6 +2297,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-top: 80px; /* 固定ヘッダー分の余白（about.htmlと同じ設定） */
 }
 
 main {
