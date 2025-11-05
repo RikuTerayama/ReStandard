@@ -143,7 +143,12 @@
     color: white !important;
     font-size: 2rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem !important; /* タイトルと画像フローの間隔を拡大 */
+  }
+  
+  /* Collectionセクションのタイトルとコンテンツの間隔を確実に確保 */
+  #collection .section-title {
+    margin-bottom: 4rem !important;
   }
   
   .collection-title {
@@ -353,12 +358,17 @@
     transform: translateX(0);
     will-change: transform;
     contain: paint;
-    display: flex;
+    display: flex !important;
     gap: min(1.5vw, 12px);
     cursor: grab;
-    animation: lookbook-scroll 40s linear infinite;
+    animation: lookbook-scroll 40s linear infinite !important;
     height: auto;
     align-items: center;
+  }
+  
+  /* Lookbookアニメーションを確実に動作させる */
+  #lookbook .lookbook-track {
+    animation: lookbook-scroll 40s linear infinite !important;
   }
   
   .lookbook-track.dragging {
@@ -674,15 +684,16 @@
   
   /* Navbar（index.html と同一の前提） */
   .navbar { 
+    background-color: rgba(255, 255, 255, 0.9) !important;
     background: rgba(255, 255, 255, 0.9) !important; 
-    backdrop-filter: blur(8px);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1000;
-    border-bottom: 1px solid #ccc;
+    backdrop-filter: blur(8px) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+    border-bottom: 1px solid #ccc !important;
   }
   .navbar .navbar-brand { font-weight: 700; letter-spacing: 0.02em; }
   .navbar .nav-link { font-weight: 500; letter-spacing: 0.02em; }
@@ -937,16 +948,22 @@
   
   /* トラックは上寄せ・Y方向のtransformを撤廃（Xのみ） */
   .lookbook-track{
-    position: absolute;
-    top: 0;
-    transform: translateX(0);      /* ← 既存の translate3d(0,-50%,0) をやめる */
-    animation: lookbook-scroll var(--lookbook-speed) linear infinite;
-    display: flex;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: translateX(0) !important;      /* ← 既存の translate3d(0,-50%,0) をやめる */
+    animation: lookbook-scroll 40s linear infinite !important;
+    display: flex !important;
     align-items: flex-start;
     gap: 12px;
     height: auto;
     will-change: transform;
     cursor: grab;
+  }
+  
+  /* Lookbookアニメーションを強制的に適用（重複定義を統合） */
+  #lookbook .lookbook-track {
+    animation: lookbook-scroll 40s linear infinite !important;
   }
   
   /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
@@ -964,9 +981,17 @@
     from{ transform: translateX(0); }
     to  { transform: translateX(-50%); } /* 右→左 */
   }
+  
+  /* Lookbookアニメーションを強制的に動作させる（JavaScriptの上書きを防止） */
+  #lookbook .lookbook-track:not(.dragging) {
+    animation: lookbook-scroll 40s linear infinite !important;
+    animation-play-state: running !important;
+  }
+  
   #lookbook .lookbook-track:active{ cursor:grabbing; }
   #lookbook .lookbook-track.dragging{ 
     animation:none !important; /* ドラッグ中のみ停止 */
+    animation-play-state: paused !important;
   }
   #lookbook .lookbook-item{ 
     flex:0 0 auto; 
@@ -1327,10 +1352,10 @@
   }
   
   /* Collection wrapper の定義 */
-  .collection-wrapper {
+  #collection .collection-wrapper {
     position: relative;
     min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
-    margin-top: 8rem; /* タイトルとの間隔をさらに拡大（重複を避ける） */
+    margin-top: 8rem !important; /* タイトルとの間隔をさらに拡大（重複を避ける） */
   }
   
   /* Collection行にナビバーと同じ背景を設定 */
@@ -2174,6 +2199,8 @@ div.copyright {
   min-width: 3200px !important; /* 16枚 × 200px */
 }
 
+/* Collection wrapper - より具体的なセレクタで確実に適用 */
+#collection .collection-wrapper,
 .collection-wrapper {
   margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
 }
@@ -2183,10 +2210,10 @@ div.copyright {
 }
 
 /* Collection画像の読み込み最適化 - スマホ表示安定化 */
+/* 注意: loadingとdecodingはHTML属性なので、CSSでは設定できません */
 @media (max-width: 900px) {
   .collection-track img {
-    loading: eager !important; /* スマホでは遅延読み込みを無効化 */
-    decoding: sync !important; /* 同期デコードで表示を安定化 */
+    /* loadingとdecodingはHTML属性で設定する必要があります */
   }
 }
 
@@ -2306,12 +2333,19 @@ main {
 
 footer {
   background-color: rgba(255, 255, 255, 0.95) !important;
-  border-top: 1px solid rgba(204, 204, 204, 0.3);
-  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(204, 204, 204, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
   margin-top: auto;
   position: relative;
   bottom: 0;
   width: 100%;
+}
+
+/* より具体的なセレクタでfooterを確実に設定 */
+footer.py-5.text-center {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-top: 1px solid rgba(204, 204, 204, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
 }
 
 /* index.htmlから移動: PC版とスマートフォン版で背景動画を切り替え */
@@ -2381,9 +2415,12 @@ footer {
 
 #splash-video {
   background: #ffffff !important;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
   transition: opacity 1.4s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.4s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
