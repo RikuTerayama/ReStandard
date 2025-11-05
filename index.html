@@ -748,6 +748,8 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      opacity: 1;
+      transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1);
     }
     
     /* スプラッシュ動画自体の背景も白色に設定 */
@@ -757,7 +759,7 @@
       max-height: 100%;
       width: auto;
       height: auto;
-      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: opacity 1.4s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.4s cubic-bezier(0.4, 0.0, 0.2, 1);
     }
     
     /* スプラッシュ遷移用の追加レイヤー */
@@ -770,8 +772,8 @@
       background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.95) 100%);
       z-index: 9998;
       opacity: 0;
-      transform: scale(1.1);
-      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: scale(1.05);
+      transition: opacity 1.2s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
     }
     
     .splash-transition-layer.active {
@@ -792,12 +794,12 @@
       opacity: 0;
       letter-spacing: 0.1em;
       z-index: 10000;
-      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1s cubic-bezier(0.4, 0.0, 0.2, 1);
     }
     
     .splash-logo.show {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1.05);
+      transform: translate(-50%, -50%) scale(1.03);
     }
     /* スプラッシュ動画関連のスタイルは削除済み */
     /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
@@ -2036,10 +2038,21 @@
       
       console.log('スプラッシュ動画を外部流入時に表示');
       
-      // 初期状態でメインコンテンツを少し透明に
+      // 初期状態でメインコンテンツを非表示に
       const mainContent = document.querySelector('main, .navbar, #collection, #brands, #lookbook');
       if (mainContent) {
-        mainContent.style.opacity = '0.3';
+        mainContent.style.opacity = '0';
+        mainContent.style.transition = 'opacity 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      }
+      
+      // 背景動画も初期状態で非表示
+      const desktopVideo = document.getElementById('desktop-bg-video');
+      const mobileVideo = document.getElementById('mobile-bg-video');
+      if (desktopVideo) {
+        desktopVideo.style.opacity = '0';
+      }
+      if (mobileVideo) {
+        mobileVideo.style.opacity = '0';
       }
       
       // 動画の読み込みと再生を最適化
@@ -2061,64 +2074,76 @@
       }
       
       function hideSplash() {
-        console.log('スプラッシュ非表示 - 段階的遷移開始');
+        console.log('スプラッシュ非表示 - スムーズな遷移開始');
         
         const transitionLayer = document.querySelector('.splash-transition-layer');
         const logo = document.querySelector('.splash-logo');
         const video = document.getElementById('splash-video');
+        const desktopVideo = document.getElementById('desktop-bg-video');
+        const mobileVideo = document.getElementById('mobile-bg-video');
+        const isMobile = window.innerWidth <= 900;
+        const mainContent = document.querySelector('main, .navbar, #collection, #brands, #lookbook');
         
-        // 段階1: ブランドロゴの表示 (0.3秒)
+        // 背景動画のトランジションを事前に設定
+        if (isMobile && mobileVideo) {
+          mobileVideo.style.transition = 'opacity 2s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        } else if (!isMobile && desktopVideo) {
+          desktopVideo.style.transition = 'opacity 2s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        }
+        
+        // 段階1: スプラッシュ動画のフェードアウト開始と同時に背景動画のフェードイン開始 (0.4秒)
+        setTimeout(() => {
+          // スプラッシュ動画のフェードアウト開始
+          if (video) {
+            video.style.transition = 'opacity 1.4s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            video.style.opacity = '0';
+            video.style.transform = 'scale(0.95)';
+          }
+          
+          // 背景動画のフェードイン開始（オーバーラップ）
+          if (isMobile && mobileVideo) {
+            mobileVideo.style.opacity = '1';
+          } else if (!isMobile && desktopVideo) {
+            desktopVideo.style.opacity = '1';
+          }
+        }, 400);
+        
+        // 段階2: ブランドロゴの表示 (0.6秒)
         setTimeout(() => {
           if (logo) {
+            logo.style.transition = 'opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1s cubic-bezier(0.4, 0.0, 0.2, 1)';
             logo.classList.add('show');
-          }
-        }, 300);
-        
-        // 段階2: 動画のフェードアウトとスケール (0.6秒)
-        setTimeout(() => {
-          if (video) {
-            video.style.opacity = '0';
-            video.style.transform = 'scale(0.8)';
           }
         }, 600);
         
-        // 段階3: 遷移レイヤーの活性化 (0.9秒)
+        // 段階3: メインコンテンツのフェードイン開始（スプラッシュが消える前に開始）(0.8秒)
         setTimeout(() => {
-          if (transitionLayer) {
-            transitionLayer.classList.add('active');
-          }
-        }, 900);
-        
-        // 段階4: 背景動画のフェードイン (1.2秒)
-        setTimeout(() => {
-          const desktopVideo = document.getElementById('desktop-bg-video');
-          const mobileVideo = document.getElementById('mobile-bg-video');
-          const isMobile = window.innerWidth <= 900;
-          
-          if (isMobile && mobileVideo) {
-            mobileVideo.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            mobileVideo.style.opacity = '1';
-          } else if (!isMobile && desktopVideo) {
-            desktopVideo.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            desktopVideo.style.opacity = '1';
-          }
-        }, 1200);
-        
-        // 段階5: メインコンテンツの段階的フェードイン (1.5秒)
-        setTimeout(() => {
-          const mainContent = document.querySelector('main, .navbar, #collection, #brands, #lookbook');
           if (mainContent) {
-            mainContent.style.transition = 'opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            mainContent.style.transition = 'opacity 2s cubic-bezier(0.4, 0.0, 0.2, 1)';
             mainContent.style.opacity = '1';
           }
-        }, 1500);
+        }, 800);
         
-        // 段階6: スプラッシュの完全削除 (2.5秒)
+        // 段階4: 遷移レイヤーの活性化 (1.0秒)
+        setTimeout(() => {
+          if (transitionLayer) {
+            transitionLayer.style.transition = 'opacity 1.2s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            transitionLayer.classList.add('active');
+          }
+        }, 1000);
+        
+        // 段階5: スプラッシュラッパー全体のフェードアウト (1.8秒)
+        setTimeout(() => {
+          splash.style.transition = 'opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1)';
+          splash.style.opacity = '0';
+        }, 1800);
+        
+        // 段階6: スプラッシュの完全削除 (2.8秒)
         setTimeout(() => {
           splash.style.display = 'none';
           document.body.classList.remove('splash-active');
-          console.log('スプラッシュ動画段階的遷移完了');
-        }, 2500); // 2.5秒の段階的遷移
+          console.log('スプラッシュ動画スムーズな遷移完了');
+        }, 2800);
       }
       
       // 動画の読み込み完了を待つ
