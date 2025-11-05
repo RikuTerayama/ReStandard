@@ -14,9 +14,20 @@
   },
   "scripts": {
     "build": "node scripts/build-news-pages.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:html": "npx html-validate *.html news/**/*.html",
+    "lint:html:fix": "npx html-validate *.html news/**/*.html --fix",
+    "check:meta": "node scripts/check-meta-descriptions.mjs",
+    "check:headings": "node scripts/check-headings.mjs",
+    "check:seo-markup": "node scripts/check-seo-markup.mjs",
+    "check:url-seo": "node scripts/check-url-seo.mjs",
+    "check:duplicate": "node scripts/check-duplicate-content.mjs"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "html-validate": "^10.3.0",
+    "jsdom": "^27.1.0"
+  }
 }

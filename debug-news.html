@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Debug</title>
+    <meta name="description" content="Newsページのデバッグ用ページです。ReStandardの開発・テスト用途です。">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        img { max-width: 200px; max-height: 200px; border: 1px solid #ddd; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>News Debug Page</h1>
+    
+    <div class="debug-section">
+        <h2>1. 環境情報</h2>
+        <div id="env-info"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>2. Manifest 読み込みテスト</h2>
+        <div id="manifest-test"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>3. 画像読み込みテスト</h2>
+        <div id="image-test"></div>
+    </div>
+    
+    <script>
+        // 環境情報を表示
+        function showEnvInfo() {
+            const envDiv = document.getElementById('env-info');
+            envDiv.innerHTML = `
+                <p><strong>URL:</strong> ${window.location.href}</p>
+                <p><strong>Origin:</strong> ${window.location.origin}</p>
+                <p><strong>Protocol:</strong> ${window.location.protocol}</p>
+                <p><strong>Host:</strong> ${window.location.host}</p>
+                <p><strong>Pathname:</strong> ${window.location.pathname}</p>
+            `;
+        }
+        
+        // Manifest読み込みテスト
+        async function testManifest() {
+            const manifestDiv = document.getElementById('manifest-test');
+            const manifestUrl = '/news_src/manifest.json';
+            
+            try {
+                manifestDiv.innerHTML += `<p class="info">Testing manifest URL: ${window.location.origin}${manifestUrl}</p>`;
+                
+                const response = await fetch(manifestUrl);
+                manifestDiv.innerHTML += `<p class="info">Response status: ${response.status}</p>`;
+                manifestDiv.innerHTML += `<p class="info">Response ok: ${response.ok}</p>`;
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    manifestDiv.innerHTML += `<p class="success">✅ Manifest loaded successfully</p>`;
+                    manifestDiv.innerHTML += `<p class="info">Number of articles: ${data.length}</p>`;
+                    
+                    if (data.length > 0) {
+                        const firstArticle = data[0];
+                        manifestDiv.innerHTML += `<p class="info">First article:</p>`;
+                        manifestDiv.innerHTML += `<pre>${JSON.stringify(firstArticle, null, 2)}</pre>`;
+                        
+                        // 画像テストに進む
+                        testImages(firstArticle);
+                    }
+                } else {
+                    manifestDiv.innerHTML += `<p class="error">❌ Manifest load failed: ${response.status} ${response.statusText}</p>`;
+                }
+            } catch (error) {
+                manifestDiv.innerHTML += `<p class="error">❌ Manifest fetch error: ${error.message}</p>`;
+            }
+        }
+        
+        // 画像読み込みテスト
+        function testImages(article) {
+            const imageDiv = document.getElementById('image-test');
+            
+            if (!article.firstImage) {
+                imageDiv.innerHTML += `<p class="error">❌ No firstImage in article</p>`;
+                return;
+            }
+            
+            imageDiv.innerHTML += `<h3>Testing image: ${article.firstImage}</h3>`;
+            
+            // 複数のURLパターンをテスト
+            const testUrls = [
+                article.firstImage, // 元のパス
+                window.location.origin + article.firstImage, // 絶対URL
+                article.firstImage.replace('/assets/', '/assets/images/'), // パス修正版
+                window.location.origin + article.firstImage.replace('/assets/', '/assets/images/') // 修正版絶対URL
+            ];
+            
+            testUrls.forEach((url, index) => {
+                imageDiv.innerHTML += `<h4>Test ${index + 1}: ${url}</h4>`;
+                
+                const img = document.createElement('img');
+                img.style.display = 'block';
+                img.style.margin = '10px 0';
+                
+                img.onload = function() {
+                    imageDiv.innerHTML += `<p class="success">✅ Test ${index + 1} SUCCESS - Image loaded (${img.naturalWidth}x${img.naturalHeight})</p>`;
+                };
+                
+                img.onerror = function(e) {
+                    imageDiv.innerHTML += `<p class="error">❌ Test ${index + 1} FAILED - ${e.type}</p>`;
+                };
+                
+                img.src = url;
+                imageDiv.appendChild(img);
+            });
+        }
+        
+        // ページ読み込み後にテスト実行
+        window.addEventListener('load', function() {
+            showEnvInfo();
+            testManifest();
+        });
+    </script>
+</body>
+</html>

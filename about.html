@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja" translate="no">
 <head>
   <meta charset="utf-8">
@@ -13,9 +13,9 @@
   gtag('config', 'G-1W9HVMCW3G');
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ReStandardの理念『Standard（定番）を再定義し、再構築する』、パートナーシップ、実績、取扱いブランドを詳しくご紹介します。">
-  <meta name="keywords" content="ReStandard, 会社概要, 理念, 実績, ブランド紹介, パートナーシップ, アパレル卸">
-  <meta name="author" content="ReStandard">
+  <meta name="description" content="Standard（定番）を再定義し、再構築する。32年間のパートナーシップと25社以上の取引実績で、欧米の厳選ブランドを日本市場へお届けしています。理念と実績をご紹介します。">
+  <!-- Google検索では評価対象外ですが、一部の検索エンジンで参考にされる可能性があります -->
+  <meta name="keywords" content="会社概要, 理念, ReStandard">
   <meta name="robots" content="index, follow">
   
   <script type="application/ld+json">
@@ -34,7 +34,7 @@
 </script>
   
   <!-- OGP設定 -->
-  <meta property="og:title" content="About | ReStandardの理念・実績・ブランド紹介">
+  <meta property="og:title" content="会社概要・理念｜ReStandard">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://restandard-2025.netlify.app/about.html">
   <meta property="og:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
@@ -43,40 +43,14 @@
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="About | ReStandardの理念・実績・ブランド紹介">
+  <meta name="twitter:title" content="会社概要・理念｜ReStandard">
   <meta name="twitter:description" content="ReStandardの理念『Standard（定番）を再定義し、再構築する』、パートナーシップ、実績、取扱いブランドを詳しくご紹介します。">
   <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
   
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
   
-  <title>About | ReStandardの理念・実績・ブランド紹介</title>
-  
-  <!-- Hover/タップ直前でトップを先読み -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function(){
-      var links = document.querySelectorAll('a[href="/"], a[href="/#brands"]');
-      links.forEach(function(a){
-        a.addEventListener('pointerenter', function(){
-          if(!a.__prefetched){
-            var l = document.createElement('link');
-            l.rel = 'prefetch';
-            l.href = '/';
-            document.head.appendChild(l);
-            a.__prefetched = true;
-          }
-        }, {passive:true});
-      });
-    });
-  </script>
-  
-  <!-- Speculation Rules でトップページを先読み -->
-  <script type="speculationrules">
-  {
-    "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }],
-    "prerender": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
-  }
-  </script>
+  <title>会社概要・理念｜ReStandard</title>
   
   <!-- プリロード -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -179,6 +153,16 @@
     }
     h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
       font-family: var(--main-font-family) !important;
+    }
+    
+    /* ブランド名のスタイル（<strong>から<span class="brand-name">に変更） */
+    .brand-name {
+      font-weight: 700;
+    }
+    
+    /* 理念テキストのスタイル（スマホ版のみ<span>を使用） */
+    .philosophy-text {
+      font-weight: 700;
     }
 
     body {
@@ -499,8 +483,6 @@
 
 </head>
 <body>
-<main>
-
 <!-- Mobile版背景動画 -->
 <video 
   id="mobile-bg-video" 
@@ -535,10 +517,11 @@
 
 
 <!-- ナビゲーションバー -->
+<header>
   <nav class="fixed-top navbar navbar-expand-lg">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
-      <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+      <a class="navbar-brand mx-auto" href="/">ReStandard</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -559,25 +542,33 @@
       </div>
     </div>
   </nav>
+</header>
 
-<!-- 本文 -->
+<main>
+<h1 class="section-title text-reveal" style="margin-top: 2rem;">
+  <span>会社概要・理念｜ReStandard</span>
+</h1>
+<nav class="breadcrumb mb-3" aria-label="breadcrumb" style="max-width: 1200px; margin: 0 auto; padding: 20px 16px 0;">
+  <ol class="breadcrumb" style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px;">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">会社概要・理念</li>
+  </ol>
+</nav>
+<p class="text-center" style="max-width: 800px; margin: 20px auto; padding: 0 20px;">Standard（定番）を再定義し、再構築する。32年間のパートナーシップと25社以上の取引実績で、欧米の厳選ブランドを日本市場へお届けしています。</p>
 <section class="about-section mb-5">
-  <h1 class="section-title text-reveal">
-    <span>About Us</span>
-  </h1>
   <div class="section-content">
     <div class="ja-content">
       <div class="about-section-box delay-1">
           <h3 class="text-center">私たちの理念</h3>
         <!-- PC版専用の改行 -->
         <p class="text-center desktop-only">
-        私たちは<strong>「Standard（定番）を再定義し、再構築する」</strong>を理念に、<br>
+        私たちは「Standard（定番）を再定義し、再構築する」を理念に、<br>
             欧米を中心に上質なアパレルブランドを日本へ輸入・ご紹介しています。
           </p>
         <!-- スマートフォン版専用の改行 -->
         <p class="text-center mobile-only">
-          <strong>「Standard（定番）を再定義し、</strong><br>
-          <strong>再構築する」</strong>を理念に、<br>
+          「Standard（定番）を再定義し、<br>
+          再構築する」を理念に、<br>
           欧米を中心に上質なアパレルブランドを<br>
           日本へ輸入・ご紹介しています。
         </p>
@@ -603,15 +594,15 @@
         <p class="text-center desktop-only">
             RockmountやHarleyをはじめとする<br>
             欧米の厳選ブランドとの取引を32年間継続しており、<br>
-            現在までに<b>25社以上のメーカーとの取引実績</b>を有しています。
+            現在までに25社以上のメーカーとの取引実績を有しています。
           </p>
         <!-- スマートフォン版専用の改行 -->
         <p class="text-center mobile-only">
           RockmountやHarleyを<br>はじめとする<br>
           欧米の厳選ブランドとの取引を<br>
-          <b>32年間継続しており、</b><br>
-          現在までに<b>25社以上のメーカーとの<br>
-          取引実績</b>を有しています。
+          32年間継続しており、<br>
+          現在までに25社以上のメーカーとの<br>
+          取引実績を有しています。
         </p>
       </div>
     </div>
@@ -625,8 +616,8 @@
           </p>
         <!-- スマートフォン版専用の改行 -->
         <p class="text-center mobile-only">
-          With our philosophy of <strong>"Redefining and<br>
-          Reconstructing Standards,"</strong><br>
+          With our philosophy of <span class="philosophy-text">"Redefining and<br>
+          Reconstructing Standards,"</span><br>
           we import and introduce high-quality<br>
           apparel brands from Europe and America to Japan.
         </p>
@@ -671,7 +662,7 @@
       <a href="https://rockmount.com/" target="_blank" rel="noopener">
           <img src="image/rockmount.webp" alt="Rockmount Mfg. Co." class="brand-image" loading="lazy" width="819" height="407" decoding="async">
       </a><br>
-      <strong>Rockmount Mfg. Co. (USA)</strong><br>
+      <span class="brand-name">Rockmount Mfg. Co. (USA)</span><br>
       <!-- PC版専用の改行 -->
       <div class="ja-content desktop-only">
         アメリカの老舗ブランド。<br>
@@ -711,7 +702,7 @@
       <a href="https://www.harleyofscotland.com/" target="_blank" rel="noopener">
           <img src="image/Harley.webp" alt="Harley" class="brand-image" loading="lazy" width="2048" height="2048" decoding="async">
       </a><br>
-      <strong>Harley of Scotland</strong><br>
+      <span class="brand-name">Harley of Scotland</span><br>
       <!-- PC版専用の改行 -->
       <div class="ja-content desktop-only">
         スコットランドのファクトリーニットブランドであるHarley of Scotland。<br>
@@ -749,7 +740,7 @@
       <a href="https://www.eribe.com/" target="_blank" rel="noopener">
           <img src="image/eribe.svg" alt="Eribe" class="brand-image" loading="lazy" width="1200" height="628" decoding="async">
       </a><br>
-      <strong>Eribe Knitwear (Scotland)</strong><br>
+      <span class="brand-name">Eribe Knitwear (Scotland)</span><br>
       <!-- PC版専用の改行 -->
       <div class="ja-content desktop-only">
         スコットランドのニットアルチザンであるEribe knitwear。<br>
@@ -783,7 +774,7 @@
       <a href="https://leminor.fr/en" target="_blank" rel="noopener">
           <img src="image/leminor.webp" alt="Le Minor" class="brand-image" loading="lazy" width="450" height="450" decoding="async">
       </a><br>
-      <strong>Le Minor (France/Grammatico)</strong><br>
+      <span class="brand-name">Le Minor (France/Grammatico)</span><br>
       <!-- PC版専用の改行 -->
       <div class="ja-content desktop-only">
         20ゲージのコットン糸を使用したボーダーニットシャツを企画販売しています。<br>
@@ -832,7 +823,7 @@
   </ul>
 
   <div class="social-links">
-    <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+    <a href="https://www.instagram.com/restandard_jp" target="_blank" rel="noopener" aria-label="Instagram">
       <!-- Instagram モノトーンSVG -->
       <svg width="24" height="24" viewBox="0 0 448 448" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="32" y="32" width="384" height="384" rx="96" fill="#fff"/>
@@ -841,17 +832,17 @@
         <circle cx="320" cy="128" r="24" fill="#222"/>
       </svg>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" aria-label="Facebook">
+    <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" rel="noopener" aria-label="Facebook">
       <!-- Facebook 公式SVG -->
       <svg width="24" height="24" viewBox="0 0 320 512" fill="#1877F3" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91V127.91c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h100.2V288z" fill="#1877F3"/><path d="M202.66 512V288h69.56l10.42-92.66h-79.98v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h98.3z" fill="#fff"/></svg>
     </a>
-    <a href="https://x.com/restandard_2025" target="_blank" aria-label="X (Twitter)">
+    <a href="https://x.com/restandard_2025" target="_blank" rel="noopener" aria-label="X (Twitter)">
       <!-- X 公式風モノトーンSVG（大きめ中央） -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.5 4H20L14.5 11.5L20.5 20H16L12 14.5L8.1 20H4L10 12.5L4.5 4H9L12.7 9.1L17.5 4ZM15.7 18.5H17.2L9.7 6.7H8.2L15.7 18.5Z" fill="#fff"/>
       </svg>
     </a>
-    <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
+    <a href="https://note.com/restandard_2025" target="_blank" rel="noopener" aria-label="note">
       <!-- note 白抜きn文字SVG（さらに大きめ・完全中心中央揃え） -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <text x="12" y="12" font-size="26" font-family="Arial Black, Arial, sans-serif" fill="#fff" font-weight="bold" text-anchor="middle" dominant-baseline="middle">n</text>
@@ -1007,5 +998,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- lazy-load フェードイン処理 -->
 <script src="js/init-sections.js?v=2025-01-18-final" defer></script>
+<!-- Hover/タップ直前でトップを先読み（フッターに移動） -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var links = document.querySelectorAll('a[href="/"], a[href="/#brands"]');
+  links.forEach(function(a){
+    a.addEventListener('pointerenter', function(){
+      if(!a.__prefetched){
+        var l = document.createElement('link');
+        l.rel = 'prefetch';
+        l.href = '/';
+        document.head.appendChild(l);
+        a.__prefetched = true;
+      }
+    }, {passive:true});
+  });
+});
+</script>
+<!-- Speculation Rules でトップページを先読み（フッターに移動） -->
+<script type="speculationrules">
+{
+  "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }],
+  "prerender": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
+}
+</script>
+</main>
 </body>
 </html>

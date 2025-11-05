@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja" translate="no">
 <head>
   <meta charset="utf-8">
@@ -36,9 +36,9 @@
   </script>
   <script>window.__QA_MEASURE_LOGS__ = false;</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
-  <meta name="keywords" content="ReStandard, アパレル卸, 欧米ブランド, Rockmount, Harley of Scotland, William Lockie, 定番, パートナーシップ, セレクトシップ">
-  <meta name="author" content="ReStandard">
+  <meta name="description" content="欧米の厳選アパレルブランドを日本へ。Rockmount、Harley of Scotland、William Lockieなど、32年の取引実績で培った信頼を基に、高品質なアイテムをお届けします。">
+  <!-- Google検索では評価対象外ですが、一部の検索エンジンで参考にされる可能性があります -->
+  <meta name="keywords" content="アパレル卸, 欧米ブランド, ReStandard">
   <meta name="robots" content="index, follow">
   
   <!-- Speculation Rules で高速化（最適化） -->
@@ -60,22 +60,7 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "ReStandard",
-  "url": "https://restandard-2025.netlify.app",
-  "description": "欧米アパレルブランドの卸売",
-  "sameAs": [
-    "https://www.instagram.com/restandard_jp",  
-    "https://www.facebook.com/restandard_jp",
-    "https://x.com/ReStandard_jp"
-  ]
-}
-</script>
-  
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": ["Organization", "LocalBusiness"],
   "name": "ReStandard",
   "description": "欧米アパレルブランドの卸売・セレクトショップ",
   "url": "https://restandard-2025.netlify.app",
@@ -102,34 +87,16 @@
     "@type": "OfferCatalog",
     "name": "アパレルブランド",
     "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Brand",
-          "name": "Rockmount"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Brand",
-          "name": "Harley of Scotland"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Brand",
-          "name": "William Lockie"
-        }
-      }
+      {"@type": "Offer", "itemOffered": {"@type": "Brand", "name": "Rockmount"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Brand", "name": "Harley of Scotland"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Brand", "name": "William Lockie"}}
     ]
   }
 }
 </script>
   
   <!-- OGP設定 -->
-  <meta property="og:title" content="ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ">
+  <meta property="og:title" content="欧米アパレルブランド卸｜ReStandard">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://restandard-2025.netlify.app">
   <meta property="og:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
@@ -138,14 +105,14 @@
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ">
+  <meta name="twitter:title" content="欧米アパレルブランド卸｜ReStandard">
   <meta name="twitter:description" content="ReStandardは欧米の高品質アパレルブランド（Rockmount, Harley of Scotland, William Lockie等）を日本市場へ卸・ご提案。定番から最新まで厳選ブランドを紹介します。">
   <meta name="twitter:image" content="https://restandard-2025.netlify.app/image/ogp.jpg">
   
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="dcmOoLbM8zJ_79cLiGo_qTXDmO27gGdVD-RvyG4FWf8" />
   
-  <title>ReStandard | 欧米アパレルブランド卸・定番セレクト・パートナーシップ</title>
+  <title>欧米アパレルブランド卸｜ReStandard</title>
   
   <!-- プリロード -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -200,636 +167,6 @@
     ]
   }
   </script>
-
-
-  <style>
-    :root {
-      --main-color: #333333;
-      --accent-color: #888;
-      --hover-bg: #f8f8f8;
-      --gradient-start: #ffffff;
-      --gradient-end:   #dedbd6;
-      --heading-font: 'Noto Serif JP', serif;
-      --body-font: 'Noto Sans JP', sans-serif;
-      --main-font-family: 'Noto Serif JP', serif;
-      --heading-font-family: 'Noto Serif JP', serif;
-      --rs-header-h: 80px; /* 64px → 80px に増加 */
-    }
-
-    html, body {
-      font-family: var(--main-font-family) !important;
-      overflow-x: hidden;
-    }
-    
-    /* 新しいCollectionセクション用の設定 */
-    * {
-      font-family: inherit !important;
-    }
-    
-    /* Collection画像の表示を強制 - スマホ表示の安定化 */
-    .collection-track {
-      min-width: 3200px !important; /* 16枚 × 200px */
-    }
-    
-    /* Collectionセクションの間隔調整 */
-    .collection-wrapper {
-      margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
-    }
-    
-    .collection-row {
-      margin: 2rem 0 !important; /* 行間の間隔を拡大 */
-    }
-    
-    /* Collection画像の読み込み最適化 - スマホ表示安定化 */
-    @media (max-width: 900px) {
-      .collection-track img {
-        loading: eager !important; /* スマホでは遅延読み込みを無効化 */
-        decoding: sync !important; /* 同期デコードで表示を安定化 */
-      }
-    }
-    
-    /* Collectionセクションの背景設定 - 透明に変更 */
-    #collection .band {
-      background: transparent !important;
-      backdrop-filter: none !important;
-      position: relative;
-    }
-    
-    /* 上段の背景：下部分のみ角丸 */
-    .collection-row:first-child .band {
-      border-radius: 0 0 20px 20px !important;
-    }
-    
-    /* 下段の背景：上部分のみ角丸 */
-    .collection-row:last-child .band {
-      border-radius: 20px 20px 0 0 !important;
-    }
-    
-    /* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
-    #lookbook .band {
-      background: rgba(255, 255, 255, 0.85) !important; /* ナビバーと同じ色 */
-      backdrop-filter: none !important;
-      position: relative;
-    }
-    
-    /* Lookbookコンテナの背景は透明のまま */
-    .lookbook-container {
-      background: transparent !important;
-    }
-    
-    /* スマホ表示におけるLookbook背景の縦の長さを短縮 */
-    @media (max-width: 900px) {
-      #lookbook .band {
-        padding-top: 12px !important; /* 上側の余白を削減 */
-        padding-bottom: 12px !important; /* 下側の余白を削減 */
-      }
-      
-      .lookbook-container {
-        min-height: 280px !important; /* 高さを削減 */
-        padding: 8px 0 !important; /* 上下のパディングを削減 */
-      }
-    }
-    
-    /* モザイク背景の削除 */
-    .collection-row::before,
-    .collection-row::after {
-      display: none !important;
-    }
-    
-    .collection-track img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      width: 200px !important;
-      height: 250px !important;
-      object-fit: cover !important;
-      flex-shrink: 0 !important;
-      border-radius: 8px !important;
-      margin: 0 8px !important;
-      transition: transform 0.3s ease !important;
-    }
-    
-    .collection-track img:hover {
-      transform: scale(1.05) !important;
-    }
-    
-    /* Lookbook画像の表示を強制 */
-    .lookbook-track {
-      min-width: 2400px !important; /* 8枚 × 300px */
-    }
-    .lookbook-track img {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      width: 300px !important;
-      height: 400px !important; /* 統一の高さに設定 */
-      object-fit: contain !important; /* containで見切れ防止 */
-      flex-shrink: 0 !important;
-    }
-    
-    /* モバイル版でのLookbook画像の高さ調整 */
-    @media (max-width: 767px) {
-      .lookbook-track img {
-        height: 350px !important; /* モバイルでは少し小さく */
-        object-fit: contain !important;
-      }
-    }
-    
-    /* PC版でのLookbook画像の高さ調整 */
-    @media (min-width: 768px) {
-      .lookbook-track img {
-        height: 400px !important; /* PC版でも適切な高さ */
-        object-fit: contain !important;
-      }
-    }
-    h1, h2, h3, h4, h5, h6, .heading, .brandlogo, .navbar-brand, .nav-link, .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
-      font-family: var(--main-font-family) !important;
-    }
-
-    body {
-      font-family: var(--body-font);
-      color: var(--main-color);
-      text-align: center;
-      line-height: 1.7;
-      font-feature-settings: "palt";
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      font-family: var(--heading-font);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .navbar, footer {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid #ccc;
-      backdrop-filter: blur(8px);
-    }
-
-    .navbar .container-fluid {
-      padding: 0 1.5rem;
-    }
-
-    .navbar-brand {
-      font-family: var(--heading-font);
-      color: var(--main-color) !important;
-      letter-spacing: 0.05em;
-      font-weight: 700;
-    }
-
-    .navbar-nav {
-      margin-right: 1rem;
-    }
-
-    .navbar-nav .nav-item {
-      margin: 0 0.5rem;
-    }
-
-    .navbar-nav .nav-link {
-      font-family: var(--heading-font);
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      color: var(--main-color) !important;
-      position: relative;
-      transition: all 0.3s var(--transition-timing);
-    }
-    
-    /* Bootstrapのデフォルト設定を上書き */
-    html body .navbar-nav .nav-link {
-      padding: 0.5rem 1rem !important;
-      font-size: 0.9rem !important;
-    }
-    html body .navbar-nav .nav-item {
-      margin: 0 0.5rem !important;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s var(--transition-timing);
-      transform: translateX(-50%);
-    }
-
-    .nav-link:hover::after {
-      width: 70%;
-    }
-
-    .nav-link:hover {
-      color: var(--accent-color) !important;
-    }
-
-    .nav-link.active {
-      font-weight: 700;
-    }
-
-    .nav-link.active::after {
-      width: 70%;
-    }
-
-    /* 言語切り替えボタンのスタイル */
-    .language-switcher {
-      display: flex;
-      align-items: center;
-      margin-left: 2rem;
-      position: relative;
-      border-radius: 24px;
-      padding: 4px;
-      transition: all 0.3s ease;
-    }
-
-    .language-switcher button {
-      background: none;
-      border: none;
-      color: var(--accent-color);
-      font-size: 0.9rem;
-      padding: 4px 12px;
-      cursor: pointer;
-      transition: all 0.3s var(--transition-timing);
-      border-radius: 20px;
-      font-family: var(--heading-font);
-      letter-spacing: 0.05em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .language-switcher button.active {
-      color: #fff;
-      font-weight: 500;
-      background: var(--main-color);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transform: scale(1.05);
-    }
-
-    /* モバイル対応 */
-    @media (max-width: 991px) {
-      .navbar-nav {
-        margin-right: 0;
-        text-align: center;
-        padding: 1rem 0;
-      }
-
-      .navbar-nav .nav-item {
-        margin: 0.5rem 0;
-      }
-
-      .language-switcher {
-        margin: 1rem auto;
-        width: fit-content;
-      }
-
-      .navbar-brand {
-        font-size: 1.3rem;
-      }
-    }
-
-    /* CLS防止と画像最適化 */
-    .collection-item img {
-      aspect-ratio: 93 / 140;
-      object-fit: cover;
-      max-width: 100%;
-      height: auto;
-    }
-
-    /* Brands関連のスタイルはstyle.cssで管理 */
-
-    /* レイアウトのブレ防止 */
-    img[width][height] {
-      height: auto;
-    }
-
-    /* 省データ回線向け */
-    .save-data img {
-      image-rendering: -webkit-optimize-contrast;
-    }
-
-    .brand-name-caption {
-      font-size: var(--font-size-3xl);
-      font-weight: bold;
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
-
-    .carousel-container {
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-    }
-    #homeCarousel .carousel-inner {
-      height: 500px;
-      align-items: center;
-      justify-content: center;
-    }
-    #homeCarousel .carousel-item {
-      justify-content: center;
-      align-items: center;
-      height: 500px;
-      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
-    }
-
-    #homeCarousel .carousel-item img {
-      max-height: 100%;
-      max-width: 100%;
-      width: auto;
-      height: auto;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      object-fit: contain;
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      border-radius: 50%;
-      padding: 20px;
-    }
-
-    .carousel-indicators-line {
-      position: absolute;
-      bottom: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: center;
-      padding-left: 0;
-      margin: 0;
-      list-style: none;
-      z-index: 10;
-    }
-
-    .carousel-indicators-line button {
-      width: 40px;
-      height: 6px;
-      margin: 6px 4px;
-      opacity: 0.4;
-      transition: opacity 0.3s;
-      border: none;
-    }
-
-    .carousel-indicators-line .active {
-      opacity: 1;
-    }
-
-    /* brand-section-title削除 - .section-titleで統一 */
-
-    /* Screen Reader Only - SEO用の非表示要素 */
-    .sr-only {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
-    
-    /* スクリーンリーダーでは読み上げられるが、視覚的には非表示 */
-    .sr-only h1,
-    .sr-only p {
-      font-size: 1rem;
-      line-height: 1.4;
-      color: transparent;
-      background: transparent;
-    }
-
-    /* Brands グリッド重複スタイル削除 */
-    /* Duplicate removed: 重複するBrands設定をstyle.cssのsections専用ブロックに統合 */
-
-    /* Brandlogo 重複スタイル削除 */
-    /* Duplicate removed: 重複するbrandlogo設定をstyle.cssのsections専用ブロックに統合 */
-
-    .preview {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -100%) scale(0.95);
-      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0;
-      visibility: hidden;
-      z-index: 10;
-      background: white;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      width: 250px;
-    }
-
-    .preview img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      filter: none;
-    }
-
-    .brandlogo:hover .preview {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, -110%) scale(1);
-    }
-
-    footer {
-      border-top: 1px solid rgba(204, 204, 204, 0.3);
-    }
-
-    footer .nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    footer .nav-link {
-      color: var(--main-color) !important;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      position: relative;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-
-    footer .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    footer .nav-link:hover::after {
-      width: 70%;
-    }
-
-    .social-links {
-      margin: 2rem 0;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin: 0 10px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #333, #666);
-      color: white !important;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      background: linear-gradient(45deg, #444, #777);
-    }
-
-    .copyright {
-      font-family: var(--body-font);
-      font-size: 0.9rem;
-      color: var(--accent-color);
-      margin-top: 2rem;
-      letter-spacing: 0.02em;
-    }
-
-    .desktop-only { display: block; }
-    .mobile-only { display: none; }
-    @media (max-width: 600px) {
-      .desktop-only { display: none !important; }
-      .mobile-only { display: inline !important; }
-    }
-
-    a, .internal-link {
-      cursor: pointer;
-    }
-    a:hover, .internal-link:hover {
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
-    }
-
-    /* 1.mov用モーダルの簡易スタイル */
-    #lp-movie-modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.85);
-      align-items: center; justify-content: center;
-    }
-    #lp-movie-modal.active { display: flex; }
-    #lp-movie-modal video { max-width: 90vw; max-height: 80vh; border-radius: 12px; box-shadow: 0 4px 32px #0008; }
-    #lp-movie-modal .close-btn {
-      position: absolute; top: 2vw; right: 2vw; font-size: 2rem; color: #fff; background: none; border: none; cursor: pointer;
-    }
-    /* スプラッシュ動画用スタイル - 段階的レイヤー遷移 */
-    #splash-video-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #ffffff !important;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      opacity: 1;
-      transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-    
-    /* スプラッシュ動画自体の背景も白色に設定 */
-    #splash-video {
-      background: #ffffff !important;
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
-      transition: opacity 1.4s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-    
-    /* スプラッシュ遷移用の追加レイヤー */
-    .splash-transition-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.95) 100%);
-      z-index: 9998;
-      opacity: 0;
-      transform: scale(1.05);
-      transition: opacity 1.2s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-    
-    .splash-transition-layer.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-    
-    /* ブランドロゴの表示 */
-    .splash-logo {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: var(--heading-font);
-      font-size: clamp(2rem, 8vw, 4rem);
-      font-weight: 700;
-      color: var(--main-color);
-      opacity: 0;
-      letter-spacing: 0.1em;
-      z-index: 10000;
-      transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-    
-    .splash-logo.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1.03);
-    }
-    /* スプラッシュ動画関連のスタイルは削除済み */
-    /* 全ての競合!importantルール削除済み - style.cssで統一管理 */
-  </style>
-  <style>
-    /* フッターが浮かないようにする設定 */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    
-    main {
-      flex: 1;
-    }
-    
-    footer {
-      border-top: 1px solid rgba(204, 204, 204, 0.3);
-      margin-top: auto;
-      position: relative;
-      bottom: 0;
-      width: 100%;
-    }
-  </style>
 </head>
 <body>
 
@@ -842,10 +179,11 @@
   </div>
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
+  <header>
   <nav class="fixed-top navbar navbar-expand-lg">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
-      <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+      <a class="navbar-brand mx-auto" href="/">ReStandard</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -866,6 +204,7 @@
       </div>
     </div>
   </nav>
+  </header>
 
   <!-- 単一背景動画 - PC/SP自動切替（最適化） -->
   <div id="background-video-container">
@@ -873,69 +212,6 @@
     <video id="mobile-bg-video" src="2.mp4" autoplay loop muted playsinline preload="metadata" style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:none;"></video>
   </div>
   
-  <style>
-    /* PC版とスマートフォン版で背景動画を切り替え */
-    @media (min-width: 901px) {
-      #desktop-bg-video {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        z-index: -1 !important;
-      }
-      #mobile-bg-video {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-    }
-    @media (max-width: 900px) {
-      #desktop-bg-video {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-      #mobile-bg-video {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        background: #000 !important;
-        z-index: -1 !important;
-      }
-    }
-    
-    /* PC版でもスマートフォン版と同様の透過設定を適用 */
-    @media (min-width: 901px) {
-      .navbar {
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        backdrop-filter: blur(10px) !important;
-        margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
-      }
-       /* 旧flowing-images系削除済み - Collection新設計で統一 */
-      
-      /* 競合スタイル削除 */
-      /* Duplicate removed: 位置調整設定をstyle.cssのsections専用ブロックに統合 */
-      
-      /* Brands セクション重複スタイル削除 */
-      /* Duplicate removed: Brands位置調整設定をstyle.cssのsections専用ブロックに統合 */
-      
-      /* Overview セクション重複スタイル削除 */
-      /* Duplicate removed: Overview設定をstyle.cssのsections専用ブロックに統合 */
-      
-      
-      /* Footer 重複スタイル削除 */
-      /* Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 */
-      
-      /* ヘッダー固定の強化 */
-      html body .navbar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 1030 !important;
-      }
-    }
-  </style>
-
   <script>
     // Service Worker アンレジスター（キャッシュ問題解決）
     if ('serviceWorker' in navigator) {
@@ -1057,18 +333,19 @@
   <!-- ヘッダーとのギャップ確保用スペーサー -->
   <div class="rs-header-spacer" aria-hidden="true"></div>
   
-  
+  <main>
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
-  <!-- Main Heading - SEO用の非表示H1 -->
+  <!-- Main Heading - SEO用のH1 -->
   <section class="sr-only">
-    <h1>ReStandard - 欧米アパレルブランド卸のパートナーシップ</h1>
+    <h1>欧米アパレルブランド卸｜ReStandard</h1>
     <p>高品質な欧米ブランドを日本市場へ。Rockmount、Harley of Scotland、William Lockieなど、厳選されたブランドをお客様にご提案します。</p>
   </section>
 
   <!-- Collection Section - 統合済み -->
   <section id="collection">
     <h2 class="section-title">Collection</h2>
+    <p class="sr-only">厳選された欧米アパレルブランドの商品を、季節のトレンドと共にご紹介します。上質な素材と職人技が光るアイテムをお楽しみください。</p>
     <div class="band">
       <div class="collection-wrapper">
       <!-- 上段：右→左 -->
@@ -1539,6 +816,7 @@
   <!-- Brands Section -->
   <section id="brands" class="restandard-section">
     <h2 class="section-title rs-reveal" data-reveal="line">Brands</h2>
+    <p class="sr-only">Rockmount、Harley of Scotland、William Lockieなど、32年の取引実績で培った信頼を基に、厳選された欧米ブランドをご紹介します。</p>
     <div class="section-inner">
     <div class="brands-grid">
         <figure class="brand-card">
@@ -1747,6 +1025,7 @@
   <!-- Lookbook Section -->
   <section id="lookbook">
     <h2 class="section-title">Lookbook</h2>
+    <p class="sr-only">実際のスタイリングをイメージできる、季節のコーディネート集をご覧ください。日常に寄り添う、上質なアイテムの着こなしをご提案します。</p>
     
     <div class="band">
       <div class="lookbook-container">
@@ -1883,7 +1162,42 @@
   </div>
 </section>
 
-
+  <!-- Contact Form Section -->
+  <section class="contact-section mb-5 section-spacing" role="region" aria-label="お問い合わせフォーム">
+    <div class="section-content">
+      <div class="container">
+        <div class="about-section-box delay-1 contact-content">
+          <div class="ja-content">
+            <p class="text-center">
+              お仕事のご依頼やご相談は、<span class="sp-br"></span>下記フォームよりご連絡ください。
+            </p>
+          </div>
+          <div class="en-content">
+            <p class="text-center">For business inquiries or consultations, please contact us using the form below.</p>
+          </div>
+        </div>
+        <div class="text-block delay-2">
+          <div class="form-container">
+            <iframe
+              id="JotFormIFrame-252014412896455"
+              title="お問い合わせフォーム"
+              onload="window.parent.scrollTo(0,0)"
+              allowtransparency="true"
+              allow="geolocation; microphone; camera; fullscreen; payment"
+              src="https://form.jotform.com/252014412896455"
+              frameborder="0"
+              style="min-width:100%;max-width:100%;height:539px;border:none;"
+              scrolling="no"
+            >
+            </iframe>
+            <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
+            <script>window.jotformEmbedHandler("iframe[id='JotFormIFrame-252014412896455']", "https://form.jotform.com/")</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
 
   <!-- Footer -->
 <footer class="py-5 text-center">
@@ -1891,7 +1205,7 @@
   <!-- Duplicate removed: Footer設定をstyle.cssのsections専用ブロックに統合 -->
 
   <ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="index.html#brands">Brands</a></li>
+    <li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
     <li class="nav-item"><a class="nav-link" href="vision.html">Vision</a></li>
     <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
@@ -1901,7 +1215,7 @@
   </ul>
 
   <div class="social-links">
-    <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+    <a href="https://www.instagram.com/restandard_jp" target="_blank" rel="noopener" aria-label="Instagram">
       <!-- Instagram モノトーンSVG -->
       <svg width="24" height="24" viewBox="0 0 448 448" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="32" y="32" width="384" height="384" rx="96" fill="#fff"/>
@@ -1910,17 +1224,17 @@
         <circle cx="320" cy="128" r="24" fill="#222"/>
       </svg>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" aria-label="Facebook">
+    <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" rel="noopener" aria-label="Facebook">
       <!-- Facebook 公式SVG -->
       <svg width="24" height="24" viewBox="0 0 320 512" fill="#1877F3" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91V127.91c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h100.2V288z" fill="#1877F3"/><path d="M202.66 512V288h69.56l10.42-92.66h-79.98v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h98.3z" fill="#fff"/></svg>
     </a>
-    <a href="https://x.com/restandard_2025" target="_blank" aria-label="X (Twitter)">
+    <a href="https://x.com/restandard_2025" target="_blank" rel="noopener" aria-label="X (Twitter)">
       <!-- X 公式風モノトーンSVG（大きめ中央） -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.5 4H20L14.5 11.5L20.5 20H16L12 14.5L8.1 20H4L10 12.5L4.5 4H9L12.7 9.1L17.5 4ZM15.7 18.5H17.2L9.7 6.7H8.2L15.7 18.5Z" fill="#fff"/>
       </svg>
     </a>
-    <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
+    <a href="https://note.com/restandard_2025" target="_blank" rel="noopener" aria-label="note">
       <!-- note 白抜きn文字SVG（さらに大きめ・完全中心中央揃え） -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <text x="12" y="12" font-size="26" font-family="Arial Black, Arial, sans-serif" fill="#fff" font-weight="bold" text-anchor="middle" dominant-baseline="middle">n</text>

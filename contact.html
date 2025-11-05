@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja" translate="no">
 <head>
   <meta charset="utf-8">
@@ -13,9 +13,9 @@
   gtag('config', 'G-1W9HVMCW3G');
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ReStandardへのお問い合わせ・ご相談はこちらから。商品・取引・アクセスなど、お気軽にご連絡ください。">
-  <meta name="keywords" content="ReStandard, お問い合わせ, 連絡先, ご相談, 取引, アパレル卸">
-  <meta name="author" content="ReStandard">
+  <meta name="description" content="商品のお問い合わせや取引に関するご相談を承ります。お気軽にご連絡ください。お客様のご要望に寄り添い、最適なご提案をいたします。ReStandardまでお問い合わせください。">
+  <!-- Google検索では評価対象外ですが、一部の検索エンジンで参考にされる可能性があります -->
+  <meta name="keywords" content="お問い合わせ, ご相談, ReStandard">
   <meta name="robots" content="index, follow">
   <script type="application/ld+json">
 {
@@ -64,36 +64,10 @@
   <link rel="stylesheet" href="css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
   <link rel="stylesheet" href="css/style.css?v=2025-01-18_FINAL_REQ">
 
-  <title>Contact | お問い合わせ・ご相談 | ReStandard</title>
-  
-  <!-- Hover/タップ直前でトップを先読み -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function(){
-      var links = document.querySelectorAll('a[href="/"], a[href="/#brands"]');
-      links.forEach(function(a){
-        a.addEventListener('pointerenter', function(){
-          if(!a.__prefetched){
-            var l = document.createElement('link');
-            l.rel = 'prefetch';
-            l.href = '/';
-            document.head.appendChild(l);
-            a.__prefetched = true;
-          }
-        }, {passive:true});
-      });
-    });
-  </script>
-  
-  <!-- Speculation Rules でトップページを先読み -->
-  <script type="speculationrules">
-  {
-    "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }],
-    "prerender": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
-  }
-  </script>
+  <title>お問い合わせ・ご相談｜ReStandard</title>
 
   <!-- OGP設定 -->
-  <meta property="og:title" content="Contact | お問い合わせ | ReStandard">
+  <meta property="og:title" content="お問い合わせ・ご相談｜ReStandard">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://restandard-2025.netlify.app/contact.html">
   <meta property="og:image" content="https://restandard-2025.netlify.app/image/ogp.jpg" loading="lazy">
@@ -517,10 +491,11 @@
 
 
 <!-- ナビゲーションバー -->
+<header>
   <nav class="fixed-top navbar navbar-expand-lg">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
-      <a class="navbar-brand mx-auto" href="index.html">ReStandard</a>
+      <a class="navbar-brand mx-auto" href="/">ReStandard</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -541,12 +516,20 @@
       </div>
     </div>
   </nav>
+</header>
 
-<!-- 本文 -->
+<main>
+<h1 class="section-title text-reveal text-center" style="margin-top: 2rem;">
+  <span>お問い合わせ・ご相談｜ReStandard</span>
+</h1>
+<nav class="breadcrumb mb-3" aria-label="breadcrumb" style="max-width: 1200px; margin: 0 auto; padding: 20px 16px 0;">
+  <ol class="breadcrumb" style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px;">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">お問い合わせ・ご相談</li>
+  </ol>
+</nav>
+<p class="text-center" style="max-width: 800px; margin: 20px auto; padding: 0 20px;">商品のお問い合わせや取引に関するご相談を承ります。お気軽にご連絡ください。お客様のご要望に寄り添い、最適なご提案をいたします。</p>
 <section class="contact-section mb-5" role="region" aria-label="お問い合わせフォーム">
-  <h1 class="section-title text-reveal text-center">
-    <span>Contact</span>
-  </h1>
   <div class="section-content">
     <div class="container">
       <div class="about-section-box delay-1 contact-content">
@@ -686,7 +669,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </ul>
 
   <div class="social-links">
-    <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+      <a href="https://www.instagram.com/restandard_jp" target="_blank" rel="noopener" aria-label="Instagram">
       <!-- Instagram モノトーンSVG -->
       <svg width="24" height="24" viewBox="0 0 448 448" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="32" y="32" width="384" height="384" rx="96" fill="#fff"/>
@@ -695,17 +678,17 @@ document.addEventListener('DOMContentLoaded', function() {
         <circle cx="320" cy="128" r="24" fill="#222"/>
       </svg>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" aria-label="Facebook">
+      <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" rel="noopener" aria-label="Facebook">
       <!-- Facebook 公式SVG -->
       <svg width="24" height="24" viewBox="0 0 320 512" fill="#1877F3" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91V127.91c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h100.2V288z" fill="#1877F3"/><path d="M202.66 512V288h69.56l10.42-92.66h-79.98v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h98.3z" fill="#fff"/></svg>
     </a>
-    <a href="https://x.com/restandard_2025" target="_blank" aria-label="X (Twitter)">
+      <a href="https://x.com/restandard_2025" target="_blank" rel="noopener" aria-label="X (Twitter)">
       <!-- X 公式風モノトーンSVG（大きめ中央） -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.5 4H20L14.5 11.5L20.5 20H16L12 14.5L8.1 20H4L10 12.5L4.5 4H9L12.7 9.1L17.5 4ZM15.7 18.5H17.2L9.7 6.7H8.2L15.7 18.5Z" fill="#fff"/>
       </svg>
     </a>
-    <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
+      <a href="https://note.com/restandard_2025" target="_blank" rel="noopener" aria-label="note">
       <!-- note 白抜きn文字SVG（さらに大きめ・完全中心中央揃え） -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <text x="12" y="12" font-size="26" font-family="Arial Black, Arial, sans-serif" fill="#fff" font-weight="bold" text-anchor="middle" dominant-baseline="middle">n</text>
@@ -775,5 +758,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- lazy-load フェードイン処理 -->
 <script src="js/init-sections.js?v=2025-01-18-final" defer></script>
+<!-- Hover/タップ直前でトップを先読み（フッターに移動） -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var links = document.querySelectorAll('a[href="/"], a[href="/#brands"]');
+  links.forEach(function(a){
+    a.addEventListener('pointerenter', function(){
+      if(!a.__prefetched){
+        var l = document.createElement('link');
+        l.rel = 'prefetch';
+        l.href = '/';
+        document.head.appendChild(l);
+        a.__prefetched = true;
+      }
+    }, {passive:true});
+  });
+});
+</script>
+<!-- Speculation Rules でトップページを先読み（フッターに移動） -->
+<script type="speculationrules">
+{
+  "prefetch": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }],
+  "prerender": [{ "source": "document", "where": { "href_matches": "/$" }, "eagerness": "moderate" }]
+}
+</script>
+</main>
 </body>
 </html>
