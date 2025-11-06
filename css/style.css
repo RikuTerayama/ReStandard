@@ -743,7 +743,7 @@
     font-family: var(--heading-font);
     color: var(--main-color) !important;
     letter-spacing: 0.05em;
-    font-weight: 700;
+    font-weight: 700 !important;
   }
 
   .navbar-nav {
@@ -924,7 +924,8 @@
   .brand-section-title, .about-title, .contact-title, .vision-title, .location-title {
     font-family: var(--heading-font, 'Noto Serif JP', serif);
   }
-  .navbar-brand, .nav-link {
+  /* navbar-brandはfont-weight: 700 !importantが適用される（742行目） */
+  .nav-link {
     font-weight: 500;
     letter-spacing: 0.02em;
   }
