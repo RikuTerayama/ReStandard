@@ -242,7 +242,7 @@
   
   /* Lookbook 行 */
   #lookbook .lookbook-track img{
-    height: var(--lookbook-img-h);
+    /* 画像サイズは2498行目の設定を採用（競合削除） */
     width: auto;
     object-fit: contain;
     display: block;
@@ -415,7 +415,6 @@
   
   .lookbook-item { 
     flex-shrink: 0;
-    height: clamp(240px, 26vw, 400px);
     width: auto;
     background: transparent;
     box-shadow: none;
@@ -442,15 +441,7 @@
     }
   }
   
-  .lookbook-item img {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-    background: transparent;
-    box-shadow: none;
-  }
+  /* 画像サイズは2469行目の設定を採用（競合削除） */
   
   /* 画像番号非表示 */
   .image-number { 
@@ -511,9 +502,7 @@
       --collection-speed: 35s;
     }
     
-    .lookbook-item img {
-      height: clamp(220px, 28vw, 300px);
-    }
+    /* 画像サイズは2498行目の設定を採用（競合削除） */
   }
   
   /* ========================================
@@ -619,7 +608,7 @@
     width:max-content; 
     will-change:transform;
   }
-  .collection-track img, .lookbook-track img {
+  .collection-track img {
     height:100%; 
     max-height:100%;
     width:auto; 
@@ -632,6 +621,8 @@
     transition: transform 0.3s ease;
     flex-shrink: 0;
   }
+  
+  /* Lookbook画像サイズは2460行目の設定を採用（競合削除） */
   
   /* === トラックの高さ：画面幅に比例（PC/タブ/SP） === */
   .collection .track-wrap,
@@ -1127,14 +1118,7 @@
       padding-block: 1rem !important;
     }
     
-    .lookbook-item {
-      height: clamp(400px, 30vw, 500px) !important; /* PCで画像全体を表示 */
-    }
-    
-    .lookbook-item img {
-      height: 100% !important;
-      object-fit: contain !important;
-    }
+    /* 画像サイズは2498行目の設定を採用（競合削除） */
     
     /* PCでもフローするように */
     #lookbook .lookbook-track {
@@ -1164,14 +1148,7 @@
   }
   
   /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
-  .lookbook-item{ 
-    height: clamp(240px, 26vw, 400px); /* PC で400pxまで拡大 */
-  }
-  .lookbook-item img{
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-  }
+  /* 画像サイズは2498行目の設定を採用（競合削除） */
   
   /* 横スクロールはXのみ */
   @keyframes lookbook-scroll{
@@ -1192,47 +1169,33 @@
   }
   #lookbook .lookbook-item{ 
     flex:0 0 auto; 
-    height: auto !important; /* 高さ柔軟化 */
     width:auto; 
     background:transparent; 
     border-radius:8px; 
     overflow:visible !important; /* 画像切れ防止 */
   }
-  .lookbook-track img{ 
-    object-fit: contain !important; /* 上下切れ防止 */
-    max-height: 100% !important; /* 画像見切れ防止 */
-    width: auto !important;
-  }
-  #lookbook .lookbook-item img{ 
-    height: auto !important; /* 高さ柔軟化 */
-    object-fit: contain !important; /* 上下切れ防止 */
-    max-height: 100% !important; /* 画像見切れ防止 */
-    width: auto !important;
-    border-radius:8px;
-    max-width: 100%;
-  }
+  /* 画像サイズは2498行目の設定を採用（競合削除） */
   #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; }
   
   /* 全般レスポンシブ画像対応 */
-  .collection-track img,
-  .lookbook-track img {
+  .collection-track img {
     max-width: 100% !important;
     height: auto !important;
   }
   
   /* PC大きく・SP小さく調整 */
   @media (min-width: 769px) {
-    .collection-track img,
-    .lookbook-track img {
+    .collection-track img {
       max-width: clamp(200px, 20vw, 300px) !important; /* PC: 大きめ */
     }
+    /* Lookbook画像サイズは2498行目の設定を採用（競合削除） */
   }
   
   @media (max-width: 768px) {
-    .collection-track img,
-    .lookbook-track img {
+    .collection-track img {
       max-width: clamp(120px, 25vw, 200px) !important; /* SP: 小さめ */
     }
+    /* Lookbook画像サイズは2498行目の設定を採用（競合削除） */
   }
   
   @keyframes scroll-left{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
@@ -1320,8 +1283,7 @@
     padding: 0 !important;
   }
   
-  .collection-track img,
-  .lookbook-track img{
+  .collection-track img {
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;   /* 全体を表示（切らない） */
@@ -1331,6 +1293,8 @@
     user-select: none !important;
     pointer-events: auto !important;
   }
+  
+  /* Lookbook画像サイズは2498行目の設定を採用（競合削除） */
   
   /* ドラッグ中はアニメ止め & カーソル */
   .collection-track.dragging,
