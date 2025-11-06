@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ja" translate="no">
 <head>
   <meta charset="utf-8">
@@ -14,8 +14,9 @@
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>「ニットが空気を纏う」としたら、それはきっとERIBÉ（エリベ）のこと。 | ReStandard</title>
-  <meta name="description" content="秋から冬へと季節が移るころ、肌寒さを感じ始めた日には、少しだけ気持ちが遠くを見つめるようになる。 そんな日に、そっと寄り添ってくれるような一着が、スコットランドから届きました。 ERIBÉ（エリベ） 天然素材と色彩感覚に満ちた、あたたかくも">
-  <meta name="keywords" content="ReStandard, ニュース, お知らせ, note, 最新情報, イベント, アパレル卸">
+  <meta name="description" content="スコットランドから届くERIBÉ。天然素材と豊かな色彩感覚で、秋から冬の季節に寄り添う一着をご紹介します。上質なニットウェアをお届けする、こだわりのブランドです。">
+  <!-- Google検索では評価対象外ですが、一部の検索エンジンで参考にされる可能性があります -->
+  <meta name="keywords" content="ERIBÉ, ニット, ReStandard">
   <meta name="author" content="ReStandard">
   <meta name="robots" content="index, follow">
   
@@ -133,7 +134,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"></noscript>
   <link rel="stylesheet" href="/css/reveal.css?v=2025-01-18_FINAL_REQ">
   <link rel="stylesheet" href="/css/i18n-visibility.css?v=2025-01-18_FINAL_REQ">
-  <link rel="stylesheet" href="/css/style.css?v=2025-01-18_FINAL_REQ">
+  <link rel="stylesheet" href="/css/style.css?v=2025-01-20-NAVBAR-UNIFIED">
 
   <style>
     :root {
@@ -179,208 +180,7 @@
       letter-spacing: 0.02em;
     }
 
-    .navbar, footer {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid #ccc;
-      backdrop-filter: blur(8px);
-    }
-
-    .navbar .container-fluid {
-      padding: 0 1.5rem;
-    }
-
-    .navbar-brand {
-      font-family: var(--heading-font);
-      color: var(--main-color) !important;
-      letter-spacing: 0.05em;
-      font-weight: 700;
-    }
-
-    .navbar-nav {
-      margin-right: 1rem;
-    }
-
-    .navbar-nav .nav-item {
-      margin: 0 0.5rem;
-    }
-
-    .navbar-nav .nav-link {
-      font-family: var(--heading-font);
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      color: var(--main-color) !important;
-      position: relative;
-      transition: all 0.3s var(--transition-timing);
-    }
-    
-    /* Bootstrapのデフォルト設定を上書き */
-    html body .navbar-nav .nav-link {
-      padding: 0.5rem 1rem !important;
-      font-size: 0.9rem !important;
-    }
-    html body .navbar-nav .nav-item {
-      margin: 0 0.5rem !important;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s var(--transition-timing);
-      transform: translateX(-50%);
-    }
-
-    .nav-link:hover::after {
-      width: 70%;
-    }
-
-    .nav-link:hover {
-      color: var(--accent-color) !important;
-    }
-
-    .nav-link.active {
-      font-weight: 700;
-    }
-
-    .nav-link.active::after {
-      width: 70%;
-    }
-
-    /* 言語切り替えボタンのスタイル */
-    .language-switcher {
-      display: flex;
-      align-items: center;
-      margin-left: 2rem;
-      position: relative;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(51, 51, 51, 0.1);
-      border-radius: 24px;
-      padding: 4px;
-      transition: all 0.3s ease;
-    }
-
-    .language-switcher button {
-      background: none;
-      border: none;
-      color: var(--accent-color);
-      font-size: 0.9rem;
-      padding: 4px 12px;
-      cursor: pointer;
-      transition: all 0.3s var(--transition-timing);
-      border-radius: 20px;
-      font-family: var(--heading-font);
-      letter-spacing: 0.05em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .language-switcher button.active {
-      color: #fff;
-      font-weight: 500;
-      background: var(--main-color);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transform: scale(1.05);
-    }
-
-    /* モバイル対応 */
-    @media (max-width: 991px) {
-      .navbar-nav {
-        margin-right: 0;
-        text-align: center;
-        padding: 1rem 0;
-      }
-
-      .navbar-nav .nav-item {
-        margin: 0.5rem 0;
-      }
-
-      .language-switcher {
-        margin: 1rem auto;
-        width: fit-content;
-      }
-
-      .navbar-brand {
-        font-size: 1.3rem;
-      }
-    }
-
-    footer {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-top: 1px solid rgba(204, 204, 204, 0.3);
-      backdrop-filter: blur(10px);
-    }
-
-    footer .nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    footer .nav-link {
-      color: var(--main-color) !important;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      position: relative;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-
-    footer .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    footer .nav-link:hover::after {
-      width: 70%;
-    }
-
-    .social-links {
-      margin: 2rem 0;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin: 0 10px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #333, #666);
-      color: white !important;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      background: linear-gradient(45deg, #444, #777);
-    }
-
-    .copyright {
-      font-family: var(--body-font);
-      font-size: 0.9rem;
-      color: var(--accent-color);
-      margin-top: 2rem;
-      letter-spacing: 0.02em;
-    }
+    /* ナビバーとフッターの設定はcss/style.cssで統一管理（index.htmlと同じ） */
 
     .desktop-only { display: block; }
     .mobile-only { display: none; }
@@ -396,7 +196,7 @@
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
     }
 
-    /* フッターが浮かないようにする設定 */
+    /* フッター関連の設定はcss/style.cssで統一管理（index.htmlと同じ） */
     html, body {
       height: 100%;
       margin: 0;
@@ -407,20 +207,11 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      padding-top: 80px; /* 固定ヘッダー分の余白（index.htmlと同じ） */
     }
     
     main {
       flex: 1;
-    }
-    
-    footer {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-top: 1px solid rgba(204, 204, 204, 0.3);
-      backdrop-filter: blur(10px);
-      margin-top: auto;
-      position: relative;
-      bottom: 0;
-      width: 100%;
     }
 
     /* News詳細ページ専用スタイル */
@@ -445,7 +236,7 @@
   <nav class="fixed-top navbar navbar-expand-lg">
     <div class="container-fluid">
       <div class="d-lg-none" style="width: 40px;"></div>
-      <a class="navbar-brand mx-auto" href="/index.html">ReStandard</a>
+      <a class="navbar-brand mx-auto" href="/">ReStandard</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -468,10 +259,10 @@
   </nav>
 
   <main class="container news-article" id="main">
+    <h1>「ニットが空気を纏う」としたら、それはきっとERIBÉ（エリベ）のこと。</h1>
     <nav class="breadcrumbs" aria-label="breadcrumb">
       <a href="/">Home</a> › <a href="/news.html">News</a> › 「ニットが空気を纏う」としたら、それはきっとERIBÉ（エリベ）のこと。
     </nav>
-    <h1>「ニットが空気を纏う」としたら、それはきっとERIBÉ（エリベ）のこと。</h1>
     <p><time datetime="2025-07-08T20:03:28">2025-07-08</time></p>
 
     
@@ -479,7 +270,7 @@
     <time></time>
     </p>
     <figure name="5a7618d8b61f4e9a9a85896698c1dbdf">
-      <img src="/assets/images/nb5aee4061d0f_915ca47e159c17e3a9356a35c7b5dc93.png">
+      <img src="/assets/images/nb5aee4061d0f_915ca47e159c17e3a9356a35c7b5dc93.png" alt="ERIBÉ（エリベ）のニット：空気を纏う軽やかなぬくもり" width="800" height="600" loading="lazy">
         <figcaption>
         </figcaption>
       </figure>
@@ -491,6 +282,7 @@
             <p name="a3d88c4780474315ad92afde8829ce46" id="a3d88c4780474315ad92afde8829ce46">天然素材と色彩感覚に満ちた、あたたかくも静かなニットブランドです。</p>
               <hr>
                 <h2 name="977395297ba347c483d1f54a1b84aff8" id="977395297ba347c483d1f54a1b84aff8">空気ごと、羽織る。</h2>
+                  <p>ERIBÉの最大の魅力は、"軽やかなぬくもり"。風景に溶け込むような佇まいと、視覚的にも癒やされる色のグラデーションが特徴です。</p>
                   <figure name="13925d18e5b8448d8a9fdb293cdf5fb5" id="13925d18e5b8448d8a9fdb293cdf5fb5">
                     <img src="/assets/images/nb5aee4061d0f_1749404179-DLg0BwjlESXM2T1QHPWfCnN8.jpg" alt="ニットが空気を纏う としたら それはきっとERIB 商品画像 - 1749404179 DLg0BwjlESXM2T1QHPWfCnN8" width="620" height="859">
                       <figcaption>
@@ -503,6 +295,7 @@
                           <p name="341fd74018c9498ca232a33bfa577f37" id="341fd74018c9498ca232a33bfa577f37">むしろ、「これからの時代に必要なものは何か？」という問いに、静かに答えてくれるようなニットです。</p>
                             <hr>
                               <h2 name="8b15f0ae80434cda86c31e3ac2381a26" id="8b15f0ae80434cda86c31e3ac2381a26">スコットランドの風土と共にある服づくり</h2>
+                                <p>スコットランド産のウールを主に使用し、地域の産業職人との協業を大切にしながら、サステナブルなものづくりを貫いています。</p>
                                 <figure name="bb3e4237ef6945bca1a6a1ec6c1fccfb" id="bb3e4237ef6945bca1a6a1ec6c1fccfb">
                                   <img src="/assets/images/nb5aee4061d0f_1749404202-cwfoArQueJz3Vg6PtmDlasU2.jpg" alt="ニットが空気を纏う としたら それはきっとERIB 商品画像 - 1749404202 cwfoArQueJz3Vg6PtmDlasU2" width="620" height="859">
                                     <figcaption>
@@ -516,6 +309,7 @@
                                       <b>大人のカジュアルにぴったりな一着</b>です。</p>
                                         <hr>
                                           <h2 name="7e017176cd5d4571b3790823a72bb0e8" id="7e017176cd5d4571b3790823a72bb0e8">セレクトショップ様バイヤー様へ</h2>
+                                            <p>ReStandardでは、ERIBÉをはじめとした欧州の上質なブランドを、国内セレクトショップ小売店様向けに卸販売しております。</p>
                                             <p name="3ea65767ad1344178dbcda4f3dca3e27" id="3ea65767ad1344178dbcda4f3dca3e27">ReStandardでは、ERIBÉをはじめとした欧州の上質なブランドを、<b>国内セレクトショップ小売店様向けに卸販売</b>しております。</p>
                                               
                                                 <p><p name="1a3f3ef07c9446e5b9820ec138f30fca" id="1a3f3ef07c9446e5b9820ec138f30fca">
@@ -533,10 +327,11 @@
                                                             <hr>
                                                               <p name="ae0696f1eda5415f9b75fd09ffa8f267" id="ae0696f1eda5415f9b75fd09ffa8f267">▶︎ <b>卸取り扱いのご相談はこちらから</b>
                                                                 <br>
-                                                                  <a href="https://restandard-2025.netlify.app/" target="_blank" rel="nofollow">https://restandard-2025.netlify.app/</a>
+                                                                  <a href="https://restandard-2025.netlify.app/" target="_blank" rel="nofollow noopener">https://restandard-2025.netlify.app/</a>
                                                                   </p>
                                                                   <hr>
-                                                                    <h2 name="93a5220cead54f67a7395167535f9108" id="93a5220cead54f67a7395167535f9108">“誰かのため”ではなく、“自分のため”に選ぶ一着。</h2>
+                                                                    <h2 name="93a5220cead54f67a7395167535f9108" id="93a5220cead54f67a7395167535f9108">"誰かのため"ではなく、"自分のため"に選ぶ一着。</h2>
+                                                                      <p>ERIBÉのニットは、静かに、でも確かに語りかけてきます。それはファッションのトレンドとは少し距離をとったところにあるけれど、むしろ、本当に必要とされる服はそこにあるのではないかと気づかせてくれます。</p>
                                                                       <figure name="cff6d889d834476cb95e481e4c8f6b87" id="cff6d889d834476cb95e481e4c8f6b87">
                                                                         <img src="/assets/images/nb5aee4061d0f_1749404215-8QT1oSrfU5xdseZ0ai2jBPVl.jpg" alt="ニットが空気を纏う としたら それはきっとERIB 商品画像 - 1749404215 8QT1oSrfU5xdseZ0ai2jBPVl" width="620" height="859">
                                                                           <figcaption>
@@ -555,14 +350,14 @@
                                                                                   ブランドの“空気感”をもっと感じていただける写真やストーリーも掲載しています。<br>
                                                                                   気になった方は、ぜひフォローしてチェックしてみてください。</p>
                                                                                   <p name="ad9b9a7647c045b1a5252cdaa0275516" id="ad9b9a7647c045b1a5252cdaa0275516">📷 Instagram<br>
-                                                                                    👉 <a href="https://www.instagram.com/restandard_jp" target="_blank" rel="nofollow">https://www.instagram.com/restandard_jp</a>
+                                                                                    👉 <a href="https://www.instagram.com/restandard_jp" target="_blank" rel="nofollow noopener">https://www.instagram.com/restandard_jp</a>
                                                                                   </p>
                                                                                   <p name="1f83a3b55c5a4a8baed6c27ea82dd0e2" id="1f83a3b55c5a4a8baed6c27ea82dd0e2">📘 Facebook<br>
-                                                                                    👉 <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" rel="nofollow">https://www.facebook.com/profile.php?id=61576965246853</a>
+                                                                                    👉 <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" rel="nofollow noopener">https://www.facebook.com/profile.php?id=61576965246853</a>
                                                                                   </p>
                                                                                   <p name="a8c1bbdf1fca4f4ea1a97177d8dcc3f2" id="a8c1bbdf1fca4f4ea1a97177d8dcc3f2">▶︎ <b>卸仕入れに関するお問い合わせはこちらから</b>
                                                                                     <br>
-                                                                                      👉 <a href="https://restandard-2025.netlify.app/" target="_blank" rel="nofollow">https://restandard-2025.netlify.app/</a>
+                                                                                      👉 <a href="https://restandard-2025.netlify.app/" target="_blank" rel="nofollow noopener">https://restandard-2025.netlify.app/</a>
                                                                                     </p>
                                                                                     
                                                                                       <hr/>
@@ -770,7 +565,7 @@
     </ul>
 
     <div class="social-links">
-      <a href="https://www.instagram.com/restandard_jp" target="_blank" aria-label="Instagram">
+      <a href="https://www.instagram.com/restandard_jp" target="_blank" rel="noopener" aria-label="Instagram">
         <!-- Instagram モノトーンSVG -->
         <svg width="24" height="24" viewBox="0 0 448 448" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="32" y="32" width="384" height="384" rx="96" fill="#fff"/>
@@ -779,17 +574,17 @@
           <circle cx="320" cy="128" r="24" fill="#222"/>
         </svg>
       </a>
-      <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" aria-label="Facebook">
+      <a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" rel="noopener" aria-label="Facebook">
         <!-- Facebook 公式SVG -->
         <svg width="24" height="24" viewBox="0 0 320 512" fill="#1877F3" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91V127.91c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h100.2V288z" fill="#1877F3"/><path d="M202.66 512V288h69.56l10.42-92.66h-79.98v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.47v224h98.3z" fill="#fff"/></svg>
       </a>
-      <a href="https://x.com/restandard_2025" target="_blank" aria-label="X (Twitter)">
+      <a href="https://x.com/restandard_2025" target="_blank" rel="noopener" aria-label="X (Twitter)">
         <!-- X 公式風モノトーンSVG（大きめ中央） -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M17.5 4H20L14.5 11.5L20.5 20H16L12 14.5L8.1 20H4L10 12.5L4.5 4H9L12.7 9.1L17.5 4ZM15.7 18.5H17.2L9.7 6.7H8.2L15.7 18.5Z" fill="#fff"/>
         </svg>
       </a>
-      <a href="https://note.com/restandard_2025" target="_blank" aria-label="note">
+      <a href="https://note.com/restandard_2025" target="_blank" rel="noopener" aria-label="note">
         <!-- note 白抜きn文字SVG（さらに大きめ・完全中心中央揃え） -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <text x="12" y="12" font-size="26" font-family="Arial Black, Arial, sans-serif" fill="#fff" font-weight="bold" text-anchor="middle" dominant-baseline="middle">n</text>
