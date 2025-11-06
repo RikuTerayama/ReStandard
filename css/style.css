@@ -2637,7 +2637,7 @@ footer .nav-link:hover::after {
   .navbar {
     background-color: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(10px) !important;
-    margin-bottom: 500px !important; /* PC版でメニューバーとflowing imagesの間隔を大幅に広げる */
+    /* margin-bottom削除：全ページで統一されたナビバー高さを維持 */
   }
   
   /* ヘッダー固定の強化 */
