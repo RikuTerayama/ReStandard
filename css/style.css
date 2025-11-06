@@ -398,14 +398,14 @@
     display: flex !important;
     gap: min(1.5vw, 12px);
     cursor: grab;
-    animation: lookbook-scroll 40s linear infinite !important;
+    animation: lookbook-scroll var(--lookbook-speed, 35s) linear infinite !important; /* Collectionと同じ速度に統一 */
     height: auto;
     align-items: center;
   }
   
   /* Lookbookアニメーションを確実に動作させる */
   #lookbook .lookbook-track {
-    animation: lookbook-scroll 40s linear infinite !important;
+    animation: lookbook-scroll var(--lookbook-speed, 35s) linear infinite !important; /* Collectionと同じ速度に統一 */
   }
   
   .lookbook-track.dragging {
@@ -677,7 +677,7 @@
   }
   @media (max-width: 480px){
     :root { 
-      --lookbook-speed: 40s; 
+      --lookbook-speed: 35s; /* Collectionと同じ速度に統一 */
     }
     /* PATCH: SP で Lookbook の縦余白を軽くする */
     .lookbook-container{
@@ -724,10 +724,16 @@
     right: 0;
     width: 100%;
     z-index: 1000;
+    min-height: 80px !important; /* 他のページと統一 */
+    padding-top: 0.5rem !important; /* 他のページと統一 */
+    padding-bottom: 0.5rem !important; /* 他のページと統一 */
   }
 
   .navbar .container-fluid {
     padding: 0 1.5rem;
+    min-height: 80px !important; /* 他のページと統一 */
+    display: flex !important;
+    align-items: center !important;
   }
 
   .navbar-brand {
@@ -1107,7 +1113,7 @@
     }
     
     #lookbook .lookbook-track {
-      animation: lookbook-scroll 60s linear infinite !important; /* 40s → 60s に遅く */
+      animation: lookbook-scroll var(--lookbook-speed, 35s) linear infinite !important; /* Collectionと同じ速度に統一 */
     }
   }
   
@@ -1122,7 +1128,7 @@
     
     /* PCでもフローするように */
     #lookbook .lookbook-track {
-      animation: lookbook-scroll 50s linear infinite !important;
+      animation: lookbook-scroll var(--lookbook-speed, 75s) linear infinite !important; /* 変数を使用 */
       animation-play-state: running !important;
     }
   }
@@ -1133,7 +1139,7 @@
     top: 0 !important;
     left: 0 !important;
     transform: translateX(0) !important;      /* ← 既存の translate3d(0,-50%,0) をやめる */
-    animation: lookbook-scroll 40s linear infinite !important;
+    animation: lookbook-scroll var(--lookbook-speed, 35s) linear infinite !important; /* Collectionと同じ速度に統一 */
     display: flex !important;
     align-items: flex-start;
     gap: 12px;
@@ -1144,7 +1150,7 @@
   
   /* Lookbookアニメーションを強制的に適用（重複定義を統合） */
   #lookbook .lookbook-track {
-    animation: lookbook-scroll 40s linear infinite !important;
+    animation: lookbook-scroll var(--lookbook-speed, 35s) linear infinite !important; /* Collectionと同じ速度に統一 */
   }
   
   /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
@@ -1158,7 +1164,7 @@
   
   /* Lookbookアニメーションを強制的に動作させる（JavaScriptの上書きを防止） */
   #lookbook .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll 40s linear infinite !important;
+    animation: lookbook-scroll var(--lookbook-speed, 35s) linear infinite !important; /* Collectionと同じ速度に統一 */
     animation-play-state: running !important;
   }
   
@@ -2472,7 +2478,8 @@ div.copyright {
 /* モバイル版でのLookbook画像の高さ調整 */
 @media (max-width: 767px) {
   .lookbook-track img {
-    height: 350px !important; /* モバイルでは少し小さく */
+    width: 350px !important; /* スマホ表示で画像サイズを大きく */
+    height: 450px !important; /* スマホ表示で画像サイズを大きく */
     object-fit: contain !important;
   }
 }
