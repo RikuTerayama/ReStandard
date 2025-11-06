@@ -2,14 +2,8 @@
   publish = "."
   command = "echo 'Static site - no build needed'"
 
-# リダイレクト設定（SPAフォールバック）- 一時的に無効化してテスト
-# 既存のファイルが存在する場合は自動的に優先される
+# リダイレクト設定は _redirects ファイルで管理（netlify.tomlより優先）
 # 静的ファイル（CSS/JS/画像など）は自動的に提供されるため、SPAフォールバックから除外される
-# [[redirects]]
-#   from = "/*"
-#   to = "/index.html"
-#   status = 200
-#   force = false
 
 # Netlify Image CDNの強キャッシュ設定
 [[headers]]
