@@ -192,137 +192,14 @@
       letter-spacing: 0.02em;
     }
 
-    .navbar, footer {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid #ccc;
-      backdrop-filter: blur(8px);
-    }
-    
-    /* ナビバーの設定はcss/style.cssで統一管理（全ページ共通） */
+    /* ナビバーとフッターの設定はcss/style.cssで統一管理（全ページ共通） */
     body {
       padding-top: 80px;
     }
 
-    .navbar-brand {
-      font-family: var(--heading-font);
-      color: var(--main-color) !important;
-      letter-spacing: 0.05em;
-      font-weight: 700;
-    }
+    /* ナビバー関連の設定はcss/style.cssで統一管理（全ページ共通） */
 
-    .navbar-nav {
-      margin-right: 1rem;
-    }
-
-    .navbar-nav .nav-item {
-      margin: 0 0.5rem;
-    }
-
-    .navbar-nav .nav-link {
-      font-family: var(--heading-font);
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      color: var(--main-color) !important;
-      position: relative;
-      transition: all 0.3s var(--transition-timing);
-    }
-    
-    /* Bootstrapのデフォルト設定を上書き */
-    html body .navbar-nav .nav-link {
-      padding: 0.5rem 1rem !important;
-      font-size: 0.9rem !important;
-    }
-    html body .navbar-nav .nav-item {
-      margin: 0 0.5rem !important;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--main-color);
-      transition: all 0.3s var(--transition-timing);
-      transform: translateX(-50%);
-    }
-
-    .nav-link:hover::after {
-      width: 70%;
-    }
-
-    .nav-link:hover {
-      color: var(--accent-color) !important;
-    }
-
-    .nav-link.active {
-      font-weight: 700;
-    }
-
-    .nav-link.active::after {
-      width: 70%;
-    }
-
-    /* 言語切り替えボタンのスタイル */
-    .language-switcher {
-      display: flex;
-      align-items: center;
-      margin-left: 2rem;
-      position: relative;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(51, 51, 51, 0.1);
-      border-radius: 24px;
-      padding: 4px;
-      transition: all 0.3s ease;
-    }
-
-    .language-switcher button {
-      background: none;
-      border: none;
-      color: var(--accent-color);
-      font-size: 0.9rem;
-      padding: 4px 12px;
-      cursor: pointer;
-      transition: all 0.3s var(--transition-timing);
-      border-radius: 20px;
-      font-family: var(--heading-font);
-      letter-spacing: 0.05em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .language-switcher button.active {
-      color: #fff;
-      font-weight: 500;
-      background: var(--main-color);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transform: scale(1.05);
-    }
-
-    /* モバイル対応 */
-    @media (max-width: 991px) {
-      .navbar-nav {
-        margin-right: 0;
-        text-align: center;
-        padding: 1rem 0;
-      }
-
-      .navbar-nav .nav-item {
-        margin: 0.5rem 0;
-      }
-
-      .language-switcher {
-        margin: 1rem auto;
-        width: fit-content;
-      }
-
-      .navbar-brand {
-        font-size: 1.3rem;
-      }
-    }
+    /* モバイル対応の設定はcss/style.cssで統一管理（全ページ共通） */
 
     footer {
       background-color: rgba(255, 255, 255, 0.95);
