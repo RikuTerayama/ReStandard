@@ -20,7 +20,7 @@
     
     /* 速度設定 */
     --collection-speed: 55s;
-    --lookbook-speed: 75s;
+    --lookbook-speed: 55s; /* Collectionと同じ速度に統一 */
     --loop: 45s;
     
     /* 共通設定 */
@@ -672,7 +672,7 @@
   /* スマホ版の画像サイズ調整 */
   @media (max-width: 768px){
     :root { 
-      --lookbook-speed: 45s; 
+      --lookbook-speed: 45s; /* Collectionと同じ速度（1024px以下で45s） */
     }
   }
   @media (max-width: 480px){
@@ -2462,15 +2462,15 @@ div.copyright {
 
 /* Lookbook画像の表示を強制 */
 .lookbook-track {
-  min-width: 2400px !important; /* 8枚 × 300px */
+  min-width: 3200px !important; /* 8枚 × 400px */
 }
 
 .lookbook-track img {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  width: 300px !important;
-  height: 400px !important; /* 統一の高さに設定 */
+  width: 400px !important; /* 画像サイズを大きく */
+  height: 520px !important; /* 画像サイズを大きく */
   object-fit: contain !important; /* containで見切れ防止 */
   flex-shrink: 0 !important;
 }
@@ -2478,8 +2478,8 @@ div.copyright {
 /* モバイル版でのLookbook画像の高さ調整 */
 @media (max-width: 767px) {
   .lookbook-track img {
-    width: 350px !important; /* スマホ表示で画像サイズを大きく */
-    height: 450px !important; /* スマホ表示で画像サイズを大きく */
+    width: 400px !important; /* スマホ表示で画像サイズをさらに大きく */
+    height: 520px !important; /* スマホ表示で画像サイズをさらに大きく */
     object-fit: contain !important;
   }
 }
@@ -2487,7 +2487,8 @@ div.copyright {
 /* PC版でのLookbook画像の高さ調整 */
 @media (min-width: 768px) {
   .lookbook-track img {
-    height: 400px !important; /* PC版でも適切な高さ */
+    width: 400px !important; /* PC版で画像サイズを大きく */
+    height: 520px !important; /* PC版で画像サイズを大きく */
     object-fit: contain !important;
   }
 }
