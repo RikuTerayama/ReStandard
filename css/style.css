@@ -710,13 +710,14 @@
     margin-top: auto; position: relative; bottom: 0; width: 100%;
   }
   
-  /* Navbar（全ページ統一） */
+  /* Navbar（全ページ統一 - index.htmlと同じ設定） */
   .navbar, footer {
     background-color: rgba(255, 255, 255, 0.9) !important;
     border-bottom: 1px solid #ccc !important;
     backdrop-filter: blur(8px) !important;
   }
   
+  /* index.htmlと全く同じナビバー設定 */
   .navbar { 
     position: fixed !important;
     top: 0 !important;
@@ -724,18 +725,20 @@
     right: 0 !important;
     width: 100% !important;
     z-index: 1000 !important;
-    min-height: 80px !important; /* 全ページ統一 */
-    padding-top: 0.5rem !important; /* 全ページ統一 */
-    padding-bottom: 0.5rem !important; /* 全ページ統一 */
-    height: auto !important; /* 高さを自動に */
+    min-height: 80px !important; /* index.htmlと同じ */
+    padding-top: 0.5rem !important; /* index.htmlと同じ */
+    padding-bottom: 0.5rem !important; /* index.htmlと同じ */
+    height: auto !important;
+    margin: 0 !important; /* マージンを確実に0に */
   }
 
   .navbar .container-fluid {
     padding: 0 1.5rem !important;
-    min-height: 80px !important; /* 全ページ統一 */
+    min-height: 80px !important; /* index.htmlと同じ */
     display: flex !important;
     align-items: center !important;
-    height: auto !important; /* 高さを自動に */
+    height: auto !important;
+    margin: 0 !important; /* マージンを確実に0に */
   }
 
   .navbar-brand {
