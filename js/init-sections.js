@@ -2,6 +2,34 @@
    Marquee initializer (Collection / Lookbook 共通) 2025-01-18
    ========================================================= */
 
+function getLookbookSpeedSec(track) {
+  const candidates = [];
+  if (track) {
+    candidates.push(track);
+    if (track.parentElement) {
+      candidates.push(track.parentElement);
+    }
+  }
+  if (document.documentElement) {
+    candidates.push(document.documentElement);
+  }
+  if (document.body) {
+    candidates.push(document.body);
+  }
+
+  for (const el of candidates) {
+    const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
+    if (cssValue) {
+      const numeric = parseFloat(cssValue);
+      if (!Number.isNaN(numeric) && numeric > 0) {
+        return numeric;
+      }
+    }
+  }
+
+  return 55;
+}
+
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
   // READ all layout properties first
@@ -218,13 +246,25 @@ function pauseWhenOutOfView(track) {
 /* 初期化時：速度を画面幅で上書き、方向は data-dir */
 function initAutoScroll(track){
   const dir = (track.dataset.direction || 'left').toLowerCase(); // left=左へ / right=右へ
+  const isLookbook = track.classList.contains('lookbook-track');
+
+  if (isLookbook) {
+    const speedSec = getLookbookSpeedSec(track);
+    track.dataset.speed = String(speedSec);
+    track.dataset.baseSpeed = String(speedSec);
+    track.style.animation = `lookbook-scroll ${speedSec}s linear infinite`;
+    track.style.animationPlayState = 'running';
+    track.style.willChange = 'transform';
+    return;
+  }
+
   let speed = parseInt(track.getAttribute('data-speed') || '55', 10);
   if (window.innerWidth <= 768)  speed = Math.max(12, speed - 10);
   if (window.innerWidth <= 480)  speed = Math.max(10, speed - 14);
   
   const dur = calcSpeedSec(speed);
   track.dataset.baseSpeed = String(speed); // 再計算に使う
-
+  
   const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
   track.style.animation = `${key} ${dur}s linear infinite`;
   track.style.animationPlayState = 'running';
@@ -328,9 +368,10 @@ function alignTrackStart(track) {
 
   // READ all layout properties first
   const dir = (track.dataset.direction || 'left').toLowerCase();
+  const isLookbook = track.classList.contains('lookbook-track');
   const base = parseFloat(track.dataset.baseSpeed || 55);
-  const dur  = calcSpeedSec(base);
-  const key  = (dir === 'right') ? 'scroll-right' : 'scroll-left';
+  const dur  = isLookbook ? getLookbookSpeedSec(track) : calcSpeedSec(base);
+  const key  = isLookbook ? 'lookbook-scroll' : (dir === 'right' ? 'scroll-right' : 'scroll-left');
   const desired = computeDesiredTx(track, target, align);
 
   // WRITE all properties after reads
@@ -409,11 +450,21 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
+        if (track.classList.contains('lookbook-track')) {
+          const speedSec = getLookbookSpeedSec(track);
+          track.dataset.speed = String(speedSec);
+          track.dataset.baseSpeed = String(speedSec);
+          track.style.animation = `lookbook-scroll ${speedSec}s linear infinite`;
+          track.style.animationPlayState = 'running';
+          return;
+        }
+
         const dir = track.dataset.direction || 'left';
         const base = parseFloat(track.dataset.baseSpeed || 55);
         const sec = calcSpeedSec(base);
         const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
         track.style.animation = `${key} ${sec}s linear infinite`;
+        track.style.animationPlayState = 'running';
       });
     }, 200);
   });
