@@ -17,6 +17,34 @@ function initLookbookTracks() {
   });
 }
 
+function resolveLookbookSpeedSeconds(track) {
+  const candidates = [];
+  if (track) {
+    candidates.push(track);
+    if (track.parentElement) {
+      candidates.push(track.parentElement);
+    }
+  }
+  if (document.documentElement) {
+    candidates.push(document.documentElement);
+  }
+  if (document.body) {
+    candidates.push(document.body);
+  }
+
+  for (const el of candidates) {
+    const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
+    if (cssValue) {
+      const numeric = parseFloat(cssValue);
+      if (!Number.isNaN(numeric) && numeric > 0) {
+        return numeric;
+      }
+    }
+  }
+
+  return 55;
+}
+
 // .lookbook-track ごとに初期化処理
 function initTrack(track) {
   // data-seg で画像枚数を取得
@@ -248,11 +276,11 @@ function attachTrackControls(track) {
     const currentTx = getCurrentTranslateX(track);
     const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
     const progress = normalizedTx / segmentWidth;
-    const duration = parseFloat(track.dataset.speed || 32);
+    const duration = resolveLookbookSpeedSeconds(track);
     const delay = -progress * duration;
     
     // アニメーション再開
-    track.style.animation = `scroll-left ${duration}s linear infinite`;
+    track.style.animation = `lookbook-scroll ${duration}s linear infinite`;
     track.style.animationDelay = `${delay}s`;
     track.style.animationPlayState = 'running';
   };
@@ -279,13 +307,14 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始（左方向）
 function startAutoScroll(track) {
-        const speed = parseFloat(track.dataset.speed || 28); // 28秒に短縮してスムーズな流れを実現
+  const speed = resolveLookbookSpeedSeconds(track);
+  track.dataset.speed = String(speed);
 
   // 開始位置の調整
   alignTrackStart(track);
   
   // アニメーション開始（左方向）
-  track.style.animation = `scroll-left ${speed}s linear infinite`;
+  track.style.animation = `lookbook-scroll ${speed}s linear infinite`;
   track.style.animationPlayState = 'running';
   
   // スクロール後の継続性を確保（Lookbook強化版）
@@ -347,7 +376,7 @@ function alignTrackStart(track) {
   const imageWidth = targetImage.getBoundingClientRect().width;
   const trackWidth = track.parentElement.offsetWidth;
   const segmentWidth = track._segmentWidth;
-  const duration = parseFloat(track.dataset.speed || 55);
+  const duration = resolveLookbookSpeedSeconds(track);
   
   // Calculate desired position
   let desiredTx;
