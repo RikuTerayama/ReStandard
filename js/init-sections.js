@@ -30,6 +30,34 @@ function getLookbookSpeedSec(track) {
   return 55;
 }
 
+function resolveCssSpeedSeconds(track, fallback = 30) {
+  const candidates = [];
+  if (track) {
+    candidates.push(track);
+    if (track.parentElement) {
+      candidates.push(track.parentElement);
+    }
+  }
+  if (document.documentElement) {
+    candidates.push(document.documentElement);
+  }
+  if (document.body) {
+    candidates.push(document.body);
+  }
+
+  for (const el of candidates) {
+    if (!el) continue;
+    const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
+    if (cssValue) {
+      const numeric = parseFloat(cssValue);
+      if (!Number.isNaN(numeric) && numeric > 0) {
+        return numeric;
+      }
+    }
+  }
+  return fallback;
+}
+
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
   // READ all layout properties first
@@ -253,13 +281,11 @@ function initAutoScroll(track){
 
   if (isLookbook) {
     const speedSec = getLookbookSpeedSec(track);
-    track.dataset.speed = String(speedSec);
-    track.dataset.baseSpeed = String(speedSec);
-    // CSSで統一管理しているためJSからは余計なanimation指定をしない
-    track.style.removeProperty('animation');
-    track.style.animationPlayState = 'running';
-    track.style.willChange = 'transform';
-    return;
+    const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
+    track.dataset.speed = String(cssSpeed);
+    track.dataset.baseSpeed = String(cssSpeed);
+    key = 'lookbook-scroll';
+    duration = cssSpeed;
   } else {
     let speed = parseInt(track.getAttribute('data-speed') || '55', 10);
     if (window.innerWidth <= 768)  speed = Math.max(12, speed - 10);
@@ -458,18 +484,20 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeTimer = setTimeout(() => {
       document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
         if (track.classList.contains('lookbook-track')) {
-          // CSS変数で速度を管理しているためJSからは変更しない
-          track.style.removeProperty('animation');
+          const speedSec = getLookbookSpeedSec(track);
+          const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
+          track.dataset.speed = String(cssSpeed);
+          track.dataset.baseSpeed = String(cssSpeed);
+          track.style.animation = `lookbook-scroll ${cssSpeed}s linear infinite`;
           track.style.animationPlayState = 'running';
-          return;
+        } else {
+          const dir = track.dataset.direction || 'left';
+          const base = parseFloat(track.dataset.baseSpeed || 55);
+          const sec = calcSpeedSec(base);
+          const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
+          track.style.animation = `${key} ${sec}s linear infinite`;
+          track.style.animationPlayState = 'running';
         }
-
-        const dir = track.dataset.direction || 'left';
-        const base = parseFloat(track.dataset.baseSpeed || 55);
-        const sec = calcSpeedSec(base);
-        const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
-        track.style.animation = `${key} ${sec}s linear infinite`;
-        track.style.animationPlayState = 'running';
       });
     }, 200);
   });
