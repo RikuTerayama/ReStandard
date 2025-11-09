@@ -301,12 +301,12 @@ function initAutoScroll(track){
     key = dir === 'right' ? 'scroll-right' : 'scroll-left';
   }
 
-  track.style.animation = `${key} ${duration}s linear infinite`;
-  track.style.animationPlayState = 'running';
+  track.style.setProperty('animation', `${key} ${duration}s linear infinite`, 'important');
+  track.style.setProperty('animation-play-state', 'running', 'important');
   track.classList.remove('dragging');
   track.isDragging = false;
   requestAnimationFrame(() => {
-    track.style.animationPlayState = 'running';
+    track.style.setProperty('animation-play-state', 'running', 'important');
   });
   track.style.willChange = 'transform';
   attachManualControls(track);
@@ -498,8 +498,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
           track.dataset.speed = String(cssSpeed);
           track.dataset.baseSpeed = String(cssSpeed);
-          track.style.animation = `lookbook-scroll ${cssSpeed}s linear infinite`;
-          track.style.animationPlayState = 'running';
+          track.style.setProperty('animation', `lookbook-scroll ${cssSpeed}s linear infinite`, 'important');
+          track.style.setProperty('animation-play-state', 'running', 'important');
           track.classList.remove('dragging');
           track.isDragging = false;
         } else {
@@ -507,8 +507,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const base = parseFloat(track.dataset.baseSpeed || 55);
           const sec = calcSpeedSec(base);
           const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
-          track.style.animation = `${key} ${sec}s linear infinite`;
-          track.style.animationPlayState = 'running';
+          track.style.setProperty('animation', `${key} ${sec}s linear infinite`, 'important');
+          track.style.setProperty('animation-play-state', 'running', 'important');
         }
       });
     }, 200);
