@@ -12,8 +12,8 @@
     /* === 統一トークン（PC/モバイル両対応のクランプ） === */
     /* 画面幅に追随して高さが変わるように clamp で定義 */
     --collection-img-h: clamp(160px, 28vw, 320px);
-    --lookbook-img-w: clamp(140px, 16vw, 260px);
-    --lookbook-img-h: clamp(200px, 22vw, 360px);
+    --lookbook-img-w: clamp(100px, 18vw, 240px);
+    --lookbook-img-h: clamp(160px, 28vw, 320px);
     --collection-gap: clamp(12px, 2vw, 24px);
     
     /* 背景帯の上下余白（小画面で少し浅く） */
