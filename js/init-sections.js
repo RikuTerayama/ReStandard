@@ -255,8 +255,11 @@ function initAutoScroll(track){
     const speedSec = getLookbookSpeedSec(track);
     track.dataset.speed = String(speedSec);
     track.dataset.baseSpeed = String(speedSec);
-    key = 'lookbook-scroll';
-    duration = speedSec;
+    // CSSで統一管理しているためJSからは余計なanimation指定をしない
+    track.style.removeProperty('animation');
+    track.style.animationPlayState = 'running';
+    track.style.willChange = 'transform';
+    return;
   } else {
     let speed = parseInt(track.getAttribute('data-speed') || '55', 10);
     if (window.innerWidth <= 768)  speed = Math.max(12, speed - 10);
@@ -364,6 +367,9 @@ function applyInitialDelay(track, desiredTxPx) {
 function alignTrackStart(track) {
   const start = (track.dataset.start || '').toLowerCase();
   const align = (track.dataset.align || 'left').toLowerCase();
+  if (track.classList.contains('lookbook-track')) {
+    return;
+  }
   const target = findImageBySuffix(track, start);
   if (!target) return;
 
@@ -452,10 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeTimer = setTimeout(() => {
       document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
         if (track.classList.contains('lookbook-track')) {
-          const speedSec = getLookbookSpeedSec(track);
-          track.dataset.speed = String(speedSec);
-          track.dataset.baseSpeed = String(speedSec);
-          track.style.animation = `lookbook-scroll ${speedSec}s linear infinite`;
+          // CSS変数で速度を管理しているためJSからは変更しない
+          track.style.removeProperty('animation');
           track.style.animationPlayState = 'running';
           return;
         }
