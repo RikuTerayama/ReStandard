@@ -241,16 +241,16 @@
   }
   
   /* Lookbook 行 */
-  #lookbook .lookbook-track img{
-    /* 画像サイズは2498行目の設定を採用（競合削除） */
-    width: auto;
-    object-fit: contain;
-    display: block;
-    border-radius: 0;
-    box-shadow: none;
-    pointer-events: auto;
-    user-select: none;
-  }
+#lookbook .lookbook-track img{
+  width: 400px !important;
+  height: 520px !important;
+  object-fit: cover !important;
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: auto;
+  user-select: none;
+}
   
   /* 縦位置は上寄せ（中央だと上下が不足時に欠けやすい） */
   #collection .collection-track{
@@ -1294,16 +1294,10 @@
     block-size: clamp(180px, 24vw, 340px) !important;
   }
   
-  /* --- Lookbook の行高：PCでも画像全体が表示されるように調整 --- */
-  #lookbook .lookbook-track{
-    block-size: clamp(200px, 25vw, 400px) !important;
-  }
-  
-  #lookbook .lookbook-item img {
-    max-height: 100% !important;
-    object-fit: contain !important;
-    width: auto !important;
-  }
+/* --- Lookbook の行高 --- */
+#lookbook .lookbook-track{
+  block-size: clamp(200px, 25vw, 400px) !important;
+}
   
   /* カード：余白のみ。白いカード背景は無し */
   .collection-item,
@@ -2504,24 +2498,6 @@ div.copyright {
   height: 520px !important; /* 画像サイズを大きく */
   object-fit: cover !important; /* 幅を統一（最大幅にフィット） */
   flex-shrink: 0 !important;
-}
-
-/* モバイル版でのLookbook画像の高さ調整 */
-@media (max-width: 767px) {
-  .lookbook-track img {
-    width: 400px !important; /* スマホ表示で画像サイズをさらに大きく */
-    height: 520px !important; /* スマホ表示で画像サイズをさらに大きく */
-    object-fit: cover !important;
-  }
-}
-
-/* PC版でのLookbook画像の高さ調整 */
-@media (min-width: 768px) {
-  .lookbook-track img {
-    width: 400px !important; /* PC版で画像サイズを大きく */
-    height: 520px !important; /* PC版で画像サイズを大きく */
-    object-fit: contain !important;
-  }
 }
 
 /* スクリーンリーダー専用（視覚的に非表示、アクセシビリティ維持） */
