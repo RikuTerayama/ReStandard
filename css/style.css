@@ -12,7 +12,8 @@
     /* === 統一トークン（PC/モバイル両対応のクランプ） === */
     /* 画面幅に追随して高さが変わるように clamp で定義 */
     --collection-img-h: clamp(160px, 28vw, 320px);
-    --lookbook-img-h: clamp(160px, 28vw, 320px);
+    --lookbook-img-w: clamp(140px, 16vw, 260px);
+    --lookbook-img-h: clamp(200px, 22vw, 360px);
     --collection-gap: clamp(12px, 2vw, 24px);
     
     /* 背景帯の上下余白（小画面で少し浅く） */
@@ -242,14 +243,15 @@
   
   /* Lookbook 行 */
 #lookbook .lookbook-track img{
-  width: 400px !important;
-  height: 520px !important;
+  width: var(--lookbook-img-w) !important;
+  height: var(--lookbook-img-h) !important;
   object-fit: cover !important;
   display: block;
   border-radius: 0;
   box-shadow: none;
   pointer-events: auto;
   user-select: none;
+  flex-shrink: 0;
 }
   
   /* 縦位置は上寄せ（中央だと上下が不足時に欠けやすい） */
@@ -456,9 +458,12 @@
   
   /* prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
-    .collection-track,
-    .lookbook-track { 
+    .collection-track { 
       animation: none !important; 
+    }
+    .lookbook-track {
+      animation: lookbook-scroll var(--lookbook-speed, 30s) linear infinite !important;
+      animation-play-state: running !important;
     }
   }
   
@@ -1298,6 +1303,18 @@
 #lookbook .lookbook-track{
   block-size: clamp(200px, 25vw, 400px) !important;
 }
+
+#lookbook .lookbook-track img{
+  width: var(--lookbook-img-w) !important;
+  height: var(--lookbook-img-h) !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  pointer-events: auto !important;
+  user-select: none !important;
+}
   
   /* カード：余白のみ。白いカード背景は無し */
   .collection-item,
@@ -1414,9 +1431,9 @@
   }
   
   .lookbook-track img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
+    width: var(--lookbook-img-w) !important;
+    height: var(--lookbook-img-h) !important;
+    object-fit: cover !important;
     display: block;
   }
   
@@ -1477,15 +1494,22 @@
     right: auto;
   }
   
-  /* 4. 画像の見切れ抑止 */
-  .collection-track img,
-  .lookbook-track img {
-    height: var(--collection-row-h, 320px);
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    display: block;
-  }
+/* 4. 画像の見切れ抑止 */
+.collection-track img {
+  height: var(--collection-row-h, 320px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.lookbook-track img {
+  width: var(--lookbook-img-w) !important;
+  height: var(--lookbook-img-h) !important;
+  object-fit: cover !important;
+  display: block;
+  flex-shrink: 0;
+}
   
   /* === center full-bleed band === */
   .band {
@@ -1692,19 +1716,13 @@
     display: block;
   }
   
-  .lookbook-track img {
-    object-fit: contain;
-    height: var(--lookbook-img-h, 400px);
-    width: auto;
-    max-width: 100%;
-    display: block;
-  }
-  
-  @media (max-width: 768px) {
-    .lookbook-track img {
-      height: var(--lookbook-img-h, 300px);
-    }
-  }
+.lookbook-track img {
+  width: var(--lookbook-img-w) !important;
+  height: var(--lookbook-img-h) !important;
+  object-fit: cover !important;
+  display: block;
+  flex-shrink: 0;
+}
   
   /* スクロールアニメーションのキーフレームは1187-1195行目で定義済み（重複削除） */
   
@@ -2487,17 +2505,7 @@ div.copyright {
 
 /* Lookbook画像の表示を強制 */
 .lookbook-track {
-  min-width: 3200px !important; /* 8枚 × 400px */
-}
-
-.lookbook-track img {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  width: 400px !important; /* 画像サイズを大きく */
-  height: 520px !important; /* 画像サイズを大きく */
-  object-fit: cover !important; /* 幅を統一（最大幅にフィット） */
-  flex-shrink: 0 !important;
+  min-width: calc(8 * var(--lookbook-img-w, 240px)) !important;
 }
 
 /* スクリーンリーダー専用（視覚的に非表示、アクセシビリティ維持） */
