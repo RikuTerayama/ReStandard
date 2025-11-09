@@ -262,6 +262,11 @@ function attachManualControls(track){
 /** IntersectionObserver で画面外は自動停止
  *  ただし "ユーザーが止めた（data-user-paused=1）" 場合は何もしない */
 function pauseWhenOutOfView(track) {
+  if (track.classList.contains('lookbook-track')) {
+    // Lookbookは常時アニメーションさせる
+    track.style.animationPlayState = 'running';
+    return;
+  }
   const io = new IntersectionObserver((entries) => {
     entries.forEach((ent) => {
       if (track.dataset.userPaused === '1') return; // ← 勝手に再生しない
@@ -298,6 +303,11 @@ function initAutoScroll(track){
 
   track.style.animation = `${key} ${duration}s linear infinite`;
   track.style.animationPlayState = 'running';
+  track.classList.remove('dragging');
+  track.isDragging = false;
+  requestAnimationFrame(() => {
+    track.style.animationPlayState = 'running';
+  });
   track.style.willChange = 'transform';
   attachManualControls(track);
 }
@@ -490,6 +500,8 @@ document.addEventListener('DOMContentLoaded', () => {
           track.dataset.baseSpeed = String(cssSpeed);
           track.style.animation = `lookbook-scroll ${cssSpeed}s linear infinite`;
           track.style.animationPlayState = 'running';
+          track.classList.remove('dragging');
+          track.isDragging = false;
         } else {
           const dir = track.dataset.direction || 'left';
           const base = parseFloat(track.dataset.baseSpeed || 55);
