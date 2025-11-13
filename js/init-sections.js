@@ -403,9 +403,6 @@ function applyInitialDelay(track, desiredTxPx) {
 function alignTrackStart(track) {
   const start = (track.dataset.start || '').toLowerCase();
   const align = (track.dataset.align || 'left').toLowerCase();
-  if (track.classList.contains('lookbook-track')) {
-    return;
-  }
   const target = findImageBySuffix(track, start);
   if (!target) return;
 
