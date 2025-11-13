@@ -245,7 +245,7 @@
 #lookbook .lookbook-track img{
   width: var(--lookbook-img-w) !important;
   height: var(--lookbook-img-h) !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   display: block;
   border-radius: 0;
   box-shadow: none;
@@ -1161,7 +1161,7 @@
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-    transform: translateX(0) !important;      /* ← 既存の translate3d(0,-50%,0) をやめる */
+    /* transformはアニメーションで制御するため、初期値のみ設定 */
     display: flex !important;
     align-items: flex-start;
     gap: 12px;
@@ -1307,7 +1307,7 @@
 #lookbook .lookbook-track img{
   width: var(--lookbook-img-w) !important;
   height: var(--lookbook-img-h) !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   flex-shrink: 0 !important;
   display: block !important;
   border-radius: 0 !important;
@@ -1433,7 +1433,7 @@
   .lookbook-track img {
     width: var(--lookbook-img-w) !important;
     height: var(--lookbook-img-h) !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
     display: block;
   }
   
@@ -1506,7 +1506,7 @@
 .lookbook-track img {
   width: var(--lookbook-img-w) !important;
   height: var(--lookbook-img-h) !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   display: block;
   flex-shrink: 0;
 }
@@ -1719,7 +1719,7 @@
 .lookbook-track img {
   width: var(--lookbook-img-w) !important;
   height: var(--lookbook-img-h) !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   display: block;
   flex-shrink: 0;
 }
