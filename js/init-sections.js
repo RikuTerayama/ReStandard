@@ -504,6 +504,22 @@ document.addEventListener('DOMContentLoaded', () => {
     alignTrackStart(track);
     // 画面外一時停止
     pauseWhenOutOfView(track);
+    
+    // Lookbookトラックの場合、インラインスタイルを確実に削除
+    if (track.classList.contains('lookbook-track')) {
+      // 複数回実行して確実に削除
+      track.style.removeProperty('animation');
+      track.style.removeProperty('animation-play-state');
+      requestAnimationFrame(() => {
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+      });
+      setTimeout(() => {
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+      }, 100);
+    }
+    
     if (window.__QA_MEASURE_LOGS__) {
       console.log(`[INIT] Track ${index + 1}: ${track.dataset.direction || 'left'} (${track.dataset.speed || '55'}s)`);
     }
@@ -534,8 +550,13 @@ document.addEventListener('DOMContentLoaded', () => {
           const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
           track.dataset.speed = String(cssSpeed);
           track.dataset.baseSpeed = String(cssSpeed);
+          // インラインスタイルを確実に削除（複数回実行）
           track.style.removeProperty('animation');
           track.style.removeProperty('animation-play-state');
+          requestAnimationFrame(() => {
+            track.style.removeProperty('animation');
+            track.style.removeProperty('animation-play-state');
+          });
           track.classList.remove('dragging');
           track.isDragging = false;
         } else {
@@ -548,6 +569,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, 200);
+  });
+  
+  // ページ読み込み完了後にもインラインスタイルを削除（念のため）
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+      });
+    }, 500);
   });
 });
 
