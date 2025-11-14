@@ -20,8 +20,8 @@
     --band-pad-block: clamp(16px, 3.2vw, 40px);
     
     /* 速度設定 */
-    --collection-speed: 55s;
-    --lookbook-speed: 55s; /* Collectionと同じ速度に統一（PC） */
+    --collection-speed: 80s;
+    --lookbook-speed: 80s; /* Collectionと同じ速度に統一（PC） */
     --loop: 45s;
     
     /* 共通設定 */
@@ -462,7 +462,7 @@
       animation: none !important; 
     }
     .lookbook-track {
-      animation: lookbook-scroll var(--lookbook-speed, 55s) linear infinite !important;
+      animation: lookbook-scroll var(--lookbook-speed, 80s) linear infinite !important;
       animation-play-state: running !important;
     }
   }
@@ -494,16 +494,16 @@
   @media (max-width: 1024px) {
     :root {
       --collection-row-h: clamp(140px, 24vw, 200px);
-      --collection-speed: 45s;
-      --lookbook-speed: 45s; /* Collectionと同じ速度（タブレット） */
+      --collection-speed: 65s;
+      --lookbook-speed: 65s; /* Collectionと同じ速度（タブレット） */
     }
   }
   
   @media (max-width: 480px) {
     :root {
       --collection-row-h: clamp(150px, 28vw, 220px); /* SP判読性向上 */
-      --collection-speed: 35s;
-      --lookbook-speed: 35s; /* Collectionと同じ速度（スマホ） */
+      --collection-speed: 50s;
+      --lookbook-speed: 50s; /* Collectionと同じ速度（スマホ） */
     }
     
     /* 画像サイズは2498行目の設定を採用（競合削除） */
@@ -676,12 +676,12 @@
   /* スマホ版の画像サイズ調整 - Collectionと同じ速度設定に統一 */
   @media (max-width: 1024px){
     :root { 
-      --lookbook-speed: 45s; /* Collectionと同じ速度（タブレット） */
+      --lookbook-speed: 65s; /* Collectionと同じ速度（タブレット） */
     }
   }
   @media (max-width: 480px){
     :root { 
-      --lookbook-speed: 35s; /* Collectionと同じ速度（スマートフォン） */
+      --lookbook-speed: 50s; /* Collectionと同じ速度（スマートフォン） */
     }
     /* PATCH: SP で Lookbook の縦余白を軽くする */
     .lookbook-container{
@@ -1151,7 +1151,7 @@
     
     /* PCでもフローするように */
     html body #lookbook .lookbook-track {
-      animation: lookbook-scroll var(--lookbook-speed, 55s) linear infinite !important; /* Collectionと同じ速度（PC） */
+      animation: lookbook-scroll var(--lookbook-speed, 80s) linear infinite !important; /* Collectionと同じ速度（PC） */
       animation-play-state: running !important;
     }
   }
@@ -1174,7 +1174,7 @@
   /* Lookbookアニメーションを強制的に適用（重複定義を統合・1箇所で管理） */
   /* この設定は上記のメディアクエリで上書きされる */
   html body #lookbook .lookbook-track {
-    animation: lookbook-scroll var(--lookbook-speed, 55s) linear infinite !important; /* Collectionと同じ速度に統一 */
+    animation: lookbook-scroll var(--lookbook-speed, 80s) linear infinite !important; /* Collectionと同じ速度に統一 */
     animation-play-state: running !important; /* PC版でも確実に動作 */
   }
   
@@ -1204,13 +1204,13 @@
   /* JavaScriptのインラインスタイルを確実に上書きするため、最高優先度で設定 */
   /* すべてのアニメーション名（lookbook-scroll, scroll-left, scroll-right）を統一速度で上書き */
   #lookbook .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll var(--lookbook-speed, 55s) linear infinite !important; /* Collectionと同じ速度に統一 */
+    animation: lookbook-scroll var(--lookbook-speed, 80s) linear infinite !important; /* Collectionと同じ速度に統一 */
     animation-play-state: running !important;
   }
   
   /* JavaScriptがscroll-leftやscroll-rightを使用している場合も上書き（インラインスタイル対応） */
   html body #lookbook .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll var(--lookbook-speed, 55s) linear infinite !important; /* Collectionと同じ速度に統一 */
+    animation: lookbook-scroll var(--lookbook-speed, 80s) linear infinite !important; /* Collectionと同じ速度に統一 */
     animation-play-state: running !important;
   }
   
