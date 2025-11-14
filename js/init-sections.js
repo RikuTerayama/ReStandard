@@ -40,10 +40,10 @@ function getLookbookSpeedSec(track) {
     }
   }
 
-  return 55;
+  return 80;
 }
 
-function resolveCssSpeedSeconds(track, fallback = 30) {
+function resolveCssSpeedSeconds(track, fallback = 80) {
   const candidates = [];
   if (track) {
     candidates.push(track);
@@ -305,9 +305,9 @@ function initAutoScroll(track){
     key = 'lookbook-scroll';
     duration = cssSpeed;
   } else {
-    let speed = parseInt(track.getAttribute('data-speed') || '55', 10);
-    if (window.innerWidth <= 768)  speed = Math.max(12, speed - 10);
-    if (window.innerWidth <= 480)  speed = Math.max(10, speed - 14);
+    let speed = parseInt(track.getAttribute('data-speed') || '80', 10);
+    if (window.innerWidth <= 768)  speed = Math.max(65, speed - 15);
+    if (window.innerWidth <= 480)  speed = Math.max(50, speed - 30);
 
     duration = calcSpeedSec(speed);
     track.dataset.baseSpeed = String(speed); // 再計算に使う
@@ -334,10 +334,10 @@ function getTxPx(el){
 }
 
 /* 速度を画面幅で段階調整（大きい画面ほどゆっくり） */
-function calcSpeedSec(base=55){
+function calcSpeedSec(base=80){
   const w = window.innerWidth;
-  if (w < 480) return Math.max(24, base - 28);   // SP
-  if (w < 992) return Math.max(30, base - 17);   // タブレット
+  if (w < 480) return Math.max(50, base - 30);   // SP
+  if (w < 992) return Math.max(65, base - 15);   // タブレット
   return base;                                   // PC
 }
 
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
           track.isDragging = false;
         } else {
           const dir = track.dataset.direction || 'left';
-          const base = parseFloat(track.dataset.baseSpeed || 55);
+          const base = parseFloat(track.dataset.baseSpeed || 80);
           const sec = calcSpeedSec(base);
           const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
           track.style.setProperty('animation', `${key} ${sec}s linear infinite`, 'important');
