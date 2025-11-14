@@ -1112,7 +1112,8 @@
     position: relative;
     overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
     display: flex;
-    align-items: flex-start; /* 上寄せ */
+    align-items: center !important; /* 上下中央揃えに変更して画像が切れないように */
+    justify-content: flex-start !important; /* 左端から開始 */
   }
   
   /* スマホ表示でLookbook背景の縦長さを短く、スピードを遅く */
@@ -1121,12 +1122,9 @@
       min-block-size: calc(var(--lookbook-img-h, 300px) + 1rem) !important;
       padding-block: 0.5rem !important;
       overflow: visible !important; /* 画像が端から端まで表示されるように */
+      align-items: center !important; /* 上下中央揃え */
     }
-    
-    html body #lookbook .lookbook-track {
-      animation: lookbook-scroll var(--lookbook-speed, 100s) linear infinite !important; /* Lookbookはより遅く（タブレット） */
-      animation-play-state: running !important; /* 確実に動作 */
-    }
+    /* アニメーション速度は1231行目のルールで統一管理（重複削除） */
   }
   
   /* さらに小さい画面での調整 */
@@ -1135,12 +1133,9 @@
       min-block-size: calc(var(--lookbook-img-h, 300px) + 1rem) !important;
       padding-block: 0.5rem !important;
       overflow: visible !important; /* 画像が端から端まで表示されるように */
+      align-items: center !important; /* 上下中央揃え */
     }
-    
-    html body #lookbook .lookbook-track {
-      animation: lookbook-scroll 120s linear infinite !important; /* Lookbookはより遅く（480px以下: 120sで固定） */
-      animation-play-state: running !important; /* 確実に動作 */
-    }
+    /* アニメーション速度は1221行目のルールで統一管理（重複削除） */
   }
   
   /* PC表示でLookbookの縦長さを調整、画像全体を表示 */
@@ -1149,6 +1144,7 @@
       min-block-size: calc(var(--lookbook-img-h, 400px) + 2rem) !important;
       padding-block: 1rem !important;
       overflow: visible !important; /* 画像が端から端まで表示されるように */
+      align-items: center !important; /* 上下中央揃え */
     }
     
     /* 画像サイズは2498行目の設定を採用（競合削除） */
@@ -1167,9 +1163,9 @@
     left: 0 !important;
     /* transformはアニメーションで制御するため、初期値のみ設定 */
     display: flex !important;
-    align-items: flex-start;
+    align-items: center !important; /* 上下中央揃えに変更して画像が切れないように */
     gap: 12px;
-    height: auto;
+    height: 100% !important; /* コンテナの高さに合わせる */
     will-change: transform;
     cursor: grab;
     /* アニメーションは下記の#lookbook .lookbook-trackで統一管理 */
@@ -2546,6 +2542,7 @@ div.copyright {
   height: var(--lookbook-img-h) !important;
   object-fit: contain !important;
   max-width: 100% !important;
+  flex-shrink: 0 !important; /* 画像が縮小されないように */
 }
 
 /* スクリーンリーダー専用（視覚的に非表示、アクセシビリティ維持） */
