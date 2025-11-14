@@ -18,31 +18,15 @@ function initLookbookTracks() {
 }
 
 function resolveLookbookSpeedSeconds(track) {
-  const candidates = [];
-  if (track) {
-    candidates.push(track);
-    if (track.parentElement) {
-      candidates.push(track.parentElement);
-    }
+  // 画面幅に応じた直接値を返す（CSS変数に依存しない）
+  const width = window.innerWidth;
+  if (width <= 480) {
+    return 120; // スマホ: 120s
+  } else if (width <= 1024) {
+    return 100; // タブレット: 100s
+  } else {
+    return 120; // PC: 120s
   }
-  if (document.documentElement) {
-    candidates.push(document.documentElement);
-  }
-  if (document.body) {
-    candidates.push(document.body);
-  }
-
-  for (const el of candidates) {
-    const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
-    if (cssValue) {
-      const numeric = parseFloat(cssValue);
-      if (!Number.isNaN(numeric) && numeric > 0) {
-        return numeric;
-      }
-    }
-  }
-
-  return 55;
 }
 
 // .lookbook-track ごとに初期化処理
