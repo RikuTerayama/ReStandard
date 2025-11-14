@@ -1204,12 +1204,34 @@
   /* JavaScriptのインラインスタイルを確実に上書きするため、最高優先度で設定 */
   /* すべてのアニメーション名（lookbook-scroll, scroll-left, scroll-right）を統一速度で上書き */
   /* インラインスタイルを上書きするため、より高い優先度で設定 */
+  /* 注意: メディアクエリのルールが優先されるように、一般ルールはフォールバック値のみ */
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging) {
-    animation: lookbook-scroll var(--lookbook-speed, 120s) linear infinite !important; /* Lookbookはより遅く */
+    animation: lookbook-scroll var(--lookbook-speed, 120s) linear infinite !important; /* Lookbookはより遅く（PCデフォルト） */
     animation-play-state: running !important;
+  }
+  
+  /* メディアクエリで確実に上書き（より具体的なセレクタで） */
+  @media (max-width: 480px) {
+    html body #lookbook .lookbook-track:not(.dragging),
+    html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+    #lookbook .lookbook-track:not(.dragging),
+    #lookbook .lookbook-track[style*="animation"]:not(.dragging) {
+      animation: lookbook-scroll 80s linear infinite !important; /* スマホ: 80sで固定 */
+      animation-play-state: running !important;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 1024px) {
+    html body #lookbook .lookbook-track:not(.dragging),
+    html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+    #lookbook .lookbook-track:not(.dragging),
+    #lookbook .lookbook-track[style*="animation"]:not(.dragging) {
+      animation: lookbook-scroll 100s linear infinite !important; /* タブレット: 100sで固定 */
+      animation-play-state: running !important;
+    }
   }
   
   #lookbook .lookbook-track:active{ cursor:grabbing; }
