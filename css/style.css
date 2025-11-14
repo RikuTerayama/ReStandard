@@ -353,14 +353,14 @@
   .lookbook-section {
     width: 100%;
     padding: 0;
-    overflow: hidden;
+    overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
     background: transparent;
   }
   
   .lookbook {
     padding: 0;
     background: transparent;
-    overflow: hidden;
+    overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
   }
   
   #collection .band, #lookbook .band{
@@ -371,6 +371,7 @@
     background: transparent !important;
     position: relative;
     z-index: 1;
+    overflow: visible !important; /* 画像が端から端まで表示されるように */
   }
   #collection .track-wrap, #lookbook .track-wrap{
     gap: var(--collection-gap);
@@ -378,7 +379,7 @@
   }
   
   .lookbook-container { 
-    overflow: hidden; 
+    overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
     position: relative;
     min-block-size: calc(var(--lookbook-img-h) + 2rem);
     padding-block: 1rem;                 /* 画像上下に程よい余白 */
@@ -1092,9 +1093,9 @@
   .lookbook-container{ 
     width: 100% !important;
     max-width: 100vw !important;
-    overflow: hidden !important;
+    overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
     display: flex !important;
-    justify-content: center !important;
+    justify-content: flex-start !important; /* 左端から開始 */
     align-items: center !important;
     position: relative !important;
     height: auto !important;
@@ -1109,7 +1110,7 @@
     min-block-size: calc(var(--lookbook-img-h) + 2rem);
     padding-block: 1rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
     display: flex;
     align-items: flex-start; /* 上寄せ */
   }
@@ -1119,6 +1120,7 @@
     .lookbook-container {
       min-block-size: calc(var(--lookbook-img-h, 300px) + 1rem) !important;
       padding-block: 0.5rem !important;
+      overflow: visible !important; /* 画像が端から端まで表示されるように */
     }
     
     html body #lookbook .lookbook-track {
@@ -1132,10 +1134,11 @@
     .lookbook-container {
       min-block-size: calc(var(--lookbook-img-h, 300px) + 1rem) !important;
       padding-block: 0.5rem !important;
+      overflow: visible !important; /* 画像が端から端まで表示されるように */
     }
     
     html body #lookbook .lookbook-track {
-      animation: lookbook-scroll var(--lookbook-speed, 80s) linear infinite !important; /* Lookbookはより遅く（480px以下） */
+      animation: lookbook-scroll 120s linear infinite !important; /* Lookbookはより遅く（480px以下: 120sで固定） */
       animation-play-state: running !important; /* 確実に動作 */
     }
   }
@@ -1145,6 +1148,7 @@
     .lookbook-container {
       min-block-size: calc(var(--lookbook-img-h, 400px) + 2rem) !important;
       padding-block: 1rem !important;
+      overflow: visible !important; /* 画像が端から端まで表示されるように */
     }
     
     /* 画像サイズは2498行目の設定を採用（競合削除） */
@@ -1219,7 +1223,7 @@
     html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
     #lookbook .lookbook-track:not(.dragging),
     #lookbook .lookbook-track[style*="animation"]:not(.dragging) {
-      animation: lookbook-scroll 80s linear infinite !important; /* スマホ: 80sで固定 */
+      animation: lookbook-scroll 120s linear infinite !important; /* スマホ: 120sで固定（より遅く） */
       animation-play-state: running !important;
     }
   }
@@ -1538,6 +1542,7 @@
     background: var(--navbar-bg, rgba(255,255,255,0.9));
     backdrop-filter: blur(10px);
     padding-block: clamp(12px, 3vw, 32px);
+    overflow: visible !important; /* 画像が端から端まで表示されるように */
   }
   
   /* Collection / Lookbook の帯の高さ（PC はやや高く、SP はやや低く） */
@@ -2497,6 +2502,7 @@ div.copyright {
   .lookbook-container {
     min-height: 280px !important; /* 高さを削減 */
     padding: 8px 0 !important; /* 上下のパディングを削減 */
+    overflow: visible !important; /* 画像が端から端まで表示されるように */
   }
 }
 
