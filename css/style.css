@@ -1203,13 +1203,11 @@
      ======================================== */
   /* JavaScriptのインラインスタイルを確実に上書きするため、最高優先度で設定 */
   /* すべてのアニメーション名（lookbook-scroll, scroll-left, scroll-right）を統一速度で上書き */
-  #lookbook .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll var(--lookbook-speed, 120s) linear infinite !important; /* Lookbookはより遅く */
-    animation-play-state: running !important;
-  }
-  
-  /* JavaScriptがscroll-leftやscroll-rightを使用している場合も上書き（インラインスタイル対応） */
-  html body #lookbook .lookbook-track:not(.dragging) {
+  /* インラインスタイルを上書きするため、より高い優先度で設定 */
+  html body #lookbook .lookbook-track:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  #lookbook .lookbook-track:not(.dragging),
+  #lookbook .lookbook-track[style*="animation"]:not(.dragging) {
     animation: lookbook-scroll var(--lookbook-speed, 120s) linear infinite !important; /* Lookbookはより遅く */
     animation-play-state: running !important;
   }
