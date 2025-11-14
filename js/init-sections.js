@@ -231,8 +231,8 @@ function attachManualControls(track){
  *  ただし "ユーザーが止めた（data-user-paused=1）" 場合は何もしない */
 function pauseWhenOutOfView(track) {
   if (track.classList.contains('lookbook-track')) {
-    // Lookbookは常時アニメーションさせる
-    track.style.animationPlayState = 'running';
+    // Lookbookは常時アニメーションさせる（CSSで制御するため、インラインスタイルは削除）
+    track.style.removeProperty('animation-play-state');
     return;
   }
   const io = new IntersectionObserver((entries) => {
