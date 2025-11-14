@@ -446,10 +446,17 @@ function alignTrackStart(track) {
   const desired = computeDesiredTx(track, target, align);
 
   // WRITE all properties after reads
-  track.style.animation = `${key} ${dur}s linear infinite`;
-  track.style.animationPlayState = 'paused';
-  applyInitialDelay(track, desired);
-  track.style.animationPlayState = 'running';
+  if (isLookbook) {
+    // LookbookはCSSで制御するため、インラインスタイルは削除
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    applyInitialDelay(track, desired);
+  } else {
+    track.style.animation = `${key} ${dur}s linear infinite`;
+    track.style.animationPlayState = 'paused';
+    applyInitialDelay(track, desired);
+    track.style.animationPlayState = 'running';
+  }
 }
 /* ===== /start alignment helpers ===== */
 
