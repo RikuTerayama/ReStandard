@@ -3,86 +3,27 @@
    ========================================================= */
 
 function getLookbookSpeedSec(track) {
-  // Collectionと同じ速度を使用するため、--collection-speedを参照
-  const candidates = [];
-  if (track) {
-    candidates.push(track);
-    if (track.parentElement) {
-      candidates.push(track.parentElement);
-    }
+  // 画面幅に応じた直接値を返す（CSS変数に依存しない）
+  const width = window.innerWidth;
+  if (width <= 480) {
+    return 120; // スマホ: 120s
+  } else if (width <= 1024) {
+    return 100; // タブレット: 100s
+  } else {
+    return 120; // PC: 120s
   }
-  if (document.documentElement) {
-    candidates.push(document.documentElement);
-  }
-  if (document.body) {
-    candidates.push(document.body);
-  }
-
-  // まず--collection-speedを試す（Collectionと同じ速度）
-  for (const el of candidates) {
-    const cssValue = getComputedStyle(el).getPropertyValue('--collection-speed');
-    if (cssValue) {
-      const numeric = parseFloat(cssValue);
-      if (!Number.isNaN(numeric) && numeric > 0) {
-        return numeric;
-      }
-    }
-  }
-
-  // フォールバック: --lookbook-speedを試す
-  for (const el of candidates) {
-    const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
-    if (cssValue) {
-      const numeric = parseFloat(cssValue);
-      if (!Number.isNaN(numeric) && numeric > 0) {
-        return numeric;
-      }
-    }
-  }
-
-  return 120;
 }
 
 function resolveCssSpeedSeconds(track, fallback = 120) {
-  const candidates = [];
-  if (track) {
-    candidates.push(track);
-    if (track.parentElement) {
-      candidates.push(track.parentElement);
-    }
+  // 画面幅に応じた直接値を返す（CSS変数に依存しない）
+  const width = window.innerWidth;
+  if (width <= 480) {
+    return 120; // スマホ: 120s
+  } else if (width <= 1024) {
+    return 100; // タブレット: 100s
+  } else {
+    return 120; // PC: 120s
   }
-  if (document.documentElement) {
-    candidates.push(document.documentElement);
-  }
-  if (document.body) {
-    candidates.push(document.body);
-  }
-
-  // まず--lookbook-speedを試す
-  for (const el of candidates) {
-    if (!el) continue;
-    const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
-    if (cssValue) {
-      const numeric = parseFloat(cssValue);
-      if (!Number.isNaN(numeric) && numeric > 0) {
-        return numeric;
-      }
-    }
-  }
-  
-  // フォールバック: --collection-speedを試す
-  for (const el of candidates) {
-    if (!el) continue;
-    const cssValue = getComputedStyle(el).getPropertyValue('--collection-speed');
-    if (cssValue) {
-      const numeric = parseFloat(cssValue);
-      if (!Number.isNaN(numeric) && numeric > 0) {
-        return numeric;
-      }
-    }
-  }
-  
-  return fallback;
 }
 
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
