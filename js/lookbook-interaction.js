@@ -279,10 +279,10 @@ function attachTrackControls(track) {
     const duration = resolveLookbookSpeedSeconds(track);
     const delay = -progress * duration;
     
-    // アニメーション再開
-    track.style.animation = `lookbook-scroll ${duration}s linear infinite`;
+    // アニメーション再開（CSSで制御するため、インラインスタイルは削除）
+    track.style.removeProperty('animation');
     track.style.animationDelay = `${delay}s`;
-    track.style.animationPlayState = 'running';
+    track.style.removeProperty('animation-play-state');
   };
   
   // イベントリスナーを追加
@@ -313,14 +313,14 @@ function startAutoScroll(track) {
   // 開始位置の調整
   alignTrackStart(track);
   
-  // アニメーション開始（左方向）
-  track.style.animation = `lookbook-scroll ${speed}s linear infinite`;
-  track.style.animationPlayState = 'running';
+  // アニメーション開始（CSSで制御するため、インラインスタイルは削除）
+  track.style.removeProperty('animation');
+  track.style.removeProperty('animation-play-state');
   
-  // スクロール後の継続性を確保（Lookbook強化版）
+  // スクロール後の継続性を確保（CSSで制御）
   track.addEventListener('animationiteration', function() {
     if (!track.isDragging && !track.classList.contains('dragging')) {
-      track.style.animationPlayState = 'running';
+      track.style.removeProperty('animation-play-state');
     }
   });
   
@@ -328,30 +328,19 @@ function startAutoScroll(track) {
   const visibilityObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
-        // 画面内に入ったらアニメーションを強制的に再開
-        track.style.animationPlayState = 'running';
-        // アニメーションを完全にリセットして連続性を確保
-        const currentAnimation = track.style.animation;
-        track.style.animation = 'none';
-        track.offsetHeight; // リフローを強制
-        track.style.animation = currentAnimation;
-        
-        // 追加: スマホでの連続表示を強化
-        if (window.innerWidth <= 900) {
-          setTimeout(() => {
-            track.style.animationPlayState = 'running';
-          }, 100);
-        }
+        // 画面内に入ったらアニメーションを強制的に再開（CSSで制御）
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
       }
     });
   }, { threshold: 0.05 }); // 閾値を下げてより敏感に反応
   
   visibilityObserver.observe(track);
   
-  // ページ可視性変更時の処理
+  // ページ可視性変更時の処理（CSSで制御）
   document.addEventListener('visibilitychange', function() {
     if (!document.hidden && !track.isDragging && !track.classList.contains('dragging')) {
-      track.style.animationPlayState = 'running';
+      track.style.removeProperty('animation-play-state');
     }
   });
 }
