@@ -243,7 +243,8 @@ function attachTrackControls(track) {
           return;
         }
       }
-      track.style.animationPlayState = 'running';
+      // LookbookはCSSで制御するため、インラインスタイルは削除
+      track.style.removeProperty('animation-play-state');
       moved = 0;
       return;
     }
@@ -252,8 +253,8 @@ function attachTrackControls(track) {
     e.preventDefault();
     e.stopPropagation();
     
-    // アニメーションを即座に再開
-    track.style.animationPlayState = 'running';
+    // アニメーションを即座に再開（LookbookはCSSで制御するため、インラインスタイルは削除）
+    track.style.removeProperty('animation-play-state');
     
     // 現在位置から再開するための負の animation-delay を計算
     const segmentWidth = track._segmentWidth;
