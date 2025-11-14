@@ -2513,6 +2513,9 @@ div.copyright {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+  width: var(--lookbook-img-w) !important;
+  height: var(--lookbook-img-h) !important;
+  object-fit: contain !important;
 }
 
 /* スクリーンリーダー専用（視覚的に非表示、アクセシビリティ維持） */
