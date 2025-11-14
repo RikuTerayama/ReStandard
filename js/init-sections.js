@@ -3,6 +3,7 @@
    ========================================================= */
 
 function getLookbookSpeedSec(track) {
+  // Collectionと同じ速度を使用するため、--collection-speedを参照
   const candidates = [];
   if (track) {
     candidates.push(track);
@@ -17,6 +18,18 @@ function getLookbookSpeedSec(track) {
     candidates.push(document.body);
   }
 
+  // まず--collection-speedを試す（Collectionと同じ速度）
+  for (const el of candidates) {
+    const cssValue = getComputedStyle(el).getPropertyValue('--collection-speed');
+    if (cssValue) {
+      const numeric = parseFloat(cssValue);
+      if (!Number.isNaN(numeric) && numeric > 0) {
+        return numeric;
+      }
+    }
+  }
+
+  // フォールバック: --lookbook-speedを試す
   for (const el of candidates) {
     const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
     if (cssValue) {
