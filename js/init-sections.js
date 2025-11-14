@@ -312,12 +312,14 @@ function initAutoScroll(track){
   let duration;
 
   if (isLookbook) {
+    // LookbookはCSSで完全に制御するため、インラインスタイルは設定しない
     const speedSec = getLookbookSpeedSec(track);
     const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
     track.dataset.speed = String(cssSpeed);
     track.dataset.baseSpeed = String(cssSpeed);
-    key = 'lookbook-scroll';
-    duration = cssSpeed;
+    // CSSの!importantルールが適用されるように、インラインスタイルは削除
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
   } else {
     let speed = parseInt(track.getAttribute('data-speed') || '80', 10);
     if (window.innerWidth <= 768)  speed = Math.max(65, speed - 15);
@@ -326,14 +328,16 @@ function initAutoScroll(track){
     duration = calcSpeedSec(speed);
     track.dataset.baseSpeed = String(speed); // 再計算に使う
     key = dir === 'right' ? 'scroll-right' : 'scroll-left';
+    track.style.setProperty('animation', `${key} ${duration}s linear infinite`, 'important');
+    track.style.setProperty('animation-play-state', 'running', 'important');
   }
-
-  track.style.setProperty('animation', `${key} ${duration}s linear infinite`, 'important');
-  track.style.setProperty('animation-play-state', 'running', 'important');
+  
   track.classList.remove('dragging');
   track.isDragging = false;
   requestAnimationFrame(() => {
-    track.style.setProperty('animation-play-state', 'running', 'important');
+    if (!isLookbook) {
+      track.style.setProperty('animation-play-state', 'running', 'important');
+    }
   });
   track.style.willChange = 'transform';
   attachManualControls(track);
@@ -518,12 +522,13 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeTimer = setTimeout(() => {
       document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
         if (track.classList.contains('lookbook-track')) {
+          // LookbookはCSSで完全に制御するため、インラインスタイルは削除
           const speedSec = getLookbookSpeedSec(track);
           const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
           track.dataset.speed = String(cssSpeed);
           track.dataset.baseSpeed = String(cssSpeed);
-          track.style.setProperty('animation', `lookbook-scroll ${cssSpeed}s linear infinite`, 'important');
-          track.style.setProperty('animation-play-state', 'running', 'important');
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
           track.classList.remove('dragging');
           track.isDragging = false;
         } else {
