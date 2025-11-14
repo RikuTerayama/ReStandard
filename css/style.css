@@ -1170,10 +1170,13 @@
   }
   
   /* Lookbookアニメーションを強制的に適用（重複定義を統合・1箇所で管理） */
-  /* この設定は上記のメディアクエリで上書きされる */
-  html body #lookbook .lookbook-track {
-    animation: lookbook-scroll 120s linear infinite !important; /* Lookbookはより遅く（PC: 120sで固定） */
-    animation-play-state: running !important; /* PC版でも確実に動作 */
+  /* 注意: このルールはメディアクエリのルール（1215行目以降）で上書きされる */
+  /* PC版のみに適用（メディアクエリのルールと競合しないように） */
+  @media (min-width: 1025px) {
+    html body #lookbook .lookbook-track {
+      animation: lookbook-scroll 120s linear infinite !important; /* Lookbookはより遅く（PC: 120sで固定） */
+      animation-play-state: running !important; /* PC版でも確実に動作 */
+    }
   }
   
   /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
