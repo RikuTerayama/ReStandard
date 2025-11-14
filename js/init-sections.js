@@ -40,10 +40,10 @@ function getLookbookSpeedSec(track) {
     }
   }
 
-  return 80;
+  return 120;
 }
 
-function resolveCssSpeedSeconds(track, fallback = 80) {
+function resolveCssSpeedSeconds(track, fallback = 120) {
   const candidates = [];
   if (track) {
     candidates.push(track);
@@ -58,6 +58,7 @@ function resolveCssSpeedSeconds(track, fallback = 80) {
     candidates.push(document.body);
   }
 
+  // まず--lookbook-speedを試す
   for (const el of candidates) {
     if (!el) continue;
     const cssValue = getComputedStyle(el).getPropertyValue('--lookbook-speed');
@@ -68,6 +69,19 @@ function resolveCssSpeedSeconds(track, fallback = 80) {
       }
     }
   }
+  
+  // フォールバック: --collection-speedを試す
+  for (const el of candidates) {
+    if (!el) continue;
+    const cssValue = getComputedStyle(el).getPropertyValue('--collection-speed');
+    if (cssValue) {
+      const numeric = parseFloat(cssValue);
+      if (!Number.isNaN(numeric) && numeric > 0) {
+        return numeric;
+      }
+    }
+  }
+  
   return fallback;
 }
 
