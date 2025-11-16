@@ -1542,6 +1542,37 @@
   display: block;
   flex-shrink: 0;
 }
+
+/* ======== FINAL Lookbook overrides (speed & clipping) ======== */
+/* スマホ版（〜480px）：Lookbook を 120s でゆっくり流す */
+@media (max-width: 480px) {
+  html body #lookbook .lookbook-track:not(.dragging) {
+    animation: lookbook-scroll 120s linear infinite !important;
+    animation-play-state: running !important;
+  }
+}
+
+/* タブレット版（481px〜1024px）：Lookbook を 100s で流す */
+@media (min-width: 481px) and (max-width: 1024px) {
+  html body #lookbook .lookbook-track:not(.dragging) {
+    animation: lookbook-scroll 100s linear infinite !important;
+    animation-play-state: running !important;
+  }
+}
+
+/* PC版（1025px〜）：Lookbook を 120s で流す */
+@media (min-width: 1025px) {
+  html body #lookbook .lookbook-track:not(.dragging) {
+    animation: lookbook-scroll 120s linear infinite !important;
+    animation-play-state: running !important;
+  }
+}
+
+/* Lookbook コンテナのクリッピング解除（どの画面幅でも画像全体を見せる） */
+#lookbook .lookbook-container {
+  overflow: visible !important;
+  min-height: auto !important;
+}
   
   /* === center full-bleed band === */
   .band {
