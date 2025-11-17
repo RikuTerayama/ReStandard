@@ -7,7 +7,7 @@ function getLookbookSpeedSec(track) {
   // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
   const width = window.innerWidth;
   if (width <= 480) {
-    return 90; // スマホ: さらに遅く（90s）
+    return 110; // スマホ: さらに遅く（110s）
   } else if (width <= 1024) {
     return 65; // タブレット: Collectionと同じ65s
   } else {
@@ -20,7 +20,7 @@ function resolveCssSpeedSeconds(track, fallback = 80) {
   // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
   const width = window.innerWidth;
   if (width <= 480) {
-    return 90; // スマホ: さらに遅く（90s）
+    return 110; // スマホ: さらに遅く（110s）
   } else if (width <= 1024) {
     return 65; // タブレット: Collectionと同じ65s
   } else {
@@ -538,14 +538,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 200);
   });
   
-  // ページ読み込み完了後にもインラインスタイルを削除（念のため）
+  // ページ読み込み完了後にもインラインスタイルを削除（外部サイトからの遷移時も確実に実行）
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+        // インラインスタイルを確実に削除（複数回実行）
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
+        requestAnimationFrame(() => {
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
+        });
+        // データ属性も更新
+        const speedSec = getLookbookSpeedSec(track);
+        const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
+        track.dataset.speed = String(cssSpeed);
+        track.dataset.baseSpeed = String(cssSpeed);
       });
     }, 500);
+  });
+  
+  // 外部サイトからの遷移時も確実に初期化（リサイズ時にも再実行）
+  let initTimeout;
+  const reinitializeLookbook = () => {
+    clearTimeout(initTimeout);
+    initTimeout = setTimeout(() => {
+      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+        if (track.classList.contains('lookbook-track')) {
+          const speedSec = getLookbookSpeedSec(track);
+          const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
+          track.dataset.speed = String(cssSpeed);
+          track.dataset.baseSpeed = String(cssSpeed);
+          // インラインスタイルを確実に削除
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
+          requestAnimationFrame(() => {
+            track.style.removeProperty('animation');
+            track.style.removeProperty('animation-play-state');
+          });
+        }
+      });
+    }, 100);
+  };
+  
+  // ページ可視性変更時にも再初期化（外部サイトからの遷移時に確実に実行）
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      reinitializeLookbook();
+    }
   });
 });
 
