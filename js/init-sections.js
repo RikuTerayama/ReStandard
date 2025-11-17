@@ -4,10 +4,10 @@
 
 function getLookbookSpeedSec(track) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
-  // Collectionセクションと同じ速度に統一: 50s/65s/80s
+  // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
   const width = window.innerWidth;
   if (width <= 480) {
-    return 50; // スマホ: Collectionと同じ50s
+    return 70; // スマホ: より遅く（70s）
   } else if (width <= 1024) {
     return 65; // タブレット: Collectionと同じ65s
   } else {
@@ -17,10 +17,10 @@ function getLookbookSpeedSec(track) {
 
 function resolveCssSpeedSeconds(track, fallback = 80) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
-  // Collectionセクションと同じ速度に統一: 50s/65s/80s
+  // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
   const width = window.innerWidth;
   if (width <= 480) {
-    return 50; // スマホ: Collectionと同じ50s
+    return 70; // スマホ: より遅く（70s）
   } else if (width <= 1024) {
     return 65; // タブレット: Collectionと同じ65s
   } else {
