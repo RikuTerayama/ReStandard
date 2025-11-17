@@ -1545,25 +1545,41 @@
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
 /* スマホ版（〜480px）：Collection セクションと同じ速度（50s）に合わせる */
+/* より具体的なセレクタで確実に適用（インラインスタイルも上書き） */
 @media (max-width: 480px) {
-  html body #lookbook .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll 50s linear infinite !important;
+  html body #lookbook .lookbook-track:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+  #lookbook .lookbook-track:not(.dragging),
+  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
+    animation: lookbook-scroll 50s linear infinite !important; /* スマホ: Collectionと同じ50s */
     animation-play-state: running !important;
   }
 }
 
 /* タブレット版（481px〜1024px）：Collection セクションと同じ速度（65s）に合わせる */
 @media (min-width: 481px) and (max-width: 1024px) {
-  html body #lookbook .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll 65s linear infinite !important;
+  html body #lookbook .lookbook-track:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+  #lookbook .lookbook-track:not(.dragging),
+  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
+    animation: lookbook-scroll 65s linear infinite !important; /* タブレット: Collectionと同じ65s */
     animation-play-state: running !important;
   }
 }
 
 /* PC版（1025px〜）：Collection セクションと同じ速度（80s）に合わせる */
 @media (min-width: 1025px) {
-  html body #lookbook .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll 80s linear infinite !important;
+  html body #lookbook .lookbook-track:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+  #lookbook .lookbook-track:not(.dragging),
+  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
+    animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
     animation-play-state: running !important;
   }
 }
