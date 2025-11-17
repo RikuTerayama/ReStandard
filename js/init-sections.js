@@ -113,7 +113,11 @@ function attachManualControls(track){
       track.isDragging = true;
       moved = 0;
       track.classList.add('dragging');
-      track.style.animationPlayState = 'paused';
+      // Lookbookトラックの場合は、CSSで制御するため、インラインスタイルは設定しない
+      const isLookbook = track.classList.contains('lookbook-track');
+      if (!isLookbook) {
+        track.style.animationPlayState = 'paused';
+      }
     }, 150);
     ev.preventDefault();
   };
@@ -138,13 +142,18 @@ function attachManualControls(track){
     if(!dragging) return;
     dragging = false;
     
+    // Lookbookトラックの場合は、CSSで制御するため、インラインスタイルは設定しない
+    const isLookbook = track.classList.contains('lookbook-track');
+    
     // READ all layout properties first
     const currentTx = getTxPx(track);
     const segmentWidth = track._segmentWidth || 0;
     const dragAmount = Math.abs(moved);
     
-    // WRITE all properties after reads
-    track.style.animationPlayState = 'running';
+    if (!isLookbook) {
+      // WRITE all properties after reads
+      track.style.animationPlayState = 'running';
+    }
     
     // セグメント幅の倍数に調整してスムーズなループを保証
     if (segmentWidth > 0) {
@@ -155,7 +164,9 @@ function attachManualControls(track){
     // 8px未満=クリック：リンク遷移は邪魔せず、その場から再開
     if (dragAmount < 8) {
       track.style.removeProperty('transform');
-      track.style.animationPlayState = 'running';
+      if (!isLookbook) {
+        track.style.animationPlayState = 'running';
+      }
       track.classList.remove('dragging');
       moved = 0; // ← ここで初めてリセット
       return;
@@ -164,6 +175,15 @@ function attachManualControls(track){
     // 8px以上=ドラッグ → 現在位置から自動再開（ジャンプ防止）
     ev.preventDefault();
     ev.stopPropagation();
+    if (isLookbook) {
+      // LookbookはCSSで制御するため、インラインスタイルは削除
+      track.style.removeProperty('transform');
+      track.style.removeProperty('animation');
+      track.style.removeProperty('animation-play-state');
+      track.classList.remove('dragging');
+      moved = 0;
+      return;
+    }
 
     // READ all layout properties first
     const loopWidth = track._segmentWidth || (track.scrollWidth / 2); // オリジナル区間幅を使用
