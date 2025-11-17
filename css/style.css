@@ -463,7 +463,7 @@
       animation: none !important; 
     }
     .lookbook-track {
-      animation: lookbook-scroll 120s linear infinite !important; /* PC: 120sで固定 */
+      animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
       animation-play-state: running !important;
     }
   }
@@ -1151,7 +1151,7 @@
     html body #lookbook .lookbook-track:not(.dragging),
     html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
     html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 120s linear infinite !important; /* Lookbookはより遅く（PC: 120sで固定） */
+      animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
       animation-play-state: running !important;
     }
   }
@@ -1178,7 +1178,7 @@
     html body #lookbook .lookbook-track:not(.dragging),
     html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
     html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 120s linear infinite !important; /* Lookbookはより遅く（PC: 120sで固定） */
+      animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
       animation-play-state: running !important; /* PC版でも確実に動作 */
     }
   }
@@ -1217,7 +1217,7 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 120s linear infinite !important; /* Lookbookはより遅く（PCデフォルト: 120sで固定） */
+    animation: lookbook-scroll 80s linear infinite !important; /* PCデフォルト: Collectionと同じ80s */
     animation-play-state: running !important;
   }
   
@@ -1229,7 +1229,7 @@
     #lookbook .lookbook-track:not(.dragging),
     #lookbook .lookbook-track[style*="animation"]:not(.dragging),
     #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 120s linear infinite !important; /* スマホ: 120sで固定（より遅く） */
+      animation: lookbook-scroll 50s linear infinite !important; /* スマホ: Collectionと同じ50s */
       animation-play-state: running !important;
     }
   }
@@ -1241,7 +1241,7 @@
     #lookbook .lookbook-track:not(.dragging),
     #lookbook .lookbook-track[style*="animation"]:not(.dragging),
     #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 100s linear infinite !important; /* タブレット: 100sで固定 */
+      animation: lookbook-scroll 65s linear infinite !important; /* タブレット: Collectionと同じ65s */
       animation-play-state: running !important;
     }
   }
@@ -2574,6 +2574,7 @@ div.copyright {
 }
 
 /* Lookbook画像の表示を強制（Collectionと同様） */
+/* 画像サイズを固定して、画面幅による変更を防ぐ */
 #lookbook .lookbook-track img,
 #lookbook .lookbook-item img,
 .lookbook-track img,
@@ -2581,11 +2582,42 @@ div.copyright {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  width: var(--lookbook-img-w) !important;
-  height: var(--lookbook-img-h) !important;
   object-fit: contain !important;
   max-width: 100% !important;
   flex-shrink: 0 !important; /* 画像が縮小されないように */
+}
+
+/* PC版: 固定サイズ */
+@media (min-width: 1025px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img,
+  .lookbook-track img,
+  .lookbook-item img {
+    width: 240px !important;
+    height: 320px !important;
+  }
+}
+
+/* タブレット版: 固定サイズ */
+@media (min-width: 481px) and (max-width: 1024px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img,
+  .lookbook-track img,
+  .lookbook-item img {
+    width: 200px !important;
+    height: 280px !important;
+  }
+}
+
+/* スマホ版: 固定サイズ */
+@media (max-width: 480px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img,
+  .lookbook-track img,
+  .lookbook-item img {
+    width: 180px !important;
+    height: 240px !important;
+  }
 }
 
 /* スクリーンリーダー専用（視覚的に非表示、アクセシビリティ維持） */
