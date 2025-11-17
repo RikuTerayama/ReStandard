@@ -242,9 +242,8 @@
   }
   
   /* Lookbook 行 */
+  /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
 #lookbook .lookbook-track img{
-  width: var(--lookbook-img-w) !important;
-  height: var(--lookbook-img-h) !important;
   object-fit: contain !important;
   display: block;
   border-radius: 0;
@@ -1287,9 +1286,8 @@
   block-size: clamp(200px, 25vw, 400px) !important;
 }
 
+  /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
 #lookbook .lookbook-track img{
-  width: var(--lookbook-img-w) !important;
-  height: var(--lookbook-img-h) !important;
   object-fit: contain !important;
   flex-shrink: 0 !important;
   display: block !important;
@@ -1413,9 +1411,8 @@
     justify-content: center;
   }
   
+  /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
   .lookbook-track img {
-    width: var(--lookbook-img-w) !important;
-    height: var(--lookbook-img-h) !important;
     object-fit: contain !important;
     display: block;
   }
@@ -1486,9 +1483,8 @@
   display: block;
 }
 
+  /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
 .lookbook-track img {
-  width: var(--lookbook-img-w) !important;
-  height: var(--lookbook-img-h) !important;
   object-fit: contain !important;
   display: block;
   flex-shrink: 0;
@@ -1536,9 +1532,18 @@
 }
 
 /* Lookbook コンテナのクリッピング解除（どの画面幅でも画像全体を見せる） */
+/* 1500px以下でもPC表示と同じ比率を維持するため、コンテナの高さも調整 */
 #lookbook .lookbook-container {
   overflow: visible !important;
   min-height: auto !important;
+}
+
+/* 1500px以下でもPC表示と同じ比率を維持（コンテナの高さを画像サイズに合わせる） */
+@media (min-width: 1025px) and (max-width: 1500px) {
+  #lookbook .lookbook-container {
+    min-block-size: calc(320px + 2rem) !important; /* 画像高さ320px + 上下余白 */
+    padding-block: 1rem !important;
+  }
 }
   
   /* === center full-bleed band === */
@@ -1747,9 +1752,8 @@
     display: block;
   }
   
+  /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
 .lookbook-track img {
-  width: var(--lookbook-img-w) !important;
-  height: var(--lookbook-img-h) !important;
   object-fit: contain !important;
   display: block;
   flex-shrink: 0;
@@ -2554,8 +2558,19 @@ div.copyright {
   flex-shrink: 0 !important; /* 画像が縮小されないように */
 }
 
-/* PC版: 固定サイズ */
+/* PC版: 固定サイズ（1025px以上、1500px以下でもPC表示と同じ比率を維持） */
 @media (min-width: 1025px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img,
+  .lookbook-track img,
+  .lookbook-item img {
+    width: 240px !important;
+    height: 320px !important;
+  }
+}
+
+/* 1500px以下でもPC表示と同じ比率を維持（1025px〜1500pxの範囲を明確化） */
+@media (min-width: 1025px) and (max-width: 1500px) {
   #lookbook .lookbook-track img,
   #lookbook .lookbook-item img,
   .lookbook-track img,
