@@ -1492,7 +1492,7 @@
 }
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
-/* スマホ版（〜480px）：さらに遅く（90s） */
+/* スマホ版（〜480px）：さらに遅く（110s） */
 /* より具体的なセレクタで確実に適用（インラインスタイルも上書き） */
 @media (max-width: 480px) {
   html body #lookbook .lookbook-track:not(.dragging),
@@ -1501,7 +1501,7 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 90s linear infinite !important; /* スマホ: さらに遅く（90s） */
+    animation: lookbook-scroll 110s linear infinite !important; /* スマホ: さらに遅く（110s） */
     animation-play-state: running !important;
   }
 }
@@ -1544,6 +1544,54 @@
   #lookbook .lookbook-container {
     min-block-size: calc(320px + 2rem) !important; /* 画像高さ320px + 上下余白 */
     padding-block: 1rem !important;
+  }
+}
+
+/* スマホ表示（1500px以下）で画像全体が表示されるように強化 */
+/* 外部サイトからの遷移時も確実に適用されるように、最高優先度で設定 */
+/* スマホ版（〜480px、1500px以下） */
+@media (max-width: 480px) {
+  #lookbook .lookbook-container,
+  html body #lookbook .lookbook-container {
+    min-block-size: calc(240px + 2rem) !important; /* 画像高さ240px + 上下余白2rem */
+    padding-block: 1rem !important;
+    overflow: visible !important;
+    align-items: center !important;
+  }
+  
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img,
+  html body #lookbook .lookbook-track img,
+  html body #lookbook .lookbook-item img,
+  .lookbook-track img,
+  .lookbook-item img {
+    width: 180px !important;
+    height: 240px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* タブレット版（481px〜1024px、1500px以下） */
+@media (min-width: 481px) and (max-width: 1024px) {
+  #lookbook .lookbook-container,
+  html body #lookbook .lookbook-container {
+    min-block-size: calc(280px + 2rem) !important; /* 画像高さ280px + 上下余白2rem */
+    padding-block: 1rem !important;
+    overflow: visible !important;
+    align-items: center !important;
+  }
+  
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img,
+  html body #lookbook .lookbook-track img,
+  html body #lookbook .lookbook-item img,
+  .lookbook-track img,
+  .lookbook-item img {
+    width: 200px !important;
+    height: 280px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
   }
 }
   
