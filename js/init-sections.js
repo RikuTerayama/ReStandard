@@ -352,7 +352,11 @@ function computeDesiredTx(track, target, align = 'left') {
 function applyInitialDelay(track, desiredTxPx) {
   // READ all layout properties first
   const loop = track._segmentWidth || (track.scrollWidth / 2);
-  const durSec = parseFloat(getComputedStyle(track).animationDuration);
+  const isLookbook = track.classList.contains('lookbook-track');
+  // Lookbookの場合は、JavaScript関数から直接速度を取得（CSS適用前でも正しい値が取得できる）
+  const durSec = isLookbook 
+    ? getLookbookSpeedSec(track)
+    : parseFloat(getComputedStyle(track).animationDuration) || 80; // フォールバック値
   const dir = (track.dataset.direction || 'left').toLowerCase();
 
   // 希望位置を keyframes の可動範囲に正規化
@@ -383,7 +387,7 @@ function alignTrackStart(track) {
   // READ all layout properties first
   const dir = (track.dataset.direction || 'left').toLowerCase();
   const isLookbook = track.classList.contains('lookbook-track');
-  const base = parseFloat(track.dataset.baseSpeed || 55);
+  const base = parseFloat(track.dataset.baseSpeed || 80); // デフォルト値を80に修正（Collectionと同じ）
   const dur  = isLookbook ? getLookbookSpeedSec(track) : calcSpeedSec(base);
   const key  = isLookbook ? 'lookbook-scroll' : (dir === 'right' ? 'scroll-right' : 'scroll-left');
   const desired = computeDesiredTx(track, target, align);
