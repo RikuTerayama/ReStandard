@@ -1209,19 +1209,10 @@
   /* JavaScriptのインラインスタイルを確実に上書きするため、最高優先度で設定 */
   /* すべてのアニメーション名（lookbook-scroll, scroll-left, scroll-right）を統一速度で上書き */
   /* インラインスタイルを上書きするため、より高い優先度で設定 */
-  /* 注意: メディアクエリのルールが優先されるように、一般ルールはPCデフォルト値 */
-  /* インラインスタイルを確実に上書きするため、最高優先度のセレクタを使用 */
-  html body #lookbook .lookbook-track:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-  #lookbook .lookbook-track:not(.dragging),
-  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 80s linear infinite !important; /* PCデフォルト: Collectionと同じ80s */
-    animation-play-state: running !important;
-  }
+  /* 注意: メディアクエリのルールで各画面幅に応じた速度を設定 */
+  /* 一般ルールは削除し、メディアクエリのみで管理（スマホで80sが適用されるのを防ぐ） */
   
-  /* メディアクエリで確実に上書き（より具体的なセレクタで） */
+  /* メディアクエリで確実に適用（より具体的なセレクタで） */
   @media (max-width: 480px) {
     html body #lookbook .lookbook-track:not(.dragging),
     html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
