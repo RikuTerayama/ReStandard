@@ -72,11 +72,8 @@ return;
       children.forEach(child => {
         const img = child.querySelector('img');
         if (img) {
-          // 画像の表示を強制（統一サイズ）
+          // 画像の表示を強制（サイズはCSSで制御するため、インラインスタイルは設定しない）
           img.style.display = 'block';
-          img.style.width = '300px';
-          img.style.height = '400px';
-          img.style.objectFit = 'contain';
           img.style.visibility = 'visible';
           img.style.opacity = '1';
         }
@@ -114,8 +111,7 @@ return;
         // 複製された画像のサイズも統一
         const clonedImg = clone.querySelector('img');
         if (clonedImg) {
-          clonedImg.style.width = '300px';
-          clonedImg.style.height = '400px';
+          // サイズはCSSで制御するため、インラインスタイルは設定しない
           clonedImg.style.objectFit = 'contain';
         }
         track.appendChild(clone);
