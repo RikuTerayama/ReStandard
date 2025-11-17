@@ -4,25 +4,27 @@
 
 function getLookbookSpeedSec(track) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
+  // Collectionセクションと同じ速度に統一: 50s/65s/80s
   const width = window.innerWidth;
   if (width <= 480) {
-    return 120; // スマホ: 120s
+    return 50; // スマホ: Collectionと同じ50s
   } else if (width <= 1024) {
-    return 100; // タブレット: 100s
+    return 65; // タブレット: Collectionと同じ65s
   } else {
-    return 120; // PC: 120s
+    return 80; // PC: Collectionと同じ80s
   }
 }
 
-function resolveCssSpeedSeconds(track, fallback = 120) {
+function resolveCssSpeedSeconds(track, fallback = 80) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
+  // Collectionセクションと同じ速度に統一: 50s/65s/80s
   const width = window.innerWidth;
   if (width <= 480) {
-    return 120; // スマホ: 120s
+    return 50; // スマホ: Collectionと同じ50s
   } else if (width <= 1024) {
-    return 100; // タブレット: 100s
+    return 65; // タブレット: Collectionと同じ65s
   } else {
-    return 120; // PC: 120s
+    return 80; // PC: Collectionと同じ80s
   }
 }
 
