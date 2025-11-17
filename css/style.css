@@ -462,10 +462,7 @@
     .collection-track { 
       animation: none !important; 
     }
-    .lookbook-track {
-      animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
-      animation-play-state: running !important;
-    }
+    /* Lookbookはメディアクエリで速度を管理するため、ここでは設定しない */
   }
   
   /* ========================================
@@ -1147,13 +1144,7 @@
     
     /* 画像サイズは2498行目の設定を採用（競合削除） */
     
-    /* PCでもフローするように */
-    html body #lookbook .lookbook-track:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
-      animation-play-state: running !important;
-    }
+    /* アニメーション速度は1534行目以降のFINALオーバーライドで統一管理 */
   }
   
   /* トラックは上寄せ・Y方向のtransformを撤廃（Xのみ） */
@@ -1171,17 +1162,8 @@
     /* アニメーションは下記の#lookbook .lookbook-trackで統一管理 */
   }
   
-  /* Lookbookアニメーションを強制的に適用（重複定義を統合・1箇所で管理） */
-  /* 注意: このルールはメディアクエリのルール（1215行目以降）で上書きされる */
-  /* PC版のみに適用（メディアクエリのルールと競合しないように） */
-  @media (min-width: 1025px) {
-    html body #lookbook .lookbook-track:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
-      animation-play-state: running !important; /* PC版でも確実に動作 */
-    }
-  }
+  /* Lookbookアニメーション速度は1534行目以降のFINALオーバーライドで統一管理 */
+  /* ここでは設定しない（重複を避けるため） */
   
   /* 画像アイテムはトークン高さに合わせる（containで見切れ防止） */
   /* 画像サイズは2498行目の設定を採用（競合削除） */
@@ -1212,30 +1194,8 @@
   /* 注意: メディアクエリのルールで各画面幅に応じた速度を設定 */
   /* 一般ルールは削除し、メディアクエリのみで管理（スマホで80sが適用されるのを防ぐ） */
   
-  /* メディアクエリで確実に適用（より具体的なセレクタで） */
-  @media (max-width: 480px) {
-    html body #lookbook .lookbook-track:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-    #lookbook .lookbook-track:not(.dragging),
-    #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-    #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 50s linear infinite !important; /* スマホ: Collectionと同じ50s */
-      animation-play-state: running !important;
-    }
-  }
-  
-  @media (min-width: 481px) and (max-width: 1024px) {
-    html body #lookbook .lookbook-track:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-    html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-    #lookbook .lookbook-track:not(.dragging),
-    #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-    #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-      animation: lookbook-scroll 65s linear infinite !important; /* タブレット: Collectionと同じ65s */
-      animation-play-state: running !important;
-    }
-  }
+  /* メディアクエリのルールは1534行目以降のFINALオーバーライドで統一管理 */
+  /* ここでは設定しない（重複を避けるため） */
   
   #lookbook .lookbook-track:active{ cursor:grabbing; }
   #lookbook .lookbook-track.dragging{ 
