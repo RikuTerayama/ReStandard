@@ -19,10 +19,10 @@ function initLookbookTracks() {
 
 function resolveLookbookSpeedSeconds(track) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
-  // スマホはさらに遅く（90s）、タブレット/PCはCollectionと同じ速度
+  // スマホはさらに遅く（110s）、タブレット/PCはCollectionと同じ速度
   const width = window.innerWidth;
   if (width <= 480) {
-    return 90; // スマホ: さらに遅く（90s）
+    return 110; // スマホ: さらに遅く（110s）
   } else if (width <= 1024) {
     return 65; // タブレット: Collectionと同じ65s
   } else {
@@ -377,7 +377,30 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// 初期化
-document.addEventListener('DOMContentLoaded', initLookbookTracks);
+// 初期化（外部サイトからの遷移時も確実に実行されるように強化）
+function initializeLookbook() {
+  if (typeof window.initLookbookTracks === 'function') {
+    initLookbookTracks();
+  }
+}
+
+// DOMContentLoadedとwindow.loadの両方で初期化（外部サイトからの遷移時も確実に実行）
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeLookbook);
+} else {
+  initializeLookbook();
+}
+
+// window.loadでも再初期化（外部サイトからの遷移時にCSSが適用されるのを待つ）
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    initializeLookbook();
+    // インラインスタイルを確実に削除
+    document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+      track.style.removeProperty('animation');
+      track.style.removeProperty('animation-play-state');
+    });
+  }, 100);
+});
 
 } // 重複読み込み防止の閉じ括弧
