@@ -1110,27 +1110,27 @@
     justify-content: flex-start !important; /* 左端から開始 */
   }
   
-  /* スマホ表示でLookbook背景の縦長さを短く、スピードを遅く */
-  @media (max-width: 1024px) {
+  /* タブレット表示（481px〜1024px）でLookbook背景の縦長さを画像サイズに合わせる */
+  @media (min-width: 481px) and (max-width: 1024px) {
     .lookbook-container {
-      min-block-size: calc(var(--lookbook-img-h, 300px) + 1rem) !important;
-      padding-block: 0.5rem !important;
+      /* 画像の高さ280pxに合わせて、PC表示と同じ比率を維持（画像高さ / コンテナ高さ ≈ 0.91） */
+      min-block-size: calc(280px + 2rem) !important; /* 画像高さ280px + 上下余白2rem */
+      padding-block: 1rem !important; /* 上下余白を1remに統一 */
       overflow: visible !important; /* 画像が端から端まで表示されるように */
       align-items: center !important; /* 上下中央揃え */
     }
-    /* アニメーション速度は1231行目のルールで統一管理（重複削除） */
   }
   
-  /* さらに小さい画面での調整 */
+  /* スマホ表示（〜480px）でLookbook背景の縦長さを画像サイズに合わせる */
   @media (max-width: 480px) {
     .lookbook-container {
-      /* 画像の高さ240pxに合わせて、PC表示と同じ比率を維持（画像高さ / コンテナ高さ ≈ 0.74） */
+      /* 画像の高さ240pxに合わせて、PC表示と同じ比率を維持（画像高さ / コンテナ高さ ≈ 0.91） */
       min-block-size: calc(240px + 2rem) !important; /* 画像高さ240px + 上下余白2rem */
       padding-block: 1rem !important; /* 上下余白を1remに統一 */
       overflow: visible !important; /* 画像が端から端まで表示されるように */
       align-items: center !important; /* 上下中央揃え */
     }
-    /* アニメーション速度は1503行目のルールで統一管理（重複削除） */
+    /* アニメーション速度は1504行目のルールで統一管理（重複削除） */
   }
   
   /* PC表示でLookbookの縦長さを調整、画像全体を表示 */
@@ -1492,7 +1492,7 @@
 }
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
-/* スマホ版（〜480px）：より遅く（70s） */
+/* スマホ版（〜480px）：さらに遅く（90s） */
 /* より具体的なセレクタで確実に適用（インラインスタイルも上書き） */
 @media (max-width: 480px) {
   html body #lookbook .lookbook-track:not(.dragging),
@@ -1501,7 +1501,7 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 70s linear infinite !important; /* スマホ: より遅く（70s） */
+    animation: lookbook-scroll 90s linear infinite !important; /* スマホ: さらに遅く（90s） */
     animation-play-state: running !important;
   }
 }
