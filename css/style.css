@@ -1506,7 +1506,7 @@
   }
 }
 
-/* タブレット版（481px〜1024px）：Collection セクションと同じ速度（65s）に合わせる */
+/* タブレット版（481px〜1024px）：さらに遅く（80s） */
 @media (min-width: 481px) and (max-width: 1024px) {
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
@@ -1514,7 +1514,7 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 65s linear infinite !important; /* タブレット: Collectionと同じ65s */
+    animation: lookbook-scroll 80s linear infinite !important; /* タブレット: さらに遅く（80s） */
     animation-play-state: running !important;
   }
 }
@@ -2589,12 +2589,26 @@ div.copyright {
 }
 
 /* Lookbook画像の表示を強制 */
+/* 注意: 画像サイズはメディアクエリで固定値に設定されるため、ここでは最小幅のみ設定 */
 .lookbook-track {
-  min-width: calc(8 * var(--lookbook-img-w, 240px)) !important;
+  min-width: calc(8 * 240px) !important; /* PC版の画像サイズ（240px）を基準 */
+}
+
+@media (max-width: 480px) {
+  .lookbook-track {
+    min-width: calc(8 * 180px) !important; /* スマホ版の画像サイズ（180px）を基準 */
+  }
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+  .lookbook-track {
+    min-width: calc(8 * 200px) !important; /* タブレット版の画像サイズ（200px）を基準 */
+  }
 }
 
 /* Lookbook画像の表示を強制（Collectionと同様） */
 /* 画像サイズを固定して、画面幅による変更を防ぐ */
+/* 注意: メディアクエリで上書きされるため、ここでは基本設定のみ */
 #lookbook .lookbook-track img,
 #lookbook .lookbook-item img,
 .lookbook-track img,
@@ -2611,10 +2625,30 @@ div.copyright {
 @media (min-width: 1025px) {
   #lookbook .lookbook-track img,
   #lookbook .lookbook-item img,
+  html body #lookbook .lookbook-track img,
+  html body #lookbook .lookbook-item img,
   .lookbook-track img,
   .lookbook-item img {
     width: 240px !important;
     height: 320px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* PC版: トラックの高さを画像の高さに合わせる */
+  #lookbook .lookbook-track,
+  html body #lookbook .lookbook-track {
+    height: 320px !important;
+    min-height: 320px !important;
+  }
+  
+  /* PC版: コンテナの高さを画像の高さに合わせる */
+  #lookbook .lookbook-container,
+  html body #lookbook .lookbook-container {
+    min-block-size: calc(320px + 2rem) !important;
+    padding-block: 1rem !important;
+    overflow: visible !important;
+    align-items: center !important;
   }
 }
 
@@ -2633,10 +2667,21 @@ div.copyright {
 @media (min-width: 481px) and (max-width: 1024px) {
   #lookbook .lookbook-track img,
   #lookbook .lookbook-item img,
+  html body #lookbook .lookbook-track img,
+  html body #lookbook .lookbook-item img,
   .lookbook-track img,
   .lookbook-item img {
     width: 200px !important;
     height: 280px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* タブレット版: トラックの高さを画像の高さに合わせる */
+  #lookbook .lookbook-track,
+  html body #lookbook .lookbook-track {
+    height: 280px !important;
+    min-height: 280px !important;
   }
 }
 
@@ -2644,10 +2689,21 @@ div.copyright {
 @media (max-width: 480px) {
   #lookbook .lookbook-track img,
   #lookbook .lookbook-item img,
+  html body #lookbook .lookbook-track img,
+  html body #lookbook .lookbook-item img,
   .lookbook-track img,
   .lookbook-item img {
     width: 180px !important;
     height: 240px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* スマホ版: トラックの高さを画像の高さに合わせる */
+  #lookbook .lookbook-track,
+  html body #lookbook .lookbook-track {
+    height: 240px !important;
+    min-height: 240px !important;
   }
 }
 
