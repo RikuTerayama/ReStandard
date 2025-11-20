@@ -24,7 +24,7 @@ function resolveLookbookSpeedSeconds(track) {
   if (width <= 480) {
     return 110; // スマホ: さらに遅く（110s）
   } else if (width <= 1024) {
-    return 65; // タブレット: Collectionと同じ65s
+    return 80; // タブレット: さらに遅く（80s）
   } else {
     return 80; // PC: Collectionと同じ80s
   }
