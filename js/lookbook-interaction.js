@@ -19,14 +19,14 @@ function initLookbookTracks() {
 
 function resolveLookbookSpeedSeconds(track) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
-  // スマホはさらに遅く（130s）、タブレット/PCもさらに遅く（100s）
+  // スマホは30%遅く（169s）、タブレット/PCも30%遅く（130s）
   const width = window.innerWidth;
   if (width <= 480) {
-    return 130; // スマホ: さらに遅く（130s）
+    return 169; // スマホ: 30%遅く（169s = 130s × 1.3）
   } else if (width <= 1024) {
-    return 100; // タブレット: さらに遅く（100s）
+    return 130; // タブレット: 30%遅く（130s = 100s × 1.3）
   } else {
-    return 100; // PC: さらに遅く（100s）
+    return 130; // PC: 30%遅く（130s = 100s × 1.3）
   }
 }
 
