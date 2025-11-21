@@ -325,6 +325,40 @@ function startAutoScroll(track) {
       track.style.removeProperty('animation-play-state');
     }
   });
+  
+  // スマホでのスクロール終了検知（Collectionと同様の処理を追加）
+  const isMobileDevice = window.innerWidth <= 900;
+  if (isMobileDevice) {
+    let scrollTimer;
+    let lastScrollTop = 0;
+    const scrollHandler = function() {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+        
+        // Lookbookセクションが画面内にある場合、アニメーションを確実に再開
+        const lookbookSection = document.getElementById('lookbook');
+        if (lookbookSection) {
+          const rect = lookbookSection.getBoundingClientRect();
+          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+          
+          if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
+            // CSSで制御するため、インラインスタイルを削除
+            track.style.removeProperty('animation');
+            track.style.removeProperty('animation-play-state');
+          }
+        }
+        
+        lastScrollTop = currentScrollTop;
+      }, 150);
+    };
+    
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    
+    // クリーンアップ用の参照を保存（必要に応じて）
+    track._scrollHandler = scrollHandler;
+  }
 }
 
 // 開始位置の調整（画像が常に表示されるよう、初期表示で look1.webp が左端に配置）
