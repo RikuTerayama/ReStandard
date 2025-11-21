@@ -1492,7 +1492,7 @@
 }
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
-/* スマホ版（〜480px）：さらに遅く（110s） */
+/* スマホ版（〜480px）：さらに遅く（130s） */
 /* より具体的なセレクタで確実に適用（インラインスタイルも上書き） */
 @media (max-width: 480px) {
   html body #lookbook .lookbook-track:not(.dragging),
@@ -1501,12 +1501,12 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 110s linear infinite !important; /* スマホ: さらに遅く（110s） */
+    animation: lookbook-scroll 130s linear infinite !important; /* スマホ: さらに遅く（130s） */
     animation-play-state: running !important;
   }
 }
 
-/* タブレット版（481px〜1024px）：さらに遅く（80s） */
+/* タブレット版（481px〜1024px）：さらに遅く（100s） */
 @media (min-width: 481px) and (max-width: 1024px) {
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
@@ -1514,12 +1514,12 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 80s linear infinite !important; /* タブレット: さらに遅く（80s） */
+    animation: lookbook-scroll 100s linear infinite !important; /* タブレット: さらに遅く（100s） */
     animation-play-state: running !important;
   }
 }
 
-/* PC版（1025px〜）：Collection セクションと同じ速度（80s）に合わせる */
+/* PC版（1025px〜）：さらに遅く（100s） */
 @media (min-width: 1025px) {
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
@@ -1527,7 +1527,7 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 80s linear infinite !important; /* PC: Collectionと同じ80s */
+    animation: lookbook-scroll 100s linear infinite !important; /* PC: さらに遅く（100s） */
     animation-play-state: running !important;
   }
 }
