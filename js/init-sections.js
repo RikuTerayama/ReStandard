@@ -7,11 +7,11 @@ function getLookbookSpeedSec(track) {
   // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
   const width = window.innerWidth;
   if (width <= 480) {
-    return 130; // スマホ: さらに遅く（130s）
+    return 169; // スマホ: 30%遅く（169s = 130s × 1.3）
   } else if (width <= 1024) {
-    return 100; // タブレット: さらに遅く（100s）
+    return 130; // タブレット: 30%遅く（130s = 100s × 1.3）
   } else {
-    return 100; // PC: さらに遅く（100s）
+    return 130; // PC: 30%遅く（130s = 100s × 1.3）
   }
 }
 
@@ -20,11 +20,11 @@ function resolveCssSpeedSeconds(track, fallback = 80) {
   // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
   const width = window.innerWidth;
   if (width <= 480) {
-    return 130; // スマホ: さらに遅く（130s）
+    return 169; // スマホ: 30%遅く（169s = 130s × 1.3）
   } else if (width <= 1024) {
-    return 100; // タブレット: さらに遅く（100s）
+    return 130; // タブレット: 30%遅く（130s = 100s × 1.3）
   } else {
-    return 100; // PC: さらに遅く（100s）
+    return 130; // PC: 30%遅く（130s = 100s × 1.3）
   }
 }
 
