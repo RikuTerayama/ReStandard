@@ -21,7 +21,7 @@
     
     /* 速度設定 */
     --collection-speed: 80s;
-    --lookbook-speed: 120s; /* Lookbookはより遅く（PC） */
+    --lookbook-speed: 130s; /* Lookbookは30%遅く（PC: 130s） */
     --loop: 45s;
     
     /* 共通設定 */
