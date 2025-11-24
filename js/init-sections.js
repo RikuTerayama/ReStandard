@@ -261,6 +261,13 @@ function pauseWhenOutOfView(track) {
     entries.forEach((ent) => {
       if (track.dataset.userPaused === '1') return; // ← 勝手に再生しない
       
+      console.log('pauseWhenOutOfView:', {
+        isIntersecting: ent.isIntersecting,
+        intersectionRatio: ent.intersectionRatio,
+        trackId: track.id || 'no-id',
+        isCollection: track.classList.contains('collection-track')
+      });
+      
       if (ent.isIntersecting) {
         // 画面内に入ったらアニメーションを確実に再開
         const speed = parseFloat(track.dataset.speed || 80);
@@ -273,15 +280,14 @@ function pauseWhenOutOfView(track) {
         track.style.animation = `${key} ${speed}s linear infinite`;
         track.style.animationPlayState = 'running';
         
-        if (window.__QA_MEASURE_LOGS__) {
-          console.log('pauseWhenOutOfView: Collectionアニメーション再開', { speed, direction });
-        }
+        console.log('pauseWhenOutOfView: Collectionアニメーション再開', { speed, direction });
       } else {
         // 画面外に出たら一時停止
         track.style.animationPlayState = 'paused';
+        console.log('pauseWhenOutOfView: Collectionアニメーション一時停止');
       }
     });
-  }, { threshold: 0.3 }); // 閾値を0.1から0.3に上げてより確実に検知
+  }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
   io.observe(track);
 }
 
