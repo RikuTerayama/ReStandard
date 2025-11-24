@@ -3,9 +3,12 @@
    ========================================================= */
 
 // 重複読み込み防止
+console.log('[Collection] スクリプト開始 - window.initCollectionTracks:', typeof window.initCollectionTracks);
 if (typeof window.initCollectionTracks === 'function') {
   // 既に読み込まれている場合は何もしない
+  console.log('[Collection] window.initCollectionTracksが既に定義されているため、スキップ');
 } else {
+  console.log('[Collection] window.initCollectionTracksが未定義のため、初期化を実行');
 
 // デバッグ用のヘルパー関数
 window.__DEBUG_COLLECTION__ = true; // デバッグモードを有効化
@@ -628,24 +631,53 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// 初期化関数をグローバルに公開（重複読み込み防止のため）
+window.initCollectionTracks = initCollectionTracks;
+
 // 初期化（DOMContentLoadedイベントがすでに発火済みの場合は即座に実行）
 console.log('[Collection] スクリプト読み込み完了 - document.readyState:', document.readyState);
 console.log('[Collection] initCollectionTracks関数を実行');
 
+// 即座に実行を試みる
+try {
+  console.log('[Collection] initCollectionTracks関数を即座に実行');
+  initCollectionTracks();
+} catch (error) {
+  console.error('[Collection] initCollectionTracks関数実行エラー:', error);
+}
+
+// DOMContentLoadedイベントでも実行（二重実行を防ぐため、フラグで制御）
+let initCollectionTracksExecuted = false;
+const initCollectionTracksOnce = () => {
+  if (!initCollectionTracksExecuted) {
+    initCollectionTracksExecuted = true;
+    console.log('[Collection] DOMContentLoadedイベントでinitCollectionTracks関数を実行');
+    try {
+      initCollectionTracks();
+    } catch (error) {
+      console.error('[Collection] DOMContentLoadedイベントでのinitCollectionTracks関数実行エラー:', error);
+    }
+  }
+};
+
 if (document.readyState === 'loading') {
   // DOMContentLoadedイベントがまだ発火していない場合
-  document.addEventListener('DOMContentLoaded', initCollectionTracks);
+  document.addEventListener('DOMContentLoaded', initCollectionTracksOnce);
   console.log('[Collection] DOMContentLoadedイベントリスナーを追加');
 } else {
-  // DOMContentLoadedイベントがすでに発火済みの場合（defer属性により発生する可能性がある）
-  console.log('[Collection] DOMContentLoadedイベントはすでに発火済み - 即座に実行');
-  initCollectionTracks();
+  // DOMContentLoadedイベントがすでに発火済みの場合
+  console.log('[Collection] DOMContentLoadedイベントはすでに発火済み');
+  initCollectionTracksOnce();
 }
 
 // loadイベントでも実行（フォールバック）
 window.addEventListener('load', () => {
   console.log('[Collection] loadイベントでinitCollectionTracks関数を実行（フォールバック）');
-  initCollectionTracks();
+  try {
+    initCollectionTracks();
+  } catch (error) {
+    console.error('[Collection] loadイベントでのinitCollectionTracks関数実行エラー:', error);
+  }
 }, { once: true });
 
 } // 重複読み込み防止の閉じ括弧
