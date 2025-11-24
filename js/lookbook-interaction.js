@@ -626,20 +626,42 @@ if (isInstagramWebView) {
   
   // Instagram WebViewでは、スクロールイベントをより頻繁に監視
   let instagramScrollTimer;
+  let lastScrollTop = 0;
   window.addEventListener('scroll', () => {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+    
     clearTimeout(instagramScrollTimer);
     instagramScrollTimer = setTimeout(() => {
-      console.log('[Lookbook] Instagram WebView: スクロール終了検知 - 再初期化');
-      try {
-        initializeLookbook();
-        // インラインスタイルを確実に削除
-        document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-        });
-      } catch (error) {
-        console.error('[Lookbook] Instagram WebView: スクロール再初期化エラー:', error);
+      console.log('[Lookbook] Instagram WebView: スクロール終了検知 - 再初期化', { scrollDirection });
+      
+      // Lookbookセクションが画面内にある場合のみ再初期化
+      const lookbookSection = document.getElementById('lookbook');
+      if (lookbookSection) {
+        const rect = lookbookSection.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isInViewport) {
+          try {
+            initializeLookbook();
+            // インラインスタイルを確実に削除
+            document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+              track.isDragging = false;
+              track.classList.remove('dragging');
+              track.style.removeProperty('animation');
+              track.style.removeProperty('animation-play-state');
+              track.style.removeProperty('transform');
+              // リフローを強制してCSSアニメーションを再適用
+              track.offsetHeight;
+            });
+            console.log('[Lookbook] Instagram WebView: 再初期化完了');
+          } catch (error) {
+            console.error('[Lookbook] Instagram WebView: スクロール再初期化エラー:', error);
+          }
+        }
       }
+      
+      lastScrollTop = currentScrollTop;
     }, 300);
   }, { passive: true });
 }
