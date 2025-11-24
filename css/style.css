@@ -2872,6 +2872,7 @@ footer .nav-link:hover::after {
   width: 100vw;
   height: 100vh;
   background: #ffffff !important;
+  background-color: #ffffff !important;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -2879,6 +2880,14 @@ footer .nav-link:hover::after {
   overflow: hidden;
   opacity: 1;
   transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* PCでのスプラッシュ動画の背景を完全に白にする */
+body.splash-active #splash-video-wrapper,
+body.splash-active #splash-video-wrapper::before,
+body.splash-active #splash-video-wrapper::after {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 #splash-video {
