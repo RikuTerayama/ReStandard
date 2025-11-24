@@ -623,6 +623,25 @@ if (isInstagramWebView) {
       }, 500);
     }
   });
+  
+  // Instagram WebViewでは、スクロールイベントをより頻繁に監視
+  let instagramScrollTimer;
+  window.addEventListener('scroll', () => {
+    clearTimeout(instagramScrollTimer);
+    instagramScrollTimer = setTimeout(() => {
+      console.log('[Lookbook] Instagram WebView: スクロール終了検知 - 再初期化');
+      try {
+        initializeLookbook();
+        // インラインスタイルを確実に削除
+        document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
+        });
+      } catch (error) {
+        console.error('[Lookbook] Instagram WebView: スクロール再初期化エラー:', error);
+      }
+    }, 300);
+  }, { passive: true });
 }
 
 } // 重複読み込み防止の閉じ括弧
