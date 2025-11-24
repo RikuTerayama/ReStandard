@@ -725,15 +725,37 @@ if (isInstagramWebView) {
   
   // Instagram WebViewでは、スクロールイベントをより頻繁に監視
   let instagramScrollTimer;
+  let lastScrollTop = 0;
   window.addEventListener('scroll', () => {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+    
     clearTimeout(instagramScrollTimer);
     instagramScrollTimer = setTimeout(() => {
-      console.log('[Collection] Instagram WebView: スクロール終了検知 - 再初期化');
-      try {
-        initCollectionTracks();
-      } catch (error) {
-        console.error('[Collection] Instagram WebView: スクロール再初期化エラー:', error);
+      console.log('[Collection] Instagram WebView: スクロール終了検知 - 再初期化', { scrollDirection });
+      
+      // Collectionセクションが画面内にある場合のみ再初期化
+      const collectionSection = document.getElementById('collection');
+      if (collectionSection) {
+        const rect = collectionSection.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isInViewport) {
+          try {
+            initCollectionTracks();
+            // イベントハンドラを確実に再設定
+            document.querySelectorAll('.collection-track').forEach(track => {
+              track.isDragging = false;
+              track.classList.remove('dragging');
+            });
+            console.log('[Collection] Instagram WebView: 再初期化完了');
+          } catch (error) {
+            console.error('[Collection] Instagram WebView: スクロール再初期化エラー:', error);
+          }
+        }
       }
+      
+      lastScrollTop = currentScrollTop;
     }, 300);
   }, { passive: true });
 }
