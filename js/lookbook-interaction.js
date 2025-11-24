@@ -582,4 +582,47 @@ window.addEventListener('load', () => {
   }, 100);
 });
 
+// Instagram WebView検出と特別な処理
+const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
+                           /FBAN|FBAV/i.test(navigator.userAgent) ||
+                           (window.navigator.standalone === false && /iPhone|iPad|iPod/i.test(navigator.userAgent));
+
+if (isInstagramWebView) {
+  console.log('[Lookbook] Instagram WebView検出 - 特別な処理を実行');
+  
+  // Instagram WebViewでは、loadイベント後にも確実に初期化を実行
+  setTimeout(() => {
+    console.log('[Lookbook] Instagram WebView: 遅延初期化を実行');
+    try {
+      initializeLookbook();
+      // インラインスタイルを確実に削除
+      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+      });
+    } catch (error) {
+      console.error('[Lookbook] Instagram WebView: 遅延初期化エラー:', error);
+    }
+  }, 1000);
+  
+  // ページ可視性変更時にも再初期化
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      console.log('[Lookbook] Instagram WebView: visibilitychange - 再初期化');
+      setTimeout(() => {
+        try {
+          initializeLookbook();
+          // インラインスタイルを確実に削除
+          document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+            track.style.removeProperty('animation');
+            track.style.removeProperty('animation-play-state');
+          });
+        } catch (error) {
+          console.error('[Lookbook] Instagram WebView: visibilitychange再初期化エラー:', error);
+        }
+      }, 500);
+    }
+  });
+}
+
 } // 重複読み込み防止の閉じ括弧
