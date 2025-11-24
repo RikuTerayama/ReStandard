@@ -1552,28 +1552,7 @@
 
 /* スマホ表示（1500px以下）で画像全体が表示されるように強化 */
 /* 外部サイトからの遷移時も確実に適用されるように、最高優先度で設定 */
-/* スマホ版（〜480px、1500px以下） */
-@media (max-width: 480px) {
-  #lookbook .lookbook-container,
-  html body #lookbook .lookbook-container {
-    min-block-size: calc(240px + 2rem) !important; /* 画像高さ240px + 上下余白2rem */
-    padding-block: 1rem !important;
-    overflow: visible !important;
-    align-items: center !important;
-  }
-  
-  #lookbook .lookbook-track img,
-  #lookbook .lookbook-item img,
-  html body #lookbook .lookbook-track img,
-  html body #lookbook .lookbook-item img,
-  .lookbook-track img,
-  .lookbook-item img {
-    width: 180px !important;
-    height: 240px !important;
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-  }
-}
+/* スマホ版（〜480px、1500px以下） - 2695行目の設定で統一管理（重複削除） */
 
 /* タブレット版（481px〜1024px、1500px以下） */
 @media (min-width: 481px) and (max-width: 1024px) {
@@ -2692,6 +2671,7 @@ div.copyright {
 }
 
 /* スマホ版: 画面幅に応じたサイズ（iPhone 12 ProとiPhone 15 Proで統一） */
+/* iPhone 15 Pro: 393px, iPhone 12 Pro: 390px - 両方とも42vwで約164pxになる */
 @media (max-width: 480px) {
   #lookbook .lookbook-track img,
   #lookbook .lookbook-item img,
@@ -2699,27 +2679,32 @@ div.copyright {
   html body #lookbook .lookbook-item img,
   .lookbook-track img,
   .lookbook-item img {
-    width: clamp(160px, 42vw, 200px) !important; /* 画面幅の42%を基準に、最小160px、最大200px */
+    width: clamp(164px, 42vw, 200px) !important; /* 画面幅の42%を基準に、最小164px（iPhone 12 Pro/15 Proで統一）、最大200px */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: clamp(213px, 56vw, 267px) !important; /* 幅の1.33倍（4:3比率）を最大高さとして設定 */
+    max-height: clamp(218px, 56vw, 267px) !important; /* 幅の約1.33倍（4:3比率）を最大高さとして設定 */
+    min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
     object-fit: contain !important;
     flex-shrink: 0 !important;
+    display: block !important;
   }
   
   /* スマホ版: トラックの高さを画像の高さに合わせる */
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
     height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: clamp(213px, 56vw, 267px) !important; /* 画像の最大高さに合わせる */
+    min-height: clamp(218px, 56vw, 267px) !important; /* 画像の最大高さに合わせる */
+    max-height: none !important; /* 最大高さの制限を解除 */
   }
   
   /* スマホ版: コンテナの高さを画像の高さに合わせる */
   #lookbook .lookbook-container,
   html body #lookbook .lookbook-container {
-    min-block-size: calc(clamp(213px, 56vw, 267px) + 2rem) !important; /* 画像の最大高さ + 上下余白 */
+    min-block-size: calc(clamp(218px, 56vw, 267px) + 2rem) !important; /* 画像の最大高さ + 上下余白 */
+    max-block-size: none !important; /* 最大高さの制限を解除 */
     padding-block: 1rem !important;
     overflow: visible !important;
     align-items: center !important;
+    display: flex !important;
   }
 }
 
