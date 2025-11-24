@@ -34,6 +34,12 @@ function initLookbookTracks() {
 // グローバルに公開（init-sections.jsから呼び出せるように）
 window.initLookbookTracks = initLookbookTracks;
 
+// startAutoScroll関数もグローバルに公開（init-sections.jsから呼び出せるように）
+window.startLookbookAutoScroll = startAutoScroll;
+
+// initTrack関数もグローバルに公開（init-sections.jsから呼び出せるように）
+window.initLookbookTrack = initTrack;
+
 function resolveLookbookSpeedSeconds(track) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
   // スマホは30%遅く（169s）、タブレット/PCも30%遅く（130s）
@@ -620,6 +626,22 @@ window.addEventListener('load', () => {
       track.style.removeProperty('animation');
       track.style.removeProperty('animation-play-state');
     });
+    
+    // Instagram WebViewでLookbookコンテナの高さを強制的に設定
+    const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
+                               /FBAN|FBAV/i.test(navigator.userAgent);
+    if (isInstagramWebView && window.innerWidth <= 480) {
+      const container = document.querySelector('#lookbook .lookbook-container');
+      if (container) {
+        const expectedMinHeight = Math.max(218, Math.min(window.innerWidth * 0.56, 267)) + 32; // 2rem = 32px
+        container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
+        container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
+        console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
+          expectedMinHeight,
+          windowWidth: window.innerWidth
+        });
+      }
+    }
   }, 100);
 });
 
@@ -630,6 +652,8 @@ const isInstagramWebView = /Instagram/i.test(navigator.userAgent) ||
 
 if (isInstagramWebView) {
   console.log('[Lookbook] Instagram WebView検出 - 特別な処理を実行');
+  // bodyにクラスを追加してCSSで検出できるようにする
+  document.body.classList.add('instagram-webview');
   
   // Instagram WebViewでは、loadイベント後にも確実に初期化を実行
   setTimeout(() => {
@@ -640,7 +664,25 @@ if (isInstagramWebView) {
       document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
+        // 速度を正しく設定（Instagram WebViewでも169s）
+        const speed = resolveLookbookSpeedSeconds(track);
+        track.dataset.speed = String(speed);
+        track.dataset.baseSpeed = String(speed);
       });
+      
+      // Instagram WebViewでLookbookコンテナの高さを強制的に設定
+      if (window.innerWidth <= 480) {
+        const container = document.querySelector('#lookbook .lookbook-container');
+        if (container) {
+          const expectedMinHeight = Math.max(218, Math.min(window.innerWidth * 0.56, 267)) + 32; // 2rem = 32px
+          container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
+          container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
+          console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
+            expectedMinHeight,
+            windowWidth: window.innerWidth
+          });
+        }
+      }
     } catch (error) {
       console.error('[Lookbook] Instagram WebView: 遅延初期化エラー:', error);
     }
@@ -703,6 +745,21 @@ if (isInstagramWebView) {
               // リフローを強制してCSSアニメーションを再適用
               track.offsetHeight;
             });
+            
+            // Instagram WebViewでLookbookコンテナの高さを強制的に設定
+            if (window.innerWidth <= 480) {
+              const container = document.querySelector('#lookbook .lookbook-container');
+              if (container) {
+                const expectedMinHeight = Math.max(218, Math.min(window.innerWidth * 0.56, 267)) + 32; // 2rem = 32px
+                container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
+                container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
+                console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
+                  expectedMinHeight,
+                  windowWidth: window.innerWidth
+                });
+              }
+            }
+            
             console.log('[Lookbook] Instagram WebView: 再初期化完了');
           } catch (error) {
             console.error('[Lookbook] Instagram WebView: スクロール再初期化エラー:', error);
