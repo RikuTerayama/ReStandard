@@ -57,6 +57,10 @@ function initCollectionTracks() {
 
 // .collection-track ごとに初期化処理
 function initTrack(track) {
+  // 初期化時にdraggingクラスを確実に削除
+  track.isDragging = false;
+  track.classList.remove('dragging');
+  
   // data-seg から元の子要素数を読み取り
   const segmentCount = parseInt(track.dataset.seg) || 16;
   
@@ -383,8 +387,16 @@ function startAutoScroll(track) {
   if (isMobileDevice) {
     // アニメーション再開のヘルパー関数
     const forceResumeAnimation = () => {
-      if (track.isDragging || track.classList.contains('dragging')) {
-        console.log('Collection: ドラッグ中なので再開をスキップ');
+      // 実際にドラッグ中でない場合は、draggingクラスを強制的に削除
+      if (!track.isDragging) {
+        track.isDragging = false;
+        track.classList.remove('dragging');
+        console.log('Collection: draggingクラスを強制削除');
+      }
+      
+      // 実際にドラッグ中の場合は再開をスキップ
+      if (track.isDragging) {
+        console.log('Collection: 実際にドラッグ中なので再開をスキップ');
         return;
       }
       
@@ -397,7 +409,14 @@ function startAutoScroll(track) {
       
       // 現在のアニメーション状態を確認
       const currentAnimation = getComputedStyle(track).animation;
-      console.log('Collection: 現在のアニメーション状態:', { currentAnimation, speed, direction });
+      const hasDraggingClass = track.classList.contains('dragging');
+      console.log('Collection: 現在のアニメーション状態:', { 
+        currentAnimation, 
+        speed, 
+        direction,
+        hasDraggingClass,
+        isDragging: track.isDragging
+      });
       
       // アニメーションを完全にリセット
       track.style.animation = 'none';
@@ -412,7 +431,13 @@ function startAutoScroll(track) {
       setTimeout(() => {
         const newAnimation = getComputedStyle(track).animation;
         const newPlayState = getComputedStyle(track).animationPlayState;
-        console.log('Collection: アニメーション再開完了:', { newAnimation, newPlayState });
+        const stillHasDraggingClass = track.classList.contains('dragging');
+        console.log('Collection: アニメーション再開完了:', { 
+          newAnimation, 
+          newPlayState,
+          stillHasDraggingClass,
+          isDragging: track.isDragging
+        });
       }, 100);
     };
     
@@ -425,10 +450,18 @@ function startAutoScroll(track) {
           hasDraggingClass: track.classList.contains('dragging')
         });
         
-        if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
-          // 画面内に入ったらアニメーションを強制的に再開
-          console.log('Collection: 画面内検知 - アニメーション再開');
-          forceResumeAnimation();
+        if (entry.isIntersecting) {
+          // 画面内に入ったらdraggingクラスを確実に削除してアニメーションを再開
+          if (track.classList.contains('dragging') && !track.isDragging) {
+            track.classList.remove('dragging');
+            track.isDragging = false;
+            console.log('Collection: 画面内検知 - draggingクラスを削除');
+          }
+          
+          if (!track.isDragging) {
+            console.log('Collection: 画面内検知 - アニメーション再開');
+            forceResumeAnimation();
+          }
         }
       });
     }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
@@ -437,8 +470,17 @@ function startAutoScroll(track) {
     
     // スマホでのページ可視性変更時の処理
     const visibilityHandler = function() {
-      if (!document.hidden && !track.isDragging && !track.classList.contains('dragging')) {
-        forceResumeAnimation();
+      if (!document.hidden) {
+        // draggingクラスを確実に削除
+        if (track.classList.contains('dragging') && !track.isDragging) {
+          track.classList.remove('dragging');
+          track.isDragging = false;
+          console.log('Collection: visibilitychange - draggingクラスを削除');
+        }
+        
+        if (!track.isDragging) {
+          forceResumeAnimation();
+        }
       }
     };
     document.addEventListener('visibilitychange', visibilityHandler);
@@ -473,9 +515,18 @@ function startAutoScroll(track) {
             hasDraggingClass: track.classList.contains('dragging')
           });
           
-          if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
-            console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
-            forceResumeAnimation();
+          if (isInViewport) {
+            // draggingクラスを確実に削除
+            if (track.classList.contains('dragging') && !track.isDragging) {
+              track.classList.remove('dragging');
+              track.isDragging = false;
+              console.log('Collection: スクロール終了検知 - draggingクラスを削除');
+            }
+            
+            if (!track.isDragging) {
+              console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
+              forceResumeAnimation();
+            }
           }
         }
         
