@@ -373,7 +373,7 @@ function startAutoScroll(track) {
     }
   });
   
-  // スマホでの可視性チェックとアニメーション復帰（強化版）
+  // 可視性チェックとアニメーション復帰（スマホ/PC両対応）
   // より確実なスマホ判定（画面幅またはユーザーエージェント）
   const isMobileDevice = window.innerWidth <= 900 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
@@ -384,7 +384,8 @@ function startAutoScroll(track) {
     userAgent: navigator.userAgent.substring(0, 50)
   });
   
-  if (isMobileDevice) {
+  // スマホ/PC両方でイベントハンドラを設定（常に設定）
+  {
     // アニメーション再開のヘルパー関数
     const forceResumeAnimation = () => {
       // 実際にドラッグ中でない場合は、draggingクラスを強制的に削除
@@ -538,6 +539,22 @@ function startAutoScroll(track) {
     
     // クリーンアップ用の参照を保存
     track._scrollHandler = scrollHandler;
+    track._visibilityObserver = visibilityObserver;
+  }
+  
+  // 初期化時にdraggingクラスを確実に削除
+  track.isDragging = false;
+  track.classList.remove('dragging');
+  
+  // アニメーションがnoneになっている場合は再設定
+  const computedAnimation = getComputedStyle(track).animation;
+  if (computedAnimation === 'none' || !computedAnimation || computedAnimation.includes('none')) {
+    console.log('Collection: アニメーションがnoneになっているため再設定');
+    const speed = parseFloat(track.dataset.speed || 80);
+    const direction = track.dataset.direction || 'left';
+    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+    track.style.animation = `${key} ${speed}s linear infinite`;
+    track.style.animationPlayState = 'running';
   }
 }
 
