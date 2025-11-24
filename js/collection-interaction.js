@@ -370,7 +370,16 @@ function startAutoScroll(track) {
   });
   
   // スマホでの可視性チェックとアニメーション復帰（強化版）
-  const isMobileDevice = window.innerWidth <= 900;
+  // より確実なスマホ判定（画面幅またはユーザーエージェント）
+  const isMobileDevice = window.innerWidth <= 900 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  // デバッグログ（常に出力）
+  console.log('Collection track初期化:', { 
+    isMobileDevice, 
+    windowWidth: window.innerWidth,
+    userAgent: navigator.userAgent.substring(0, 50)
+  });
+  
   if (isMobileDevice) {
     // アニメーション再開のヘルパー関数
     const forceResumeAnimation = () => {
@@ -394,12 +403,20 @@ function startAutoScroll(track) {
     
     const visibilityObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        console.log('Collection IntersectionObserver:', { 
+          isIntersecting: entry.isIntersecting, 
+          intersectionRatio: entry.intersectionRatio,
+          isDragging: track.isDragging,
+          hasDraggingClass: track.classList.contains('dragging')
+        });
+        
         if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
           // 画面内に入ったらアニメーションを強制的に再開
+          console.log('Collection: 画面内検知 - アニメーション再開');
           forceResumeAnimation();
         }
       });
-    }, { threshold: 0.3 }); // 閾値を0.1から0.3に上げてより確実に検知
+    }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
     
     visibilityObserver.observe(track);
     
@@ -429,11 +446,21 @@ function startAutoScroll(track) {
           const rect = collectionSection.getBoundingClientRect();
           const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
           
+          console.log('Collection スクロール終了検知:', {
+            scrollDirection,
+            currentScrollTop,
+            lastScrollTop,
+            isInViewport,
+            rectTop: rect.top,
+            rectBottom: rect.bottom,
+            windowHeight: window.innerHeight,
+            isDragging: track.isDragging,
+            hasDraggingClass: track.classList.contains('dragging')
+          });
+          
           if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
+            console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
             forceResumeAnimation();
-            if (window.__QA_MEASURE_LOGS__) {
-              console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
-            }
           }
         }
         
