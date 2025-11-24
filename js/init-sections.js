@@ -510,6 +510,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   tracks.forEach((track, index) => {
+    console.log(`[INIT] Track ${index + 1} 初期化開始:`, {
+      isCollection: track.classList.contains('collection-track'),
+      isLookbook: track.classList.contains('lookbook-track'),
+      className: track.className
+    });
+    
     // 初期化時にdraggingクラスを確実に削除
     track.isDragging = false;
     track.classList.remove('dragging');
@@ -526,7 +532,14 @@ document.addEventListener('DOMContentLoaded', () => {
     pauseWhenOutOfView(track);
     
     // Collection Trackの場合、イベントハンドラを設定（即座に実行）
+    console.log(`[INIT] Track ${index + 1} Collection判定:`, {
+      hasCollectionClass: track.classList.contains('collection-track'),
+      hasVisibilityObserver: !!track._visibilityObserver,
+      hasScrollHandler: !!track._scrollHandler
+    });
+    
     if (track.classList.contains('collection-track')) {
+      console.log(`[INIT] Collection Track ${index + 1}: Collection Trackとして認識されました`);
       // 既に設定されている場合はスキップ
       if (track._visibilityObserver || track._scrollHandler) {
         console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラは既に設定済み`);
@@ -696,6 +709,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ページ読み込み完了後にもインラインスタイルを削除（外部サイトからの遷移時も確実に実行）
   window.addEventListener('load', () => {
     setTimeout(() => {
+      // Lookbook Trackの処理
       document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
         // インラインスタイルを確実に削除（複数回実行）
         track.style.removeProperty('animation');
@@ -709,6 +723,80 @@ document.addEventListener('DOMContentLoaded', () => {
         const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
         track.dataset.speed = String(cssSpeed);
         track.dataset.baseSpeed = String(cssSpeed);
+      });
+      
+      // Collection Trackのイベントハンドラを設定（DOMContentLoadedで設定されなかった場合のフォールバック）
+      document.querySelectorAll('#collection .collection-track').forEach((track, index) => {
+        if (!track._visibilityObserver || !track._scrollHandler) {
+          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラを設定（フォールバック）`);
+          
+          // IntersectionObserverを設定
+          const visibilityObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                if (track.classList.contains('dragging') && !track.isDragging) {
+                  track.classList.remove('dragging');
+                  track.isDragging = false;
+                  console.log(`[LOAD] Collection Track ${index + 1}: 画面内検知 - draggingクラスを削除`);
+                }
+                
+                if (!track.isDragging) {
+                  const speed = parseFloat(track.dataset.speed || 80);
+                  const direction = track.dataset.direction || 'left';
+                  const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+                  
+                  track.style.animation = 'none';
+                  track.offsetHeight;
+                  track.style.animation = `${key} ${speed}s linear infinite`;
+                  track.style.animationPlayState = 'running';
+                  console.log(`[LOAD] Collection Track ${index + 1}: 画面内検知 - アニメーション再開`);
+                }
+              }
+            });
+          }, { threshold: 0.1 });
+          
+          visibilityObserver.observe(track);
+          track._visibilityObserver = visibilityObserver;
+          
+          // スクロールハンドラを設定
+          let scrollTimer;
+          let lastScrollTop = 0;
+          const scrollHandler = function() {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function() {
+              const collectionSection = document.getElementById('collection');
+              if (collectionSection) {
+                const rect = collectionSection.getBoundingClientRect();
+                const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isInViewport) {
+                  if (track.classList.contains('dragging') && !track.isDragging) {
+                    track.classList.remove('dragging');
+                    track.isDragging = false;
+                    console.log(`[LOAD] Collection Track ${index + 1}: スクロール終了検知 - draggingクラスを削除`);
+                  }
+                  
+                  if (!track.isDragging) {
+                    const speed = parseFloat(track.dataset.speed || 80);
+                    const direction = track.dataset.direction || 'left';
+                    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+                    
+                    track.style.animation = 'none';
+                    track.offsetHeight;
+                    track.style.animation = `${key} ${speed}s linear infinite`;
+                    track.style.animationPlayState = 'running';
+                    console.log(`[LOAD] Collection Track ${index + 1}: スクロール終了後、アニメーション再開`);
+                  }
+                }
+              }
+              lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            }, 300);
+          };
+          
+          window.addEventListener('scroll', scrollHandler, { passive: true });
+          track._scrollHandler = scrollHandler;
+          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラ設定完了`);
+        }
       });
     }, 500);
   });
