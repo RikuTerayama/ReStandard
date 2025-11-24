@@ -525,6 +525,86 @@ document.addEventListener('DOMContentLoaded', () => {
     // 画面外一時停止
     pauseWhenOutOfView(track);
     
+    // Collection Trackの場合、イベントハンドラを設定
+    if (track.classList.contains('collection-track')) {
+      setTimeout(() => {
+        // 既に設定されている場合はスキップ
+        if (track._visibilityObserver || track._scrollHandler) {
+          return;
+        }
+        
+        const isMobileDevice = window.innerWidth <= 900 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラを設定`, { isMobileDevice });
+        
+        // IntersectionObserverを設定
+        const visibilityObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              if (track.classList.contains('dragging') && !track.isDragging) {
+                track.classList.remove('dragging');
+                track.isDragging = false;
+                console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - draggingクラスを削除`);
+              }
+              
+              if (!track.isDragging) {
+                const speed = parseFloat(track.dataset.speed || 80);
+                const direction = track.dataset.direction || 'left';
+                const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+                
+                track.style.animation = 'none';
+                track.offsetHeight;
+                track.style.animation = `${key} ${speed}s linear infinite`;
+                track.style.animationPlayState = 'running';
+                console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - アニメーション再開`);
+              }
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        visibilityObserver.observe(track);
+        track._visibilityObserver = visibilityObserver;
+        
+        // スクロールハンドラを設定
+        let scrollTimer;
+        let lastScrollTop = 0;
+        const scrollHandler = function() {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(function() {
+            const collectionSection = document.getElementById('collection');
+            if (collectionSection) {
+              const rect = collectionSection.getBoundingClientRect();
+              const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+              
+              if (isInViewport) {
+                if (track.classList.contains('dragging') && !track.isDragging) {
+                  track.classList.remove('dragging');
+                  track.isDragging = false;
+                  console.log(`[INIT] Collection Track ${index + 1}: スクロール終了検知 - draggingクラスを削除`);
+                }
+                
+                if (!track.isDragging) {
+                  const speed = parseFloat(track.dataset.speed || 80);
+                  const direction = track.dataset.direction || 'left';
+                  const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+                  
+                  track.style.animation = 'none';
+                  track.offsetHeight;
+                  track.style.animation = `${key} ${speed}s linear infinite`;
+                  track.style.animationPlayState = 'running';
+                  console.log(`[INIT] Collection Track ${index + 1}: スクロール終了後、アニメーション再開`);
+                }
+              }
+            }
+            lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          }, 300);
+        };
+        
+        window.addEventListener('scroll', scrollHandler, { passive: true });
+        track._scrollHandler = scrollHandler;
+      }, 200);
+    }
+    
     // 初期化後に再度draggingクラスを確認して削除
     setTimeout(() => {
       if (track.classList.contains('dragging')) {
