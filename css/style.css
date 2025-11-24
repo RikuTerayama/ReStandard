@@ -680,10 +680,8 @@
   }
   @media (max-width: 480px){
     /* --lookbook-speedは削除（直接値を指定するため） */
-    /* PATCH: SP で Lookbook の縦余白を軽くする */
-    .lookbook-container{
-      min-block-size: clamp(120px, 32vw, 200px); /* 旧: calc(var(--lookbook-img-h)+2rem) 相当を緩和 */
-    }
+    /* PATCH: SP で Lookbook の縦余白を軽くする - 2689行目の設定で統一管理（重複削除） */
+    /* .lookbook-container の設定は2689行目で統一管理 */
     /* 帯の上下を軽めに */
     .band{
       padding-block: clamp(6px, 1.5vw, 14px) !important;
@@ -1500,7 +1498,10 @@
   #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
   #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
   #lookbook .lookbook-track[data-speed="169"]:not(.dragging),
-  .lookbook-track:not(.dragging) {
+  #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
+  #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
+  .lookbook-track:not(.dragging),
+  html body .lookbook-track:not(.dragging) {
     animation: lookbook-scroll 169s linear infinite !important; /* スマホ: 169s（適切な速度） */
     animation-play-state: running !important;
     animation-duration: 169s !important; /* 確実に適用 */
@@ -1540,9 +1541,10 @@
 
 /* Lookbook コンテナのクリッピング解除（どの画面幅でも画像全体を見せる） */
 /* 1500px以下でもPC表示と同じ比率を維持するため、コンテナの高さも調整 */
+/* min-height: auto は削除 - 2689行目の設定で統一管理 */
 #lookbook .lookbook-container {
   overflow: visible !important;
-  min-height: auto !important;
+  /* min-height: auto を削除 - スマホ版の設定（2689行目）で上書き */
 }
 
 /* 1500px以下でもPC表示と同じ比率を維持（コンテナの高さを画像サイズに合わせる） */
@@ -2640,11 +2642,22 @@ div.copyright {
 /* iPhone 15 Pro: 393px, iPhone 12 Pro: 390px - 両方とも42vwで約164pxになる */
 @media (max-width: 480px) {
   #lookbook .lookbook-track img,
+  /* すべてのLookbook画像に適用（HTML属性も上書き） */
   #lookbook .lookbook-item img,
+  #lookbook .lookbook-item img[width],
+  #lookbook .lookbook-item img[height],
   html body #lookbook .lookbook-track img,
+  html body #lookbook .lookbook-track img[width],
+  html body #lookbook .lookbook-track img[height],
   html body #lookbook .lookbook-item img,
+  html body #lookbook .lookbook-item img[width],
+  html body #lookbook .lookbook-item img[height],
   .lookbook-track img,
-  .lookbook-item img {
+  .lookbook-track img[width],
+  .lookbook-track img[height],
+  .lookbook-item img,
+  .lookbook-item img[width],
+  .lookbook-item img[height] {
     width: clamp(164px, 42vw, 200px) !important; /* 画面幅の42%を基準に、最小164px（iPhone 12 Pro/15 Proで統一）、最大200px */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
     max-height: clamp(218px, 56vw, 267px) !important; /* 幅の約1.33倍（4:3比率）を最大高さとして設定 */
@@ -2658,23 +2671,6 @@ div.copyright {
     display: block !important;
   }
   
-  /* HTMLのwidth/height属性を無効化 */
-  #lookbook .lookbook-item img[width],
-  html body #lookbook .lookbook-track img[width],
-  html body #lookbook .lookbook-item img[width],
-  .lookbook-track img[width],
-  .lookbook-item img[width] {
-    width: clamp(164px, 42vw, 200px) !important;
-  }
-  
-  #lookbook .lookbook-item img[height],
-  html body #lookbook .lookbook-track img[height],
-  html body #lookbook .lookbook-item img[height],
-  .lookbook-track img[height],
-  .lookbook-item img[height] {
-    height: auto !important;
-  }
-  
   /* スマホ版: トラックの高さを画像の高さに合わせる */
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
@@ -2685,10 +2681,15 @@ div.copyright {
   
   /* スマホ版: コンテナの高さを画像の高さに合わせる */
   #lookbook .lookbook-container,
-  html body #lookbook .lookbook-container {
+  html body #lookbook .lookbook-container,
+  html #lookbook .lookbook-container {
     min-block-size: calc(clamp(218px, 56vw, 267px) + 2rem) !important; /* 画像の最大高さ + 上下余白 */
+    min-height: calc(clamp(218px, 56vw, 267px) + 2rem) !important; /* min-block-sizeのフォールバック */
     max-block-size: none !important; /* 最大高さの制限を解除 */
+    max-height: none !important; /* max-block-sizeのフォールバック */
     padding-block: 1rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
     overflow: visible !important;
     align-items: center !important;
     display: flex !important;
