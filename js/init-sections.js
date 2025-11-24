@@ -715,12 +715,19 @@ const initSections = () => {
     setTimeout(() => {
       // Lookbook Trackの処理
       document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+        // draggingクラスを確実に削除
+        track.isDragging = false;
+        track.classList.remove('dragging');
         // インラインスタイルを確実に削除（複数回実行）
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
+        track.style.removeProperty('transform');
         requestAnimationFrame(() => {
           track.style.removeProperty('animation');
           track.style.removeProperty('animation-play-state');
+          track.style.removeProperty('transform');
+          // リフローを強制してCSSアニメーションを再適用
+          track.offsetHeight;
         });
         // データ属性も更新
         const speedSec = getLookbookSpeedSec(track);
