@@ -659,6 +659,12 @@ document.head.appendChild(style);
 // 初期化関数をグローバルに公開（重複読み込み防止のため）
 window.initCollectionTracks = initCollectionTracks;
 
+// startAutoScroll関数もグローバルに公開（init-sections.jsから呼び出せるように）
+window.startCollectionAutoScroll = startAutoScroll;
+
+// initTrack関数もグローバルに公開（init-sections.jsから呼び出せるように）
+window.initCollectionTrack = initTrack;
+
 // 初期化（DOMContentLoadedイベントがすでに発火済みの場合は即座に実行）
 console.log('[Collection] スクリプト読み込み完了 - document.readyState:', document.readyState);
 console.log('[Collection] initCollectionTracks関数を実行');
