@@ -326,13 +326,27 @@ function initAutoScroll(track){
     duration = calcSpeedSec(speed);
     track.dataset.baseSpeed = String(speed); // 再計算に使う
     key = dir === 'right' ? 'scroll-right' : 'scroll-left';
+    
+    // draggingクラスを確実に削除してからアニメーションを設定
+    track.isDragging = false;
+    track.classList.remove('dragging');
+    
     track.style.setProperty('animation', `${key} ${duration}s linear infinite`, 'important');
     track.style.setProperty('animation-play-state', 'running', 'important');
   }
   
-  track.classList.remove('dragging');
+  // 再度draggingクラスを確認して削除
   track.isDragging = false;
+  track.classList.remove('dragging');
+  
   requestAnimationFrame(() => {
+    // draggingクラスが残っている場合は削除
+    if (track.classList.contains('dragging')) {
+      track.classList.remove('dragging');
+      track.isDragging = false;
+      console.log('initAutoScroll: draggingクラスを削除');
+    }
+    
     if (!isLookbook) {
       track.style.setProperty('animation-play-state', 'running', 'important');
     }
@@ -496,6 +510,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   tracks.forEach((track, index) => {
+    // 初期化時にdraggingクラスを確実に削除
+    track.isDragging = false;
+    track.classList.remove('dragging');
+    
     // 幅確保
     ensureLoopWidth(track);
     // 中央補正を適用
@@ -506,6 +524,28 @@ document.addEventListener('DOMContentLoaded', () => {
     alignTrackStart(track);
     // 画面外一時停止
     pauseWhenOutOfView(track);
+    
+    // 初期化後に再度draggingクラスを確認して削除
+    setTimeout(() => {
+      if (track.classList.contains('dragging')) {
+        track.classList.remove('dragging');
+        track.isDragging = false;
+        console.log(`[INIT] Track ${index + 1}: draggingクラスを削除`);
+      }
+      
+      // Collection Trackの場合、アニメーションがnoneになっていないか確認
+      if (track.classList.contains('collection-track')) {
+        const computedAnimation = getComputedStyle(track).animation;
+        if (computedAnimation === 'none' || !computedAnimation || computedAnimation.includes('none')) {
+          const speed = parseFloat(track.dataset.speed || 80);
+          const direction = track.dataset.direction || 'left';
+          const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+          track.style.animation = `${key} ${speed}s linear infinite`;
+          track.style.animationPlayState = 'running';
+          console.log(`[INIT] Track ${index + 1}: アニメーションを再設定`);
+        }
+      }
+    }, 100);
     
     // Lookbookトラックの場合、インラインスタイルを確実に削除
     if (track.classList.contains('lookbook-track')) {
