@@ -386,6 +386,23 @@ function startAutoScroll(track) {
     userAgent: navigator.userAgent.substring(0, 50)
   });
   
+  // 初期化時にdraggingクラスを確実に削除
+  track.isDragging = false;
+  track.classList.remove('dragging');
+  
+  // アニメーションがpausedになっている場合は再設定
+  const computedAnimation = getComputedStyle(track).animation;
+  const computedPlayState = getComputedStyle(track).animationPlayState;
+  if (computedPlayState === 'paused' || computedAnimation === 'paused' || track.classList.contains('dragging')) {
+    console.log('Lookbook: アニメーションが停止しているため再設定');
+    track.isDragging = false;
+    track.classList.remove('dragging');
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    track.style.removeProperty('transform');
+    track.offsetHeight;
+  }
+  
   const visibilityObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       console.log('Lookbook IntersectionObserver:', { 
@@ -432,9 +449,10 @@ function startAutoScroll(track) {
   
   // クリーンアップ用の参照を保存
   track._visibilityHandler = visibilityHandler;
+  track._visibilityObserver = visibilityObserver;
   
-  // スマホでのスクロール終了検知（Collectionと同様の処理を追加）
-  if (isMobileDevice) {
+  // スクロール終了検知（スマホ/PC両対応 - 常に設定）
+  {
     let scrollTimer;
     let lastScrollTop = 0;
     const scrollHandler = function() {
