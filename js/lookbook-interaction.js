@@ -4,18 +4,35 @@
 
 // 重複読み込み防止
 if (typeof window.initLookbookTracks === 'function') {
-  // 既に読み込まれている場合は何もしない
+  // 既に読み込まれている場合は再初期化のみ実行
+  console.log('[Lookbook] 既に読み込まれているため、再初期化を実行');
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    window.initLookbookTracks();
+  }
 } else {
 
 // Lookbook トラックでも Collection と同様の無限スクロールとクリック/ドラッグ判定を実装
 function initLookbookTracks() {
   const tracks = document.querySelectorAll('.lookbook-track');
   
+  console.log(`[Lookbook] initLookbookTracks: ${tracks.length} tracks found`);
+  
   tracks.forEach((track, index) => {
+    // 既に初期化されている場合はスキップ
+    if (track._lookbookInitialized) {
+      console.log(`[Lookbook] Track ${index + 1}: 既に初期化済み`);
+      return;
+    }
+    
+    console.log(`[Lookbook] Track ${index + 1}: 初期化開始`);
     // 初期化処理
     initTrack(track);
+    track._lookbookInitialized = true;
   });
 }
+
+// グローバルに公開（init-sections.jsから呼び出せるように）
+window.initLookbookTracks = initLookbookTracks;
 
 function resolveLookbookSpeedSeconds(track) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
@@ -295,13 +312,32 @@ function getCurrentTranslateX(track) {
 function startAutoScroll(track) {
   const speed = resolveLookbookSpeedSeconds(track);
   track.dataset.speed = String(speed);
+  track.dataset.baseSpeed = String(speed);
 
   // 開始位置の調整
   alignTrackStart(track);
   
   // アニメーション開始（CSSで制御するため、インラインスタイルは削除）
+  // 複数回実行して確実に削除
   track.style.removeProperty('animation');
   track.style.removeProperty('animation-play-state');
+  track.style.removeProperty('animation-duration');
+  track.style.removeProperty('animation-name');
+  track.style.removeProperty('animation-timing-function');
+  track.style.removeProperty('animation-iteration-count');
+  
+  // リフローを強制してCSSアニメーションを再適用
+  track.offsetHeight;
+  
+  requestAnimationFrame(() => {
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    track.style.removeProperty('animation-duration');
+    track.style.removeProperty('animation-name');
+    track.style.removeProperty('animation-timing-function');
+    track.style.removeProperty('animation-iteration-count');
+    track.offsetHeight;
+  });
   
   // スクロール後の継続性を確保（CSSで制御）
   track.addEventListener('animationiteration', function() {
