@@ -316,6 +316,11 @@ function startAutoScroll(track) {
     
     console.log('Lookbook: アニメーション強制再開開始');
     
+    // 現在のアニメーション状態を確認
+    const currentAnimation = getComputedStyle(track).animation;
+    const currentPlayState = getComputedStyle(track).animationPlayState;
+    console.log('Lookbook: 現在のアニメーション状態:', { currentAnimation, currentPlayState });
+    
     // CSSアニメーションを強制的に再開するため、クラスを操作
     track.classList.remove('dragging');
     track.style.removeProperty('animation');
@@ -330,7 +335,13 @@ function startAutoScroll(track) {
       if (!track.isDragging && !track.classList.contains('dragging')) {
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
-        console.log('Lookbook: アニメーション再開完了');
+        
+        // 再設定後の状態を確認
+        setTimeout(() => {
+          const newAnimation = getComputedStyle(track).animation;
+          const newPlayState = getComputedStyle(track).animationPlayState;
+          console.log('Lookbook: アニメーション再開完了:', { newAnimation, newPlayState });
+        }, 100);
       }
     });
   };
