@@ -260,9 +260,28 @@ function pauseWhenOutOfView(track) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((ent) => {
       if (track.dataset.userPaused === '1') return; // ← 勝手に再生しない
-      track.style.animationPlayState = ent.isIntersecting ? 'running' : 'paused';
+      
+      if (ent.isIntersecting) {
+        // 画面内に入ったらアニメーションを確実に再開
+        const speed = parseFloat(track.dataset.speed || 80);
+        const direction = track.dataset.direction || 'left';
+        const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+        
+        // アニメーションを完全にリセットして再開
+        track.style.animation = 'none';
+        track.offsetHeight; // リフローを強制
+        track.style.animation = `${key} ${speed}s linear infinite`;
+        track.style.animationPlayState = 'running';
+        
+        if (window.__QA_MEASURE_LOGS__) {
+          console.log('pauseWhenOutOfView: Collectionアニメーション再開', { speed, direction });
+        }
+      } else {
+        // 画面外に出たら一時停止
+        track.style.animationPlayState = 'paused';
+      }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.3 }); // 閾値を0.1から0.3に上げてより確実に検知
   io.observe(track);
 }
 
