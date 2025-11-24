@@ -2630,7 +2630,8 @@ div.copyright {
   .lookbook-track img,
   .lookbook-item img {
     width: 240px !important;
-    height: 320px !important;
+    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
+    max-height: 320px !important; /* 最大高さを設定 */
     object-fit: contain !important;
     flex-shrink: 0 !important;
   }
@@ -2638,7 +2639,7 @@ div.copyright {
   /* PC版: トラックの高さを画像の高さに合わせる */
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
-    height: 320px !important;
+    height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
     min-height: 320px !important;
   }
   
@@ -2659,7 +2660,8 @@ div.copyright {
   .lookbook-track img,
   .lookbook-item img {
     width: 240px !important;
-    height: 320px !important;
+    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
+    max-height: 320px !important; /* 最大高さを設定 */
   }
 }
 
@@ -2672,7 +2674,8 @@ div.copyright {
   .lookbook-track img,
   .lookbook-item img {
     width: 200px !important;
-    height: 280px !important;
+    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
+    max-height: 280px !important; /* 最大高さを設定 */
     object-fit: contain !important;
     flex-shrink: 0 !important;
   }
@@ -2680,7 +2683,7 @@ div.copyright {
   /* タブレット版: トラックの高さを画像の高さに合わせる */
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
-    height: 280px !important;
+    height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
     min-height: 280px !important;
   }
 }
@@ -2694,7 +2697,8 @@ div.copyright {
   .lookbook-track img,
   .lookbook-item img {
     width: 180px !important;
-    height: 240px !important;
+    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
+    max-height: 240px !important; /* 最大高さを設定 */
     object-fit: contain !important;
     flex-shrink: 0 !important;
   }
@@ -2702,7 +2706,7 @@ div.copyright {
   /* スマホ版: トラックの高さを画像の高さに合わせる */
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
-    height: 240px !important;
+    height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
     min-height: 240px !important;
   }
 }
