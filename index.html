@@ -1343,6 +1343,16 @@
       
       console.log('スプラッシュ動画を外部流入時に表示');
       
+      // スプラッシュ動画の背景を確実に白に設定
+      if (splash) {
+        splash.style.backgroundColor = '#ffffff';
+        splash.style.background = '#ffffff';
+      }
+      if (video) {
+        video.style.backgroundColor = '#ffffff';
+        video.style.background = '#ffffff';
+      }
+      
       // 初期状態でメインコンテンツを非表示に
       const mainContent = document.querySelector('main, .navbar, #collection, #brands, #lookbook');
       if (mainContent) {
