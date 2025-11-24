@@ -307,24 +307,53 @@ function startAutoScroll(track) {
   });
   
   // Lookbookの可視性チェックとアニメーション復帰（強化版）
-  const visibilityObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
-        // 画面内に入ったらアニメーションを強制的に再開（CSSで制御）
+  // CSSアニメーションを強制的に再開するヘルパー関数
+  const forceResumeLookbookAnimation = () => {
+    if (track.isDragging || track.classList.contains('dragging')) return;
+    
+    // CSSアニメーションを強制的に再開するため、クラスを操作
+    track.classList.remove('dragging');
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    track.style.removeProperty('transform');
+    
+    // リフローを強制してCSSアニメーションを再適用
+    track.offsetHeight;
+    
+    // 少し遅延してから再度確認（CSSアニメーションの適用を待つ）
+    requestAnimationFrame(() => {
+      if (!track.isDragging && !track.classList.contains('dragging')) {
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
       }
     });
-  }, { threshold: 0.05 }); // 閾値を下げてより敏感に反応
+    
+    if (window.__QA_MEASURE_LOGS__) {
+      console.log('Lookbookアニメーション強制再開');
+    }
+  };
+  
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
+        // 画面内に入ったらアニメーションを強制的に再開（CSSで制御）
+        forceResumeLookbookAnimation();
+      }
+    });
+  }, { threshold: 0.3 }); // 閾値を0.05から0.3に上げてより確実に検知
   
   visibilityObserver.observe(track);
   
   // ページ可視性変更時の処理（CSSで制御）
-  document.addEventListener('visibilitychange', function() {
+  const visibilityHandler = function() {
     if (!document.hidden && !track.isDragging && !track.classList.contains('dragging')) {
-      track.style.removeProperty('animation-play-state');
+      forceResumeLookbookAnimation();
     }
-  });
+  };
+  document.addEventListener('visibilitychange', visibilityHandler);
+  
+  // クリーンアップ用の参照を保存
+  track._visibilityHandler = visibilityHandler;
   
   // スマホでのスクロール終了検知（Collectionと同様の処理を追加）
   const isMobileDevice = window.innerWidth <= 900;
@@ -344,19 +373,21 @@ function startAutoScroll(track) {
           const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
           
           if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
-            // CSSで制御するため、インラインスタイルを削除
-            track.style.removeProperty('animation');
-            track.style.removeProperty('animation-play-state');
+            // CSSで制御するため、インラインスタイルを削除してCSSアニメーションを再開
+            forceResumeLookbookAnimation();
+            if (window.__QA_MEASURE_LOGS__) {
+              console.log('スクロール終了後、Lookbookアニメーション再開', { scrollDirection });
+            }
           }
         }
         
         lastScrollTop = currentScrollTop;
-      }, 150);
+      }, 300); // タイマーを150msから300msに延長
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
     
-    // クリーンアップ用の参照を保存（必要に応じて）
+    // クリーンアップ用の参照を保存
     track._scrollHandler = scrollHandler;
   }
 }
