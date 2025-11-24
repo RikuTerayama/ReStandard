@@ -37,9 +37,14 @@ window.initLookbookTracks = initLookbookTracks;
 function resolveLookbookSpeedSeconds(track) {
   // 画面幅に応じた直接値を返す（CSS変数に依存しない）
   // スマホは30%遅く（169s）、タブレット/PCも30%遅く（130s）
+  // Instagram WebViewでも同じ速度を適用
   const width = window.innerWidth;
+  const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
+                             /FBAN|FBAV/i.test(navigator.userAgent);
+  
   if (width <= 480) {
-    return 169; // スマホ: 30%遅く（169s = 130s × 1.3）
+    // スマホ: 常に169s（Instagram WebViewでも同じ）
+    return 169;
   } else if (width <= 1024) {
     return 130; // タブレット: 30%遅く（130s = 100s × 1.3）
   } else {
@@ -652,6 +657,10 @@ if (isInstagramWebView) {
           document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
             track.style.removeProperty('animation');
             track.style.removeProperty('animation-play-state');
+            // 速度を正しく設定（Instagram WebViewでも169s）
+            const speed = resolveLookbookSpeedSeconds(track);
+            track.dataset.speed = String(speed);
+            track.dataset.baseSpeed = String(speed);
           });
         } catch (error) {
           console.error('[Lookbook] Instagram WebView: visibilitychange再初期化エラー:', error);
@@ -687,6 +696,10 @@ if (isInstagramWebView) {
               track.style.removeProperty('animation');
               track.style.removeProperty('animation-play-state');
               track.style.removeProperty('transform');
+              // 速度を正しく設定（Instagram WebViewでも169s）
+              const speed = resolveLookbookSpeedSeconds(track);
+              track.dataset.speed = String(speed);
+              track.dataset.baseSpeed = String(speed);
               // リフローを強制してCSSアニメーションを再適用
               track.offsetHeight;
             });
