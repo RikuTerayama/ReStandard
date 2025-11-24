@@ -2,13 +2,24 @@
    Collection Interaction Handler 2025-01-18
    ========================================================= */
 
+// スクリプト読み込み確認（最上部に配置）
+console.log('[Collection] ===== スクリプト読み込み開始 =====');
+console.log('[Collection] document.readyState:', document.readyState);
+console.log('[Collection] window.initCollectionTracks:', typeof window.initCollectionTracks);
+
 // 重複読み込み防止
-console.log('[Collection] スクリプト開始 - window.initCollectionTracks:', typeof window.initCollectionTracks);
 if (typeof window.initCollectionTracks === 'function') {
   // 既に読み込まれている場合は何もしない
-  console.log('[Collection] window.initCollectionTracksが既に定義されているため、スキップ');
+  console.log('[Collection] ⚠️ window.initCollectionTracksが既に定義されているため、スキップ');
+  // 早期リターンではなく、既存の関数を実行
+  try {
+    console.log('[Collection] 既存のinitCollectionTracks関数を実行');
+    window.initCollectionTracks();
+  } catch (error) {
+    console.error('[Collection] 既存のinitCollectionTracks関数実行エラー:', error);
+  }
 } else {
-  console.log('[Collection] window.initCollectionTracksが未定義のため、初期化を実行');
+  console.log('[Collection] ✅ window.initCollectionTracksが未定義のため、初期化を実行');
 
 // デバッグ用のヘルパー関数
 window.__DEBUG_COLLECTION__ = true; // デバッグモードを有効化
