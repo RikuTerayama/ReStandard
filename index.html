@@ -1334,6 +1334,7 @@
       if (isInternalNavigation || hasInternalSession) {
         console.log('内部リンクからの遷移のため、スプラッシュ動画を無効化');
         document.body.classList.remove('splash-active');
+        document.body.style.removeProperty('background-color');
         splash.style.display = 'none';
         return;
       }
