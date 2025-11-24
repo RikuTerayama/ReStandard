@@ -494,7 +494,10 @@ function initLazyLoadFadeIn() {
 }
 
 /* ===================== init ===================== */
-document.addEventListener('DOMContentLoaded', () => {
+// DOMContentLoadedイベントがすでに発火済みの場合は即座に実行、そうでない場合はイベントリスナーを追加
+const initSections = () => {
+  console.log('[INIT] initSections関数実行開始');
+  
   // DOM存在確認・querySelector修正
   if (window.__QA_MEASURE_LOGS__) {
     console.log('[INIT] Collection/Lookbook 初期化開始');
@@ -505,6 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Collection 上段・下段（新構造対応）
   const tracks = document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track');
+  console.log(`[INIT] Total tracks found: ${tracks.length}`);
   if (window.__QA_MEASURE_LOGS__) {
     console.log(`[INIT] Total tracks found: ${tracks.length}`);
   }
@@ -830,7 +834,18 @@ document.addEventListener('DOMContentLoaded', () => {
       reinitializeLookbook();
     }
   });
-});
+};
+
+// DOMContentLoadedイベントがすでに発火済みの場合は即座に実行、そうでない場合はイベントリスナーを追加
+if (document.readyState === 'loading') {
+  // DOMContentLoadedイベントがまだ発火していない場合
+  document.addEventListener('DOMContentLoaded', initSections);
+  console.log('[INIT] DOMContentLoadedイベントリスナーを追加');
+} else {
+  // DOMContentLoadedイベントがすでに発火済みの場合（defer属性により発生する可能性がある）
+  console.log('[INIT] DOMContentLoadedイベントはすでに発火済み - 即座に実行');
+  initSections();
+}
 
 // 見出しJSリセット削除 - CSS制御のみに統一
 if (window.__QA_MEASURE_LOGS__) {
