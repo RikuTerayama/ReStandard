@@ -372,33 +372,52 @@ function startAutoScroll(track) {
   // スマホでの可視性チェックとアニメーション復帰（強化版）
   const isMobileDevice = window.innerWidth <= 900;
   if (isMobileDevice) {
+    // アニメーション再開のヘルパー関数
+    const forceResumeAnimation = () => {
+      if (track.isDragging || track.classList.contains('dragging')) return;
+      
+      // アニメーションを完全にリセットして再開
+      const currentAnimation = track.style.animation;
+      const speed = parseFloat(track.dataset.speed || 80);
+      const direction = track.dataset.direction || 'left';
+      const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+      
+      track.style.animation = 'none';
+      track.offsetHeight; // リフローを強制
+      track.style.animation = `${key} ${speed}s linear infinite`;
+      track.style.animationPlayState = 'running';
+      
+      if (window.__QA_MEASURE_LOGS__) {
+        console.log('Collectionアニメーション強制再開:', { speed, direction });
+      }
+    };
+    
     const visibilityObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
           // 画面内に入ったらアニメーションを強制的に再開
-          track.style.animationPlayState = 'running';
-          // アニメーションを完全にリセット
-          const currentAnimation = track.style.animation;
-          track.style.animation = 'none';
-          track.offsetHeight; // リフローを強制
-          track.style.animation = currentAnimation;
+          forceResumeAnimation();
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.3 }); // 閾値を0.1から0.3に上げてより確実に検知
     
     visibilityObserver.observe(track);
     
     // スマホでのページ可視性変更時の処理
-    document.addEventListener('visibilitychange', function() {
+    const visibilityHandler = function() {
       if (!document.hidden && !track.isDragging && !track.classList.contains('dragging')) {
-        track.style.animationPlayState = 'running';
+        forceResumeAnimation();
       }
-    });
+    };
+    document.addEventListener('visibilitychange', visibilityHandler);
+    
+    // クリーンアップ用の参照を保存
+    track._visibilityHandler = visibilityHandler;
     
     // スマホでのスクロール終了検知（強化版）
     let scrollTimer;
     let lastScrollTop = 0;
-    window.addEventListener('scroll', function() {
+    const scrollHandler = function() {
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(function() {
         const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -411,14 +430,21 @@ function startAutoScroll(track) {
           const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
           
           if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
-            track.style.animationPlayState = 'running';
-            console.log('スクロール終了後、Collectionアニメーション再開');
+            forceResumeAnimation();
+            if (window.__QA_MEASURE_LOGS__) {
+              console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
+            }
           }
         }
         
         lastScrollTop = currentScrollTop;
-      }, 150);
-    }, { passive: true });
+      }, 300); // タイマーを150msから300msに延長
+    };
+    
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    
+    // クリーンアップ用の参照を保存
+    track._scrollHandler = scrollHandler;
   }
 }
 
