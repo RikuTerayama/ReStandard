@@ -722,6 +722,20 @@ if (isInstagramWebView) {
       }, 500);
     }
   });
+  
+  // Instagram WebViewでは、スクロールイベントをより頻繁に監視
+  let instagramScrollTimer;
+  window.addEventListener('scroll', () => {
+    clearTimeout(instagramScrollTimer);
+    instagramScrollTimer = setTimeout(() => {
+      console.log('[Collection] Instagram WebView: スクロール終了検知 - 再初期化');
+      try {
+        initCollectionTracks();
+      } catch (error) {
+        console.error('[Collection] Instagram WebView: スクロール再初期化エラー:', error);
+      }
+    }, 300);
+  }, { passive: true });
 }
 
 } // 重複読み込み防止の閉じ括弧
