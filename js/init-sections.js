@@ -525,19 +525,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 画面外一時停止
     pauseWhenOutOfView(track);
     
-    // Collection Trackの場合、イベントハンドラを設定
+    // Collection Trackの場合、イベントハンドラを設定（即座に実行）
     if (track.classList.contains('collection-track')) {
-      setTimeout(() => {
-        // 既に設定されている場合はスキップ
-        if (track._visibilityObserver || track._scrollHandler) {
-          return;
-        }
+      // 既に設定されている場合はスキップ
+      if (track._visibilityObserver || track._scrollHandler) {
+        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラは既に設定済み`);
+      } else {
+        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラを設定開始`);
         
-        const isMobileDevice = window.innerWidth <= 900 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラを設定`, { isMobileDevice });
-        
-        // IntersectionObserverを設定
+        // 即座に実行（setTimeoutを削除）
+        // IntersectionObserverを設定（スマホ/PC両対応）
         const visibilityObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -564,8 +561,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         visibilityObserver.observe(track);
         track._visibilityObserver = visibilityObserver;
+        console.log(`[INIT] Collection Track ${index + 1}: IntersectionObserver設定完了`);
         
-        // スクロールハンドラを設定
+        // スクロールハンドラを設定（スマホ/PC両対応）
         let scrollTimer;
         let lastScrollTop = 0;
         const scrollHandler = function() {
@@ -602,7 +600,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         window.addEventListener('scroll', scrollHandler, { passive: true });
         track._scrollHandler = scrollHandler;
-      }, 200);
+        console.log(`[INIT] Collection Track ${index + 1}: スクロールハンドラ設定完了`);
+        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラ設定完了`);
+      }
     }
     
     // 初期化後に再度draggingクラスを確認して削除
