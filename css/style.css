@@ -440,6 +440,8 @@
     }
   }
   
+  /* Lookbook画像には影響しないように削除 - 2633行目の設定で統一管理 */
+  
   /* 画像サイズは2469行目の設定を採用（競合削除） */
   
   /* 画像番号非表示 */
@@ -1483,17 +1485,28 @@
 /* スマホ版（〜480px）：適切な速度（169s） */
 /* より具体的なセレクタで確実に適用（インラインスタイルも上書き） */
 @media (max-width: 480px) {
+  /* すべてのLookbook Trackに適用（インラインスタイルも上書き） */
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
   html body #lookbook .lookbook-track[data-speed]:not(.dragging),
+  html body #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
+  html body #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
+  html body #lookbook .lookbook-track[data-speed="169"]:not(.dragging),
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-  #lookbook .lookbook-track[data-speed]:not(.dragging) {
+  #lookbook .lookbook-track[data-speed]:not(.dragging),
+  #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
+  #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
+  #lookbook .lookbook-track[data-speed="169"]:not(.dragging),
+  .lookbook-track:not(.dragging) {
     animation: lookbook-scroll 169s linear infinite !important; /* スマホ: 169s（適切な速度） */
     animation-play-state: running !important;
     animation-duration: 169s !important; /* 確実に適用 */
+    animation-name: lookbook-scroll !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
   }
 }
 
@@ -2502,18 +2515,14 @@ div.copyright {
   background: transparent !important;
 }
 
-/* スマホ表示におけるLookbook背景の縦の長さを短縮 */
+/* スマホ表示におけるLookbook背景の縦の長さを短縮 - 2691行目の設定で統一管理（重複削除） */
 @media (max-width: 900px) {
   #lookbook .band {
     padding-top: 12px !important; /* 上側の余白を削減 */
     padding-bottom: 12px !important; /* 下側の余白を削減 */
   }
   
-  .lookbook-container {
-    min-height: 280px !important; /* 高さを削減 */
-    padding: 8px 0 !important; /* 上下のパディングを削減 */
-    overflow: visible !important; /* 画像が端から端まで表示されるように */
-  }
+  /* .lookbook-container の設定は2691行目で統一管理（重複削除） */
 }
 
 /* モザイク背景の削除 */
@@ -2522,7 +2531,8 @@ div.copyright {
   display: none !important;
 }
 
-.collection-track img {
+/* Collection Track画像の設定 - Lookbookには影響しないようにセレクタを限定 */
+#collection .collection-track img {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -2641,9 +2651,28 @@ div.copyright {
     min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
     min-width: clamp(164px, 42vw, 200px) !important; /* 最小幅を設定して画像が縮小されないように */
     max-width: clamp(164px, 42vw, 200px) !important; /* 最大幅を設定して画像が拡大されないように */
+    /* HTMLのwidth/height属性を上書き */
+    aspect-ratio: auto !important;
     object-fit: contain !important;
     flex-shrink: 0 !important;
     display: block !important;
+  }
+  
+  /* HTMLのwidth/height属性を無効化 */
+  #lookbook .lookbook-item img[width],
+  html body #lookbook .lookbook-track img[width],
+  html body #lookbook .lookbook-item img[width],
+  .lookbook-track img[width],
+  .lookbook-item img[width] {
+    width: clamp(164px, 42vw, 200px) !important;
+  }
+  
+  #lookbook .lookbook-item img[height],
+  html body #lookbook .lookbook-track img[height],
+  html body #lookbook .lookbook-item img[height],
+  .lookbook-track img[height],
+  .lookbook-item img[height] {
+    height: auto !important;
   }
   
   /* スマホ版: トラックの高さを画像の高さに合わせる */
