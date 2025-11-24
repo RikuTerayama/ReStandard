@@ -836,16 +836,36 @@ const initSections = () => {
   });
 };
 
-// DOMContentLoadedイベントがすでに発火済みの場合は即座に実行、そうでない場合はイベントリスナーを追加
+// 即座に実行を試みる（DOMContentLoadedイベントがすでに発火済みの場合）
+console.log('[INIT] スクリプト読み込み完了 - document.readyState:', document.readyState);
+console.log('[INIT] initSections関数を即座に実行');
+initSections();
+
+// DOMContentLoadedイベントでも実行（二重実行を防ぐため、フラグで制御）
+let initSectionsExecuted = false;
+const initSectionsOnce = () => {
+  if (!initSectionsExecuted) {
+    initSectionsExecuted = true;
+    console.log('[INIT] DOMContentLoadedイベントでinitSections関数を実行');
+    initSections();
+  }
+};
+
 if (document.readyState === 'loading') {
   // DOMContentLoadedイベントがまだ発火していない場合
-  document.addEventListener('DOMContentLoaded', initSections);
+  document.addEventListener('DOMContentLoaded', initSectionsOnce);
   console.log('[INIT] DOMContentLoadedイベントリスナーを追加');
 } else {
-  // DOMContentLoadedイベントがすでに発火済みの場合（defer属性により発生する可能性がある）
-  console.log('[INIT] DOMContentLoadedイベントはすでに発火済み - 即座に実行');
-  initSections();
+  // DOMContentLoadedイベントがすでに発火済みの場合
+  console.log('[INIT] DOMContentLoadedイベントはすでに発火済み');
+  initSectionsOnce();
 }
+
+// loadイベントでも実行（フォールバック）
+window.addEventListener('load', () => {
+  console.log('[INIT] loadイベントでinitSections関数を実行（フォールバック）');
+  initSections();
+}, { once: true });
 
 // 見出しJSリセット削除 - CSS制御のみに統一
 if (window.__QA_MEASURE_LOGS__) {
