@@ -254,6 +254,12 @@ function attachManualControls(track){
 function pauseWhenOutOfView(track) {
   if (track.classList.contains('lookbook-track')) {
     // Lookbookは常時アニメーションさせる（CSSで制御するため、インラインスタイルは削除）
+    // draggingクラスが残っている場合は削除
+    if (track.classList.contains('dragging') && !track.isDragging) {
+      track.classList.remove('dragging');
+      track.isDragging = false;
+      console.log('pauseWhenOutOfView: Lookbookのdraggingクラスを削除');
+    }
     track.style.removeProperty('animation-play-state');
     return;
   }
@@ -293,6 +299,10 @@ function pauseWhenOutOfView(track) {
 
 /* 初期化時：速度を画面幅で上書き、方向は data-dir */
 function initAutoScroll(track){
+  // 初期化時にdraggingクラスを確実に削除
+  track.isDragging = false;
+  track.classList.remove('dragging');
+  
   const dir = (track.dataset.direction || 'left').toLowerCase(); // left=左へ / right=右へ
   const isLookbook = track.classList.contains('lookbook-track');
 
