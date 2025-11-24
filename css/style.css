@@ -1121,17 +1121,7 @@
     }
   }
   
-  /* スマホ表示（〜480px）でLookbook背景の縦長さを画像サイズに合わせる */
-  @media (max-width: 480px) {
-    .lookbook-container {
-      /* 画像の高さを画面幅に応じて動的に設定（iPhone 12 ProとiPhone 15 Proで統一） */
-      min-block-size: calc(clamp(213px, 56vw, 267px) + 2rem) !important; /* 画像の最大高さ + 上下余白2rem */
-      padding-block: 1rem !important; /* 上下余白を1remに統一 */
-      overflow: visible !important; /* 画像が端から端まで表示されるように */
-      align-items: center !important; /* 上下中央揃え */
-    }
-    /* アニメーション速度は1504行目のルールで統一管理（重複削除） */
-  }
+  /* スマホ表示（〜480px）でLookbook背景の縦長さを画像サイズに合わせる - 2704行目の設定で統一管理（重複削除） */
   
   /* PC表示でLookbookの縦長さを調整、画像全体を表示 */
   @media (min-width: 1025px) {
@@ -1283,9 +1273,7 @@
   }
   
 /* --- Lookbook の行高 --- */
-#lookbook .lookbook-track{
-  block-size: clamp(200px, 25vw, 400px) !important;
-}
+/* #lookbook .lookbook-track の block-size 設定を削除 - 画像サイズが正しく適用されるように */
 
   /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
 #lookbook .lookbook-track img{
@@ -1556,28 +1544,7 @@
 /* 外部サイトからの遷移時も確実に適用されるように、最高優先度で設定 */
 /* スマホ版（〜480px、1500px以下） - 2695行目の設定で統一管理（重複削除） */
 
-/* タブレット版（481px〜1024px、1500px以下） */
-@media (min-width: 481px) and (max-width: 1024px) {
-  #lookbook .lookbook-container,
-  html body #lookbook .lookbook-container {
-    min-block-size: calc(280px + 2rem) !important; /* 画像高さ280px + 上下余白2rem */
-    padding-block: 1rem !important;
-    overflow: visible !important;
-    align-items: center !important;
-  }
-  
-  #lookbook .lookbook-track img,
-  #lookbook .lookbook-item img,
-  html body #lookbook .lookbook-track img,
-  html body #lookbook .lookbook-item img,
-  .lookbook-track img,
-  .lookbook-item img {
-    width: 200px !important;
-    height: 280px !important;
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-  }
-}
+/* タブレット版（481px〜1024px、1500px以下） - 2653行目の設定で統一管理（重複削除） */
   
   /* === center full-bleed band === */
   .band {
@@ -2574,21 +2541,8 @@ div.copyright {
 
 /* Lookbook画像の表示を強制 */
 /* 注意: 画像サイズはメディアクエリで固定値に設定されるため、ここでは最小幅のみ設定 */
-.lookbook-track {
-  min-width: calc(8 * 240px) !important; /* PC版の画像サイズ（240px）を基準 */
-}
-
-@media (max-width: 480px) {
-  .lookbook-track {
-    min-width: calc(8 * 180px) !important; /* スマホ版の画像サイズ（180px）を基準 */
-  }
-}
-
-@media (min-width: 481px) and (max-width: 1024px) {
-  .lookbook-track {
-    min-width: calc(8 * 200px) !important; /* タブレット版の画像サイズ（200px）を基準 */
-  }
-}
+/* .lookbook-track の min-width 設定を削除 - 画像サイズが動的に変更されるため、固定値は使用しない */
+/* トラックの幅は画像の実際のサイズに基づいて自動的に計算される */
 
 /* Lookbook画像の表示を強制（Collectionと同様） */
 /* 画像サイズを固定して、画面幅による変更を防ぐ */
