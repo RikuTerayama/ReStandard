@@ -47,16 +47,28 @@ function debugCollectionTap(e) {
 
 // 各 collection-track で無限スクロールのロジックを実装
 function initCollectionTracks() {
+  console.log('[Collection] initCollectionTracks関数実行開始');
   const tracks = document.querySelectorAll('.collection-track');
+  console.log('[Collection] Collection tracks found:', tracks.length);
   
   tracks.forEach((track, index) => {
+    console.log(`[Collection] Track ${index + 1} 初期化開始`);
     // 初期化処理
     initTrack(track);
+    console.log(`[Collection] Track ${index + 1} 初期化完了`);
   });
+  
+  console.log('[Collection] initCollectionTracks関数実行完了');
 }
 
 // .collection-track ごとに初期化処理
 function initTrack(track) {
+  console.log('[Collection] initTrack関数実行開始:', {
+    hasCollectionClass: track.classList.contains('collection-track'),
+    datasetSpeed: track.dataset.speed,
+    datasetDirection: track.dataset.direction
+  });
+  
   // 初期化時にdraggingクラスを確実に削除
   track.isDragging = false;
   track.classList.remove('dragging');
@@ -71,7 +83,9 @@ function initTrack(track) {
   attachTrackControls(track); // タッチ操作後の継続アニメーション機能を有効化
   
   // オートスクロール開始
+  console.log('[Collection] startAutoScroll関数を呼び出し');
   startAutoScroll(track);
+  console.log('[Collection] startAutoScroll関数呼び出し完了');
 }
 
 // 無限ループのための要素複製（安全な実装）
@@ -385,6 +399,7 @@ function startAutoScroll(track) {
   });
   
   // スマホ/PC両方でイベントハンドラを設定（常に設定）
+  console.log('[Collection] startAutoScroll: イベントハンドラ設定開始');
   {
     // アニメーション再開のヘルパー関数
     const forceResumeAnimation = () => {
@@ -540,6 +555,11 @@ function startAutoScroll(track) {
     // クリーンアップ用の参照を保存
     track._scrollHandler = scrollHandler;
     track._visibilityObserver = visibilityObserver;
+    
+    console.log('[Collection] startAutoScroll: イベントハンドラ設定完了', {
+      hasVisibilityObserver: !!track._visibilityObserver,
+      hasScrollHandler: !!track._scrollHandler
+    });
   }
   
   // 初期化時にdraggingクラスを確実に削除
@@ -608,7 +628,24 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// 初期化
-document.addEventListener('DOMContentLoaded', initCollectionTracks);
+// 初期化（DOMContentLoadedイベントがすでに発火済みの場合は即座に実行）
+console.log('[Collection] スクリプト読み込み完了 - document.readyState:', document.readyState);
+console.log('[Collection] initCollectionTracks関数を実行');
+
+if (document.readyState === 'loading') {
+  // DOMContentLoadedイベントがまだ発火していない場合
+  document.addEventListener('DOMContentLoaded', initCollectionTracks);
+  console.log('[Collection] DOMContentLoadedイベントリスナーを追加');
+} else {
+  // DOMContentLoadedイベントがすでに発火済みの場合（defer属性により発生する可能性がある）
+  console.log('[Collection] DOMContentLoadedイベントはすでに発火済み - 即座に実行');
+  initCollectionTracks();
+}
+
+// loadイベントでも実行（フォールバック）
+window.addEventListener('load', () => {
+  console.log('[Collection] loadイベントでinitCollectionTracks関数を実行（フォールバック）');
+  initCollectionTracks();
+}, { once: true });
 
 } // 重複読み込み防止の閉じ括弧
