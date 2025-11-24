@@ -1498,9 +1498,11 @@
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+  html body #lookbook .lookbook-track[data-speed]:not(.dragging),
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
+  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+  #lookbook .lookbook-track[data-speed]:not(.dragging) {
     animation: lookbook-scroll 169s linear infinite !important; /* スマホ: 169s（適切な速度） */
     animation-play-state: running !important;
     animation-duration: 169s !important; /* 確実に適用 */
@@ -2599,7 +2601,7 @@ div.copyright {
   visibility: visible !important;
   opacity: 1 !important;
   object-fit: contain !important;
-  max-width: 100% !important;
+  /* max-width: 100% !important; を削除 - 画像サイズが正しく適用されるように */
   flex-shrink: 0 !important; /* 画像が縮小されないように */
 }
 
@@ -2683,6 +2685,8 @@ div.copyright {
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
     max-height: clamp(218px, 56vw, 267px) !important; /* 幅の約1.33倍（4:3比率）を最大高さとして設定 */
     min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
+    min-width: clamp(164px, 42vw, 200px) !important; /* 最小幅を設定して画像が縮小されないように */
+    max-width: clamp(164px, 42vw, 200px) !important; /* 最大幅を設定して画像が拡大されないように */
     object-fit: contain !important;
     flex-shrink: 0 !important;
     display: block !important;
