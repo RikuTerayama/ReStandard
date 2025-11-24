@@ -1498,6 +1498,7 @@
   #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
   #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
   #lookbook .lookbook-track[data-speed="169"]:not(.dragging),
+  #lookbook .lookbook-track[data-speed="50"]:not(.dragging), /* Instagram WebView用 */
   #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
   #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
   .lookbook-track:not(.dragging),
@@ -1508,6 +1509,20 @@
     animation-name: lookbook-scroll !important;
     animation-timing-function: linear !important;
     animation-iteration-count: infinite !important;
+  }
+  
+  /* Instagram WebViewでも同じ速度を適用 */
+  @supports (-webkit-touch-callout: none) {
+    html body #lookbook .lookbook-track:not(.dragging),
+    #lookbook .lookbook-track:not(.dragging),
+    .lookbook-track:not(.dragging) {
+      animation: lookbook-scroll 169s linear infinite !important;
+      animation-play-state: running !important;
+      animation-duration: 169s !important;
+      animation-name: lookbook-scroll !important;
+      animation-timing-function: linear !important;
+      animation-iteration-count: infinite !important;
+    }
   }
 }
 
@@ -2547,6 +2562,19 @@ div.copyright {
   transition: transform 0.3s ease !important;
 }
 
+/* Instagram WebViewでCollection画像サイズを統一 */
+@media (max-width: 480px) {
+  @supports (-webkit-touch-callout: none) {
+    #collection .collection-track img {
+      width: auto !important;
+      max-width: clamp(93px, 25vw, 200px) !important;
+      height: auto !important;
+      max-height: 140px !important;
+      object-fit: contain !important;
+    }
+  }
+}
+
 .collection-track img:hover {
   transform: scale(1.05) !important;
 }
@@ -2671,6 +2699,27 @@ div.copyright {
     display: block !important;
   }
   
+  /* Instagram WebViewでも同じサイズを適用 */
+  @supports (-webkit-touch-callout: none) {
+    #lookbook .lookbook-track img,
+    #lookbook .lookbook-item img,
+    html body #lookbook .lookbook-track img,
+    html body #lookbook .lookbook-item img,
+    .lookbook-track img,
+    .lookbook-item img {
+      width: clamp(164px, 42vw, 200px) !important;
+      height: auto !important;
+      max-height: clamp(218px, 56vw, 267px) !important;
+      min-height: 0 !important;
+      min-width: clamp(164px, 42vw, 200px) !important;
+      max-width: clamp(164px, 42vw, 200px) !important;
+      aspect-ratio: auto !important;
+      object-fit: contain !important;
+      flex-shrink: 0 !important;
+      display: block !important;
+    }
+  }
+  
   /* スマホ版: トラックの高さを画像の高さに合わせる */
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
@@ -2693,6 +2742,24 @@ div.copyright {
     overflow: visible !important;
     align-items: center !important;
     display: flex !important;
+  }
+  
+  /* Instagram WebViewでも同じコンテナ高さを適用 */
+  @supports (-webkit-touch-callout: none) {
+    #lookbook .lookbook-container,
+    html body #lookbook .lookbook-container,
+    html #lookbook .lookbook-container {
+      min-block-size: calc(clamp(218px, 56vw, 267px) + 2rem) !important;
+      min-height: calc(clamp(218px, 56vw, 267px) + 2rem) !important;
+      max-block-size: none !important;
+      max-height: none !important;
+      padding-block: 1rem !important;
+      padding-top: 1rem !important;
+      padding-bottom: 1rem !important;
+      overflow: visible !important;
+      align-items: center !important;
+      display: flex !important;
+    }
   }
 }
 
