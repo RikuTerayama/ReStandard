@@ -1343,15 +1343,24 @@
       
       console.log('スプラッシュ動画を外部流入時に表示');
       
-      // スプラッシュ動画の背景を確実に白に設定
+      // スプラッシュ動画の背景を確実に白に設定（PC/スマホ両対応）
       if (splash) {
         splash.style.backgroundColor = '#ffffff';
         splash.style.background = '#ffffff';
+        splash.style.setProperty('background', '#ffffff', 'important');
+        splash.style.setProperty('background-color', '#ffffff', 'important');
+        // body要素の背景の影響を受けないようにする
+        document.body.style.backgroundColor = '#ffffff';
       }
       if (video) {
         video.style.backgroundColor = '#ffffff';
         video.style.background = '#ffffff';
+        video.style.setProperty('background', '#ffffff', 'important');
+        video.style.setProperty('background-color', '#ffffff', 'important');
       }
+      
+      // body要素にクラスを追加してスプラッシュ表示中であることを示す
+      document.body.classList.add('splash-active');
       
       // 初期状態でメインコンテンツを非表示に
       const mainContent = document.querySelector('main, .navbar, #collection, #brands, #lookbook');
@@ -1457,6 +1466,8 @@
         setTimeout(() => {
           splash.style.display = 'none';
           document.body.classList.remove('splash-active');
+          // body要素の背景色を元に戻す
+          document.body.style.removeProperty('background-color');
           console.log('スプラッシュ動画スムーズな遷移完了');
         }, 2800);
       }
