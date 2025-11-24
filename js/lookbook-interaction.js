@@ -32,6 +32,10 @@ function resolveLookbookSpeedSeconds(track) {
 
 // .lookbook-track ごとに初期化処理
 function initTrack(track) {
+  // 初期化時にdraggingクラスを確実に削除
+  track.isDragging = false;
+  track.classList.remove('dragging');
+  
   // data-seg で画像枚数を取得
   const segmentCount = parseInt(track.dataset.seg) || 8;
   
@@ -309,8 +313,16 @@ function startAutoScroll(track) {
   // Lookbookの可視性チェックとアニメーション復帰（強化版）
   // CSSアニメーションを強制的に再開するヘルパー関数
   const forceResumeLookbookAnimation = () => {
-    if (track.isDragging || track.classList.contains('dragging')) {
-      console.log('Lookbook: ドラッグ中なので再開をスキップ');
+    // 実際にドラッグ中でない場合は、draggingクラスを強制的に削除
+    if (!track.isDragging) {
+      track.isDragging = false;
+      track.classList.remove('dragging');
+      console.log('Lookbook: draggingクラスを強制削除');
+    }
+    
+    // 実際にドラッグ中の場合は再開をスキップ
+    if (track.isDragging) {
+      console.log('Lookbook: 実際にドラッグ中なので再開をスキップ');
       return;
     }
     
@@ -319,9 +331,16 @@ function startAutoScroll(track) {
     // 現在のアニメーション状態を確認
     const currentAnimation = getComputedStyle(track).animation;
     const currentPlayState = getComputedStyle(track).animationPlayState;
-    console.log('Lookbook: 現在のアニメーション状態:', { currentAnimation, currentPlayState });
+    const hasDraggingClass = track.classList.contains('dragging');
+    console.log('Lookbook: 現在のアニメーション状態:', { 
+      currentAnimation, 
+      currentPlayState, 
+      hasDraggingClass,
+      isDragging: track.isDragging
+    });
     
-    // CSSアニメーションを強制的に再開するため、クラスを操作
+    // CSSアニメーションを強制的に再開するため、クラスとスタイルを確実にクリア
+    track.isDragging = false;
     track.classList.remove('dragging');
     track.style.removeProperty('animation');
     track.style.removeProperty('animation-play-state');
@@ -332,17 +351,28 @@ function startAutoScroll(track) {
     
     // 少し遅延してから再度確認（CSSアニメーションの適用を待つ）
     requestAnimationFrame(() => {
-      if (!track.isDragging && !track.classList.contains('dragging')) {
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-        
-        // 再設定後の状態を確認
-        setTimeout(() => {
-          const newAnimation = getComputedStyle(track).animation;
-          const newPlayState = getComputedStyle(track).animationPlayState;
-          console.log('Lookbook: アニメーション再開完了:', { newAnimation, newPlayState });
-        }, 100);
+      // 再度draggingクラスを確認して削除
+      if (track.classList.contains('dragging')) {
+        track.classList.remove('dragging');
+        track.isDragging = false;
+        console.log('Lookbook: requestAnimationFrame内でdraggingクラスを削除');
       }
+      
+      track.style.removeProperty('animation');
+      track.style.removeProperty('animation-play-state');
+      
+      // 再設定後の状態を確認
+      setTimeout(() => {
+        const newAnimation = getComputedStyle(track).animation;
+        const newPlayState = getComputedStyle(track).animationPlayState;
+        const stillHasDraggingClass = track.classList.contains('dragging');
+        console.log('Lookbook: アニメーション再開完了:', { 
+          newAnimation, 
+          newPlayState,
+          stillHasDraggingClass,
+          isDragging: track.isDragging
+        });
+      }, 100);
     });
   };
   
@@ -365,10 +395,18 @@ function startAutoScroll(track) {
         hasDraggingClass: track.classList.contains('dragging')
       });
       
-      if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
-        // 画面内に入ったらアニメーションを強制的に再開（CSSで制御）
-        console.log('Lookbook: 画面内検知 - アニメーション再開');
-        forceResumeLookbookAnimation();
+      if (entry.isIntersecting) {
+        // 画面内に入ったらdraggingクラスを確実に削除してアニメーションを再開
+        if (track.classList.contains('dragging') && !track.isDragging) {
+          track.classList.remove('dragging');
+          track.isDragging = false;
+          console.log('Lookbook: 画面内検知 - draggingクラスを削除');
+        }
+        
+        if (!track.isDragging) {
+          console.log('Lookbook: 画面内検知 - アニメーション再開');
+          forceResumeLookbookAnimation();
+        }
       }
     });
   }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
@@ -377,8 +415,17 @@ function startAutoScroll(track) {
   
   // ページ可視性変更時の処理（CSSで制御）
   const visibilityHandler = function() {
-    if (!document.hidden && !track.isDragging && !track.classList.contains('dragging')) {
-      forceResumeLookbookAnimation();
+    if (!document.hidden) {
+      // draggingクラスを確実に削除
+      if (track.classList.contains('dragging') && !track.isDragging) {
+        track.classList.remove('dragging');
+        track.isDragging = false;
+        console.log('Lookbook: visibilitychange - draggingクラスを削除');
+      }
+      
+      if (!track.isDragging) {
+        forceResumeLookbookAnimation();
+      }
     }
   };
   document.addEventListener('visibilitychange', visibilityHandler);
@@ -414,10 +461,19 @@ function startAutoScroll(track) {
             hasDraggingClass: track.classList.contains('dragging')
           });
           
-          if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
-            // CSSで制御するため、インラインスタイルを削除してCSSアニメーションを再開
-            console.log('スクロール終了後、Lookbookアニメーション再開', { scrollDirection });
-            forceResumeLookbookAnimation();
+          if (isInViewport) {
+            // draggingクラスを確実に削除
+            if (track.classList.contains('dragging') && !track.isDragging) {
+              track.classList.remove('dragging');
+              track.isDragging = false;
+              console.log('Lookbook: スクロール終了検知 - draggingクラスを削除');
+            }
+            
+            if (!track.isDragging) {
+              // CSSで制御するため、インラインスタイルを削除してCSSアニメーションを再開
+              console.log('スクロール終了後、Lookbookアニメーション再開', { scrollDirection });
+              forceResumeLookbookAnimation();
+            }
           }
         }
         
