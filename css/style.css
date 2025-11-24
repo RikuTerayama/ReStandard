@@ -1124,8 +1124,8 @@
   /* スマホ表示（〜480px）でLookbook背景の縦長さを画像サイズに合わせる */
   @media (max-width: 480px) {
     .lookbook-container {
-      /* 画像の高さ240pxに合わせて、PC表示と同じ比率を維持（画像高さ / コンテナ高さ ≈ 0.91） */
-      min-block-size: calc(240px + 2rem) !important; /* 画像高さ240px + 上下余白2rem */
+      /* 画像の高さを画面幅に応じて動的に設定（iPhone 12 ProとiPhone 15 Proで統一） */
+      min-block-size: calc(clamp(213px, 56vw, 267px) + 2rem) !important; /* 画像の最大高さ + 上下余白2rem */
       padding-block: 1rem !important; /* 上下余白を1remに統一 */
       overflow: visible !important; /* 画像が端から端まで表示されるように */
       align-items: center !important; /* 上下中央揃え */
@@ -1492,7 +1492,7 @@
 }
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
-/* スマホ版（〜480px）：30%遅く（169s） */
+/* スマホ版（〜480px）：適切な速度（169s） */
 /* より具体的なセレクタで確実に適用（インラインスタイルも上書き） */
 @media (max-width: 480px) {
   html body #lookbook .lookbook-track:not(.dragging),
@@ -1501,12 +1501,13 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 169s linear infinite !important; /* スマホ: 30%遅く（169s = 130s × 1.3） */
+    animation: lookbook-scroll 169s linear infinite !important; /* スマホ: 169s（適切な速度） */
     animation-play-state: running !important;
+    animation-duration: 169s !important; /* 確実に適用 */
   }
 }
 
-/* タブレット版（481px〜1024px）：30%遅く（130s） */
+/* タブレット版（481px〜1024px）：適切な速度（130s） */
 @media (min-width: 481px) and (max-width: 1024px) {
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
@@ -1514,12 +1515,13 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 130s linear infinite !important; /* タブレット: 30%遅く（130s = 100s × 1.3） */
+    animation: lookbook-scroll 130s linear infinite !important; /* タブレット: 130s（適切な速度） */
     animation-play-state: running !important;
+    animation-duration: 130s !important; /* 確実に適用 */
   }
 }
 
-/* PC版（1025px〜）：30%遅く（130s） */
+/* PC版（1025px〜）：適切な速度（130s） */
 @media (min-width: 1025px) {
   html body #lookbook .lookbook-track:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
@@ -1527,8 +1529,9 @@
   #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 130s linear infinite !important; /* PC: 30%遅く（130s = 100s × 1.3） */
+    animation: lookbook-scroll 130s linear infinite !important; /* PC: 130s（適切な速度） */
     animation-play-state: running !important;
+    animation-duration: 130s !important; /* 確実に適用 */
   }
 }
 
@@ -2688,7 +2691,7 @@ div.copyright {
   }
 }
 
-/* スマホ版: 固定サイズ */
+/* スマホ版: 画面幅に応じたサイズ（iPhone 12 ProとiPhone 15 Proで統一） */
 @media (max-width: 480px) {
   #lookbook .lookbook-track img,
   #lookbook .lookbook-item img,
@@ -2696,9 +2699,9 @@ div.copyright {
   html body #lookbook .lookbook-item img,
   .lookbook-track img,
   .lookbook-item img {
-    width: 180px !important;
+    width: clamp(160px, 42vw, 200px) !important; /* 画面幅の42%を基準に、最小160px、最大200px */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 240px !important; /* 最大高さを設定 */
+    max-height: clamp(213px, 56vw, 267px) !important; /* 幅の1.33倍（4:3比率）を最大高さとして設定 */
     object-fit: contain !important;
     flex-shrink: 0 !important;
   }
@@ -2707,7 +2710,16 @@ div.copyright {
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
     height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: 240px !important;
+    min-height: clamp(213px, 56vw, 267px) !important; /* 画像の最大高さに合わせる */
+  }
+  
+  /* スマホ版: コンテナの高さを画像の高さに合わせる */
+  #lookbook .lookbook-container,
+  html body #lookbook .lookbook-container {
+    min-block-size: calc(clamp(213px, 56vw, 267px) + 2rem) !important; /* 画像の最大高さ + 上下余白 */
+    padding-block: 1rem !important;
+    overflow: visible !important;
+    align-items: center !important;
   }
 }
 
