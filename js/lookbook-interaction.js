@@ -309,7 +309,12 @@ function startAutoScroll(track) {
   // Lookbookの可視性チェックとアニメーション復帰（強化版）
   // CSSアニメーションを強制的に再開するヘルパー関数
   const forceResumeLookbookAnimation = () => {
-    if (track.isDragging || track.classList.contains('dragging')) return;
+    if (track.isDragging || track.classList.contains('dragging')) {
+      console.log('Lookbook: ドラッグ中なので再開をスキップ');
+      return;
+    }
+    
+    console.log('Lookbook: アニメーション強制再開開始');
     
     // CSSアニメーションを強制的に再開するため、クラスを操作
     track.classList.remove('dragging');
@@ -325,22 +330,37 @@ function startAutoScroll(track) {
       if (!track.isDragging && !track.classList.contains('dragging')) {
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
+        console.log('Lookbook: アニメーション再開完了');
       }
     });
-    
-    if (window.__QA_MEASURE_LOGS__) {
-      console.log('Lookbookアニメーション強制再開');
-    }
   };
+  
+  // より確実なスマホ判定（画面幅またはユーザーエージェント）
+  const isMobileDevice = window.innerWidth <= 900 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  // デバッグログ（常に出力）
+  console.log('Lookbook track初期化:', { 
+    isMobileDevice, 
+    windowWidth: window.innerWidth,
+    userAgent: navigator.userAgent.substring(0, 50)
+  });
   
   const visibilityObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      console.log('Lookbook IntersectionObserver:', { 
+        isIntersecting: entry.isIntersecting, 
+        intersectionRatio: entry.intersectionRatio,
+        isDragging: track.isDragging,
+        hasDraggingClass: track.classList.contains('dragging')
+      });
+      
       if (entry.isIntersecting && !track.isDragging && !track.classList.contains('dragging')) {
         // 画面内に入ったらアニメーションを強制的に再開（CSSで制御）
+        console.log('Lookbook: 画面内検知 - アニメーション再開');
         forceResumeLookbookAnimation();
       }
     });
-  }, { threshold: 0.3 }); // 閾値を0.05から0.3に上げてより確実に検知
+  }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
   
   visibilityObserver.observe(track);
   
@@ -356,7 +376,6 @@ function startAutoScroll(track) {
   track._visibilityHandler = visibilityHandler;
   
   // スマホでのスクロール終了検知（Collectionと同様の処理を追加）
-  const isMobileDevice = window.innerWidth <= 900;
   if (isMobileDevice) {
     let scrollTimer;
     let lastScrollTop = 0;
@@ -372,12 +391,22 @@ function startAutoScroll(track) {
           const rect = lookbookSection.getBoundingClientRect();
           const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
           
+          console.log('Lookbook スクロール終了検知:', {
+            scrollDirection,
+            currentScrollTop,
+            lastScrollTop,
+            isInViewport,
+            rectTop: rect.top,
+            rectBottom: rect.bottom,
+            windowHeight: window.innerHeight,
+            isDragging: track.isDragging,
+            hasDraggingClass: track.classList.contains('dragging')
+          });
+          
           if (isInViewport && !track.isDragging && !track.classList.contains('dragging')) {
             // CSSで制御するため、インラインスタイルを削除してCSSアニメーションを再開
+            console.log('スクロール終了後、Lookbookアニメーション再開', { scrollDirection });
             forceResumeLookbookAnimation();
-            if (window.__QA_MEASURE_LOGS__) {
-              console.log('スクロール終了後、Lookbookアニメーション再開', { scrollDirection });
-            }
           }
         }
         
