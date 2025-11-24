@@ -751,7 +751,11 @@ const initSections = () => {
       // Collection Trackのイベントハンドラを設定（DOMContentLoadedで設定されなかった場合のフォールバック）
       document.querySelectorAll('#collection .collection-track').forEach((track, index) => {
         if (!track._visibilityObserver || !track._scrollHandler) {
-          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラを設定（フォールバック）`);
+          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラを設定（フォールバック）`, {
+            hasVisibilityObserver: !!track._visibilityObserver,
+            hasScrollHandler: !!track._scrollHandler,
+            className: track.className
+          });
           
           // IntersectionObserverを設定
           const visibilityObserver = new IntersectionObserver((entries) => {
