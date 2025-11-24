@@ -572,6 +572,20 @@ function startAutoScroll(track) {
     
     console.log('[Collection] startAutoScroll: イベントハンドラ設定完了', {
       hasVisibilityObserver: !!track._visibilityObserver,
+      hasScrollHandler: !!track._scrollHandler,
+      trackId: track.id || 'no-id',
+      className: track.className
+    });
+  }
+  
+  // 初期化時にdraggingクラスを確実に削除
+  track.isDragging = false;
+  track.classList.remove('dragging');
+  
+  // イベントハンドラが設定されていない場合は再設定を試みる
+  if (!track._visibilityObserver || !track._scrollHandler) {
+    console.warn('[Collection] startAutoScroll: イベントハンドラが設定されていません。再設定を試みます。', {
+      hasVisibilityObserver: !!track._visibilityObserver,
       hasScrollHandler: !!track._scrollHandler
     });
   }
