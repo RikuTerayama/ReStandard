@@ -507,7 +507,8 @@ const initSections = () => {
   initLazyLoadFadeIn();
   
   // Collection 上段・下段（新構造対応）
-  const tracks = document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track');
+  // Lookbook Trackは lookbook-interaction.js で初期化するため、ここでは Collection Track のみを取得
+  const tracks = document.querySelectorAll('#collection .collection-track');
   console.log(`[INIT] Total tracks found: ${tracks.length}`);
   if (window.__QA_MEASURE_LOGS__) {
     console.log(`[INIT] Total tracks found: ${tracks.length}`);
@@ -520,6 +521,17 @@ const initSections = () => {
       className: track.className
     });
     
+    // Lookbook Trackの場合は、lookbook-interaction.jsの初期化をスキップ（重複を避ける）
+    if (track.classList.contains('lookbook-track')) {
+      console.log(`[INIT] Track ${index + 1}: Lookbook Trackとして認識 - lookbook-interaction.jsで初期化`);
+      // インラインスタイルを確実に削除（CSSで制御するため）
+      track.style.removeProperty('animation');
+      track.style.removeProperty('animation-play-state');
+      track.style.removeProperty('transform');
+      return; // Lookbook Trackの場合はここで終了
+    }
+    
+    // Collection Trackのみ初期化
     // 初期化時にdraggingクラスを確実に削除
     track.isDragging = false;
     track.classList.remove('dragging');
