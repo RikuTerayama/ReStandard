@@ -383,22 +383,37 @@ function startAutoScroll(track) {
   if (isMobileDevice) {
     // アニメーション再開のヘルパー関数
     const forceResumeAnimation = () => {
-      if (track.isDragging || track.classList.contains('dragging')) return;
+      if (track.isDragging || track.classList.contains('dragging')) {
+        console.log('Collection: ドラッグ中なので再開をスキップ');
+        return;
+      }
+      
+      console.log('Collection: アニメーション強制再開開始');
       
       // アニメーションを完全にリセットして再開
-      const currentAnimation = track.style.animation;
       const speed = parseFloat(track.dataset.speed || 80);
       const direction = track.dataset.direction || 'left';
       const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
       
+      // 現在のアニメーション状態を確認
+      const currentAnimation = getComputedStyle(track).animation;
+      console.log('Collection: 現在のアニメーション状態:', { currentAnimation, speed, direction });
+      
+      // アニメーションを完全にリセット
       track.style.animation = 'none';
+      track.style.animationPlayState = 'paused';
       track.offsetHeight; // リフローを強制
+      
+      // アニメーションを再設定
       track.style.animation = `${key} ${speed}s linear infinite`;
       track.style.animationPlayState = 'running';
       
-      if (window.__QA_MEASURE_LOGS__) {
-        console.log('Collectionアニメーション強制再開:', { speed, direction });
-      }
+      // 再設定後の状態を確認
+      setTimeout(() => {
+        const newAnimation = getComputedStyle(track).animation;
+        const newPlayState = getComputedStyle(track).animationPlayState;
+        console.log('Collection: アニメーション再開完了:', { newAnimation, newPlayState });
+      }, 100);
     };
     
     const visibilityObserver = new IntersectionObserver((entries) => {
