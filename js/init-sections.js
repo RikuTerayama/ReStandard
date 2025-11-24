@@ -521,13 +521,21 @@ const initSections = () => {
       className: track.className
     });
     
-    // Lookbook Trackの場合は、lookbook-interaction.jsの初期化をスキップ（重複を避ける）
+    // Lookbook Trackの場合は、lookbook-interaction.jsの初期化関数を使用
     if (track.classList.contains('lookbook-track')) {
       console.log(`[INIT] Track ${index + 1}: Lookbook Trackとして認識 - lookbook-interaction.jsで初期化`);
-      // インラインスタイルを確実に削除（CSSで制御するため）
-      track.style.removeProperty('animation');
-      track.style.removeProperty('animation-play-state');
-      track.style.removeProperty('transform');
+      
+      // lookbook-interaction.jsのinitTrack関数を使用して初期化
+      if (typeof window.initLookbookTrack === 'function') {
+        console.log(`[INIT] Lookbook Track ${index + 1}: lookbook-interaction.jsのinitTrack関数を呼び出し`);
+        window.initLookbookTrack(track);
+      } else {
+        console.log(`[INIT] Lookbook Track ${index + 1}: lookbook-interaction.jsのinitTrack関数が見つかりません。直接初期化します。`);
+        // インラインスタイルを確実に削除（CSSで制御するため）
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+        track.style.removeProperty('transform');
+      }
       return; // Lookbook Trackの場合はここで終了
     }
     
@@ -536,31 +544,40 @@ const initSections = () => {
     track.isDragging = false;
     track.classList.remove('dragging');
     
-    // 幅確保
-    ensureLoopWidth(track);
-    // 中央補正を適用
-    centerTrack(track);
-    // 自動スクロール初期化
-    initAutoScroll(track);
-    // ★開始画像に揃える
-    alignTrackStart(track);
-    // 画面外一時停止
-    pauseWhenOutOfView(track);
-    
-    // Collection Trackの場合、イベントハンドラを設定（即座に実行）
-    console.log(`[INIT] Track ${index + 1} Collection判定:`, {
-      hasCollectionClass: track.classList.contains('collection-track'),
-      hasVisibilityObserver: !!track._visibilityObserver,
-      hasScrollHandler: !!track._scrollHandler
-    });
-    
+    // Collection Trackの場合、collection-interaction.jsの初期化関数を使用
     if (track.classList.contains('collection-track')) {
-      console.log(`[INIT] Collection Track ${index + 1}: Collection Trackとして認識されました`);
-      // 既に設定されている場合はスキップ
-      if (track._visibilityObserver || track._scrollHandler) {
-        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラは既に設定済み`);
+      console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsで初期化`);
+      
+      // collection-interaction.jsのinitTrack関数を使用して初期化
+      if (typeof window.initCollectionTrack === 'function') {
+        console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数を呼び出し`);
+        window.initCollectionTrack(track);
       } else {
-        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラを設定開始`);
+        console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりません。直接初期化します。`);
+        // 幅確保
+        ensureLoopWidth(track);
+        // 中央補正を適用
+        centerTrack(track);
+        // 自動スクロール初期化
+        initAutoScroll(track);
+        // ★開始画像に揃える
+        alignTrackStart(track);
+        // 画面外一時停止
+        pauseWhenOutOfView(track);
+        
+        // Collection Trackの場合、イベントハンドラを設定（即座に実行）
+        console.log(`[INIT] Track ${index + 1} Collection判定:`, {
+          hasCollectionClass: track.classList.contains('collection-track'),
+          hasVisibilityObserver: !!track._visibilityObserver,
+          hasScrollHandler: !!track._scrollHandler
+        });
+        
+        console.log(`[INIT] Collection Track ${index + 1}: Collection Trackとして認識されました`);
+        // 既に設定されている場合はスキップ
+        if (track._visibilityObserver || track._scrollHandler) {
+          console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラは既に設定済み`);
+        } else {
+          console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラを設定開始`);
         
         // 即座に実行（setTimeoutを削除）
         // IntersectionObserverを設定（スマホ/PC両対応）
