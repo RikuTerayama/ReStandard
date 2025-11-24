@@ -811,6 +811,189 @@
         console.log(`✅ Title ${i+1} 色:`, styles.color, 'サイズ:', styles.fontSize);
       });
     }, 1000); // 1秒後に実行
+    
+    // Lookbookセクションの詳細デバッグ情報を取得する関数
+    window.debugLookbook = function() {
+      console.log('=== Lookbookセクション デバッグ情報 ===');
+      
+      const tracks = document.querySelectorAll('#lookbook .lookbook-track');
+      const images = document.querySelectorAll('#lookbook .lookbook-track img');
+      const container = document.querySelector('#lookbook .lookbook-container');
+      
+      console.log('【デバイス情報】');
+      console.log({
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
+        screenWidth: screen.width,
+        screenHeight: screen.height,
+        devicePixelRatio: window.devicePixelRatio,
+        userAgent: navigator.userAgent,
+        isInstagramWebView: /Instagram/i.test(navigator.userAgent) || /FBAN|FBAV/i.test(navigator.userAgent),
+        platform: navigator.platform
+      });
+      
+      console.log('【Lookbook Track情報】');
+      tracks.forEach((track, index) => {
+        const computedStyle = getComputedStyle(track);
+        const rect = track.getBoundingClientRect();
+        console.log(`Track ${index + 1}:`, {
+          width: rect.width,
+          height: rect.height,
+          scrollWidth: track.scrollWidth,
+          scrollHeight: track.scrollHeight,
+          animation: computedStyle.animation,
+          animationDuration: computedStyle.animationDuration,
+          animationPlayState: computedStyle.animationPlayState,
+          animationName: computedStyle.animationName,
+          transform: computedStyle.transform,
+          hasDraggingClass: track.classList.contains('dragging'),
+          isDragging: track.isDragging,
+          datasetSpeed: track.dataset.speed,
+          datasetBaseSpeed: track.dataset.baseSpeed,
+          inlineAnimation: track.style.animation,
+          inlineAnimationPlayState: track.style.animationPlayState
+        });
+      });
+      
+      console.log('【Lookbook 画像情報】');
+      images.forEach((img, index) => {
+        const computedStyle = getComputedStyle(img);
+        const rect = img.getBoundingClientRect();
+        const naturalWidth = img.naturalWidth;
+        const naturalHeight = img.naturalHeight;
+        console.log(`画像 ${index + 1}:`, {
+          src: img.src.substring(0, 50) + '...',
+          naturalWidth: naturalWidth,
+          naturalHeight: naturalHeight,
+          displayWidth: rect.width,
+          displayHeight: rect.height,
+          computedWidth: computedStyle.width,
+          computedHeight: computedStyle.height,
+          computedMaxHeight: computedStyle.maxHeight,
+          computedMinHeight: computedStyle.minHeight,
+          objectFit: computedStyle.objectFit,
+          aspectRatio: naturalWidth && naturalHeight ? (naturalWidth / naturalHeight).toFixed(2) : 'N/A',
+          displayAspectRatio: rect.width && rect.height ? (rect.width / rect.height).toFixed(2) : 'N/A'
+        });
+      });
+      
+      console.log('【Lookbook コンテナ情報】');
+      if (container) {
+        const computedStyle = getComputedStyle(container);
+        const rect = container.getBoundingClientRect();
+        console.log({
+          width: rect.width,
+          height: rect.height,
+          minBlockSize: computedStyle.minBlockSize,
+          maxBlockSize: computedStyle.maxBlockSize,
+          paddingBlock: computedStyle.paddingBlock,
+          paddingTop: computedStyle.paddingTop,
+          paddingBottom: computedStyle.paddingBottom,
+          overflow: computedStyle.overflow,
+          alignItems: computedStyle.alignItems,
+          display: computedStyle.display
+        });
+      }
+      
+      console.log('【CSS計算値（42vw, 56vw）】');
+      const vw42 = window.innerWidth * 0.42;
+      const vw56 = window.innerWidth * 0.56;
+      console.log({
+        '42vw': vw42 + 'px',
+        '56vw': vw56 + 'px',
+        'clamp(164px, 42vw, 200px)': `clamp(164px, ${vw42}px, 200px) = ${Math.max(164, Math.min(vw42, 200)).toFixed(2)}px`,
+        'clamp(218px, 56vw, 267px)': `clamp(218px, ${vw56}px, 267px) = ${Math.max(218, Math.min(vw56, 267)).toFixed(2)}px`
+      });
+      
+      console.log('=== デバッグ情報終了 ===');
+    };
+    
+    // Collectionセクションの詳細デバッグ情報を取得する関数
+    window.debugCollection = function() {
+      console.log('=== Collectionセクション デバッグ情報 ===');
+      
+      const tracks = document.querySelectorAll('#collection .collection-track');
+      
+      console.log('【デバイス情報】');
+      console.log({
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
+        userAgent: navigator.userAgent,
+        isInstagramWebView: /Instagram/i.test(navigator.userAgent) || /FBAN|FBAV/i.test(navigator.userAgent)
+      });
+      
+      console.log('【Collection Track情報】');
+      tracks.forEach((track, index) => {
+        const computedStyle = getComputedStyle(track);
+        const rect = track.getBoundingClientRect();
+        console.log(`Track ${index + 1}:`, {
+          width: rect.width,
+          height: rect.height,
+          animation: computedStyle.animation,
+          animationDuration: computedStyle.animationDuration,
+          animationPlayState: computedStyle.animationPlayState,
+          hasDraggingClass: track.classList.contains('dragging'),
+          isDragging: track.isDragging,
+          hasVisibilityObserver: !!track._visibilityObserver,
+          hasScrollHandler: !!track._scrollHandler,
+          inlineAnimation: track.style.animation,
+          inlineAnimationPlayState: track.style.animationPlayState
+        });
+      });
+      
+      console.log('=== デバッグ情報終了 ===');
+    };
+    
+    // スクロール時の状態を監視する関数
+    window.monitorScroll = function() {
+      let lastScrollTop = 0;
+      const scrollHandler = () => {
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+        
+        if (Math.abs(currentScrollTop - lastScrollTop) > 50) {
+          console.log('【スクロール検知】', {
+            scrollDirection,
+            currentScrollTop,
+            lastScrollTop,
+            collectionSection: (() => {
+              const section = document.getElementById('collection');
+              if (section) {
+                const rect = section.getBoundingClientRect();
+                return {
+                  top: rect.top,
+                  bottom: rect.bottom,
+                  isInViewport: rect.top < window.innerHeight && rect.bottom > 0
+                };
+              }
+              return null;
+            })(),
+            lookbookSection: (() => {
+              const section = document.getElementById('lookbook');
+              if (section) {
+                const rect = section.getBoundingClientRect();
+                return {
+                  top: rect.top,
+                  bottom: rect.bottom,
+                  isInViewport: rect.top < window.innerHeight && rect.bottom > 0
+                };
+              }
+              return null;
+            })()
+          });
+        }
+        
+        lastScrollTop = currentScrollTop;
+      };
+      
+      window.addEventListener('scroll', scrollHandler, { passive: true });
+      console.log('スクロール監視を開始しました。停止するには window.stopMonitorScroll() を実行してください。');
+      
+      window.stopMonitorScroll = () => {
+        window.removeEventListener('scroll', scrollHandler);
+        console.log('スクロール監視を停止しました。');
+      };
+    };
   </script>
 
   <!-- Brands Section -->
