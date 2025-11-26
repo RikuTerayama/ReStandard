@@ -670,11 +670,11 @@ if (isInstagramWebView) {
         track.dataset.baseSpeed = String(speed);
       });
       
-      // Instagram WebViewでLookbookコンテナの高さを強制的に設定
+      // Instagram WebViewでLookbookコンテナの高さを強制的に設定（固定値で統一）
       if (window.innerWidth <= 480) {
         const container = document.querySelector('#lookbook .lookbook-container');
         if (container) {
-          const expectedMinHeight = Math.max(218, Math.min(window.innerWidth * 0.56, 267)) + 32; // 2rem = 32px
+          const expectedMinHeight = 220 + 32; // 固定値220px + 2rem = 32px = 252px
           container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
           container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
           console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
