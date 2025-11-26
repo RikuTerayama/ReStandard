@@ -549,9 +549,30 @@ const initSections = () => {
       console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsで初期化`);
       
       // collection-interaction.jsのinitTrack関数を使用して初期化
+      // ただし、initTrack関数内でstartAutoScrollが呼ばれるため、イベントハンドラは自動的に設定される
       if (typeof window.initCollectionTrack === 'function') {
         console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数を呼び出し`);
-        window.initCollectionTrack(track);
+        try {
+          window.initCollectionTrack(track);
+          // イベントハンドラが設定されたか確認
+          setTimeout(() => {
+            if (!track._visibilityObserver || !track._scrollHandler) {
+              console.warn(`[INIT] Collection Track ${index + 1}: イベントハンドラが設定されていません。フォールバック処理を実行します。`);
+              // フォールバック: collection-interaction.jsのstartAutoScrollを直接呼び出す
+              if (typeof window.startCollectionAutoScroll === 'function') {
+                window.startCollectionAutoScroll(track);
+              }
+            }
+          }, 100);
+        } catch (error) {
+          console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
+          // エラー時は直接初期化
+          ensureLoopWidth(track);
+          centerTrack(track);
+          initAutoScroll(track);
+          alignTrackStart(track);
+          pauseWhenOutOfView(track);
+        }
       } else {
         console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりません。直接初期化します。`);
         // 幅確保
