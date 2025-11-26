@@ -528,12 +528,30 @@ const initSections = () => {
       // lookbook-interaction.jsのinitTrack関数を使用して初期化
       if (typeof window.initLookbookTrack === 'function') {
         console.log(`[INIT] Lookbook Track ${index + 1}: lookbook-interaction.jsのinitTrack関数を呼び出し`);
-        window.initLookbookTrack(track);
+        try {
+          window.initLookbookTrack(track);
+          // イベントハンドラが設定されたか確認
+          setTimeout(() => {
+            if (!track._visibilityObserver || !track._scrollHandler) {
+              console.warn(`[INIT] Lookbook Track ${index + 1}: イベントハンドラが設定されていません。`);
+            } else {
+              console.log(`[INIT] Lookbook Track ${index + 1}: イベントハンドラが正常に設定されました。`);
+            }
+          }, 200);
+        } catch (error) {
+          console.error(`[INIT] Lookbook Track ${index + 1}: 初期化エラー`, error);
+          // エラー時はインラインスタイルを確実に削除（CSSで制御するため）
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
+          track.style.removeProperty('animation-duration');
+          track.style.removeProperty('transform');
+        }
       } else {
         console.log(`[INIT] Lookbook Track ${index + 1}: lookbook-interaction.jsのinitTrack関数が見つかりません。直接初期化します。`);
         // インラインスタイルを確実に削除（CSSで制御するため）
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
+        track.style.removeProperty('animation-duration');
         track.style.removeProperty('transform');
       }
       return; // Lookbook Trackの場合はここで終了
@@ -554,16 +572,29 @@ const initSections = () => {
         console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数を呼び出し`);
         try {
           window.initCollectionTrack(track);
-          // イベントハンドラが設定されたか確認
+          // イベントハンドラが設定されたか確認（より長い待機時間で確認）
           setTimeout(() => {
             if (!track._visibilityObserver || !track._scrollHandler) {
               console.warn(`[INIT] Collection Track ${index + 1}: イベントハンドラが設定されていません。フォールバック処理を実行します。`);
               // フォールバック: collection-interaction.jsのstartAutoScrollを直接呼び出す
               if (typeof window.startCollectionAutoScroll === 'function') {
+                console.log(`[INIT] Collection Track ${index + 1}: startCollectionAutoScrollを直接呼び出し`);
                 window.startCollectionAutoScroll(track);
+                // 再度確認
+                setTimeout(() => {
+                  if (!track._visibilityObserver || !track._scrollHandler) {
+                    console.error(`[INIT] Collection Track ${index + 1}: フォールバック処理後もイベントハンドラが設定されていません。`);
+                  } else {
+                    console.log(`[INIT] Collection Track ${index + 1}: フォールバック処理でイベントハンドラが設定されました。`);
+                  }
+                }, 100);
+              } else {
+                console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll関数が見つかりません。`);
               }
+            } else {
+              console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラが正常に設定されました。`);
             }
-          }, 100);
+          }, 200); // 100msから200msに延長
         } catch (error) {
           console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
           // エラー時は直接初期化
@@ -599,53 +630,16 @@ const initSections = () => {
           console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラは既に設定済み`);
         } else {
           console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラを設定開始`);
-        
-        // 即座に実行（setTimeoutを削除）
-        // IntersectionObserverを設定（スマホ/PC両対応）
-        const visibilityObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              if (track.classList.contains('dragging') && !track.isDragging) {
-                track.classList.remove('dragging');
-                track.isDragging = false;
-                console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - draggingクラスを削除`);
-              }
-              
-              if (!track.isDragging) {
-                const speed = parseFloat(track.dataset.speed || 80);
-                const direction = track.dataset.direction || 'left';
-                const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-                
-                track.style.animation = 'none';
-                track.offsetHeight;
-                track.style.animation = `${key} ${speed}s linear infinite`;
-                track.style.animationPlayState = 'running';
-                console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - アニメーション再開`);
-              }
-            }
-          });
-        }, { threshold: 0.1 });
-        
-        visibilityObserver.observe(track);
-        track._visibilityObserver = visibilityObserver;
-        console.log(`[INIT] Collection Track ${index + 1}: IntersectionObserver設定完了`);
-        
-        // スクロールハンドラを設定（スマホ/PC両対応）
-        let scrollTimer;
-        let lastScrollTop = 0;
-        const scrollHandler = function() {
-          clearTimeout(scrollTimer);
-          scrollTimer = setTimeout(function() {
-            const collectionSection = document.getElementById('collection');
-            if (collectionSection) {
-              const rect = collectionSection.getBoundingClientRect();
-              const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-              
-              if (isInViewport) {
+          
+          // 即座に実行（setTimeoutを削除）
+          // IntersectionObserverを設定（スマホ/PC両対応）
+          const visibilityObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
                 if (track.classList.contains('dragging') && !track.isDragging) {
                   track.classList.remove('dragging');
                   track.isDragging = false;
-                  console.log(`[INIT] Collection Track ${index + 1}: スクロール終了検知 - draggingクラスを削除`);
+                  console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - draggingクラスを削除`);
                 }
                 
                 if (!track.isDragging) {
@@ -657,18 +651,56 @@ const initSections = () => {
                   track.offsetHeight;
                   track.style.animation = `${key} ${speed}s linear infinite`;
                   track.style.animationPlayState = 'running';
-                  console.log(`[INIT] Collection Track ${index + 1}: スクロール終了後、アニメーション再開`);
+                  console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - アニメーション再開`);
                 }
               }
-            }
-            lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          }, 300);
-        };
-        
-        window.addEventListener('scroll', scrollHandler, { passive: true });
-        track._scrollHandler = scrollHandler;
-        console.log(`[INIT] Collection Track ${index + 1}: スクロールハンドラ設定完了`);
-        console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラ設定完了`);
+            });
+          }, { threshold: 0.1 });
+          
+          visibilityObserver.observe(track);
+          track._visibilityObserver = visibilityObserver;
+          console.log(`[INIT] Collection Track ${index + 1}: IntersectionObserver設定完了`);
+          
+          // スクロールハンドラを設定（スマホ/PC両対応）
+          let scrollTimer;
+          let lastScrollTop = 0;
+          const scrollHandler = function() {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function() {
+              const collectionSection = document.getElementById('collection');
+              if (collectionSection) {
+                const rect = collectionSection.getBoundingClientRect();
+                const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isInViewport) {
+                  if (track.classList.contains('dragging') && !track.isDragging) {
+                    track.classList.remove('dragging');
+                    track.isDragging = false;
+                    console.log(`[INIT] Collection Track ${index + 1}: スクロール終了検知 - draggingクラスを削除`);
+                  }
+                  
+                  if (!track.isDragging) {
+                    const speed = parseFloat(track.dataset.speed || 80);
+                    const direction = track.dataset.direction || 'left';
+                    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+                    
+                    track.style.animation = 'none';
+                    track.offsetHeight;
+                    track.style.animation = `${key} ${speed}s linear infinite`;
+                    track.style.animationPlayState = 'running';
+                    console.log(`[INIT] Collection Track ${index + 1}: スクロール終了後、アニメーション再開`);
+                  }
+                }
+              }
+              lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            }, 300);
+          };
+          
+          window.addEventListener('scroll', scrollHandler, { passive: true });
+          track._scrollHandler = scrollHandler;
+          console.log(`[INIT] Collection Track ${index + 1}: スクロールハンドラ設定完了`);
+          console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラ設定完了`);
+        }
       }
     }
     
