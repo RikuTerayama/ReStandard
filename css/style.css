@@ -1217,8 +1217,19 @@
   }
   
   @media (max-width: 768px) {
-    .collection-track img {
-      max-width: clamp(120px, 25vw, 200px) !important; /* SP: 小さめ */
+    .collection-track img,
+    #collection .collection-track img,
+    html body #collection .collection-track img,
+    #collection .collection-track a img,
+    html body #collection .collection-track a img {
+      max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
+      width: auto !important;
+      height: auto !important;
+      max-height: 140px !important;
+      object-fit: contain !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     /* Lookbook画像サイズは2498行目の設定を採用（競合削除） */
   }
@@ -1408,17 +1419,20 @@
   }
   
   /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
-  .lookbook-track img {
-    object-fit: contain !important;
-    display: block;
-    /* 画像サイズはメディアクエリで制御するため、ここでは設定しない */
-    width: auto !important;
-    height: auto !important;
-    max-width: none !important;
-    max-height: none !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-  }
+.lookbook-track img,
+html body .lookbook-track img,
+.lookbook-item img,
+html body .lookbook-item img {
+  object-fit: contain !important;
+  display: block;
+  /* 画像サイズはメディアクエリで制御するため、ここでは設定しない */
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
   
 /* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
 
@@ -1523,6 +1537,10 @@
     animation-name: lookbook-scroll !important;
     animation-timing-function: linear !important;
     animation-iteration-count: infinite !important;
+    /* インラインスタイルを確実に上書き */
+    animation-delay: 0s !important;
+    animation-fill-mode: none !important;
+    animation-direction: normal !important;
   }
   
   /* Instagram WebViewでも同じ速度を適用 */
@@ -1551,6 +1569,13 @@
     animation: lookbook-scroll 130s linear infinite !important; /* タブレット: 130s（適切な速度） */
     animation-play-state: running !important;
     animation-duration: 130s !important; /* 確実に適用 */
+    animation-name: lookbook-scroll !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
+    /* インラインスタイルを確実に上書き */
+    animation-delay: 0s !important;
+    animation-fill-mode: none !important;
+    animation-direction: normal !important;
   }
 }
 
@@ -1565,6 +1590,13 @@
     animation: lookbook-scroll 130s linear infinite !important; /* PC: 130s（適切な速度） */
     animation-play-state: running !important;
     animation-duration: 130s !important; /* 確実に適用 */
+    animation-name: lookbook-scroll !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
+    /* インラインスタイルを確実に上書き */
+    animation-delay: 0s !important;
+    animation-fill-mode: none !important;
+    animation-direction: normal !important;
   }
 }
 
@@ -2588,25 +2620,50 @@ div.copyright {
   image-rendering: crisp-edges !important;
 }
 
-/* Instagram WebViewでCollection画像サイズを統一 */
+/* Instagram WebViewでCollection画像サイズを統一（固定値で統一） */
 @media (max-width: 480px) {
-  /* Instagram WebView検出用のクラスを追加（JavaScriptで設定） */
-  body.instagram-webview #collection .collection-track img {
+  /* 通常のスマホ表示でも同じサイズを適用（最優先） */
+  #collection .collection-track img,
+  html body #collection .collection-track img,
+  #collection .collection-track a img,
+  html body #collection .collection-track a img {
     width: auto !important;
-    max-width: clamp(93px, 25vw, 200px) !important;
+    max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
     height: auto !important;
     max-height: 140px !important;
     object-fit: contain !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Instagram WebView検出用のクラスを追加（JavaScriptで設定） */
+  body.instagram-webview #collection .collection-track img,
+  body.instagram-webview #collection .collection-track a img {
+    width: auto !important;
+    max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
+    height: auto !important;
+    max-height: 140px !important;
+    object-fit: contain !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* @supportsでも適用 */
   @supports (-webkit-touch-callout: none) {
-    #collection .collection-track img {
+    #collection .collection-track img,
+    html body #collection .collection-track img,
+    #collection .collection-track a img,
+    html body #collection .collection-track a img {
       width: auto !important;
-      max-width: clamp(93px, 25vw, 200px) !important;
+      max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
       height: auto !important;
       max-height: 140px !important;
       object-fit: contain !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
   }
 }
@@ -2721,7 +2778,12 @@ div.copyright {
   .lookbook-track img[height],
   .lookbook-item img,
   .lookbook-item img[width],
-  .lookbook-item img[height] {
+  .lookbook-item img[height],
+  /* より具体的なセレクタで確実に適用 */
+  #lookbook .lookbook-track a img,
+  #lookbook .lookbook-item a img,
+  html body #lookbook .lookbook-track a img,
+  html body #lookbook .lookbook-item a img {
     width: 165px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
     max-height: 220px !important; /* 固定値で統一（幅の約1.33倍） */
@@ -2742,7 +2804,12 @@ div.copyright {
     html body #lookbook .lookbook-track img,
     html body #lookbook .lookbook-item img,
     .lookbook-track img,
-    .lookbook-item img {
+    .lookbook-item img,
+    /* より具体的なセレクタで確実に適用 */
+    #lookbook .lookbook-track a img,
+    #lookbook .lookbook-item a img,
+    html body #lookbook .lookbook-track a img,
+    html body #lookbook .lookbook-item a img {
       width: 165px !important;
       height: auto !important;
       max-height: 220px !important;
@@ -2760,7 +2827,12 @@ div.copyright {
   body.instagram-webview #lookbook .lookbook-track img,
   body.instagram-webview #lookbook .lookbook-item img,
   body.instagram-webview html body #lookbook .lookbook-track img,
-  body.instagram-webview html body #lookbook .lookbook-item img {
+  body.instagram-webview html body #lookbook .lookbook-item img,
+  /* より具体的なセレクタで確実に適用 */
+  body.instagram-webview #lookbook .lookbook-track a img,
+  body.instagram-webview #lookbook .lookbook-item a img,
+  body.instagram-webview html body #lookbook .lookbook-track a img,
+  body.instagram-webview html body #lookbook .lookbook-item a img {
     width: 165px !important;
     height: auto !important;
     max-height: 220px !important;
@@ -2769,6 +2841,7 @@ div.copyright {
     max-width: 165px !important;
     aspect-ratio: auto !important;
     object-fit: contain !important;
+    display: block !important;
   }
   
   /* スマホ版: トラックの高さを画像の高さに合わせる */
