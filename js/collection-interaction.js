@@ -381,7 +381,20 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始
 function startAutoScroll(track) {
-        const speed = parseFloat(track.dataset.speed || 30); // 30秒に変更
+  // 速度を統一（スマホ: 80s、タブレット/PC: 80s）
+  // HTMLのdata-speed属性は無視し、画面幅に応じた固定値を使用
+  let speed;
+  if (window.innerWidth <= 480) {
+    speed = 80; // スマホ: 80s（ゆっくり流れる）
+  } else if (window.innerWidth <= 1024) {
+    speed = 80; // タブレット: 80s
+  } else {
+    speed = 80; // PC: 80s
+  }
+  
+  // data-speed属性を更新（デバッグ用）
+  track.dataset.speed = String(speed);
+  track.dataset.baseSpeed = String(speed);
 
   // reverse クラスが付いているトラックはスクロール方向を逆にして、21.JPG が右端になるよう初期化
   const isReverse = track.classList.contains('reverse');
@@ -390,9 +403,10 @@ function startAutoScroll(track) {
   // 開始位置の調整
   alignTrackStart(track, scrollDirection);
   
-  // アニメーション開始
+  // アニメーション開始（インラインスタイルで確実に設定）
   track.style.animation = `scroll-${scrollDirection} ${speed}s linear infinite`;
   track.style.animationPlayState = 'running';
+  track.style.animationDuration = `${speed}s`;
   
   // スクロール後の継続性を確保（スマホ対応強化）
   track.addEventListener('animationiteration', function() {
