@@ -381,15 +381,15 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始
 function startAutoScroll(track) {
-  // 速度を統一（スマホ: 80s、タブレット/PC: 80s）
+  // 速度を統一（すべての環境で120sに統一 - ゆっくり流れる）
   // HTMLのdata-speed属性は無視し、画面幅に応じた固定値を使用
   let speed;
   if (window.innerWidth <= 480) {
-    speed = 80; // スマホ: 80s（ゆっくり流れる）
+    speed = 120; // スマホ: 120s（ゆっくり流れる）
   } else if (window.innerWidth <= 1024) {
-    speed = 80; // タブレット: 80s
+    speed = 120; // タブレット: 120s
   } else {
-    speed = 80; // PC: 80s
+    speed = 120; // PC: 120s
   }
   
   // data-speed属性を更新（デバッグ用）
@@ -447,7 +447,15 @@ function startAutoScroll(track) {
       console.log('Collection: アニメーション強制再開開始');
       
       // アニメーションを完全にリセットして再開
-      const speed = parseFloat(track.dataset.speed || 80);
+      // 速度を統一（すべての環境で120s）
+      let speed;
+      if (window.innerWidth <= 480) {
+        speed = 120; // スマホ: 120s
+      } else if (window.innerWidth <= 1024) {
+        speed = 120; // タブレット: 120s
+      } else {
+        speed = 120; // PC: 120s
+      }
       const direction = track.dataset.direction || 'left';
       const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
       
@@ -532,11 +540,22 @@ function startAutoScroll(track) {
     // クリーンアップ用の参照を保存
     track._visibilityHandler = visibilityHandler;
     
-    // スマホでのスクロール終了検知（強化版）
+    // スクロール終了検知（強化版 - すべての環境で確実に動作）
     let scrollTimer;
     let lastScrollTop = 0;
+    let scrollTimeoutId;
     const scrollHandler = function() {
+      // 既存のタイマーをクリア
       clearTimeout(scrollTimer);
+      clearTimeout(scrollTimeoutId);
+      
+      // 即座にdraggingクラスをチェックして削除
+      if (track.classList.contains('dragging') && !track.isDragging) {
+        track.classList.remove('dragging');
+        track.isDragging = false;
+        console.log('Collection: スクロール中 - draggingクラスを削除');
+      }
+      
       scrollTimer = setTimeout(function() {
         const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
@@ -575,7 +594,22 @@ function startAutoScroll(track) {
         }
         
         lastScrollTop = currentScrollTop;
-      }, 300); // タイマーを150msから300msに延長
+        
+        // 追加のタイマーで確実に再開
+        scrollTimeoutId = setTimeout(() => {
+          if (!track.isDragging && !track.classList.contains('dragging')) {
+            const collectionSection = document.getElementById('collection');
+            if (collectionSection) {
+              const rect = collectionSection.getBoundingClientRect();
+              const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+              if (isInViewport) {
+                console.log('Collection: 追加タイマーでアニメーション再開');
+                forceResumeAnimation();
+              }
+            }
+          }
+        }, 100);
+      }, 200); // タイマーを200msに短縮してより敏感に反応
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
