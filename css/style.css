@@ -1610,10 +1610,10 @@ html body .lookbook-item img {
 /* min-height: auto は削除 - 2689行目の設定で統一管理 */
 #lookbook .lookbook-container {
   overflow: visible !important;
-  /* デフォルトのmin-block-sizeを設定（スマホ版では固定値220px + 2rem = 252px） */
+  /* デフォルトのmin-block-sizeを設定（スマホ版では固定値240px + 2rem = 272px） */
   /* メディアクエリで上書きされるため、ここでは最小値のみ設定 */
-  min-block-size: calc(220px + 2rem) !important;
-  min-height: calc(220px + 2rem) !important;
+  min-block-size: calc(240px + 2rem) !important;
+  min-height: calc(240px + 2rem) !important;
 }
 
 /* 1500px以下でもPC表示と同じ比率を維持（コンテナの高さを画像サイズに合わせる） */
@@ -2606,13 +2606,16 @@ html body #lookbook .lookbook-container {
 }
 
 /* Collection Track画像の設定 - Lookbookには影響しないようにセレクタを限定 */
-#collection .collection-track img {
+#collection .collection-track img,
+html body #collection .collection-track img,
+#collection .collection-track a img,
+html body #collection .collection-track a img {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
   /* Safariで確実に表示されるように、すべての表示プロパティを明示的に設定 */
   content-visibility: auto !important;
-  contain: layout style paint !important;
+  /* containを削除 - 画像が表示されない原因の可能性 */
   /* 画像サイズはメディアクエリで制御 */
   width: auto !important;
   height: auto !important;
@@ -2626,6 +2629,11 @@ html body #lookbook .lookbook-container {
   /* Safariで画像が確実に読み込まれるように */
   image-rendering: -webkit-optimize-contrast !important;
   image-rendering: crisp-edges !important;
+  /* 確実に表示されるように */
+  position: relative !important;
+  z-index: 1 !important;
+  /* 背景色を設定して画像が確実に表示されるように */
+  background-color: transparent !important;
 }
 
 /* Instagram WebViewでCollection画像サイズを統一（固定値で統一） */
@@ -2647,15 +2655,21 @@ html body #lookbook .lookbook-container {
   
   /* Instagram WebView検出用のクラスを追加（JavaScriptで設定） */
   body.instagram-webview #collection .collection-track img,
-  body.instagram-webview #collection .collection-track a img {
+  body.instagram-webview #collection .collection-track a img,
+  html body body.instagram-webview #collection .collection-track img,
+  html body body.instagram-webview #collection .collection-track a img {
     width: auto !important;
     max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
     height: auto !important;
     max-height: 140px !important;
     object-fit: contain !important;
+    aspect-ratio: auto !important; /* アスペクト比を維持 */
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    /* 横長にならないように */
+    min-width: 0 !important;
+    min-height: 0 !important;
   }
   
   /* @supportsでも適用 */
@@ -2728,8 +2742,10 @@ html body #lookbook .lookbook-container {
     min-block-size: calc(320px + 2rem) !important;
     padding-block: 1rem !important;
     overflow: visible !important;
-    align-items: center !important;
+    align-items: flex-start !important; /* flex-startに変更して画像が切れないように */
     min-height: calc(320px + 2rem) !important; /* 画像が切れないように */
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
 }
 
@@ -2794,12 +2810,12 @@ html body #lookbook .lookbook-container {
   #lookbook .lookbook-item a img,
   html body #lookbook .lookbook-track a img,
   html body #lookbook .lookbook-item a img {
-    width: 220px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ、大きく表示） */
+    width: 240px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ、大きく表示） */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 293px !important; /* 固定値で統一（幅の約1.33倍、画像が切れないように） */
+    max-height: 320px !important; /* 固定値で統一（幅の約1.33倍、画像が切れないように） */
     min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
-    min-width: 220px !important; /* 最小幅を設定して画像が縮小されないように */
-    max-width: 220px !important; /* 最大幅を設定して画像が拡大されないように */
+    min-width: 240px !important; /* 最小幅を設定して画像が縮小されないように */
+    max-width: 240px !important; /* 最大幅を設定して画像が拡大されないように */
     /* HTMLのwidth/height属性を上書き */
     aspect-ratio: auto !important;
     object-fit: contain !important;
@@ -2820,12 +2836,12 @@ html body #lookbook .lookbook-container {
     #lookbook .lookbook-item a img,
     html body #lookbook .lookbook-track a img,
     html body #lookbook .lookbook-item a img {
-      width: 220px !important;
+      width: 240px !important;
       height: auto !important;
-      max-height: 293px !important;
+      max-height: 320px !important;
       min-height: 0 !important;
-      min-width: 220px !important;
-      max-width: 220px !important;
+      min-width: 240px !important;
+      max-width: 240px !important;
       aspect-ratio: auto !important;
       object-fit: contain !important;
       flex-shrink: 0 !important;
@@ -2843,12 +2859,12 @@ html body #lookbook .lookbook-container {
   body.instagram-webview #lookbook .lookbook-item a img,
   body.instagram-webview html body #lookbook .lookbook-track a img,
   body.instagram-webview html body #lookbook .lookbook-item a img {
-    width: 165px !important;
+    width: 240px !important;
     height: auto !important;
-    max-height: 220px !important;
+    max-height: 320px !important;
     min-height: 0 !important;
-    min-width: 165px !important;
-    max-width: 165px !important;
+    min-width: 240px !important;
+    max-width: 240px !important;
     aspect-ratio: auto !important;
     object-fit: contain !important;
     display: block !important;
@@ -2858,7 +2874,7 @@ html body #lookbook .lookbook-container {
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
     height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: 293px !important; /* 画像のmax-heightに合わせて調整 */
+    min-height: 320px !important; /* 画像のmax-heightに合わせて調整 */
     max-height: none !important; /* 最大高さの制限を解除 */
     overflow: visible !important; /* 画像が切れないように */
   }
@@ -2867,10 +2883,14 @@ html body #lookbook .lookbook-container {
   #lookbook .lookbook-container,
   html body #lookbook .lookbook-container,
   html #lookbook .lookbook-container {
-    min-block-size: calc(220px + 2rem) !important; /* 画像の最大高さ220px + 上下余白2rem = 252px */
-    min-height: calc(220px + 2rem) !important; /* min-block-sizeのフォールバック */
+    min-block-size: calc(320px + 2rem) !important; /* 画像の最大高さ320px + 上下余白2rem = 352px（画像が切れないように） */
+    min-height: calc(320px + 2rem) !important; /* min-block-sizeのフォールバック */
     max-block-size: none !important; /* 最大高さの制限を解除 */
     max-height: none !important; /* max-block-sizeのフォールバック */
+    overflow: visible !important; /* 画像が切れないように */
+    align-items: flex-start !important; /* flex-startに変更して画像が切れないように */
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
     padding-block: 1rem !important;
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
