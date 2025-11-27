@@ -513,10 +513,21 @@ function startAutoScroll(track) {
           if (!track.isDragging) {
             console.log('Collection: 画面内検知 - アニメーション再開');
             forceResumeAnimation();
+            // 複数回実行して確実に再開
+            setTimeout(() => {
+              if (!track.isDragging && !track.classList.contains('dragging')) {
+                forceResumeAnimation();
+              }
+            }, 50);
+            setTimeout(() => {
+              if (!track.isDragging && !track.classList.contains('dragging')) {
+                forceResumeAnimation();
+              }
+            }, 150);
           }
         }
       });
-    }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
+    }, { threshold: 0.01, rootMargin: '100px' }); // 閾値を0.01に下げ、rootMarginを追加してより敏感に反応
     
     visibilityObserver.observe(track);
     
@@ -564,7 +575,7 @@ function startAutoScroll(track) {
         const collectionSection = document.getElementById('collection');
         if (collectionSection) {
           const rect = collectionSection.getBoundingClientRect();
-          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+          const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100; // マージンを追加してより敏感に反応
           
           console.log('Collection スクロール終了検知:', {
             scrollDirection,
@@ -612,7 +623,7 @@ function startAutoScroll(track) {
             const collectionSection = document.getElementById('collection');
             if (collectionSection) {
               const rect = collectionSection.getBoundingClientRect();
-              const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+              const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100;
               if (isInViewport) {
                 console.log('Collection: 追加タイマーでアニメーション再開');
                 forceResumeAnimation();
@@ -620,7 +631,7 @@ function startAutoScroll(track) {
             }
           }
         }, 100);
-      }, 150); // タイマーを150msに短縮してより敏感に反応
+      }, 100); // タイマーを150msから100msに短縮してより敏感に反応 // タイマーを150msに短縮してより敏感に反応
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
