@@ -40,23 +40,8 @@ window.startLookbookAutoScroll = startAutoScroll;
 // initTrack関数もグローバルに公開（init-sections.jsから呼び出せるように）
 window.initLookbookTrack = initTrack;
 
-function resolveLookbookSpeedSeconds(track) {
-  // 画面幅に応じた直接値を返す（CSS変数に依存しない）
-  // スマホは30%遅く（169s）、タブレット/PCも30%遅く（130s）
-  // Instagram WebViewでも同じ速度を適用
-  const width = window.innerWidth;
-  const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
-                             /FBAN|FBAV/i.test(navigator.userAgent);
-  
-  if (width <= 480) {
-    // スマホ: 常に169s（Instagram WebViewでも同じ）
-    return 169;
-  } else if (width <= 1024) {
-    return 130; // タブレット: 30%遅く（130s = 100s × 1.3）
-  } else {
-    return 130; // PC: 30%遅く（130s = 100s × 1.3）
-  }
-}
+// 関数を削除 - CSSで完全に制御するため不要
+// Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
 
 // .lookbook-track ごとに初期化処理
 function initTrack(track) {
@@ -290,7 +275,7 @@ function attachTrackControls(track) {
     const currentTx = getCurrentTranslateX(track);
     const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
     const progress = normalizedTx / segmentWidth;
-    const duration = resolveLookbookSpeedSeconds(track);
+    const duration = 120; // CSSで120sに統一されているため、120sを使用
     const delay = -progress * duration;
     
     // アニメーション再開（CSSで制御するため、インラインスタイルは削除）
@@ -321,9 +306,8 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始（左方向）
 function startAutoScroll(track) {
-  const speed = resolveLookbookSpeedSeconds(track);
-  track.dataset.speed = String(speed);
-  track.dataset.baseSpeed = String(speed);
+  // CSSで完全に制御するため、速度設定は削除
+  // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
 
   // 開始位置の調整
   alignTrackStart(track);
@@ -627,7 +611,7 @@ function alignTrackStart(track) {
   const imageWidth = targetImage.getBoundingClientRect().width;
   const trackWidth = track.parentElement.offsetWidth;
   const segmentWidth = track._segmentWidth;
-  const duration = resolveLookbookSpeedSeconds(track);
+  const duration = 120; // CSSで120sに統一されているため、120sを使用
   
   // Calculate desired position
   let desiredTx;
@@ -718,10 +702,8 @@ if (isInstagramWebView) {
       document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
-        // 速度を正しく設定（Instagram WebViewでも169s）
-        const speed = resolveLookbookSpeedSeconds(track);
-        track.dataset.speed = String(speed);
-        track.dataset.baseSpeed = String(speed);
+        // CSSで完全に制御するため、速度設定は削除
+        // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
       });
       
       // Instagram WebViewでLookbookコンテナの高さを強制的に設定（固定値で統一）
@@ -753,10 +735,8 @@ if (isInstagramWebView) {
           document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
             track.style.removeProperty('animation');
             track.style.removeProperty('animation-play-state');
-            // 速度を正しく設定（Instagram WebViewでも169s）
-            const speed = resolveLookbookSpeedSeconds(track);
-            track.dataset.speed = String(speed);
-            track.dataset.baseSpeed = String(speed);
+            // CSSで完全に制御するため、速度設定は削除
+            // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
           });
         } catch (error) {
           console.error('[Lookbook] Instagram WebView: visibilitychange再初期化エラー:', error);
@@ -793,9 +773,8 @@ if (isInstagramWebView) {
               track.style.removeProperty('animation-play-state');
               track.style.removeProperty('transform');
               // 速度を正しく設定（Instagram WebViewでも169s）
-              const speed = resolveLookbookSpeedSeconds(track);
-              track.dataset.speed = String(speed);
-              track.dataset.baseSpeed = String(speed);
+              // CSSで完全に制御するため、速度設定は削除
+              // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
               // リフローを強制してCSSアニメーションを再適用
               track.offsetHeight;
             });
