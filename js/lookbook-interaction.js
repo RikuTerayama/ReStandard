@@ -469,11 +469,18 @@ function startAutoScroll(track) {
         
         if (!track.isDragging) {
           console.log('Lookbook: 画面内検知 - アニメーション再開');
+          // 即座に再開
           forceResumeLookbookAnimation();
+          // 追加のタイマーで確実に再開
+          setTimeout(() => {
+            if (!track.isDragging && !track.classList.contains('dragging')) {
+              forceResumeLookbookAnimation();
+            }
+          }, 100);
         }
       }
     });
-  }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
+  }, { threshold: 0.05 }); // 閾値を0.05に下げてより敏感に反応
   
   visibilityObserver.observe(track);
   
