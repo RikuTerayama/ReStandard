@@ -589,6 +589,17 @@ function startAutoScroll(track) {
             if (!track.isDragging) {
               console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
               forceResumeAnimation();
+              // 複数回実行して確実に再開
+              setTimeout(() => {
+                if (!track.isDragging && !track.classList.contains('dragging')) {
+                  forceResumeAnimation();
+                }
+              }, 50);
+              setTimeout(() => {
+                if (!track.isDragging && !track.classList.contains('dragging')) {
+                  forceResumeAnimation();
+                }
+              }, 150);
             }
           }
         }
@@ -609,7 +620,7 @@ function startAutoScroll(track) {
             }
           }
         }, 100);
-      }, 200); // タイマーを200msに短縮してより敏感に反応
+      }, 150); // タイマーを150msに短縮してより敏感に反応
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
