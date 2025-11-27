@@ -259,17 +259,14 @@ function pauseWhenOutOfView(track) {
       
       if (ent.isIntersecting) {
         // 画面内に入ったらアニメーションを確実に再開
-        const speed = parseFloat(track.dataset.speed || 80);
-        const direction = track.dataset.direction || 'left';
-        const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-        
-        // アニメーションを完全にリセットして再開
-        track.style.animation = 'none';
+        // CSSで完全に制御するため、インラインスタイルは削除
+        // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+        track.style.removeProperty('animation-duration');
         track.offsetHeight; // リフローを強制
-        track.style.animation = `${key} ${speed}s linear infinite`;
-        track.style.animationPlayState = 'running';
         
-        console.log('pauseWhenOutOfView: Collectionアニメーション再開', { speed, direction });
+        console.log('pauseWhenOutOfView: Collectionアニメーション再開（CSSで制御）');
       } else {
         // 画面外に出たら一時停止
         track.style.animationPlayState = 'paused';
@@ -309,8 +306,11 @@ function initAutoScroll(track){
     track.isDragging = false;
     track.classList.remove('dragging');
     
-    track.style.setProperty('animation', `${key} ${duration}s linear infinite`, 'important');
-    track.style.setProperty('animation-play-state', 'running', 'important');
+    // CSSで完全に制御するため、インラインスタイルは削除
+    // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    track.style.removeProperty('animation-duration');
   }
   
   // 再度draggingクラスを確認して削除
@@ -325,8 +325,9 @@ function initAutoScroll(track){
       console.log('initAutoScroll: draggingクラスを削除');
     }
     
+    // CSSで完全に制御するため、インラインスタイルは削除
     if (!isLookbook) {
-      track.style.setProperty('animation-play-state', 'running', 'important');
+      track.style.removeProperty('animation-play-state');
     }
   });
   track.style.willChange = 'transform';
@@ -622,15 +623,13 @@ const initSections = () => {
                 }
                 
                 if (!track.isDragging) {
-                  const speed = parseFloat(track.dataset.speed || 80);
-                  const direction = track.dataset.direction || 'left';
-                  const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-                  
-                  track.style.animation = 'none';
+                  // CSSで完全に制御するため、インラインスタイルは削除
+                  // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+                  track.style.removeProperty('animation');
+                  track.style.removeProperty('animation-play-state');
+                  track.style.removeProperty('animation-duration');
                   track.offsetHeight;
-                  track.style.animation = `${key} ${speed}s linear infinite`;
-                  track.style.animationPlayState = 'running';
-                  console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - アニメーション再開`);
+                  console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - アニメーション再開（CSSで制御）`);
                 }
               }
             });
@@ -659,15 +658,13 @@ const initSections = () => {
                   }
                   
                   if (!track.isDragging) {
-                    const speed = parseFloat(track.dataset.speed || 80);
-                    const direction = track.dataset.direction || 'left';
-                    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-                    
-                    track.style.animation = 'none';
+                    // CSSで完全に制御するため、インラインスタイルは削除
+                    // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+                    track.style.removeProperty('animation');
+                    track.style.removeProperty('animation-play-state');
+                    track.style.removeProperty('animation-duration');
                     track.offsetHeight;
-                    track.style.animation = `${key} ${speed}s linear infinite`;
-                    track.style.animationPlayState = 'running';
-                    console.log(`[INIT] Collection Track ${index + 1}: スクロール終了後、アニメーション再開`);
+                    console.log(`[INIT] Collection Track ${index + 1}: スクロール終了後、アニメーション再開（CSSで制御）`);
                   }
                 }
               }
@@ -695,12 +692,13 @@ const initSections = () => {
       if (track.classList.contains('collection-track')) {
         const computedAnimation = getComputedStyle(track).animation;
         if (computedAnimation === 'none' || !computedAnimation || computedAnimation.includes('none')) {
-          const speed = parseFloat(track.dataset.speed || 80);
-          const direction = track.dataset.direction || 'left';
-          const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-          track.style.animation = `${key} ${speed}s linear infinite`;
-          track.style.animationPlayState = 'running';
-          console.log(`[INIT] Track ${index + 1}: アニメーションを再設定`);
+          // CSSで完全に制御するため、インラインスタイルは削除
+          // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
+          track.style.removeProperty('animation-duration');
+          track.offsetHeight;
+          console.log(`[INIT] Track ${index + 1}: アニメーションを再設定（CSSで制御）`);
         }
       }
     }, 100);
@@ -811,17 +809,13 @@ const initSections = () => {
                 }
                 
                 if (!track.isDragging) {
-                  const speed = 150; // 固定値で統一（collection-interaction.jsと一致）
-                  const direction = track.dataset.direction || 'left';
-                  const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-                  
-                  track.style.animation = 'none';
+                  // CSSで完全に制御するため、インラインスタイルは削除
+                  // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+                  track.style.removeProperty('animation');
+                  track.style.removeProperty('animation-play-state');
+                  track.style.removeProperty('animation-duration');
                   track.offsetHeight;
-                  track.style.animation = `${key} ${speed}s linear infinite`;
-                  track.style.animationPlayState = 'running';
-                  track.dataset.speed = String(speed);
-                  track.dataset.baseSpeed = String(speed);
-                  console.log(`[LOAD] Collection Track ${index + 1}: 画面内検知 - アニメーション再開`);
+                  console.log(`[LOAD] Collection Track ${index + 1}: 画面内検知 - アニメーション再開（CSSで制御）`);
                 }
               }
             });
@@ -849,17 +843,13 @@ const initSections = () => {
                   }
                   
                   if (!track.isDragging) {
-                    const speed = 150; // 固定値で統一（collection-interaction.jsと一致）
-                    const direction = track.dataset.direction || 'left';
-                    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-                    
-                    track.style.animation = 'none';
+                    // CSSで完全に制御するため、インラインスタイルは削除
+                    // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+                    track.style.removeProperty('animation');
+                    track.style.removeProperty('animation-play-state');
+                    track.style.removeProperty('animation-duration');
                     track.offsetHeight;
-                    track.style.animation = `${key} ${speed}s linear infinite`;
-                    track.style.animationPlayState = 'running';
-                    track.dataset.speed = String(speed);
-                    track.dataset.baseSpeed = String(speed);
-                    console.log(`[LOAD] Collection Track ${index + 1}: スクロール終了後、アニメーション再開`);
+                    console.log(`[LOAD] Collection Track ${index + 1}: スクロール終了後、アニメーション再開（CSSで制御）`);
                   }
                 }
               }
