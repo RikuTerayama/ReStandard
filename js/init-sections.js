@@ -2,31 +2,8 @@
    Marquee initializer (Collection / Lookbook 共通) 2025-01-18
    ========================================================= */
 
-function getLookbookSpeedSec(track) {
-  // 画面幅に応じた直接値を返す（CSS変数に依存しない）
-  // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
-  const width = window.innerWidth;
-  if (width <= 480) {
-    return 169; // スマホ: 30%遅く（169s = 130s × 1.3）
-  } else if (width <= 1024) {
-    return 130; // タブレット: 30%遅く（130s = 100s × 1.3）
-  } else {
-    return 130; // PC: 30%遅く（130s = 100s × 1.3）
-  }
-}
-
-function resolveCssSpeedSeconds(track, fallback = 80) {
-  // 画面幅に応じた直接値を返す（CSS変数に依存しない）
-  // スマホはより遅く（70s）、タブレット/PCはCollectionと同じ速度
-  const width = window.innerWidth;
-  if (width <= 480) {
-    return 169; // スマホ: 30%遅く（169s = 130s × 1.3）
-  } else if (width <= 1024) {
-    return 130; // タブレット: 30%遅く（130s = 100s × 1.3）
-  } else {
-    return 130; // PC: 30%遅く（130s = 100s × 1.3）
-  }
-}
+// 関数を削除 - CSSで完全に制御するため不要
+// Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
 
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
@@ -316,12 +293,8 @@ function initAutoScroll(track){
   let duration;
 
   if (isLookbook) {
-    // LookbookはCSSで完全に制御するため、インラインスタイルは設定しない
-    const speedSec = getLookbookSpeedSec(track);
-    const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
-    track.dataset.speed = String(cssSpeed);
-    track.dataset.baseSpeed = String(cssSpeed);
-    // CSSの!importantルールが適用されるように、インラインスタイルは削除
+    // LookbookはCSSで完全に制御するため、インラインスタイルは削除
+    // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
     track.style.removeProperty('animation');
     track.style.removeProperty('animation-play-state');
   } else {
@@ -429,8 +402,8 @@ function applyInitialDelay(track, desiredTxPx) {
   const isLookbook = track.classList.contains('lookbook-track');
   // Lookbookの場合は、JavaScript関数から直接速度を取得（CSS適用前でも正しい値が取得できる）
   const durSec = isLookbook 
-    ? getLookbookSpeedSec(track)
-    : parseFloat(getComputedStyle(track).animationDuration) || 80; // フォールバック値
+    ? 120 // CSSで120sに統一されているため、120sを使用
+    : 50; // CSSで50sに統一されているため、50sを使用
   const dir = (track.dataset.direction || 'left').toLowerCase();
 
   // 希望位置を keyframes の可動範囲に正規化
@@ -461,8 +434,8 @@ function alignTrackStart(track) {
   // READ all layout properties first
   const dir = (track.dataset.direction || 'left').toLowerCase();
   const isLookbook = track.classList.contains('lookbook-track');
-  // Collectionは固定値150sを使用（calcSpeedSecを使わない）
-  const dur  = isLookbook ? getLookbookSpeedSec(track) : 150;
+  // CSSで速度が統一されているため、直接値を使用
+  const dur  = isLookbook ? 120 : 50; // Lookbook: 120s, Collection: 50s
   const key  = isLookbook ? 'lookbook-scroll' : (dir === 'right' ? 'scroll-right' : 'scroll-left');
   const desired = computeDesiredTx(track, target, align);
 
@@ -773,11 +746,7 @@ const initSections = () => {
       document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
         if (track.classList.contains('lookbook-track')) {
           // LookbookはCSSで完全に制御するため、インラインスタイルは削除
-          const speedSec = getLookbookSpeedSec(track);
-          const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
-          track.dataset.speed = String(cssSpeed);
-          track.dataset.baseSpeed = String(cssSpeed);
-          // インラインスタイルを確実に削除（複数回実行）
+          // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
           track.style.removeProperty('animation');
           track.style.removeProperty('animation-play-state');
           requestAnimationFrame(() => {
@@ -787,13 +756,13 @@ const initSections = () => {
           track.classList.remove('dragging');
           track.isDragging = false;
         } else {
-          const dir = track.dataset.direction || 'left';
-          const speed = 150; // 固定値で統一（collection-interaction.jsと一致）
-          const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
-          track.style.setProperty('animation', `${key} ${speed}s linear infinite`, 'important');
-          track.style.setProperty('animation-play-state', 'running', 'important');
-          track.dataset.speed = String(speed);
-          track.dataset.baseSpeed = String(speed);
+          // CollectionはCSSで完全に制御するため、インラインスタイルは削除
+          // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
+          track.style.removeProperty('animation-duration');
+          track.classList.remove('dragging');
+          track.isDragging = false;
         }
       });
     }, 200);
@@ -818,11 +787,8 @@ const initSections = () => {
           // リフローを強制してCSSアニメーションを再適用
           track.offsetHeight;
         });
-        // データ属性も更新
-        const speedSec = getLookbookSpeedSec(track);
-        const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
-        track.dataset.speed = String(cssSpeed);
-        track.dataset.baseSpeed = String(cssSpeed);
+        // CSSで完全に制御するため、データ属性の更新は不要
+        // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
       });
       
       // Collection Trackのイベントハンドラを設定（DOMContentLoadedで設定されなかった場合のフォールバック）
@@ -916,11 +882,8 @@ const initSections = () => {
     initTimeout = setTimeout(() => {
       document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
         if (track.classList.contains('lookbook-track')) {
-          const speedSec = getLookbookSpeedSec(track);
-          const cssSpeed = resolveCssSpeedSeconds(track, speedSec);
-          track.dataset.speed = String(cssSpeed);
-          track.dataset.baseSpeed = String(cssSpeed);
-          // インラインスタイルを確実に削除
+          // CSSで完全に制御するため、インラインスタイルは削除
+          // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
           track.style.removeProperty('animation');
           track.style.removeProperty('animation-play-state');
           requestAnimationFrame(() => {
