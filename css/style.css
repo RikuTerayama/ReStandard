@@ -2729,6 +2729,7 @@ html body #lookbook .lookbook-container {
     padding-block: 1rem !important;
     overflow: visible !important;
     align-items: center !important;
+    min-height: calc(320px + 2rem) !important; /* 画像が切れないように */
   }
 }
 
@@ -2793,12 +2794,12 @@ html body #lookbook .lookbook-container {
   #lookbook .lookbook-item a img,
   html body #lookbook .lookbook-track a img,
   html body #lookbook .lookbook-item a img {
-    width: 200px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ、大きく表示） */
+    width: 220px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ、大きく表示） */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 267px !important; /* 固定値で統一（幅の約1.33倍、画像が切れないように） */
+    max-height: 293px !important; /* 固定値で統一（幅の約1.33倍、画像が切れないように） */
     min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
-    min-width: 200px !important; /* 最小幅を設定して画像が縮小されないように */
-    max-width: 200px !important; /* 最大幅を設定して画像が拡大されないように */
+    min-width: 220px !important; /* 最小幅を設定して画像が縮小されないように */
+    max-width: 220px !important; /* 最大幅を設定して画像が拡大されないように */
     /* HTMLのwidth/height属性を上書き */
     aspect-ratio: auto !important;
     object-fit: contain !important;
@@ -2819,12 +2820,12 @@ html body #lookbook .lookbook-container {
     #lookbook .lookbook-item a img,
     html body #lookbook .lookbook-track a img,
     html body #lookbook .lookbook-item a img {
-      width: 200px !important;
+      width: 220px !important;
       height: auto !important;
-      max-height: 267px !important;
+      max-height: 293px !important;
       min-height: 0 !important;
-      min-width: 200px !important;
-      max-width: 200px !important;
+      min-width: 220px !important;
+      max-width: 220px !important;
       aspect-ratio: auto !important;
       object-fit: contain !important;
       flex-shrink: 0 !important;
@@ -2857,7 +2858,7 @@ html body #lookbook .lookbook-container {
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
     height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: 267px !important; /* 画像のmax-heightに合わせて調整 */
+    min-height: 293px !important; /* 画像のmax-heightに合わせて調整 */
     max-height: none !important; /* 最大高さの制限を解除 */
     overflow: visible !important; /* 画像が切れないように */
   }
