@@ -490,7 +490,7 @@ function startAutoScroll(track) {
         }
       }
     });
-  }, { threshold: 0.01, rootMargin: '50px' }); // 閾値を0.01に下げ、rootMarginを追加してより敏感に反応
+  }, { threshold: 0.01, rootMargin: '100px' }); // 閾値を0.01に下げ、rootMarginを100pxに拡大してより敏感に反応
   
   visibilityObserver.observe(track);
   
@@ -540,7 +540,7 @@ function startAutoScroll(track) {
         const lookbookSection = document.getElementById('lookbook');
         if (lookbookSection) {
           const rect = lookbookSection.getBoundingClientRect();
-          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+          const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100; // マージンを追加してより敏感に反応
           
           console.log('Lookbook スクロール終了検知:', {
             scrollDirection,
@@ -589,7 +589,7 @@ function startAutoScroll(track) {
             const lookbookSection = document.getElementById('lookbook');
             if (lookbookSection) {
               const rect = lookbookSection.getBoundingClientRect();
-              const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+              const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100;
               if (isInViewport) {
                 console.log('Lookbook: 追加タイマーでアニメーション再開');
                 forceResumeLookbookAnimation();
@@ -597,7 +597,7 @@ function startAutoScroll(track) {
             }
           }
         }, 100);
-      }, 150); // タイマーを150msに短縮してより敏感に反応
+      }, 100); // タイマーを150msから100msに短縮してより敏感に反応 // タイマーを150msに短縮してより敏感に反応
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
@@ -687,7 +687,7 @@ window.addEventListener('load', () => {
     if (isInstagramWebView && window.innerWidth <= 480) {
       const container = document.querySelector('#lookbook .lookbook-container');
       if (container) {
-        const expectedMinHeight = Math.max(218, Math.min(window.innerWidth * 0.56, 267)) + 32; // 2rem = 32px
+        const expectedMinHeight = 373 + 32; // 固定値373px（画像のmax-height）+ 2rem = 32px = 405px
         container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
         container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
         console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
@@ -804,7 +804,7 @@ if (isInstagramWebView) {
             if (window.innerWidth <= 480) {
               const container = document.querySelector('#lookbook .lookbook-container');
               if (container) {
-                const expectedMinHeight = Math.max(218, Math.min(window.innerWidth * 0.56, 267)) + 32; // 2rem = 32px
+                const expectedMinHeight = 373 + 32; // 固定値373px（画像のmax-height）+ 2rem = 32px = 405px
                 container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
                 container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
                 console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
