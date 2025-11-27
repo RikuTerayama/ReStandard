@@ -68,20 +68,26 @@ function ensureLoopWidth(track) {
   const needsMoreContent = () => totalWidth < maxLoopWidth || clonesAdded < minClones;
 
   while (needsMoreContent() && clonesAdded < 80) {
-    const fragment = document.createDocumentFragment();
-    originals.forEach((node) => {
-      const clone = node.cloneNode(true);
-      clone.querySelectorAll('img').forEach((img) => {
-        if (img.hasAttribute('data-lcp')) return; // skip LCP
-        if (!img.hasAttribute('loading')) {
-          img.setAttribute('loading', 'lazy');
-        }
-        if (img.hasAttribute('fetchpriority')) {
-          img.removeAttribute('fetchpriority');
-        }
+      const fragment = document.createDocumentFragment();
+      originals.forEach((node) => {
+        const clone = node.cloneNode(true);
+        clone.querySelectorAll('img').forEach((img) => {
+          if (img.hasAttribute('data-lcp')) return; // skip LCP
+          // Collection画像にはlazy loadingを適用しない（Safariで表示されない問題を回避）
+          const isCollectionImage = img.closest('#collection') !== null;
+          if (!isCollectionImage && !img.hasAttribute('loading')) {
+            img.setAttribute('loading', 'lazy');
+          }
+          // Collection画像のloading属性を削除（Safariで確実に表示されるように）
+          if (isCollectionImage && img.hasAttribute('loading')) {
+            img.removeAttribute('loading');
+          }
+          if (img.hasAttribute('fetchpriority')) {
+            img.removeAttribute('fetchpriority');
+          }
+        });
+        fragment.appendChild(clone);
       });
-      fragment.appendChild(clone);
-    });
     track.appendChild(fragment);
     totalWidth += segmentWidth;
     clonesAdded++;
