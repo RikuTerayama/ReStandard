@@ -471,16 +471,26 @@ function startAutoScroll(track) {
           console.log('Lookbook: 画面内検知 - アニメーション再開');
           // 即座に再開
           forceResumeLookbookAnimation();
-          // 追加のタイマーで確実に再開
+          // 追加のタイマーで確実に再開（複数回実行）
           setTimeout(() => {
             if (!track.isDragging && !track.classList.contains('dragging')) {
               forceResumeLookbookAnimation();
             }
-          }, 100);
+          }, 50);
+          setTimeout(() => {
+            if (!track.isDragging && !track.classList.contains('dragging')) {
+              forceResumeLookbookAnimation();
+            }
+          }, 150);
+          setTimeout(() => {
+            if (!track.isDragging && !track.classList.contains('dragging')) {
+              forceResumeLookbookAnimation();
+            }
+          }, 300);
         }
       }
     });
-  }, { threshold: 0.05 }); // 閾値を0.05に下げてより敏感に反応
+  }, { threshold: 0.01, rootMargin: '50px' }); // 閾値を0.01に下げ、rootMarginを追加してより敏感に反応
   
   visibilityObserver.observe(track);
   
@@ -556,6 +566,17 @@ function startAutoScroll(track) {
               // CSSで制御するため、インラインスタイルを削除してCSSアニメーションを再開
               console.log('スクロール終了後、Lookbookアニメーション再開', { scrollDirection });
               forceResumeLookbookAnimation();
+              // 複数回実行して確実に再開
+              setTimeout(() => {
+                if (!track.isDragging && !track.classList.contains('dragging')) {
+                  forceResumeLookbookAnimation();
+                }
+              }, 50);
+              setTimeout(() => {
+                if (!track.isDragging && !track.classList.contains('dragging')) {
+                  forceResumeLookbookAnimation();
+                }
+              }, 150);
             }
           }
         }
@@ -576,7 +597,7 @@ function startAutoScroll(track) {
             }
           }
         }, 100);
-      }, 200); // タイマーを200msに短縮してより敏感に反応
+      }, 150); // タイマーを150msに短縮してより敏感に反応
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
