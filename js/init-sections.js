@@ -455,8 +455,8 @@ function alignTrackStart(track) {
   // READ all layout properties first
   const dir = (track.dataset.direction || 'left').toLowerCase();
   const isLookbook = track.classList.contains('lookbook-track');
-  const base = parseFloat(track.dataset.baseSpeed || 80); // デフォルト値を80に修正（Collectionと同じ）
-  const dur  = isLookbook ? getLookbookSpeedSec(track) : calcSpeedSec(base);
+  // Collectionは固定値150sを使用（calcSpeedSecを使わない）
+  const dur  = isLookbook ? getLookbookSpeedSec(track) : 150;
   const key  = isLookbook ? 'lookbook-scroll' : (dir === 'right' ? 'scroll-right' : 'scroll-left');
   const desired = computeDesiredTx(track, target, align);
 
@@ -467,7 +467,8 @@ function alignTrackStart(track) {
     track.style.removeProperty('animation-play-state');
     applyInitialDelay(track, desired);
   } else {
-    track.style.animation = `${key} ${dur}s linear infinite`;
+    // Collectionは固定値150sを使用（確実に統一）
+    track.style.animation = `${key} 150s linear infinite`;
     track.style.animationPlayState = 'paused';
     applyInitialDelay(track, desired);
     track.style.animationPlayState = 'running';
@@ -838,7 +839,7 @@ const initSections = () => {
                 }
                 
                 if (!track.isDragging) {
-                  const speed = parseFloat(track.dataset.speed || 80);
+                  const speed = 150; // 固定値で統一（collection-interaction.jsと一致）
                   const direction = track.dataset.direction || 'left';
                   const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
                   
@@ -846,6 +847,8 @@ const initSections = () => {
                   track.offsetHeight;
                   track.style.animation = `${key} ${speed}s linear infinite`;
                   track.style.animationPlayState = 'running';
+                  track.dataset.speed = String(speed);
+                  track.dataset.baseSpeed = String(speed);
                   console.log(`[LOAD] Collection Track ${index + 1}: 画面内検知 - アニメーション再開`);
                 }
               }
