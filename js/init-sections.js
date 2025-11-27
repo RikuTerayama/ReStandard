@@ -268,9 +268,10 @@ function pauseWhenOutOfView(track) {
         
         console.log('pauseWhenOutOfView: Collectionアニメーション再開（CSSで制御）');
       } else {
-        // 画面外に出たら一時停止
-        track.style.animationPlayState = 'paused';
-        console.log('pauseWhenOutOfView: Collectionアニメーション一時停止');
+        // 画面外に出たら一時停止（CSSで制御するため、インラインスタイルは削除）
+        track.style.removeProperty('animation-play-state');
+        // CSSでpausedを設定（CSSルールで制御）
+        console.log('pauseWhenOutOfView: Collectionアニメーション一時停止（CSSで制御）');
       }
     });
   }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
@@ -295,19 +296,12 @@ function initAutoScroll(track){
     track.style.removeProperty('animation');
     track.style.removeProperty('animation-play-state');
   } else {
-    // Collection: すべての環境で150sに統一（collection-interaction.jsと一致）
-    const speed = 150; // 固定値で統一
-    duration = speed; // calcSpeedSecを使わず、直接150sを使用
-    track.dataset.baseSpeed = String(speed);
-    track.dataset.speed = String(speed);
-    key = dir === 'right' ? 'scroll-right' : 'scroll-left';
-    
-    // draggingクラスを確実に削除してからアニメーションを設定
+    // Collection: CSSで50sに統一されているため、インラインスタイルは削除
+    // draggingクラスを確実に削除
     track.isDragging = false;
     track.classList.remove('dragging');
     
     // CSSで完全に制御するため、インラインスタイルは削除
-    // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
     track.style.removeProperty('animation');
     track.style.removeProperty('animation-play-state');
     track.style.removeProperty('animation-duration');
@@ -447,11 +441,12 @@ function alignTrackStart(track) {
     track.style.removeProperty('animation-play-state');
     applyInitialDelay(track, desired);
   } else {
-    // Collectionは固定値150sを使用（確実に統一）
-    track.style.animation = `${key} 150s linear infinite`;
-    track.style.animationPlayState = 'paused';
+    // CollectionはCSSで50sに統一されているため、インラインスタイルは削除
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    track.style.removeProperty('animation-duration');
     applyInitialDelay(track, desired);
-    track.style.animationPlayState = 'running';
+    track.offsetHeight; // リフローを強制してCSSアニメーションを適用
   }
 }
 /* ===== /start alignment helpers ===== */
@@ -462,6 +457,12 @@ function initLazyLoadFadeIn() {
   
   lazyImages.forEach(img => {
     if (img.hasAttribute('data-lcp')) return; // skip LCP
+    // Collection画像のloading属性を削除（Safariで確実に表示されるように）
+    const isCollectionImage = img.closest('#collection') !== null;
+    if (isCollectionImage && img.hasAttribute('loading')) {
+      img.removeAttribute('loading');
+      return; // Collection画像はlazy loadingを適用しない
+    }
     img.addEventListener('load', () => {
       img.classList.add('loaded');
     });
