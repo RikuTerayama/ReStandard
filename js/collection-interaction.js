@@ -400,13 +400,15 @@ function startAutoScroll(track) {
   const isReverse = track.classList.contains('reverse');
   const scrollDirection = isReverse ? 'right' : 'left';
   
-  // 開始位置の調整
+  // 開始位置の調整（速度を150sに固定してから実行）
+  track.dataset.speed = '150';
+  track.dataset.baseSpeed = '150';
   alignTrackStart(track, scrollDirection);
   
   // アニメーション開始（インラインスタイルで確実に設定）
-  track.style.animation = `scroll-${scrollDirection} ${speed}s linear infinite`;
+  track.style.animation = `scroll-${scrollDirection} 150s linear infinite`;
   track.style.animationPlayState = 'running';
-  track.style.animationDuration = `${speed}s`;
+  track.style.animationDuration = '150s';
   
   // スクロール後の継続性を確保（スマホ対応強化）
   track.addEventListener('animationiteration', function() {
@@ -696,7 +698,7 @@ function alignTrackStart(track, direction) {
   const imageWidth = targetImage.getBoundingClientRect().width;
   const trackWidth = track.parentElement.offsetWidth;
   const segmentWidth = track._segmentWidth;
-  const duration = parseFloat(track.dataset.speed || 55);
+  const duration = 150; // 固定値150sを使用（すべての環境で統一）
   
   // Calculate desired position
   let desiredTx;
