@@ -2790,7 +2790,7 @@ html body #collection .collection-track a img {
     }
   }
   
-  /* Instagram WebView検出用のクラスでも同じサイズを適用 */
+  /* Instagram WebView検出用のクラスでも同じサイズを適用（60vwに統一） */
   body.instagram-webview #lookbook .lookbook-track img,
   body.instagram-webview #lookbook .lookbook-item img,
   body.instagram-webview html body #lookbook .lookbook-track img,
@@ -2800,32 +2800,32 @@ html body #collection .collection-track a img {
   body.instagram-webview #lookbook .lookbook-item a img,
   body.instagram-webview html body #lookbook .lookbook-track a img,
   body.instagram-webview html body #lookbook .lookbook-item a img {
-    width: 300px !important;
+    width: 60vw !important; /* 画面幅の60%に統一 */
     height: auto !important;
-    max-height: 400px !important;
+    max-height: 80vw !important; /* 画面幅の80% */
     min-height: 0 !important;
-    min-width: 300px !important;
+    min-width: 200px !important;
     max-width: 300px !important;
     aspect-ratio: auto !important;
     object-fit: contain !important;
     display: block !important;
   }
   
-  /* スマホ版: トラックの高さを画像の高さに合わせる */
+  /* スマホ版: トラックの高さを画像の高さに合わせる（画面幅に対する%で指定） */
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
     height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: 400px !important; /* 画像のmax-heightに合わせて調整 */
+    min-height: 80vw !important; /* 画像のmax-height（80vw）に合わせて調整 */
     max-height: none !important; /* 最大高さの制限を解除 */
     overflow: visible !important; /* 画像が切れないように */
   }
   
-  /* スマホ版: コンテナの高さを画像の高さに合わせる（固定値で統一） */
+  /* スマホ版: コンテナの高さを画像の高さに合わせる（画面幅に対する%で指定） */
   #lookbook .lookbook-container,
   html body #lookbook .lookbook-container,
   html #lookbook .lookbook-container {
-    min-block-size: calc(400px + 2rem) !important; /* 画像の最大高さ400px + 上下余白2rem = 432px（画像が切れないように） */
-    min-height: calc(400px + 2rem) !important; /* min-block-sizeのフォールバック */
+    min-block-size: calc(80vw + 2rem) !important; /* 画像のmax-height（80vw）+ 上下余白2rem */
+    min-height: calc(80vw + 2rem) !important; /* min-block-sizeのフォールバック */
     max-block-size: none !important; /* 最大高さの制限を解除 */
     max-height: none !important; /* max-block-sizeのフォールバック */
     overflow: visible !important; /* 画像が切れないように */
@@ -2841,8 +2841,8 @@ html body #collection .collection-track a img {
     #lookbook .lookbook-container,
     html body #lookbook .lookbook-container,
     html #lookbook .lookbook-container {
-      min-block-size: calc(400px + 2rem) !important;
-      min-height: calc(400px + 2rem) !important;
+      min-block-size: calc(80vw + 2rem) !important; /* 画像のmax-height（80vw）+ 上下余白2rem */
+      min-height: calc(80vw + 2rem) !important;
       max-block-size: none !important;
       max-height: none !important;
       padding-block: 1rem !important;
@@ -2857,8 +2857,8 @@ html body #collection .collection-track a img {
   /* Instagram WebView検出用のクラスでも同じコンテナ高さを適用 */
   body.instagram-webview #lookbook .lookbook-container,
   body.instagram-webview html body #lookbook .lookbook-container {
-    min-block-size: calc(400px + 2rem) !important;
-    min-height: calc(400px + 2rem) !important;
+    min-block-size: calc(80vw + 2rem) !important; /* 画像のmax-height（80vw）+ 上下余白2rem */
+    min-height: calc(80vw + 2rem) !important;
     max-block-size: none !important;
     max-height: none !important;
     padding-block: 1rem !important;
