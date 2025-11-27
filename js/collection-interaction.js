@@ -381,34 +381,23 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始
 function startAutoScroll(track) {
-  // 速度を統一（すべての環境で150sに統一 - ゆっくり流れる）
-  // HTMLのdata-speed属性は無視し、画面幅に応じた固定値を使用
-  let speed;
-  if (window.innerWidth <= 480) {
-    speed = 150; // スマホ: 150s（ゆっくり流れる）
-  } else if (window.innerWidth <= 1024) {
-    speed = 150; // タブレット: 150s
-  } else {
-    speed = 150; // PC: 150s
-  }
+  // CSSで完全に制御するため、インラインスタイルは削除
+  // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
   
-  // data-speed属性を更新（デバッグ用）
-  track.dataset.speed = String(speed);
-  track.dataset.baseSpeed = String(speed);
-
   // reverse クラスが付いているトラックはスクロール方向を逆にして、21.JPG が右端になるよう初期化
   const isReverse = track.classList.contains('reverse');
   const scrollDirection = isReverse ? 'right' : 'left';
   
-  // 開始位置の調整（速度を150sに固定してから実行）
-  track.dataset.speed = '150';
-  track.dataset.baseSpeed = '150';
+  // 開始位置の調整（CSSで速度が50sに統一されているため、50sを使用）
   alignTrackStart(track, scrollDirection);
   
-  // アニメーション開始（インラインスタイルで確実に設定）
-  track.style.animation = `scroll-${scrollDirection} 150s linear infinite`;
-  track.style.animationPlayState = 'running';
-  track.style.animationDuration = '150s';
+  // インラインスタイルを削除してCSSアニメーションを適用
+  track.style.removeProperty('animation');
+  track.style.removeProperty('animation-play-state');
+  track.style.removeProperty('animation-duration');
+  
+  // リフローを強制してCSSアニメーションを再適用
+  track.offsetHeight;
   
   // スクロール後の継続性を確保（スマホ対応強化）
   track.addEventListener('animationiteration', function() {
@@ -448,38 +437,23 @@ function startAutoScroll(track) {
       
       console.log('Collection: アニメーション強制再開開始');
       
-      // アニメーションを完全にリセットして再開
-      // 速度を統一（すべての環境で150s）
-      let speed;
-      if (window.innerWidth <= 480) {
-        speed = 150; // スマホ: 150s
-      } else if (window.innerWidth <= 1024) {
-        speed = 150; // タブレット: 150s
-      } else {
-        speed = 150; // PC: 150s
-      }
-      const direction = track.dataset.direction || 'left';
-      const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
+      // CSSで完全に制御するため、インラインスタイルは削除
+      // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
       
       // 現在のアニメーション状態を確認
       const currentAnimation = getComputedStyle(track).animation;
       const hasDraggingClass = track.classList.contains('dragging');
       console.log('Collection: 現在のアニメーション状態:', { 
         currentAnimation, 
-        speed, 
-        direction,
         hasDraggingClass,
         isDragging: track.isDragging
       });
       
-      // アニメーションを完全にリセット
-      track.style.animation = 'none';
-      track.style.animationPlayState = 'paused';
+      // インラインスタイルを削除してCSSアニメーションを適用
+      track.style.removeProperty('animation');
+      track.style.removeProperty('animation-play-state');
+      track.style.removeProperty('animation-duration');
       track.offsetHeight; // リフローを強制
-      
-      // アニメーションを再設定
-      track.style.animation = `${key} ${speed}s linear infinite`;
-      track.style.animationPlayState = 'running';
       
       // 再設定後の状態を確認
       setTimeout(() => {
@@ -698,7 +672,7 @@ function alignTrackStart(track, direction) {
   const imageWidth = targetImage.getBoundingClientRect().width;
   const trackWidth = track.parentElement.offsetWidth;
   const segmentWidth = track._segmentWidth;
-  const duration = 150; // 固定値150sを使用（すべての環境で統一）
+  const duration = 50; // CSSで50sに統一されているため、50sを使用
   
   // Calculate desired position
   let desiredTx;
