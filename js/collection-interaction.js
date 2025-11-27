@@ -640,16 +640,12 @@ function startAutoScroll(track) {
   track.isDragging = false;
   track.classList.remove('dragging');
   
-  // アニメーションがnoneになっている場合は再設定
-  const computedAnimation = getComputedStyle(track).animation;
-  if (computedAnimation === 'none' || !computedAnimation || computedAnimation.includes('none')) {
-    console.log('Collection: アニメーションがnoneになっているため再設定');
-    const speed = parseFloat(track.dataset.speed || 80);
-    const direction = track.dataset.direction || 'left';
-    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-    track.style.animation = `${key} ${speed}s linear infinite`;
-    track.style.animationPlayState = 'running';
-  }
+  // CSSで完全に制御するため、インラインスタイルは削除
+  // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+  track.style.removeProperty('animation');
+  track.style.removeProperty('animation-play-state');
+  track.style.removeProperty('animation-duration');
+  track.offsetHeight; // リフローを強制してCSSアニメーションを適用
 }
 
 // 開始位置の調整
