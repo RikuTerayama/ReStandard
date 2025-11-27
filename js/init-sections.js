@@ -319,12 +319,11 @@ function initAutoScroll(track){
     track.style.removeProperty('animation');
     track.style.removeProperty('animation-play-state');
   } else {
-    let speed = parseInt(track.getAttribute('data-speed') || '80', 10);
-    if (window.innerWidth <= 768)  speed = Math.max(65, speed - 15);
-    if (window.innerWidth <= 480)  speed = Math.max(50, speed - 30);
-
-    duration = calcSpeedSec(speed);
-    track.dataset.baseSpeed = String(speed); // 再計算に使う
+    // Collection: すべての環境で150sに統一（collection-interaction.jsと一致）
+    const speed = 150; // 固定値で統一
+    duration = speed; // calcSpeedSecを使わず、直接150sを使用
+    track.dataset.baseSpeed = String(speed);
+    track.dataset.speed = String(speed);
     key = dir === 'right' ? 'scroll-right' : 'scroll-left';
     
     // draggingクラスを確実に削除してからアニメーションを設定
@@ -782,11 +781,12 @@ const initSections = () => {
           track.isDragging = false;
         } else {
           const dir = track.dataset.direction || 'left';
-          const base = parseFloat(track.dataset.baseSpeed || 80);
-          const sec = calcSpeedSec(base);
+          const speed = 150; // 固定値で統一（collection-interaction.jsと一致）
           const key = dir === 'right' ? 'scroll-right' : 'scroll-left';
-          track.style.setProperty('animation', `${key} ${sec}s linear infinite`, 'important');
+          track.style.setProperty('animation', `${key} ${speed}s linear infinite`, 'important');
           track.style.setProperty('animation-play-state', 'running', 'important');
+          track.dataset.speed = String(speed);
+          track.dataset.baseSpeed = String(speed);
         }
       });
     }, 200);
@@ -874,7 +874,7 @@ const initSections = () => {
                   }
                   
                   if (!track.isDragging) {
-                    const speed = parseFloat(track.dataset.speed || 80);
+                    const speed = 150; // 固定値で統一（collection-interaction.jsと一致）
                     const direction = track.dataset.direction || 'left';
                     const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
                     
@@ -882,6 +882,8 @@ const initSections = () => {
                     track.offsetHeight;
                     track.style.animation = `${key} ${speed}s linear infinite`;
                     track.style.animationPlayState = 'running';
+                    track.dataset.speed = String(speed);
+                    track.dataset.baseSpeed = String(speed);
                     console.log(`[LOAD] Collection Track ${index + 1}: スクロール終了後、アニメーション再開`);
                   }
                 }
