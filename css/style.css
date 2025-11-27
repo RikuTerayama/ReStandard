@@ -19,9 +19,9 @@
     /* 背景帯の上下余白（小画面で少し浅く） */
     --band-pad-block: clamp(16px, 3.2vw, 40px);
     
-    /* 速度設定 */
-    --collection-speed: 80s;
-    --lookbook-speed: 130s; /* Lookbookは30%遅く（PC: 130s） */
+    /* 速度設定 - CSS変数を削除し、直接値で設定 */
+    /* --collection-speed: 80s; 削除 - 直接値50sを使用 */
+    /* --lookbook-speed: 130s; 削除 - 直接値120sを使用 */
     --loop: 45s;
     
     /* 共通設定 */
@@ -498,15 +498,15 @@
   @media (max-width: 1024px) {
     :root {
       --collection-row-h: clamp(140px, 24vw, 200px);
-      --collection-speed: 65s;
-      --lookbook-speed: 100s; /* Lookbookはより遅く（タブレット） */
+      /* --collection-speed: 65s; 削除 - 直接値50sを使用 */
+      /* --lookbook-speed: 100s; 削除 - 直接値120sを使用 */
     }
   }
   
   @media (max-width: 480px) {
     :root {
       --collection-row-h: clamp(150px, 28vw, 220px); /* SP判読性向上 */
-      --collection-speed: 50s;
+      /* --collection-speed: 50s; 削除 - 直接値50sを使用 */
       /* --lookbook-speedは削除（直接値を指定するため） */
     }
     
@@ -678,11 +678,7 @@
   }
   
   /* スマホ版の画像サイズ調整 - Lookbookはより遅く */
-  @media (max-width: 1024px){
-    :root { 
-      --lookbook-speed: 100s; /* Lookbookはより遅く（タブレット） */
-    }
-  }
+  /* @media (max-width: 1024px) は削除 - CSS変数を使用しないため不要 */
   @media (max-width: 480px){
     /* --lookbook-speedは削除（直接値を指定するため） */
     /* PATCH: SP で Lookbook の縦余白を軽くする - 2689行目の設定で統一管理（重複削除） */
@@ -1050,12 +1046,12 @@
     text-align: center !important;
   }
   
-  /* Collection アニメーション確実適用 */
+  /* Collection アニメーション確実適用 - 全環境で50sに統一 */
   .collection-track[data-direction="left"]{
-    animation: scroll-left var(--collection-speed) linear infinite !important; /* 左へスクロール */
+    animation: scroll-left 50s linear infinite !important; /* 全環境で50sに統一 */
   }
   .collection-track[data-direction="right"]{
-    animation: scroll-right var(--collection-speed) linear infinite !important; /* 右へスクロール */
+    animation: scroll-right 50s linear infinite !important; /* 全環境で50sに統一 */
   }
   
   #collection .collection-track.dragging{ 
@@ -1514,94 +1510,38 @@ html body .lookbook-item img {
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
 /* スマホ版（〜480px）：適切な速度（169s） */
-/* より具体的なセレクタで確実に適用（インラインスタイルも上書き） */
-@media (max-width: 480px) {
-  /* すべてのLookbook Trackに適用（インラインスタイルも上書き） */
-  html body #lookbook .lookbook-track:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-  html body #lookbook .lookbook-track[data-speed]:not(.dragging),
-  html body #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
-  html body #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
-  html body #lookbook .lookbook-track[data-speed="169"]:not(.dragging),
-  #lookbook .lookbook-track:not(.dragging),
-  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-  #lookbook .lookbook-track[data-speed]:not(.dragging),
-  #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
-  #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
-  #lookbook .lookbook-track[data-speed="169"]:not(.dragging),
-  #lookbook .lookbook-track[data-speed="50"]:not(.dragging), /* Instagram WebView用 */
-  #lookbook .lookbook-track[data-speed="120"]:not(.dragging),
-  #lookbook .lookbook-track[data-speed="80"]:not(.dragging),
-  .lookbook-track:not(.dragging),
-  html body .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll 169s linear infinite !important; /* スマホ: 169s（適切な速度） */
-    animation-play-state: running !important;
-    animation-duration: 169s !important; /* 確実に適用 */
-    animation-name: lookbook-scroll !important;
-    animation-timing-function: linear !important;
-    animation-iteration-count: infinite !important;
-    /* インラインスタイルを確実に上書き */
-    animation-delay: 0s !important;
-    animation-fill-mode: none !important;
-    animation-direction: normal !important;
-  }
-  
-  /* Instagram WebViewでも同じ速度を適用 */
-  @supports (-webkit-touch-callout: none) {
-    html body #lookbook .lookbook-track:not(.dragging),
-    #lookbook .lookbook-track:not(.dragging),
-    .lookbook-track:not(.dragging) {
-      animation: lookbook-scroll 169s linear infinite !important;
-      animation-play-state: running !important;
-      animation-duration: 169s !important;
-      animation-name: lookbook-scroll !important;
-      animation-timing-function: linear !important;
-      animation-iteration-count: infinite !important;
-    }
-  }
+/* Lookbook アニメーション - 全環境で120sに統一 */
+html body #lookbook .lookbook-track:not(.dragging),
+#lookbook .lookbook-track:not(.dragging),
+.lookbook-track:not(.dragging),
+html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+html body #lookbook .lookbook-track[data-speed]:not(.dragging),
+#lookbook .lookbook-track[style*="animation"]:not(.dragging),
+#lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+#lookbook .lookbook-track[data-speed]:not(.dragging) {
+  animation: lookbook-scroll 120s linear infinite !important; /* 全環境で120sに統一 */
+  animation-play-state: running !important;
+  animation-duration: 120s !important;
+  animation-name: lookbook-scroll !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  animation-delay: 0s !important;
+  animation-fill-mode: none !important;
+  animation-direction: normal !important;
 }
 
-/* タブレット版（481px〜1024px）：適切な速度（130s） */
-@media (min-width: 481px) and (max-width: 1024px) {
+/* Instagram WebViewでも同じ速度を適用 */
+@supports (-webkit-touch-callout: none) {
   html body #lookbook .lookbook-track:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
   #lookbook .lookbook-track:not(.dragging),
-  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 130s linear infinite !important; /* タブレット: 130s（適切な速度） */
+  .lookbook-track:not(.dragging) {
+    animation: lookbook-scroll 120s linear infinite !important; /* 全環境で120sに統一 */
     animation-play-state: running !important;
-    animation-duration: 130s !important; /* 確実に適用 */
+    animation-duration: 120s !important;
     animation-name: lookbook-scroll !important;
     animation-timing-function: linear !important;
     animation-iteration-count: infinite !important;
-    /* インラインスタイルを確実に上書き */
-    animation-delay: 0s !important;
-    animation-fill-mode: none !important;
-    animation-direction: normal !important;
-  }
-}
-
-/* PC版（1025px〜）：適切な速度（130s） */
-@media (min-width: 1025px) {
-  html body #lookbook .lookbook-track:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-  #lookbook .lookbook-track:not(.dragging),
-  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging) {
-    animation: lookbook-scroll 130s linear infinite !important; /* PC: 130s（適切な速度） */
-    animation-play-state: running !important;
-    animation-duration: 130s !important; /* 確実に適用 */
-    animation-name: lookbook-scroll !important;
-    animation-timing-function: linear !important;
-    animation-iteration-count: infinite !important;
-    /* インラインスタイルを確実に上書き */
-    animation-delay: 0s !important;
-    animation-fill-mode: none !important;
-    animation-direction: normal !important;
   }
 }
 
@@ -2673,7 +2613,7 @@ html body #collection .collection-track a img {
     min-height: 0 !important;
   }
   
-  /* @supportsでも適用 */
+  /* @supportsでも適用 - Instagram WebViewでもcontainに統一 */
   @supports (-webkit-touch-callout: none) {
     #collection .collection-track img,
     html body #collection .collection-track img,
@@ -2683,7 +2623,7 @@ html body #collection .collection-track a img {
       max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
       height: auto !important;
       max-height: 140px !important;
-      object-fit: contain !important;
+      object-fit: contain !important; /* coverからcontainに変更 - 横長を防止 */
       display: block !important;
       visibility: visible !important;
       opacity: 1 !important;
@@ -2811,12 +2751,12 @@ html body #collection .collection-track a img {
   #lookbook .lookbook-item a img,
   html body #lookbook .lookbook-track a img,
   html body #lookbook .lookbook-item a img {
-    width: 300px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ、大きく表示） */
+    width: 60vw !important; /* 画面幅の60% */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 400px !important; /* 固定値で統一（幅の約1.33倍、画像が切れないように） */
+    max-height: 80vw !important; /* 画面幅の80%（アスペクト比維持） */
     min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
-    min-width: 300px !important; /* 最小幅を設定して画像が縮小されないように */
-    max-width: 300px !important; /* 最大幅を設定して画像が拡大されないように */
+    min-width: 200px !important; /* 最小幅 */
+    max-width: 300px !important; /* 最大幅 */
     /* HTMLのwidth/height属性を上書き */
     aspect-ratio: auto !important;
     object-fit: contain !important;
@@ -2837,11 +2777,11 @@ html body #collection .collection-track a img {
     #lookbook .lookbook-item a img,
     html body #lookbook .lookbook-track a img,
     html body #lookbook .lookbook-item a img {
-      width: 300px !important;
+      width: 60vw !important; /* 画面幅の60% */
       height: auto !important;
-      max-height: 400px !important;
+      max-height: 80vw !important; /* 画面幅の80% */
       min-height: 0 !important;
-      min-width: 300px !important;
+      min-width: 200px !important;
       max-width: 300px !important;
       aspect-ratio: auto !important;
       object-fit: contain !important;
