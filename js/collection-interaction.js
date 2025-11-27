@@ -381,15 +381,15 @@ function getCurrentTranslateX(track) {
 
 // オートスクロール開始
 function startAutoScroll(track) {
-  // 速度を統一（すべての環境で120sに統一 - ゆっくり流れる）
+  // 速度を統一（すべての環境で150sに統一 - ゆっくり流れる）
   // HTMLのdata-speed属性は無視し、画面幅に応じた固定値を使用
   let speed;
   if (window.innerWidth <= 480) {
-    speed = 120; // スマホ: 120s（ゆっくり流れる）
+    speed = 150; // スマホ: 150s（ゆっくり流れる）
   } else if (window.innerWidth <= 1024) {
-    speed = 120; // タブレット: 120s
+    speed = 150; // タブレット: 150s
   } else {
-    speed = 120; // PC: 120s
+    speed = 150; // PC: 150s
   }
   
   // data-speed属性を更新（デバッグ用）
@@ -447,14 +447,14 @@ function startAutoScroll(track) {
       console.log('Collection: アニメーション強制再開開始');
       
       // アニメーションを完全にリセットして再開
-      // 速度を統一（すべての環境で120s）
+      // 速度を統一（すべての環境で150s）
       let speed;
       if (window.innerWidth <= 480) {
-        speed = 120; // スマホ: 120s
+        speed = 150; // スマホ: 150s
       } else if (window.innerWidth <= 1024) {
-        speed = 120; // タブレット: 120s
+        speed = 150; // タブレット: 150s
       } else {
-        speed = 120; // PC: 120s
+        speed = 150; // PC: 150s
       }
       const direction = track.dataset.direction || 'left';
       const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
