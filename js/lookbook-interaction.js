@@ -498,12 +498,23 @@ function startAutoScroll(track) {
   track._visibilityHandler = visibilityHandler;
   track._visibilityObserver = visibilityObserver;
   
-  // スクロール終了検知（スマホ/PC両対応 - 常に設定）
+  // スクロール終了検知（スマホ/PC両対応 - 常に設定、強化版）
   {
     let scrollTimer;
     let lastScrollTop = 0;
+    let scrollTimeoutId;
     const scrollHandler = function() {
+      // 既存のタイマーをクリア
       clearTimeout(scrollTimer);
+      clearTimeout(scrollTimeoutId);
+      
+      // 即座にdraggingクラスをチェックして削除
+      if (track.classList.contains('dragging') && !track.isDragging) {
+        track.classList.remove('dragging');
+        track.isDragging = false;
+        console.log('Lookbook: スクロール中 - draggingクラスを削除');
+      }
+      
       scrollTimer = setTimeout(function() {
         const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
@@ -543,7 +554,22 @@ function startAutoScroll(track) {
         }
         
         lastScrollTop = currentScrollTop;
-      }, 300); // タイマーを150msから300msに延長
+        
+        // 追加のタイマーで確実に再開
+        scrollTimeoutId = setTimeout(() => {
+          if (!track.isDragging && !track.classList.contains('dragging')) {
+            const lookbookSection = document.getElementById('lookbook');
+            if (lookbookSection) {
+              const rect = lookbookSection.getBoundingClientRect();
+              const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+              if (isInViewport) {
+                console.log('Lookbook: 追加タイマーでアニメーション再開');
+                forceResumeLookbookAnimation();
+              }
+            }
+          }
+        }, 100);
+      }, 200); // タイマーを200msに短縮してより敏感に反応
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
