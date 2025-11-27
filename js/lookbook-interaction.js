@@ -728,7 +728,7 @@ if (isInstagramWebView) {
       if (window.innerWidth <= 480) {
         const container = document.querySelector('#lookbook .lookbook-container');
         if (container) {
-          const expectedMinHeight = 220 + 32; // 固定値220px + 2rem = 32px = 252px
+          const expectedMinHeight = 400 + 32; // 固定値400px（画像のmax-height）+ 2rem = 32px = 432px
           container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
           container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
           console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
@@ -804,7 +804,7 @@ if (isInstagramWebView) {
             if (window.innerWidth <= 480) {
               const container = document.querySelector('#lookbook .lookbook-container');
               if (container) {
-                const expectedMinHeight = 373 + 32; // 固定値373px（画像のmax-height）+ 2rem = 32px = 405px
+                const expectedMinHeight = 400 + 32; // 固定値400px（画像のmax-height）+ 2rem = 32px = 432px
                 container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
                 container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
                 console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
