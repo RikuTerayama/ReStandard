@@ -229,12 +229,17 @@
   
   /* 画像は常に行内に収まる（contain） */
   /* PATCH: Collection 画像の完全表示を徹底 */
-  #collection .collection-track img{
+  #collection .collection-track img,
+  html body #collection .collection-track img,
+  #collection .collection-track a img,
+  html body #collection .collection-track a img {
     height: auto !important;
     max-height: 100% !important; /* トラックの block-size に追従 */
     width: auto !important;
     object-fit: contain !important;
-    display: block;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     border-radius: 0;
     box-shadow: none;
     pointer-events: auto;
@@ -2577,8 +2582,11 @@ div.copyright {
 }
 
 /* Lookbookコンテナの背景は透明のまま */
-.lookbook-container {
+.lookbook-container,
+#lookbook .lookbook-container,
+html body #lookbook .lookbook-container {
   background: transparent !important;
+  overflow: visible !important; /* 画像が切れないように */
 }
 
 /* スマホ表示におけるLookbook背景の縦の長さを短縮 - 2691行目の設定で統一管理（重複削除） */
@@ -2756,6 +2764,7 @@ div.copyright {
   html body #lookbook .lookbook-track {
     height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
     min-height: 280px !important;
+    overflow: visible !important; /* 画像が切れないように */
   }
 }
 
@@ -2784,12 +2793,12 @@ div.copyright {
   #lookbook .lookbook-item a img,
   html body #lookbook .lookbook-track a img,
   html body #lookbook .lookbook-item a img {
-    width: 165px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
+    width: 200px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ、大きく表示） */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 220px !important; /* 固定値で統一（幅の約1.33倍） */
+    max-height: 267px !important; /* 固定値で統一（幅の約1.33倍、画像が切れないように） */
     min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
-    min-width: 165px !important; /* 最小幅を設定して画像が縮小されないように */
-    max-width: 165px !important; /* 最大幅を設定して画像が拡大されないように */
+    min-width: 200px !important; /* 最小幅を設定して画像が縮小されないように */
+    max-width: 200px !important; /* 最大幅を設定して画像が拡大されないように */
     /* HTMLのwidth/height属性を上書き */
     aspect-ratio: auto !important;
     object-fit: contain !important;
@@ -2810,12 +2819,12 @@ div.copyright {
     #lookbook .lookbook-item a img,
     html body #lookbook .lookbook-track a img,
     html body #lookbook .lookbook-item a img {
-      width: 165px !important;
+      width: 200px !important;
       height: auto !important;
-      max-height: 220px !important;
+      max-height: 267px !important;
       min-height: 0 !important;
-      min-width: 165px !important;
-      max-width: 165px !important;
+      min-width: 200px !important;
+      max-width: 200px !important;
       aspect-ratio: auto !important;
       object-fit: contain !important;
       flex-shrink: 0 !important;
@@ -2848,8 +2857,9 @@ div.copyright {
   #lookbook .lookbook-track,
   html body #lookbook .lookbook-track {
     height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: clamp(218px, 56vw, 267px) !important; /* 画像の最大高さに合わせる */
+    min-height: 267px !important; /* 画像のmax-heightに合わせて調整 */
     max-height: none !important; /* 最大高さの制限を解除 */
+    overflow: visible !important; /* 画像が切れないように */
   }
   
   /* スマホ版: コンテナの高さを画像の高さに合わせる（固定値で統一） */
