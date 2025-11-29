@@ -500,20 +500,15 @@ const initSections = () => {
   // lazy-load フェードイン処理を初期化
   initLazyLoadFadeIn();
   
-  // Collection 上段・下段（新構造対応）
-  // Lookbook Trackは lookbook-interaction.js で初期化するため、ここでは Collection Track のみを取得
-  const tracks = document.querySelectorAll('#collection .collection-track');
-  console.log(`[INIT] Total tracks found: ${tracks.length}`);
-  if (window.__QA_MEASURE_LOGS__) {
-    console.log(`[INIT] Total tracks found: ${tracks.length}`);
-  }
+  // Step 5: Collection専用マーキー実装 - 汎用trackロジックから完全に分離
+  // Collection Trackは collection-marquee.js で完全に制御するため、ここでは処理しない
+  // Lookbook Trackのみを処理（汎用trackロジックを使用）
   
-  tracks.forEach((track, index) => {
-    console.log(`[INIT] Track ${index + 1} 初期化開始:`, {
-      isCollection: track.classList.contains('collection-track'),
-      isLookbook: track.classList.contains('lookbook-track'),
-      className: track.className
-    });
+  const lookbookTracks = document.querySelectorAll('#lookbook .lookbook-track');
+  console.log(`[INIT] Lookbook tracks found: ${lookbookTracks.length}`);
+  
+  lookbookTracks.forEach((track, index) => {
+    console.log(`[INIT] Lookbook Track ${index + 1} 初期化開始`);
     
     // Lookbook Trackの場合は、lookbook-interaction.jsの初期化関数を使用
     if (track.classList.contains('lookbook-track')) {
@@ -667,30 +662,24 @@ const initSections = () => {
     });
   });
   
-  // 画面幅が変わったら再計算（速度だけアップデート）
+  // Step 5: Collection専用マーキー実装 - resizeイベントからCollectionを完全に除外
+  // Collectionは collection-marquee.js で完全に制御するため、ここでは処理しない
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      document.querySelectorAll('#collection .collection-track, #lookbook .lookbook-track').forEach(track => {
-        if (track.classList.contains('lookbook-track')) {
-          // LookbookはCSSで完全に制御するため、インラインスタイルは削除
-          // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
+      // Lookbook Trackのみ処理（Collectionは除外）
+      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
+        // LookbookはCSSで完全に制御するため、インラインスタイルは削除
+        // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+        requestAnimationFrame(() => {
           track.style.removeProperty('animation');
           track.style.removeProperty('animation-play-state');
-          requestAnimationFrame(() => {
-            track.style.removeProperty('animation');
-            track.style.removeProperty('animation-play-state');
-          });
-          track.classList.remove('dragging');
-          track.isDragging = false;
-        } else if (track.classList.contains('collection-track')) {
-          // Step 4: CollectionはCSSで完全制御するため、resize時もスタイル操作をしない
-          // CSSでanimation-play-state: running !importantが設定されているため、JSでの操作は不要
-          // draggingクラスのみ削除（念のため）
-          track.classList.remove('dragging');
-          track.isDragging = false;
-        }
+        });
+        track.classList.remove('dragging');
+        track.isDragging = false;
       });
     }, 200);
   });
@@ -718,11 +707,9 @@ const initSections = () => {
         // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
       });
       
-      // Step 3: Collection TrackはCSSで完全制御するため、イベントハンドラは不要
-      // collection-interaction.jsの初期化は既に完了しているはず
-      document.querySelectorAll('#collection .collection-track').forEach((track, index) => {
-        console.log(`[LOAD] Collection Track ${index + 1}: CSSで完全制御（イベントハンドラ不要）`);
-      });
+      // Step 5: Collection専用マーキー実装 - loadイベントからCollectionを完全に除外
+      // Collectionは collection-marquee.js で完全に制御するため、ここでは処理しない
+      console.log('[LOAD] Collection Track: collection-marquee.jsで完全制御（汎用trackロジックから除外）');
     }, 500);
   });
   
