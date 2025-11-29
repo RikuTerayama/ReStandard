@@ -210,18 +210,36 @@ return;
         }
         // loading属性が設定されていないことを確認
         img.loading = 'eager'; // eagerに設定して確実に読み込む
-        // 画像の表示を強制（Google Chromeで確実に表示されるように）
+        // Step 4: Chrome初期表示問題の修正 - 画像の表示を強制
+        // Chromeでは画像が表示されない場合があるため、明示的にスタイルを設定
         img.style.display = 'block';
         img.style.visibility = 'visible';
         img.style.opacity = '1';
+        // Chrome対応: widthとheightを明示的に設定しない（CSSで制御）
+        // width: auto, height: autoを維持することで、CSSのobject-fit: containが正しく機能する
+        img.style.width = 'auto';
+        img.style.height = 'auto';
         // 画像の読み込み完了を待つ
         if (!img.complete) {
           img.addEventListener('load', function() {
             console.log('Collection: 画像読み込み完了', img.src);
+            // Chrome対応: 読み込み完了後もスタイルを維持
+            img.style.display = 'block';
+            img.style.visibility = 'visible';
+            img.style.opacity = '1';
+            img.style.width = 'auto';
+            img.style.height = 'auto';
           }, { once: true });
           img.addEventListener('error', function() {
             console.error('Collection: 画像読み込みエラー', img.src);
           }, { once: true });
+        } else {
+          // Chrome対応: 既に読み込み済みの場合もスタイルを設定
+          img.style.display = 'block';
+          img.style.visibility = 'visible';
+          img.style.opacity = '1';
+          img.style.width = 'auto';
+          img.style.height = 'auto';
         }
       }
     }
@@ -250,10 +268,13 @@ return;
             }
             // loading属性が設定されていないことを確認
             img.loading = 'eager'; // eagerに設定して確実に読み込む
-            // 画像の表示を強制
+            // Step 4: Chrome初期表示問題の修正 - クローン画像の表示も強制
             img.style.display = 'block';
             img.style.visibility = 'visible';
             img.style.opacity = '1';
+            // Chrome対応: widthとheightを明示的に設定しない（CSSで制御）
+            img.style.width = 'auto';
+            img.style.height = 'auto';
           }
         });
         track.appendChild(clone);
@@ -480,20 +501,20 @@ window.addEventListener('pageshow', (event) => {
   // event.persistedに関係なく、すべてのページ遷移で再初期化
   console.log('[Collection] pageshowイベント - 再初期化を実行', { persisted: event.persisted });
   
-  // 画像の読み込み完了を待つ
+  // Step 4: pageshowイベントでの再初期化を簡素化
+  // CollectionアニメーションはCSSで完全制御するため、スタイル操作は不要
   const reinitializeCollection = () => {
     try {
+      // 画像の読み込み完了を待ってから再初期化
       initCollectionTracks();
-      // イベントハンドラを確実に再設定
+      // draggingクラスのみ削除（念のため）
       document.querySelectorAll('.collection-track').forEach(track => {
         track.isDragging = false;
         track.classList.remove('dragging');
-        // startAutoScrollを再実行してイベントハンドラを再設定
-        if (typeof window.startCollectionAutoScroll === 'function') {
-          window.startCollectionAutoScroll(track);
-        }
+        // Step 4: startAutoScrollは再実行しない（CSSで完全制御するため不要）
+        // 初期化時に一度だけ実行されれば、その後はCSSが自動的に制御する
       });
-      console.log('[Collection] pageshowイベント: 再初期化完了');
+      console.log('[Collection] pageshowイベント: 再初期化完了（CSSで完全制御）');
     } catch (error) {
       console.error('[Collection] pageshowイベント: 再初期化エラー', error);
     }
@@ -549,7 +570,8 @@ if (isInstagramWebView) {
   // bodyにクラスを追加してCSSで検出できるようにする
   document.body.classList.add('instagram-webview');
   
-  // Instagram WebViewでは、loadイベント後にも確実に初期化を実行
+  // Step 4: Instagram WebViewでもCSSで完全制御するため、特別な再初期化は不要
+  // loadイベント後にも確実に初期化を実行（画像読み込み待機のため）
   setTimeout(() => {
     console.log('[Collection] Instagram WebView: 遅延初期化を実行');
     try {
@@ -559,22 +581,9 @@ if (isInstagramWebView) {
     }
   }, 1000);
   
-  // ページ可視性変更時にも再初期化
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      console.log('[Collection] Instagram WebView: visibilitychange - 再初期化');
-      setTimeout(() => {
-        try {
-          initCollectionTracks();
-        } catch (error) {
-          console.error('[Collection] Instagram WebView: visibilitychange再初期化エラー:', error);
-        }
-      }, 500);
-    }
-  });
-  
-  // Instagram WebViewでもスクロールイベントハンドラは削除（IntersectionObserverのみで制御）
-  // スクロール中でもアニメーションを継続させるため、スクロール検知による再初期化は不要
+  // Step 4: visibilitychangeでの再初期化を削除（CSSで完全制御するため不要）
+  // CollectionアニメーションはCSSで常時runningとし、JSからは一切制御しない
+  // 再初期化によるスタイル操作が、アニメーション停止の原因になる可能性があるため削除
 }
 
 } // 重複読み込み防止の閉じ括弧
