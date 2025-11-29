@@ -220,10 +220,11 @@
     background: transparent;
   }
   
-  .collection-track.dragging {
+  /* ドラッグ機能を削除したため、draggingクラス関連のCSSも削除 */
+  /* .collection-track.dragging {
     cursor: grabbing;
-    animation: none !important; /* ドラッグ中はCSSアニメ停止 */
-  }
+    animation: none !important;
+  } */
   
   
   /* 画像は常に行内に収まる（contain） */
@@ -664,11 +665,11 @@
     animation: marquee-r var(--loop,45s) linear infinite; 
   }
   
-  /* ドラッグ中はCSSアニメを一時停止（JSが .dragging を付与） */
-  .collection-track.dragging,
+  /* ドラッグ機能を削除したため、draggingクラス関連のCSSも削除 */
+  /* .collection-track.dragging,
   .lookbook-track.dragging{
     animation-play-state: paused !important;
-  }
+  } */
   
   /* 見出しの余白調整（行が食い込むのを防ぐ） */
   #collection .section-title,
@@ -1054,10 +1055,11 @@
     animation: scroll-right 50s linear infinite !important; /* 全環境で50sに統一 */
   }
   
-  #collection .collection-track.dragging{ 
+  /* ドラッグ機能を削除したため、draggingクラス関連のCSSも削除 */
+  /* #collection .collection-track.dragging{ 
     cursor:grabbing; 
-    animation:none !important; /* ドラッグ中のみ停止 */
-  }
+    animation:none !important;
+  } */
   #collection .collection-item{ flex:0 0 auto; height:100%;
     border-radius:12px; overflow:hidden; background:#fff; }
   #collection .collection-item img{ 
@@ -1343,12 +1345,12 @@
   
   /* Lookbook画像サイズは2498行目の設定を採用（競合削除） */
   
-  /* ドラッグ中はアニメ止め & カーソル */
-  .collection-track.dragging,
+  /* ドラッグ機能を削除したため、draggingクラス関連のCSSも削除 */
+  /* .collection-track.dragging,
   .lookbook-track.dragging{
     cursor: grabbing !important;
     animation-play-state: paused !important;
-  }
+  } */
   
   /* ====== Global alignment & typography unification ====== */
   /* 見出し・本文とも言語に依存せず中央揃え（必要箇所のみに限定） */
