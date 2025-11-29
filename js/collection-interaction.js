@@ -159,13 +159,27 @@ return;
     const img = child.querySelector('img');
     if (img) {
       const isCollectionImage = img.closest('#collection') !== null;
-      if (isCollectionImage && img.hasAttribute('loading')) {
-        img.removeAttribute('loading');
+      if (isCollectionImage) {
+        // loading属性を完全に削除（HTML属性も含む）
+        if (img.hasAttribute('loading')) {
+          img.removeAttribute('loading');
+        }
+        // loading属性が設定されていないことを確認
+        img.loading = 'eager'; // eagerに設定して確実に読み込む
+        // 画像の表示を強制（Google Chromeで確実に表示されるように）
+        img.style.display = 'block';
+        img.style.visibility = 'visible';
+        img.style.opacity = '1';
+        // 画像の読み込み完了を待つ
+        if (!img.complete) {
+          img.addEventListener('load', function() {
+            console.log('Collection: 画像読み込み完了', img.src);
+          }, { once: true });
+          img.addEventListener('error', function() {
+            console.error('Collection: 画像読み込みエラー', img.src);
+          }, { once: true });
+        }
       }
-      // 画像の表示を強制（Google Chromeで確実に表示されるように）
-      img.style.display = 'block';
-      img.style.visibility = 'visible';
-      img.style.opacity = '1';
     }
   });
   
@@ -185,13 +199,18 @@ return;
         // クローン画像のloading属性も削除
         clone.querySelectorAll('img').forEach((img) => {
           const isCollectionImage = img.closest('#collection') !== null;
-          if (isCollectionImage && img.hasAttribute('loading')) {
-            img.removeAttribute('loading');
+          if (isCollectionImage) {
+            // loading属性を完全に削除（HTML属性も含む）
+            if (img.hasAttribute('loading')) {
+              img.removeAttribute('loading');
+            }
+            // loading属性が設定されていないことを確認
+            img.loading = 'eager'; // eagerに設定して確実に読み込む
+            // 画像の表示を強制
+            img.style.display = 'block';
+            img.style.visibility = 'visible';
+            img.style.opacity = '1';
           }
-          // 画像の表示を強制
-          img.style.display = 'block';
-          img.style.visibility = 'visible';
-          img.style.opacity = '1';
         });
         track.appendChild(clone);
         cloneCount++;
@@ -505,18 +524,11 @@ function startAutoScroll(track) {
         isDragging: track.isDragging
       });
       
+      // will-changeプロパティを設定してブラウザの最適化を有効化
+      track.style.willChange = 'transform';
+      
       // インラインスタイルを確実に削除してCSSアニメーションを適用
-      // 複数回実行して確実に適用（環境によってタイミングが異なるため）
-      track.style.removeProperty('animation');
-      track.style.removeProperty('animation-play-state');
-      track.style.removeProperty('animation-duration');
-      track.style.removeProperty('animation-name');
-      track.style.removeProperty('animation-timing-function');
-      track.style.removeProperty('animation-iteration-count');
-      track.style.removeProperty('animation-delay');
-      track.offsetHeight; // リフローを強制
-      
-      // requestAnimationFrameで複数回実行して確実に適用
+      // requestAnimationFrameを使用してブラウザのレンダリングサイクルに合わせる
       requestAnimationFrame(() => {
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
@@ -525,44 +537,45 @@ function startAutoScroll(track) {
         track.style.removeProperty('animation-timing-function');
         track.style.removeProperty('animation-iteration-count');
         track.style.removeProperty('animation-delay');
-        track.offsetHeight;
-      });
-      
-      requestAnimationFrame(() => {
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-        track.style.removeProperty('animation-duration');
-        track.style.removeProperty('animation-name');
-        track.style.removeProperty('animation-timing-function');
-        track.style.removeProperty('animation-iteration-count');
-        track.style.removeProperty('animation-delay');
-        track.offsetHeight;
-      });
-      
-      // 追加のタイマーで確実に適用（Google Chromeなどで必要）
-      setTimeout(() => {
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-        track.style.removeProperty('animation-duration');
-        track.style.removeProperty('animation-name');
-        track.style.removeProperty('animation-timing-function');
-        track.style.removeProperty('animation-iteration-count');
-        track.style.removeProperty('animation-delay');
-        track.offsetHeight;
-      }, 50);
-      
-      // 再設定後の状態を確認
-      setTimeout(() => {
-        const newAnimation = getComputedStyle(track).animation;
-        const newPlayState = getComputedStyle(track).animationPlayState;
-        const stillHasDraggingClass = track.classList.contains('dragging');
-        console.log('Collection: アニメーション再開完了:', { 
-          newAnimation, 
-          newPlayState,
-          stillHasDraggingClass,
-          isDragging: track.isDragging
+        track.style.removeProperty('transform'); // transformも削除してCSSアニメーションを確実に適用
+        track.offsetHeight; // リフローを強制
+        
+        // 次のフレームで再度確認
+        requestAnimationFrame(() => {
+          track.style.removeProperty('animation');
+          track.style.removeProperty('animation-play-state');
+          track.style.removeProperty('animation-duration');
+          track.style.removeProperty('animation-name');
+          track.style.removeProperty('animation-timing-function');
+          track.style.removeProperty('animation-iteration-count');
+          track.style.removeProperty('animation-delay');
+          track.style.removeProperty('transform');
+          track.offsetHeight;
+          
+          // さらに次のフレームで確認（確実にCSSアニメーションが適用されるように）
+          requestAnimationFrame(() => {
+            const computedAnimation = getComputedStyle(track).animation;
+            const computedPlayState = getComputedStyle(track).animationPlayState;
+            console.log('Collection: アニメーション再開完了:', { 
+              computedAnimation, 
+              computedPlayState,
+              hasDraggingClass: track.classList.contains('dragging'),
+              isDragging: track.isDragging
+            });
+            
+            // アニメーションが適用されていない場合は再試行
+            if (!computedAnimation || computedAnimation === 'none') {
+              console.warn('Collection: アニメーションが適用されていません。再試行します。');
+              setTimeout(() => {
+                track.style.removeProperty('animation');
+                track.style.removeProperty('animation-play-state');
+                track.style.removeProperty('transform');
+                track.offsetHeight;
+              }, 100);
+            }
+          });
         });
-      }, 100);
+      });
     };
     
     const visibilityObserver = new IntersectionObserver((entries) => {
@@ -627,7 +640,11 @@ function startAutoScroll(track) {
     let scrollTimer;
     let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop; // 初期値を設定
     let scrollTimeoutId;
+    let isScrolling = false; // スクロール中フラグ
     const scrollHandler = function() {
+      // スクロール開始をマーク
+      isScrolling = true;
+      
       // 既存のタイマーをクリア
       clearTimeout(scrollTimer);
       clearTimeout(scrollTimeoutId);
@@ -644,11 +661,14 @@ function startAutoScroll(track) {
       const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
       
       scrollTimer = setTimeout(function() {
+        // スクロール終了をマーク
+        isScrolling = false;
+        
         // Collectionセクションが画面内にある場合、アニメーションを確実に再開
         const collectionSection = document.getElementById('collection');
         if (collectionSection) {
           const rect = collectionSection.getBoundingClientRect();
-          const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100; // マージンを追加してより敏感に反応
+          const isInViewport = rect.top < window.innerHeight + 200 && rect.bottom > -200; // マージンを拡大
           
           console.log('Collection スクロール終了検知:', {
             scrollDirection,
@@ -659,10 +679,11 @@ function startAutoScroll(track) {
             rectBottom: rect.bottom,
             windowHeight: window.innerHeight,
             isDragging: track.isDragging,
-            hasDraggingClass: track.classList.contains('dragging')
+            hasDraggingClass: track.classList.contains('dragging'),
+            isScrolling: isScrolling
           });
           
-          if (isInViewport) {
+          if (isInViewport && !isScrolling) {
             // draggingクラスを確実に削除
             if (track.classList.contains('dragging') && !track.isDragging) {
               track.classList.remove('dragging');
@@ -672,25 +693,32 @@ function startAutoScroll(track) {
             
             if (!track.isDragging) {
               console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
-              forceResumeAnimation();
+              
+              // requestAnimationFrameを使用してスクロール終了後のレンダリングサイクルで再開
+              requestAnimationFrame(() => {
+                if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
+                  forceResumeAnimation();
+                }
+              });
+              
               // 複数回実行して確実に再開（特に上方向スクロール時）
-              setTimeout(() => {
-                if (!track.isDragging && !track.classList.contains('dragging')) {
-                  forceResumeAnimation();
-                }
-              }, 50);
-              setTimeout(() => {
-                if (!track.isDragging && !track.classList.contains('dragging')) {
-                  forceResumeAnimation();
-                }
-              }, 150);
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
+                    forceResumeAnimation();
+                  }
+                });
+              });
+              
               // 上方向スクロール時は追加のタイマーで確実に再開
               if (scrollDirection === 'up') {
                 setTimeout(() => {
-                  if (!track.isDragging && !track.classList.contains('dragging')) {
-                    forceResumeAnimation();
+                  if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
+                    requestAnimationFrame(() => {
+                      forceResumeAnimation();
+                    });
                   }
-                }, 300);
+                }, 200);
               }
             }
           }
@@ -701,19 +729,21 @@ function startAutoScroll(track) {
         
         // 追加のタイマーで確実に再開
         scrollTimeoutId = setTimeout(() => {
-          if (!track.isDragging && !track.classList.contains('dragging')) {
+          if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
             const collectionSection = document.getElementById('collection');
             if (collectionSection) {
               const rect = collectionSection.getBoundingClientRect();
-              const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100;
+              const isInViewport = rect.top < window.innerHeight + 200 && rect.bottom > -200;
               if (isInViewport) {
                 console.log('Collection: 追加タイマーでアニメーション再開');
-                forceResumeAnimation();
+                requestAnimationFrame(() => {
+                  forceResumeAnimation();
+                });
               }
             }
           }
-        }, 100);
-      }, 50); // タイマーを100msから50msに短縮してより敏感に反応
+        }, 150); // タイマーを150msに延長してスクロール終了を確実に検知
+      }, 150); // タイマーを150msに延長してスクロール終了を確実に検知
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
@@ -861,29 +891,65 @@ window.addEventListener('load', () => {
 
 // pageshowイベントを処理（ページ遷移時の初期化問題を解決）
 window.addEventListener('pageshow', (event) => {
-  // bfcacheから復元された場合、初期化を再実行
-  if (event.persisted) {
-    console.log('[Collection] pageshowイベント（bfcacheから復元） - 再初期化を実行');
-    setTimeout(() => {
-      try {
-        initCollectionTracks();
-        // イベントハンドラを確実に再設定
-        document.querySelectorAll('.collection-track').forEach(track => {
-          track.isDragging = false;
-          track.classList.remove('dragging');
-          // startAutoScrollを再実行してイベントハンドラを再設定
-          if (typeof window.startCollectionAutoScroll === 'function') {
-            window.startCollectionAutoScroll(track);
-          }
-        });
-        console.log('[Collection] pageshowイベント: 再初期化完了');
-      } catch (error) {
-        console.error('[Collection] pageshowイベント: 再初期化エラー', error);
-      }
-    }, 100);
-  } else {
-    console.log('[Collection] pageshowイベント（通常のページ読み込み）');
+  // event.persistedに関係なく、すべてのページ遷移で再初期化
+  console.log('[Collection] pageshowイベント - 再初期化を実行', { persisted: event.persisted });
+  
+  // 画像の読み込み完了を待つ
+  const reinitializeCollection = () => {
+    try {
+      initCollectionTracks();
+      // イベントハンドラを確実に再設定
+      document.querySelectorAll('.collection-track').forEach(track => {
+        track.isDragging = false;
+        track.classList.remove('dragging');
+        // startAutoScrollを再実行してイベントハンドラを再設定
+        if (typeof window.startCollectionAutoScroll === 'function') {
+          window.startCollectionAutoScroll(track);
+        }
+      });
+      console.log('[Collection] pageshowイベント: 再初期化完了');
+    } catch (error) {
+      console.error('[Collection] pageshowイベント: 再初期化エラー', error);
+    }
+  };
+  
+  // 画像の読み込み完了を待つ
+  const images = document.querySelectorAll('#collection .collection-track img');
+  let loadedCount = 0;
+  const totalImages = images.length;
+  
+  if (totalImages === 0) {
+    // 画像がない場合は即座に再初期化
+    setTimeout(reinitializeCollection, 100);
+    return;
   }
+  
+  images.forEach(img => {
+    if (img.complete && img.naturalWidth > 0) {
+      loadedCount++;
+    } else {
+      img.addEventListener('load', () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          setTimeout(reinitializeCollection, 100);
+        }
+      }, { once: true });
+      img.addEventListener('error', () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          setTimeout(reinitializeCollection, 100);
+        }
+      }, { once: true });
+    }
+  });
+  
+  // タイムアウト処理（3秒以内に読み込まれない場合）
+  setTimeout(() => {
+    if (loadedCount < totalImages) {
+      console.warn('[Collection] pageshowイベント: 画像の読み込みがタイムアウトしました。再初期化を実行します。');
+      reinitializeCollection();
+    }
+  }, 3000);
 });
 
 // Instagram WebView検出と特別な処理
