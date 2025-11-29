@@ -1069,12 +1069,13 @@
   #collection .collection-item{ flex:0 0 auto; height:100%;
     border-radius:12px; overflow:hidden; background:#fff; }
   #collection .collection-item img{ 
-    width:100%; 
-    height:100%; 
+    width: auto !important; /* Step 4: width: autoに統一（横長を防止） */
+    height: auto !important; /* Step 4: height: autoに統一（縦横比を維持） */
+    max-width: 100% !important; /* 親要素からはみ出さないように */
     max-height: 40vh !important; /* レスポンシブ対応 */
-    width: auto !important;
-    object-fit: contain !important; /* cover→contain変更 */
-    display:block; 
+    object-fit: contain !important; /* cover→contain変更 - 縦横比を維持 */
+    display: block !important; 
+    aspect-ratio: auto !important; /* Step 4: アスペクト比を維持 */
   }
   
   /* ====== Lookbook ====== */
@@ -2605,15 +2606,16 @@ html body #collection .collection-track a img {
   }
   
   /* Instagram WebView検出用のクラスを追加（JavaScriptで設定） */
+  /* Step 4: Instagram WebViewでの横長表示を防止 */
   body.instagram-webview #collection .collection-track img,
   body.instagram-webview #collection .collection-track a img,
   html body body.instagram-webview #collection .collection-track img,
   html body body.instagram-webview #collection .collection-track a img {
-    width: auto !important;
+    width: auto !important; /* 自動幅（画像の元の幅を維持） */
     max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
-    height: auto !important;
-    max-height: 140px !important;
-    object-fit: contain !important;
+    height: auto !important; /* 自動高さ（縦横比を維持） */
+    max-height: 140px !important; /* 最大高さを制限 */
+    object-fit: contain !important; /* 縦横比を維持して収める */
     aspect-ratio: auto !important; /* アスペクト比を維持 */
     display: block !important;
     visibility: visible !important;
@@ -2621,9 +2623,12 @@ html body #collection .collection-track a img {
     /* 横長にならないように */
     min-width: 0 !important;
     min-height: 0 !important;
+    /* Step 4: 親要素のflexbox設定の影響を無効化 */
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
   }
   
-  /* @supportsでも適用 - Instagram WebViewでもcontainに統一 */
+  /* Step 4: @supportsでも適用 - Instagram WebViewでもcontainに統一 */
   @supports (-webkit-touch-callout: none) {
     #collection .collection-track img,
     html body #collection .collection-track img,
@@ -2633,18 +2638,22 @@ html body #collection .collection-track a img {
     html body .collection-track img,
     .collection-track a img,
     html body .collection-track a img {
-      width: auto !important;
+      width: auto !important; /* 自動幅（画像の元の幅を維持） */
       max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
-      height: auto !important;
-      max-height: 140px !important;
+      height: auto !important; /* 自動高さ（縦横比を維持） */
+      max-height: 140px !important; /* 最大高さを制限 */
       object-fit: contain !important; /* coverからcontainに変更 - 横長を防止 */
+      aspect-ratio: auto !important; /* アスペクト比を維持 */
       display: block !important;
       visibility: visible !important;
       opacity: 1 !important;
+      /* Step 4: 親要素のflexbox設定の影響を無効化 */
+      flex-shrink: 0 !important;
+      flex-grow: 0 !important;
     }
   }
   
-  /* Instagram WebView検出用のクラスでも同じ設定を適用 */
+  /* Step 4: Instagram WebView検出用のクラスでも同じ設定を適用 */
   body.instagram-webview #collection .collection-track img,
   body.instagram-webview html body #collection .collection-track img,
   body.instagram-webview #collection .collection-track a img,
@@ -2653,12 +2662,18 @@ html body #collection .collection-track a img {
   body.instagram-webview html body .collection-track img,
   body.instagram-webview .collection-track a img,
   body.instagram-webview html body .collection-track a img {
-    width: auto !important;
+    width: auto !important; /* 自動幅（画像の元の幅を維持） */
     max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
-    height: auto !important;
-    max-height: 140px !important;
-    object-fit: contain !important; /* coverからcontainに変更 - 横長を防止 */
+    height: auto !important; /* 自動高さ（縦横比を維持） */
+    max-height: 140px !important; /* 最大高さを制限 */
+    object-fit: contain !important; /* 縦横比を維持して収める */
+    aspect-ratio: auto !important; /* アスペクト比を維持 */
     display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    /* Step 4: 親要素のflexbox設定の影響を無効化 */
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
