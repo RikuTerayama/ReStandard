@@ -1574,6 +1574,29 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
   }
 }
 
+/* PC版（1025px以上）のLookbook速度を遅くする */
+@media (min-width: 1025px) {
+  html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+  html body #lookbook .lookbook-track[data-speed]:not(.dragging),
+  #lookbook .lookbook-track[style*="animation"]:not(.dragging),
+  #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
+  #lookbook .lookbook-track[data-speed]:not(.dragging),
+  html body #lookbook .lookbook-track:not(.dragging),
+  #lookbook .lookbook-track:not(.dragging),
+  .lookbook-track:not(.dragging) {
+    animation: lookbook-scroll 180s linear infinite !important; /* PC版は180sに設定（遅くする） */
+    animation-play-state: running !important;
+    animation-duration: 180s !important;
+    animation-name: lookbook-scroll !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
+    animation-delay: 0s !important;
+    animation-fill-mode: none !important;
+    animation-direction: normal !important;
+  }
+}
+
 /* Lookbook コンテナのクリッピング解除（どの画面幅でも画像全体を見せる） */
 /* 1500px以下でもPC表示と同じ比率を維持するため、コンテナの高さも調整 */
 /* min-height: auto は削除 - 2689行目の設定で統一管理 */
