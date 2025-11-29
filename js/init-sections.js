@@ -82,6 +82,12 @@ function ensureLoopWidth(track) {
   }
 }
 function attachManualControls(track){
+  // Step 3: Collection trackはcollection-interaction.jsで完全に制御するため、ドラッグ機能を無効化
+  if (track.classList.contains('collection-track')) {
+    console.log('attachManualControls: Collection trackはcollection-interaction.jsで制御されるため、ドラッグ機能をスキップ');
+    return;
+  }
+  
   let startX = 0;
   let startTx = 0;
   let dragging = false;
@@ -239,6 +245,12 @@ function attachManualControls(track){
 /** IntersectionObserver で画面外は自動停止
  *  ただし "ユーザーが止めた（data-user-paused=1）" 場合は何もしない */
 function pauseWhenOutOfView(track) {
+  // Step 3: Collection trackはcollection-interaction.jsで完全に制御するため、ここでは処理しない
+  if (track.classList.contains('collection-track')) {
+    console.log('pauseWhenOutOfView: Collection trackはcollection-interaction.jsで制御されるため、スキップ');
+    return;
+  }
+  
   if (track.classList.contains('lookbook-track')) {
     // Lookbookは常時アニメーションさせる（CSSで制御するため、インラインスタイルは削除）
     // draggingクラスが残っている場合は削除
@@ -250,6 +262,8 @@ function pauseWhenOutOfView(track) {
     track.style.removeProperty('animation-play-state');
     return;
   }
+  
+  // その他のtrackタイプ（将来の拡張用）
   const io = new IntersectionObserver((entries) => {
     entries.forEach((ent) => {
       if (track.dataset.userPaused === '1') return; // ← 勝手に再生しない
@@ -264,18 +278,17 @@ function pauseWhenOutOfView(track) {
       if (ent.isIntersecting) {
         // 画面内に入ったらアニメーションを確実に再開
         // CSSで完全に制御するため、インラインスタイルは削除
-        // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
         track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
         track.style.removeProperty('animation-duration');
         track.offsetHeight; // リフローを強制
         
-        console.log('pauseWhenOutOfView: Collectionアニメーション再開（CSSで制御）');
+        console.log('pauseWhenOutOfView: アニメーション再開（CSSで制御）');
       } else {
         // 画面外に出たら一時停止（CSSで制御するため、インラインスタイルは削除）
         track.style.removeProperty('animation-play-state');
         // CSSでpausedを設定（CSSルールで制御）
-        console.log('pauseWhenOutOfView: Collectionアニメーション一時停止（CSSで制御）');
+        console.log('pauseWhenOutOfView: アニメーション一時停止（CSSで制御）');
       }
     });
   }, { threshold: 0.1 }); // 閾値を0.1に戻してより敏感に反応
@@ -284,6 +297,12 @@ function pauseWhenOutOfView(track) {
 
 /* 初期化時：速度を画面幅で上書き、方向は data-dir */
 function initAutoScroll(track){
+  // Step 3: Collection trackはcollection-interaction.jsで完全に制御するため、ここでは処理しない
+  if (track.classList.contains('collection-track')) {
+    console.log('initAutoScroll: Collection trackはcollection-interaction.jsで制御されるため、スキップ');
+    return;
+  }
+  
   // 初期化時にdraggingクラスを確実に削除
   track.isDragging = false;
   track.classList.remove('dragging');
@@ -299,16 +318,6 @@ function initAutoScroll(track){
     // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
     track.style.removeProperty('animation');
     track.style.removeProperty('animation-play-state');
-  } else {
-    // Collection: CSSで50sに統一されているため、インラインスタイルは削除
-    // draggingクラスを確実に削除
-    track.isDragging = false;
-    track.classList.remove('dragging');
-    
-    // CSSで完全に制御するため、インラインスタイルは削除
-    track.style.removeProperty('animation');
-    track.style.removeProperty('animation-play-state');
-    track.style.removeProperty('animation-duration');
   }
   
   // 再度draggingクラスを確認して削除
@@ -515,9 +524,9 @@ const initSections = () => {
         console.log(`[INIT] Lookbook Track ${index + 1}: lookbook-interaction.jsのinitTrack関数を呼び出し`);
         try {
           window.initLookbookTrack(track);
-          // イベントハンドラが設定されたか確認
+          // イベントハンドラが設定されたか確認（Lookbookのみ）
           setTimeout(() => {
-            if (!track._visibilityObserver || !track._scrollHandler) {
+            if (!track._visibilityObserver) {
               console.warn(`[INIT] Lookbook Track ${index + 1}: イベントハンドラが設定されていません。`);
             } else {
               console.log(`[INIT] Lookbook Track ${index + 1}: イベントハンドラが正常に設定されました。`);
@@ -557,29 +566,11 @@ const initSections = () => {
         console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数を呼び出し`);
         try {
           window.initCollectionTrack(track);
-          // イベントハンドラが設定されたか確認（collection-interaction.jsの初期化を待つ）
+          // Step 3: Collection trackはイベントハンドラを設定しない（CSSで完全制御）
+          // collection-interaction.jsの初期化が完了したことを確認
           setTimeout(() => {
-            if (!track._visibilityObserver || !track._scrollHandler) {
-              console.warn(`[INIT] Collection Track ${index + 1}: イベントハンドラが設定されていません。startCollectionAutoScrollを呼び出します。`);
-              // フォールバック: collection-interaction.jsのstartAutoScrollを直接呼び出す
-              if (typeof window.startCollectionAutoScroll === 'function') {
-                console.log(`[INIT] Collection Track ${index + 1}: startCollectionAutoScrollを直接呼び出し`);
-                window.startCollectionAutoScroll(track);
-                // 再度確認
-                setTimeout(() => {
-                  if (!track._visibilityObserver || !track._scrollHandler) {
-                    console.error(`[INIT] Collection Track ${index + 1}: フォールバック処理後もイベントハンドラが設定されていません。`);
-                  } else {
-                    console.log(`[INIT] Collection Track ${index + 1}: フォールバック処理でイベントハンドラが設定されました。`);
-                  }
-                }, 100);
-              } else {
-                console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll関数が見つかりません。`);
-              }
-            } else {
-              console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラが正常に設定されました。`);
-            }
-          }, 300); // collection-interaction.jsの初期化を待つため、300msに延長
+            console.log(`[INIT] Collection Track ${index + 1}: 初期化完了（CSSで完全制御）`);
+          }, 100);
         } catch (error) {
           console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
           // エラー時はstartCollectionAutoScrollを直接呼び出す
@@ -609,15 +600,10 @@ const initSections = () => {
             console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりました。初期化を実行します。`);
             try {
               window.initCollectionTrack(track);
-              // イベントハンドラが設定されたか確認
+              // Step 3: Collection trackはイベントハンドラを設定しない（CSSで完全制御）
               setTimeout(() => {
-                if (!track._visibilityObserver || !track._scrollHandler) {
-                  console.warn(`[INIT] Collection Track ${index + 1}: イベントハンドラが設定されていません。startCollectionAutoScrollを呼び出します。`);
-                  if (typeof window.startCollectionAutoScroll === 'function') {
-                    window.startCollectionAutoScroll(track);
-                  }
-                }
-              }, 200);
+                console.log(`[INIT] Collection Track ${index + 1}: 初期化完了（CSSで完全制御）`);
+              }, 100);
             } catch (error) {
               console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
             }
@@ -744,28 +730,10 @@ const initSections = () => {
         // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
       });
       
-      // Collection Trackのイベントハンドラはcollection-interaction.jsで設定されるため、ここでは設定しない
-      // フォールバック: collection-interaction.jsのstartCollectionAutoScrollを呼び出す
+      // Step 3: Collection TrackはCSSで完全制御するため、イベントハンドラは不要
+      // collection-interaction.jsの初期化は既に完了しているはず
       document.querySelectorAll('#collection .collection-track').forEach((track, index) => {
-        if (!track._visibilityObserver || !track._scrollHandler) {
-          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラが設定されていません。startCollectionAutoScrollを呼び出します。`, {
-            hasVisibilityObserver: !!track._visibilityObserver,
-            hasScrollHandler: !!track._scrollHandler,
-            className: track.className
-          });
-          
-          // collection-interaction.jsのstartCollectionAutoScrollを呼び出す
-          if (typeof window.startCollectionAutoScroll === 'function') {
-            try {
-              window.startCollectionAutoScroll(track);
-              console.log(`[LOAD] Collection Track ${index + 1}: startCollectionAutoScroll呼び出し完了`);
-            } catch (error) {
-              console.error(`[LOAD] Collection Track ${index + 1}: startCollectionAutoScroll実行エラー`, error);
-            }
-          } else {
-            console.error(`[LOAD] Collection Track ${index + 1}: startCollectionAutoScroll関数が見つかりません。`);
-          }
-        }
+        console.log(`[LOAD] Collection Track ${index + 1}: CSSで完全制御（イベントハンドラ不要）`);
       });
     }, 500);
   });
