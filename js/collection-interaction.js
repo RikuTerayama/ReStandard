@@ -65,27 +65,48 @@ async function initCollectionTracks() {
   const tracks = document.querySelectorAll('.collection-track');
   console.log('[Collection] Collection tracks found:', tracks.length);
   
-  // すべての画像の読み込み完了を待つ
+  // Step 3: Chrome初期表示問題の修正 - 画像読み込み待機処理を改善
+  // Chromeでは画像のcomplete判定が不正確な場合があるため、より確実な方法を使用
   const imageLoadPromises = [];
   tracks.forEach(track => {
     const images = track.querySelectorAll('img');
     images.forEach(img => {
-      if (!img.complete || img.naturalWidth === 0) {
+      // Chrome対応: complete判定に加えて、naturalWidthとnaturalHeightも確認
+      const isLoaded = img.complete && img.naturalWidth > 0 && img.naturalHeight > 0;
+      
+      if (!isLoaded) {
+        // Chrome対応: loadイベントとerrorイベントの両方で確実に解決
         const promise = new Promise((resolve) => {
-          img.addEventListener('load', () => resolve(), { once: true });
-          img.addEventListener('error', () => resolve(), { once: true }); // エラーでも続行
+          let resolved = false;
+          const resolveOnce = () => {
+            if (!resolved) {
+              resolved = true;
+              resolve();
+            }
+          };
+          
+          img.addEventListener('load', resolveOnce, { once: true });
+          img.addEventListener('error', resolveOnce, { once: true });
+          
+          // Chrome対応: タイムアウトを追加（個別画像ごとに5秒）
+          setTimeout(() => {
+            if (!resolved) {
+              console.warn('[Collection] 画像読み込みタイムアウト:', img.src.substring(0, 50));
+              resolveOnce();
+            }
+          }, 5000);
         });
         imageLoadPromises.push(promise);
       }
     });
   });
   
-  // すべての画像が読み込まれるか、タイムアウト（3秒）まで待つ
+  // すべての画像が読み込まれるか、タイムアウト（5秒）まで待つ
   if (imageLoadPromises.length > 0) {
     console.log(`[Collection] ${imageLoadPromises.length}個の画像の読み込みを待機中...`);
     await Promise.race([
       Promise.all(imageLoadPromises),
-      new Promise(resolve => setTimeout(resolve, 3000)) // 3秒でタイムアウト
+      new Promise(resolve => setTimeout(resolve, 5000)) // 5秒に延長（Chrome対応）
     ]);
     console.log('[Collection] 画像の読み込み完了（またはタイムアウト）');
   }
@@ -315,10 +336,9 @@ function startAutoScroll(track) {
     track.offsetHeight;
   }, 50);
   
-  // アニメーションイテレーション時に確実に継続
-  track.addEventListener('animationiteration', function() {
-    track.style.animationPlayState = 'running';
-  });
+  // Step 3: animationiterationイベントでのanimationPlayState設定を削除
+  // CSSでanimation-play-state: running !importantが設定されているため、JSでの設定は不要
+  // インラインスタイルで設定すると、CSSの!importantルールと競合する可能性がある
   
   // 可視性チェックとアニメーション復帰（スマホ/PC両対応）
   // より確実なスマホ判定（画面幅またはユーザーエージェント）
@@ -331,88 +351,16 @@ function startAutoScroll(track) {
     userAgent: navigator.userAgent.substring(0, 50)
   });
   
-  // スマホ/PC両方でイベントハンドラを設定（常に設定）
-  console.log('[Collection] startAutoScroll: イベントハンドラ設定開始');
-  {
-    // アニメーション再開のヘルパー関数（簡素化版）
-    // 責務: インラインスタイルを削除してCSSアニメーションを確実に適用し、常にrunning状態を保つ
-    const forceResumeAnimation = () => {
-      // インラインスタイルを削除してCSSアニメーションに任せる
-      track.style.removeProperty('animation');
-      track.style.removeProperty('animation-play-state');
-      track.style.removeProperty('animation-duration');
-      track.style.removeProperty('animation-name');
-      track.style.removeProperty('animation-timing-function');
-      track.style.removeProperty('animation-iteration-count');
-      track.style.removeProperty('animation-delay');
-      track.style.removeProperty('transform');
-      
-      // リフローを強制してCSSアニメーションを確実に適用
-      track.offsetHeight;
-      
-      // 念のため、animation-play-stateを明示的にrunningに設定（CSSでデフォルト設定されているが、確実性のため）
-      // requestAnimationFrameは1回のみ使用（スクロール中でも確実に反映されるように）
-      requestAnimationFrame(() => {
-        track.style.removeProperty('animation-play-state');
-        track.offsetHeight;
-      });
-    };
-    
-    // IntersectionObserver: ログ出力のみ（pause制御は削除）
-    // Step 2の方針: Collectionアニメーションは常時runningとし、Observerでのpauseをやめる
-    // パフォーマンスよりも「絶対に止まらない」ことを優先
-    const visibilityObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        console.log('Collection IntersectionObserver:', { 
-          isIntersecting: entry.isIntersecting, 
-          intersectionRatio: entry.intersectionRatio
-        });
-        
-        // 画面内に入った場合のみ、念のためインラインスタイルをクリア
-        // pause処理は削除（アプローチA: 常時runningを維持）
-        if (entry.isIntersecting) {
-          console.log('Collection: 画面内検知 - インラインスタイルクリア');
-          forceResumeAnimation();
-        }
-        // 画面外に出た場合でもpauseしない（常時runningを維持）
-      });
-    }, { threshold: 0, rootMargin: '0px' }); // rootMarginを0pxに変更（不要な判定を避ける）
-    
-    visibilityObserver.observe(track);
-    
-    // ページ可視性変更時の処理
-    // Step 2の方針: ページが表示されたら確実にrunning状態を保つ（pause処理は削除）
-    const visibilityHandler = function() {
-      if (!document.hidden) {
-        // ページが表示されたらアニメーションを確実にrunning状態に保つ
-        console.log('Collection: visibilitychange - アニメーションrunning状態を維持');
-        forceResumeAnimation();
-      }
-      // ページが非表示になってもpauseしない（タブ切り替え後もスムーズに再開できるように）
-    };
-    document.addEventListener('visibilitychange', visibilityHandler);
-    
-    // クリーンアップ用の参照を保存
-    track._visibilityHandler = visibilityHandler;
-    
-    // スクロールイベントハンドラを削除（スクロール中でもアニメーションを継続させるため）
-    // IntersectionObserverのみで制御し、画面外に出た時のみ一時停止、画面内に入ったら再開
-    // スクロール中は常にアニメーションを継続させる
-    track._visibilityObserver = visibilityObserver;
-    
-    console.log('[Collection] startAutoScroll: イベントハンドラ設定完了', {
-      hasVisibilityObserver: !!track._visibilityObserver,
-      trackId: track.id || 'no-id',
-      className: track.className
-    });
-  }
+  // Step 3: IntersectionObserverとvisibilitychangeイベントハンドラを完全に削除
+  // CollectionアニメーションはCSSで常時runningとし、JSからは一切制御しない
+  // 初期化時に一度だけインラインスタイルを削除し、その後はCSSに完全に任せる
+  track._visibilityObserver = null; // Observerを完全に削除
+  track._visibilityHandler = null; // visibilitychangeハンドラも削除
   
-  // イベントハンドラが設定されていない場合は再設定を試みる
-  if (!track._visibilityObserver) {
-    console.warn('[Collection] startAutoScroll: IntersectionObserverが設定されていません。再設定を試みます。', {
-      hasVisibilityObserver: !!track._visibilityObserver
-    });
-  }
+  console.log('[Collection] startAutoScroll: 初期化完了（イベントハンドラなし - CSSで完全制御）', {
+    trackId: track.id || 'no-id',
+    className: track.className
+  });
   
   // CSSで完全に制御するため、インラインスタイルは削除
   // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
