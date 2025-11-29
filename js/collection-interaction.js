@@ -391,13 +391,42 @@ function startAutoScroll(track) {
   // 開始位置の調整（CSSで速度が50sに統一されているため、50sを使用）
   alignTrackStart(track, scrollDirection);
   
-  // インラインスタイルを削除してCSSアニメーションを適用
+  // インラインスタイルを確実に削除してCSSアニメーションを適用
+  // 複数回実行して確実に適用（環境によってタイミングが異なるため）
   track.style.removeProperty('animation');
   track.style.removeProperty('animation-play-state');
   track.style.removeProperty('animation-duration');
+  track.style.removeProperty('animation-name');
+  track.style.removeProperty('animation-timing-function');
+  track.style.removeProperty('animation-iteration-count');
+  track.style.removeProperty('animation-delay');
   
   // リフローを強制してCSSアニメーションを再適用
   track.offsetHeight;
+  
+  // requestAnimationFrameで複数回実行して確実に適用
+  requestAnimationFrame(() => {
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    track.style.removeProperty('animation-duration');
+    track.style.removeProperty('animation-name');
+    track.style.removeProperty('animation-timing-function');
+    track.style.removeProperty('animation-iteration-count');
+    track.style.removeProperty('animation-delay');
+    track.offsetHeight;
+  });
+  
+  // 追加のタイマーで確実に適用（Google Chromeなどで必要）
+  setTimeout(() => {
+    track.style.removeProperty('animation');
+    track.style.removeProperty('animation-play-state');
+    track.style.removeProperty('animation-duration');
+    track.style.removeProperty('animation-name');
+    track.style.removeProperty('animation-timing-function');
+    track.style.removeProperty('animation-iteration-count');
+    track.style.removeProperty('animation-delay');
+    track.offsetHeight;
+  }, 50);
   
   // スクロール後の継続性を確保（スマホ対応強化）
   track.addEventListener('animationiteration', function() {
@@ -449,11 +478,51 @@ function startAutoScroll(track) {
         isDragging: track.isDragging
       });
       
-      // インラインスタイルを削除してCSSアニメーションを適用
+      // インラインスタイルを確実に削除してCSSアニメーションを適用
+      // 複数回実行して確実に適用（環境によってタイミングが異なるため）
       track.style.removeProperty('animation');
       track.style.removeProperty('animation-play-state');
       track.style.removeProperty('animation-duration');
+      track.style.removeProperty('animation-name');
+      track.style.removeProperty('animation-timing-function');
+      track.style.removeProperty('animation-iteration-count');
+      track.style.removeProperty('animation-delay');
       track.offsetHeight; // リフローを強制
+      
+      // requestAnimationFrameで複数回実行して確実に適用
+      requestAnimationFrame(() => {
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+        track.style.removeProperty('animation-duration');
+        track.style.removeProperty('animation-name');
+        track.style.removeProperty('animation-timing-function');
+        track.style.removeProperty('animation-iteration-count');
+        track.style.removeProperty('animation-delay');
+        track.offsetHeight;
+      });
+      
+      requestAnimationFrame(() => {
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+        track.style.removeProperty('animation-duration');
+        track.style.removeProperty('animation-name');
+        track.style.removeProperty('animation-timing-function');
+        track.style.removeProperty('animation-iteration-count');
+        track.style.removeProperty('animation-delay');
+        track.offsetHeight;
+      });
+      
+      // 追加のタイマーで確実に適用（Google Chromeなどで必要）
+      setTimeout(() => {
+        track.style.removeProperty('animation');
+        track.style.removeProperty('animation-play-state');
+        track.style.removeProperty('animation-duration');
+        track.style.removeProperty('animation-name');
+        track.style.removeProperty('animation-timing-function');
+        track.style.removeProperty('animation-iteration-count');
+        track.style.removeProperty('animation-delay');
+        track.offsetHeight;
+      }, 50);
       
       // 再設定後の状態を確認
       setTimeout(() => {
