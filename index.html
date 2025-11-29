@@ -1512,25 +1512,37 @@
       splashInitialized = true;
       
       // 内部リンクからの遷移かどうかをチェック（同じドメインからの遷移のみ）
+      // BASE（restandard.base.ec）からの遷移は外部遷移として扱う
       const currentHostname = window.location.hostname;
       const referrerHostname = document.referrer ? new URL(document.referrer).hostname : null;
-      const isInternalNavigation = referrerHostname && referrerHostname === currentHostname;
+      const isBaseDomain = referrerHostname && referrerHostname.includes('restandard.base.ec');
+      const isInternalNavigation = referrerHostname && referrerHostname === currentHostname && !isBaseDomain;
       
       // セッションストレージでも内部遷移をチェック
       const hasInternalSession = sessionStorage.getItem('rs-internal-nav') === 'true';
       
-      // 内部リンクからの遷移の場合はスプラッシュ動画を無効化
-      if (isInternalNavigation || hasInternalSession) {
+      // 内部リンクからの遷移の場合はスプラッシュ動画を無効化（BASEからの遷移は除外）
+      if ((isInternalNavigation || hasInternalSession) && !isBaseDomain) {
         console.log('内部リンクからの遷移のため、スプラッシュ動画を無効化', {
           currentHostname,
           referrerHostname,
           isInternalNavigation,
-          hasInternalSession
+          hasInternalSession,
+          isBaseDomain
         });
         document.body.classList.remove('splash-active');
         document.body.style.removeProperty('background-color');
         splash.style.display = 'none';
         return;
+      }
+      
+      // BASEからの遷移の場合はスプラッシュ動画を表示
+      if (isBaseDomain) {
+        console.log('BASEからの遷移を検出 - スプラッシュ動画を表示', {
+          currentHostname,
+          referrerHostname,
+          isBaseDomain
+        });
       }
       
       console.log('外部からの遷移を検出', {
