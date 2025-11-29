@@ -1048,6 +1048,10 @@
   }
   
   /* Collection アニメーション確実適用 - 全環境で50sに統一 */
+  .collection-track[data-direction="left"],
+  .collection-track[data-direction="right"] {
+    will-change: transform !important; /* ブラウザのレンダリング最適化を有効化 */
+  }
   .collection-track[data-direction="left"]{
     animation: scroll-left 50s linear infinite !important; /* 全環境で50sに統一 */
   }
