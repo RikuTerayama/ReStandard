@@ -740,77 +740,27 @@ const initSections = () => {
         // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
       });
       
-      // Collection Trackのイベントハンドラを設定（DOMContentLoadedで設定されなかった場合のフォールバック）
+      // Collection Trackのイベントハンドラはcollection-interaction.jsで設定されるため、ここでは設定しない
+      // フォールバック: collection-interaction.jsのstartCollectionAutoScrollを呼び出す
       document.querySelectorAll('#collection .collection-track').forEach((track, index) => {
         if (!track._visibilityObserver || !track._scrollHandler) {
-          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラを設定（フォールバック）`, {
+          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラが設定されていません。startCollectionAutoScrollを呼び出します。`, {
             hasVisibilityObserver: !!track._visibilityObserver,
             hasScrollHandler: !!track._scrollHandler,
             className: track.className
           });
           
-          // IntersectionObserverを設定
-          const visibilityObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                if (track.classList.contains('dragging') && !track.isDragging) {
-                  track.classList.remove('dragging');
-                  track.isDragging = false;
-                  console.log(`[LOAD] Collection Track ${index + 1}: 画面内検知 - draggingクラスを削除`);
-                }
-                
-                if (!track.isDragging) {
-                  // CSSで完全に制御するため、インラインスタイルは削除
-                  // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
-                  track.style.removeProperty('animation');
-                  track.style.removeProperty('animation-play-state');
-                  track.style.removeProperty('animation-duration');
-                  track.offsetHeight;
-                  console.log(`[LOAD] Collection Track ${index + 1}: 画面内検知 - アニメーション再開（CSSで制御）`);
-                }
-              }
-            });
-          }, { threshold: 0.1 });
-          
-          visibilityObserver.observe(track);
-          track._visibilityObserver = visibilityObserver;
-          
-          // スクロールハンドラを設定
-          let scrollTimer;
-          let lastScrollTop = 0;
-          const scrollHandler = function() {
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(function() {
-              const collectionSection = document.getElementById('collection');
-              if (collectionSection) {
-                const rect = collectionSection.getBoundingClientRect();
-                const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-                
-                if (isInViewport) {
-                  if (track.classList.contains('dragging') && !track.isDragging) {
-                    track.classList.remove('dragging');
-                    track.isDragging = false;
-                    console.log(`[LOAD] Collection Track ${index + 1}: スクロール終了検知 - draggingクラスを削除`);
-                  }
-                  
-                  if (!track.isDragging) {
-                    // CSSで完全に制御するため、インラインスタイルは削除
-                    // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
-                    track.style.removeProperty('animation');
-                    track.style.removeProperty('animation-play-state');
-                    track.style.removeProperty('animation-duration');
-                    track.offsetHeight;
-                    console.log(`[LOAD] Collection Track ${index + 1}: スクロール終了後、アニメーション再開（CSSで制御）`);
-                  }
-                }
-              }
-              lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            }, 300);
-          };
-          
-          window.addEventListener('scroll', scrollHandler, { passive: true });
-          track._scrollHandler = scrollHandler;
-          console.log(`[LOAD] Collection Track ${index + 1}: イベントハンドラ設定完了`);
+          // collection-interaction.jsのstartCollectionAutoScrollを呼び出す
+          if (typeof window.startCollectionAutoScroll === 'function') {
+            try {
+              window.startCollectionAutoScroll(track);
+              console.log(`[LOAD] Collection Track ${index + 1}: startCollectionAutoScroll呼び出し完了`);
+            } catch (error) {
+              console.error(`[LOAD] Collection Track ${index + 1}: startCollectionAutoScroll実行エラー`, error);
+            }
+          } else {
+            console.error(`[LOAD] Collection Track ${index + 1}: startCollectionAutoScroll関数が見つかりません。`);
+          }
         }
       });
     }, 500);
