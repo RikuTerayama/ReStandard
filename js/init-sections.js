@@ -553,10 +553,10 @@ const initSections = () => {
         console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数を呼び出し`);
         try {
           window.initCollectionTrack(track);
-          // イベントハンドラが設定されたか確認（より長い待機時間で確認）
+          // イベントハンドラが設定されたか確認（collection-interaction.jsの初期化を待つ）
           setTimeout(() => {
             if (!track._visibilityObserver || !track._scrollHandler) {
-              console.warn(`[INIT] Collection Track ${index + 1}: イベントハンドラが設定されていません。フォールバック処理を実行します。`);
+              console.warn(`[INIT] Collection Track ${index + 1}: イベントハンドラが設定されていません。startCollectionAutoScrollを呼び出します。`);
               // フォールバック: collection-interaction.jsのstartAutoScrollを直接呼び出す
               if (typeof window.startCollectionAutoScroll === 'function') {
                 console.log(`[INIT] Collection Track ${index + 1}: startCollectionAutoScrollを直接呼び出し`);
@@ -575,109 +575,59 @@ const initSections = () => {
             } else {
               console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラが正常に設定されました。`);
             }
-          }, 200); // 100msから200msに延長
+          }, 300); // collection-interaction.jsの初期化を待つため、300msに延長
         } catch (error) {
           console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
-          // エラー時は直接初期化
-          ensureLoopWidth(track);
-          centerTrack(track);
-          initAutoScroll(track);
-          alignTrackStart(track);
-          pauseWhenOutOfView(track);
+          // エラー時はstartCollectionAutoScrollを直接呼び出す
+          if (typeof window.startCollectionAutoScroll === 'function') {
+            console.log(`[INIT] Collection Track ${index + 1}: startCollectionAutoScrollを直接呼び出します。`);
+            try {
+              window.startCollectionAutoScroll(track);
+            } catch (fallbackError) {
+              console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll実行エラー`, fallbackError);
+            }
+          } else {
+            console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll関数が見つかりません。`);
+          }
         }
       } else {
-        console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりません。直接初期化します。`);
-        // 幅確保
-        ensureLoopWidth(track);
-        // 中央補正を適用
-        centerTrack(track);
-        // 自動スクロール初期化
-        initAutoScroll(track);
-        // ★開始画像に揃える
-        alignTrackStart(track);
-        // 画面外一時停止
-        pauseWhenOutOfView(track);
+        // collection-interaction.jsのinitTrack関数が見つからない場合
+        // 少し待ってから再試行（collection-interaction.jsの読み込みを待つ）
+        console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりません。読み込みを待機します。`);
+        let retryCount = 0;
+        const maxRetries = 10;
+        const retryInterval = 100;
         
-        // Collection Trackの場合、イベントハンドラを設定（即座に実行）
-        console.log(`[INIT] Track ${index + 1} Collection判定:`, {
-          hasCollectionClass: track.classList.contains('collection-track'),
-          hasVisibilityObserver: !!track._visibilityObserver,
-          hasScrollHandler: !!track._scrollHandler
-        });
-        
-        console.log(`[INIT] Collection Track ${index + 1}: Collection Trackとして認識されました`);
-        // 既に設定されている場合はスキップ
-        if (track._visibilityObserver || track._scrollHandler) {
-          console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラは既に設定済み`);
-        } else {
-          console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラを設定開始`);
-          
-          // 即座に実行（setTimeoutを削除）
-          // IntersectionObserverを設定（スマホ/PC両対応）
-          const visibilityObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                if (track.classList.contains('dragging') && !track.isDragging) {
-                  track.classList.remove('dragging');
-                  track.isDragging = false;
-                  console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - draggingクラスを削除`);
-                }
-                
-                if (!track.isDragging) {
-                  // CSSで完全に制御するため、インラインスタイルは削除
-                  // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
-                  track.style.removeProperty('animation');
-                  track.style.removeProperty('animation-play-state');
-                  track.style.removeProperty('animation-duration');
-                  track.offsetHeight;
-                  console.log(`[INIT] Collection Track ${index + 1}: 画面内検知 - アニメーション再開（CSSで制御）`);
-                }
-              }
-            });
-          }, { threshold: 0.1 });
-          
-          visibilityObserver.observe(track);
-          track._visibilityObserver = visibilityObserver;
-          console.log(`[INIT] Collection Track ${index + 1}: IntersectionObserver設定完了`);
-          
-          // スクロールハンドラを設定（スマホ/PC両対応）
-          let scrollTimer;
-          let lastScrollTop = 0;
-          const scrollHandler = function() {
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(function() {
-              const collectionSection = document.getElementById('collection');
-              if (collectionSection) {
-                const rect = collectionSection.getBoundingClientRect();
-                const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-                
-                if (isInViewport) {
-                  if (track.classList.contains('dragging') && !track.isDragging) {
-                    track.classList.remove('dragging');
-                    track.isDragging = false;
-                    console.log(`[INIT] Collection Track ${index + 1}: スクロール終了検知 - draggingクラスを削除`);
-                  }
-                  
-                  if (!track.isDragging) {
-                    // CSSで完全に制御するため、インラインスタイルは削除
-                    // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
-                    track.style.removeProperty('animation');
-                    track.style.removeProperty('animation-play-state');
-                    track.style.removeProperty('animation-duration');
-                    track.offsetHeight;
-                    console.log(`[INIT] Collection Track ${index + 1}: スクロール終了後、アニメーション再開（CSSで制御）`);
+        const retryInit = setInterval(() => {
+          retryCount++;
+          if (typeof window.initCollectionTrack === 'function') {
+            clearInterval(retryInit);
+            console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりました。初期化を実行します。`);
+            try {
+              window.initCollectionTrack(track);
+              // イベントハンドラが設定されたか確認
+              setTimeout(() => {
+                if (!track._visibilityObserver || !track._scrollHandler) {
+                  console.warn(`[INIT] Collection Track ${index + 1}: イベントハンドラが設定されていません。startCollectionAutoScrollを呼び出します。`);
+                  if (typeof window.startCollectionAutoScroll === 'function') {
+                    window.startCollectionAutoScroll(track);
                   }
                 }
-              }
-              lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            }, 300);
-          };
-          
-          window.addEventListener('scroll', scrollHandler, { passive: true });
-          track._scrollHandler = scrollHandler;
-          console.log(`[INIT] Collection Track ${index + 1}: スクロールハンドラ設定完了`);
-          console.log(`[INIT] Collection Track ${index + 1}: イベントハンドラ設定完了`);
-        }
+              }, 200);
+            } catch (error) {
+              console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
+            }
+          } else if (retryCount >= maxRetries) {
+            clearInterval(retryInit);
+            console.error(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりませんでした。フォールバック処理を実行します。`);
+            // フォールバック: startCollectionAutoScrollを直接呼び出す
+            if (typeof window.startCollectionAutoScroll === 'function') {
+              window.startCollectionAutoScroll(track);
+            } else {
+              console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll関数も見つかりませんでした。`);
+            }
+          }
+        }, retryInterval);
       }
     }
     
