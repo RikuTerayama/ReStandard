@@ -334,65 +334,33 @@ function startAutoScroll(track) {
   // スマホ/PC両方でイベントハンドラを設定（常に設定）
   console.log('[Collection] startAutoScroll: イベントハンドラ設定開始');
   {
-    // アニメーション再開のヘルパー関数
+    // アニメーション再開のヘルパー関数（簡素化版）
+    // 責務: インラインスタイルを削除してCSSアニメーションを確実に適用し、常にrunning状態を保つ
     const forceResumeAnimation = () => {
-      console.log('Collection: アニメーション継続/再開');
+      // インラインスタイルを削除してCSSアニメーションに任せる
+      track.style.removeProperty('animation');
+      track.style.removeProperty('animation-play-state');
+      track.style.removeProperty('animation-duration');
+      track.style.removeProperty('animation-name');
+      track.style.removeProperty('animation-timing-function');
+      track.style.removeProperty('animation-iteration-count');
+      track.style.removeProperty('animation-delay');
+      track.style.removeProperty('transform');
       
-      // CSSで完全に制御するため、インラインスタイルは削除
-      // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
+      // リフローを強制してCSSアニメーションを確実に適用
+      track.offsetHeight;
       
-      // will-changeプロパティを設定してブラウザの最適化を有効化
-      track.style.willChange = 'transform';
-      
-      // インラインスタイルを確実に削除してCSSアニメーションを適用
-      // requestAnimationFrameを使用してブラウザのレンダリングサイクルに合わせる
+      // 念のため、animation-play-stateを明示的にrunningに設定（CSSでデフォルト設定されているが、確実性のため）
+      // requestAnimationFrameは1回のみ使用（スクロール中でも確実に反映されるように）
       requestAnimationFrame(() => {
-        track.style.removeProperty('animation');
         track.style.removeProperty('animation-play-state');
-        track.style.removeProperty('animation-duration');
-        track.style.removeProperty('animation-name');
-        track.style.removeProperty('animation-timing-function');
-        track.style.removeProperty('animation-iteration-count');
-        track.style.removeProperty('animation-delay');
-        track.style.removeProperty('transform'); // transformも削除してCSSアニメーションを確実に適用
-        track.offsetHeight; // リフローを強制
-        
-        // 次のフレームで再度確認
-        requestAnimationFrame(() => {
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-          track.style.removeProperty('animation-duration');
-          track.style.removeProperty('animation-name');
-          track.style.removeProperty('animation-timing-function');
-          track.style.removeProperty('animation-iteration-count');
-          track.style.removeProperty('animation-delay');
-          track.style.removeProperty('transform');
-          track.offsetHeight;
-          
-          // さらに次のフレームで確認（確実にCSSアニメーションが適用されるように）
-          requestAnimationFrame(() => {
-            const computedAnimation = getComputedStyle(track).animation;
-            const computedPlayState = getComputedStyle(track).animationPlayState;
-            console.log('Collection: アニメーション適用完了:', { 
-              computedAnimation, 
-              computedPlayState
-            });
-            
-            // アニメーションが適用されていない場合は再試行
-            if (!computedAnimation || computedAnimation === 'none') {
-              console.warn('Collection: アニメーションが適用されていません。再試行します。');
-              setTimeout(() => {
-                track.style.removeProperty('animation');
-                track.style.removeProperty('animation-play-state');
-                track.style.removeProperty('transform');
-                track.offsetHeight;
-              }, 100);
-            }
-          });
-        });
+        track.offsetHeight;
       });
     };
     
+    // IntersectionObserver: ログ出力のみ（pause制御は削除）
+    // Step 2の方針: Collectionアニメーションは常時runningとし、Observerでのpauseをやめる
+    // パフォーマンスよりも「絶対に止まらない」ことを優先
     const visibilityObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         console.log('Collection IntersectionObserver:', { 
@@ -400,31 +368,27 @@ function startAutoScroll(track) {
           intersectionRatio: entry.intersectionRatio
         });
         
+        // 画面内に入った場合のみ、念のためインラインスタイルをクリア
+        // pause処理は削除（アプローチA: 常時runningを維持）
         if (entry.isIntersecting) {
-          // 画面内に入ったらアニメーションを確実に再開（スクロール中でも継続）
-          console.log('Collection: 画面内検知 - アニメーション継続/再開');
+          console.log('Collection: 画面内検知 - インラインスタイルクリア');
           forceResumeAnimation();
-        } else {
-          // 画面外に出た場合は一時停止（パフォーマンス最適化）
-          console.log('Collection: 画面外検知 - アニメーション一時停止');
-          track.style.animationPlayState = 'paused';
         }
+        // 画面外に出た場合でもpauseしない（常時runningを維持）
       });
-    }, { threshold: 0, rootMargin: '200px' }); // rootMarginを拡大してより早く検知
+    }, { threshold: 0, rootMargin: '0px' }); // rootMarginを0pxに変更（不要な判定を避ける）
     
     visibilityObserver.observe(track);
     
     // ページ可視性変更時の処理
+    // Step 2の方針: ページが表示されたら確実にrunning状態を保つ（pause処理は削除）
     const visibilityHandler = function() {
       if (!document.hidden) {
-        // ページが表示されたらアニメーションを再開
-        console.log('Collection: visibilitychange - アニメーション再開');
+        // ページが表示されたらアニメーションを確実にrunning状態に保つ
+        console.log('Collection: visibilitychange - アニメーションrunning状態を維持');
         forceResumeAnimation();
-      } else {
-        // ページが非表示になったら一時停止（パフォーマンス最適化）
-        console.log('Collection: visibilitychange - アニメーション一時停止');
-        track.style.animationPlayState = 'paused';
       }
+      // ページが非表示になってもpauseしない（タブ切り替え後もスムーズに再開できるように）
     };
     document.addEventListener('visibilitychange', visibilityHandler);
     
