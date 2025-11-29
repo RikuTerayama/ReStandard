@@ -1539,7 +1539,8 @@ html body .lookbook-item img {
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
 /* スマホ版（〜480px）：適切な速度（169s） */
-/* Lookbook アニメーション - 全環境で120sに統一 */
+/* Lookbook アニメーション - スマホ/タブレット版（1024px以下）は120s */
+/* PC版は下記のメディアクエリで180sに上書き */
 html body #lookbook .lookbook-track:not(.dragging),
 #lookbook .lookbook-track:not(.dragging),
 .lookbook-track:not(.dragging),
@@ -1549,7 +1550,7 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
 #lookbook .lookbook-track[style*="animation"]:not(.dragging),
 #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
 #lookbook .lookbook-track[data-speed]:not(.dragging) {
-  animation: lookbook-scroll 120s linear infinite !important; /* 全環境で120sに統一 */
+  animation: lookbook-scroll 120s linear infinite !important; /* スマホ/タブレット版は120s */
   animation-play-state: running !important;
   animation-duration: 120s !important;
   animation-name: lookbook-scroll !important;
@@ -1560,12 +1561,12 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
   animation-direction: normal !important;
 }
 
-/* Instagram WebViewでも同じ速度を適用 */
+/* Instagram WebViewでも同じ速度を適用（スマホ/タブレット版は120s） */
 @supports (-webkit-touch-callout: none) {
   html body #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track:not(.dragging),
   .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll 120s linear infinite !important; /* 全環境で120sに統一 */
+    animation: lookbook-scroll 120s linear infinite !important; /* スマホ/タブレット版は120s */
     animation-play-state: running !important;
     animation-duration: 120s !important;
     animation-name: lookbook-scroll !important;
@@ -1574,7 +1575,8 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
   }
 }
 
-/* PC版（1025px以上）のLookbook速度を遅くする */
+/* PC版（1025px以上）のLookbook速度を遅くする（180s） */
+/* メディアクエリを最後に配置し、確実に上書きされるようにする */
 @media (min-width: 1025px) {
   html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
   html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
@@ -1594,6 +1596,20 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
     animation-delay: 0s !important;
     animation-fill-mode: none !important;
     animation-direction: normal !important;
+  }
+  
+  /* @supports内でもPC版の速度を適用（確実に上書きするため） */
+  @supports (-webkit-touch-callout: none) {
+    html body #lookbook .lookbook-track:not(.dragging),
+    #lookbook .lookbook-track:not(.dragging),
+    .lookbook-track:not(.dragging) {
+      animation: lookbook-scroll 180s linear infinite !important; /* PC版は180s */
+      animation-play-state: running !important;
+      animation-duration: 180s !important;
+      animation-name: lookbook-scroll !important;
+      animation-timing-function: linear !important;
+      animation-iteration-count: infinite !important;
+    }
   }
 }
 
