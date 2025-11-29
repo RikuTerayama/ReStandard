@@ -154,6 +154,21 @@ return;
   // オリジナル区間幅を記録
   track._segmentWidth = originalWidth;
   
+  // Collection画像のloading属性を削除（元の画像にも適用）
+  children.forEach(child => {
+    const img = child.querySelector('img');
+    if (img) {
+      const isCollectionImage = img.closest('#collection') !== null;
+      if (isCollectionImage && img.hasAttribute('loading')) {
+        img.removeAttribute('loading');
+      }
+      // 画像の表示を強制（Google Chromeで確実に表示されるように）
+      img.style.display = 'block';
+      img.style.visibility = 'visible';
+      img.style.opacity = '1';
+    }
+  });
+  
   // 安全な複製処理
   const viewportWidth = window.innerWidth;
   const targetWidth = Math.max(originalWidth * 2, viewportWidth * 2); // 3倍から2倍に削減
@@ -167,6 +182,17 @@ return;
     children.forEach(child => {
       if (cloneCount < maxClones) {
         const clone = child.cloneNode(true);
+        // クローン画像のloading属性も削除
+        clone.querySelectorAll('img').forEach((img) => {
+          const isCollectionImage = img.closest('#collection') !== null;
+          if (isCollectionImage && img.hasAttribute('loading')) {
+            img.removeAttribute('loading');
+          }
+          // 画像の表示を強制
+          img.style.display = 'block';
+          img.style.visibility = 'visible';
+          img.style.opacity = '1';
+        });
         track.appendChild(clone);
         cloneCount++;
       }
@@ -598,7 +624,7 @@ function startAutoScroll(track) {
     
     // スクロール終了検知（強化版 - すべての環境で確実に動作）
     let scrollTimer;
-    let lastScrollTop = 0;
+    let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop; // 初期値を設定
     let scrollTimeoutId;
     const scrollHandler = function() {
       // 既存のタイマーをクリア
@@ -612,10 +638,11 @@ function startAutoScroll(track) {
         console.log('Collection: スクロール中 - draggingクラスを削除');
       }
       
+      // スクロール方向を即座に検知（lastScrollTopを更新前に）
+      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+      
       scrollTimer = setTimeout(function() {
-        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
-        
         // Collectionセクションが画面内にある場合、アニメーションを確実に再開
         const collectionSection = document.getElementById('collection');
         if (collectionSection) {
@@ -645,7 +672,7 @@ function startAutoScroll(track) {
             if (!track.isDragging) {
               console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
               forceResumeAnimation();
-              // 複数回実行して確実に再開
+              // 複数回実行して確実に再開（特に上方向スクロール時）
               setTimeout(() => {
                 if (!track.isDragging && !track.classList.contains('dragging')) {
                   forceResumeAnimation();
@@ -656,10 +683,19 @@ function startAutoScroll(track) {
                   forceResumeAnimation();
                 }
               }, 150);
+              // 上方向スクロール時は追加のタイマーで確実に再開
+              if (scrollDirection === 'up') {
+                setTimeout(() => {
+                  if (!track.isDragging && !track.classList.contains('dragging')) {
+                    forceResumeAnimation();
+                  }
+                }, 300);
+              }
             }
           }
         }
         
+        // lastScrollTopを更新（タイマー内で更新してタイミングを改善）
         lastScrollTop = currentScrollTop;
         
         // 追加のタイマーで確実に再開
@@ -676,7 +712,7 @@ function startAutoScroll(track) {
             }
           }
         }, 100);
-      }, 100); // タイマーを150msから100msに短縮してより敏感に反応 // タイマーを150msに短縮してより敏感に反応
+      }, 50); // タイマーを100msから50msに短縮してより敏感に反応
     };
     
     window.addEventListener('scroll', scrollHandler, { passive: true });
@@ -822,6 +858,33 @@ window.addEventListener('load', () => {
   }
 }, { once: true });
 
+// pageshowイベントを処理（ページ遷移時の初期化問題を解決）
+window.addEventListener('pageshow', (event) => {
+  // bfcacheから復元された場合、初期化を再実行
+  if (event.persisted) {
+    console.log('[Collection] pageshowイベント（bfcacheから復元） - 再初期化を実行');
+    setTimeout(() => {
+      try {
+        initCollectionTracks();
+        // イベントハンドラを確実に再設定
+        document.querySelectorAll('.collection-track').forEach(track => {
+          track.isDragging = false;
+          track.classList.remove('dragging');
+          // startAutoScrollを再実行してイベントハンドラを再設定
+          if (typeof window.startCollectionAutoScroll === 'function') {
+            window.startCollectionAutoScroll(track);
+          }
+        });
+        console.log('[Collection] pageshowイベント: 再初期化完了');
+      } catch (error) {
+        console.error('[Collection] pageshowイベント: 再初期化エラー', error);
+      }
+    }, 100);
+  } else {
+    console.log('[Collection] pageshowイベント（通常のページ読み込み）');
+  }
+});
+
 // Instagram WebView検出と特別な処理
 const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
                            /FBAN|FBAV/i.test(navigator.userAgent) ||
@@ -829,6 +892,9 @@ const isInstagramWebView = /Instagram/i.test(navigator.userAgent) ||
 
 if (isInstagramWebView) {
   console.log('[Collection] Instagram WebView検出 - 特別な処理を実行');
+  
+  // bodyにクラスを追加してCSSで検出できるようにする
+  document.body.classList.add('instagram-webview');
   
   // Instagram WebViewでは、loadイベント後にも確実に初期化を実行
   setTimeout(() => {
@@ -856,10 +922,10 @@ if (isInstagramWebView) {
   
   // Instagram WebViewでは、スクロールイベントをより頻繁に監視
   let instagramScrollTimer;
-  let lastScrollTop = 0;
+  let instagramLastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
   window.addEventListener('scroll', () => {
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+    const scrollDirection = currentScrollTop > instagramLastScrollTop ? 'down' : 'up';
     
     clearTimeout(instagramScrollTimer);
     instagramScrollTimer = setTimeout(() => {
@@ -869,7 +935,7 @@ if (isInstagramWebView) {
       const collectionSection = document.getElementById('collection');
       if (collectionSection) {
         const rect = collectionSection.getBoundingClientRect();
-        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100;
         
         if (isInViewport) {
           try {
@@ -878,6 +944,10 @@ if (isInstagramWebView) {
             document.querySelectorAll('.collection-track').forEach(track => {
               track.isDragging = false;
               track.classList.remove('dragging');
+              // startAutoScrollを再実行してイベントハンドラを再設定
+              if (typeof window.startCollectionAutoScroll === 'function') {
+                window.startCollectionAutoScroll(track);
+              }
             });
             console.log('[Collection] Instagram WebView: 再初期化完了');
           } catch (error) {
@@ -886,8 +956,8 @@ if (isInstagramWebView) {
         }
       }
       
-      lastScrollTop = currentScrollTop;
-    }, 300);
+      instagramLastScrollTop = currentScrollTop;
+    }, 50); // タイマーを300msから50msに短縮
   }, { passive: true });
 }
 
