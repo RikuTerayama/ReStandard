@@ -60,10 +60,35 @@ function debugCollectionTap(e) {
 }
 
 // 各 collection-track で無限スクロールのロジックを実装
-function initCollectionTracks() {
+async function initCollectionTracks() {
   console.log('[Collection] initCollectionTracks関数実行開始');
   const tracks = document.querySelectorAll('.collection-track');
   console.log('[Collection] Collection tracks found:', tracks.length);
+  
+  // すべての画像の読み込み完了を待つ
+  const imageLoadPromises = [];
+  tracks.forEach(track => {
+    const images = track.querySelectorAll('img');
+    images.forEach(img => {
+      if (!img.complete || img.naturalWidth === 0) {
+        const promise = new Promise((resolve) => {
+          img.addEventListener('load', () => resolve(), { once: true });
+          img.addEventListener('error', () => resolve(), { once: true }); // エラーでも続行
+        });
+        imageLoadPromises.push(promise);
+      }
+    });
+  });
+  
+  // すべての画像が読み込まれるか、タイムアウト（3秒）まで待つ
+  if (imageLoadPromises.length > 0) {
+    console.log(`[Collection] ${imageLoadPromises.length}個の画像の読み込みを待機中...`);
+    await Promise.race([
+      Promise.all(imageLoadPromises),
+      new Promise(resolve => setTimeout(resolve, 3000)) // 3秒でタイムアウト
+    ]);
+    console.log('[Collection] 画像の読み込み完了（またはタイムアウト）');
+  }
   
   tracks.forEach((track, index) => {
     console.log(`[Collection] Track ${index + 1} 初期化開始`);
@@ -83,9 +108,7 @@ function initTrack(track) {
     datasetDirection: track.dataset.direction
   });
   
-  // 初期化時にdraggingクラスを確実に削除
-  track.isDragging = false;
-  track.classList.remove('dragging');
+  // ドラッグ機能は削除済みのため、draggingクラス関連の処理は不要
   
   // data-seg から元の子要素数を読み取り
   const segmentCount = parseInt(track.dataset.seg) || 16;
@@ -233,189 +256,7 @@ return;
   }
 }
 
-// トラックコントロールの実装（削除: 縦スクロールとの干渉を防ぐため）
-// ドラッグ機能は不要（自動スクロールがあるため）
-function attachTrackControls_DISABLED(track) {
-  let startX = 0;
-  let startY = 0;
-  let startTx = 0;
-  let isPointerDown = false;
-  let isDragging = false;
-  let moved = 0;
-  let longPressTimer = null;
-  // スマホでのドラッグ判定閾値を調整
-  const isMobile = window.innerWidth <= 900;
-  const DRAG_THRESHOLD = isMobile ? 10 : 6; // スマホでは10px、PCでは6px
-  
-  const onDown = (e) => {
-    // PC版ではマウスイベントを完全に無視してアニメーションを継続
-    if (e.type === 'mousedown' || e.type === 'pointerdown' || e.type === 'mouseenter' || e.type === 'mouseleave') {
-      return;
-    }
-    
-    // リンク要素がクリックされた場合は即座にナビゲーションを許可
-    if (e.target.closest('a')) {
-      return;
-    }
-    
-    // デバッグ情報を出力
-    debugCollectionTap(e);
-    
-    startX = e.clientX || e.touches[0].clientX;
-    startY = e.clientY || e.touches[0].clientY;
-    startTx = getCurrentTranslateX(track);
-    moved = 0;
-    isPointerDown = true;
-    isDragging = false;
-    
-    // スマホでの長押しタイマーを短縮（300ms）してより敏感に反応
-    const isMobile = window.innerWidth <= 900;
-    const longPressDelay = isMobile ? 300 : 500;
-    
-    longPressTimer = setTimeout(() => {
-      isDragging = true;
-      track.isDragging = true;
-      track.classList.add('dragging');
-      track.style.animationPlayState = 'paused';
-    }, longPressDelay);
-    
-    // タップの場合はpreventDefaultしない（リンクナビゲーションを許可）
-    // ドラッグ判定はonMoveで行う
-  };
-  
-  const onMove = (e) => {
-    // PC版ではマウスイベントを完全に無視
-    if (e.type === 'mousemove' || e.type === 'pointermove') {
-      return;
-    }
-    
-    if (!isPointerDown) return;
-    
-    const currentX = e.clientX || e.touches[0].clientX;
-    const currentY = e.clientY || e.touches[0].clientY;
-    const dx = currentX - startX;
-    const dy = currentY - startY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    // 閾値を超えたらドラッグ開始
-    if (!isDragging && distance > DRAG_THRESHOLD) {
-      isDragging = true;
-      track.isDragging = true;
-      track.classList.add('dragging');
-      track.style.animationPlayState = 'paused';
-      
-      // 長押しタイマーをクリア
-      if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
-      }
-    }
-    
-    if (isDragging) {
-      // ドラッグ中は track._tx を更新してスクロール位置を変更
-      track._tx = startTx + dx;
-      track.style.transform = `translateX(${track._tx}px)`;
-      e.preventDefault(); // ドラッグ時のみpreventDefault
-    }
-  };
-  
-  const onUp = (e) => {
-    // PC版ではマウスイベントを完全に無視
-    if (e.type === 'mouseup' || e.type === 'pointerup') {
-      return;
-    }
-    
-    // 長押しタイマーをクリア
-    if (longPressTimer) {
-      clearTimeout(longPressTimer);
-      longPressTimer = null;
-    }
-    
-    isPointerDown = false;
-    
-    if (!isDragging) {
-      // ドラッグしていない場合、タップとして処理
-      // ブラウザのデフォルトクリック動作を許可（リンクナビゲーション）
-      if (window.__QA_MEASURE_LOGS__) {
-        console.log('Collection tap detected - allowing default navigation');
-      }
-      return;
-    }
-    
-    // ドラッグが発生していた場合の処理
-    isDragging = false;
-    track.isDragging = false;
-    track.classList.remove('dragging');
-    track.style.removeProperty('transform');
-    
-    // ドラッグ後のアニメーション再開処理
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // アニメーションを即座に再開
-    track.style.animationPlayState = 'running';
-    
-    // 現在位置から再開するための負の animation-delay を計算
-    const segmentWidth = track._segmentWidth;
-    const currentTx = getCurrentTranslateX(track);
-    const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
-    const progress = normalizedTx / segmentWidth;
-    const duration = parseFloat(track.dataset.speed || 30);
-    const delay = -progress * duration;
-    
-    // アニメーション再開
-    const direction = track.dataset.direction || 'left';
-    const key = direction === 'right' ? 'scroll-right' : 'scroll-left';
-    track.style.animation = `${key} ${duration}s linear infinite`;
-    track.style.animationDelay = `${delay}s`;
-    track.style.animationPlayState = 'running';
-  };
-  
-  // イベントリスナーを追加（スマホ対応強化）
-  track.addEventListener('pointerdown', onDown);
-  track.addEventListener('pointermove', onMove);
-  track.addEventListener('pointerup', onUp);
-  track.addEventListener('touchstart', onDown, { passive: false });
-  track.addEventListener('touchmove', onMove, { passive: false });
-  track.addEventListener('touchend', onUp);
-  
-  // スマホでの追加イベント処理
-  if (isMobile) {
-    track.addEventListener('touchcancel', onUp);
-    track.addEventListener('touchend', onUp);
-    
-    // スマホでのスクロール終了時のアニメーション復帰
-    let scrollEndTimer;
-    track.addEventListener('touchmove', function() {
-      clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(function() {
-        if (!track.isDragging && !track.classList.contains('dragging')) {
-          track.style.animationPlayState = 'running';
-        }
-      }, 150); // 150ms後にアニメーション復帰
-    }, { passive: true });
-  }
-  
-  // 画像のドラッグを無効化
-  track.querySelectorAll('img').forEach(img => {
-    img.setAttribute('draggable', 'false');
-    img.style.userSelect = 'none';
-    img.style.webkitUserDrag = 'none';
-  });
-  
-  // リンクのクリック処理（念のため）
-  track.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      // タップの場合はデフォルトナビゲーションを許可
-      if (!isDragging) {
-        if (window.__QA_MEASURE_LOGS__) {
-          console.log('Collection link clicked - allowing navigation');
-        }
-        // preventDefaultしない
-      }
-    }, { passive: true });
-  });
-}
+// ドラッグ機能は完全に削除（自動スクロールのみで動作）
 
 // 現在の translateX 値を取得
 function getCurrentTranslateX(track) {
@@ -474,11 +315,9 @@ function startAutoScroll(track) {
     track.offsetHeight;
   }, 50);
   
-  // スクロール後の継続性を確保（スマホ対応強化）
+  // アニメーションイテレーション時に確実に継続
   track.addEventListener('animationiteration', function() {
-    if (!track.isDragging && !track.classList.contains('dragging')) {
-      track.style.animationPlayState = 'running';
-    }
+    track.style.animationPlayState = 'running';
   });
   
   // 可視性チェックとアニメーション復帰（スマホ/PC両対応）
@@ -497,32 +336,10 @@ function startAutoScroll(track) {
   {
     // アニメーション再開のヘルパー関数
     const forceResumeAnimation = () => {
-      // 実際にドラッグ中でない場合は、draggingクラスを強制的に削除
-      if (!track.isDragging) {
-        track.isDragging = false;
-        track.classList.remove('dragging');
-        console.log('Collection: draggingクラスを強制削除');
-      }
-      
-      // 実際にドラッグ中の場合は再開をスキップ
-      if (track.isDragging) {
-        console.log('Collection: 実際にドラッグ中なので再開をスキップ');
-        return;
-      }
-      
-      console.log('Collection: アニメーション強制再開開始');
+      console.log('Collection: アニメーション継続/再開');
       
       // CSSで完全に制御するため、インラインスタイルは削除
       // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
-      
-      // 現在のアニメーション状態を確認
-      const currentAnimation = getComputedStyle(track).animation;
-      const hasDraggingClass = track.classList.contains('dragging');
-      console.log('Collection: 現在のアニメーション状態:', { 
-        currentAnimation, 
-        hasDraggingClass,
-        isDragging: track.isDragging
-      });
       
       // will-changeプロパティを設定してブラウザの最適化を有効化
       track.style.willChange = 'transform';
@@ -556,11 +373,9 @@ function startAutoScroll(track) {
           requestAnimationFrame(() => {
             const computedAnimation = getComputedStyle(track).animation;
             const computedPlayState = getComputedStyle(track).animationPlayState;
-            console.log('Collection: アニメーション再開完了:', { 
+            console.log('Collection: アニメーション適用完了:', { 
               computedAnimation, 
-              computedPlayState,
-              hasDraggingClass: track.classList.contains('dragging'),
-              isDragging: track.isDragging
+              computedPlayState
             });
             
             // アニメーションが適用されていない場合は再試行
@@ -582,53 +397,33 @@ function startAutoScroll(track) {
       entries.forEach(entry => {
         console.log('Collection IntersectionObserver:', { 
           isIntersecting: entry.isIntersecting, 
-          intersectionRatio: entry.intersectionRatio,
-          isDragging: track.isDragging,
-          hasDraggingClass: track.classList.contains('dragging')
+          intersectionRatio: entry.intersectionRatio
         });
         
         if (entry.isIntersecting) {
-          // 画面内に入ったらdraggingクラスを確実に削除してアニメーションを再開
-          if (track.classList.contains('dragging') && !track.isDragging) {
-            track.classList.remove('dragging');
-            track.isDragging = false;
-            console.log('Collection: 画面内検知 - draggingクラスを削除');
-          }
-          
-          if (!track.isDragging) {
-            console.log('Collection: 画面内検知 - アニメーション再開');
-            forceResumeAnimation();
-            // 複数回実行して確実に再開
-            setTimeout(() => {
-              if (!track.isDragging && !track.classList.contains('dragging')) {
-                forceResumeAnimation();
-              }
-            }, 50);
-            setTimeout(() => {
-              if (!track.isDragging && !track.classList.contains('dragging')) {
-                forceResumeAnimation();
-              }
-            }, 150);
-          }
+          // 画面内に入ったらアニメーションを確実に再開（スクロール中でも継続）
+          console.log('Collection: 画面内検知 - アニメーション継続/再開');
+          forceResumeAnimation();
+        } else {
+          // 画面外に出た場合は一時停止（パフォーマンス最適化）
+          console.log('Collection: 画面外検知 - アニメーション一時停止');
+          track.style.animationPlayState = 'paused';
         }
       });
-    }, { threshold: 0.01, rootMargin: '100px' }); // 閾値を0.01に下げ、rootMarginを追加してより敏感に反応
+    }, { threshold: 0, rootMargin: '200px' }); // rootMarginを拡大してより早く検知
     
     visibilityObserver.observe(track);
     
-    // スマホでのページ可視性変更時の処理
+    // ページ可視性変更時の処理
     const visibilityHandler = function() {
       if (!document.hidden) {
-        // draggingクラスを確実に削除
-        if (track.classList.contains('dragging') && !track.isDragging) {
-          track.classList.remove('dragging');
-          track.isDragging = false;
-          console.log('Collection: visibilitychange - draggingクラスを削除');
-        }
-        
-        if (!track.isDragging) {
-          forceResumeAnimation();
-        }
+        // ページが表示されたらアニメーションを再開
+        console.log('Collection: visibilitychange - アニメーション再開');
+        forceResumeAnimation();
+      } else {
+        // ページが非表示になったら一時停止（パフォーマンス最適化）
+        console.log('Collection: visibilitychange - アニメーション一時停止');
+        track.style.animationPlayState = 'paused';
       }
     };
     document.addEventListener('visibilitychange', visibilityHandler);
@@ -636,145 +431,24 @@ function startAutoScroll(track) {
     // クリーンアップ用の参照を保存
     track._visibilityHandler = visibilityHandler;
     
-    // スクロール終了検知（強化版 - すべての環境で確実に動作）
-    let scrollTimer;
-    let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop; // 初期値を設定
-    let scrollTimeoutId;
-    let isScrolling = false; // スクロール中フラグ
-    const scrollHandler = function() {
-      // スクロール開始をマーク
-      isScrolling = true;
-      
-      // 既存のタイマーをクリア
-      clearTimeout(scrollTimer);
-      clearTimeout(scrollTimeoutId);
-      
-      // 即座にdraggingクラスをチェックして削除
-      if (track.classList.contains('dragging') && !track.isDragging) {
-        track.classList.remove('dragging');
-        track.isDragging = false;
-        console.log('Collection: スクロール中 - draggingクラスを削除');
-      }
-      
-      // スクロール方向を即座に検知（lastScrollTopを更新前に）
-      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
-      
-      scrollTimer = setTimeout(function() {
-        // スクロール終了をマーク
-        isScrolling = false;
-        
-        // Collectionセクションが画面内にある場合、アニメーションを確実に再開
-        const collectionSection = document.getElementById('collection');
-        if (collectionSection) {
-          const rect = collectionSection.getBoundingClientRect();
-          const isInViewport = rect.top < window.innerHeight + 200 && rect.bottom > -200; // マージンを拡大
-          
-          console.log('Collection スクロール終了検知:', {
-            scrollDirection,
-            currentScrollTop,
-            lastScrollTop,
-            isInViewport,
-            rectTop: rect.top,
-            rectBottom: rect.bottom,
-            windowHeight: window.innerHeight,
-            isDragging: track.isDragging,
-            hasDraggingClass: track.classList.contains('dragging'),
-            isScrolling: isScrolling
-          });
-          
-          if (isInViewport && !isScrolling) {
-            // draggingクラスを確実に削除
-            if (track.classList.contains('dragging') && !track.isDragging) {
-              track.classList.remove('dragging');
-              track.isDragging = false;
-              console.log('Collection: スクロール終了検知 - draggingクラスを削除');
-            }
-            
-            if (!track.isDragging) {
-              console.log('スクロール終了後、Collectionアニメーション再開', { scrollDirection });
-              
-              // requestAnimationFrameを使用してスクロール終了後のレンダリングサイクルで再開
-              requestAnimationFrame(() => {
-                if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
-                  forceResumeAnimation();
-                }
-              });
-              
-              // 複数回実行して確実に再開（特に上方向スクロール時）
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
-                    forceResumeAnimation();
-                  }
-                });
-              });
-              
-              // 上方向スクロール時は追加のタイマーで確実に再開
-              if (scrollDirection === 'up') {
-                setTimeout(() => {
-                  if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
-                    requestAnimationFrame(() => {
-                      forceResumeAnimation();
-                    });
-                  }
-                }, 200);
-              }
-            }
-          }
-        }
-        
-        // lastScrollTopを更新（タイマー内で更新してタイミングを改善）
-        lastScrollTop = currentScrollTop;
-        
-        // 追加のタイマーで確実に再開
-        scrollTimeoutId = setTimeout(() => {
-          if (!isScrolling && !track.isDragging && !track.classList.contains('dragging')) {
-            const collectionSection = document.getElementById('collection');
-            if (collectionSection) {
-              const rect = collectionSection.getBoundingClientRect();
-              const isInViewport = rect.top < window.innerHeight + 200 && rect.bottom > -200;
-              if (isInViewport) {
-                console.log('Collection: 追加タイマーでアニメーション再開');
-                requestAnimationFrame(() => {
-                  forceResumeAnimation();
-                });
-              }
-            }
-          }
-        }, 150); // タイマーを150msに延長してスクロール終了を確実に検知
-      }, 150); // タイマーを150msに延長してスクロール終了を確実に検知
-    };
-    
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-    
-    // クリーンアップ用の参照を保存
-    track._scrollHandler = scrollHandler;
+    // スクロールイベントハンドラを削除（スクロール中でもアニメーションを継続させるため）
+    // IntersectionObserverのみで制御し、画面外に出た時のみ一時停止、画面内に入ったら再開
+    // スクロール中は常にアニメーションを継続させる
     track._visibilityObserver = visibilityObserver;
     
     console.log('[Collection] startAutoScroll: イベントハンドラ設定完了', {
       hasVisibilityObserver: !!track._visibilityObserver,
-      hasScrollHandler: !!track._scrollHandler,
       trackId: track.id || 'no-id',
       className: track.className
     });
   }
   
-  // 初期化時にdraggingクラスを確実に削除
-  track.isDragging = false;
-  track.classList.remove('dragging');
-  
   // イベントハンドラが設定されていない場合は再設定を試みる
-  if (!track._visibilityObserver || !track._scrollHandler) {
-    console.warn('[Collection] startAutoScroll: イベントハンドラが設定されていません。再設定を試みます。', {
-      hasVisibilityObserver: !!track._visibilityObserver,
-      hasScrollHandler: !!track._scrollHandler
+  if (!track._visibilityObserver) {
+    console.warn('[Collection] startAutoScroll: IntersectionObserverが設定されていません。再設定を試みます。', {
+      hasVisibilityObserver: !!track._visibilityObserver
     });
   }
-  
-  // 初期化時にdraggingクラスを確実に削除
-  track.isDragging = false;
-  track.classList.remove('dragging');
   
   // CSSで完全に制御するため、インラインスタイルは削除
   // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
@@ -987,45 +661,8 @@ if (isInstagramWebView) {
     }
   });
   
-  // Instagram WebViewでは、スクロールイベントをより頻繁に監視
-  let instagramScrollTimer;
-  let instagramLastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  window.addEventListener('scroll', () => {
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollDirection = currentScrollTop > instagramLastScrollTop ? 'down' : 'up';
-    
-    clearTimeout(instagramScrollTimer);
-    instagramScrollTimer = setTimeout(() => {
-      console.log('[Collection] Instagram WebView: スクロール終了検知 - 再初期化', { scrollDirection });
-      
-      // Collectionセクションが画面内にある場合のみ再初期化
-      const collectionSection = document.getElementById('collection');
-      if (collectionSection) {
-        const rect = collectionSection.getBoundingClientRect();
-        const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100;
-        
-        if (isInViewport) {
-          try {
-            initCollectionTracks();
-            // イベントハンドラを確実に再設定
-            document.querySelectorAll('.collection-track').forEach(track => {
-              track.isDragging = false;
-              track.classList.remove('dragging');
-              // startAutoScrollを再実行してイベントハンドラを再設定
-              if (typeof window.startCollectionAutoScroll === 'function') {
-                window.startCollectionAutoScroll(track);
-              }
-            });
-            console.log('[Collection] Instagram WebView: 再初期化完了');
-          } catch (error) {
-            console.error('[Collection] Instagram WebView: スクロール再初期化エラー:', error);
-          }
-        }
-      }
-      
-      instagramLastScrollTop = currentScrollTop;
-    }, 50); // タイマーを300msから50msに短縮
-  }, { passive: true });
+  // Instagram WebViewでもスクロールイベントハンドラは削除（IntersectionObserverのみで制御）
+  // スクロール中でもアニメーションを継続させるため、スクロール検知による再初期化は不要
 }
 
 } // 重複読み込み防止の閉じ括弧
