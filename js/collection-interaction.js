@@ -93,8 +93,8 @@ function initTrack(track) {
   // 子要素を複製して segmentWidth を計算
   ensureInfiniteLoop(track, segmentCount);
   
-  // マウスポインタのダウン・ムーブ・アップイベントを拾い、クリックとドラッグを区別
-  attachTrackControls(track); // タッチ操作後の継続アニメーション機能を有効化
+  // ドラッグ機能を削除（縦スクロールとの干渉を防ぐため）
+  // attachTrackControls(track); // 削除: 縦スクロール中に誤ってdraggingクラスが付与される問題を解決
   
   // オートスクロール開始
   console.log('[Collection] startAutoScroll関数を呼び出し');
@@ -214,8 +214,9 @@ return;
   }
 }
 
-// トラックコントロールの実装
-function attachTrackControls(track) {
+// トラックコントロールの実装（削除: 縦スクロールとの干渉を防ぐため）
+// ドラッグ機能は不要（自動スクロールがあるため）
+function attachTrackControls_DISABLED(track) {
   let startX = 0;
   let startY = 0;
   let startTx = 0;
@@ -794,14 +795,14 @@ function alignTrackStart(track, direction) {
   track.style.animationDelay = `${delay}s`;
 }
 
-// ドラッグ中のアニメーション停止用CSS
-const style = document.createElement('style');
-style.textContent = `
-  .collection-track.dragging {
-    animation-play-state: paused !important;
-  }
-`;
-document.head.appendChild(style);
+// ドラッグ機能を削除したため、draggingクラス関連のCSSも削除
+// const style = document.createElement('style');
+// style.textContent = `
+//   .collection-track.dragging {
+//     animation-play-state: paused !important;
+//   }
+// `;
+// document.head.appendChild(style);
 
 // 初期化関数をグローバルに公開（重複読み込み防止のため）
 window.initCollectionTracks = initCollectionTracks;
