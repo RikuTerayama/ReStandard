@@ -56,8 +56,12 @@ function ensureLoopWidth(track) {
             img.setAttribute('loading', 'lazy');
           }
           // Collection画像のloading属性を削除（Safariで確実に表示されるように）
-          if (isCollectionImage && img.hasAttribute('loading')) {
-            img.removeAttribute('loading');
+          if (isCollectionImage) {
+            if (img.hasAttribute('loading')) {
+              img.removeAttribute('loading');
+            }
+            // loading属性が設定されていないことを確認
+            img.loading = 'eager'; // eagerに設定して確実に読み込む
           }
           if (img.hasAttribute('fetchpriority')) {
             img.removeAttribute('fetchpriority');
