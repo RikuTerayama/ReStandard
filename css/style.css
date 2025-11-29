@@ -2620,7 +2620,11 @@ html body #collection .collection-track a img {
     #collection .collection-track img,
     html body #collection .collection-track img,
     #collection .collection-track a img,
-    html body #collection .collection-track a img {
+    html body #collection .collection-track a img,
+    .collection-track img,
+    html body .collection-track img,
+    .collection-track a img,
+    html body .collection-track a img {
       width: auto !important;
       max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
       height: auto !important;
@@ -2630,6 +2634,25 @@ html body #collection .collection-track a img {
       visibility: visible !important;
       opacity: 1 !important;
     }
+  }
+  
+  /* Instagram WebView検出用のクラスでも同じ設定を適用 */
+  body.instagram-webview #collection .collection-track img,
+  body.instagram-webview html body #collection .collection-track img,
+  body.instagram-webview #collection .collection-track a img,
+  body.instagram-webview html body #collection .collection-track a img,
+  body.instagram-webview .collection-track img,
+  body.instagram-webview html body .collection-track img,
+  body.instagram-webview .collection-track a img,
+  body.instagram-webview html body .collection-track a img {
+    width: auto !important;
+    max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
+    height: auto !important;
+    max-height: 140px !important;
+    object-fit: contain !important; /* coverからcontainに変更 - 横長を防止 */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 }
 
