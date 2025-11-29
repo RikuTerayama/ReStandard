@@ -409,8 +409,9 @@ function applyInitialDelay(track, desiredTxPx) {
   const loop = track._segmentWidth || (track.scrollWidth / 2);
   const isLookbook = track.classList.contains('lookbook-track');
   // Lookbookの場合は、JavaScript関数から直接速度を取得（CSS適用前でも正しい値が取得できる）
+  // PC版（1025px以上）は180s、それ以外は120s
   const durSec = isLookbook 
-    ? 120 // CSSで120sに統一されているため、120sを使用
+    ? (window.innerWidth >= 1025 ? 180 : 120) // PC版は180s、スマホ/タブレットは120s
     : 50; // CSSで50sに統一されているため、50sを使用
   const dir = (track.dataset.direction || 'left').toLowerCase();
 
@@ -443,7 +444,8 @@ function alignTrackStart(track) {
   const dir = (track.dataset.direction || 'left').toLowerCase();
   const isLookbook = track.classList.contains('lookbook-track');
   // CSSで速度が統一されているため、直接値を使用
-  const dur  = isLookbook ? 120 : 50; // Lookbook: 120s, Collection: 50s
+  // PC版（1025px以上）は180s、それ以外は120s
+  const dur  = isLookbook ? (window.innerWidth >= 1025 ? 180 : 120) : 50; // Lookbook: PC版180s/その他120s, Collection: 50s
   const key  = isLookbook ? 'lookbook-scroll' : (dir === 'right' ? 'scroll-right' : 'scroll-left');
   const desired = computeDesiredTx(track, target, align);
 
