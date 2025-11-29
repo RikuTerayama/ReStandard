@@ -1047,18 +1047,37 @@
     text-align: center !important;
   }
   
-  /* Collection アニメーション確実適用 - 全環境で50sに統一 */
-  /* Step 2: 常時runningを維持するため、animation-play-stateを明示的に設定 */
-  .collection-track[data-direction="left"],
-  .collection-track[data-direction="right"] {
-    will-change: transform !important; /* ブラウザのレンダリング最適化を有効化 */
-    animation-play-state: running !important; /* 常時runningを維持（JSからのpauseを防ぐ） */
+  /* =========================================================
+     Collection専用マーキー - CSSベース無限フロー
+     汎用trackロジックから完全に独立
+     ========================================================= */
+  
+  /* Collection専用アニメーション - 100% CSSベース */
+  /* JSからは一切制御しない（初期化時の要素複製のみ） */
+  #collection .collection-track[data-direction="left"],
+  #collection .collection-track[data-direction="right"] {
+    will-change: transform !important;
+    animation-play-state: running !important; /* 常時running（JSからのpauseを防ぐ） */
+    /* アニメーションは個別に設定（下記） */
   }
-  .collection-track[data-direction="left"]{
-    animation: scroll-left 50s linear infinite !important; /* 全環境で50sに統一 */
+  
+  #collection .collection-track[data-direction="left"] {
+    animation: collection-scroll-left 50s linear infinite !important;
   }
-  .collection-track[data-direction="right"]{
-    animation: scroll-right 50s linear infinite !important; /* 全環境で50sに統一 */
+  
+  #collection .collection-track[data-direction="right"] {
+    animation: collection-scroll-right 50s linear infinite !important;
+  }
+  
+  /* Collection専用の@keyframes（汎用trackとは独立） */
+  @keyframes collection-scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); } /* 右→左 */
+  }
+  
+  @keyframes collection-scroll-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); } /* 左→右 */
   }
   
   /* ドラッグ機能を削除したため、draggingクラス関連のCSSも削除 */
