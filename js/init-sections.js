@@ -629,19 +629,9 @@ const initSections = () => {
         console.log(`[INIT] Track ${index + 1}: draggingクラスを削除`);
       }
       
-      // Collection Trackの場合、アニメーションがnoneになっていないか確認
-      if (track.classList.contains('collection-track')) {
-        const computedAnimation = getComputedStyle(track).animation;
-        if (computedAnimation === 'none' || !computedAnimation || computedAnimation.includes('none')) {
-          // CSSで完全に制御するため、インラインスタイルは削除
-          // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-          track.style.removeProperty('animation-duration');
-          track.offsetHeight;
-          console.log(`[INIT] Track ${index + 1}: アニメーションを再設定（CSSで制御）`);
-        }
-      }
+      // Step 4: Collection TrackはCSSで完全制御するため、アニメーション状態の確認・操作はしない
+      // CSSでanimation-play-state: running !importantが設定されているため、JSでの操作は不要
+      // アニメーションがnoneになっていても、CSSが自動的に適用される
     }, 100);
     
     // Lookbookトラックの場合、インラインスタイルを確実に削除
@@ -694,12 +684,10 @@ const initSections = () => {
           });
           track.classList.remove('dragging');
           track.isDragging = false;
-        } else {
-          // CollectionはCSSで完全に制御するため、インラインスタイルは削除
-          // Collection速度はCSSで50sに統一されているため、JavaScriptでは設定しない
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-          track.style.removeProperty('animation-duration');
+        } else if (track.classList.contains('collection-track')) {
+          // Step 4: CollectionはCSSで完全制御するため、resize時もスタイル操作をしない
+          // CSSでanimation-play-state: running !importantが設定されているため、JSでの操作は不要
+          // draggingクラスのみ削除（念のため）
           track.classList.remove('dragging');
           track.isDragging = false;
         }
