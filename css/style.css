@@ -1048,9 +1048,11 @@
   }
   
   /* Collection アニメーション確実適用 - 全環境で50sに統一 */
+  /* Step 2: 常時runningを維持するため、animation-play-stateを明示的に設定 */
   .collection-track[data-direction="left"],
   .collection-track[data-direction="right"] {
     will-change: transform !important; /* ブラウザのレンダリング最適化を有効化 */
+    animation-play-state: running !important; /* 常時runningを維持（JSからのpauseを防ぐ） */
   }
   .collection-track[data-direction="left"]{
     animation: scroll-left 50s linear infinite !important; /* 全環境で50sに統一 */
