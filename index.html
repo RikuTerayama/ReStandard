@@ -1494,9 +1494,7 @@
     let splashInitialized = false;
     
     function initializeSplash() {
-      if (splashInitialized) return;
-      splashInitialized = true;
-      
+      // splashInitializedフラグをチェックしない（再初期化を許可）
       const splash = document.getElementById('splash-video-wrapper');
       const video = document.getElementById('splash-video');
       
@@ -1504,6 +1502,14 @@
         console.log('スプラッシュ動画要素が見つかりません');
         return;
       }
+      
+      // すでに初期化済みの場合は、再初期化をスキップ（ただし、初回は実行）
+      if (splashInitialized && splash.style.display === 'none') {
+        console.log('スプラッシュ動画は既に非表示になっています。再初期化をスキップします。');
+        return;
+      }
+      
+      splashInitialized = true;
       
       // 内部リンクからの遷移かどうかをチェック（同じドメインからの遷移のみ）
       const currentHostname = window.location.hostname;
