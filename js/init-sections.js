@@ -548,88 +548,12 @@ const initSections = () => {
       return; // Lookbook Trackの場合はここで終了
     }
     
-    // Collection Trackのみ初期化
-    // 初期化時にdraggingクラスを確実に削除
-    track.isDragging = false;
-    track.classList.remove('dragging');
-    
-    // Collection Trackの場合、collection-interaction.jsの初期化関数を使用
+    // Collection Trackは collection-marquee.js で完全に制御するため、ここでは処理しない
+    // Collection Trackが混入した場合は警告を出してスキップ
     if (track.classList.contains('collection-track')) {
-      console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsで初期化`);
-      
-      // collection-interaction.jsのinitTrack関数を使用して初期化
-      // ただし、initTrack関数内でstartAutoScrollが呼ばれるため、イベントハンドラは自動的に設定される
-      if (typeof window.initCollectionTrack === 'function') {
-        console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数を呼び出し`);
-        try {
-          window.initCollectionTrack(track);
-          // Step 3: Collection trackはイベントハンドラを設定しない（CSSで完全制御）
-          // collection-interaction.jsの初期化が完了したことを確認
-          setTimeout(() => {
-            console.log(`[INIT] Collection Track ${index + 1}: 初期化完了（CSSで完全制御）`);
-          }, 100);
-        } catch (error) {
-          console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
-          // エラー時はstartCollectionAutoScrollを直接呼び出す
-          if (typeof window.startCollectionAutoScroll === 'function') {
-            console.log(`[INIT] Collection Track ${index + 1}: startCollectionAutoScrollを直接呼び出します。`);
-            try {
-              window.startCollectionAutoScroll(track);
-            } catch (fallbackError) {
-              console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll実行エラー`, fallbackError);
-            }
-          } else {
-            console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll関数が見つかりません。`);
-          }
-        }
-      } else {
-        // collection-interaction.jsのinitTrack関数が見つからない場合
-        // 少し待ってから再試行（collection-interaction.jsの読み込みを待つ）
-        console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりません。読み込みを待機します。`);
-        let retryCount = 0;
-        const maxRetries = 10;
-        const retryInterval = 100;
-        
-        const retryInit = setInterval(() => {
-          retryCount++;
-          if (typeof window.initCollectionTrack === 'function') {
-            clearInterval(retryInit);
-            console.log(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりました。初期化を実行します。`);
-            try {
-              window.initCollectionTrack(track);
-              // Step 3: Collection trackはイベントハンドラを設定しない（CSSで完全制御）
-              setTimeout(() => {
-                console.log(`[INIT] Collection Track ${index + 1}: 初期化完了（CSSで完全制御）`);
-              }, 100);
-            } catch (error) {
-              console.error(`[INIT] Collection Track ${index + 1}: 初期化エラー`, error);
-            }
-          } else if (retryCount >= maxRetries) {
-            clearInterval(retryInit);
-            console.error(`[INIT] Collection Track ${index + 1}: collection-interaction.jsのinitTrack関数が見つかりませんでした。フォールバック処理を実行します。`);
-            // フォールバック: startCollectionAutoScrollを直接呼び出す
-            if (typeof window.startCollectionAutoScroll === 'function') {
-              window.startCollectionAutoScroll(track);
-            } else {
-              console.error(`[INIT] Collection Track ${index + 1}: startCollectionAutoScroll関数も見つかりませんでした。`);
-            }
-          }
-        }, retryInterval);
-      }
+      console.warn(`[INIT] Collection Track ${index + 1} が検出されましたが、collection-marquee.jsで制御されるためスキップします。`);
+      return;
     }
-    
-    // 初期化後に再度draggingクラスを確認して削除
-    setTimeout(() => {
-      if (track.classList.contains('dragging')) {
-        track.classList.remove('dragging');
-        track.isDragging = false;
-        console.log(`[INIT] Track ${index + 1}: draggingクラスを削除`);
-      }
-      
-      // Step 4: Collection TrackはCSSで完全制御するため、アニメーション状態の確認・操作はしない
-      // CSSでanimation-play-state: running !importantが設定されているため、JSでの操作は不要
-      // アニメーションがnoneになっていても、CSSが自動的に適用される
-    }, 100);
     
     // Lookbookトラックの場合、インラインスタイルを確実に削除
     if (track.classList.contains('lookbook-track')) {
