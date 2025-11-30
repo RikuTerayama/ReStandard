@@ -1175,7 +1175,15 @@
     }
   }
   
-  /* スマホ表示（〜480px）でLookbook背景の縦長さを画像サイズに合わせる - 2704行目の設定で統一管理（重複削除） */
+  /* スマホ表示（〜480px）でLookbook背景の縦長さを画像サイズに合わせる */
+  @media (max-width: 480px) {
+    .lookbook-container {
+      min-block-size: calc(420px + 0.5rem) !important; /* iPhone 12でも画像が見える高さを確保 */
+      padding-block: 0.25rem !important;
+      overflow: visible !important;
+      align-items: center !important;
+    }
+  }
   
   /* PC表示でLookbookの縦長さを調整、画像全体を表示 */
   @media (min-width: 1025px) {
@@ -1204,7 +1212,16 @@
     height: 100% !important; /* コンテナの高さに合わせる */
     will-change: transform;
     cursor: grab;
+    pointer-events: auto !important; /* クリックイベントを有効化 */
     /* アニメーションは下記の#lookbook .lookbook-trackで統一管理 */
+  }
+  
+  /* Lookbookアイテムのクリックを確実に有効化 */
+  #lookbook .lookbook-item {
+    pointer-events: auto !important;
+    position: relative;
+    display: inline-flex;
+    z-index: 1;
   }
   
   /* Lookbookアニメーション速度は1534行目以降のFINALオーバーライドで統一管理 */
@@ -1253,6 +1270,10 @@
     background:transparent; 
     border-radius:8px; 
     overflow:visible !important; /* 画像切れ防止 */
+    pointer-events: auto !important; /* クリックイベントを確実に有効化 */
+    position: relative;
+    display: inline-flex;
+    z-index: 1;
   }
   /* 画像サイズは2498行目の設定を採用（競合削除） */
   #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; }
@@ -2525,11 +2546,13 @@ div.copyright {
 /* Collection画像の読み込み最適化 - スマホ表示安定化 */
 /* 注意: loadingとdecodingはHTML属性なので、CSSでは設定できません */
 
-/* Collectionセクションの背景設定 - 透明に変更 */
-#collection .band {
-  background: transparent !important;
-  backdrop-filter: none !important;
+/* Collectionセクションの背景設定 - ナビバーと同じ色に統一 */
+#collection .band,
+#collection .collection-wrapper {
+  background: rgba(255, 255, 255, 0.9) !important; /* ナビバーと同じ色（ヘッダーと同系統） */
+  backdrop-filter: blur(8px) !important;
   position: relative;
+  border-radius: 12px;
 }
 
 /* 上段の背景：下部分のみ角丸 */
@@ -2543,10 +2566,12 @@ div.copyright {
 }
 
 /* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
-#lookbook .band {
-  background: rgba(255, 255, 255, 0.85) !important; /* ナビバーと同じ色 */
-  backdrop-filter: none !important;
+#lookbook .band,
+#lookbook .lookbook-wrapper {
+  background: rgba(255, 255, 255, 0.9) !important; /* ナビバーと同じ色（ヘッダーと同系統） */
+  backdrop-filter: blur(8px) !important;
   position: relative;
+  border-radius: 12px;
 }
 
 /* Lookbookコンテナの背景は透明のまま */
@@ -2812,22 +2837,24 @@ html body #collection .collection-track a img {
   .lookbook-item img[width],
   .lookbook-item img[height],
   /* より具体的なセレクタで確実に適用 */
-  #lookbook .lookbook-track a img,
-  #lookbook .lookbook-item a img,
-  html body #lookbook .lookbook-track a img,
-  html body #lookbook .lookbook-item a img {
-    width: 70vw !important; /* 画面幅の70%に拡大（画像を大きく見せる） */
-    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 85vw !important; /* 画面幅の85%に拡大（画像を大きく見せる） */
-    min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
-    min-width: 240px !important; /* 最小幅を拡大 */
-    max-width: 360px !important; /* 最大幅を拡大 */
-    /* HTMLのwidth/height属性を上書き */
-    aspect-ratio: auto !important;
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-    display: block !important;
-  }
+    #lookbook .lookbook-track a img,
+    #lookbook .lookbook-item a img,
+    html body #lookbook .lookbook-track a img,
+    html body #lookbook .lookbook-item a img {
+      width: 70vw !important; /* 画面幅の70%に拡大（画像を大きく見せる） */
+      height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
+      max-height: 85vw !important; /* 画面幅の85%に拡大（画像を大きく見せる） */
+      min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
+      min-width: 240px !important; /* 最小幅を拡大 */
+      max-width: 360px !important; /* 最大幅を拡大 */
+      /* HTMLのwidth/height属性を上書き */
+      aspect-ratio: auto !important;
+      object-fit: contain !important;
+      flex-shrink: 0 !important;
+      display: block !important;
+      opacity: 1 !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
+      visibility: visible !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
+    }
   
   /* スマホ (≤480px) */
   @media (max-width: 480px) {
