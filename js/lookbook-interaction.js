@@ -510,33 +510,9 @@ if (document.readyState === 'loading') {
   initializeLookbook();
 }
 
-// window.loadでも再初期化（外部サイトからの遷移時にCSSが適用されるのを待つ）
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    initializeLookbook();
-    // インラインスタイルを確実に削除
-    document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-      track.style.removeProperty('animation');
-      track.style.removeProperty('animation-play-state');
-    });
-    
-    // Instagram WebViewでLookbookコンテナの高さを強制的に設定
-    const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
-                               /FBAN|FBAV/i.test(navigator.userAgent);
-    if (isInstagramWebView && window.innerWidth <= 480) {
-      const container = document.querySelector('#lookbook .lookbook-container');
-      if (container) {
-        const expectedMinHeight = 373 + 32; // 固定値373px（画像のmax-height）+ 2rem = 32px = 405px
-        container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
-        container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
-        console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
-          expectedMinHeight,
-          windowWidth: window.innerWidth
-        });
-      }
-    }
-  }, 100);
-});
+// Collection/LookbookともにCSSベースで常時runningとするため、
+// loadイベントでのスタイル操作は削除
+// アニメーション状態を触らないようにする
 
 // Instagram WebView検出と特別な処理
 const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
@@ -548,36 +524,9 @@ if (isInstagramWebView) {
   // bodyにクラスを追加してCSSで検出できるようにする
   document.body.classList.add('instagram-webview');
   
-  // Instagram WebViewでは、loadイベント後にも確実に初期化を実行
-  setTimeout(() => {
-    console.log('[Lookbook] Instagram WebView: 遅延初期化を実行');
-    try {
-      initializeLookbook();
-      // インラインスタイルを確実に削除
-      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-        // CSSで完全に制御するため、速度設定は削除
-        // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
-      });
-      
-      // Instagram WebViewでLookbookコンテナの高さを強制的に設定（固定値で統一）
-      if (window.innerWidth <= 480) {
-        const container = document.querySelector('#lookbook .lookbook-container');
-        if (container) {
-          const expectedMinHeight = 400 + 32; // 固定値400px（画像のmax-height）+ 2rem = 32px = 432px
-          container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
-          container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
-          console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
-            expectedMinHeight,
-            windowWidth: window.innerWidth
-          });
-        }
-      }
-    } catch (error) {
-      console.error('[Lookbook] Instagram WebView: 遅延初期化エラー:', error);
-    }
-  }, 1000);
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // Instagram WebView向けの遅延初期化も削除
+  // アニメーション状態を触らないようにする
   
   // Collection/LookbookともにCSSベースで常時runningとするため、
   // visibilitychangeとスクロールイベントでの再初期化は削除
