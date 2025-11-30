@@ -253,14 +253,9 @@ function pauseWhenOutOfView(track) {
   }
   
   if (track.classList.contains('lookbook-track')) {
-    // Lookbookは常時アニメーションさせる（CSSで制御するため、インラインスタイルは削除）
-    // draggingクラスが残っている場合は削除
-    if (track.classList.contains('dragging') && !track.isDragging) {
-      track.classList.remove('dragging');
-      track.isDragging = false;
-      console.log('pauseWhenOutOfView: Lookbookのdraggingクラスを削除');
-    }
-    track.style.removeProperty('animation-play-state');
+    // Collection/LookbookともにCSSベースで常時runningとするため、
+    // pauseWhenOutOfViewでの処理は削除
+    // アニメーション状態を触らないようにする
     return;
   }
   
@@ -404,31 +399,14 @@ function computeDesiredTx(track, target, align = 'left') {
   return -x;
 }
 
-/** 現在の keyframes（left/right）に対して、希望 translateX を満たす負の animation-delay を適用 */
+/** Collection/LookbookともにCSSベースで常時runningとするため、
+ *  applyInitialDelay関数は削除（初期位置合わせは不要）
+ *  アニメーション状態を触らないようにする
+ */
 function applyInitialDelay(track, desiredTxPx) {
-  // READ all layout properties first
-  const loop = track._segmentWidth || (track.scrollWidth / 2);
-  const isLookbook = track.classList.contains('lookbook-track');
-  // LookbookもCollectionと同じ70sに統一
-  const durSec = 70; // Collection/Lookbook共通で70sに統一
-  const dir = (track.dataset.direction || 'left').toLowerCase();
-
-  // 希望位置を keyframes の可動範囲に正規化
-  // left: 0 → -loop, right: -loop → 0 の範囲であれば OK
-  let T = desiredTxPx;
-  let progress;
-  if (dir === 'left') {
-    while (T < -loop) T += loop;
-    while (T > 0)     T -= loop;
-    progress = (-T) / loop;                               // 0..1
-  } else {
-    while (T < -loop) T += loop;
-    while (T > 0)     T -= loop;
-    progress = (T + loop) / loop;                         // 0..1
-  }
-  
-  // WRITE after all reads
-  track.style.animationDelay = `-${(progress * durSec).toFixed(4)}s`;
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // animationDelayの操作は削除
+  // アニメーション状態を触らないようにする
 }
 
 /** data-start / data-align に従って初期位置を合わせる */
@@ -447,20 +425,9 @@ function alignTrackStart(track) {
   const key  = isLookbook ? 'lookbook-scroll' : (dir === 'right' ? 'scroll-right' : 'scroll-left');
   const desired = computeDesiredTx(track, target, align);
 
-  // WRITE all properties after reads
-  if (isLookbook) {
-    // LookbookはCSSで制御するため、インラインスタイルは削除
-    track.style.removeProperty('animation');
-    track.style.removeProperty('animation-play-state');
-    applyInitialDelay(track, desired);
-  } else {
-    // CollectionはCSSで50sに統一されているため、インラインスタイルは削除
-    track.style.removeProperty('animation');
-    track.style.removeProperty('animation-play-state');
-    track.style.removeProperty('animation-duration');
-    applyInitialDelay(track, desired);
-    track.offsetHeight; // リフローを強制してCSSアニメーションを適用
-  }
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // alignTrackStartでのスタイル操作は削除
+  // アニメーション状態を触らないようにする
 }
 /* ===== /start alignment helpers ===== */
 
