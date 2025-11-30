@@ -215,63 +215,13 @@
   // グローバルに公開（init-sections.jsから呼び出せるように）
   window.initCollectionMarquee = initCollectionMarquee;
 
-  // 即座に実行を試みる
+  // DOMContentLoadedのみで初期化
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initCollectionMarquee();
     });
   } else {
     initCollectionMarquee();
-  }
-
-  // loadイベントでも実行（フォールバック）
-  window.addEventListener('load', () => {
-    // 既に初期化済みの場合はスキップ
-    const tracks = document.querySelectorAll('#collection .collection-track');
-    if (tracks.length > 0 && tracks[0].children.length > 0) {
-      const firstTrack = tracks[0];
-      const expectedChildren = parseInt(firstTrack.dataset.seg) || 16;
-      if (firstTrack.children.length <= expectedChildren) {
-        console.log('[Collection Marquee] loadイベント: 再初期化を実行');
-        initCollectionMarquee();
-      }
-    }
-  }, { once: true });
-
-  // pageshowイベント（bfcache対応）
-  // アニメーションを止めないように、要素複製のみを実行（アニメーション状態は触らない）
-  window.addEventListener('pageshow', (event) => {
-    console.log('[Collection Marquee] pageshowイベント - 要素複製のみ実行', { persisted: event.persisted });
-    // アニメーションを止めないように、要素複製のみを実行
-    // アニメーション状態（animation*）は一切触らない
-    setTimeout(() => {
-      const tracks = document.querySelectorAll('#collection .collection-track');
-      tracks.forEach(track => {
-        // 既に複製済みの場合はスキップ
-        const children = Array.from(track.children);
-        const expectedChildren = parseInt(track.dataset.seg) || 16;
-        if (children.length <= expectedChildren) {
-          // 要素複製のみ実行（アニメーション状態は触らない）
-          initMarqueeTrack(track);
-        }
-      });
-    }, 100);
-  });
-
-  // Instagram WebView検出と特別な処理
-  const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
-                             /FBAN|FBAV/i.test(navigator.userAgent) ||
-                             (window.navigator.standalone === false && /iPhone|iPad|iPod/i.test(navigator.userAgent));
-
-  if (isInstagramWebView) {
-    console.log('[Collection Marquee] Instagram WebView検出');
-    document.body.classList.add('instagram-webview');
-    
-    // loadイベント後にも確実に初期化を実行
-    setTimeout(() => {
-      console.log('[Collection Marquee] Instagram WebView: 遅延初期化を実行');
-      initCollectionMarquee();
-    }, 1000);
   }
 
 })();
