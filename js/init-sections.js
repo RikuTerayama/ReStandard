@@ -502,13 +502,6 @@ const initSections = () => {
           track.style.removeProperty('animation-duration');
           track.style.removeProperty('transform');
         }
-      } else {
-        console.log(`[INIT] Lookbook Track ${index + 1}: lookbook-interaction.jsのinitTrack関数が見つかりません。直接初期化します。`);
-        // インラインスタイルを確実に削除（CSSで制御するため）
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-        track.style.removeProperty('animation-duration');
-        track.style.removeProperty('transform');
       }
       return; // Lookbook Trackの場合はここで終了
     }
@@ -520,19 +513,11 @@ const initSections = () => {
       return;
     }
     
-    // Lookbookトラックの場合、インラインスタイルを確実に削除
+    // Lookbook Trackは lookbook-marquee.js で完全に制御するため、ここでは処理しない
+    // Lookbook Trackが混入した場合は警告を出してスキップ
     if (track.classList.contains('lookbook-track')) {
-      // 複数回実行して確実に削除
-      track.style.removeProperty('animation');
-      track.style.removeProperty('animation-play-state');
-      requestAnimationFrame(() => {
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-      });
-      setTimeout(() => {
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-      }, 100);
+      console.warn(`[INIT] Lookbook Track ${index + 1} が検出されましたが、lookbook-marquee.jsで制御されるためスキップします。`);
+      return;
     }
     
     if (window.__QA_MEASURE_LOGS__) {
@@ -559,18 +544,7 @@ const initSections = () => {
   // resizeイベントでのスタイル操作は削除
   // アニメーション状態を触らないようにする
   
-  // ページ読み込み完了後にもインラインスタイルを削除（外部サイトからの遷移時も確実に実行）
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      // Lookbook Trackの処理
-      // LookbookはCSSで完全に制御するため、スタイル操作は不要
-      // アニメーション状態を触らないようにする
-      
-      // Step 5: Collection専用マーキー実装 - loadイベントからCollectionを完全に除外
-      // Collectionは collection-marquee.js で完全に制御するため、ここでは処理しない
-      console.log('[LOAD] Collection Track: collection-marquee.jsで完全制御（汎用trackロジックから除外）');
-    }, 500);
-  });
+  // Collection/Lookbook Trackは専用JSで完全に制御するため、loadイベントでの処理は不要
   
   // 外部サイトからの遷移時も確実に初期化（リサイズ時にも再実行）
   // Collection/LookbookともにCSSベースで常時runningとするため、
