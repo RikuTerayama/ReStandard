@@ -146,14 +146,23 @@
           img.removeAttribute('loading');
         }
         img.loading = 'eager';
-        img.style.display = 'block';
-        img.style.visibility = 'visible';
-        img.style.opacity = '1';
+        // Chrome初期表示対策: より積極的にスタイルを設定
+        if (img.style.display !== 'block') {
+          img.style.display = 'block';
+        }
+        if (img.style.visibility !== 'visible') {
+          img.style.visibility = 'visible';
+        }
+        if (img.style.opacity !== '1') {
+          img.style.opacity = '1';
+        }
         img.style.width = 'auto';
         img.style.height = 'auto';
         // Instagram WebView対策: flex-shrinkとflex-growを設定
         img.style.flexShrink = '0';
         img.style.flexGrow = '0';
+        // Chrome初期表示対策: 強制的にリフローを発生させる
+        img.offsetHeight;
       }
     });
 
