@@ -1042,9 +1042,14 @@
   }
   #collection .collection-track{
     display:flex; align-items:center; gap: 8px !important; /* 左右スペース調整 */
-    will-change: transform; width: max-content !important; height:100%; cursor: grab;
+    will-change: transform !important; 
+    width: max-content !important; 
+    height:100%; 
+    cursor: default !important; /* ドラッグ機能を無効化 */
     margin: 0 !important;
     text-align: center !important;
+    /* アニメーションを確実に適用するため、インラインスタイルを上書き */
+    animation-play-state: running !important;
   }
   
   /* =========================================================
@@ -1054,19 +1059,32 @@
   
   /* Collection専用アニメーション - 100% CSSベース */
   /* JSからは一切制御しない（初期化時の要素複製のみ） */
+  /* より具体的なセレクタで確実に適用 */
+  html body #collection .collection-track[data-direction="left"],
   #collection .collection-track[data-direction="left"],
+  html body #collection .collection-track[data-direction="right"],
   #collection .collection-track[data-direction="right"] {
     will-change: transform !important;
     animation-play-state: running !important; /* 常時running（JSからのpauseを防ぐ） */
     /* アニメーションは個別に設定（下記） */
   }
   
+  html body #collection .collection-track[data-direction="left"],
   #collection .collection-track[data-direction="left"] {
     animation: collection-scroll-left 50s linear infinite !important;
+    animation-name: collection-scroll-left !important;
+    animation-duration: 50s !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
   }
   
+  html body #collection .collection-track[data-direction="right"],
   #collection .collection-track[data-direction="right"] {
     animation: collection-scroll-right 50s linear infinite !important;
+    animation-name: collection-scroll-right !important;
+    animation-duration: 50s !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
   }
   
   /* Collection専用の@keyframes（汎用trackとは独立） */
@@ -1087,14 +1105,19 @@
   } */
   #collection .collection-item{ flex:0 0 auto; height:100%;
     border-radius:12px; overflow:hidden; background:#fff; }
-  #collection .collection-item img{ 
-    width: auto !important; /* Step 4: width: autoに統一（横長を防止） */
-    height: auto !important; /* Step 4: height: autoに統一（縦横比を維持） */
-    max-width: 100% !important; /* 親要素からはみ出さないように */
-    max-height: 40vh !important; /* レスポンシブ対応 */
-    object-fit: contain !important; /* cover→contain変更 - 縦横比を維持 */
+  #collection .collection-item img,
+  #collection .collection-track img,
+  #collection .collection-track a img { 
+    width: auto !important; /* width: autoに統一（横長を防止） */
+    height: auto !important; /* height: autoに統一（縦横比を維持） */
+    max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
+    max-height: 140px !important; /* 最大高さを制限 */
+    object-fit: contain !important; /* contain - 縦横比を維持 */
     display: block !important; 
-    aspect-ratio: auto !important; /* Step 4: アスペクト比を維持 */
+    aspect-ratio: auto !important; /* アスペクト比を維持 */
+    /* Instagram WebView対策: flexboxの影響を無効化 */
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
   }
   
   /* ====== Lookbook ====== */
