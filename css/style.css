@@ -146,8 +146,9 @@
     padding-inline: clamp(16px, 2vw, 24px);
   }
   
-  /* ドラッグ中の共通制御 */
-  .dragging {
+  /* ドラッグ中の共通制御 - Collection/Lookbookには適用しない */
+  /* Collection/LookbookはCSSベースで常時runningのため、draggingクラスによるpauseは無効化 */
+  .dragging:not(.collection-track):not(.lookbook-track) {
     animation-play-state: paused !important;
     cursor: grabbing !important;
   }
@@ -312,12 +313,9 @@
     pointer-events: auto; /* クリック可視性 */
   }
   
-  /* ホバー一時停止 */
-  @media (hover: hover) {
-    .collection-row:hover .collection-track { 
-    animation-play-state: paused;
-    }
-  }
+  /* ホバー一時停止 - Collection/Lookbookには適用しない（常時running） */
+  /* Collection/LookbookはCSSベースで常時runningのため、hoverによるpauseは無効化 */
+  /* Collection trackには適用しないため、このルールは削除 */
   
   /* prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
@@ -457,12 +455,8 @@
   
   /* Lookbook アニメーションは970行目付近の定義を使用（重複削除） */
   
-  /* ホバー一時停止 */
-  @media (hover: hover) {
-    .lookbook-container:hover .lookbook-track {
-      animation-play-state: paused;
-    }
-  }
+  /* ホバー一時停止 - Lookbookには適用しない（常時running） */
+  /* LookbookはCSSベースで常時runningのため、hoverによるpauseは無効化 */
   
   /* prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
@@ -1118,6 +1112,8 @@
     /* Instagram WebView対策: flexboxの影響を無効化 */
     flex-shrink: 0 !important;
     flex-grow: 0 !important;
+    opacity: 1 !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
+    visibility: visible !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
   }
   
   /* ====== Lookbook ====== */
@@ -1159,6 +1155,7 @@
     padding-block: 0.25rem !important; /* 0.5remから0.25remにさらに短縮 */
     position: relative;
     overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
+    overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
     display: flex;
     align-items: center !important; /* 上下中央揃え（ど真ん中） */
     justify-content: flex-start !important; /* 左端から開始 */
@@ -1171,6 +1168,7 @@
       min-block-size: calc(350px + 0.5rem) !important; /* 画像高さ350px + 上下余白0.25rem */
       padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
       overflow: visible !important; /* 画像が端から端まで表示されるように */
+      overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
       align-items: center !important; /* 上下中央揃え（ど真ん中） */
     }
   }
@@ -1192,6 +1190,7 @@
       min-block-size: calc(400px + 0.5rem) !important; /* 画像高さ400px + 上下余白0.25rem */
       padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
       overflow: visible !important; /* 画像が端から端まで表示されるように */
+      overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
       align-items: center !important; /* 上下中央揃え（ど真ん中） */
     }
     
@@ -1260,10 +1259,8 @@
   /* ここでは設定しない（重複を避けるため） */
   
   #lookbook .lookbook-track:active{ cursor:grabbing; }
-  #lookbook .lookbook-track.dragging{ 
-    animation:none !important; /* ドラッグ中のみ停止 */
-    animation-play-state: paused !important;
-  }
+  /* Lookbookのdraggingクラスによるpauseは無効化（常時running） */
+  /* #lookbook .lookbook-track.dragging のルールは削除 */
   #lookbook .lookbook-item{ 
     flex:0 0 auto; 
     width:auto; 
@@ -1276,7 +1273,8 @@
     z-index: 1;
   }
   /* 画像サイズは2498行目の設定を採用（競合削除） */
-  #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; }
+  /* Lookbookのhoverによるpauseは無効化（常時running） */
+  /* #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; } は削除 */
   
   /* 全般レスポンシブ画像対応 */
   .collection-track img {
@@ -2572,6 +2570,26 @@ div.copyright {
   backdrop-filter: blur(8px) !important;
   position: relative;
   border-radius: 12px;
+  padding-block: clamp(16px, 3.2vw, 40px); /* 上下余白を確保 */
+}
+
+/* Lookbook wrapperの背景を確実に表示 */
+#lookbook .lookbook-wrapper {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(8px) !important;
+  border-radius: 12px;
+  min-height: 450px; /* PC基準の高さを確保 */
+  display: block;
+  position: relative;
+}
+
+/* スマホでも背景パネルが確実に表示されるように */
+@media (max-width: 480px) {
+  #lookbook .lookbook-wrapper {
+    min-height: 450px !important; /* iPhone 12でも背景パネルが見える高さを確保 */
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px) !important;
+  }
 }
 
 /* Lookbookコンテナの背景は透明のまま */
@@ -2580,6 +2598,7 @@ div.copyright {
 html body #lookbook .lookbook-container {
   background: transparent !important;
   overflow: visible !important; /* 画像が切れないように */
+  overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
 }
 
 /* スマホ表示におけるLookbook背景の縦の長さを短縮 - 2691行目の設定で統一管理（重複削除） */
@@ -2900,15 +2919,14 @@ html body #collection .collection-track a img {
   #lookbook .lookbook-container,
   html body #lookbook .lookbook-container,
   html #lookbook .lookbook-container {
-    min-block-size: calc(80vw + 2rem) !important; /* 画像のmax-height（80vw）+ 上下余白2rem */
-    min-height: calc(80vw + 2rem) !important; /* min-block-sizeのフォールバック */
+    min-block-size: calc(420px + 0.5rem) !important; /* iPhone 12でも画像が見える高さを確保 */
+    min-height: calc(420px + 0.5rem) !important; /* min-block-sizeのフォールバック */
     max-block-size: none !important; /* 最大高さの制限を解除 */
     max-height: none !important; /* max-block-sizeのフォールバック */
     overflow: visible !important; /* 画像が切れないように */
-    align-items: flex-start !important; /* flex-startに変更して画像が上から表示されるように */
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-    padding-block: 1rem !important;
+    overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
+    align-items: center !important; /* 上下中央揃え（ど真ん中）に戻す */
+    padding-block: 0.25rem !important; /* 余白を最小限に */
     display: flex !important;
   }
   
