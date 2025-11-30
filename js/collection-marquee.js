@@ -59,6 +59,9 @@
           img.style.opacity = '1';
           img.style.width = 'auto';
           img.style.height = 'auto';
+          // Instagram WebView対策: flex-shrinkとflex-growを設定
+          img.style.flexShrink = '0';
+          img.style.flexGrow = '0';
         }
       });
     });
@@ -73,11 +76,12 @@
     }
 
     // 各trackを初期化（要素複製のみ）
-    tracks.forEach((track, index) => {
+    for (let index = 0; index < tracks.length; index++) {
+      const track = tracks[index];
       console.log(`[Collection Marquee] Track ${index + 1} 初期化開始`);
-      initMarqueeTrack(track);
+      await initMarqueeTrack(track);
       console.log(`[Collection Marquee] Track ${index + 1} 初期化完了`);
-    });
+    }
 
     console.log('[Collection Marquee] 初期化完了');
   }
@@ -86,7 +90,7 @@
    * 単一のtrackを初期化（要素複製のみ）
    * アニメーション制御は一切行わない
    */
-  function initMarqueeTrack(track) {
+  async function initMarqueeTrack(track) {
     const children = Array.from(track.children);
     
     if (children.length === 0) {
@@ -94,7 +98,7 @@
       return;
     }
 
-    // 元の幅を計算
+    // 元の幅を計算（リトライロジック）
     let originalWidth = 0;
     let attempts = 0;
     const maxAttempts = 5;
@@ -115,17 +119,18 @@
             img.style.opacity = '1';
             img.style.width = 'auto';
             img.style.height = 'auto';
+            // Instagram WebView対策: flex-shrinkとflex-growを設定
+            img.style.flexShrink = '0';
+            img.style.flexGrow = '0';
           }
         });
         attempts++;
         
         if (attempts < maxAttempts) {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              initMarqueeTrack(track);
-              resolve();
-            }, 200);
-          });
+          // リトライ前に少し待機
+          await new Promise(resolve => setTimeout(resolve, 200));
+          // 再帰的に呼び出し（リトライ）
+          return await initMarqueeTrack(track);
         }
       }
     }
@@ -146,6 +151,9 @@
         img.style.opacity = '1';
         img.style.width = 'auto';
         img.style.height = 'auto';
+        // Instagram WebView対策: flex-shrinkとflex-growを設定
+        img.style.flexShrink = '0';
+        img.style.flexGrow = '0';
       }
     });
 
@@ -172,6 +180,9 @@
             img.style.opacity = '1';
             img.style.width = 'auto';
             img.style.height = 'auto';
+            // Instagram WebView対策: flex-shrinkとflex-growを設定
+            img.style.flexShrink = '0';
+            img.style.flexGrow = '0';
           });
           
           track.appendChild(clone);
