@@ -1071,18 +1071,18 @@
   
   html body #collection .collection-track[data-direction="left"],
   #collection .collection-track[data-direction="left"] {
-    animation: collection-scroll-left 50s linear infinite !important;
+    animation: collection-scroll-left 70s linear infinite !important; /* 70sに統一 */
     animation-name: collection-scroll-left !important;
-    animation-duration: 50s !important;
+    animation-duration: 70s !important;
     animation-timing-function: linear !important;
     animation-iteration-count: infinite !important;
   }
   
   html body #collection .collection-track[data-direction="right"],
   #collection .collection-track[data-direction="right"] {
-    animation: collection-scroll-right 50s linear infinite !important;
+    animation: collection-scroll-right 70s linear infinite !important; /* 70sに統一 */
     animation-name: collection-scroll-right !important;
-    animation-duration: 50s !important;
+    animation-duration: 70s !important;
     animation-timing-function: linear !important;
     animation-iteration-count: infinite !important;
   }
@@ -1154,9 +1154,9 @@
   /* 帯の最小高 = 画像高 + 余白（上下1rem） */
   .lookbook-container{
     /* 画像サイズに合わせて背景の高さを短くする */
-    /* 画像のmax-height（320px） + 上下余白（0.5rem = 8px） */
-    min-block-size: calc(320px + 1rem) !important;
-    padding-block: 0.5rem !important; /* 1remから0.5remに短縮 */
+    /* 画像のmax-height（400px） + 上下余白（0.25rem = 4px） */
+    min-block-size: calc(400px + 0.5rem) !important;
+    padding-block: 0.25rem !important; /* 0.5remから0.25remにさらに短縮 */
     position: relative;
     overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
     display: flex;
@@ -1167,9 +1167,9 @@
   /* タブレット表示（481px〜1024px）でLookbook背景の縦長さを画像サイズに合わせる */
   @media (min-width: 481px) and (max-width: 1024px) {
     .lookbook-container {
-      /* 画像の高さ280pxに合わせて、背景の高さを短くする */
-      min-block-size: calc(280px + 1rem) !important; /* 画像高さ280px + 上下余白0.5rem */
-      padding-block: 0.5rem !important; /* 上下余白を0.5remに短縮 */
+      /* 画像の高さ350pxに合わせて、背景の高さを短くする */
+      min-block-size: calc(350px + 0.5rem) !important; /* 画像高さ350px + 上下余白0.25rem */
+      padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
       overflow: visible !important; /* 画像が端から端まで表示されるように */
       align-items: center !important; /* 上下中央揃え（ど真ん中） */
     }
@@ -1181,8 +1181,8 @@
   @media (min-width: 1025px) {
     .lookbook-container {
       /* 画像サイズに合わせて背景の高さを短くする */
-      min-block-size: calc(320px + 1rem) !important; /* 画像高さ320px + 上下余白0.5rem */
-      padding-block: 0.5rem !important; /* 上下余白を0.5remに短縮 */
+      min-block-size: calc(400px + 0.5rem) !important; /* 画像高さ400px + 上下余白0.25rem */
+      padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
       overflow: visible !important; /* 画像が端から端まで表示されるように */
       align-items: center !important; /* 上下中央揃え（ど真ん中） */
     }
@@ -1564,7 +1564,8 @@ html body .lookbook-item img {
 
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
 /* スマホ版（〜480px）：適切な速度（169s） */
-/* Lookbook アニメーション - Collectionと同じ50sに統一（全環境・全端末で統一） */
+/* Lookbook アニメーション - Collectionと同じ70sに統一（全環境・全端末で統一） */
+/* 50sでは速すぎるため、70sに調整 */
 html body #lookbook .lookbook-track:not(.dragging),
 #lookbook .lookbook-track:not(.dragging),
 .lookbook-track:not(.dragging),
@@ -1574,9 +1575,9 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
 #lookbook .lookbook-track[style*="animation"]:not(.dragging),
 #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
 #lookbook .lookbook-track[data-speed]:not(.dragging) {
-  animation: lookbook-scroll 50s linear infinite !important; /* Collectionと同じ50sに統一 */
+  animation: lookbook-scroll 70s linear infinite !important; /* Collectionと同じ70sに統一 */
   animation-play-state: running !important; /* 常時running（JSからのpauseを防ぐ） */
-  animation-duration: 50s !important;
+  animation-duration: 70s !important;
   animation-name: lookbook-scroll !important;
   animation-timing-function: linear !important;
   animation-iteration-count: infinite !important;
@@ -1590,9 +1591,9 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
   html body #lookbook .lookbook-track:not(.dragging),
   #lookbook .lookbook-track:not(.dragging),
   .lookbook-track:not(.dragging) {
-    animation: lookbook-scroll 50s linear infinite !important; /* Collectionと同じ50sに統一 */
+    animation: lookbook-scroll 70s linear infinite !important; /* Collectionと同じ70sに統一 */
     animation-play-state: running !important;
-    animation-duration: 50s !important;
+    animation-duration: 70s !important;
     animation-name: lookbook-scroll !important;
     animation-timing-function: linear !important;
     animation-iteration-count: infinite !important;
@@ -2843,12 +2844,12 @@ html body #collection .collection-track a img {
   #lookbook .lookbook-item a img,
   html body #lookbook .lookbook-track a img,
   html body #lookbook .lookbook-item a img {
-    width: 60vw !important; /* 画面幅の60% */
+    width: 70vw !important; /* 画面幅の70%に拡大（画像を大きく見せる） */
     height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 80vw !important; /* 画面幅の80%（アスペクト比維持） */
+    max-height: 85vw !important; /* 画面幅の85%に拡大（画像を大きく見せる） */
     min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
-    min-width: 200px !important; /* 最小幅 */
-    max-width: 300px !important; /* 最大幅 */
+    min-width: 240px !important; /* 最小幅を拡大 */
+    max-width: 360px !important; /* 最大幅を拡大 */
     /* HTMLのwidth/height属性を上書き */
     aspect-ratio: auto !important;
     object-fit: contain !important;
@@ -2949,13 +2950,13 @@ html body #collection .collection-track a img {
   /* Instagram WebView検出用のクラスでも同じコンテナ高さを適用 */
   body.instagram-webview #lookbook .lookbook-container,
   body.instagram-webview html body #lookbook .lookbook-container {
-    min-block-size: calc(320px + 1rem) !important; /* 画像高さ320px + 上下余白0.5rem */
-    min-height: calc(320px + 1rem) !important;
+    min-block-size: calc(400px + 0.5rem) !important; /* 画像高さ400px + 上下余白0.25rem */
+    min-height: calc(400px + 0.5rem) !important;
     max-block-size: none !important;
     max-height: none !important;
-    padding-block: 0.5rem !important; /* 上下余白を0.5remに短縮 */
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
+    padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
     overflow: visible !important;
     align-items: center !important; /* 上下中央揃え（ど真ん中） */
     display: flex !important;
