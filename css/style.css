@@ -1099,6 +1099,9 @@
   } */
   #collection .collection-item{ flex:0 0 auto; height:100%;
     border-radius:12px; overflow:hidden; background:#fff; }
+  /* =========================================================
+     Collection画像の「最後の砦」- iPhone12 Chromeで消える問題を完全防止（STEP5）
+     ========================================================= */
   #collection .collection-item img,
   #collection .collection-track img,
   #collection .collection-track a img { 
@@ -1112,8 +1115,11 @@
     /* Instagram WebView対策: flexboxの影響を無効化 */
     flex-shrink: 0 !important;
     flex-grow: 0 !important;
-    opacity: 1 !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
-    visibility: visible !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
+    /* 最後の砦：iPhone12 Chromeで画像が消える問題を完全防止 */
+    opacity: 1 !important;
+    visibility: visible !important;
+    /* transitionでopacityが0になることを防ぐ */
+    transition: none !important;
   }
   
   /* ====== Lookbook ====== */
@@ -1147,56 +1153,45 @@
   /* 古い lookbook-container 設定は下記で統一済み */
   
   /* ---------- Lookbook ---------- */
-  /* 帯の最小高 = 画像高 + 余白（上下1rem） */
-  .lookbook-container{
-    /* 画像サイズに合わせて背景の高さを短くする */
-    /* 画像のmax-height（400px） + 上下余白（0.25rem = 4px） */
-    min-block-size: calc(400px + 0.5rem) !important;
-    padding-block: 0.25rem !important; /* 0.5remから0.25remにさらに短縮 */
-    position: relative;
-    overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
+  /* =========================================================
+     Lookbookコンテナの高さと縦中央 - 一元管理（STEP5）
+     ========================================================= */
+  /* ベース（全環境） */
+  .lookbook-container {
+    display: flex !important;
+    align-items: center !important; /* 上下中央揃え */
     overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
-    display: flex;
-    align-items: center !important; /* 上下中央揃え（ど真ん中） */
-    justify-content: flex-start !important; /* 左端から開始 */
+    overflow: visible !important;
+    position: relative;
+    padding-block: 0.25rem !important;
+    min-height: 420px; /* ベースの高さ */
   }
   
-  /* タブレット表示（481px〜1024px）でLookbook背景の縦長さを画像サイズに合わせる */
-  @media (min-width: 481px) and (max-width: 1024px) {
-    .lookbook-container {
-      /* 画像の高さ350pxに合わせて、背景の高さを短くする */
-      min-block-size: calc(350px + 0.5rem) !important; /* 画像高さ350px + 上下余白0.25rem */
-      padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
-      overflow: visible !important; /* 画像が端から端まで表示されるように */
-      overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
-      align-items: center !important; /* 上下中央揃え（ど真ん中） */
-    }
-  }
-  
-  /* スマホ表示（〜480px）でLookbook背景の縦長さを画像サイズに合わせる */
+  /* スマホ（〜480px） */
   @media (max-width: 480px) {
     .lookbook-container {
-      min-block-size: calc(420px + 0.5rem) !important; /* iPhone 12でも画像が見える高さを確保 */
-      padding-block: 0.25rem !important;
-      overflow: visible !important;
+      min-height: 420px !important; /* iPhone 12でも画像が見える高さを確保 */
       align-items: center !important;
+      overflow-y: visible !important;
     }
   }
   
-  /* PC表示でLookbookの縦長さを調整、画像全体を表示 */
+  /* タブレット（481px〜1024px） */
+  @media (min-width: 481px) and (max-width: 1024px) {
+    .lookbook-container {
+      min-height: 420px !important;
+      align-items: center !important;
+      overflow-y: visible !important;
+    }
+  }
+  
+  /* PC（1025px以上） */
   @media (min-width: 1025px) {
     .lookbook-container {
-      /* 画像サイズに合わせて背景の高さを短くする */
-      min-block-size: calc(400px + 0.5rem) !important; /* 画像高さ400px + 上下余白0.25rem */
-      padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
-      overflow: visible !important; /* 画像が端から端まで表示されるように */
-      overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
-      align-items: center !important; /* 上下中央揃え（ど真ん中） */
+      min-height: 450px !important; /* PCでは少し高めに */
+      align-items: center !important;
+      overflow-y: visible !important;
     }
-    
-    /* 画像サイズは2498行目の設定を採用（競合削除） */
-    
-    /* アニメーション速度は1534行目以降のFINALオーバーライドで統一管理 */
   }
   
   /* トラックは上寄せ・Y方向のtransformを撤廃（Xのみ） */
@@ -1630,10 +1625,7 @@ html body #lookbook .lookbook-track[data-speed],
   #collection .band { 
     min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
   }
-  #lookbook   .band { 
-    /* スマホ版ではcalc(80vw + 2rem)に統一（メディアクエリで上書き） */
-    min-height: calc(80vw + 2rem);
-  }
+  /* STEP5: .bandクラスには背景を持たせないため、このルールは削除 */
   
   /* === Collection layout guards === */
   .collection-section { 
@@ -2563,33 +2555,34 @@ div.copyright {
   border-radius: 20px 20px 0 0 !important;
 }
 
-/* Lookbookセクションの背景設定 - ナビバーと同じ色に統一 */
-#lookbook .band,
+/* =========================================================
+   Lookbook背景パネル - 1箇所に集約（STEP5）
+   ========================================================= */
+/* Lookbook wrapperに背景パネルを一元管理 */
 #lookbook .lookbook-wrapper {
-  background: rgba(255, 255, 255, 0.9) !important; /* ナビバーと同じ色（ヘッダーと同系統） */
+  /* ヘッダーと同じ色変数を使用（fallback付き） */
+  background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
   backdrop-filter: blur(8px) !important;
+  border-radius: 12px;
   position: relative;
-  border-radius: 12px;
-  padding-block: clamp(16px, 3.2vw, 40px); /* 上下余白を確保 */
-}
-
-/* Lookbook wrapperの背景を確実に表示 */
-#lookbook .lookbook-wrapper {
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(8px) !important;
-  border-radius: 12px;
-  min-height: 450px; /* PC基準の高さを確保 */
   display: block;
-  position: relative;
+  padding-block: clamp(16px, 3.2vw, 40px); /* 上下余白を確保 */
+  min-height: 450px; /* PC基準の高さを確保 */
 }
 
 /* スマホでも背景パネルが確実に表示されるように */
 @media (max-width: 480px) {
   #lookbook .lookbook-wrapper {
     min-height: 450px !important; /* iPhone 12でも背景パネルが見える高さを確保 */
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
     backdrop-filter: blur(8px) !important;
   }
+}
+
+/* .bandクラスには背景を持たせない（レイアウトのみ） */
+#lookbook .band {
+  background: transparent !important;
+  backdrop-filter: none !important;
 }
 
 /* Lookbookコンテナの背景は透明のまま */
@@ -2786,17 +2779,7 @@ html body #collection .collection-track a img {
     min-height: 320px !important;
   }
   
-  /* PC版: コンテナの高さを画像の高さに合わせる */
-  #lookbook .lookbook-container,
-  html body #lookbook .lookbook-container {
-    min-block-size: calc(320px + 2rem) !important;
-    padding-block: 1rem !important;
-    overflow: visible !important;
-    align-items: flex-start !important; /* flex-startに変更して画像が切れないように */
-    min-height: calc(320px + 2rem) !important; /* 画像が切れないように */
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-  }
+  /* STEP5: PC版のコンテナ設定は1151-1189行目で一元管理されているため、この重複設定は削除 */
 }
 
 /* 1500px以下でもPC表示と同じ比率を維持（1025px〜1500pxの範囲を明確化） */
@@ -2930,38 +2913,8 @@ html body #collection .collection-track a img {
     display: flex !important;
   }
   
-  /* Instagram WebViewでも同じコンテナ高さを適用 */
-  @supports (-webkit-touch-callout: none) {
-    #lookbook .lookbook-container,
-    html body #lookbook .lookbook-container,
-    html #lookbook .lookbook-container {
-      min-block-size: calc(80vw + 2rem) !important; /* 画像のmax-height（80vw）+ 上下余白2rem */
-      min-height: calc(80vw + 2rem) !important;
-      max-block-size: none !important;
-      max-height: none !important;
-      padding-block: 1rem !important;
-      padding-top: 1rem !important;
-      padding-bottom: 1rem !important;
-      overflow: visible !important;
-      align-items: flex-start !important;
-      display: flex !important;
-    }
-  }
-  
-  /* Instagram WebView検出用のクラスでも同じコンテナ高さを適用 */
-  body.instagram-webview #lookbook .lookbook-container,
-  body.instagram-webview html body #lookbook .lookbook-container {
-    min-block-size: calc(400px + 0.5rem) !important; /* 画像高さ400px + 上下余白0.25rem */
-    min-height: calc(400px + 0.5rem) !important;
-    max-block-size: none !important;
-    max-height: none !important;
-    padding-block: 0.25rem !important; /* 上下余白を0.25remにさらに短縮 */
-    padding-top: 0.25rem !important;
-    padding-bottom: 0.25rem !important;
-    overflow: visible !important;
-    align-items: center !important; /* 上下中央揃え（ど真ん中） */
-    display: flex !important;
-  }
+  /* STEP5: Instagram WebView向けの設定は削除（1151-1189行目で一元管理） */
+  /* @supportsやbody.instagram-webviewによる分岐は廃止し、メディアクエリで統一 */
 }
 
 /* スクリーンリーダー専用（視覚的に非表示、アクセシビリティ維持） */
