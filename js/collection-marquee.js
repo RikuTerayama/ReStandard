@@ -230,10 +230,22 @@
   }, { once: true });
 
   // pageshowイベント（bfcache対応）
+  // アニメーションを止めないように、要素複製のみを実行（アニメーション状態は触らない）
   window.addEventListener('pageshow', (event) => {
-    console.log('[Collection Marquee] pageshowイベント - 再初期化を実行', { persisted: event.persisted });
+    console.log('[Collection Marquee] pageshowイベント - 要素複製のみ実行', { persisted: event.persisted });
+    // アニメーションを止めないように、要素複製のみを実行
+    // アニメーション状態（animation*）は一切触らない
     setTimeout(() => {
-      initCollectionMarquee();
+      const tracks = document.querySelectorAll('#collection .collection-track');
+      tracks.forEach(track => {
+        // 既に複製済みの場合はスキップ
+        const children = Array.from(track.children);
+        const expectedChildren = parseInt(track.dataset.seg) || 16;
+        if (children.length <= expectedChildren) {
+          // 要素複製のみ実行（アニメーション状態は触らない）
+          initMarqueeTrack(track);
+        }
+      });
     }, 100);
   });
 
