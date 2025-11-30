@@ -7,6 +7,12 @@
 
 /** 子要素をクローンして 300% 幅以上にし、無限ループを成立させる */
 function ensureLoopWidth(track) {
+  // STEP5: Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
+  if (track.closest('#collection, #lookbook')) {
+    console.log('ensureLoopWidth: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
+    return;
+  }
+  
   // READ all layout properties first
   const parentWidth = track.parentElement?.offsetWidth || track.offsetWidth || 1;
   const isLookbookTrack = track.classList.contains('lookbook-track');
@@ -82,8 +88,14 @@ function ensureLoopWidth(track) {
   }
 }
 function attachManualControls(track){
-  // Collection trackは collection-marquee.js で完全に制御するため、ドラッグ機能を無効化
-  // Lookbook trackもCSSベースで常時runningとするため、ドラッグ機能を無効化
+  // STEP5: Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
+  // 親セクションでフィルタリングして完全隔離
+  if (track.closest('#collection, #lookbook')) {
+    console.log('attachManualControls: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
+    return;
+  }
+  
+  // クラス名でも念のためチェック（二重防御）
   if (track.classList.contains('collection-track') || track.classList.contains('lookbook-track')) {
     console.log('attachManualControls: Collection/Lookbook trackはCSSで完全制御するため、ドラッグ機能をスキップ');
     return;
@@ -249,16 +261,16 @@ function attachManualControls(track){
 /** IntersectionObserver で画面外は自動停止
  *  ただし "ユーザーが止めた（data-user-paused=1）" 場合は何もしない */
 function pauseWhenOutOfView(track) {
-  // Step 3: Collection trackはcollection-interaction.jsで完全に制御するため、ここでは処理しない
-  if (track.classList.contains('collection-track')) {
-    console.log('pauseWhenOutOfView: Collection trackはcollection-interaction.jsで制御されるため、スキップ');
+  // STEP5: Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
+  // 親セクションでフィルタリングして完全隔離
+  if (track.closest('#collection, #lookbook')) {
+    console.log('pauseWhenOutOfView: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
     return;
   }
   
-  if (track.classList.contains('lookbook-track')) {
-    // Collection/LookbookともにCSSベースで常時runningとするため、
-    // pauseWhenOutOfViewでの処理は削除
-    // アニメーション状態を触らないようにする
+  // クラス名でも念のためチェック（二重防御）
+  if (track.classList.contains('collection-track') || track.classList.contains('lookbook-track')) {
+    console.log('pauseWhenOutOfView: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
     return;
   }
   
@@ -296,15 +308,19 @@ function pauseWhenOutOfView(track) {
 
 /* 初期化時：速度を画面幅で上書き、方向は data-dir */
 function initAutoScroll(track){
-  // Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
-  if (track.classList.contains('collection-track')) {
-    console.log('initAutoScroll: Collection trackはcollection-marquee.jsで制御されるため、スキップ');
+  // STEP5: Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
+  // 親セクションでフィルタリングして完全隔離
+  if (track.closest('#collection, #lookbook')) {
+    console.log('initAutoScroll: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
+    // draggingクラスが残っている場合は削除（念のため）
+    track.isDragging = false;
+    track.classList.remove('dragging');
     return;
   }
   
-  if (track.classList.contains('lookbook-track')) {
-    console.log('initAutoScroll: Lookbook trackはlookbook-marquee.jsで制御されるため、スキップ');
-    // LookbookはCSSで完全に制御するため、draggingクラスを削除するだけ
+  // クラス名でも念のためチェック（二重防御）
+  if (track.classList.contains('collection-track') || track.classList.contains('lookbook-track')) {
+    console.log('initAutoScroll: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
     track.isDragging = false;
     track.classList.remove('dragging');
     return;
@@ -356,6 +372,12 @@ function calcSpeedSec(base=80){
 
 /* トラックを中央に配置する関数 */
 function centerTrack(track) {
+  // STEP5: Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
+  if (track.closest('#collection, #lookbook')) {
+    console.log('centerTrack: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
+    return;
+  }
+  
   // トラックの親要素に中央揃えのスタイルを適用
   const parent = track.parentElement;
   if (parent) {
@@ -412,6 +434,12 @@ function applyInitialDelay(track, desiredTxPx) {
 
 /** data-start / data-align に従って初期位置を合わせる */
 function alignTrackStart(track) {
+  // STEP5: Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
+  if (track.closest('#collection, #lookbook')) {
+    console.log('alignTrackStart: Collection/Lookbook trackは専用JSで制御されるため、スキップ');
+    return;
+  }
+  
   const start = (track.dataset.start || '').toLowerCase();
   const align = (track.dataset.align || 'left').toLowerCase();
   const target = findImageBySuffix(track, start);
@@ -468,63 +496,12 @@ const initSections = () => {
   // lazy-load フェードイン処理を初期化
   initLazyLoadFadeIn();
   
-  // Step 5: Collection専用マーキー実装 - 汎用trackロジックから完全に分離
-  // Collection Trackは collection-marquee.js で完全に制御するため、ここでは処理しない
-  // Lookbook Trackのみを処理（汎用trackロジックを使用）
+  // STEP5: Collection/Lookbook trackは専用JSで完全に制御するため、ここでは一切処理しない
+  // collection-marquee.js / lookbook-marquee.js がそれぞれ担当するため、
+  // init-sections.jsからは完全に隔離する
   
-  const lookbookTracks = document.querySelectorAll('#lookbook .lookbook-track');
-  console.log(`[INIT] Lookbook tracks found: ${lookbookTracks.length}`);
-  
-  lookbookTracks.forEach((track, index) => {
-    console.log(`[INIT] Lookbook Track ${index + 1} 初期化開始`);
-    
-    // Lookbook Trackの場合は、lookbook-interaction.jsの初期化関数を使用
-    if (track.classList.contains('lookbook-track')) {
-      console.log(`[INIT] Track ${index + 1}: Lookbook Trackとして認識 - lookbook-interaction.jsで初期化`);
-      
-      // lookbook-interaction.jsのinitTrack関数を使用して初期化
-      if (typeof window.initLookbookTrack === 'function') {
-        console.log(`[INIT] Lookbook Track ${index + 1}: lookbook-interaction.jsのinitTrack関数を呼び出し`);
-        try {
-          window.initLookbookTrack(track);
-          // イベントハンドラが設定されたか確認（Lookbookのみ）
-          setTimeout(() => {
-            if (!track._visibilityObserver) {
-              console.warn(`[INIT] Lookbook Track ${index + 1}: イベントハンドラが設定されていません。`);
-            } else {
-              console.log(`[INIT] Lookbook Track ${index + 1}: イベントハンドラが正常に設定されました。`);
-            }
-          }, 200);
-        } catch (error) {
-          console.error(`[INIT] Lookbook Track ${index + 1}: 初期化エラー`, error);
-          // エラー時はインラインスタイルを確実に削除（CSSで制御するため）
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-          track.style.removeProperty('animation-duration');
-          track.style.removeProperty('transform');
-        }
-      }
-      return; // Lookbook Trackの場合はここで終了
-    }
-    
-    // Collection Trackは collection-marquee.js で完全に制御するため、ここでは処理しない
-    // Collection Trackが混入した場合は警告を出してスキップ
-    if (track.classList.contains('collection-track')) {
-      console.warn(`[INIT] Collection Track ${index + 1} が検出されましたが、collection-marquee.jsで制御されるためスキップします。`);
-      return;
-    }
-    
-    // Lookbook Trackは lookbook-marquee.js で完全に制御するため、ここでは処理しない
-    // Lookbook Trackが混入した場合は警告を出してスキップ
-    if (track.classList.contains('lookbook-track')) {
-      console.warn(`[INIT] Lookbook Track ${index + 1} が検出されましたが、lookbook-marquee.jsで制御されるためスキップします。`);
-      return;
-    }
-    
-    if (window.__QA_MEASURE_LOGS__) {
-      console.log(`[INIT] Track ${index + 1}: ${track.dataset.direction || 'left'} (${track.dataset.speed || '55'}s)`);
-    }
-  });
+  // Collection/Lookbook trackの初期化処理は削除
+  // 専用JS（collection-marquee.js / lookbook-marquee.js）がDOMContentLoadedで初期化する
   
   // href 未設定（# や空、javascript:void(0)）の a は data-href を使って遷移させる
   document.querySelectorAll('#collection a, #lookbook a').forEach(a => {
