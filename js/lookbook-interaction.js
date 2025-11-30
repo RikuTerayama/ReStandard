@@ -209,12 +209,9 @@ function attachTrackControls(track) {
       // track.style.animationPlayState = 'paused';
     }
     
-    if (isDragging) {
-      // ドラッグ中は track._tx を更新してスクロール位置を変更
-      track._tx = startTx + dx;
-      track.style.transform = `translateX(${track._tx}px)`;
-      e.preventDefault();
-    }
+    // Collection/LookbookともにCSSベースで常時runningとするため、
+    // ドラッグ中のtransform操作は削除
+    // アニメーション状態を触らないようにする
   };
   
   const onUp = (e) => {
@@ -246,8 +243,9 @@ function attachTrackControls(track) {
     
     isDragging = false;
     track.isDragging = false; // グローバルフラグもリセット
-    track.classList.remove('dragging');
-    track.style.removeProperty('transform');
+    // Collection/LookbookともにCSSベースで常時runningとするため、
+    // draggingクラスとtransform操作は削除
+    // アニメーション状態を触らないようにする
     
     // 5px未満=クリック：リンク遷移
     if (moved < 5) {
@@ -259,8 +257,9 @@ function attachTrackControls(track) {
           return;
         }
       }
-      // LookbookはCSSで制御するため、インラインスタイルは削除
-      track.style.removeProperty('animation-play-state');
+      // Collection/LookbookともにCSSベースで常時runningとするため、
+      // スタイル操作は削除
+      // アニメーション状態を触らないようにする
       moved = 0;
       return;
     }
@@ -269,8 +268,9 @@ function attachTrackControls(track) {
     e.preventDefault();
     e.stopPropagation();
     
-    // アニメーションを即座に再開（LookbookはCSSで制御するため、インラインスタイルは削除）
-    track.style.removeProperty('animation-play-state');
+    // Collection/LookbookともにCSSベースで常時runningとするため、
+    // アニメーション再開処理は削除
+    // アニメーション状態を触らないようにする
     
     // 現在位置から再開するための負の animation-delay を計算
     const segmentWidth = track._segmentWidth;
@@ -280,10 +280,9 @@ function attachTrackControls(track) {
     const duration = 70; // CSSで70sに統一されているため、70sを使用（Collectionと同じ）
     const delay = -progress * duration;
     
-    // アニメーション再開（CSSで制御するため、インラインスタイルは削除）
-    track.style.removeProperty('animation');
-    track.style.animationDelay = `${delay}s`;
-    track.style.removeProperty('animation-play-state');
+    // Collection/LookbookともにCSSベースで常時runningとするため、
+    // アニメーション再開処理は削除
+    // アニメーション状態を触らないようにする
   };
   
   // イベントリスナーを追加
@@ -311,103 +310,21 @@ function startAutoScroll(track) {
   // CSSで完全に制御するため、速度設定は削除
   // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
 
-  // 開始位置の調整
-  alignTrackStart(track);
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // スタイル操作は削除
+  // アニメーション状態を触らないようにする
   
-  // アニメーション開始（CSSで制御するため、インラインスタイルは削除）
-  // 複数回実行して確実に削除
-  track.style.removeProperty('animation');
-  track.style.removeProperty('animation-play-state');
-  track.style.removeProperty('animation-duration');
-  track.style.removeProperty('animation-name');
-  track.style.removeProperty('animation-timing-function');
-  track.style.removeProperty('animation-iteration-count');
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // requestAnimationFrame内のスタイル操作は削除
+  // アニメーション状態を触らないようにする
   
-  // リフローを強制してCSSアニメーションを再適用
-  track.offsetHeight;
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // animationiterationイベントでのスタイル操作は削除
+  // アニメーション状態を触らないようにする
   
-  requestAnimationFrame(() => {
-    track.style.removeProperty('animation');
-    track.style.removeProperty('animation-play-state');
-    track.style.removeProperty('animation-duration');
-    track.style.removeProperty('animation-name');
-    track.style.removeProperty('animation-timing-function');
-    track.style.removeProperty('animation-iteration-count');
-    track.offsetHeight;
-  });
-  
-  // スクロール後の継続性を確保（CSSで制御）
-  track.addEventListener('animationiteration', function() {
-    if (!track.isDragging && !track.classList.contains('dragging')) {
-      track.style.removeProperty('animation-play-state');
-    }
-  });
-  
-  // Lookbookの可視性チェックとアニメーション復帰（強化版）
-  // CSSアニメーションを強制的に再開するヘルパー関数
-  const forceResumeLookbookAnimation = () => {
-    // 実際にドラッグ中でない場合は、draggingクラスを強制的に削除
-    if (!track.isDragging) {
-      track.isDragging = false;
-      track.classList.remove('dragging');
-      console.log('Lookbook: draggingクラスを強制削除');
-    }
-    
-    // 実際にドラッグ中の場合は再開をスキップ
-    if (track.isDragging) {
-      console.log('Lookbook: 実際にドラッグ中なので再開をスキップ');
-      return;
-    }
-    
-    console.log('Lookbook: アニメーション強制再開開始');
-    
-    // 現在のアニメーション状態を確認
-    const currentAnimation = getComputedStyle(track).animation;
-    const currentPlayState = getComputedStyle(track).animationPlayState;
-    const hasDraggingClass = track.classList.contains('dragging');
-    console.log('Lookbook: 現在のアニメーション状態:', { 
-      currentAnimation, 
-      currentPlayState, 
-      hasDraggingClass,
-      isDragging: track.isDragging
-    });
-    
-    // CSSアニメーションを強制的に再開するため、クラスとスタイルを確実にクリア
-    track.isDragging = false;
-    track.classList.remove('dragging');
-    track.style.removeProperty('animation');
-    track.style.removeProperty('animation-play-state');
-    track.style.removeProperty('transform');
-    
-    // リフローを強制してCSSアニメーションを再適用
-    track.offsetHeight;
-    
-    // 少し遅延してから再度確認（CSSアニメーションの適用を待つ）
-    requestAnimationFrame(() => {
-      // 再度draggingクラスを確認して削除
-      if (track.classList.contains('dragging')) {
-        track.classList.remove('dragging');
-        track.isDragging = false;
-        console.log('Lookbook: requestAnimationFrame内でdraggingクラスを削除');
-      }
-      
-      track.style.removeProperty('animation');
-      track.style.removeProperty('animation-play-state');
-      
-      // 再設定後の状態を確認
-      setTimeout(() => {
-        const newAnimation = getComputedStyle(track).animation;
-        const newPlayState = getComputedStyle(track).animationPlayState;
-        const stillHasDraggingClass = track.classList.contains('dragging');
-        console.log('Lookbook: アニメーション再開完了:', { 
-          newAnimation, 
-          newPlayState,
-          stillHasDraggingClass,
-          isDragging: track.isDragging
-        });
-      }, 100);
-    });
-  };
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // forceResumeLookbookAnimation関数は削除
+  // アニメーション状態を触らないようにする
   
   // より確実なスマホ判定（画面幅またはユーザーエージェント）
   const isMobileDevice = window.innerWidth <= 900 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -419,22 +336,9 @@ function startAutoScroll(track) {
     userAgent: navigator.userAgent.substring(0, 50)
   });
   
-  // 初期化時にdraggingクラスを確実に削除
-  track.isDragging = false;
-  track.classList.remove('dragging');
-  
-  // アニメーションがpausedになっている場合は再設定
-  const computedAnimation = getComputedStyle(track).animation;
-  const computedPlayState = getComputedStyle(track).animationPlayState;
-  if (computedPlayState === 'paused' || computedAnimation === 'paused' || track.classList.contains('dragging')) {
-    console.log('Lookbook: アニメーションが停止しているため再設定');
-    track.isDragging = false;
-    track.classList.remove('dragging');
-    track.style.removeProperty('animation');
-    track.style.removeProperty('animation-play-state');
-    track.style.removeProperty('transform');
-    track.offsetHeight;
-  }
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // 初期化時のスタイル操作は削除
+  // アニメーション状態を触らないようにする
   
   // Collectionと同様に、LookbookもCSSベースで常時runningとする
   // IntersectionObserver、visibilitychange、scrollイベントでのpause/resumeを削除
@@ -447,54 +351,18 @@ function startAutoScroll(track) {
 }
 
 // 開始位置の調整（画像が常に表示されるよう、初期表示で look1.webp が左端に配置）
+// Collection/LookbookともにCSSベースで常時runningとするため、
+// alignTrackStart関数は削除（初期位置合わせは不要）
+// アニメーション状態を触らないようにする
 function alignTrackStart(track) {
-  const startImage = track.dataset.start;
-  const align = track.dataset.align || 'left';
-  
-  if (!startImage) return;
-  
-  // 指定された画像を探す
-  const images = track.querySelectorAll('img');
-  const targetImage = Array.from(images).find(img => 
-    img.src.toLowerCase().includes(startImage.toLowerCase())
-  );
-  
-  if (!targetImage) return;
-  
-  // READ all layout properties first
-  const imageLeft = targetImage.offsetLeft;
-  const imageWidth = targetImage.getBoundingClientRect().width;
-  const trackWidth = track.parentElement.offsetWidth;
-  const segmentWidth = track._segmentWidth;
-  const duration = 120; // CSSで120sに統一されているため、120sを使用
-  
-  // Calculate desired position
-  let desiredTx;
-  if (align === 'right') {
-    // 画像の右端をトラックの右端に合わせる
-    desiredTx = trackWidth - (imageLeft + imageWidth);
-  } else {
-    // 画像の左端をトラックの左端に合わせる
-    desiredTx = -imageLeft;
-  }
-  
-  // 負の animation-delay を計算
-  const normalizedTx = ((desiredTx % segmentWidth) + segmentWidth) % segmentWidth;
-  const progress = normalizedTx / segmentWidth;
-  const delay = -progress * duration;
-  
-  // WRITE after all reads
-  track.style.animationDelay = `${delay}s`;
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // animationDelayの操作は削除
+  // アニメーション状態を触らないようにする
 }
 
-// ドラッグ中のアニメーション停止用CSS
-const style = document.createElement('style');
-style.textContent = `
-  .lookbook-track.dragging {
-    animation-play-state: paused !important;
-  }
-`;
-document.head.appendChild(style);
+// Collection/LookbookともにCSSベースで常時runningとするため、
+// ドラッグ中のアニメーション停止用CSSは削除
+// アニメーション状態を触らないようにする
 
 // 初期化（外部サイトからの遷移時も確実に実行されるように強化）
 function initializeLookbook() {
