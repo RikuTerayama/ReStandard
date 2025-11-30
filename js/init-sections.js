@@ -224,23 +224,26 @@ function attachManualControls(track){
   
   // クリック時の寄せ直しロジックは削除（リンク遷移を阻害しない）
   
-  // ホイール横スクロール対応
-  track.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
-    
-    // READ all layout properties first
-    const currentTx = getTxPx(track);
-    
-    // WRITE all properties after reads
-    track.style.animationPlayState = 'paused';
-    track.classList.add('dragging');
-    track.style.transform = `translateX(${currentTx - e.deltaX}px)`;
-    
-    clearTimeout(track._wheelTimer);
-    track._wheelTimer = setTimeout(() => {
-      onUp({ preventDefault: () => {}, stopPropagation: () => {} });
-    }, 300);
-  }, { passive: usePassive ? true : false });
+  // ホイール横スクロール対応 - Collection/Lookbookには適用しない
+  // Collection/Lookbook trackはCSSベースで常時runningのため、wheelイベントでのpauseは無効化
+  if (!track.classList.contains('collection-track') && !track.classList.contains('lookbook-track')) {
+    track.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+      
+      // READ all layout properties first
+      const currentTx = getTxPx(track);
+      
+      // WRITE all properties after reads
+      track.style.animationPlayState = 'paused';
+      track.classList.add('dragging');
+      track.style.transform = `translateX(${currentTx - e.deltaX}px)`;
+      
+      clearTimeout(track._wheelTimer);
+      track._wheelTimer = setTimeout(() => {
+        onUp({ preventDefault: () => {}, stopPropagation: () => {} });
+      }, 300);
+    }, { passive: usePassive ? true : false });
+  }
 }
 
 /** IntersectionObserver で画面外は自動停止
@@ -293,28 +296,29 @@ function pauseWhenOutOfView(track) {
 
 /* 初期化時：速度を画面幅で上書き、方向は data-dir */
 function initAutoScroll(track){
-  // Step 3: Collection trackはcollection-interaction.jsで完全に制御するため、ここでは処理しない
+  // Collection/Lookbook trackは専用JSで完全に制御するため、ここでは処理しない
   if (track.classList.contains('collection-track')) {
-    console.log('initAutoScroll: Collection trackはcollection-interaction.jsで制御されるため、スキップ');
+    console.log('initAutoScroll: Collection trackはcollection-marquee.jsで制御されるため、スキップ');
     return;
   }
   
+  if (track.classList.contains('lookbook-track')) {
+    console.log('initAutoScroll: Lookbook trackはlookbook-marquee.jsで制御されるため、スキップ');
+    // LookbookはCSSで完全に制御するため、draggingクラスを削除するだけ
+    track.isDragging = false;
+    track.classList.remove('dragging');
+    return;
+  }
+  
+  // その他のtrackタイプ（将来の拡張用）のみ処理
   // 初期化時にdraggingクラスを確実に削除
   track.isDragging = false;
   track.classList.remove('dragging');
   
   const dir = (track.dataset.direction || 'left').toLowerCase(); // left=左へ / right=右へ
-  const isLookbook = track.classList.contains('lookbook-track');
 
   let key;
   let duration;
-
-  if (isLookbook) {
-    // LookbookはCSSで完全に制御するため、インラインスタイルは削除
-    // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
-    track.style.removeProperty('animation');
-    track.style.removeProperty('animation-play-state');
-  }
   
   // 再度draggingクラスを確認して削除
   track.isDragging = false;
@@ -328,10 +332,7 @@ function initAutoScroll(track){
       console.log('initAutoScroll: draggingクラスを削除');
     }
     
-    // CSSで完全に制御するため、インラインスタイルは削除
-    if (!isLookbook) {
-      track.style.removeProperty('animation-play-state');
-    }
+    track.style.removeProperty('animation-play-state');
   });
   track.style.willChange = 'transform';
   attachManualControls(track);
