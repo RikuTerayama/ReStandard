@@ -179,8 +179,9 @@ function attachTrackControls(track) {
     longPressTimer = setTimeout(() => {
       isDragging = true;
       track.isDragging = true;
-      track.classList.add('dragging');
-      track.style.animationPlayState = 'paused';
+      // ドラッグ機能を無効化（CSSベースで常時running）
+      // track.classList.add('dragging');
+      // track.style.animationPlayState = 'paused';
     }, 500);
     
     // リンク要素の場合はpreventDefaultを避ける
@@ -203,8 +204,9 @@ function attachTrackControls(track) {
     if (!isDragging && moved > 10) {
       isDragging = true;
       track.isDragging = true;
-      track.classList.add('dragging');
-      track.style.animationPlayState = 'paused';
+      // ドラッグ機能を無効化（CSSベースで常時running）
+      // track.classList.add('dragging');
+      // track.style.animationPlayState = 'paused';
     }
     
     if (isDragging) {
@@ -275,7 +277,7 @@ function attachTrackControls(track) {
     const currentTx = getCurrentTranslateX(track);
     const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
     const progress = normalizedTx / segmentWidth;
-    const duration = 50; // CSSで50sに統一されているため、50sを使用（Collectionと同じ）
+    const duration = 70; // CSSで70sに統一されているため、70sを使用（Collectionと同じ）
     const delay = -progress * duration;
     
     // アニメーション再開（CSSで制御するため、インラインスタイルは削除）
@@ -577,85 +579,9 @@ if (isInstagramWebView) {
     }
   }, 1000);
   
-  // ページ可視性変更時にも再初期化
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      console.log('[Lookbook] Instagram WebView: visibilitychange - 再初期化');
-      setTimeout(() => {
-        try {
-          initializeLookbook();
-          // インラインスタイルを確実に削除
-          document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-            track.style.removeProperty('animation');
-            track.style.removeProperty('animation-play-state');
-            // CSSで完全に制御するため、速度設定は削除
-            // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
-          });
-        } catch (error) {
-          console.error('[Lookbook] Instagram WebView: visibilitychange再初期化エラー:', error);
-        }
-      }, 500);
-    }
-  });
-  
-  // Instagram WebViewでは、スクロールイベントをより頻繁に監視
-  let instagramScrollTimer;
-  let lastScrollTop = 0;
-  window.addEventListener('scroll', () => {
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
-    
-    clearTimeout(instagramScrollTimer);
-    instagramScrollTimer = setTimeout(() => {
-      console.log('[Lookbook] Instagram WebView: スクロール終了検知 - 再初期化', { scrollDirection });
-      
-      // Lookbookセクションが画面内にある場合のみ再初期化
-      const lookbookSection = document.getElementById('lookbook');
-      if (lookbookSection) {
-        const rect = lookbookSection.getBoundingClientRect();
-        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-        
-        if (isInViewport) {
-          try {
-            initializeLookbook();
-            // インラインスタイルを確実に削除
-            document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-              track.isDragging = false;
-              track.classList.remove('dragging');
-              track.style.removeProperty('animation');
-              track.style.removeProperty('animation-play-state');
-              track.style.removeProperty('transform');
-              // 速度を正しく設定（Instagram WebViewでも169s）
-              // CSSで完全に制御するため、速度設定は削除
-              // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
-              // リフローを強制してCSSアニメーションを再適用
-              track.offsetHeight;
-            });
-            
-            // Instagram WebViewでLookbookコンテナの高さを強制的に設定
-            if (window.innerWidth <= 480) {
-              const container = document.querySelector('#lookbook .lookbook-container');
-              if (container) {
-                const expectedMinHeight = 400 + 32; // 固定値400px（画像のmax-height）+ 2rem = 32px = 432px
-                container.style.setProperty('min-block-size', `${expectedMinHeight}px`, 'important');
-                container.style.setProperty('min-height', `${expectedMinHeight}px`, 'important');
-                console.log('[Lookbook] Instagram WebView: コンテナ高さを強制的に設定', {
-                  expectedMinHeight,
-                  windowWidth: window.innerWidth
-                });
-              }
-            }
-            
-            console.log('[Lookbook] Instagram WebView: 再初期化完了');
-          } catch (error) {
-            console.error('[Lookbook] Instagram WebView: スクロール再初期化エラー:', error);
-          }
-        }
-      }
-      
-      lastScrollTop = currentScrollTop;
-    }, 300);
-  }, { passive: true });
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // visibilitychangeとスクロールイベントでの再初期化は削除
+  // アニメーション状態を触らないようにする
 }
 
 } // 重複読み込み防止の閉じ括弧
