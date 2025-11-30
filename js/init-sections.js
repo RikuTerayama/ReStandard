@@ -82,9 +82,10 @@ function ensureLoopWidth(track) {
   }
 }
 function attachManualControls(track){
-  // Step 3: Collection trackはcollection-interaction.jsで完全に制御するため、ドラッグ機能を無効化
-  if (track.classList.contains('collection-track')) {
-    console.log('attachManualControls: Collection trackはcollection-interaction.jsで制御されるため、ドラッグ機能をスキップ');
+  // Collection trackは collection-marquee.js で完全に制御するため、ドラッグ機能を無効化
+  // Lookbook trackもCSSベースで常時runningとするため、ドラッグ機能を無効化
+  if (track.classList.contains('collection-track') || track.classList.contains('lookbook-track')) {
+    console.log('attachManualControls: Collection/Lookbook trackはCSSで完全制御するため、ドラッグ機能をスキップ');
     return;
   }
   
