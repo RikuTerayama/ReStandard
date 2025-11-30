@@ -408,8 +408,8 @@ function applyInitialDelay(track, desiredTxPx) {
   // READ all layout properties first
   const loop = track._segmentWidth || (track.scrollWidth / 2);
   const isLookbook = track.classList.contains('lookbook-track');
-  // LookbookもCollectionと同じ50sに統一
-  const durSec = 50; // Collection/Lookbook共通で50sに統一
+  // LookbookもCollectionと同じ70sに統一
+  const durSec = 70; // Collection/Lookbook共通で70sに統一
   const dir = (track.dataset.direction || 'left').toLowerCase();
 
   // 希望位置を keyframes の可動範囲に正規化
@@ -587,48 +587,16 @@ const initSections = () => {
   
   // Step 5: Collection専用マーキー実装 - resizeイベントからCollectionを完全に除外
   // Collectionは collection-marquee.js で完全に制御するため、ここでは処理しない
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      // Lookbook Trackのみ処理（Collectionは除外）
-      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-        // LookbookはCSSで完全に制御するため、インラインスタイルは削除
-        // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-        requestAnimationFrame(() => {
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-        });
-        track.classList.remove('dragging');
-        track.isDragging = false;
-      });
-    }, 200);
-  });
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // resizeイベントでのスタイル操作は削除
+  // アニメーション状態を触らないようにする
   
   // ページ読み込み完了後にもインラインスタイルを削除（外部サイトからの遷移時も確実に実行）
   window.addEventListener('load', () => {
     setTimeout(() => {
       // Lookbook Trackの処理
-      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-        // draggingクラスを確実に削除
-        track.isDragging = false;
-        track.classList.remove('dragging');
-        // インラインスタイルを確実に削除（複数回実行）
-        track.style.removeProperty('animation');
-        track.style.removeProperty('animation-play-state');
-        track.style.removeProperty('transform');
-        requestAnimationFrame(() => {
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-          track.style.removeProperty('transform');
-          // リフローを強制してCSSアニメーションを再適用
-          track.offsetHeight;
-        });
-        // CSSで完全に制御するため、データ属性の更新は不要
-        // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
-      });
+      // LookbookはCSSで完全に制御するため、スタイル操作は不要
+      // アニメーション状態を触らないようにする
       
       // Step 5: Collection専用マーキー実装 - loadイベントからCollectionを完全に除外
       // Collectionは collection-marquee.js で完全に制御するため、ここでは処理しない
@@ -637,31 +605,9 @@ const initSections = () => {
   });
   
   // 外部サイトからの遷移時も確実に初期化（リサイズ時にも再実行）
-  let initTimeout;
-  const reinitializeLookbook = () => {
-    clearTimeout(initTimeout);
-    initTimeout = setTimeout(() => {
-      document.querySelectorAll('#lookbook .lookbook-track').forEach(track => {
-        if (track.classList.contains('lookbook-track')) {
-          // CSSで完全に制御するため、インラインスタイルは削除
-          // Lookbook速度はCSSで120sに統一されているため、JavaScriptでは設定しない
-          track.style.removeProperty('animation');
-          track.style.removeProperty('animation-play-state');
-          requestAnimationFrame(() => {
-            track.style.removeProperty('animation');
-            track.style.removeProperty('animation-play-state');
-          });
-        }
-      });
-    }, 100);
-  };
-  
-  // ページ可視性変更時にも再初期化（外部サイトからの遷移時に確実に実行）
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      reinitializeLookbook();
-    }
-  });
+  // Collection/LookbookともにCSSベースで常時runningとするため、
+  // visibilitychangeイベントでの再初期化は削除
+  // アニメーション状態を触らないようにする
 };
 
 // 即座に実行を試みる（DOMContentLoadedイベントがすでに発火済みの場合）
