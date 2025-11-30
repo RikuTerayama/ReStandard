@@ -275,7 +275,7 @@ function attachTrackControls(track) {
     const currentTx = getCurrentTranslateX(track);
     const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
     const progress = normalizedTx / segmentWidth;
-    const duration = 120; // CSSで120sに統一されているため、120sを使用
+    const duration = 50; // CSSで50sに統一されているため、50sを使用（Collectionと同じ）
     const delay = -progress * duration;
     
     // アニメーション再開（CSSで制御するため、インラインスタイルは削除）
@@ -434,161 +434,14 @@ function startAutoScroll(track) {
     track.offsetHeight;
   }
   
-  const visibilityObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      console.log('Lookbook IntersectionObserver:', { 
-        isIntersecting: entry.isIntersecting, 
-        intersectionRatio: entry.intersectionRatio,
-        isDragging: track.isDragging,
-        hasDraggingClass: track.classList.contains('dragging')
-      });
-      
-      if (entry.isIntersecting) {
-        // 画面内に入ったらdraggingクラスを確実に削除してアニメーションを再開
-        if (track.classList.contains('dragging') && !track.isDragging) {
-          track.classList.remove('dragging');
-          track.isDragging = false;
-          console.log('Lookbook: 画面内検知 - draggingクラスを削除');
-        }
-        
-        if (!track.isDragging) {
-          console.log('Lookbook: 画面内検知 - アニメーション再開');
-          // 即座に再開
-          forceResumeLookbookAnimation();
-          // 追加のタイマーで確実に再開（複数回実行）
-          setTimeout(() => {
-            if (!track.isDragging && !track.classList.contains('dragging')) {
-              forceResumeLookbookAnimation();
-            }
-          }, 50);
-          setTimeout(() => {
-            if (!track.isDragging && !track.classList.contains('dragging')) {
-              forceResumeLookbookAnimation();
-            }
-          }, 150);
-          setTimeout(() => {
-            if (!track.isDragging && !track.classList.contains('dragging')) {
-              forceResumeLookbookAnimation();
-            }
-          }, 300);
-        }
-      }
-    });
-  }, { threshold: 0.01, rootMargin: '100px' }); // 閾値を0.01に下げ、rootMarginを100pxに拡大してより敏感に反応
+  // Collectionと同様に、LookbookもCSSベースで常時runningとする
+  // IntersectionObserver、visibilitychange、scrollイベントでのpause/resumeを削除
+  // CSSでanimation-play-state: running !importantが設定されているため、JSでの制御は不要
+  track._visibilityObserver = null;
+  track._visibilityHandler = null;
+  track._scrollHandler = null;
   
-  visibilityObserver.observe(track);
-  
-  // ページ可視性変更時の処理（CSSで制御）
-  const visibilityHandler = function() {
-    if (!document.hidden) {
-      // draggingクラスを確実に削除
-      if (track.classList.contains('dragging') && !track.isDragging) {
-        track.classList.remove('dragging');
-        track.isDragging = false;
-        console.log('Lookbook: visibilitychange - draggingクラスを削除');
-      }
-      
-      if (!track.isDragging) {
-        forceResumeLookbookAnimation();
-      }
-    }
-  };
-  document.addEventListener('visibilitychange', visibilityHandler);
-  
-  // クリーンアップ用の参照を保存
-  track._visibilityHandler = visibilityHandler;
-  track._visibilityObserver = visibilityObserver;
-  
-  // スクロール終了検知（スマホ/PC両対応 - 常に設定、強化版）
-  {
-    let scrollTimer;
-    let lastScrollTop = 0;
-    let scrollTimeoutId;
-    const scrollHandler = function() {
-      // 既存のタイマーをクリア
-      clearTimeout(scrollTimer);
-      clearTimeout(scrollTimeoutId);
-      
-      // 即座にdraggingクラスをチェックして削除
-      if (track.classList.contains('dragging') && !track.isDragging) {
-        track.classList.remove('dragging');
-        track.isDragging = false;
-        console.log('Lookbook: スクロール中 - draggingクラスを削除');
-      }
-      
-      scrollTimer = setTimeout(function() {
-        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
-        
-        // Lookbookセクションが画面内にある場合、アニメーションを確実に再開
-        const lookbookSection = document.getElementById('lookbook');
-        if (lookbookSection) {
-          const rect = lookbookSection.getBoundingClientRect();
-          const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100; // マージンを追加してより敏感に反応
-          
-          console.log('Lookbook スクロール終了検知:', {
-            scrollDirection,
-            currentScrollTop,
-            lastScrollTop,
-            isInViewport,
-            rectTop: rect.top,
-            rectBottom: rect.bottom,
-            windowHeight: window.innerHeight,
-            isDragging: track.isDragging,
-            hasDraggingClass: track.classList.contains('dragging')
-          });
-          
-          if (isInViewport) {
-            // draggingクラスを確実に削除
-            if (track.classList.contains('dragging') && !track.isDragging) {
-              track.classList.remove('dragging');
-              track.isDragging = false;
-              console.log('Lookbook: スクロール終了検知 - draggingクラスを削除');
-            }
-            
-            if (!track.isDragging) {
-              // CSSで制御するため、インラインスタイルを削除してCSSアニメーションを再開
-              console.log('スクロール終了後、Lookbookアニメーション再開', { scrollDirection });
-              forceResumeLookbookAnimation();
-              // 複数回実行して確実に再開
-              setTimeout(() => {
-                if (!track.isDragging && !track.classList.contains('dragging')) {
-                  forceResumeLookbookAnimation();
-                }
-              }, 50);
-              setTimeout(() => {
-                if (!track.isDragging && !track.classList.contains('dragging')) {
-                  forceResumeLookbookAnimation();
-                }
-              }, 150);
-            }
-          }
-        }
-        
-        lastScrollTop = currentScrollTop;
-        
-        // 追加のタイマーで確実に再開
-        scrollTimeoutId = setTimeout(() => {
-          if (!track.isDragging && !track.classList.contains('dragging')) {
-            const lookbookSection = document.getElementById('lookbook');
-            if (lookbookSection) {
-              const rect = lookbookSection.getBoundingClientRect();
-              const isInViewport = rect.top < window.innerHeight + 100 && rect.bottom > -100;
-              if (isInViewport) {
-                console.log('Lookbook: 追加タイマーでアニメーション再開');
-                forceResumeLookbookAnimation();
-              }
-            }
-          }
-        }, 100);
-      }, 100); // タイマーを150msから100msに短縮してより敏感に反応 // タイマーを150msに短縮してより敏感に反応
-    };
-    
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-    
-    // クリーンアップ用の参照を保存
-    track._scrollHandler = scrollHandler;
-  }
+  console.log('[Lookbook] CSSベースで常時running - イベントハンドラなし');
 }
 
 // 開始位置の調整（画像が常に表示されるよう、初期表示で look1.webp が左端に配置）
