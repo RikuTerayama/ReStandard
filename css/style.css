@@ -1565,16 +1565,17 @@ html body .lookbook-item img {
 /* ======== FINAL Lookbook overrides (speed & clipping) ======== */
 /* スマホ版（〜480px）：適切な速度（169s） */
 /* Lookbook アニメーション - Collectionと同じ70sに統一（全環境・全端末で統一） */
-/* 50sでは速すぎるため、70sに調整 */
-html body #lookbook .lookbook-track:not(.dragging),
-#lookbook .lookbook-track:not(.dragging),
-.lookbook-track:not(.dragging),
-html body #lookbook .lookbook-track[style*="animation"]:not(.dragging),
-html body #lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-html body #lookbook .lookbook-track[data-speed]:not(.dragging),
-#lookbook .lookbook-track[style*="animation"]:not(.dragging),
-#lookbook .lookbook-track[style*="animation-play-state"]:not(.dragging),
-#lookbook .lookbook-track[data-speed]:not(.dragging) {
+/* PC基準で統一（どの環境でも同じ速度） */
+/* :not(.dragging)セレクタを削除（draggingクラスは使用しない） */
+html body #lookbook .lookbook-track,
+#lookbook .lookbook-track,
+.lookbook-track,
+html body #lookbook .lookbook-track[style*="animation"],
+html body #lookbook .lookbook-track[style*="animation-play-state"],
+html body #lookbook .lookbook-track[data-speed],
+#lookbook .lookbook-track[style*="animation"],
+#lookbook .lookbook-track[style*="animation-play-state"],
+#lookbook .lookbook-track[data-speed] {
   animation: lookbook-scroll 70s linear infinite !important; /* Collectionと同じ70sに統一 */
   animation-play-state: running !important; /* 常時running（JSからのpauseを防ぐ） */
   animation-duration: 70s !important;
@@ -1588,9 +1589,9 @@ html body #lookbook .lookbook-track[data-speed]:not(.dragging),
 
 /* Instagram WebViewでも同じ速度を適用 */
 @supports (-webkit-touch-callout: none) {
-  html body #lookbook .lookbook-track:not(.dragging),
-  #lookbook .lookbook-track:not(.dragging),
-  .lookbook-track:not(.dragging) {
+  html body #lookbook .lookbook-track,
+  #lookbook .lookbook-track,
+  .lookbook-track {
     animation: lookbook-scroll 70s linear infinite !important; /* Collectionと同じ70sに統一 */
     animation-play-state: running !important;
     animation-duration: 70s !important;
