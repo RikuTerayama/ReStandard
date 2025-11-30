@@ -496,68 +496,9 @@ window.addEventListener('load', () => {
   }
 }, { once: true });
 
-// pageshowイベントを処理（ページ遷移時の初期化問題を解決）
-window.addEventListener('pageshow', (event) => {
-  // event.persistedに関係なく、すべてのページ遷移で再初期化
-  console.log('[Collection] pageshowイベント - 再初期化を実行', { persisted: event.persisted });
-  
-  // Step 4: pageshowイベントでの再初期化を簡素化
-  // CollectionアニメーションはCSSで完全制御するため、スタイル操作は不要
-  const reinitializeCollection = () => {
-    try {
-      // 画像の読み込み完了を待ってから再初期化
-      initCollectionTracks();
-      // draggingクラスのみ削除（念のため）
-      document.querySelectorAll('.collection-track').forEach(track => {
-        track.isDragging = false;
-        track.classList.remove('dragging');
-        // Step 4: startAutoScrollは再実行しない（CSSで完全制御するため不要）
-        // 初期化時に一度だけ実行されれば、その後はCSSが自動的に制御する
-      });
-      console.log('[Collection] pageshowイベント: 再初期化完了（CSSで完全制御）');
-    } catch (error) {
-      console.error('[Collection] pageshowイベント: 再初期化エラー', error);
-    }
-  };
-  
-  // 画像の読み込み完了を待つ
-  const images = document.querySelectorAll('#collection .collection-track img');
-  let loadedCount = 0;
-  const totalImages = images.length;
-  
-  if (totalImages === 0) {
-    // 画像がない場合は即座に再初期化
-    setTimeout(reinitializeCollection, 100);
-    return;
-  }
-  
-  images.forEach(img => {
-    if (img.complete && img.naturalWidth > 0) {
-      loadedCount++;
-    } else {
-      img.addEventListener('load', () => {
-        loadedCount++;
-        if (loadedCount === totalImages) {
-          setTimeout(reinitializeCollection, 100);
-        }
-      }, { once: true });
-      img.addEventListener('error', () => {
-        loadedCount++;
-        if (loadedCount === totalImages) {
-          setTimeout(reinitializeCollection, 100);
-        }
-      }, { once: true });
-    }
-  });
-  
-  // タイムアウト処理（3秒以内に読み込まれない場合）
-  setTimeout(() => {
-    if (loadedCount < totalImages) {
-      console.warn('[Collection] pageshowイベント: 画像の読み込みがタイムアウトしました。再初期化を実行します。');
-      reinitializeCollection();
-    }
-  }, 3000);
-});
+// Collectionは collection-marquee.js で完全に制御するため、
+// pageshowイベントでの再初期化は削除
+// アニメーション状態を触らないようにする
 
 // Instagram WebView検出と特別な処理
 const isInstagramWebView = /Instagram/i.test(navigator.userAgent) || 
