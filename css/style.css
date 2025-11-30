@@ -1587,19 +1587,6 @@ html body #lookbook .lookbook-track[data-speed],
   animation-direction: normal !important;
 }
 
-/* Instagram WebViewでも同じ速度を適用 */
-@supports (-webkit-touch-callout: none) {
-  html body #lookbook .lookbook-track,
-  #lookbook .lookbook-track,
-  .lookbook-track {
-    animation: lookbook-scroll 70s linear infinite !important; /* Collectionと同じ70sに統一 */
-    animation-play-state: running !important;
-    animation-duration: 70s !important;
-    animation-name: lookbook-scroll !important;
-    animation-timing-function: linear !important;
-    animation-iteration-count: infinite !important;
-  }
-}
 
 /* Lookbook コンテナのクリッピング解除（どの画面幅でも画像全体を見せる） */
 /* 1155行目の設定で統一管理（重複削除） */
@@ -2842,51 +2829,35 @@ html body #collection .collection-track a img {
     display: block !important;
   }
   
-  /* Instagram WebViewでも同じサイズを適用（Safariと同じ値に統一） */
-  @supports (-webkit-touch-callout: none) {
-    #lookbook .lookbook-track img,
-    #lookbook .lookbook-item img,
-    html body #lookbook .lookbook-track img,
-    html body #lookbook .lookbook-item img,
-    .lookbook-track img,
+  /* スマホ (≤480px) */
+  @media (max-width: 480px) {
     .lookbook-item img,
-    /* より具体的なセレクタで確実に適用 */
     #lookbook .lookbook-track a img,
-    #lookbook .lookbook-item a img,
-    html body #lookbook .lookbook-track a img,
-    html body #lookbook .lookbook-item a img {
-      width: 70vw !important; /* 画面幅の70%に統一（Safariと同じ） */
-      height: auto !important;
-      max-height: 85vw !important; /* 画面幅の85%に統一（Safariと同じ） */
-      min-height: 0 !important;
-      min-width: 240px !important; /* Safariと同じ値に統一 */
-      max-width: 360px !important; /* Safariと同じ値に統一 */
-      aspect-ratio: auto !important;
-      object-fit: contain !important;
-      flex-shrink: 0 !important;
-      display: block !important;
+    #lookbook .lookbook-item a img {
+      max-width: min(70vw, 360px) !important;
+      max-height: min(85vw, 520px) !important;
+      min-width: 240px !important;
     }
   }
-  
-  /* Instagram WebView検出用のクラスでも同じサイズを適用（60vwに統一） */
-  body.instagram-webview #lookbook .lookbook-track img,
-  body.instagram-webview #lookbook .lookbook-item img,
-  body.instagram-webview html body #lookbook .lookbook-track img,
-  body.instagram-webview html body #lookbook .lookbook-item img,
-  /* より具体的なセレクタで確実に適用 */
-  body.instagram-webview #lookbook .lookbook-track a img,
-  body.instagram-webview #lookbook .lookbook-item a img,
-  body.instagram-webview html body #lookbook .lookbook-track a img,
-  body.instagram-webview html body #lookbook .lookbook-item a img {
-    width: 60vw !important; /* 画面幅の60%に統一 */
-    height: auto !important;
-    max-height: 80vw !important; /* 画面幅の80% */
-    min-height: 0 !important;
-    min-width: 200px !important;
-    max-width: 300px !important;
-    aspect-ratio: auto !important;
-    object-fit: contain !important;
-    display: block !important;
+
+  /* タブレット (481px-1024px) */
+  @media (min-width: 481px) and (max-width: 1024px) {
+    .lookbook-item img,
+    #lookbook .lookbook-track a img,
+    #lookbook .lookbook-item a img {
+      max-width: min(60vw, 400px) !important;
+      max-height: min(75vw, 520px) !important;
+    }
+  }
+
+  /* PC (≥1025px) */
+  @media (min-width: 1025px) {
+    .lookbook-item img,
+    #lookbook .lookbook-track a img,
+    #lookbook .lookbook-item a img {
+      max-width: 400px !important;
+      max-height: 520px !important;
+    }
   }
   
   /* スマホ版: トラックの高さを画像の高さに合わせる（画面幅に対する%で指定） */
