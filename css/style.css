@@ -2546,13 +2546,15 @@ div.copyright {
 /* Collection画像の読み込み最適化 - スマホ表示安定化 */
 /* 注意: loadingとdecodingはHTML属性なので、CSSでは設定できません */
 
-/* Collectionセクションの背景設定 - ナビバーと同じ色に統一 */
-#collection .band,
-#collection .collection-wrapper {
-  background: rgba(255, 255, 255, 0.9) !important; /* ナビバーと同じ色（ヘッダーと同系統） */
-  backdrop-filter: blur(8px) !important;
+/* Collectionセクションの背景設定 - 末尾の最終上書きブロックで統一管理 */
+#collection .band {
+  background: transparent !important; /* 背景は末尾の最終上書きブロックで統一 */
+  backdrop-filter: none !important;
   position: relative;
-  border-radius: 12px;
+}
+#collection .collection-wrapper {
+  /* 背景は末尾の最終上書きブロックで統一管理 */
+  position: relative;
 }
 
 /* 上段の背景：下部分のみ角丸 */
@@ -2570,10 +2572,7 @@ div.copyright {
    ========================================================= */
 /* Lookbook wrapperに背景パネルを一元管理 */
 #lookbook .lookbook-wrapper {
-  /* ヘッダーと同じ色変数を使用（fallback付き） */
-  background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
-  backdrop-filter: blur(8px) !important;
-  border-radius: 12px;
+  /* 背景は末尾の最終上書きブロックで統一管理 */
   position: relative;
   display: block;
   padding-block: clamp(16px, 3.2vw, 40px); /* 上下余白を確保 */
@@ -2581,22 +2580,18 @@ div.copyright {
 }
 
 /* スマホでも背景パネルが確実に表示されるように */
+/* 背景は末尾の最終上書きブロックで統一管理 */
 @media (max-width: 480px) {
   #lookbook .lookbook-wrapper {
     min-height: 450px !important; /* iPhone 12でも背景パネルが見える高さを確保 */
-    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
-    backdrop-filter: blur(8px) !important;
-    border-radius: 12px !important;
   }
 }
 
 /* タブレットでも背景パネルが確実に表示されるように */
+/* 背景は末尾の最終上書きブロックで統一管理 */
 @media (min-width: 481px) and (max-width: 1024px) {
   #lookbook .lookbook-wrapper {
     min-height: 450px !important;
-    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
-    backdrop-filter: blur(8px) !important;
-    border-radius: 12px !important;
   }
 }
 
@@ -3213,12 +3208,12 @@ body.splash-active #splash-video-wrapper::after {
    FINAL OVERRIDES: Collection / Lookbook 最終防御レイヤー
    ========================================================= */
 
-/* == FINAL: unify header glass tone and lookbook/collection background == */
+/* === Lookbook / Collection 専用パネル 最終レイヤー === */
 /* ヘッダー（.navbar）と同じ背景トーンに完全統一 */
-#lookbook .lookbook-wrapper,
-#collection .collection-wrapper {
-  background: rgba(255, 255, 255, 0.9) !important; /* ヘッダーと同じ値 */
-  backdrop-filter: blur(8px) !important; /* ヘッダーと同じ値 */
+#collection .collection-wrapper,
+#lookbook .lookbook-wrapper {
+  background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
+  backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   border-radius: 12px;
 }
@@ -3263,7 +3258,7 @@ body.splash-active #splash-video-wrapper::after {
 @media (max-width: 480px) {
   #lookbook .lookbook-wrapper {
     min-height: 480px !important; /* 背景パネルがしっかり見える高さ */
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
   }
@@ -3283,7 +3278,7 @@ body.splash-active #splash-video-wrapper::after {
 @media (min-width: 481px) and (max-width: 1024px) {
   #lookbook .lookbook-wrapper {
     min-height: 450px !important;
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
   }
@@ -3297,9 +3292,18 @@ body.splash-active #splash-video-wrapper::after {
     min-height: 420px !important;
     width: 100% !important;
   }
+
+  /* Lookbook画像の下側が切れないようにする */
+  #lookbook .lookbook-item img {
+    width: auto !important;
+    max-width: 400px !important;
+    max-height: 520px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
 }
 
-/* == FINAL: collection images must be visible on first paint == */
+/* Collection 画像 最終防御 */
 #collection .collection-item img,
 #collection .collection-track img {
   opacity: 1 !important;
@@ -3307,6 +3311,7 @@ body.splash-active #splash-video-wrapper::after {
   display: block !important;
   transition: none !important;
   filter: none !important;
+  transform: none !important; /* scale(0)などを防ぐ */
 }
 
 /* == FINAL: PC lookbook speed adjustment == */
