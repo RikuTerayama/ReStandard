@@ -1,33 +1,42 @@
 /* This file exists ONLY to force Lookbook background to match navbar.
    It must be loaded AFTER all other CSS. */
 
-/* Lookbook section 自体は透明にする */
+/* ===== Lookbook section : no background / no blur ===== */
 #lookbook {
   position: relative;
   padding-top: 80px;
   padding-bottom: 80px;
-  background: transparent !important;
+  background: none !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-/* 画像まわりのパネル：ここだけ navbar と同じ背景を持たせる */
+#lookbook::before,
+#lookbook::after {
+  background: none !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  content: none !important;
+}
+
+/* ===== Lookbook panel : ONLY here has white + blur ===== */
 #lookbook .lookbook-wrapper.lookbook-panel {
   position: relative;
   margin: 32px auto 64px;
   max-width: 1180px;
-  /* 必要なら上下マージンや横幅は調整してOK */
 
-  background-color: rgba(255, 255, 255, 0.9) !important; /* navbar と同じ値 */
-  backdrop-filter: blur(8px) !important;                  /* navbar と同じ blur */
+  background-color: rgba(255, 255, 255, 0.9) !important; /* navbar と同じ */
+  backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
+
   border-radius: 12px;
 }
 
-/* 中身のコンテナは透明にしておく（背景は wrapper が担当） */
+/* 中身の container はレイアウトだけ担当。背景は持たせない */
 #lookbook .lookbook-container {
-  background: transparent !important;
+  background: none !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -51,6 +60,30 @@ DEBUG: to visually confirm override, temporarily uncomment this:
 }
 */
 
+/* ===== メディアクエリ: モバイル / タブレットでも同じポリシー ===== */
+@media (max-width: 768px) {
+  #lookbook {
+    background: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #lookbook .lookbook-wrapper.lookbook-panel {
+    margin: 24px auto 48px;
+    max-width: 100%;
+    padding-inline: 16px;
+    /* 必要に応じて min-height 等はここに書く */
+  }
+
+  #lookbook .lookbook-container {
+    background: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
 /* ============================================================
    Expected DevTools "Computed" values after this override:
    ============================================================
@@ -67,4 +100,5 @@ DEBUG: to visually confirm override, temporarily uncomment this:
    - background-color: rgba(0, 0, 0, 0) (透明)
    - backdrop-filter: none
    ============================================================ */
+
 
