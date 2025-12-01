@@ -318,8 +318,10 @@
   /* Collection trackには適用しないため、このルールは削除 */
   
   /* prefers-reduced-motion */
+  /* Collection/LookbookはCSSベースで常時runningのため、prefers-reduced-motionでも無効化しない */
   @media (prefers-reduced-motion: reduce) {
-    .collection-track { 
+    /* Collection/Lookbook以外のtrackのみアニメーションを無効化 */
+    .track:not(.collection-track):not(.lookbook-track) { 
       animation: none !important; 
     }
   }
@@ -459,8 +461,10 @@
   /* LookbookはCSSベースで常時runningのため、hoverによるpauseは無効化 */
   
   /* prefers-reduced-motion */
+  /* Collection/LookbookはCSSベースで常時runningのため、prefers-reduced-motionでも無効化しない */
   @media (prefers-reduced-motion: reduce) {
-    .collection-track { 
+    /* Collection/Lookbook以外のtrackのみアニメーションを無効化 */
+    .track:not(.collection-track):not(.lookbook-track) { 
       animation: none !important; 
     }
     /* Lookbookはメディアクエリで速度を管理するため、ここでは設定しない */
@@ -1120,6 +1124,10 @@
     visibility: visible !important;
     /* transitionでopacityが0になることを防ぐ */
     transition: none !important;
+    /* filterで暗くならないようにする */
+    filter: none !important;
+    /* transformでscale(0)にならないようにする */
+    transform: none !important;
   }
   
   /* ====== Lookbook ====== */
@@ -1157,39 +1165,41 @@
      Lookbookコンテナの高さと縦中央 - 一元管理（STEP5）
      ========================================================= */
   /* ベース（全環境） */
-  .lookbook-container {
+  #lookbook .lookbook-container {
     display: flex !important;
-    align-items: center !important; /* 上下中央揃え */
+    align-items: center !important; /* 上下中央揃え（ど真ん中） */
+    justify-content: flex-start !important; /* 横方向は左寄せ */
     overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
     overflow: visible !important;
     position: relative;
     padding-block: 0.25rem !important;
     min-height: 420px; /* ベースの高さ */
+    width: 100%; /* 親要素の幅に合わせる */
   }
   
   /* スマホ（〜480px） */
   @media (max-width: 480px) {
-    .lookbook-container {
+    #lookbook .lookbook-container {
       min-height: 420px !important; /* iPhone 12でも画像が見える高さを確保 */
-      align-items: center !important;
+      align-items: center !important; /* 縦中央揃えを維持 */
       overflow-y: visible !important;
     }
   }
   
   /* タブレット（481px〜1024px） */
   @media (min-width: 481px) and (max-width: 1024px) {
-    .lookbook-container {
+    #lookbook .lookbook-container {
       min-height: 420px !important;
-      align-items: center !important;
+      align-items: center !important; /* 縦中央揃えを維持 */
       overflow-y: visible !important;
     }
   }
   
   /* PC（1025px以上） */
   @media (min-width: 1025px) {
-    .lookbook-container {
+    #lookbook .lookbook-container {
       min-height: 450px !important; /* PCでは少し高めに */
-      align-items: center !important;
+      align-items: center !important; /* 縦中央揃えを維持 */
       overflow-y: visible !important;
     }
   }
@@ -2576,6 +2586,17 @@ div.copyright {
     min-height: 450px !important; /* iPhone 12でも背景パネルが見える高さを確保 */
     background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
     backdrop-filter: blur(8px) !important;
+    border-radius: 12px !important;
+  }
+}
+
+/* タブレットでも背景パネルが確実に表示されるように */
+@media (min-width: 481px) and (max-width: 1024px) {
+  #lookbook .lookbook-wrapper {
+    min-height: 450px !important;
+    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
+    backdrop-filter: blur(8px) !important;
+    border-radius: 12px !important;
   }
 }
 
