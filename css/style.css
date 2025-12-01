@@ -3417,10 +3417,10 @@ body.splash-active #splash-video-wrapper::after {
   inset: 0; /* top:0; right:0; bottom:0; left:0; */
   z-index: -1; /* behind Lookbook content, but still above the page background/video */
   
-  /* COPY the navbar background style 1:1 here */
+  /* Solid background matching navbar - NO blur */
   background-color: rgba(255, 255, 255, 0.9) !important; /* exactly same as navbar */
-  backdrop-filter: blur(8px) !important; /* exactly same as navbar */
-  -webkit-backdrop-filter: blur(8px) !important;
+  backdrop-filter: none !important; /* NO blur - solid background only */
+  -webkit-backdrop-filter: none !important;
   /* Navbar has border-bottom: 1px solid #ccc, but we don't need it for the overlay */
 }
 
@@ -3457,3 +3457,38 @@ DEBUG: to check wiring, temporarily uncomment this:
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+/* ============================================================
+   Final hard override for Lookbook background - NO blur, solid color
+   This MUST override all previous rules including .band backdrop-filter
+   ============================================================ */
+#lookbook,
+#lookbook .lookbook-wrapper,
+#lookbook .lookbook-panel,
+#lookbook .lookbook-container {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.9) !important; /* SAME value as navbar */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#lookbook::before,
+#lookbook .lookbook-wrapper::before,
+#lookbook .lookbook-container::before {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Override .band backdrop-filter for Lookbook specifically */
+#lookbook .band {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/*
+DEBUG: to check that overrides are active, temporarily uncomment:
+#lookbook .lookbook-container {
+  background-color: rgba(0, 255, 0, 0.6) !important;
+}
+*/
