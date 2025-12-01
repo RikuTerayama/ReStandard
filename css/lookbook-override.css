@@ -85,6 +85,67 @@ DEBUG: to visually confirm override, temporarily uncomment this:
 }
 
 /* ============================================================
+   FINAL OVERRIDE: Force #lookbook and .lookbook-container to be transparent
+   This must override ALL previous rules including grouped selectors
+   Using more specific selectors to ensure highest priority
+   ============================================================ */
+/* === Lookbook section itself: transparent, no blur === */
+html body #lookbook,
+html #lookbook,
+body #lookbook,
+#lookbook {
+  position: relative;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background: none !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html body #lookbook::before,
+html body #lookbook::after,
+html #lookbook::before,
+html #lookbook::after,
+body #lookbook::before,
+body #lookbook::after,
+#lookbook::before,
+#lookbook::after {
+  background: none !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  content: none !important;
+}
+
+/* === Lookbook panel around images === */
+html body #lookbook .lookbook-wrapper.lookbook-panel,
+html #lookbook .lookbook-wrapper.lookbook-panel,
+body #lookbook .lookbook-wrapper.lookbook-panel,
+#lookbook .lookbook-wrapper.lookbook-panel {
+  position: relative;
+  margin: 32px auto 64px;
+  max-width: 1180px;
+
+  background-color: rgba(255, 255, 255, 0.9) !important; /* same as navbar */
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+
+  border-radius: 12px;
+}
+
+/* Inner container: layout only, no background */
+html body #lookbook .lookbook-container,
+html #lookbook .lookbook-container,
+body #lookbook .lookbook-container,
+#lookbook .lookbook-container {
+  background: none !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ============================================================
    Expected DevTools "Computed" values after this override:
    ============================================================
    
