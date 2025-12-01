@@ -3337,3 +3337,30 @@ body.splash-active #splash-video-wrapper::after {
     animation-duration: 90s !important; /* 70s より少しゆっくり */
   }
 }
+
+/* === Lookbook / Collection 共通の白パネル === */
+#collection .collection-panel,
+#lookbook .lookbook-panel {
+  position: relative;
+  z-index: 1;
+  background: var(--navbar-bg, rgba(255, 255, 255, 0.95));
+  backdrop-filter: none; /* まずはヘッダーと同じトーンに寄せる。必要なら後でblurを足す */
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin-inline: auto;
+  max-width: 1180px;
+}
+
+/* 背景動画は確実に背面へ */
+#background-video-container,
+#desktop-bg-video,
+#mobile-bg-video {
+  z-index: -1;
+}
+
+/* モバイルで高さが足りない問題の最低限の対策 */
+@media (max-width: 480px) {
+  #lookbook .lookbook-panel {
+    min-height: 480px;
+  }
+}
