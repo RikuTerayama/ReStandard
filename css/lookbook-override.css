@@ -1,165 +1,111 @@
-/* This file exists ONLY to force Lookbook background to match navbar.
-   It must be loaded AFTER all other CSS. */
+/* ============================================================
+   CSS Load Order (from index.html):
+   1. css/style.css
+   2. Bootstrap CSS (CDN)
+   3. Font Awesome (CDN)
+   4. Google Fonts (CDN)
+   5. css/reveal.css
+   6. css/i18n-visibility.css
+   7. css/lookbook-override.css (THIS FILE - loaded last)
+   
+   This file is the SINGLE SOURCE OF TRUTH for all Lookbook background/blur styles.
+   ============================================================ */
 
-/* ===== Lookbook section : no background / no blur ===== */
+/* =========================================================
+   Lookbook base: section itself is transparent, no blur
+   ========================================================= */
 #lookbook {
   position: relative;
   padding-top: 80px;
   padding-bottom: 80px;
-  background: none !important;
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background: none;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
+/* Make sure no pseudo-element adds a background */
 #lookbook::before,
 #lookbook::after {
-  background: none !important;
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  content: none !important;
+  content: none;
+  background: none;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
-/* ===== Lookbook panel : ONLY here has white + blur ===== */
+/* =========================================================
+   Lookbook panel: white + blur only around the image band
+   ========================================================= */
 #lookbook .lookbook-wrapper.lookbook-panel {
   position: relative;
   margin: 32px auto 64px;
   max-width: 1180px;
 
-  background-color: rgba(255, 255, 255, 0.9) !important; /* navbar と同じ */
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  background-color: rgba(255, 255, 255, 0.9); /* same as navbar */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   border-radius: 12px;
 }
 
-/* 中身の container はレイアウトだけ担当。背景は持たせない */
+/* Inner container: layout only, no background */
 #lookbook .lookbook-container {
-  background: none !important;
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  background: none;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  border-radius: 12px; /* to match the wrapper visually */
 }
 
-/* Ensure no generic overlay/section rules leak into Lookbook */
-#lookbook::before,
-#lookbook .lookbook-wrapper::before,
-#lookbook .lookbook-container::before,
-#lookbook .band,
-#lookbook .band::before {
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+/* Just a safety net: the track and items must not reintroduce backgrounds */
+#lookbook .lookbook-track,
+#lookbook .lookbook-track * {
+  background: none;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
-/*
-DEBUG: to visually confirm override, temporarily uncomment this:
-#lookbook .lookbook-container {
-  background-color: rgba(0, 255, 0, 0.5) !important;
+/* If .band is used inside Lookbook, neutralize its blur for Lookbook only */
+#lookbook .band {
+  background: none;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
-*/
 
-/* ===== メディアクエリ: モバイル / タブレットでも同じポリシー ===== */
+/* =========================================================
+   Responsive tweaks – same policy (panel only)
+   ========================================================= */
 @media (max-width: 768px) {
   #lookbook {
-    background: none !important;
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background: none;
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   #lookbook .lookbook-wrapper.lookbook-panel {
     margin: 24px auto 48px;
     max-width: 100%;
     padding-inline: 16px;
-    /* 必要に応じて min-height 等はここに書く */
   }
 
   #lookbook .lookbook-container {
-    background: none !important;
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background: none;
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
-/* ============================================================
-   FINAL OVERRIDE: Force #lookbook and .lookbook-container to be transparent
-   This must override ALL previous rules including grouped selectors
-   Using more specific selectors to ensure highest priority
-   ============================================================ */
-/* === Lookbook section itself: transparent, no blur === */
-html body #lookbook,
-html #lookbook,
-body #lookbook,
+/* DEBUG – temporary: make Lookbook background light-green overlay */
 #lookbook {
-  position: relative;
-  padding-top: 80px;
-  padding-bottom: 80px;
-  background: none !important;
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  outline: 2px solid lime; /* just for visual confirmation */
 }
-
-html body #lookbook::before,
-html body #lookbook::after,
-html #lookbook::before,
-html #lookbook::after,
-body #lookbook::before,
-body #lookbook::after,
-#lookbook::before,
-#lookbook::after {
-  background: none !important;
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  content: none !important;
-}
-
-/* === Lookbook panel around images === */
-html body #lookbook .lookbook-wrapper.lookbook-panel,
-html #lookbook .lookbook-wrapper.lookbook-panel,
-body #lookbook .lookbook-wrapper.lookbook-panel,
-#lookbook .lookbook-wrapper.lookbook-panel {
-  position: relative;
-  margin: 32px auto 64px;
-  max-width: 1180px;
-
-  background-color: rgba(255, 255, 255, 0.9) !important; /* same as navbar */
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-
-  border-radius: 12px;
-}
-
-/* Inner container: layout only, no background */
-html body #lookbook .lookbook-container,
-html #lookbook .lookbook-container,
-body #lookbook .lookbook-container,
-#lookbook .lookbook-container {
-  background: none !important;
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-/* ============================================================
-   Expected DevTools "Computed" values after this override:
-   ============================================================
-   
-   #lookbook
-   - background-color: rgba(0, 0, 0, 0) (完全に透明)
-   - backdrop-filter: none
-   
-   .lookbook-wrapper.lookbook-panel
-   - background-color: rgba(255, 255, 255, 0.9) (navbar と同じ色)
-   - backdrop-filter: blur(8px) (navbar と同じ blur)
-   
-   #lookbook .lookbook-container
-   - background-color: rgba(0, 0, 0, 0) (透明)
-   - backdrop-filter: none
-   ============================================================ */
-
-
