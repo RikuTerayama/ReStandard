@@ -3222,11 +3222,12 @@ body.splash-active #splash-video-wrapper::after {
   z-index: 1 !important;
 }
 
-/* Lookbook wrapperは背景を持たない（.lookbook-panelが担当） */
+/* Lookbook wrapperは背景を持たない（css/lookbook-override.cssが担当） */
+/* Background removed - see css/lookbook-override.css */
 #lookbook .lookbook-wrapper {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  /* background: transparent !important; */
+  /* backdrop-filter: none !important; */
+  /* -webkit-backdrop-filter: none !important; */
   position: relative;
   z-index: 1;
 }
@@ -3269,20 +3270,21 @@ body.splash-active #splash-video-wrapper::after {
 
 /* == FINAL: mobile layout fix for lookbook (iPhone 12 / 15 対策) == */
 @media (max-width: 480px) {
-  /* .lookbook-panelが背景を担当するため、.lookbook-wrapperは背景を持たない */
+  /* .lookbook-wrapperの背景はcss/lookbook-override.cssが担当 */
   #lookbook .lookbook-wrapper {
     min-height: 480px !important; /* 背景パネルがしっかり見える高さ */
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    /* background: transparent !important; */
+    /* backdrop-filter: none !important; */
+    /* -webkit-backdrop-filter: none !important; */
   }
   
-  /* .lookbook-panelの背景は#lookbook::beforeで統一管理 */
-  #lookbook .lookbook-panel {
+  /* .lookbook-panelの背景はcss/lookbook-override.cssで統一管理 */
+  /* Background removed - see css/lookbook-override.css */
+  /* #lookbook .lookbook-panel {
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-  }
+  } */
 
   #lookbook .lookbook-container {
     display: flex !important;
@@ -3306,20 +3308,21 @@ body.splash-active #splash-video-wrapper::after {
 
 /* タブレット（481–1024px）向けの最終上書き */
 @media (min-width: 481px) and (max-width: 1024px) {
-  /* .lookbook-panelが背景を担当するため、.lookbook-wrapperは背景を持たない */
+  /* .lookbook-wrapperの背景はcss/lookbook-override.cssが担当 */
   #lookbook .lookbook-wrapper {
     min-height: 450px !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
+    /* background: transparent !important; */
+    /* backdrop-filter: none !important; */
     -webkit-backdrop-filter: none !important;
   }
   
-  /* .lookbook-panelの背景は#lookbook::beforeで統一管理 */
-  #lookbook .lookbook-panel {
+  /* .lookbook-panelの背景はcss/lookbook-override.cssで統一管理 */
+  /* Background removed - see css/lookbook-override.css */
+  /* #lookbook .lookbook-panel {
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-  }
+  } */
 
   #lookbook .lookbook-container {
     display: flex !important;
@@ -3362,14 +3365,12 @@ body.splash-active #splash-video-wrapper::after {
 }
 
 /* === Lookbook / Collection 共通の白パネル === */
-/* Lookbook背景パネル: Background now handled by #lookbook::before overlay */
+/* Lookbook背景パネル: Background now handled by css/lookbook-override.css */
 #lookbook .lookbook-panel {
   position: relative;
   z-index: 1;
-  /* Background removed - now handled by #lookbook::before overlay */
-  background-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  /* Background removed - now handled by css/lookbook-override.css */
+  /* background-color, backdrop-filter removed - see css/lookbook-override.css */
   border-radius: 12px;
   padding: 32px 24px;
   margin-inline: auto;
@@ -3403,37 +3404,25 @@ body.splash-active #splash-video-wrapper::after {
 }
 
 /* ============================================================
-   Lookbook overlay: MUST visually match navbar background
-   Using #lookbook::before to guarantee override of all old rules
+   OLD Lookbook background rules - DISABLED
+   All Lookbook background decisions are now centralized in css/lookbook-override.css
    ============================================================ */
+/* 
 #lookbook {
   position: relative;
-  z-index: 0; /* will sit above the background video (which uses z-index: -1) */
+  z-index: 0;
 }
 
 #lookbook::before {
   content: "";
   position: absolute;
-  inset: 0; /* top:0; right:0; bottom:0; left:0; */
-  z-index: -1; /* behind Lookbook content, but still above the page background/video */
-  
-  /* Solid background matching navbar - NO blur */
-  background-color: rgba(255, 255, 255, 0.9) !important; /* exactly same as navbar */
-  backdrop-filter: none !important; /* NO blur - solid background only */
-  -webkit-backdrop-filter: none !important;
-  /* Navbar has border-bottom: 1px solid #ccc, but we don't need it for the overlay */
-}
-
-/*
-DEBUG: to check wiring, temporarily uncomment this:
-#lookbook::before {
-  background-color: rgba(255, 0, 0, 0.7) !important;
+  inset: 0;
+  z-index: -1;
+  background-color: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
-*/
 
-/* Neutralize old Lookbook background rules to prevent conflicts */
 #lookbook .lookbook-panel {
   background-color: transparent !important;
   backdrop-filter: none !important;
@@ -3458,16 +3447,12 @@ DEBUG: to check wiring, temporarily uncomment this:
   -webkit-backdrop-filter: none !important;
 }
 
-/* ============================================================
-   Final hard override for Lookbook background - NO blur, solid color
-   This MUST override all previous rules including .band backdrop-filter
-   ============================================================ */
 #lookbook,
 #lookbook .lookbook-wrapper,
 #lookbook .lookbook-panel,
 #lookbook .lookbook-container {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.9) !important; /* SAME value as navbar */
+  background-color: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -3479,16 +3464,9 @@ DEBUG: to check wiring, temporarily uncomment this:
   -webkit-backdrop-filter: none !important;
 }
 
-/* Override .band backdrop-filter for Lookbook specifically */
 #lookbook .band {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   background-color: rgba(255, 255, 255, 0.9) !important;
-}
-
-/*
-DEBUG: to check that overrides are active, temporarily uncomment:
-#lookbook .lookbook-container {
-  background-color: rgba(0, 255, 0, 0.6) !important;
 }
 */
