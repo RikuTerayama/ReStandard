@@ -3211,16 +3211,24 @@ body.splash-active #splash-video-wrapper::after {
 /* === Lookbook / Collection 専用パネル 最終レイヤー === */
 /* ヘッダー（.navbar）と同じ背景トーンに完全統一 */
 /* 背景動画のぼかしではなく、独立した白パネルとして表示 */
-#collection .collection-wrapper,
-#lookbook .lookbook-wrapper {
+/* Lookbook背景は.lookbook-panelで統一管理（上記の3341-3352行目） */
+/* このブロックは残すが、.lookbook-panelが優先される */
+#collection .collection-wrapper {
   background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   border-radius: 12px;
   position: relative !important;
-  z-index: 1 !important; /* 背景動画（z-index:-1）より前面に */
-  /* 背景動画のぼかしを防ぐため、背景色を不透明に近づける */
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  z-index: 1 !important;
+}
+
+/* Lookbook wrapperは背景を持たない（.lookbook-panelが担当） */
+#lookbook .lookbook-wrapper {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  position: relative;
+  z-index: 1;
 }
 
 /* == FINAL GUARD: Collection / Lookbook marquee must never pause == */
@@ -3261,9 +3269,17 @@ body.splash-active #splash-video-wrapper::after {
 
 /* == FINAL: mobile layout fix for lookbook (iPhone 12 / 15 対策) == */
 @media (max-width: 480px) {
+  /* .lookbook-panelが背景を担当するため、.lookbook-wrapperは背景を持たない */
   #lookbook .lookbook-wrapper {
     min-height: 480px !important; /* 背景パネルがしっかり見える高さ */
-    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* .lookbook-panelの背景を維持 */
+  #lookbook .lookbook-panel {
+    background-color: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
   }
@@ -3290,12 +3306,19 @@ body.splash-active #splash-video-wrapper::after {
 
 /* タブレット（481–1024px）向けの最終上書き */
 @media (min-width: 481px) and (max-width: 1024px) {
+  /* .lookbook-panelが背景を担当するため、.lookbook-wrapperは背景を持たない */
   #lookbook .lookbook-wrapper {
     min-height: 450px !important;
-    background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* .lookbook-panelの背景を維持 */
+  #lookbook .lookbook-panel {
+    background-color: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
-    z-index: 1 !important; /* 背景動画より前面に */
   }
 
   #lookbook .lookbook-container {
@@ -3339,12 +3362,25 @@ body.splash-active #splash-video-wrapper::after {
 }
 
 /* === Lookbook / Collection 共通の白パネル === */
-#collection .collection-panel,
+/* Lookbook背景パネル: MUST visually match .navbar */
 #lookbook .lookbook-panel {
   position: relative;
   z-index: 1;
-  background: var(--navbar-bg, rgba(255, 255, 255, 0.95));
-  backdrop-filter: none; /* まずはヘッダーと同じトーンに寄せる。必要なら後でblurを足す */
+  background-color: rgba(255, 255, 255, 0.9) !important; /* exactly same as navbar */
+  backdrop-filter: blur(8px) !important; /* exactly same as navbar */
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin-inline: auto;
+  max-width: 1180px;
+}
+
+#collection .collection-panel {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.9) !important; /* exactly same as navbar */
+  backdrop-filter: blur(8px) !important; /* exactly same as navbar */
+  -webkit-backdrop-filter: blur(8px) !important;
   border-radius: 12px;
   padding: 32px 24px;
   margin-inline: auto;
