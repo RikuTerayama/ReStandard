@@ -3277,11 +3277,11 @@ body.splash-active #splash-video-wrapper::after {
     -webkit-backdrop-filter: none !important;
   }
   
-  /* .lookbook-panelの背景を維持 */
+  /* .lookbook-panelの背景は#lookbook::beforeで統一管理 */
   #lookbook .lookbook-panel {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   #lookbook .lookbook-container {
@@ -3314,11 +3314,11 @@ body.splash-active #splash-video-wrapper::after {
     -webkit-backdrop-filter: none !important;
   }
   
-  /* .lookbook-panelの背景を維持 */
+  /* .lookbook-panelの背景は#lookbook::beforeで統一管理 */
   #lookbook .lookbook-panel {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   #lookbook .lookbook-container {
@@ -3362,13 +3362,14 @@ body.splash-active #splash-video-wrapper::after {
 }
 
 /* === Lookbook / Collection 共通の白パネル === */
-/* Lookbook背景パネル: MUST visually match .navbar */
+/* Lookbook背景パネル: Background now handled by #lookbook::before overlay */
 #lookbook .lookbook-panel {
   position: relative;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.9) !important; /* exactly same as navbar */
-  backdrop-filter: blur(8px) !important; /* exactly same as navbar */
-  -webkit-backdrop-filter: blur(8px) !important;
+  /* Background removed - now handled by #lookbook::before overlay */
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border-radius: 12px;
   padding: 32px 24px;
   margin-inline: auto;
@@ -3399,4 +3400,60 @@ body.splash-active #splash-video-wrapper::after {
   #lookbook .lookbook-panel {
     min-height: 480px;
   }
+}
+
+/* ============================================================
+   Lookbook overlay: MUST visually match navbar background
+   Using #lookbook::before to guarantee override of all old rules
+   ============================================================ */
+#lookbook {
+  position: relative;
+  z-index: 0; /* will sit above the background video (which uses z-index: -1) */
+}
+
+#lookbook::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  z-index: -1; /* behind Lookbook content, but still above the page background/video */
+  
+  /* COPY the navbar background style 1:1 here */
+  background-color: rgba(255, 255, 255, 0.9) !important; /* exactly same as navbar */
+  backdrop-filter: blur(8px) !important; /* exactly same as navbar */
+  -webkit-backdrop-filter: blur(8px) !important;
+  /* Navbar has border-bottom: 1px solid #ccc, but we don't need it for the overlay */
+}
+
+/*
+DEBUG: to check wiring, temporarily uncomment this:
+#lookbook::before {
+  background-color: rgba(255, 0, 0, 0.7) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+*/
+
+/* Neutralize old Lookbook background rules to prevent conflicts */
+#lookbook .lookbook-panel {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#lookbook .lookbook-wrapper {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#lookbook .lookbook-container {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#lookbook .lookbook-track {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
