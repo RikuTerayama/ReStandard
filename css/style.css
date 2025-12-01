@@ -3208,3 +3208,110 @@ body.splash-active #splash-video-wrapper::after {
   border: none;
   cursor: pointer;
 }
+
+/* =========================================================
+   FINAL OVERRIDES: Collection / Lookbook 最終防御レイヤー
+   ========================================================= */
+
+/* == FINAL: unify header glass tone and lookbook/collection background == */
+/* ヘッダー（.navbar）と同じ背景トーンに完全統一 */
+#lookbook .lookbook-wrapper,
+#collection .collection-wrapper {
+  background: rgba(255, 255, 255, 0.9) !important; /* ヘッダーと同じ値 */
+  backdrop-filter: blur(8px) !important; /* ヘッダーと同じ値 */
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 12px;
+}
+
+/* == FINAL GUARD: Collection / Lookbook marquee must never pause == */
+#collection .collection-track,
+#lookbook .lookbook-track {
+  animation-play-state: running !important;
+  animation-iteration-count: infinite !important;
+}
+
+/* prefers-reduced-motion でも Collection / Lookbook は止めない */
+@media (prefers-reduced-motion: reduce) {
+  #collection .collection-track,
+  #lookbook .lookbook-track {
+    animation-duration: 70s !important; /* 現在の仕様と同じ秒数に合わせる */
+    animation-play-state: running !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* 画像が filter / transform / transition で消えないための最後の砦 */
+#collection .collection-track img,
+#collection .collection-item img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transition: none !important;
+  filter: none !important;
+}
+
+#lookbook .lookbook-track img,
+#lookbook .lookbook-item img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transition: none !important;
+  filter: none !important;
+}
+
+/* == FINAL: mobile layout fix for lookbook (iPhone 12 / 15 対策) == */
+@media (max-width: 480px) {
+  #lookbook .lookbook-wrapper {
+    min-height: 480px !important; /* 背景パネルがしっかり見える高さ */
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  #lookbook .lookbook-container {
+    display: flex !important;
+    align-items: center !important;       /* 縦方向のど真ん中 */
+    justify-content: flex-start !important; /* 横方向は左から流れる */
+    overflow: visible !important;
+    overflow-y: visible !important;
+    min-height: 420px !important;        /* 画像が切れない程度の高さ */
+    width: 100% !important;
+  }
+}
+
+/* タブレット（481–1024px）向けの最終上書き */
+@media (min-width: 481px) and (max-width: 1024px) {
+  #lookbook .lookbook-wrapper {
+    min-height: 450px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  #lookbook .lookbook-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    min-height: 420px !important;
+    width: 100% !important;
+  }
+}
+
+/* == FINAL: collection images must be visible on first paint == */
+#collection .collection-item img,
+#collection .collection-track img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transition: none !important;
+  filter: none !important;
+}
+
+/* == FINAL: PC lookbook speed adjustment == */
+@media (min-width: 1025px) {
+  #lookbook .lookbook-track {
+    animation-duration: 90s !important; /* 70s より少しゆっくり */
+  }
+}
