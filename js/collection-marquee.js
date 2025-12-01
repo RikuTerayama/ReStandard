@@ -219,9 +219,33 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initCollectionMarquee();
+      // デバッグ: アニメーション状態を監視
+      setupAnimationDebug('collection');
     });
   } else {
     initCollectionMarquee();
+    // デバッグ: アニメーション状態を監視
+    setupAnimationDebug('collection');
+  }
+
+  // デバッグ関数: アニメーション状態を監視
+  function setupAnimationDebug(sectionId) {
+    const track = document.querySelector(`#${sectionId} .${sectionId}-track`);
+    if (!track) return;
+    
+    const logState = (label) => {
+      const cs = getComputedStyle(track);
+      console.log(`[DEBUG ${sectionId}][${label}] animationPlayState=${cs.animationPlayState}, opacity=${cs.opacity}, visibility=${cs.visibility}, transform=${cs.transform.substring(0, 50)}`);
+    };
+    
+    logState('init');
+    
+    // スクロール、pageshow、visibilitychangeイベントで状態を監視
+    ['scroll', 'pageshow', 'visibilitychange'].forEach(evt => {
+      window.addEventListener(evt, () => {
+        setTimeout(() => logState(evt), 100); // 少し遅延させて状態変化を確認
+      }, { passive: true });
+    });
   }
 
 })();
