@@ -1,25 +1,33 @@
 /* This file exists ONLY to force Lookbook background to match navbar.
    It must be loaded AFTER all other CSS. */
 
-/* Final hard override for Lookbook background - must visually match navbar */
-/* Only .lookbook-wrapper and .lookbook-panel have background, not #lookbook itself */
-#lookbook .lookbook-wrapper,
-#lookbook .lookbook-panel {
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.9) !important; /* SAME value as navbar */
-  backdrop-filter: blur(8px) !important;                  /* SAME as navbar */
-  -webkit-backdrop-filter: blur(8px) !important;
-}
-
-/* Remove background from #lookbook section itself */
+/* Lookbook section 自体は透明にする */
 #lookbook {
+  position: relative;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background: transparent !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-/* Remove background from .lookbook-container */
+/* 画像まわりのパネル：ここだけ navbar と同じ背景を持たせる */
+#lookbook .lookbook-wrapper.lookbook-panel {
+  position: relative;
+  margin: 32px auto 64px;
+  max-width: 1180px;
+  /* 必要なら上下マージンや横幅は調整してOK */
+
+  background-color: rgba(255, 255, 255, 0.9) !important; /* navbar と同じ値 */
+  backdrop-filter: blur(8px) !important;                  /* navbar と同じ blur */
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 12px;
+}
+
+/* 中身のコンテナは透明にしておく（背景は wrapper が担当） */
 #lookbook .lookbook-container {
+  background: transparent !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -42,4 +50,21 @@ DEBUG: to visually confirm override, temporarily uncomment this:
   background-color: rgba(0, 255, 0, 0.5) !important;
 }
 */
+
+/* ============================================================
+   Expected DevTools "Computed" values after this override:
+   ============================================================
+   
+   #lookbook
+   - background-color: rgba(0, 0, 0, 0) (完全に透明)
+   - backdrop-filter: none
+   
+   .lookbook-wrapper.lookbook-panel
+   - background-color: rgba(255, 255, 255, 0.9) (navbar と同じ色)
+   - backdrop-filter: blur(8px) (navbar と同じ blur)
+   
+   #lookbook .lookbook-container
+   - background-color: rgba(0, 0, 0, 0) (透明)
+   - backdrop-filter: none
+   ============================================================ */
 
