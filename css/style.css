@@ -3210,12 +3210,17 @@ body.splash-active #splash-video-wrapper::after {
 
 /* === Lookbook / Collection 専用パネル 最終レイヤー === */
 /* ヘッダー（.navbar）と同じ背景トーンに完全統一 */
+/* 背景動画のぼかしではなく、独立した白パネルとして表示 */
 #collection .collection-wrapper,
 #lookbook .lookbook-wrapper {
   background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   border-radius: 12px;
+  position: relative !important;
+  z-index: 1 !important; /* 背景動画（z-index:-1）より前面に */
+  /* 背景動画のぼかしを防ぐため、背景色を不透明に近づける */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 /* == FINAL GUARD: Collection / Lookbook marquee must never pause == */
@@ -3272,6 +3277,15 @@ body.splash-active #splash-video-wrapper::after {
     min-height: 420px !important;        /* 画像が切れない程度の高さ */
     width: 100% !important;
   }
+
+  /* Lookbook画像の下側が切れないようにする（スマホ） */
+  #lookbook .lookbook-item img {
+    width: auto !important;
+    max-width: 400px !important;
+    max-height: 520px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
 }
 
 /* タブレット（481–1024px）向けの最終上書き */
@@ -3281,6 +3295,7 @@ body.splash-active #splash-video-wrapper::after {
     background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
+    z-index: 1 !important; /* 背景動画より前面に */
   }
 
   #lookbook .lookbook-container {
@@ -3305,7 +3320,9 @@ body.splash-active #splash-video-wrapper::after {
 
 /* Collection 画像 最終防御 */
 #collection .collection-item img,
-#collection .collection-track img {
+#collection .collection-track img,
+#collection .collection-track picture img,
+#collection .collection-track a img {
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
