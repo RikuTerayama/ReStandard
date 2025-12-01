@@ -1,0 +1,32 @@
+/* This file exists ONLY to force Lookbook background to match navbar.
+   It must be loaded AFTER all other CSS. */
+
+/* Final hard override for Lookbook background - must visually match navbar */
+#lookbook,
+#lookbook .lookbook-wrapper,
+#lookbook .lookbook-panel,
+#lookbook .lookbook-container {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.9) !important; /* SAME value as navbar */
+  backdrop-filter: blur(8px) !important;                  /* SAME as navbar */
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Ensure no generic overlay/section rules leak into Lookbook */
+#lookbook::before,
+#lookbook .lookbook-wrapper::before,
+#lookbook .lookbook-container::before,
+#lookbook .band,
+#lookbook .band::before {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/*
+DEBUG: to visually confirm override, temporarily uncomment this:
+#lookbook .lookbook-container {
+  background-color: rgba(0, 255, 0, 0.5) !important;
+}
+*/
+
