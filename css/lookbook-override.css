@@ -16,59 +16,107 @@
    - All other Lookbook elements (.lookbook-container, .lookbook-track, .band) are transparent
    ============================================================ */
 
-/* =========================================================
-   Lookbook base: section itself is transparent
-   ========================================================= */
+/* ===== Lookbook base: section itself has NO background ===== */
 #lookbook {
   position: relative;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding: clamp(40px, 6vw, 80px) 0;
   background: none !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  text-align: center !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 auto;
 }
 
+/* セクション内の band と疑似要素にも背景を持たせない */
 #lookbook::before,
-#lookbook::after {
-  content: none !important;
+#lookbook::after,
+#lookbook .band,
+#lookbook .band::before {
   background: none !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-/* =========================================================
-   Lookbook panel: ONLY around the image band
-   ========================================================= */
+/* ===== Frosted panel ONLY around the image row ===== */
 #lookbook .lookbook-wrapper.lookbook-panel {
   position: relative;
   margin: 32px auto 64px;
   max-width: 1180px;
-
-  background-color: rgba(255, 255, 255, 0.9) !important; /* navbarと同じトーン */
+  padding-block: clamp(16px, 3.2vw, 40px);
+  padding-inline: clamp(16px, 2vw, 24px);
+  background-color: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
-
   border-radius: 12px;
 }
 
-/* Inner container: layout only, no background */
+/* 中身のコンテナはレイアウト専用。背景は持たせない */
 #lookbook .lookbook-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px;
   background: none !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  overflow: visible !important;
+  overflow-y: visible !important;
+  position: relative;
+  padding-block: 0.25rem !important;
+  min-height: 420px;
+  width: 100%;
+}
 
-  border-radius: 12px;
+/* 画像サイズ・レイアウトは必要に応じてここにまとめる */
+#lookbook .lookbook-track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 12px;
+  overflow-x: auto;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  align-items: center !important;
+  height: 100% !important;
+  will-change: transform;
+  cursor: grab;
+  pointer-events: auto !important;
+}
+
+#lookbook .lookbook-track img,
+#lookbook .lookbook-item img {
+  object-fit: contain !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  flex-shrink: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  pointer-events: auto !important;
+  user-select: none !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+#lookbook .lookbook-item {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+  position: relative;
+  display: inline-flex;
+  z-index: 1;
 }
 
 /* Safety: track側で背景が復活しないようにする */
-#lookbook .lookbook-track,
 #lookbook .lookbook-track * {
   background: none !important;
   background-color: transparent !important;
@@ -78,10 +126,17 @@
 
 /* Lookbook内の .band は背景なしに固定 */
 #lookbook .band {
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding-block: clamp(12px, 2vw, 24px) !important;
   background: none !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  position: relative;
+  z-index: 1;
+  overflow: visible !important;
 }
 
 /* =========================================================
@@ -106,5 +161,78 @@
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    min-height: 420px !important;
+  }
+}
+
+/* PC版の画像サイズ設定 */
+@media (min-width: 1025px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img {
+    width: 240px !important;
+    height: auto !important;
+    max-height: 320px !important;
+    object-fit: contain !important;
+  }
+
+  #lookbook .lookbook-track {
+    height: auto !important;
+    min-height: 320px !important;
+  }
+
+  #lookbook .lookbook-container {
+    min-height: 450px !important;
+  }
+}
+
+/* タブレット版の画像サイズ設定 */
+@media (min-width: 481px) and (max-width: 1024px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img {
+    width: 200px !important;
+    height: auto !important;
+    max-height: 280px !important;
+    object-fit: contain !important;
+  }
+
+  #lookbook .lookbook-track {
+    height: auto !important;
+    min-height: 280px !important;
+    overflow: visible !important;
+  }
+
+  #lookbook .lookbook-container {
+    min-height: 420px !important;
+  }
+}
+
+/* スマホ版の画像サイズ設定 */
+@media (max-width: 480px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img {
+    width: 70vw !important;
+    height: auto !important;
+    max-height: 85vw !important;
+    min-width: 240px !important;
+    max-width: 360px !important;
+    object-fit: contain !important;
+  }
+
+  #lookbook .lookbook-track {
+    height: auto !important;
+    min-height: 80vw !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  #lookbook .lookbook-container {
+    min-block-size: calc(420px + 0.5rem) !important;
+    min-height: calc(420px + 0.5rem) !important;
+    max-block-size: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    align-items: center !important;
+    padding-block: 0.25rem !important;
   }
 }
