@@ -9,6 +9,11 @@
    7. css/lookbook-override.css (THIS FILE - loaded last)
    
    This file is the SINGLE SOURCE OF TRUTH for all Lookbook background/blur styles.
+   
+   Lookbook background policy:
+   - Section (#lookbook) itself is transparent (no background/blur)
+   - Only .lookbook-wrapper.lookbook-panel has white+blur (rgba(255,255,255,0.9) + blur(8px))
+   - All other Lookbook elements (.lookbook-container, .lookbook-track, .band) are transparent
    ============================================================ */
 
 /* =========================================================
