@@ -615,8 +615,10 @@
     animation-play-state: paused !important;
   } */
   
-  /* 見出しの余白調整（行が食い込むのを防ぐ） */
-  /* Collection と Lookbook のタイトル周りの間隔を統一 */
+  /* =========================================================
+     見出しの余白調整: Collection と Lookbook のタイトル〜フロー間隔を統一
+     PC表示で両セクションのタイトルと画像フローの距離を同じバランスに
+     ========================================================= */
   #collection .section-title,
   #lookbook .section-title {
     margin-top: .5rem;
@@ -628,6 +630,13 @@
     #collection .section-title,
     #lookbook .section-title {
       margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+    
+    /* Collection と Lookbook のパネル上端までの余白を統一 */
+    #collection .band,
+    #collection .collection-wrapper,
+    #lookbook .lookbook-wrapper.lookbook-panel {
+      margin-top: 0;
     }
   }
   
@@ -1063,9 +1072,14 @@
   /* =========================================================
      Collection画像サイズ統一: すべてのアイテムを同じサイズに
      ========================================================= */
-  /* PC表示: 固定サイズで統一 */
+  /* =========================================================
+     Collection画像サイズ統一: 全画像を同じカードサイズに
+     PC表示では固定の高さとアスペクト比で統一し、
+     画像はobject-fit: coverでカード内にフィットさせる
+     ========================================================= */
   @media (min-width: 1025px) {
     /* .collection-item クラスがないため、.collection-track a に対してスタイルを適用 */
+    /* 1.JPG/3.JPG/4.JPGを含む全画像を同じサイズに統一 */
     #collection .collection-track a {
       flex: 0 0 auto !important;
       height: var(--collection-img-h, 320px) !important;
@@ -1075,20 +1089,35 @@
       overflow: hidden !important;
       background: transparent !important;
       display: block !important;
+      position: relative !important;
     }
 
+    /* 画像は親の<a>タグのサイズに合わせてカード内にフィット */
     #collection .collection-item img,
     #collection .collection-track img,
     #collection .collection-track a img,
+    #collection .collection-track a picture,
+    #collection .collection-track a picture img,
     #collection .collection-track picture img {
       width: 100% !important;
       height: 100% !important;
-      object-fit: cover !important; /* カードサイズを統一 */
+      object-fit: cover !important; /* カードサイズを統一: 画像をトリミングしてカード内に収める */
       display: block !important;
       opacity: 1 !important;
       visibility: visible !important;
       flex-shrink: 0 !important;
       flex-grow: 0 !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+    
+    /* pictureタグも親のサイズに合わせる */
+    #collection .collection-track a picture {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      position: relative !important;
     }
   }
 
@@ -2449,36 +2478,32 @@ div.copyright {
   display: none !important;
 }
 
-/* Collection Track画像の設定 - Lookbookには影響しないようにセレクタを限定 */
-#collection .collection-track img,
-html body #collection .collection-track img,
-#collection .collection-track a img,
-html body #collection .collection-track a img {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  /* content-visibilityを削除 - Safariで画像が表示されない原因 */
-  /* containを削除 - 画像が表示されない原因の可能性 */
-  /* 画像サイズはメディアクエリで制御 */
-  width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-  flex-shrink: 0 !important;
-  border-radius: 8px !important;
-  margin: 0 8px !important;
-  transition: transform 0.3s ease !important;
-  /* Safariで画像が確実に読み込まれるように */
-  image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
-  /* 確実に表示されるように */
-  position: relative !important;
-  z-index: 1 !important;
-  /* 背景色を設定して画像が確実に表示されるように */
-  background-color: transparent !important;
-  /* レイアウトシフトを防ぐ */
-  will-change: transform !important;
+/* =========================================================
+   Collection Track画像の設定 - スマホ表示用
+   PC表示では上記の固定サイズ設定が優先される
+   ========================================================= */
+@media (max-width: 1024px) {
+  #collection .collection-track img,
+  html body #collection .collection-track img,
+  #collection .collection-track a img,
+  html body #collection .collection-track a img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+    border-radius: 8px !important;
+    margin: 0 8px !important;
+    transition: transform 0.3s ease !important;
+    position: relative !important;
+    z-index: 1 !important;
+    background-color: transparent !important;
+    will-change: transform !important;
+  }
 }
 
 /* Instagram WebViewでCollection画像サイズを統一（固定値で統一） */
