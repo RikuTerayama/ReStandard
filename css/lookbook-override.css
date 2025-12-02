@@ -107,42 +107,45 @@
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
-  /* min-height は削除: 中身の高さに合わせる */
+  height: auto !important;
+  min-height: auto !important;
+  /* 中身の高さに合わせる */
 }
 
 /* Track wrap - moved from style.css */
+/* 高さを固定せず、画像の高さに追従させる */
 #lookbook .track-wrap {
   display: flex;
   justify-content: center;
   overflow: visible;
-  height: clamp(140px, 22vw, 260px);
+  height: auto;
+  min-height: clamp(140px, 22vw, 260px);
 }
 
 @media (min-width: 1024px) {
   #lookbook .track-wrap {
-    height: clamp(160px, 18vw, 240px);
+    height: auto;
+    min-height: clamp(160px, 18vw, 240px);
   }
 }
 
 /* 画像サイズ・レイアウトは必要に応じてここにまとめる */
+/* position: absolute を削除し、画像が切れないようにする */
 #lookbook .lookbook-track {
   display: flex !important;
   flex-wrap: nowrap !important;
   gap: 12px;
   overflow-x: auto;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
+  overflow-y: visible !important;
+  position: relative !important;
   align-items: center !important;
-  height: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
   will-change: transform;
   cursor: grab;
   pointer-events: auto !important;
   width: max-content;
   margin: 0 auto;
-  position: relative;
-  left: auto;
-  right: auto;
 }
 
 #lookbook .lookbook-track img,
