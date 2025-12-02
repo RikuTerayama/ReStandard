@@ -230,21 +230,24 @@
   
   /* 画像は常に行内に収まる（contain） */
   /* PATCH: Collection 画像の完全表示を徹底 */
-  #collection .collection-track img,
-  html body #collection .collection-track img,
-  #collection .collection-track a img,
-  html body #collection .collection-track a img {
-    height: auto !important;
-    max-height: 100% !important; /* トラックの block-size に追従 */
-    width: auto !important;
-    object-fit: contain !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    border-radius: 0;
-    box-shadow: none;
-    pointer-events: auto;
-    user-select: none;
+  /* スマホ表示用: PC表示では上書きされる */
+  @media (max-width: 1024px) {
+    #collection .collection-track img,
+    html body #collection .collection-track img,
+    #collection .collection-track a img,
+    html body #collection .collection-track a img {
+      height: auto !important;
+      max-height: 100% !important; /* トラックの block-size に追従 */
+      width: auto !important;
+      object-fit: contain !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      border-radius: 0;
+      box-shadow: none;
+      pointer-events: auto;
+      user-select: none;
+    }
   }
   
   /* Lookbook 行 */
@@ -613,12 +616,20 @@
   } */
   
   /* 見出しの余白調整（行が食い込むのを防ぐ） */
-  #collection .section-title {
+  /* Collection と Lookbook のタイトル周りの間隔を統一 */
+  #collection .section-title,
+  #lookbook .section-title {
     margin-top: .5rem;
     margin-bottom: 1rem;
   }
   
-  /* Lookbook .section-title: css/lookbook-override.css に移管済み */
+  /* PC表示: Collection と Lookbook のタイトル〜フロー間隔を統一 */
+  @media (min-width: 1025px) {
+    #collection .section-title,
+    #lookbook .section-title {
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+  }
   
   /* スマホ版の画像サイズ調整 - Lookbookはより遅く */
   /* @media (max-width: 1024px) は削除 - CSS変数を使用しないため不要 */
@@ -1054,7 +1065,8 @@
      ========================================================= */
   /* PC表示: 固定サイズで統一 */
   @media (min-width: 1025px) {
-    #collection .collection-item {
+    /* .collection-item クラスがないため、.collection-track a に対してスタイルを適用 */
+    #collection .collection-track a {
       flex: 0 0 auto !important;
       height: var(--collection-img-h, 320px) !important;
       width: auto !important;
@@ -1062,11 +1074,13 @@
       border-radius: 0 !important;
       overflow: hidden !important;
       background: transparent !important;
+      display: block !important;
     }
 
     #collection .collection-item img,
     #collection .collection-track img,
-    #collection .collection-track a img {
+    #collection .collection-track a img,
+    #collection .collection-track picture img {
       width: 100% !important;
       height: 100% !important;
       object-fit: cover !important; /* カードサイズを統一 */
@@ -1171,18 +1185,15 @@
   /* #lookbook .lookbook-container:hover .lookbook-track{ animation-play-state: paused; } は削除 */
   
   /* 全般レスポンシブ画像対応 */
-  .collection-track img {
-    max-width: 100% !important;
-    height: auto !important;
+  /* PC表示では上書きされるため、スマホ表示のみ */
+  @media (max-width: 1024px) {
+    .collection-track img {
+      max-width: 100% !important;
+      height: auto !important;
+    }
   }
   
-  /* PC大きく・SP小さく調整 */
-  @media (min-width: 769px) {
-    .collection-track img {
-      max-width: clamp(200px, 20vw, 300px) !important; /* PC: 大きめ */
-    }
-    /* Lookbook画像サイズは2498行目の設定を採用（競合削除） */
-  }
+  /* PC表示では #collection .collection-track a の固定サイズ設定が優先される */
   
   @media (max-width: 768px) {
     .collection-track img,
