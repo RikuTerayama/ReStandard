@@ -8,7 +8,8 @@
    6. css/i18n-visibility.css
    7. css/lookbook-override.css (THIS FILE - loaded last)
    
-   This file is the SINGLE SOURCE OF TRUTH for all Lookbook background/blur styles.
+   This file is the SINGLE SOURCE OF TRUTH for all Lookbook styles.
+   All Lookbook-related styles moved from style.css on 2025-01-XX
    
    Lookbook background policy:
    - Section (#lookbook) itself is transparent (no background/blur)
@@ -41,6 +42,21 @@
   -webkit-backdrop-filter: none !important;
 }
 
+/* Lookbook section wrapper - moved from style.css */
+.lookbook-section {
+  width: 100% !important;
+  max-width: none !important;
+  text-align: center !important;
+  background: none !important;
+  overflow: visible !important;
+}
+
+.lookbook {
+  padding: 0;
+  background: none !important;
+  overflow: visible !important;
+}
+
 /* ===== Frosted panel ONLY around the image row ===== */
 #lookbook .lookbook-wrapper.lookbook-panel {
   position: relative;
@@ -64,6 +80,13 @@
     margin-right: calc(50% - 50vw);
     border-radius: 0;
     padding-block: clamp(16px, 3.2vw, 40px);
+    padding-inline: clamp(16px, 3.2vw, 40px);
+  }
+
+  /* 画像フロー全体を中央寄せ */
+  #lookbook .lookbook-wrapper.lookbook-panel .lookbook-container {
+    max-width: 1180px;
+    margin: 0 auto;
   }
 }
 
@@ -81,8 +104,24 @@
   overflow-y: visible !important;
   position: relative;
   padding-block: 0.25rem !important;
-  min-height: 420px;
   width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  /* min-height は削除: 中身の高さに合わせる */
+}
+
+/* Track wrap - moved from style.css */
+#lookbook .track-wrap {
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+  height: clamp(140px, 22vw, 260px);
+}
+
+@media (min-width: 1024px) {
+  #lookbook .track-wrap {
+    height: clamp(160px, 18vw, 240px);
+  }
 }
 
 /* 画像サイズ・レイアウトは必要に応じてここにまとめる */
@@ -99,6 +138,11 @@
   will-change: transform;
   cursor: grab;
   pointer-events: auto !important;
+  width: max-content;
+  margin: 0 auto;
+  position: relative;
+  left: auto;
+  right: auto;
 }
 
 #lookbook .lookbook-track img,
@@ -127,6 +171,27 @@
   position: relative;
   display: inline-flex;
   z-index: 1;
+  inline-size: auto !important;
+  block-size: 100% !important;
+}
+
+#lookbook .lookbook-track a {
+  display: block !important;
+  inline-size: auto !important;
+  block-size: 100% !important;
+  pointer-events: auto !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+/* Lookbook row - moved from style.css */
+#lookbook .lookbook-row {
+  position: relative;
+  height: auto;
+  min-block-size: clamp(160px, 22vw, 340px);
+  overflow: visible;
 }
 
 /* Safety: track側で背景が復活しないようにする */
@@ -152,6 +217,12 @@
   overflow: visible !important;
 }
 
+/* Lookbook track dragging state - moved from style.css */
+#lookbook .lookbook-track.dragging {
+  cursor: grabbing;
+  animation: none !important;
+}
+
 /* =========================================================
    Responsive (モバイル): 同じポリシーを維持
    ========================================================= */
@@ -174,7 +245,11 @@
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    min-height: 420px !important;
+    /* min-height は削除: 中身の高さに合わせる */
+  }
+
+  #lookbook .lookbook-row {
+    min-block-size: clamp(140px, 36vw, 260px);
   }
 }
 
@@ -190,11 +265,7 @@
 
   #lookbook .lookbook-track {
     height: auto !important;
-    min-height: 320px !important;
-  }
-
-  #lookbook .lookbook-container {
-    min-height: 450px !important;
+    /* min-height は削除: 中身の高さに合わせる */
   }
 }
 
@@ -212,10 +283,6 @@
     height: auto !important;
     min-height: 280px !important;
     overflow: visible !important;
-  }
-
-  #lookbook .lookbook-container {
-    min-height: 420px !important;
   }
 }
 
