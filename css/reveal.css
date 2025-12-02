@@ -1,76 +1,111 @@
-/* ReStandard テキスト演出 - 競合に勝つ高優先度実装 */
+/* =========================================================
+   ReStandard テキスト演出 - 下→上方向に統一
+   サイト全体で「下から上にスライドしながら不透明になる」リビールに統一
+   ========================================================= */
 :root {
-  --rs-reveal-duration: 900ms;
+  --rs-reveal-duration: 700ms;
   --rs-reveal-delay: 60ms;
   --rs-reveal-ease: cubic-bezier(.22,.61,.36,1);
-  --rs-reveal-shift: 14px;
+  --rs-reveal-shift-y: 12px; /* 下→上方向のシフト量 */
+  --rs-reveal-shift-x: 14px; /* 後方互換性のため残す */
 }
 
 /* 初期状態：JavaScriptが読み込まれる前は通常表示 */
 .rs-reveal[data-reveal] {
   opacity: 1 !important;
-  transform: translateX(0) !important;
+  transform: translateY(0) !important;
   will-change: opacity, transform, clip-path, mask-position, mask-size;
 }
 
-/* JavaScript適用後の初期状態：不可視（rs-revealクラスが2回適用された場合のみ） */
+/* JavaScript適用後の初期状態：不可視（下から上にスライド） */
 .rs-reveal.rs-reveal.rs-reveal[data-reveal] {
   opacity: 0 !important;
-  transform: translateX(var(--rs-reveal-shift)) !important;
+  transform: translateY(var(--rs-reveal-shift-y)) !important;
 }
 
-/* "見える"状態 */
+/* "見える"状態：下から上にスライドしながら不透明になる */
 .rs-reveal.is-visible[data-reveal] {
   opacity: 1 !important;
-  transform: translateX(0) !important;
+  transform: translateY(0) !important;
+  transition:
+    opacity var(--rs-reveal-duration) var(--rs-reveal-ease),
+    transform var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
 }
 
-/* Wipe（左→右） */
+/* =========================================================
+   統一リビールアニメーション: 下→上方向にスライドしながら不透明になる
+   ========================================================= */
+
+/* 基本リビール: 下→上方向（デフォルト） */
+.rs-reveal[data-reveal],
+.rs-reveal[data-reveal="up"] {
+  opacity: 0 !important;
+  transform: translateY(var(--rs-reveal-shift-y)) !important;
+  transition:
+    opacity var(--rs-reveal-duration) var(--rs-reveal-ease),
+    transform var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
+}
+
+.rs-reveal.is-visible[data-reveal],
+.rs-reveal.is-visible[data-reveal="up"] {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Wipe（下→上）: マスクで下から上に表示 */
 .rs-reveal[data-reveal="wipe"] {
   -webkit-mask-image: linear-gradient(#000 0 0) !important;
           mask-image: linear-gradient(#000 0 0) !important;
-  -webkit-mask-size: 0% 100% !important;
-          mask-size: 0% 100% !important;
+  -webkit-mask-size: 100% 0% !important;
+          mask-size: 100% 0% !important;
   -webkit-mask-repeat: no-repeat !important;
           mask-repeat: no-repeat !important;
-  -webkit-mask-position: left center !important;
-          mask-position: left center !important;
-  transition: -webkit-mask-size var(--rs-reveal-duration) var(--rs-reveal-ease),
-              mask-size var(--rs-reveal-duration) var(--rs-reveal-ease),
-              opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
+  -webkit-mask-position: bottom center !important;
+          mask-position: bottom center !important;
+  opacity: 0 !important;
+  transform: translateY(var(--rs-reveal-shift-y)) !important;
+  transition: 
+    -webkit-mask-size var(--rs-reveal-duration) var(--rs-reveal-ease),
+    mask-size var(--rs-reveal-duration) var(--rs-reveal-ease),
+    opacity var(--rs-reveal-duration) var(--rs-reveal-ease),
+    transform var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
 }
 .rs-reveal.is-visible[data-reveal="wipe"] {
   -webkit-mask-size: 100% 100% !important;
           mask-size: 100% 100% !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
-/* Char（文字ごと） */
+/* Char（文字ごと）: 下→上方向に統一 */
 .rs-reveal[data-reveal="char"] .rs-char {
   display: inline-block !important;
   opacity: 0 !important;
-  transform: translateX(var(--rs-reveal-shift)) !important;
-  transition: transform var(--rs-reveal-duration) var(--rs-reveal-ease),
-              opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
+  transform: translateY(var(--rs-reveal-shift-y)) !important;
+  transition: 
+    transform var(--rs-reveal-duration) var(--rs-reveal-ease),
+    opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
 }
 .rs-reveal.is-visible[data-reveal="char"] .rs-char {
   opacity: 1 !important;
-  transform: translateX(0) !important;
+  transform: translateY(0) !important;
 }
 .rs-reveal[data-reveal="char"] .rs-char {
   transition-delay: calc(var(--i) * var(--rs-reveal-delay)) !important;
 }
 
-/* Line（行ごと） */
+/* Line（行ごと）: 下→上方向に統一 */
 .rs-reveal[data-reveal="line"] > .rs-line {
   display: block !important;
   opacity: 0 !important;
-  transform: translateX(var(--rs-reveal-shift)) !important;
-  transition: transform var(--rs-reveal-duration) var(--rs-reveal-ease),
-              opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
+  transform: translateY(var(--rs-reveal-shift-y)) !important;
+  transition: 
+    transform var(--rs-reveal-duration) var(--rs-reveal-ease),
+    opacity var(--rs-reveal-duration) var(--rs-reveal-ease) !important;
 }
 .rs-reveal.is-visible[data-reveal="line"] > .rs-line {
   opacity: 1 !important;
-  transform: translateX(0) !important;
+  transform: translateY(0) !important;
 }
 .rs-reveal.is-visible[data-reveal="line"] > .rs-line {
   transition-delay: calc(var(--i) * var(--rs-reveal-delay)) !important;
@@ -86,7 +121,7 @@
   .rs-reveal .rs-line,
   .rs-reveal .rs-char {
     opacity: 1 !important;
-    transform: none !important;
+    transform: translateY(0) !important;
     -webkit-mask-size: 100% 100% !important;
             mask-size: 100% 100% !important;
   }
