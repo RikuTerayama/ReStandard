@@ -354,16 +354,18 @@
      Lookbook - 双方向ドラッグとアニメ両立
      ======================================== */
   /* Lookbook - 横幅一杯背景は.bandに統一 */
+  /* Lookbook の背景は css/lookbook-override.css で管理する */
   .lookbook-section {
     width: 100%;
     padding: 0;
     overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
-    background: transparent;
+    background: none !important; /* 背景は css/lookbook-override.css で管理 */
   }
   
+  /* Lookbook の背景は css/lookbook-override.css で管理する */
   .lookbook {
     padding: 0;
-    background: transparent;
+    background: none !important; /* 背景は css/lookbook-override.css で管理 */
     overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
   }
   
