@@ -71,22 +71,34 @@
   z-index: 1;
 }
 
-/* PC表示: Lookbook のフロー背景を横幅いっぱいに */
+/* =========================================================
+   PC表示: Lookbook のフロー背景を横幅いっぱいに
+   Collection と同様のフルブリードレイアウトに統一
+   ========================================================= */
 @media (min-width: 1025px) {
   #lookbook .lookbook-wrapper.lookbook-panel {
-    max-width: none;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    border-radius: 0;
-    padding-block: clamp(16px, 3.2vw, 40px);
-    padding-inline: clamp(16px, 3.2vw, 40px);
+    max-width: none !important;
+    width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    border-radius: 0 !important;
+    padding-block: clamp(16px, 3.2vw, 40px) !important;
+    padding-inline: clamp(16px, 3.2vw, 40px) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
-  /* 画像フロー全体を中央寄せ */
+  /* 画像フロー全体を中央寄せ（Collectionと同様） */
   #lookbook .lookbook-wrapper.lookbook-panel .lookbook-container {
     max-width: 1180px;
     margin: 0 auto;
+    width: 100%;
+  }
+  
+  /* Lookbook trackも横幅いっぱいに広がるように */
+  #lookbook .lookbook-track {
+    width: 100%;
+    max-width: none;
   }
 }
 
