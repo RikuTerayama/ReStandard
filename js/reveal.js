@@ -15,10 +15,11 @@ function initReveal(root = document) {
   if (force) {
     log('FORCE MODE: 全要素を即時表示');
     // reveal関数が定義される前に呼び出されるため、直接スタイルを適用
+    // 下→上方向に統一: translateY(0)を使用
     document.querySelectorAll('.rs-reveal[data-reveal]').forEach((el) => {
       el.classList.add('is-visible');
       el.style.setProperty('opacity', '1', 'important');
-      el.style.setProperty('transform', 'translateX(0)', 'important');
+      el.style.setProperty('transform', 'translateY(0)', 'important');
       
       // wipeの場合はmask-sizeも適用
       if (el.dataset.reveal === 'wipe') {
@@ -74,6 +75,7 @@ function initReveal(root = document) {
   }
 
   // 初期適用：インラインstyleで"初期状態"を強制（競合に勝つ）
+  // 下→上方向に統一: translateYを使用
   function prime(el) {
     const mode = el.dataset.reveal;
     
@@ -83,8 +85,9 @@ function initReveal(root = document) {
     el.classList.add('rs-reveal');
     
     // 初期状態を即座に適用（視覚的なちらつきを防ぐ）
+    // 下→上方向: translateYを使用
     el.style.setProperty('opacity', '0', 'important');
-    el.style.setProperty('transform', `translateX(var(--rs-reveal-shift))`, 'important');
+    el.style.setProperty('transform', `translateY(var(--rs-reveal-shift-y, 12px))`, 'important');
 
     if (mode === 'char' && !el.querySelector('.rs-char')) splitChars(el);
     if (mode === 'line' && !el.querySelector('.rs-line')) splitLines(el);
@@ -93,13 +96,14 @@ function initReveal(root = document) {
   }
 
   // 表示化：is-visible と同時にインラインstyleでも最終状態を指示
+  // 下→上方向に統一: translateY(0)を使用
   function reveal(el) {
     const node = el;
     node.classList.add('is-visible');
     node.style.setProperty('opacity', '1', 'important');
-    node.style.setProperty('transform', 'translateX(0)', 'important');
+    node.style.setProperty('transform', 'translateY(0)', 'important');
 
-    // wipeの場合はmask-sizeをインラインで後押し
+    // wipeの場合はmask-sizeをインラインで後押し（下→上方向）
     if (node.dataset.reveal === 'wipe') {
       (node.style).setProperty('-webkit-mask-size', '100% 100%', 'important');
       (node.style).setProperty('mask-size', '100% 100%', 'important');
