@@ -377,31 +377,7 @@
     justify-content: center;
   }
   
-  /* Lookbook .lookbook-container: スタイルは css/lookbook-override.css で管理 */
-  
-  .lookbook-track {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translateX(0);
-    will-change: transform;
-    contain: paint;
-    display: flex !important;
-    gap: min(1.5vw, 12px);
-    cursor: grab;
-    /* アニメーションは#lookbook .lookbook-trackで統一管理（下記参照） */
-    height: auto;
-    align-items: center !important; /* 上下中央揃え（画像が切れないように） */
-  }
-  
-  /* Lookbookアニメーションは1198-1212行目で統一管理（重複削除） */
-  
-  .lookbook-track.dragging {
-    cursor: grabbing;
-    animation: none !important; /* ドラッグ中は必ず停止 */
-  }
-  
-  /* Lookbook .lookbook-item, .lookbook-row: スタイルは css/lookbook-override.css で管理 */
+  /* Lookbook関連スタイル: すべて css/lookbook-override.css に移管済み */
   
   /* Lookbook画像には影響しないように削除 - 2633行目の設定で統一管理 */
   
@@ -519,8 +495,7 @@
   
   /* ====== 画像カード ====== */
   
-  .collection-track a,
-  .lookbook-track a{
+  .collection-track a {
     display: inline-block;
     padding: 0 8px; /* 画像間のスペーシング */
     flex-shrink: 0;
@@ -528,50 +503,57 @@
     cursor: pointer;
   }
   
-  /* ==== Collection / Lookbook 画像の「カード」装飾を確実に無効化 ==== */
+  /* Lookbook .lookbook-track a: css/lookbook-override.css に移管済み */
+  
+  /* ==== Collection 画像の「カード」装飾を確実に無効化 ==== */
   #collection .collection-track a,
-  #collection .collection-track .collection-item,
-  #lookbook  .lookbook-track a,
-  #lookbook  .lookbook-track .lookbook-item {
+  #collection .collection-track .collection-item {
     background: transparent !important;
     box-shadow: none !important;
     padding: 0 !important;
     border: 0 !important;
   }
   
-  /* === Collection/Lookbook：見切れゼロ & 中央配置 & 再開位置継続 === */
-  #collection, #lookbook { 
-    width:100%; 
-    max-width:none; 
-    margin:0 auto; 
+  /* Lookbook: css/lookbook-override.css に移管済み */
+  
+  /* === Collection：見切れゼロ & 中央配置 & 再開位置継続 === */
+  #collection {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
   }
+  
+  /* Lookbook: css/lookbook-override.css に移管済み */
   .section-title { 
     color:#fff !important; 
   }
   
   /* 行は可変高。中身に追従（見切れ防止） */
-  #collection .collection-row,
-  #lookbook .lookbook-row {
-    position:relative;
-    height:auto;
-    min-block-size:clamp(160px,22vw,340px); /* PC下限 */
-    overflow:visible;
+  #collection .collection-row {
+    position: relative;
+    height: auto;
+    min-block-size: clamp(160px, 22vw, 340px); /* PC下限 */
+    overflow: visible;
   }
-  @media (max-width: 767px){
-    #collection .collection-row,
-    #lookbook .lookbook-row { 
-      min-block-size:clamp(140px,36vw,260px); 
+  
+  @media (max-width: 767px) {
+    #collection .collection-row {
+      min-block-size: clamp(140px, 36vw, 260px);
     }
   }
   
+  /* Lookbook .lookbook-row: css/lookbook-override.css に移管済み */
+  
   /* トラックと画像：見切れゼロ */
-  .collection-track, .lookbook-track {
-    display:flex; 
-    align-items:center; 
-    gap:12px;
-    width:max-content; 
-    will-change:transform;
+  .collection-track {
+    display: flex; 
+    align-items: center; 
+    gap: 12px;
+    width: max-content; 
+    will-change: transform;
   }
+  
+  /* Lookbook .lookbook-track: css/lookbook-override.css に移管済み */
   .collection-track img {
     height:100%; 
     max-height:100%;
@@ -589,20 +571,24 @@
   /* Lookbook画像サイズは2460行目の設定を採用（競合削除） */
   
   /* === トラックの高さ：画面幅に比例（PC/タブ/SP） === */
-  .collection .track-wrap,
-  .lookbook .track-wrap{
+  .collection .track-wrap {
     height: clamp(140px, 22vw, 260px);   /* PCで大きすぎない／SPで過少にならない */
   }
-  @media (min-width:1024px){
-    .collection .track-wrap,
-    .lookbook .track-wrap{ height: clamp(160px, 18vw, 240px);}
+  
+  @media (min-width: 1024px) {
+    .collection .track-wrap {
+      height: clamp(160px, 18vw, 240px);
+    }
   }
   
+  /* Lookbook .track-wrap: css/lookbook-override.css に移管済み */
+  
   /* === スライド同士の隙間・左右余白 === */
-  .collection .slide,
-  .lookbook .slide{
+  .collection .slide {
     padding-inline: clamp(4px, 1.2vw, 10px);
   }
+  
+  /* Lookbook .slide: css/lookbook-override.css に移管済み */
   
   /* ====== アニメーション ====== */
   
@@ -627,11 +613,12 @@
   } */
   
   /* 見出しの余白調整（行が食い込むのを防ぐ） */
-  #collection .section-title,
-  #lookbook   .section-title{
+  #collection .section-title {
     margin-top: .5rem;
     margin-bottom: 1rem;
   }
+  
+  /* Lookbook .section-title: css/lookbook-override.css に移管済み */
   
   /* スマホ版の画像サイズ調整 - Lookbookはより遅く */
   /* @media (max-width: 1024px) は削除 - CSS変数を使用しないため不要 */
@@ -834,11 +821,13 @@
   /* 背景動画は常に背面へ */
   #mobile-bg-video, #desktop-bg-video { z-index: -1; }
   
-  /* Collection/Lookbookセクションのz-index調整 */
-  #collection, #lookbook {
+  /* Collectionセクションのz-index調整 */
+  #collection {
     position: relative;
     z-index: 1;
   }
+  
+  /* Lookbook: css/lookbook-override.css に移管済み */
   
   /* Collectionの背景帯を確実に表示 */
   #collection .band {
@@ -846,15 +835,7 @@
     z-index: 1;
   }
   
-  /* Lookbook .band: background/blur removed - handled by css/lookbook-override.css */
-  #lookbook .band {
-    position: relative;
-    z-index: 1;
-    background: none !important;
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
+  /* Lookbook .band: css/lookbook-override.css に移管済み */
   
   /* レスポンシブ細部（タイトル・ナビ間隔の統一） */
   @media (max-width: 768px) {
@@ -1068,58 +1049,69 @@
     cursor:grabbing; 
     animation:none !important;
   } */
-  #collection .collection-item{ flex:0 0 auto; height:100%;
-    border-radius:12px; overflow:hidden; background:#fff; }
   /* =========================================================
-     Collection画像の「最後の砦」- iPhone12 Chromeで消える問題を完全防止（STEP5）
+     Collection画像サイズ統一: すべてのアイテムを同じサイズに
      ========================================================= */
-  #collection .collection-item img,
-  #collection .collection-track img,
-  #collection .collection-track a img { 
-    width: auto !important; /* width: autoに統一（横長を防止） */
-    height: auto !important; /* height: autoに統一（縦横比を維持） */
-    max-width: 93px !important; /* 固定値で統一（iPhone 12 Pro/15 Proで同じサイズ） */
-    max-height: 140px !important; /* 最大高さを制限 */
-    object-fit: contain !important; /* contain - 縦横比を維持 */
-    display: block !important; 
-    aspect-ratio: auto !important; /* アスペクト比を維持 */
-    /* Instagram WebView対策: flexboxの影響を無効化 */
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    /* 最後の砦：iPhone12 Chromeで画像が消える問題を完全防止 */
-    opacity: 1 !important;
-    visibility: visible !important;
-    /* transitionでopacityが0になることを防ぐ */
-    transition: none !important;
-    /* filterで暗くならないようにする */
-    filter: none !important;
-    /* transformでscale(0)にならないようにする */
-    transform: none !important;
+  /* PC表示: 固定サイズで統一 */
+  @media (min-width: 1025px) {
+    #collection .collection-item {
+      flex: 0 0 auto !important;
+      height: var(--collection-img-h, 320px) !important;
+      width: auto !important;
+      aspect-ratio: 3 / 4 !important;
+      border-radius: 0 !important;
+      overflow: hidden !important;
+      background: transparent !important;
+    }
+
+    #collection .collection-item img,
+    #collection .collection-track img,
+    #collection .collection-track a img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important; /* カードサイズを統一 */
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      flex-shrink: 0 !important;
+      flex-grow: 0 !important;
+    }
+  }
+
+  /* スマホ表示: 既存の設定を維持 */
+  @media (max-width: 1024px) {
+    #collection .collection-item {
+      flex: 0 0 auto !important;
+      height: 100% !important;
+      border-radius: 0 !important;
+      overflow: visible !important;
+      background: transparent !important;
+    }
+
+    #collection .collection-item img,
+    #collection .collection-track img,
+    #collection .collection-track a img {
+      width: auto !important;
+      height: auto !important;
+      max-width: 93px !important;
+      max-height: 140px !important;
+      object-fit: contain !important;
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      flex-shrink: 0 !important;
+      flex-grow: 0 !important;
+    }
   }
   
-  /* ====== Lookbook ====== */
-  /* Lookbook 横幅100%・高さ柔軟化 */
-  .lookbook-section{ 
-    width: 100% !important; /* 横幅100% */
-    max-width: none !important;
-    text-align: center !important; /* 中央揃え */
-  }
-  /* Lookbook の背景は css/lookbook-override.css で管理する */
-  #lookbook{ 
-    padding: clamp(40px,6vw,80px) 0; 
-    background: none;
-    text-align: center !important; /* 中央揃え */
-    width: 100% !important; /* 横幅100% */
-    max-width: none !important;
-  }
-  /* セクションコンテナ統一設定 */
-  .collection-container,
-  .lookbook-container{ 
+  /* Lookbook関連スタイル: すべて css/lookbook-override.css に移管済み */
+  /* Collectionコンテナ設定 */
+  .collection-container {
     width: 100% !important;
     max-width: 100vw !important;
-    overflow: visible !important; /* 画像が端から端まで表示されるように変更 */
+    overflow: visible !important;
     display: flex !important;
-    justify-content: flex-start !important; /* 左端から開始 */
+    justify-content: flex-start !important;
     align-items: center !important;
     position: relative !important;
     height: auto !important;
@@ -1262,27 +1254,10 @@
 /* --- Lookbook の行高 --- */
 /* #lookbook .lookbook-track の block-size 設定を削除 - 画像サイズが正しく適用されるように */
 
-  /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
-#lookbook .lookbook-track img{
-  object-fit: contain !important;
-  flex-shrink: 0 !important;
-  display: block !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  pointer-events: auto !important;
-  user-select: none !important;
-  /* 画像サイズはメディアクエリで制御するため、ここでは設定しない */
-  width: auto !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-}
+  /* Lookbook関連スタイル: css/lookbook-override.css に移管済み */
   
-  /* カード：余白のみ。白いカード背景は無し */
-  .collection-item,
-  .lookbook-item{
+  /* Collection カード：余白のみ。白いカード背景は無し */
+  .collection-item {
     inline-size: auto !important;
     block-size: 100% !important;
     border-radius: 0 !important;
@@ -1291,10 +1266,9 @@
     overflow: visible !important; /* 切れ防止 */
   }
   
-  /* 画像（リンク内の <img>）は割合を保って必ず全部見せる */
-  .collection-track a,
-  .lookbook-track a{
-    display:block !important;
+  /* Collection 画像（リンク内の <img>）は割合を保って必ず全部見せる */
+  .collection-track a {
+    display: block !important;
     inline-size: auto !important;
     block-size: 100% !important;
     pointer-events: auto !important;
@@ -1394,21 +1368,7 @@
     justify-content: center;
   }
   
-  /* 画像サイズは2558-2588行目の固定サイズ設定で統一管理（CSS変数は削除） */
-.lookbook-track img,
-html body .lookbook-track img,
-.lookbook-item img,
-html body .lookbook-item img {
-  object-fit: contain !important;
-  display: block;
-  /* 画像サイズはメディアクエリで制御するため、ここでは設定しない */
-  width: auto !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-}
+  /* Lookbook画像スタイル: css/lookbook-override.css に移管済み */
   
 /* 古いbrand関連スタイルは削除 - #brandsスコープで管理 */
 
@@ -1449,35 +1409,26 @@ html body .lookbook-item img {
     padding-block: clamp(12px, 3vw, 32px);
   }
   
-  /* Lookbook .band: background/blur removed - handled by css/lookbook-override.css */
-  #lookbook .band {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    background: none !important;
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    padding-block: clamp(12px, 3vw, 32px);
-  }
+  /* Lookbook .band: css/lookbook-override.css に移管済み */
   
   /* 古いbrand関連ホバースタイルは削除 - #brandsスコープで管理 */
   
   /* 3. トラックの中央化・relative化 */
-  #collection .track-wrap,
-  #lookbook .track-wrap {
+  #collection .track-wrap {
     display: flex;
     justify-content: center;
     overflow: visible;
   }
   
-  .collection-track,
-  .lookbook-track {
+  .collection-track {
     width: max-content;
     margin: 0 auto;
     position: relative;
     left: auto;
     right: auto;
   }
+  
+  /* Lookbook .track-wrap, .lookbook-track: css/lookbook-override.css に移管済み */
   
 /* 4. 画像の見切れ抑止 */
 .collection-track img {
@@ -1541,17 +1492,7 @@ html body #lookbook .lookbook-track[data-speed],
     overflow: visible !important; /* 画像が端から端まで表示されるように */
   }
   
-  /* Lookbook .band: background/blur removed - handled by css/lookbook-override.css */
-  #lookbook .band {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    background: none !important;
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    padding-block: clamp(12px, 3vw, 32px);
-    overflow: visible !important;
-  }
+  /* Lookbook .band: css/lookbook-override.css に移管済み */
   
   /* Collection / Lookbook の帯の高さ（PC はやや高く、SP はやや低く） */
   #collection .band { 
@@ -1630,26 +1571,12 @@ html body #lookbook .lookbook-track[data-speed],
     margin-top: 4rem !important; /* PC表示で適切な間隔 */
   }
   
-  /* Collection行にナビバーと同じ背景を設定 */
+  /* Collection行: 背景は .collection-panel が担当するため、行自体は透明 */
   .collection-row {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    margin: 8px 0;
-  }
-  
-  .collection-row:first-child {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    width: 100%;
-  }
-  
-  .collection-row:last-child {
-    position: absolute;
-    top: 75%;
-    transform: translateY(-50%);
-    width: 100%;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border-radius: 0;
+    margin: 0;
   }
   
   /* 行の高さと間隔のカスタムプロパティ */
@@ -2503,14 +2430,7 @@ div.copyright {
 /* Lookbookコンテナ: スタイルは css/lookbook-override.css で管理 */
 
 /* スマホ表示におけるLookbook背景の縦の長さを短縮 - 2691行目の設定で統一管理（重複削除） */
-@media (max-width: 900px) {
-  #lookbook .band {
-    padding-top: 12px !important; /* 上側の余白を削減 */
-    padding-bottom: 12px !important; /* 下側の余白を削減 */
-  }
-  
-  /* .lookbook-container の設定は2691行目で統一管理（重複削除） */
-}
+/* Lookbook関連スタイル: css/lookbook-override.css に移管済み */
 
 /* モザイク背景の削除 */
 .collection-row::before,
@@ -2650,180 +2570,7 @@ html body #collection .collection-track a img {
 /* .lookbook-track の min-width 設定を削除 - 画像サイズが動的に変更されるため、固定値は使用しない */
 /* トラックの幅は画像の実際のサイズに基づいて自動的に計算される */
 
-/* Lookbook画像の表示を強制（Collectionと同様） */
-/* 画像サイズを固定して、画面幅による変更を防ぐ */
-/* 注意: メディアクエリで上書きされるため、ここでは基本設定のみ */
-#lookbook .lookbook-track img,
-#lookbook .lookbook-item img,
-.lookbook-track img,
-.lookbook-item img {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  object-fit: contain !important;
-  /* max-width: 100% !important; を削除 - 画像サイズが正しく適用されるように */
-  flex-shrink: 0 !important; /* 画像が縮小されないように */
-}
-
-/* PC版: 固定サイズ（1025px以上、1500px以下でもPC表示と同じ比率を維持） */
-@media (min-width: 1025px) {
-  #lookbook .lookbook-track img,
-  #lookbook .lookbook-item img,
-  html body #lookbook .lookbook-track img,
-  html body #lookbook .lookbook-item img,
-  .lookbook-track img,
-  .lookbook-item img {
-    width: 240px !important;
-    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 320px !important; /* 最大高さを設定 */
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-  }
-  
-  /* PC版: トラックの高さを画像の高さに合わせる */
-  #lookbook .lookbook-track,
-  html body #lookbook .lookbook-track {
-    height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: 320px !important;
-  }
-  
-  /* STEP5: PC版のコンテナ設定は1151-1189行目で一元管理されているため、この重複設定は削除 */
-}
-
-/* 1500px以下でもPC表示と同じ比率を維持（1025px〜1500pxの範囲を明確化） */
-@media (min-width: 1025px) and (max-width: 1500px) {
-  #lookbook .lookbook-track img,
-  #lookbook .lookbook-item img,
-  .lookbook-track img,
-  .lookbook-item img {
-    width: 240px !important;
-    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 320px !important; /* 最大高さを設定 */
-  }
-}
-
-/* タブレット版: 固定サイズ */
-@media (min-width: 481px) and (max-width: 1024px) {
-  #lookbook .lookbook-track img,
-  #lookbook .lookbook-item img,
-  html body #lookbook .lookbook-track img,
-  html body #lookbook .lookbook-item img,
-  .lookbook-track img,
-  .lookbook-item img {
-    width: 200px !important;
-    height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-    max-height: 280px !important; /* 最大高さを設定 */
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-  }
-  
-  /* タブレット版: トラックの高さを画像の高さに合わせる */
-  #lookbook .lookbook-track,
-  html body #lookbook .lookbook-track {
-    height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: 280px !important;
-    overflow: visible !important; /* 画像が切れないように */
-  }
-}
-
-/* スマホ版: 画面幅に応じたサイズ（iPhone 12 ProとiPhone 15 Proで統一） */
-/* iPhone 15 Pro: 393px, iPhone 12 Pro: 390px - 両方とも固定値165pxで統一 */
-@media (max-width: 480px) {
-  #lookbook .lookbook-track img,
-  /* すべてのLookbook画像に適用（HTML属性も上書き） */
-  #lookbook .lookbook-item img,
-  #lookbook .lookbook-item img[width],
-  #lookbook .lookbook-item img[height],
-  html body #lookbook .lookbook-track img,
-  html body #lookbook .lookbook-track img[width],
-  html body #lookbook .lookbook-track img[height],
-  html body #lookbook .lookbook-item img,
-  html body #lookbook .lookbook-item img[width],
-  html body #lookbook .lookbook-item img[height],
-  .lookbook-track img,
-  .lookbook-track img[width],
-  .lookbook-track img[height],
-  .lookbook-item img,
-  .lookbook-item img[width],
-  .lookbook-item img[height],
-  /* より具体的なセレクタで確実に適用 */
-    #lookbook .lookbook-track a img,
-    #lookbook .lookbook-item a img,
-    html body #lookbook .lookbook-track a img,
-    html body #lookbook .lookbook-item a img {
-      width: 70vw !important; /* 画面幅の70%に拡大（画像を大きく見せる） */
-      height: auto !important; /* 高さをautoに変更して画像のアスペクト比を維持 */
-      max-height: 85vw !important; /* 画面幅の85%に拡大（画像を大きく見せる） */
-      min-height: 0 !important; /* 最小高さを0に設定して画像のアスペクト比を維持 */
-      min-width: 240px !important; /* 最小幅を拡大 */
-      max-width: 360px !important; /* 最大幅を拡大 */
-      /* HTMLのwidth/height属性を上書き */
-      aspect-ratio: auto !important;
-      object-fit: contain !important;
-      flex-shrink: 0 !important;
-      display: block !important;
-      opacity: 1 !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
-      visibility: visible !important; /* iPhone 12 Chromeで画像が消える問題を防止 */
-    }
-  
-  /* スマホ (≤480px) */
-  @media (max-width: 480px) {
-    .lookbook-item img,
-    #lookbook .lookbook-track a img,
-    #lookbook .lookbook-item a img {
-      max-width: min(70vw, 360px) !important;
-      max-height: min(85vw, 520px) !important;
-      min-width: 240px !important;
-    }
-  }
-
-  /* タブレット (481px-1024px) */
-  @media (min-width: 481px) and (max-width: 1024px) {
-    .lookbook-item img,
-    #lookbook .lookbook-track a img,
-    #lookbook .lookbook-item a img {
-      max-width: min(60vw, 400px) !important;
-      max-height: min(75vw, 520px) !important;
-    }
-  }
-
-  /* PC (≥1025px) */
-  @media (min-width: 1025px) {
-    .lookbook-item img,
-    #lookbook .lookbook-track a img,
-    #lookbook .lookbook-item a img {
-      max-width: 400px !important;
-      max-height: 520px !important;
-    }
-  }
-  
-  /* スマホ版: トラックの高さを画像の高さに合わせる（画面幅に対する%で指定） */
-  #lookbook .lookbook-track,
-  html body #lookbook .lookbook-track {
-    height: auto !important; /* 高さをautoに変更して画像の高さに合わせる */
-    min-height: 80vw !important; /* 画像のmax-height（80vw）に合わせて調整 */
-    max-height: none !important; /* 最大高さの制限を解除 */
-    overflow: visible !important; /* 画像が切れないように */
-  }
-  
-  /* スマホ版: コンテナの高さを画像の高さに合わせる（画面幅に対する%で指定） */
-  #lookbook .lookbook-container,
-  html body #lookbook .lookbook-container,
-  html #lookbook .lookbook-container {
-    min-block-size: calc(420px + 0.5rem) !important; /* iPhone 12でも画像が見える高さを確保 */
-    min-height: calc(420px + 0.5rem) !important; /* min-block-sizeのフォールバック */
-    max-block-size: none !important; /* 最大高さの制限を解除 */
-    max-height: none !important; /* max-block-sizeのフォールバック */
-    overflow: visible !important; /* 画像が切れないように */
-    overflow-y: visible !important; /* iPhone15 Chromeで画像下部が切れる問題を防止 */
-    align-items: center !important; /* 上下中央揃え（ど真ん中）に戻す */
-    padding-block: 0.25rem !important; /* 余白を最小限に */
-    display: flex !important;
-  }
-  
-  /* STEP5: Instagram WebView向けの設定は削除（1151-1189行目で一元管理） */
-  /* @supportsやbody.instagram-webviewによる分岐は廃止し、メディアクエリで統一 */
-}
+/* Lookbook画像スタイル: css/lookbook-override.css に移管済み */
 
 /* スクリーンリーダー専用（視覚的に非表示、アクセシビリティ維持） */
 .sr-only {
@@ -3182,27 +2929,17 @@ body.splash-active #splash-video-wrapper::after {
   }
 }
 
-/* === Lookbook / Collection 共通の白パネル === */
-/* Lookbook背景パネル: Background now handled by css/lookbook-override.css */
-#lookbook .lookbook-panel {
-  position: relative;
-  z-index: 1;
-  /* Background removed - now handled by css/lookbook-override.css */
-  /* background-color, backdrop-filter removed - see css/lookbook-override.css */
-  border-radius: 12px;
-  padding: 32px 24px;
-  margin-inline: auto;
-  max-width: 1180px;
-}
+/* === Collection 共通の白パネル === */
+/* Lookbook背景パネル: css/lookbook-override.css に移管済み */
 
 #collection .collection-panel {
   position: relative;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.9) !important; /* exactly same as navbar */
-  backdrop-filter: blur(8px) !important; /* exactly same as navbar */
+  background-color: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
+  backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   border-radius: 12px;
-  padding: 32px 24px;
+  padding: clamp(16px, 3.2vw, 40px) clamp(16px, 3.2vw, 40px);
   margin-inline: auto;
   max-width: 1180px;
 }
@@ -3216,6 +2953,13 @@ body.splash-active #splash-video-wrapper::after {
     margin-right: calc(50% - 50vw);
     border-radius: 0;
     padding-block: clamp(16px, 3.2vw, 40px);
+    padding-inline: clamp(16px, 3.2vw, 40px);
+  }
+
+  /* 画像フロー全体を中央寄せ */
+  #collection .collection-panel .collection-wrapper {
+    max-width: 1180px;
+    margin: 0 auto;
   }
 }
 
@@ -3265,38 +3009,4 @@ body.splash-active #splash-video-wrapper::after {
   -webkit-backdrop-filter: none !important;
 }
 
-#lookbook .lookbook-container {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-#lookbook .lookbook-track {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-#lookbook,
-#lookbook .lookbook-wrapper,
-#lookbook .lookbook-panel,
-#lookbook .lookbook-container {
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-#lookbook::before,
-#lookbook .lookbook-wrapper::before,
-#lookbook .lookbook-container::before {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-#lookbook .band {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  background-color: rgba(255, 255, 255, 0.9) !important;
-}
-*/
+/* Lookbook関連スタイル: css/lookbook-override.css に移管済み */
