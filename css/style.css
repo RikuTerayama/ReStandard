@@ -1626,7 +1626,7 @@ html body #lookbook .lookbook-track[data-speed],
   /* Collection wrapper の定義 */
   #collection .collection-wrapper {
     position: relative;
-    min-height: calc(var(--collection-img-h, 320px) * 2 + var(--collection-gap, 20px) * 3);
+    min-height: auto; /* フロー以外に背景が伸びすぎないように */
     margin-top: 4rem !important; /* PC表示で適切な間隔 */
   }
   
@@ -3103,13 +3103,12 @@ body.splash-active #splash-video-wrapper::after {
 /* === Lookbook / Collection 専用パネル 最終レイヤー === */
 /* ヘッダー（.navbar）と同じ背景トーンに完全統一 */
 /* 背景動画のぼかしではなく、独立した白パネルとして表示 */
-/* Lookbook背景は.lookbook-panelで統一管理（上記の3341-3352行目） */
-/* このブロックは残すが、.lookbook-panelが優先される */
+/* Collection wrapper: 背景は panel 側に任せるので透明にする */
 #collection .collection-wrapper {
-  background: var(--navbar-bg, rgba(255, 255, 255, 0.9)) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border-radius: 12px;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0;
   position: relative !important;
   z-index: 1 !important;
 }
@@ -3206,6 +3205,18 @@ body.splash-active #splash-video-wrapper::after {
   padding: 32px 24px;
   margin-inline: auto;
   max-width: 1180px;
+}
+
+/* PC表示: Collection のフロー背景を横幅いっぱいに */
+@media (min-width: 1025px) {
+  #collection .collection-panel {
+    max-width: none;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-radius: 0;
+    padding-block: clamp(16px, 3.2vw, 40px);
+  }
 }
 
 /* 背景動画は確実に背面へ */
