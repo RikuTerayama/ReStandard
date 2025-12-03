@@ -88,17 +88,28 @@
     margin-bottom: 0 !important;
   }
 
-  /* 画像フロー全体を中央寄せ（Collectionと同様） */
+  /* 要件③: 画像フロー全体を横幅いっぱいに表示 */
   #lookbook .lookbook-wrapper.lookbook-panel .lookbook-container {
-    max-width: 1180px;
-    margin: 0 auto;
-    width: 100%;
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
   }
   
   /* Lookbook trackも横幅いっぱいに広がるように */
   #lookbook .lookbook-track {
     width: 100%;
     max-width: none;
+  }
+  
+  /* 要件②: Lookbook画像も高さを統一（Collectionと同様のコンセプト） */
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-track a img,
+  #lookbook .lookbook-track picture img {
+    height: var(--collection-img-h, 320px) !important;
+    max-height: var(--collection-img-h, 320px) !important;
+    width: auto !important;
+    object-fit: contain !important; /* 画像の全体が見えることを優先 */
+    object-position: center !important;
   }
 }
 
@@ -160,9 +171,11 @@
   margin: 0 auto;
 }
 
+/* 要件②: Lookbook画像も高さを統一（Collectionと同様のコンセプト） */
 #lookbook .lookbook-track img,
 #lookbook .lookbook-item img {
-  object-fit: contain !important;
+  object-fit: contain !important; /* 画像の全体が見えることを優先 */
+  object-position: center !important;
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -173,6 +186,15 @@
   user-select: none !important;
   width: auto !important;
   height: auto !important;
+}
+
+/* PC表示: Lookbook画像の高さを統一 */
+@media (min-width: 1025px) {
+  #lookbook .lookbook-track img,
+  #lookbook .lookbook-item img {
+    height: var(--collection-img-h, 320px) !important;
+    max-height: var(--collection-img-h, 320px) !important;
+  }
 }
 
 #lookbook .lookbook-item {
