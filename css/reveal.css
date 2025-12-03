@@ -1,13 +1,14 @@
 /* =========================================================
-   ReStandard テキスト演出 - 下→上方向に統一
+   要件⑤: テキストのリビールアニメーション - 下から上に統一
    サイト全体で「下から上にスライドしながら不透明になる」リビールに統一
+   アニメーション時間: 0.6s、イージング: cubic-bezier(0.4, 0, 0.2, 1)
+   行ごとに0.04sずつ遅延
    ========================================================= */
 :root {
-  --rs-reveal-duration: 700ms;
-  --rs-reveal-delay: 60ms;
-  --rs-reveal-ease: cubic-bezier(.22,.61,.36,1);
-  --rs-reveal-shift-y: 12px; /* 下→上方向のシフト量 */
-  --rs-reveal-shift-x: 14px; /* 後方互換性のため残す */
+  --rs-reveal-duration: 0.6s;
+  --rs-reveal-delay: 0.04s;
+  --rs-reveal-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --rs-reveal-shift-y: 10px; /* 要件⑤: 下に10pxずれている状態 */
 }
 
 /* 初期状態：JavaScriptが読み込まれる前は通常表示 */
