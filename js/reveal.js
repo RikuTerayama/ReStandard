@@ -75,8 +75,8 @@ function initReveal(root = document) {
   }
 
   // 初期適用：インラインstyleで"初期状態"を強制（競合に勝つ）
-  // 下→上方向に統一: translateYを使用
-  function prime(el) {
+  // 要件⑤: 下→上方向に統一、初期状態は透明かつ下に10pxずれている状態
+  function prime(el, index = 0) {
     const mode = el.dataset.reveal;
     
     // クラスが既に適用されている場合はスキップ
@@ -85,9 +85,13 @@ function initReveal(root = document) {
     el.classList.add('rs-reveal');
     
     // 初期状態を即座に適用（視覚的なちらつきを防ぐ）
-    // 下→上方向: translateYを使用
+    // 要件⑤: 初期状態は透明かつ下に10pxずれている状態
     el.style.setProperty('opacity', '0', 'important');
-    el.style.setProperty('transform', `translateY(var(--rs-reveal-shift-y, 12px))`, 'important');
+    el.style.setProperty('transform', 'translateY(10px)', 'important');
+    
+    // 要件⑤: 行ごとに0.04sずつ遅延
+    const delay = index * 0.04;
+    el.style.setProperty('transition-delay', `${delay}s`, 'important');
 
     if (mode === 'char' && !el.querySelector('.rs-char')) splitChars(el);
     if (mode === 'line' && !el.querySelector('.rs-line')) splitLines(el);
@@ -96,12 +100,14 @@ function initReveal(root = document) {
   }
 
   // 表示化：is-visible と同時にインラインstyleでも最終状態を指示
-  // 下→上方向に統一: translateY(0)を使用
+  // 要件⑤: 下→上方向に統一、0.6sでアニメーション
   function reveal(el) {
     const node = el;
     node.classList.add('is-visible');
     node.style.setProperty('opacity', '1', 'important');
     node.style.setProperty('transform', 'translateY(0)', 'important');
+    // 要件⑤: アニメーション時間0.6s、イージングはcubic-bezier(0.4, 0, 0.2, 1)
+    node.style.setProperty('transition', 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)', 'important');
 
     // wipeの場合はmask-sizeをインラインで後押し（下→上方向）
     if (node.dataset.reveal === 'wipe') {
@@ -121,12 +127,48 @@ function initReveal(root = document) {
   }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
 
   function boot(ctx) {
-    const targets = ctx.querySelectorAll('.rs-reveal[data-reveal]:not([data-rs-ready])');
-    targets.forEach((el) => {
-      prime(el);
-      el.dataset.rsReady = '1';
-      io.observe(el);
+    // 要件⑤: .section-title, p要素（.no-revealクラスを除く）に自動的にクラスを付与
+    const sectionTitles = ctx.querySelectorAll('.section-title:not(.rs-reveal)');
+    const paragraphs = ctx.querySelectorAll('p:not(.no-reveal):not(.rs-reveal)');
+    
+    // セクションタイトルにクラスを付与
+    sectionTitles.forEach((el) => {
+      if (!el.hasAttribute('data-reveal')) {
+        el.setAttribute('data-reveal', 'up');
+      }
     });
+    
+    // 段落にクラスを付与
+    paragraphs.forEach((el) => {
+      // フッターの細かい注記は除外
+      if (el.closest('footer')) return;
+      if (!el.hasAttribute('data-reveal')) {
+        el.setAttribute('data-reveal', 'up');
+      }
+    });
+    
+    const targets = ctx.querySelectorAll('.rs-reveal[data-reveal]:not([data-rs-ready])');
+    
+    // 要件⑤: 同じコンテナ内の要素に順番にindexを割り当てて遅延を設定
+    const containers = new Map();
+    targets.forEach((el) => {
+      const container = el.closest('section, article, .container, .wrapper') || document.body;
+      if (!containers.has(container)) {
+        containers.set(container, []);
+      }
+      containers.get(container).push(el);
+    });
+    
+    let globalIndex = 0;
+    containers.forEach((elements) => {
+      elements.forEach((el, index) => {
+        prime(el, globalIndex + index);
+        el.dataset.rsReady = '1';
+        io.observe(el);
+      });
+      globalIndex += elements.length;
+    });
+    
     log('boot targets:', targets.length);
     
     // デバッグ：要素の状態を確認
