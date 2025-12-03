@@ -161,9 +161,12 @@ function attachTrackControls(track) {
   let longPressTimer = null;
   
   const onDown = (e) => {
-    // PC版ではマウスイベントを完全に無視してアニメーションを継続
-    if (e.type === 'mousedown' || e.type === 'pointerdown' || e.type === 'mouseenter' || e.type === 'mouseleave') {
-      return;
+    // PC版ではマウスイベントを無視（タッチのみ対応）
+    if (e.type === 'mousedown' || e.type === 'pointerdown') {
+      // タッチデバイスでない場合はスキップ
+      if (!('ontouchstart' in window)) {
+        return;
+      }
     }
     
     // リンク要素がクリックされた場合は即座にナビゲーションを許可
@@ -179,9 +182,9 @@ function attachTrackControls(track) {
     longPressTimer = setTimeout(() => {
       isDragging = true;
       track.isDragging = true;
-      // ドラッグ機能を無効化（CSSベースで常時running）
-      // track.classList.add('dragging');
-      // track.style.animationPlayState = 'paused';
+      track.classList.add('dragging');
+      // ドラッグ中は自動スクロールを一時停止
+      track.style.animationPlayState = 'paused';
     }, 500);
     
     // リンク要素の場合はpreventDefaultを避ける
@@ -193,25 +196,31 @@ function attachTrackControls(track) {
   const onMove = (e) => {
     // PC版ではマウスイベントを完全に無視
     if (e.type === 'mousemove' || e.type === 'pointermove') {
-      return;
+      if (!('ontouchstart' in window)) {
+        return;
+      }
     }
     
-    const currentX = e.clientX || e.touches[0].clientX;
+    const currentX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
     const dx = currentX - startX;
     moved += Math.abs(dx);
     
     // 10px以上移動したらドラッグ開始（より明確な識別）
     if (!isDragging && moved > 10) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
       isDragging = true;
       track.isDragging = true;
-      // ドラッグ機能を無効化（CSSベースで常時running）
-      // track.classList.add('dragging');
-      // track.style.animationPlayState = 'paused';
+      track.classList.add('dragging');
+      // ドラッグ中は自動スクロールを一時停止
+      track.style.animationPlayState = 'paused';
     }
     
-    // Collection/LookbookともにCSSベースで常時runningとするため、
-    // ドラッグ中のtransform操作は削除
-    // アニメーション状態を触らないようにする
+    // 要件④: ドラッグ中はtransformでトラックを移動
+    if (isDragging) {
+      track.style.transform = `translateX(${startTx + dx}px)`;
+      e.preventDefault();
+    }
   };
   
   const onUp = (e) => {
@@ -242,10 +251,8 @@ function attachTrackControls(track) {
     }
     
     isDragging = false;
-    track.isDragging = false; // グローバルフラグもリセット
-    // Collection/LookbookともにCSSベースで常時runningとするため、
-    // draggingクラスとtransform操作は削除
-    // アニメーション状態を触らないようにする
+    track.isDragging = false;
+    track.classList.remove('dragging');
     
     // 5px未満=クリック：リンク遷移
     if (moved < 5) {
@@ -257,32 +264,58 @@ function attachTrackControls(track) {
           return;
         }
       }
-      // Collection/LookbookともにCSSベースで常時runningとするため、
-      // スタイル操作は削除
-      // アニメーション状態を触らないようにする
+      // クリックの場合は元の位置から再開
+      track.style.removeProperty('transform');
+      // アニメーションを再開（現在位置から）
+      const segmentWidth = track._segmentWidth || 0;
+      if (segmentWidth > 0) {
+        const currentTx = getCurrentTranslateX(track);
+        const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
+        const progress = normalizedTx / segmentWidth;
+        const computedStyle = getComputedStyle(track);
+        const animationDuration = computedStyle.animationDuration;
+        let duration = 120;
+        if (animationDuration) {
+          duration = parseFloat(animationDuration) * (animationDuration.includes('ms') ? 1 : 1000);
+        }
+        const delay = -progress * duration;
+        track.style.animationPlayState = 'paused';
+        track.style.animationDelay = `${delay}ms`;
+        track.style.animationPlayState = 'running';
+      }
       moved = 0;
       return;
     }
     
-    // 8px以上=ドラッグ：離した位置から自動スクロールを再開
+    // 要件④: 8px以上=ドラッグ：離した位置から自動スクロールを再開
     e.preventDefault();
     e.stopPropagation();
     
-    // Collection/LookbookともにCSSベースで常時runningとするため、
-    // アニメーション再開処理は削除
-    // アニメーション状態を触らないようにする
-    
     // 現在位置から再開するための負の animation-delay を計算
-    const segmentWidth = track._segmentWidth;
-    const currentTx = getCurrentTranslateX(track);
-    const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
-    const progress = normalizedTx / segmentWidth;
-    const duration = 70; // CSSで70sに統一されているため、70sを使用（Collectionと同じ）
-    const delay = -progress * duration;
-    
-    // Collection/LookbookともにCSSベースで常時runningとするため、
-    // アニメーション再開処理は削除
-    // アニメーション状態を触らないようにする
+    const segmentWidth = track._segmentWidth || 0;
+    if (segmentWidth > 0) {
+      const currentTx = getCurrentTranslateX(track);
+      const normalizedTx = ((currentTx % segmentWidth) + segmentWidth) % segmentWidth;
+      const progress = normalizedTx / segmentWidth;
+      
+      // Lookbookのアニメーション速度を取得（CSSから）
+      const computedStyle = getComputedStyle(track);
+      const animationDuration = computedStyle.animationDuration;
+      let duration = 120; // デフォルト値（Lookbookは120s）
+      
+      if (animationDuration) {
+        duration = parseFloat(animationDuration) * (animationDuration.includes('ms') ? 1 : 1000);
+      }
+      
+      const delay = -progress * duration;
+      
+      // アニメーションを一時停止してから、新しいdelayで再開
+      track.style.animationPlayState = 'paused';
+      track.style.animationDelay = `${delay}ms`;
+      track.style.animationPlayState = 'running';
+      
+      console.log(`[Lookbook Interaction] アニメーション再開: delay=${delay}ms, progress=${progress.toFixed(2)}`);
+    }
   };
   
   // イベントリスナーを追加
