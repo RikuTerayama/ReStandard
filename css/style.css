@@ -178,14 +178,15 @@
   }
   
   /* スマホ表示でCollectionタイトルと画像フローの間隔を調整 */
+  /* 要件①: Collectionの見出し〜フローの間隔をLookbookと同じバランスに */
   @media (max-width: 900px) {
     #collection h2,
     #collection .section-title {
-      margin-bottom: 1.5rem !important;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem) !important;
     }
     
     #collection .collection-wrapper {
-      margin-top: 2rem !important; /* スマホ表示で間隔を縮小 */
+      margin-top: 0 !important; /* Lookbookと統一 */
     }
   }
   
@@ -617,7 +618,8 @@
   
   /* =========================================================
      見出しの余白調整: Collection と Lookbook のタイトル〜フロー間隔を統一
-     PC表示で両セクションのタイトルと画像フローの距離を同じバランスに
+     要件①: Collectionの見出し〜フローの間隔をLookbookと同じバランスに
+     基準はLookbook側（Lookbookの間隔はそのまま、CollectionをLookbookに合わせる）
      ========================================================= */
   #collection .section-title,
   #lookbook .section-title {
@@ -625,19 +627,22 @@
     margin-bottom: 1rem;
   }
   
-  /* PC表示: Collection と Lookbook のタイトル〜フロー間隔を統一 */
-  @media (min-width: 1025px) {
-    #collection .section-title,
-    #lookbook .section-title {
-      margin-bottom: clamp(1rem, 2vw, 1.5rem);
-    }
-    
-    /* Collection と Lookbook のパネル上端までの余白を統一 */
-    #collection .band,
-    #collection .collection-wrapper,
-    #lookbook .lookbook-wrapper.lookbook-panel {
-      margin-top: 0;
-    }
+  /* Collection と Lookbook のタイトル〜フロー間隔を統一（PC/スマホ共通） */
+  #collection .section-title,
+  #lookbook .section-title {
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  }
+  
+  /* Collection と Lookbook のパネル上端までの余白を統一 */
+  #collection .band,
+  #collection .collection-wrapper,
+  #lookbook .lookbook-wrapper.lookbook-panel {
+    margin-top: 0;
+  }
+  
+  /* Collection wrapperの余白をLookbookと統一 */
+  #collection .collection-wrapper {
+    margin-top: 0;
   }
   
   /* スマホ版の画像サイズ調整 - Lookbookはより遅く */
@@ -1073,49 +1078,45 @@
      Collection画像サイズ統一: すべてのアイテムを同じサイズに
      ========================================================= */
   /* =========================================================
-     Collection画像サイズ統一: 全画像を同じカードサイズに
-     PC表示では固定の高さとアスペクト比で統一し、
-     画像はobject-fit: coverでカード内にフィットさせる
+     Collection画像サイズ統一: 全画像を同じ高さに統一
+     要件②: object-fit: containをベースに、高さ320px相当に統一
+     画像の全体が見えることを優先し、トリミングは極力行わない
      ========================================================= */
   @media (min-width: 1025px) {
     /* .collection-item クラスがないため、.collection-track a に対してスタイルを適用 */
-    /* 1.JPG/3.JPG/4.JPGを含む全画像を同じサイズに統一 */
+    /* 1.JPG/3.JPG/4.JPGを含む全画像を同じ高さに統一 */
     #collection .collection-track a {
       flex: 0 0 auto !important;
       height: var(--collection-img-h, 320px) !important;
       width: auto !important;
-      aspect-ratio: 3 / 4 !important;
-      border-radius: 0 !important;
-      overflow: hidden !important;
-      background: transparent !important;
       display: block !important;
       position: relative !important;
+      overflow: visible !important;
     }
 
-    /* 画像は親の<a>タグのサイズに合わせてカード内にフィット */
+    /* 画像はcontainで全体が見えるようにし、高さを統一 */
     #collection .collection-item img,
     #collection .collection-track img,
     #collection .collection-track a img,
-    #collection .collection-track a picture,
     #collection .collection-track a picture img,
     #collection .collection-track picture img {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important; /* カードサイズを統一: 画像をトリミングしてカード内に収める */
+      width: auto !important;
+      height: var(--collection-img-h, 320px) !important;
+      max-height: var(--collection-img-h, 320px) !important;
+      object-fit: contain !important; /* 画像の全体が見えることを優先 */
+      object-position: center !important;
       display: block !important;
       opacity: 1 !important;
       visibility: visible !important;
       flex-shrink: 0 !important;
       flex-grow: 0 !important;
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
+      position: relative !important;
     }
     
     /* pictureタグも親のサイズに合わせる */
     #collection .collection-track a picture {
-      width: 100% !important;
-      height: 100% !important;
+      width: auto !important;
+      height: var(--collection-img-h, 320px) !important;
       display: block !important;
       position: relative !important;
     }
@@ -2992,10 +2993,17 @@ body.splash-active #splash-video-wrapper::after {
     padding-inline: clamp(16px, 3.2vw, 40px);
   }
 
-  /* 画像フロー全体を中央寄せ */
+  /* 要件③: 画像フロー全体を横幅いっぱいに表示 */
   #collection .collection-panel .collection-wrapper {
-    max-width: 1180px;
-    margin: 0 auto;
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  
+  /* Collection trackも横幅いっぱいに広がるように */
+  #collection .collection-track {
+    width: 100%;
+    max-width: none;
   }
 }
 
