@@ -169,13 +169,11 @@
     color: white !important;
     font-size: 2rem;
     text-align: center;
-    margin-bottom: 2rem !important; /* スマホ表示で間隔を調整 */
+    /* margin-bottomは631行目で統一設定（Brands/Lookbookと統一） */
   }
   
-  /* Collectionセクションのタイトルとコンテンツの間隔を確実に確保 */
-  #collection .section-title {
-    margin-bottom: 2rem !important; /* スマホ表示で間隔を調整 */
-  }
+  /* Collectionセクションのタイトルとコンテンツの間隔をBrands/Lookbookと統一 */
+  /* margin-bottomは631行目で統一設定 */
   
   /* スマホ表示でCollectionタイトルと画像フローの間隔を調整 */
   /* 要件①: Collectionの見出し〜フローの間隔をLookbookと同じバランスに */
@@ -1609,7 +1607,7 @@ html body #lookbook .lookbook-track[data-speed],
   #collection .collection-wrapper {
     position: relative;
     min-height: auto; /* フロー以外に背景が伸びすぎないように */
-    margin-top: 4rem !important; /* PC表示で適切な間隔 */
+    margin-top: 0 !important; /* Brands/Lookbookと統一 */
   }
   
   /* Collection行: 背景は .collection-panel が担当するため、行自体は透明 */
@@ -2426,7 +2424,7 @@ div.copyright {
 /* Collection wrapper - より具体的なセレクタで確実に適用 */
 #collection .collection-wrapper,
 .collection-wrapper {
-  margin-top: 8rem !important; /* Collection文字との間隔を大幅に拡大 */
+  margin-top: 0 !important; /* Collection文字との間隔をBrands/Lookbookと統一 */
 }
 
 .collection-row {
