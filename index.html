@@ -1272,14 +1272,18 @@
         splash.style.background = '#ffffff';
         splash.style.setProperty('background', '#ffffff', 'important');
         splash.style.setProperty('background-color', '#ffffff', 'important');
+        splash.style.setProperty('background-image', 'none', 'important');
         // body要素の背景の影響を受けないようにする
         document.body.style.backgroundColor = '#ffffff';
+        // html要素の背景も白にする（念のため）
+        document.documentElement.style.backgroundColor = '#ffffff';
       }
       if (video) {
         video.style.backgroundColor = '#ffffff';
         video.style.background = '#ffffff';
         video.style.setProperty('background', '#ffffff', 'important');
         video.style.setProperty('background-color', '#ffffff', 'important');
+        video.style.setProperty('background-image', 'none', 'important');
       }
       
       // body要素にクラスを追加してスプラッシュ表示中であることを示す
