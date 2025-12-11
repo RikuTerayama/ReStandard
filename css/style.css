@@ -2792,8 +2792,21 @@ body.splash-active #splash-video-wrapper::after {
   background-color: #ffffff !important;
 }
 
+/* スプラッシュ動画の背景を常に白にする（黒い線を防ぐ） */
+#splash-video-wrapper {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+/* 動画要素の背景を確実に白にする（object-fit: containの余白部分も白にする） */
 #splash-video {
   background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+#splash-video {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
   width: 100% !important;
   height: 100% !important;
   max-width: 100vw !important;
@@ -2804,6 +2817,19 @@ body.splash-active #splash-video-wrapper::after {
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
   transition: opacity 1.4s cubic-bezier(0.4, 0.0, 0.2, 1), transform 1.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* スプラッシュ動画の疑似要素も白背景にする（黒い線を防ぐ） */
+#splash-video::before,
+#splash-video::after {
+  content: none !important;
+}
+
+/* スプラッシュ動画ラッパーの疑似要素も確実に白にする */
+#splash-video-wrapper::before,
+#splash-video-wrapper::after {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 .splash-transition-layer {
