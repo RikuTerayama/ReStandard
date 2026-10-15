@@ -1,0 +1,128 @@
+/* Shared layout. The data attribute scopes these rules to the new controller.
+   Specificity intentionally supersedes legacy rules in style.css. */
+html body :is(#collection, #lookbook) {
+  --product-height: clamp(160px, 24vw, 300px);
+  --product-gap: clamp(12px, 2vw, 24px);
+}
+html body #lookbook { --product-height: clamp(230px, 36vw, 400px); }
+
+html body #collection .band,
+html body #collection .collection-panel,
+html body #lookbook .lookbook-wrapper.lookbook-panel {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
+}
+html body #collection .collection-panel,
+html body #lookbook .lookbook-wrapper.lookbook-panel {
+  padding: clamp(16px, 3vw, 32px) 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  min-block-size: 0 !important;
+  overflow: hidden !important;
+}
+html body #collection .collection-row,
+html body #lookbook .lookbook-container {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  min-block-size: 0 !important;
+  padding: 4px 0 !important;
+  margin-inline: 0 !important;
+  overflow: auto hidden !important;
+  scrollbar-width: none;
+}
+html body #collection .collection-row + .collection-row { margin-top: var(--product-gap) !important; }
+html body :is(#collection, #lookbook) [data-marquee-viewport] {
+  overflow: hidden !important;
+  overflow: clip !important;
+}
+
+html body :is(#collection, #lookbook) [data-product-marquee][data-direction] {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: max-content !important;
+  max-width: none !important;
+  height: var(--product-height) !important;
+  block-size: var(--product-height) !important;
+  min-height: 0 !important;
+  min-block-size: 0 !important;
+  max-height: none !important;
+  gap: var(--product-gap) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  position: relative !important;
+  inset: auto !important;
+  overflow: visible !important;
+  animation: none !important;
+  transition: none !important;
+  touch-action: pan-y pinch-zoom !important;
+  cursor: grab !important;
+  will-change: transform !important;
+}
+html body :is(#collection, #lookbook) [data-product-marquee][data-direction][data-marquee-ready] { gap: 0 !important; }
+html body :is(#collection, #lookbook) [data-product-marquee][data-direction].is-dragging { cursor: grabbing !important; }
+.marquee-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--product-gap);
+  padding-right: var(--product-gap);
+  width: max-content;
+  box-sizing: content-box;
+}
+html body :is(#collection, #lookbook) [data-product-marquee][data-direction] a {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: min(calc(var(--product-height) * var(--image-ratio, 0.75)), 78vw) !important;
+  inline-size: min(calc(var(--product-height) * var(--image-ratio, 0.75)), 78vw) !important;
+  height: var(--product-height) !important;
+  block-size: var(--product-height) !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  cursor: inherit;
+}
+html body :is(#collection, #lookbook) [data-product-marquee][data-direction] img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  inline-size: 100% !important;
+  block-size: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none;
+}
+html body :is(#collection, #lookbook) [data-product-marquee][data-direction] a:focus-visible {
+  outline: 3px solid #393329;
+  outline-offset: -3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html body :is(#collection, #lookbook) [data-marquee-viewport] { overflow: auto hidden !important; }
+  html body :is(#collection, #lookbook) [data-product-marquee][data-direction] {
+    transform: none !important;
+    will-change: auto !important;
+    touch-action: auto !important;
+  }
+  [data-marquee-clone] { display: none !important; }
+}

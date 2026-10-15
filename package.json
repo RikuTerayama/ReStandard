@@ -14,6 +14,8 @@
   },
   "scripts": {
     "build": "node scripts/build-news-pages.mjs",
+    "render:products": "node scripts/render-product-sections.cjs",
+    "test:marquee": "node scripts/test-product-marquee.cjs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:html": "npx html-validate *.html news/**/*.html",
     "lint:html:fix": "npx html-validate *.html news/**/*.html --fix",
@@ -28,6 +30,7 @@
   "license": "ISC",
   "devDependencies": {
     "html-validate": "^10.3.0",
-    "jsdom": "^27.1.0"
+    "jsdom": "^27.1.0",
+    "playwright": "^1.62.1"
   }
 }
