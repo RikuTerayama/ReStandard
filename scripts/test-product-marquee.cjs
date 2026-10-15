@@ -21,6 +21,73 @@ const server = http.createServer((req,res) => {
   fs.readFile(file,(error,data)=>{if(error){res.writeHead(404).end();return;}res.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');res.end(data);});
 });
 let browser;
+async function testMobileTouch(browser, url) {
+  // Use a separate mobile session with real compositor timing. Mouse events and
+  // the deterministic animation clock above cannot reproduce native touch input.
+  const mobile = await browser.newPage({viewport:{width:375,height:812},hasTouch:true,isMobile:true,deviceScaleFactor:3});
+  await mobile.goto(url,{waitUntil:'load'});
+  await mobile.evaluate(()=>{
+    window.clicked=[];
+    document.addEventListener('click',event=>{
+      const a=event.target.closest('a');
+      if(a){window.clicked.push({href:a.href,prevented:event.defaultPrevented});event.preventDefault();}
+    });
+  });
+  const touch = await mobile.context().newCDPSession(mobile);
+  const position = track=>track.evaluate(t=>new DOMMatrix(getComputedStyle(t).transform).m41);
+  for (const index of [0,1,2]) {
+    const track=mobile.locator('[data-product-marquee]').nth(index);
+    await track.locator('..').scrollIntoViewIfNeeded();
+    for(const delta of [-120,120]) {
+      const box=await track.boundingBox();
+      const start={x:delta<0?260:100,y:box.y+box.height/2};
+      const before=await position(track);
+      await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...start,id:0}]});
+      for(const fraction of [0.2,0.4,0.7,1]) {
+        await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:start.x+delta*fraction,y:start.y,id:0}]});
+        await mobile.waitForTimeout(30);
+      }
+      assert(await track.evaluate(t=>t.classList.contains('is-dragging')),'Touch remains active after capture transfers from image to track');
+      const after=await position(track);
+      const width=await track.evaluate(t=>t.firstElementChild.getBoundingClientRect().width);
+      const error=((after-before-delta+width/2)%width+width)%width-width/2;
+      assert(Math.abs(error)<6,`All rows follow the full swipe in both directions: ${error}`);
+      await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+      assert(!(await track.evaluate(t=>t.classList.contains('is-dragging'))));
+      const released=await position(track);await mobile.waitForTimeout(150);
+      assert.notEqual(await position(track),released,'Automatic movement resumes after a swipe');
+    }
+    assert.equal(await mobile.evaluate(()=>window.clicked.length),0,'Swiping must not open a product');
+    const target=await track.locator('a').evaluateAll(as=>{
+      const a=as.find(a=>{const r=a.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;});
+      const r=a.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,href:a.href};
+    });
+    await mobile.touchscreen.tap(target.x,target.y);
+    await mobile.waitForFunction(()=>window.clicked.length>0,null,{timeout:2000});
+    assert.deepEqual(await mobile.evaluate(()=>window.clicked.pop()),{href:target.href,prevented:false},'A tap after swiping still opens the correct product');
+    const box=await track.boundingBox(), y=box.y+box.height/2;
+    await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:260,y,id:0}]});
+    await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:160,y,id:0}]});
+    await mobile.waitForTimeout(30);
+    await touch.send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]});
+    assert(!(await track.evaluate(t=>t.classList.contains('is-dragging'))),'Touch cancellation releases the row');
+    const cancelled=await position(track);await mobile.waitForTimeout(150);
+    assert.notEqual(await position(track),cancelled,'Automatic movement resumes after cancellation');
+  }
+  await mobile.locator('[data-product-marquee]').first().locator('..').scrollIntoViewIfNeeded();
+  await mobile.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+  const beforeY=await mobile.evaluate(()=>scrollY+document.body.scrollTop);
+  const box=await mobile.locator('[data-product-marquee]').first().boundingBox();
+  const y=box.y+box.height/2;
+  await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:180,y,id:0}]});
+  for(const dy of [20,50,90]){
+    await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:180,y:y-dy,id:0}]});
+    await mobile.waitForTimeout(30);
+  }
+  await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+  await mobile.waitForFunction(before=>scrollY+document.body.scrollTop>before+10,beforeY,{timeout:2000}).catch(async error=>{console.log({beforeY,y,state:await mobile.evaluate(()=>({scrollY,bodyScroll:document.body.scrollTop,docHeight:document.documentElement.scrollHeight,bodyHeight:document.body.scrollHeight,bodyClient:document.body.clientHeight}))});throw error;});
+  await mobile.close();
+}
 async function main() {
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const url = `http://127.0.0.1:${server.address().port}/`;
@@ -55,7 +122,7 @@ async function main() {
     for(const g of await geometry()){
       assert.equal(g.animation,'none');
       assert(Math.abs(g.width-g.distance)<0.5,'Repeated groups must include the trailing gap');
-      assert(g.coverage>=-0.5 && g.left<=0.5,'Viewport must stay covered');
+      assert(g.coverage>=-0.5 && g.left<=0.5,`Viewport must stay covered at ${width}: ${JSON.stringify(g)}`);
       assert(g.images.every(i=>i.loaded&&i.width>0&&i.width<=width&&Math.abs(i.height-g.height)<0.5&&i.fit==='contain'),'All images visible without distortion');
     }
     const panel=await page.locator('#lookbook .lookbook-panel').evaluate(el=>({height:el.getBoundingClientRect().height,content:el.firstElementChild.getBoundingClientRect().height,padding:parseFloat(getComputedStyle(el).paddingTop)+parseFloat(getComputedStyle(el).paddingBottom)}));
@@ -80,6 +147,7 @@ async function main() {
   }
   assert(wraps>=2,'At least two complete loops exercised');
   await page.setViewportSize({width:375,height:900});await page.waitForTimeout(50);await advance(100);
+  await testMobileTouch(browser, url);
   for(const index of [0,1,2]){
     const track=page.locator('[data-product-marquee]').nth(index);
     await track.scrollIntoViewIfNeeded();
@@ -108,6 +176,7 @@ async function main() {
     const r=a.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,href:a.href};
   });
   await page.touchscreen.tap(target.x,target.y);
+  await page.waitForFunction(()=>window.clicked.length>0,null,{polling:20,timeout:2000});
   assert.deepEqual(await page.evaluate(()=>window.clicked.pop()),{href:target.href,prevented:false});
   // Simulate returning from browser history and changing motion preference.
   await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));
@@ -132,6 +201,6 @@ async function main() {
   assert.equal(await noJS.locator('[data-product-marquee] a').count(),32);
   await noJS.close();
   assert.deepEqual(errors,[]);
-  console.log('PASS: 8 widths, all 32 product mappings, 2+ cycles, drag/release/cancel, touch link, pageshow, reduced motion, failed images, no-JS fallback.');
+  console.log('PASS: 8 widths, all 32 product mappings, 2+ cycles, real touch swipes on all rows, drag/release/cancel, touch link, pageshow, reduced motion, failed images, no-JS fallback.');
 }
 main().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{await browser?.close();server.close();});

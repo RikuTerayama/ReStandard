@@ -118,8 +118,14 @@
       drag.lastX = event.clientX;
       paint(row);
     });
-    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => {
+    ['pointerup', 'pointercancel'].forEach(type => {
       window.addEventListener(type, event => finishDrag(row, event));
+    });
+    track.addEventListener('lostpointercapture', event => {
+      // Touch initially captures the image/link. Transferring capture to this
+      // track fires a bubbling lostpointercapture from that child; it does not
+      // mean the gesture ended. Only release when the track itself loses it.
+      if (event.target === track) finishDrag(row, event);
     });
     track.addEventListener('click', event => {
       if (row.suppressClick && event.detail !== 0) {
