@@ -14,6 +14,14 @@
   },
   "scripts": {
     "build": "node scripts/build-news-pages.mjs",
+    "build:catalog": "node scripts/build-catalog.cjs",
+    "build:catalog:site": "node scripts/build-catalog-site.cjs",
+    "sync:public": "python scripts/sync-public-catalog.py && node scripts/prepare-public-catalog.cjs",
+    "validate:catalog": "node scripts/validate-public-catalog.cjs",
+    "preview:catalog": "node scripts/preview-catalog.cjs",
+    "sync:catalog": "node scripts/sync-catalog.cjs",
+    "test:catalog": "node --test scripts/test-catalog.cjs",
+    "test:catalog:browser": "node scripts/test-catalog-browser.cjs",
     "render:products": "node scripts/render-product-sections.cjs",
     "test:marquee": "node scripts/test-product-marquee.cjs",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,7 +31,8 @@
     "check:headings": "node scripts/check-headings.mjs",
     "check:seo-markup": "node scripts/check-seo-markup.mjs",
     "check:url-seo": "node scripts/check-url-seo.mjs",
-    "check:duplicate": "node scripts/check-duplicate-content.mjs"
+    "check:duplicate": "node scripts/check-duplicate-content.mjs",
+    "test:editorial": "node scripts/test-editorial.cjs"
   },
   "keywords": [],
   "author": "",

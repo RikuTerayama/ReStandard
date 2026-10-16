@@ -1,9 +1,13 @@
 [build]
-  publish = "."
-  command = "echo 'Static site - no build needed'"
+  publish = ".catalog-dist"
+  command = "npm run build:catalog:site"
 
-# リダイレクト設定は _redirects ファイルで管理（netlify.tomlより優先）
-# 静的ファイル（CSS/JS/画像など）は自動的に提供されるため、SPAフォールバックから除外される
+[functions]
+  directory = "_infra/catalog-functions"
+  node_bundler = "esbuild"
+
+# 商品ルートはFunction、既存ページは静的ファイルで提供する。
+# 公開用 _redirects にSPAフォールバックを含めず、不明なURLは404にする。
 
 # Netlify Image CDNの強キャッシュ設定
 [[headers]]

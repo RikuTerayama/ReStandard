@@ -10,8 +10,8 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'assets/base-products.json'), 'utf8'));
 const sections = ['collection','lookbook'].map(id => html.match(new RegExp(`<section id="${id}">[\\s\\S]*?<\\/section>`))[0]).join('\n');
 const fixture = `<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/lookbook-override.css"><link rel="stylesheet" href="/css/product-marquee.css">
-${sections}<script src="/js/product-marquee.js" defer></script>`;
+<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/lookbook-override.css"><link rel="stylesheet" href="/css/product-marquee.css"><link rel="stylesheet" href="/css/editorial.css">
+<body class="rs-editorial rs-home">${sections}<script src="/js/product-marquee.js" defer></script></body>`;
 const types = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.webp':'image/webp'};
 const server = http.createServer((req,res) => {
   const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);

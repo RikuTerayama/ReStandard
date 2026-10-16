@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.catalog-private/
+.catalog-preview/
+.catalog-dist/
+test-results/
+
