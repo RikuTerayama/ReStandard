@@ -36,7 +36,9 @@
     "test:language": "node scripts/test-language.cjs",
     "test:refinements": "node scripts/test-refinements.cjs",
     "render:lookbook": "node scripts/build-lookbook.cjs",
-    "sync:shell": "node scripts/sync-site-shell.cjs"
+    "sync:shell": "node scripts/sync-site-shell.cjs",
+    "test:header": "node scripts/test-header.cjs",
+    "test:cursor": "node scripts/test-cursor.cjs"
   },
   "keywords": [],
   "author": "",

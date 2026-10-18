@@ -1,0 +1,10 @@
+/* Shared action cursor. Keep text entry, zooming and active dragging meaningful. */
+@media (hover:hover) and (pointer:fine){
+ :root{--rs-action-cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='8' fill='%23333' fill-opacity='.7'/%3E%3C/svg%3E") 16 16,pointer}
+ html body :is(a[href],button,summary,[role="button"],.internal-link),html body .site-header .rs-nav :is(a[href],button,summary){cursor:var(--rs-action-cursor)!important}
+ html body :is(a[href],button,summary,[role="button"]) :is(span,img,svg){cursor:inherit!important}
+ html body a.gallery-slide,html body a.gallery-slide img{cursor:zoom-in!important}
+ html body [data-product-marquee].is-dragging :is(a,img){cursor:grabbing!important}
+ html body :is(button:disabled,[aria-disabled="true"]){cursor:not-allowed!important}
+}
+@media (hover:hover) and (pointer:fine){html body .site-header .rs-nav :is(button:disabled,[aria-disabled="true"]){cursor:not-allowed!important}}

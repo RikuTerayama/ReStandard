@@ -1,7 +1,7 @@
 /* Local, reviewed English copy. No visitor data is sent to a translation service. */
 (() => {
   'use strict';
-  const key = 'rs-lang', version = '20261018-2';
+  const key = 'rs-lang', version = '20261018-3';
   const japanese = /[\u3040-\u30ff\u3400-\u9fff]/;
   const norm = s => s.replace(/\s+/g, ' ').trim();
   const originals = new WeakMap();
@@ -57,7 +57,7 @@
     document.querySelectorAll('[data-lang-btn]').forEach(btn => {
       const active = btn.dataset.langBtn === language;
       btn.classList.toggle('active', active); btn.setAttribute('aria-pressed', String(active));
-      btn.closest('.language-switcher')?.removeAttribute('hidden');
+      btn.closest('.language-switcher,.rs-language')?.removeAttribute('hidden');
     });
     document.querySelectorAll('a[href]').forEach(a => {
       const raw = a.getAttribute('href');
@@ -115,7 +115,7 @@
     if (initialized) return;
     initialized = true;
     const status = document.createElement('p'); status.id='language-status'; status.className='language-status'; status.setAttribute('role','status'); status.setAttribute('translate','no'); document.body.append(status);
-    document.querySelectorAll('.language-switcher').forEach(el=>{el.removeAttribute('hidden');el.setAttribute('role','group');el.setAttribute('aria-label','Language / 言語');});
+    document.querySelectorAll('.language-switcher,.rs-language').forEach(el=>{el.removeAttribute('hidden');el.setAttribute('role','group');el.setAttribute('aria-label','Language / 言語');});
     document.querySelectorAll('[data-lang-btn]').forEach(btn=>btn.addEventListener('click',()=>setLang(btn.dataset.langBtn)));
     observer = new MutationObserver(()=>render());
     const query = new URLSearchParams(location.search).get('lang');

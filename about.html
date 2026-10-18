@@ -228,10 +228,7 @@
     a, .internal-link {
       cursor: pointer;
     }
-    a:hover, .internal-link:hover {
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="8" fill="%23333" fill-opacity="0.7"/></svg>') 16 16, pointer;
-    }
-  </style>
+</style>
   <!-- フッター関連の設定はcss/style.cssで統一管理（全ページ共通） -->
 
 
@@ -248,10 +245,11 @@
 
 
 <link rel="stylesheet" href="/css/editorial.css?v=20261016-1">
-<script src="/js/editorial.js?v=20261018-2" defer></script>
+<script src="/js/editorial.js?v=20261018-3" defer></script>
 <link rel="stylesheet" href="/css/language.css?v=20261018-2">
-<script src="/js/lang-toggle.js?v=20261018-2" defer></script>
-<link rel="stylesheet" href="/css/site-shell.css?v=20261018-2">
+<script src="/js/lang-toggle.js?v=20261018-3" defer></script>
+<link rel="stylesheet" href="/css/site-shell.css?v=20261018-3">
+<link rel="stylesheet" href="/css/cursor.css?v=20261018-1">
 </head>
 <body class="rs-editorial rs-inner">
 <!-- Mobile版背景動画 -->
@@ -288,17 +286,7 @@
 
 
 <!-- ナビゲーションバー -->
-<header class="site-header">
-  <nav class="navbar rs-nav" aria-label="メインナビゲーション"><div class="container-fluid"><a class="navbar-brand" href="/">ReStandard</a><button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="メニューを開く">Menu <span aria-hidden="true">＋</span></button><div class="navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
-<li class="nav-item"><a class="nav-link" href="/products/">Products</a></li>
-<li class="nav-item"><a class="nav-link" href="/lookbook.html">Lookbook</a></li>
-<li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
-<li class="nav-item"><a class="nav-link" href="/vision.html">Vision</a></li>
-<li class="nav-item"><a class="nav-link" href="/news.html">News</a></li>
-<li class="nav-item"><a class="nav-link" href="/location.html">Location</a></li>
-<li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
-<li class="nav-item"><a class="nav-link" href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store</a></li></ul><div class="language-switcher"><button data-lang-btn="ja" class="active" type="button">JA</button><button data-lang-btn="en" type="button">EN</button></div></div></div></nav>
-  </header>
+<header class="site-header"><nav class="rs-nav" aria-label="メインナビゲーション"><div class="rs-header-inner"><a class="rs-brand" href="/">ReStandard</a><button class="rs-menu-toggle" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="メニューを開く">Menu <span aria-hidden="true">＋</span></button><div class="rs-menu" id="navbarNav"><ul class="rs-nav-list"><li><details class="rs-nav-group"><summary>Collection <span aria-hidden="true">＋</span></summary><ul class="rs-subnav"><li><a href="/#brands">Brands</a></li><li><a href="/products/">Products</a></li><li><a href="/lookbook.html">Lookbook</a></li></ul></details></li><li><details class="rs-nav-group"><summary>About <span aria-hidden="true">＋</span></summary><ul class="rs-subnav"><li><a href="/about.html">About ReStandard</a></li><li><a href="/vision.html">Vision</a></li><li><a href="/location.html">Location</a></li></ul></details></li><li><a class="rs-primary-link" href="/news.html">News</a></li><li><a class="rs-primary-link" href="/contact.html">Contact</a></li><li class="rs-mobile-store"><a href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store ↗</a></li></ul></div><div class="rs-header-tools"><a class="rs-store-link" href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store <span aria-hidden="true">↗</span></a><div class="rs-language"><button data-lang-btn="ja" class="active" type="button">JA</button><button data-lang-btn="en" type="button">EN</button></div></div></div></nav></header>
 
 <main>
 <section class="about-section mb-5">
