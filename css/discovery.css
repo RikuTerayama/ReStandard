@@ -1,0 +1,73 @@
+/* Shared editorial additions: the same quiet spacing across static and catalogue pages. */
+html{scroll-padding-top:104px}
+.discovery-actions,.wholesale-actions{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:28px}
+.discovery-actions a,.wholesale-actions a,.brand-enquiry>a{display:inline-block;padding:8px 0;border-bottom:1px solid #aaa99f;text-decoration:none;font-size:12px;line-height:1.8}
+html body .wholesale-guide{max-width:1120px;margin:0 auto 64px;padding:0 0 50px;border-bottom:1px solid #deded7;text-align:left!important}
+html body .wholesale-guide .eyebrow{font-size:10px!important;letter-spacing:.15em!important;margin:0 0 16px!important}
+html body .wholesale-guide h2{font-size:clamp(26px,3vw,40px)!important;font-weight:400!important;line-height:1.4!important;margin:0 0 24px!important;text-align:left!important}
+html body .wholesale-guide>p{max-width:48em;font-size:14px!important;line-height:2!important;margin:0 0 16px!important}
+html body .wholesale-guide .wholesale-lead{font-size:20px!important}
+html body .wholesale-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin:42px 0 24px}
+html body .wholesale-steps article{border-top:1px solid #deded7;padding-top:18px}
+html body .wholesale-steps span{font:400 10px/1.6 Arial,sans-serif;letter-spacing:.1em;color:#6a6a63}
+html body .wholesale-steps h3{font-size:16px!important;line-height:1.7!important;font-weight:400!important;margin:18px 0 12px!important}
+html body .wholesale-steps p,html body .wholesale-questions p{font-size:13px!important;line-height:1.9!important;margin:0!important}
+html body .wholesale-questions{margin-top:42px;max-width:800px}
+html body .wholesale-questions details{padding:16px 0;border-top:1px solid #deded7}
+html body .wholesale-questions summary{font-size:14px;cursor:pointer;line-height:1.8}
+html body .wholesale-questions details p{padding:16px 0 0;color:#62625d}
+html body .contact-embed{text-align:left!important;min-height:160px}
+html body.rs-editorial .contact-section>#enquiry-form{width:100%!important;max-width:820px!important;margin-inline:auto!important}
+html body .contact-embed [data-form-status],html body .contact-embed .form-fallback{font-size:12px!important;line-height:1.8!important;color:#62625d}
+html body .contact-embed button{background:transparent;border:1px solid #aaa99f;padding:12px 20px;font:inherit;color:inherit;cursor:pointer}
+html body .contact-embed iframe{display:block;min-width:0;max-width:100%}
+html body .contact-embed [hidden]{display:none!important}
+.brand-intro{display:grid;grid-template-columns:minmax(180px,.65fr) minmax(0,1.35fr);gap:clamp(32px,6vw,90px);align-items:center;padding:35px 0 65px;max-width:1200px;margin:0 auto}
+.brand-intro-logo{background:#fff;padding:35px;display:grid;place-items:center;min-height:260px}
+.brand-intro-logo img{display:block;width:100%;max-width:280px;height:180px;object-fit:contain}
+.brand-intro h1{font-size:clamp(30px,4vw,54px);font-weight:400;line-height:1.2;letter-spacing:-.025em;margin:15px 0 24px}
+.brand-description{font-size:15px;line-height:2;max-width:42em;color:#55554f}
+.brand-references{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:26px;font-size:11px;color:#66665f}
+.brand-references a{text-underline-offset:4px}
+.brand-selection-heading{border-top:1px solid #deded7;padding:35px 0 20px;scroll-margin-top:105px}
+.brand-selection-heading h2,.brand-enquiry h2{font-size:22px;font-weight:400;margin:0 0 16px}
+.brand-selection-heading p,.brand-enquiry p{font-size:13px;line-height:1.9;color:#66665f;max-width:48em}
+.brand-enquiry{margin:55px 0 35px;border-block:1px solid #deded7;padding:35px 0;display:flex;align-items:center;justify-content:space-between;gap:26px}
+.brand-enquiry>a{flex-shrink:0}
+.brand-directory{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:42px 30px;margin-bottom:80px}
+.brand-directory>a{display:block;text-decoration:none}
+.brand-directory-logo{background:#fff;display:grid;place-items:center;height:200px;margin-bottom:20px;padding:30px}
+.brand-directory-logo img{width:100%;max-width:240px;height:140px;object-fit:contain}
+.brand-directory .eyebrow{font-size:10px;margin-bottom:8px;color:#66665f}
+.brand-directory-name{display:flex;justify-content:space-between;gap:12px;font-size:19px}
+.brand-directory-status{font-size:11px;color:#66665f;margin-top:10px}
+.brand-directory a:hover .brand-directory-name{text-decoration:underline;text-underline-offset:5px}
+html body.rs-home .brand-section-link{padding:0 var(--rs-gutter);margin:-15px 0 28px;font-size:12px}
+html body.rs-home .marquee-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px 28px;padding:0 var(--rs-gutter);margin:-12px 0 26px}
+html body.rs-home .marquee-toolbar p{font-size:13px!important;line-height:1.8!important;margin:0!important;color:#62625d}
+html body.rs-home .marquee-toolbar button{display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 0;border:0;border-bottom:1px solid #aaa99f;background:none;font:400 11px/1.7 Arial,"Yu Gothic",sans-serif;color:#1c1c1b;cursor:pointer}
+html body.rs-home .marquee-toolbar button[hidden]{display:none!important}
+html body.rs-home .marquee-toolbar button:disabled{max-width:100%;text-align:left;color:#66665f;border-color:transparent;cursor:default}
+html body.rs-home .intro-theme{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:14px}
+html body.rs-home .intro-theme p{font-size:12px!important;margin:0!important;line-height:1.7!important}
+html body.rs-home .intro-theme a{font-size:10px!important;line-height:1.7;text-underline-offset:4px;flex-shrink:0}
+.lookbook-theme-nav{display:flex;flex-wrap:wrap;gap:14px 32px;padding:0 0 35px;margin:0 0 35px;border-bottom:1px solid #deded7;font-size:13px}
+.lookbook-theme-nav a{text-decoration:none;padding:8px 0;border-bottom:1px solid #aaa99f}
+.lookbook-theme{scroll-margin-top:110px}
+.lookbook-theme-heading{max-width:1240px;margin:0 auto 30px}
+html[lang="en"] .lookbook-theme-heading>.eyebrow{display:none}
+.lookbook-theme-heading h2{font-size:clamp(24px,2.5vw,34px);font-weight:400;margin:10px 0 14px;line-height:1.5}
+.lookbook-theme-heading>p:last-child{font-size:13px;line-height:1.9;color:#62625d}
+html body.lookbook-page .lookbook-copy h3.look-item-label{margin-top:0}
+html body.lookbook-page .lookbook-copy h4.look-item-label{margin-top:18px}
+@media(max-width:760px){
+ html body .wholesale-steps{grid-template-columns:1fr;gap:26px;margin-top:30px}
+ html body .wholesale-guide{margin-bottom:40px;padding-bottom:30px}
+ html body .wholesale-actions{gap:12px 24px}
+ .brand-intro{grid-template-columns:1fr;gap:26px;padding:20px 0 35px}
+ .brand-intro-logo{min-height:170px;padding:20px}.brand-intro-logo img{height:130px;max-width:220px}
+ .brand-description{font-size:14px}.brand-enquiry{align-items:flex-start;flex-direction:column}
+ .brand-directory{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 18px}.brand-directory-logo{height:140px;padding:16px}.brand-directory-logo img{height:100px}.brand-directory-name{font-size:15px}
+ .lookbook-theme-nav{font-size:12px;gap:10px 20px}.lookbook-theme-heading{margin-bottom:22px}
+ html body.rs-home .intro-theme{flex-wrap:wrap;gap:5px 16px}
+}

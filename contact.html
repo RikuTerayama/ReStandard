@@ -101,27 +101,7 @@
   </script>
 
   <!-- 動画の構造化データ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "name": "ReStandard Contact - お問い合わせ",
-    "description": "ReStandardのお問い合わせページを紹介する動画です。商品に関するご相談、お打ち合わせのご予約など、お気軽にお問い合わせください。",
-    "thumbnailUrl": "https://restandard-2025.netlify.app/image/video-thumbnail.webp",
-    "uploadDate": "2025-01-20",
-    "duration": "PT30S",
-    "contentUrl": "https://restandard-2025.netlify.app/7.mp4",
-    "embedUrl": "https://restandard-2025.netlify.app/contact.html",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ReStandard",
-      "url": "https://restandard-2025.netlify.app"
-    },
-    "keywords": "ReStandard, お問い合わせ, ご相談, お打ち合わせ, 予約, アパレル卸",
-    "inLanguage": "ja",
-    "isAccessibleForFree": true
-  }
-  </script>
+  
 
 
   <style>
@@ -219,7 +199,9 @@
 <link rel="stylesheet" href="/css/editorial.css?v=20261016-1">
 <script src="/js/editorial.js?v=20261018-3" defer></script>
 <link rel="stylesheet" href="/css/language.css?v=20261018-2">
-<script src="/js/lang-toggle.js?v=20261018-3" defer></script>
+<script src="/js/lang-toggle.js?v=20261018-5" defer></script>
+<script src="/js/contact-embed.js?v=20261018-1" defer></script>
+<link rel="stylesheet" href="/css/discovery.css?v=20261018-1">
 <link rel="stylesheet" href="/css/site-shell.css?v=20261018-4">
 <link rel="stylesheet" href="/css/cursor.css?v=20261018-1">
 </head>
@@ -227,40 +209,14 @@
 
 
 <!-- Mobile版背景動画 -->
-<video 
-  id="mobile-bg-video" 
-  src="2.mp4" 
-  autoplay 
-  loop 
-  muted 
-  playsinline 
-  preload="metadata"
-  aria-label="ReStandardのContactを紹介するMobile用背景動画"
-  title="ReStandard Contact (Mobile)"
-  poster="image/video-thumbnail.webp"
-  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1; display:block; background:#000;">
-  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
-</video>
+
 
 <!-- PC版背景動画 -->
-<video 
-  id="desktop-bg-video" 
-  src="7.mp4" 
-  autoplay 
-  loop 
-  muted 
-  playsinline 
-  preload="metadata"
-  aria-label="ReStandardのContactを紹介するPC用背景動画"
-  title="ReStandard Contact (PC)"
-  poster="image/video-thumbnail.webp"
-  style="position:fixed; top:0; left:0; width:100vw; height:100vh; object-fit:cover; z-index:-1;">
-  <p>お使いのブラウザは動画の再生をサポートしていません。</p>
-</video>
+
 
 
 <!-- ナビゲーションバー -->
-<header class="site-header"><nav class="rs-nav" aria-label="メインナビゲーション"><div class="rs-header-inner"><a class="rs-brand" href="/">ReStandard</a><button class="rs-menu-toggle" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="メニューを開く">Menu <span aria-hidden="true">＋</span></button><div class="rs-menu" id="navbarNav"><ul class="rs-nav-list"><li><details class="rs-nav-group"><summary>Collection <span aria-hidden="true">＋</span></summary><ul class="rs-subnav"><li><a href="/#brands">Brands</a></li><li><a href="/products/">Products</a></li><li><a href="/lookbook.html">Lookbook</a></li></ul></details></li><li><details class="rs-nav-group"><summary>About <span aria-hidden="true">＋</span></summary><ul class="rs-subnav"><li><a href="/about.html">About ReStandard</a></li><li><a href="/vision.html">Vision</a></li><li><a href="/location.html">Location</a></li></ul></details></li><li><a class="rs-primary-link" href="/news.html">News</a></li><li><a class="rs-primary-link" href="/contact.html">Contact</a></li><li class="rs-mobile-store"><a href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store ↗</a></li></ul></div><div class="rs-header-tools"><a class="rs-store-link" href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store <span aria-hidden="true">↗</span></a><div class="rs-language"><button data-lang-btn="ja" class="active" type="button">JA</button><button data-lang-btn="en" type="button">EN</button></div></div></div></nav></header>
+<header class="site-header"><nav class="rs-nav" aria-label="メインナビゲーション"><div class="rs-header-inner"><a class="rs-brand" href="/">ReStandard</a><button class="rs-menu-toggle" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="メニューを開く">Menu <span aria-hidden="true">＋</span></button><div class="rs-menu" id="navbarNav"><ul class="rs-nav-list"><li><details class="rs-nav-group"><summary>Collection <span aria-hidden="true">＋</span></summary><ul class="rs-subnav"><li><a href="/brands/">Brands</a></li><li><a href="/products/">Products</a></li><li><a href="/lookbook.html">Lookbook</a></li></ul></details></li><li><details class="rs-nav-group"><summary>About <span aria-hidden="true">＋</span></summary><ul class="rs-subnav"><li><a href="/about.html">About ReStandard</a></li><li><a href="/contact.html#wholesale">Wholesale</a></li><li><a href="/vision.html">Vision</a></li><li><a href="/location.html">Location</a></li></ul></details></li><li><a class="rs-primary-link" href="/news.html">News</a></li><li><a class="rs-primary-link" href="/contact.html">Contact</a></li><li class="rs-mobile-store"><a href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store ↗</a></li></ul></div><div class="rs-header-tools"><a class="rs-store-link" href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store <span aria-hidden="true">↗</span></a><div class="rs-language"><button data-lang-btn="ja" class="active" type="button">JA</button><button data-lang-btn="en" type="button">EN</button></div></div></div></nav></header>
 
 <main>
 <section class="contact-section mb-5" role="region" aria-label="お問い合わせフォーム">
@@ -274,7 +230,8 @@
   </ol>
 </nav>
 <p class="text-center sr-only" style="max-width: 800px; margin: 20px auto; padding: 0 20px;">商品のお問い合わせや取引に関するご相談を承ります。お気軽にご連絡ください。お客様のご要望に寄り添い、最適なご提案をいたします。</p>
-  <div class="section-content">
+<section class="wholesale-guide" id="wholesale" aria-labelledby="wholesale-title"><p class="eyebrow">ReStandard / Wholesale</p><h2 id="wholesale-title">お取引について</h2><p class="wholesale-lead">お店に合うブランドを、ここから。</p><p>新規のお取引や取扱商品のご相談は、下記フォームよりお寄せください。気になるブランドや商品が決まっている場合は、あわせてお知らせください。</p><div class="wholesale-steps"><article><span>01 / CONTACT</span><h3>まずはお店について</h3><p>会社名・店舗名、所在地、店舗やオンラインショップのURLと、ご相談内容をお知らせください。</p></article><article><span>02 / COLLECTION</span><h3>商品・資料のご相談</h3><p>ご希望のブランド・商品・時期をご記入ください。カタログやサンプルをご希望の場合も、フォームでお知らせください。</p></article><article><span>03 / DETAILS</span><h3>ご注文前に条件を確認</h3><p>お取引価格、発注数量、納期、お支払い方法などは、ご注文前に個別にご確認ください。</p></article></div><div class="wholesale-actions"><a href="#enquiry-form">お取引の相談をする ↗</a><a href="/brands/">取扱ブランドを見る ↗</a></div><div class="wholesale-questions"><details><summary>取引条件を知りたい</summary><p>ご検討中のブランド・商品と、ご希望の数量や時期をお知らせください。条件はお問い合わせ時にご確認いただけます。</p></details><details><summary>カタログやサンプルを見たい</summary><p>フォームのお問い合わせ種別で「カタログ・サンプルについて」を選び、ご希望の商品をご記入ください。ご用意の可否はお問い合わせ時にご確認ください。</p></details><details><summary>個人で商品を購入したい</summary><p>個人のお客様のお買い物は、BASEオンラインストアをご利用ください。 <a href="https://restandard.base.ec/">Online Store ↗</a></p></details></div></section>
+  <div class="section-content" id="enquiry-form">
     <div class="container">
       <div class="about-section-box delay-1 contact-content">
         <div class="ja-content">
@@ -288,20 +245,9 @@
       </div>
       <div class="text-block delay-2">
         <div class="form-container">
-          <aside class="english-form-guide" lang="en" translate="no"><h3>Contact form — English guide</h3><p>The form below is provided by Jotform and its field labels are in Japanese. Please use this guide when completing it. Fields marked * are required.</p><dl><dt lang="ja">会社名・店舗名 *</dt><dd>Company / shop name *</dd><dt lang="ja">メールアドレス *</dt><dd>Email address *</dd><dt lang="ja">電話番号</dt><dd>Phone number (optional)</dd><dt lang="ja">お問い合わせ種別</dt><dd>Enquiry type (optional): wholesale / products / catalogues &amp; samples / other, in that order</dd><dt lang="ja">お問い合わせ内容 *</dt><dd>Your message *</dd><dt lang="ja">送信</dt><dd>Submit</dd></dl></aside><iframe
-            id="JotFormIFrame-252014412896455"
-            title="お問い合わせフォーム"
-            onload="window.parent.scrollTo(0,0)"
-            allowtransparency="true"
-            allow="geolocation; microphone; camera; fullscreen; payment"
-            src="https://form.jotform.com/252014412896455"
-            frameborder="0"
-            style="min-width:100%;max-width:100%;height:539px;border:none;"
-            scrolling="no"
-          >
-          </iframe>
-          <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
-          <script>window.jotformEmbedHandler?.("iframe[id='JotFormIFrame-252014412896455']", "https://form.jotform.com/")</script>
+          <aside class="english-form-guide" lang="en" translate="no"><h3>Contact form — English guide</h3><p>The form below is provided by Jotform and its field labels are in Japanese. Please use this guide when completing it. Fields marked * are required.</p><dl><dt lang="ja">会社名・店舗名 *</dt><dd>Company / shop name *</dd><dt lang="ja">メールアドレス *</dt><dd>Email address *</dd><dt lang="ja">電話番号</dt><dd>Phone number (optional)</dd><dt lang="ja">お問い合わせ種別</dt><dd>Enquiry type (optional): wholesale / products / catalogues &amp; samples / other, in that order</dd><dt lang="ja">お問い合わせ内容 *</dt><dd>Your message *</dd><dt lang="ja">送信</dt><dd>Submit</dd></dl></aside><div class="contact-embed" data-contact-embed><p data-form-status role="status">お問い合わせフォームは、この位置までスクロールすると読み込まれます。</p><button type="button" data-load-form hidden>フォームを読み込む</button><iframe id="JotFormIFrame-252014412896455" title="お問い合わせフォーム" data-src="https://form.jotform.com/252014412896455" hidden style="width:100%;height:640px;border:0" allow="fullscreen" ></iframe><p class="form-fallback"><a href="https://form.jotform.com/252014412896455" target="_blank" rel="noopener noreferrer">フォームを別のタブで開く ↗</a></p></div>
+          
+          
         </div>
       </div>
     </div>
@@ -359,72 +305,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </main>
 
   <!-- Footer -->
-<footer class="rs-footer site-footer"><a class="rs-wordmark" href="/">ReStandard</a><nav aria-label="フッターナビゲーション"><ul class="nav"><li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
+<footer class="rs-footer site-footer"><a class="rs-wordmark" href="/">ReStandard</a><nav aria-label="フッターナビゲーション"><ul class="nav"><li class="nav-item"><a class="nav-link" href="/brands/">Brands</a></li>
 <li class="nav-item"><a class="nav-link" href="/products/">Products</a></li>
 <li class="nav-item"><a class="nav-link" href="/lookbook.html">Lookbook</a></li>
 <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
 <li class="nav-item"><a class="nav-link" href="/vision.html">Vision</a></li>
 <li class="nav-item"><a class="nav-link" href="/news.html">News</a></li>
 <li class="nav-item"><a class="nav-link" href="/location.html">Location</a></li>
-<li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
+<li class="nav-item"><a class="nav-link" href="/contact.html#wholesale">Wholesale</a></li><li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
 <li class="nav-item"><a class="nav-link" href="https://restandard.base.ec/" target="_blank" rel="noopener noreferrer">Online Store</a></li></ul></nav><div class="rs-footer-bottom"><div><a href="https://www.instagram.com/restandard_jp" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://note.com/restandard_2025" target="_blank" rel="noopener noreferrer">note</a><a href="https://www.facebook.com/profile.php?id=61576965246853" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://x.com/restandard_2025" target="_blank" rel="noopener noreferrer">X</a><a href="/sitemap.html">Sitemap</a></div><p>© ReStandard</p></div></footer>
     
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/reveal.js?v=2025-01-18-final"></script>
 
-<script>
-// 背景動画の読み込みと再生を確実にする
-document.addEventListener('DOMContentLoaded', function() {
-  const desktopVideo = document.getElementById('desktop-bg-video');
-  const mobileVideo = document.getElementById('mobile-bg-video');
-  
-  // PC版動画の読み込みと再生
-  if (desktopVideo) {
-    desktopVideo.addEventListener('loadeddata', function() {
-      console.log('PC版背景動画が読み込まれました');
-      desktopVideo.play().catch(function(error) {
-        console.log('PC版動画の自動再生に失敗:', error);
-      });
-    });
-    
-    desktopVideo.addEventListener('error', function(e) {
-      console.error('PC版動画の読み込みエラー:', e);
-    });
-    
-    // 動画が再生されていない場合は再試行
-    setTimeout(function() {
-      if (desktopVideo.paused && window.innerWidth >= 901) {
-        desktopVideo.play().catch(function(error) {
-          console.log('PC版動画の再試行に失敗:', error);
-        });
-      }
-    }, 1000);
-  }
-  
-  // スマートフォン版動画の読み込みと再生
-  if (mobileVideo) {
-    mobileVideo.addEventListener('loadeddata', function() {
-      console.log('スマートフォン版背景動画が読み込まれました');
-      mobileVideo.play().catch(function(error) {
-        console.log('スマートフォン版動画の自動再生に失敗:', error);
-      });
-    });
-    
-    mobileVideo.addEventListener('error', function(e) {
-      console.error('スマートフォン版動画の読み込みエラー:', e);
-    });
-    
-    // 動画が再生されていない場合は再試行
-    setTimeout(function() {
-      if (mobileVideo.paused && window.innerWidth <= 900) {
-        mobileVideo.play().catch(function(error) {
-          console.log('スマートフォン版動画の再試行に失敗:', error);
-        });
-      }
-    }, 1000);
-  }
-});
-</script>
+
 
 <!-- lazy-load フェードイン処理 -->
 <script src="js/init-sections.js?v=2025-01-18-final" defer></script>

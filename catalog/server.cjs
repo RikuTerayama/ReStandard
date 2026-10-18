@@ -52,7 +52,7 @@ function createCatalogService({config=defaultConfig,load=()=>config.dataSource==
     }else if(parts.length===1){canonical=`/${parts[0]}/`;body=render.directoryPage(catalog,{...options,kind:parts[0]});}
     else{
       const brands=parts[0]==='brands',name=parts[1];
-      if(!render.visible(catalog).some(p=>brands?render.brandKey(p.brand)===render.brandKey(name):render.categoriesOf(p).includes(name)))return fail(404);
+      if(!(brands&&require('./brand-profiles.json').some(p=>p.name===render.brandKey(name)))&&!render.visible(catalog).some(p=>brands?render.brandKey(p.brand)===render.brandKey(name):render.categoriesOf(p).includes(name)))return fail(404);
       canonical=brands?render.brandPath(name):render.categoryPath(name);
       body=render.listPage(catalog,{...options,path:canonical,brand:brands?name:null,category:brands?null:name});
     }

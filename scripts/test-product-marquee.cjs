@@ -74,6 +74,20 @@ async function testMobileTouch(browser, url) {
     const cancelled=await position(track);await mobile.waitForTimeout(150);
     assert.notEqual(await position(track),cancelled,'Automatic movement resumes after cancellation');
   }
+  // A deliberate pause survives manual touch gestures and history restoration.
+  await mobile.locator('[data-marquee-toggle="collection"]').click();
+  await mobile.locator('[data-marquee-toggle="lookbook"]').click();
+  for (const index of [0,1,2]) {
+    const track=mobile.locator('[data-product-marquee]').nth(index);
+    await track.locator('..').scrollIntoViewIfNeeded();
+    const box=await track.boundingBox(),y=box.y+box.height/2,before=await position(track);
+    await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:250,y,id:0}]});
+    for(const x of [225,200,170,140])await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y,id:0}]});
+    await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+    const stopped=await position(track);assert.notEqual(stopped,before,'Paused rows can still be swiped');
+    await mobile.evaluate(()=>dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));
+    await mobile.waitForTimeout(200);assert.equal(await position(track),stopped,'Manual swipe and history return preserve user pause');
+  }
   await mobile.locator('[data-product-marquee]').first().locator('..').scrollIntoViewIfNeeded();
   await mobile.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
   const beforeY=await mobile.evaluate(()=>scrollY+document.body.scrollTop);

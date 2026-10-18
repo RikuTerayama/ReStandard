@@ -22,7 +22,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'.catalog-dist');
   for(const dir of ['css','js','image','assets','news','public'])await fs.cp(path.join(root,dir),path.join(out,dir),{recursive:true});
   await fs.mkdir(path.join(out,'news_src'),{recursive:true});
   await fs.copyFile(path.join(root,'news_src/manifest.json'),path.join(out,'news_src/manifest.json'));
-  for(const file of ['index.html','about.html','contact.html','location.html','vision.html','news.html','sitemap.html','lookbook.html','404.html','robots.txt','google13cb3392ef4a2c51.html','1.mp4','2.mp4','5.mov','7.mp4'])await fs.copyFile(path.join(root,file),path.join(out,file));
+  for(const file of ['index.html','about.html','contact.html','location.html','vision.html','news.html','sitemap.html','lookbook.html','404.html','robots.txt','google13cb3392ef4a2c51.html'])await fs.copyFile(path.join(root,file),path.join(out,file));
   let home=await fs.readFile(path.join(out,'index.html'),'utf8');
   await fs.writeFile(path.join(out,'index.html'),connectHome(home,catalog.products));
   await fs.copyFile(path.join(root,'sitemap.xml'),path.join(out,'sitemap-pages.xml'));

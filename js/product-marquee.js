@@ -2,11 +2,12 @@
 (() => {
   'use strict';
   const selector = '[data-product-marquee]';
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reducedMotion = window.rsMotionPreference ||= window.matchMedia('(prefers-reduced-motion: reduce)');
   const rows = [];
   const wrap = (value, width) => ((value % width) + width) % width;
   let frame = 0;
   let lastTime = 0;
+  let viewportWidth = window.innerWidth;
 
   function paint(row) {
     row.track.style.transform = `translate3d(${-row.offset}px, 0, 0)`;
@@ -37,11 +38,17 @@
 
   function tick(time) {
     frame = 0;
+    // Resize/observer events may arrive after the next paint. Reserve enough
+    // repeated images as soon as the viewport changes, even during a loop.
+    if (viewportWidth !== window.innerWidth) {
+      viewportWidth = window.innerWidth;
+      rows.forEach(row => { row.needsMeasure = true; });
+    }
     const seconds = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
     lastTime = time;
     for (const row of rows) {
       if (row.needsMeasure) measure(row);
-      if (row.width && !reducedMotion.matches && !row.drag?.active && !row.focused) {
+      if (row.width && !row.paused && !reducedMotion.matches && !row.drag?.active && !row.focused) {
         row.offset = wrap(row.offset + row.direction * row.speed * seconds, row.width);
         paint(row);
       }
@@ -78,7 +85,7 @@
       track, group, viewport: track.parentElement, width: 0, offset: 0,
       direction: track.dataset.direction === 'right' ? -1 : 1,
       speed: Number(track.dataset.pixelsPerSecond) || 32,
-      needsMeasure: true, drag: null, focused: false, suppressClick: false
+      needsMeasure: true, drag: null, focused: false, suppressClick: false, paused: false
     };
     rows.push(row);
     row.viewport.dataset.marqueeViewport = '';
@@ -155,6 +162,22 @@
 
   function start() {
     document.querySelectorAll(selector).forEach(init);
+    document.querySelectorAll('[data-marquee-toggle]').forEach(button=>{
+      const controlled=rows.filter(row=>row.track.closest('section')?.id===button.dataset.marqueeToggle);
+      if(!controlled.length)return;
+      button.hidden=false;
+      function label(){
+        const paused=controlled[0].paused||reducedMotion.matches;
+        button.setAttribute('aria-pressed',String(paused));
+        button.querySelector('[aria-hidden]').textContent=paused?'▶':'Ⅱ';
+        button.querySelector('[data-marquee-label]').textContent=paused?'自動スクロールを再開':'自動スクロールを停止';
+        button.disabled=reducedMotion.matches;
+        if(reducedMotion.matches){button.querySelector('[data-marquee-label]').textContent='動きを減らす設定のため自動スクロールは停止中です。';}
+      }
+      button.addEventListener('click',()=>{const paused=!controlled[0].paused;controlled.forEach(row=>{row.paused=paused;row.track.dataset.userPaused=String(paused)});label();wake();});
+      reducedMotion.addEventListener('change',label);
+      label();
+    });
     wake();
   }
   document.addEventListener('visibilitychange', () => {
@@ -179,6 +202,13 @@
     rows.forEach(row => { finishDrag(row); row.viewport.scrollLeft = 0; row.needsMeasure = true; });
     wake();
   });
+  // Bind the live preference observer after the document has loaded. Some
+  // browsers do not notify queries created while the document is still parsing.
+  window.addEventListener('load', () => {
+    const livePreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    window.rsLiveMotionPreference = livePreference;
+    livePreference.addEventListener('change', () => reducedMotion.dispatchEvent(new Event('change')));
+  }, {once:true});
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
   else start();
 })();

@@ -1,6 +1,7 @@
 'use strict';
 const { availability, isFresh } = require('./normalize.cjs');
 const {header,footer}=require('./site-shell.cjs');
+const brandProfiles=require('./brand-profiles.json');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const json = value => JSON.stringify(value).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026');
 const money = n => `¥${n.toLocaleString('ja-JP')}`;
@@ -32,8 +33,8 @@ function card(p, fresh, preview, eager = false) {
     <h2><a href="${esc(p.url)}">${esc(p.name)}</a></h2><p class="price" data-volatile>${price(p,fresh,preview)}</p>
     <p class="stock" data-volatile ${publicRecent(p)?`data-stock-expires="${Date.parse(p.fetchedAt)+86400000}"`:""}>${fresh?availability(p):publicStock(p)}</p></div></article>`;
 }
-function breadcrumb(parts, siteUrl) {
-  const values = [{name:'ホーム',url:'/'},{name:'Products',url:'/products/'},...parts];
+function breadcrumb(parts, siteUrl, root='Products') {
+  const values = [{name:'ホーム',url:'/'},{name:root,url:root==='Brands'?'/brands/':'/products/'},...parts];
   return {html:`<nav class="breadcrumbs" aria-label="パンくずリスト"><ol>${values.map((p,i)=>`<li>${i===values.length-1?`<span aria-current="page">${esc(p.name)}</span>`:`<a href="${esc(p.url)}">${esc(p.name)}</a>`}</li>`).join('')}</ol></nav>`,
     data:{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:values.map((p,i)=>({'@type':'ListItem',position:i+1,name:p.name,item:siteUrl+p.url}))}};
 }
@@ -44,7 +45,7 @@ function layout({title,description,path,body,siteUrl,ogImage,schema=[],preview=f
 <link rel="canonical" href="${esc(siteUrl+path)}"><meta property="og:type" content="website"><meta property="og:site_name" content="ReStandard">
 <meta property="og:title" content="${esc(title)} | ReStandard"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${esc(siteUrl+path)}">
 ${ogImage?`<meta property="og:image" content="${esc(ogImage)}">`:''}
-<link rel="stylesheet" href="/css/catalog.css?v=20261018-2"><link rel="stylesheet" href="/css/language.css?v=20261018-2"><script src="/js/lang-toggle.js?v=20261018-3" defer></script><script src="/js/catalog.js?v=20261018-2" defer></script>
+<link rel="stylesheet" href="/css/catalog.css?v=20261018-2"><link rel="stylesheet" href="/css/discovery.css?v=20261018-1"><link rel="stylesheet" href="/css/language.css?v=20261018-2"><script src="/js/lang-toggle.js?v=20261018-5" defer></script><script src="/js/catalog.js?v=20261018-2" defer></script>
 ${schema.map(s=>`<script type="application/ld+json">${json(s)}</script>`).join('\n')}<link rel="stylesheet" href="/css/site-shell.css?v=20261018-4"><script src="/js/editorial.js?v=20261018-3" defer></script><link rel="stylesheet" href="/css/cursor.css?v=20261018-1"></head>
 <body ${expiresAt?`data-offer-expires="${expiresAt}"`:''}><a class="skip-link" href="#main">本文へ</a>
 ${header}
@@ -88,6 +89,8 @@ ${related.length?`<section class="related"><h2>あわせて見る</h2><p>同じ�
 }
 function listPage(catalog,{siteUrl,preview=false,path='/products/',brand=null,category=null,params=new URLSearchParams(),now=Date.now()}) {
   const fresh = isFresh(catalog,now), all = visible(catalog);
+  const profile=brandProfiles.find(p=>p.name===brandKey(brand));
+  const brandHasProducts=all.some(p=>brandKey(p.brand)===brandKey(brand));
   const selectedBrand = brand || params.get('brand') || '', selectedCategory=category || params.get('category') || '';
   const stock = params.get('stock') || '', sort = params.get('sort') || 'default';
   let items = all.filter(p=>(!selectedBrand||brandKey(p.brand)===brandKey(selectedBrand))&&(!selectedCategory||categoriesOf(p).includes(selectedCategory)));
@@ -96,31 +99,33 @@ function listPage(catalog,{siteUrl,preview=false,path='/products/',brand=null,ca
   if (sort==='price-asc'||sort==='price-desc') items.sort((a,b)=>a.price===null?1:b.price===null?-1:(a.price-b.price)*(sort==='price-desc'?-1:1));
   const title = brand || category || 'Products';
   const options = (values,selected) => [...new Set(values.filter(Boolean))].sort().map(v=>`<option value="${esc(v)}"${v===selected?' selected':''}>${esc(v)}</option>`).join('');
-  const crumb = breadcrumb(brand||category?[{name:title,url:path}]:[],siteUrl);
-  const body = `${crumb.html}<section class="collection-heading"><p class="eyebrow">ReStandard / Products</p><h1>${esc(title)}</h1><p>一枚ずつ、ディテールまで。</p></section>
-<form class="catalog-filters" method="get" action="${esc(path)}">
+  const crumb = breadcrumb(brand||category?[{name:title,url:path}]:[],siteUrl,brand?'Brands':'Products');
+  const brandIntro=profile?`<section class="brand-intro"><div class="brand-intro-logo"><img src="${esc(profile.logo)}" alt="${esc(profile.name)}" width="320" height="220"></div><div><p class="eyebrow">${esc(profile.category)}</p><h1>${esc(title)}</h1><p class="brand-description">${esc(profile.description)}</p><nav class="discovery-actions" aria-label="ブランド紹介"><a href="#brand-products">取扱商品 ↓</a><a href="/contact.html#wholesale">このブランドのお取引を相談する ↗</a></nav><div class="brand-references">${profile.article?`<a href="${esc(profile.article)}">ブランドの記事を読む ↗</a>`:''}<a href="${esc(profile.official)}" target="_blank" rel="noopener noreferrer">ブランド公式サイト ↗</a></div></div></section><section class="brand-selection-heading" id="brand-products"><h2>取扱商品</h2><p>${brandHasProducts?'BASEに掲載中の商品を紹介しています。お取引のご相談は、ブランド名・品番とともにお問い合わせください。':'このブランドの掲載商品は現在ありません。取扱いについてはお問い合わせください。'}</p></section>`:'';
+  const body = `${crumb.html}${brandIntro||`<section class="collection-heading"><p class="eyebrow">ReStandard / Products</p><h1>${esc(title)}</h1><p>一枚ずつ、ディテールまで。</p></section>`}
+${!profile||brandHasProducts?`<form class="catalog-filters" method="get" action="${esc(path)}">
 ${brand?'':`<label>ブランド<select name="brand"><option value="">すべてのブランド</option>${options(all.map(p=>brandKey(p.brand)),brandKey(selectedBrand))}</select></label>`}
 ${category?'':`<label>カテゴリー<select name="category"><option value="">すべてのカテゴリー</option>${options(all.flatMap(categoriesOf),selectedCategory)}</select></label>`}
 <label>販売状況<select name="stock"><option value="">すべて</option>${fresh?`<option value="available"${stock==='available'?' selected':''}>在庫あり</option>`:''}<option value="sold-out"${stock==='sold-out'?' selected':''}>売り切れ</option></select></label>
 <label>並び順<select name="sort"><option value="default">掲載順</option><option value="price-asc"${sort==='price-asc'?' selected':''}>価格の低い順</option><option value="price-desc"${sort==='price-desc'?' selected':''}>価格の高い順</option></select></label><button type="submit">絞り込む</button></form>
-<p class="results-count">${items.length} items</p>
+<p class="results-count">${items.length} items</p>`:''}
 <div class="product-grid">${items.map((p,i)=>card(p,fresh,preview,i===0)).join('')}</div>
-${!items.length?'<p class="empty-state">条件に一致する商品がありません。<a href="/products/">すべての商品を見る</a></p>':''}
+${!items.length&&(!profile||brandHasProducts)?'<p class="empty-state">条件に一致する商品がありません。<a href="/products/">すべての商品を見る</a></p>':''}
+${profile?'<aside class="brand-enquiry"><div><h2>取扱いのご相談</h2><p>ご希望のブランド名をフォームのお問い合わせ内容にご記入ください。</p></div><a href="/contact.html#wholesale">お取引の相談をする ↗</a></aside>':''}
 <nav class="browse-links" aria-label="ブランドから探す"><h2>Brands</h2>${[...new Set(all.map(p=>brandKey(p.brand)).filter(Boolean))].map(b=>`<a href="${brandPath(b)}">${esc(b)}</a>`).join('')}</nav>`;
-  return layout({title,description:`ReStandardの${brand||category||'商品'}一覧。写真と商品詳細を確認し、BASEオンラインストアで購入できます。`,path,body,siteUrl,preview,noindex:[...params].length>0,schema:[crumb.data],expiresAt:fresh?Date.parse(catalog.fetchedAt)+60000:null});
+  return layout({title,description:profile?`${title} — ブランド紹介・取扱商品`: `ReStandardの${brand||category||'商品'}一覧。写真と商品詳細を確認し、BASEオンラインストアで購入できます。`,path,body,siteUrl,ogImage:profile?siteUrl+profile.logo:undefined,preview,noindex:[...params].length>0,schema:[crumb.data,...(profile?[{'@context':'https://schema.org','@type':'Brand',name:profile.name,url:siteUrl+path,sameAs:profile.official,description:profile.description}]:[])],expiresAt:fresh?Date.parse(catalog.fetchedAt)+60000:null});
 }
 function directoryPage(catalog,{siteUrl,preview=false,kind='brands'}) {
   const brands=kind==='brands',title=brands?'Brands':'Categories',path=`/${kind}/`;
-  const names=[...new Set(visible(catalog).flatMap(p=>brands?[brandKey(p.brand)]:categoriesOf(p)).filter(Boolean))];
+  const names=[...new Set([...(brands?brandProfiles.map(p=>p.name):[]),...visible(catalog).flatMap(p=>brands?[brandKey(p.brand)]:categoriesOf(p)).filter(Boolean)])];
   return layout({title,description:`ReStandardの商品を${brands?'ブランド':'カテゴリー'}から探す。`,path,siteUrl,preview,
-    body:`<section class="collection-heading"><p class="eyebrow">ReStandard / Products</p><h1>${title}</h1></section><nav class="directory">${names.map(n=>`<a href="${brands?brandPath(n):categoryPath(n)}">${esc(n)} <span>→</span></a>`).join('')}</nav>`});
+    body:`<section class="collection-heading"><p class="eyebrow">ReStandard / ${brands?'Brands':'Products'}</p><h1>${title}</h1>${brands?'<p>ブランドの背景から、一枚との出会いへ。</p>':''}</section><nav class="${brands?'brand-directory':'directory'}">${names.map(n=>{const p=brands&&brandProfiles.find(p=>p.name===n);return `<a href="${brands?brandPath(n):categoryPath(n)}">${p?`<div class="brand-directory-logo"><img src="${esc(p.logo)}" alt="" width="240" height="160" loading="lazy"></div><p class="eyebrow">${esc(p.category)}</p>`:''}<span class="brand-directory-name">${esc(n)} <span>→</span></span>${p?`<p class="brand-directory-status">${visible(catalog).some(p=>brandKey(p.brand)===n)?'商品掲載あり':'商品掲載なし・お問い合わせ'}</p>`:''}</a>`}).join('')}</nav>`});
 }
 function errorPage(status,siteUrl) {
   return layout({title:status===404?'商品が見つかりません':'商品情報を確認しています',description:'ReStandardの商品一覧またはBASEオンラインストアをご利用ください。',path:'/products/',siteUrl,noindex:true,
     body:`<section class="empty-state"><p>${status}</p><h1>${status===404?'商品が見つかりません':'現在、商品情報を確認できません'}</h1><p>${status===404?'公開が終了したか、URLが変更された可能性があります。':'時間をおいて再度お試しください。最新の商品情報はBASEでご確認いただけます。'}</p><a href="/products/">Productsへ</a> <a href="https://restandard.base.ec/">BASEオンラインストアへ ↗</a></section>`});
 }
 function sitemap(catalog,siteUrl) {
-  const all=visible(catalog),urls=['/products/','/brands/','/categories/',...all.map(p=>p.url),...[...new Set(all.map(p=>brandKey(p.brand)).filter(Boolean))].map(brandPath),...[...new Set(all.flatMap(categoriesOf))].map(categoryPath)];
+  const all=visible(catalog),urls=['/products/','/brands/','/categories/',...all.map(p=>p.url),...[...new Set([...brandProfiles.map(p=>p.name),...all.map(p=>brandKey(p.brand)).filter(Boolean)])].map(brandPath),...[...new Set(all.flatMap(categoriesOf))].map(categoryPath)];
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(url=>`<url><loc>${esc(siteUrl+url)}</loc></url>`).join('')}</urlset>`;
 }
 module.exports={productPage,listPage,directoryPage,errorPage,sitemap,brandPath,brandKey,categoryPath,categoriesOf,esc,visible};

@@ -2,7 +2,7 @@
 const {chromium}=require('playwright');const {fork}=require('node:child_process');const fs=require('node:fs');const assert=require('node:assert/strict');
 const {normalize}=require('../catalog/normalize.cjs');const {brandPath,categoryPath,categoriesOf}=require('../catalog/render.cjs');
 const cat=normalize(require('../catalog/public-snapshot.json'),require('../catalog/config.json'));
-const routes=['/','/about.html','/vision.html','/news.html','/location.html','/contact.html','/sitemap.html','/404.html','/lookbook.html','/products/','/brands/','/categories/',...new Set(require('../news_src/manifest.json').map(a=>'/news/'+a.slug+'/')),...cat.products.map(p=>p.url),...new Set(cat.products.map(p=>p.brand).filter(Boolean).map(brandPath)),...new Set(cat.products.flatMap(categoriesOf).map(categoryPath))];
+const routes=['/','/about.html','/vision.html','/news.html','/location.html','/contact.html','/sitemap.html','/404.html','/lookbook.html','/products/','/brands/','/categories/',...new Set(require('../news_src/manifest.json').map(a=>'/news/'+a.slug+'/')),...cat.products.map(p=>p.url),...new Set([...require('../catalog/brand-profiles.json').map(p=>p.name),...cat.products.map(p=>p.brand).filter(Boolean)].map(brandPath)),...new Set(cat.products.flatMap(categoriesOf).map(categoryPath))];
 const origin=process.env.TEST_ORIGIN||'http://127.0.0.1:4184';const server=process.env.TEST_ORIGIN?null:fork('scripts/preview-catalog.cjs',[],{env:{...process.env,PORT:'4184'},silent:true});let browser;
 (async()=>{if(server)await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject)});
  browser=await chromium.launch({channel:'chrome',headless:true});const context=await browser.newContext({viewport:{width:1440,height:1000}});
