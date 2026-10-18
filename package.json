@@ -32,7 +32,11 @@
     "check:seo-markup": "node scripts/check-seo-markup.mjs",
     "check:url-seo": "node scripts/check-url-seo.mjs",
     "check:duplicate": "node scripts/check-duplicate-content.mjs",
-    "test:editorial": "node scripts/test-editorial.cjs"
+    "test:editorial": "node scripts/test-editorial.cjs",
+    "test:language": "node scripts/test-language.cjs",
+    "test:refinements": "node scripts/test-refinements.cjs",
+    "render:lookbook": "node scripts/build-lookbook.cjs",
+    "sync:shell": "node scripts/sync-site-shell.cjs"
   },
   "keywords": [],
   "author": "",

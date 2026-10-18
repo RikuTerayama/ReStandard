@@ -95,16 +95,16 @@ test('production remains gated while Phase 1 and pilot validation are pending',a
   let calls=0;const handle=createCatalogService({config:{...config,phase1Confirmed:false},load:async()=>{calls++;return snapshot();}});
   assert.equal((await handle('/products/')).status,503);assert.equal(calls,0);
 });
-test('public snapshot mode retains unknown stock, and hides dated price/status after 24 hours without JS',async()=>{
+test('manual public snapshot retains the published JPY price without timestamps; stock and Offer remain conservative',async()=>{
   const actualNow=Date.now;
   try {
     Date.now=()=>now();
     const publicData=snapshot([item(1,{stock:null,publicAvailability:'sold-out'})],{source:'base-public-store',complete:false,publicListingComplete:true});
     const handle=createCatalogService({config:{...config,dataSource:'public-store'},load:async()=>publicData});
-    const before=await handle('/products/base-1/');assert.equal(before.status,200);assert(before.body.includes('¥12,300'));assert(before.body.includes('売り切れ（確認時）'));
+    const before=await handle('/products/base-1/');assert.equal(before.status,200);assert(before.body.includes('¥12,300'));assert(before.body.includes('売り切れ'));assert(before.body.includes('data-stock-expires='));
     assert(!graph(before.body)[0].offers);
     Date.now=()=>now()+86400001;
-    const after=await handle('/products/base-1/');assert.equal(after.status,200);assert(!after.body.includes('¥12,300'));assert(!after.body.includes('売り切れ（確認時）'));assert(after.body.includes('価格はBASEでご確認ください'));
+    const after=await handle('/products/base-1/');assert.equal(after.status,200);assert(after.body.includes('¥12,300'));assert(!after.body.includes('売り切れ'));assert(!after.body.includes('確認時の価格'));assert(!after.body.includes('class="sync-time"'));assert(!after.body.includes('BASEの商品説明（'));assert(!graph(after.body)[0].offers);
   } finally {Date.now=actualNow;}
 });
 test('public sold-out filtering, original brand spelling, and reviewed evidence invalidation',async()=>{

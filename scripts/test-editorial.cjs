@@ -56,6 +56,7 @@ let browser;
  }
  const page=await browser.newPage({viewport:{width:375,height:900}});
  await page.goto(origin+'/about.html');await page.locator('.navbar-toggler').click();await page.locator('[data-lang-btn="en"]').click();
+ await page.waitForFunction(()=>document.documentElement.lang==='en');
  assert.equal(await page.locator('html').getAttribute('lang'),'en');
  assert(await page.getByText('Our Philosophy',{exact:true}).isVisible());
  await page.locator('[data-lang-btn="ja"]').click();assert(await page.getByText('私たちの理念',{exact:true}).isVisible());report.interactions.push('Mobile menu, Escape/focus and JA/EN switching');

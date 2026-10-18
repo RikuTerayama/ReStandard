@@ -165,6 +165,12 @@
     } else wake();
   });
   window.addEventListener('blur', () => rows.forEach(row => finishDrag(row)));
+  // A viewport resize can arrive before ResizeObserver's next delivery.
+  // Remeasure on the next animation frame so wide screens stay covered.
+  window.addEventListener('resize', () => {
+    rows.forEach(row => { row.needsMeasure = true; });
+    wake();
+  });
   window.addEventListener('pageshow', () => {
     rows.forEach(row => { finishDrag(row); row.needsMeasure = true; });
     wake();

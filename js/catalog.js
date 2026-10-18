@@ -36,6 +36,13 @@
   }
   document.querySelector('[data-close-zoom]')?.addEventListener('click',()=>dialog.close());
   dialog?.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+  // Public prices are manually maintained; only observed stock notices expire.
+  document.querySelectorAll('[data-stock-expires]').forEach(el=>{
+    const expires=Number(el.dataset.stockExpires);
+    const refresh=()=>{if(Date.now()>=expires)el.textContent='在庫はBASEでご確認ください';};
+    setTimeout(refresh,Math.max(0,expires-Date.now()+10));
+    addEventListener('pageshow',refresh);document.addEventListener('visibilitychange',refresh);
+  });
   // A page left open must not continue presenting a cached offer as current.
   // The server also enforces expiry, including for JavaScript-disabled visitors.
   const expires=Number(document.body.dataset.offerExpires);

@@ -1,0 +1,36 @@
+html body.rs-home .home-intro{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:580px;margin:0!important;padding:0!important;background:#f0f0eb!important}
+html body.rs-home .home-intro-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:70px clamp(24px,5vw,84px);color:#1c1c1b;text-align:left}
+html body.rs-home .home-intro .eyebrow{font-size:11px!important;letter-spacing:.18em!important;margin:0 0 38px!important;text-transform:uppercase}
+html body.rs-home .home-intro h1{font-size:clamp(28px,2.6vw,46px)!important;line-height:1.65!important;letter-spacing:.02em!important;margin:0 0 24px!important;font-weight:400!important;text-align:left!important}
+html body.rs-home .home-intro .intro-detail{font-size:14px!important;line-height:2!important;max-width:36em;margin:0!important}
+html body.rs-home .intro-actions{display:flex;gap:28px;flex-wrap:wrap;margin-top:36px}
+html body.rs-home .intro-actions a{font-size:12px!important;padding:8px 0;border-bottom:1px solid #1c1c1b;text-decoration:none}
+html body.rs-home .home-intro-visual{margin:0;min-width:0;display:flex;align-items:center;justify-content:center;background:#eae9e4}
+html body.rs-home .home-intro-visual img{display:block;width:100%;height:min(720px,78vh);min-height:580px;object-fit:contain}
+html body.rs-home #about-restandard{display:grid!important;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);column-gap:7vw;row-gap:32px;padding-block:100px!important;border-top:1px solid #deded7}
+html body.rs-home #about-restandard>h2.section-title{font-size:clamp(30px,3vw,48px)!important;line-height:1.4!important;margin:0!important;max-width:8em!important}
+html body.rs-home #about-restandard .restandard-body{width:100%!important;max-width:900px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+html body.rs-home #about-restandard .about-text{font-size:clamp(17px,1.35vw,21px)!important;line-height:2.1!important;letter-spacing:.015em!important;margin:0!important;max-width:none!important;text-align:left!important}
+html body.rs-home #about-restandard .about-text br{display:none!important}
+html body.rs-home #about-restandard .about-text b{font-weight:500!important}
+html body.rs-home #about-restandard .about-text a{border:0!important;text-decoration:underline!important;text-underline-offset:5px!important}
+html body.rs-home #contact .section-content{width:100%!important;max-width:820px!important;margin:0 auto!important}
+html body.rs-home #contact .container{width:100%!important;max-width:820px!important;margin:0 auto!important;padding:0!important}
+html body.rs-home #contact .form-container{margin:0!important}
+html body.rs-home #contact{border-top:1px solid #deded7}
+@media(max-width:760px){html body.rs-home .home-intro{grid-template-columns:1fr;min-height:0}html body.rs-home .home-intro-copy{padding:45px 24px}html body.rs-home .home-intro .eyebrow{margin-bottom:22px!important}html body.rs-home .home-intro-visual img{height:auto;min-height:0;max-height:80vh;width:100%;object-fit:contain}html body.rs-home #about-restandard{grid-template-columns:1fr;padding-block:55px!important}html body.rs-home #about-restandard>h2.section-title{max-width:none!important}html body.rs-home #about-restandard .about-text{font-size:16px!important}}
+/* Compact opening story: preserve the full outfit in every slide. */
+html body.rs-home .home-intro{min-height:0}
+html body.rs-home .home-intro-copy{padding:42px clamp(24px,5vw,84px)}
+html body.rs-home .home-intro h1{font-size:clamp(27px,2.4vw,40px)!important}
+html body.rs-home .home-intro .eyebrow{margin-bottom:24px!important}
+html body.rs-home .home-intro-visual{position:relative;display:block;min-height:0;align-self:stretch;touch-action:pan-y}
+html body.rs-home .intro-slides{height:clamp(420px,56vh,560px)}
+html body.rs-home .intro-slide{height:100%}
+html body.rs-home .intro-slide[hidden]{display:none!important}
+html body.rs-home .home-intro-visual img{height:100%;width:100%;min-height:0;max-height:none;object-fit:contain}
+html body.rs-home .intro-controls{display:flex;align-items:center;gap:16px;position:absolute;right:16px;bottom:14px;background:rgba(250,250,247,.94);padding:2px 8px;font:11px Arial,sans-serif;color:#20201e}
+html body.rs-home .intro-controls[hidden]{display:none}
+html body.rs-home .intro-controls button{width:38px;min-height:40px;border:0;background:none;color:inherit;font-size:17px;cursor:pointer}
+html body.rs-home .intro-controls button:focus-visible{outline:1px solid currentColor;outline-offset:-3px}
+@media(max-width:760px){html body.rs-home .intro-slides{height:420px;max-height:58svh}html body.rs-home .home-intro-copy{padding:32px 24px}html body.rs-home .home-intro h1{font-size:27px!important}html body.rs-home .intro-actions{margin-top:22px}html body.rs-home .home-intro-visual img{height:100%;width:100%}}

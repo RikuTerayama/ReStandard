@@ -1,5 +1,6 @@
 'use strict';
 const { availability, isFresh } = require('./normalize.cjs');
+const {header,footer}=require('./site-shell.cjs');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const json = value => JSON.stringify(value).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026');
 const money = n => `¥${n.toLocaleString('ja-JP')}`;
@@ -11,22 +12,25 @@ const categoryPath = name => `/categories/${encodeURIComponent(name)}/`;
 const categoriesOf = p => [...new Set([...p.categories.map(c=>c.name),p.category].filter(Boolean))];
 const visible = catalog => catalog.products.filter(p=>p.published);
 const publicRecent = (p,now=Date.now()) => p.source==='base-public-store' && now-Date.parse(p.fetchedAt)>=0 && now-Date.parse(p.fetchedAt)<86400000;
-const publicStock = p => publicRecent(p)&&p.publicAvailability==='sold-out'?'売り切れ（確認時）':'在庫はBASEでご確認ください';
+const publicStock = p => publicRecent(p)&&p.publicAvailability==='sold-out'?'売り切れ':'在庫はBASEでご確認ください';
 function picture(p, index = 0, eager = false, thumb = false) {
   const img = p.images[index];
   if (!img) return '<span class="image-missing">画像を準備しています</span>';
   const image = `<img src="${esc(thumb ? img.preview : img.url)}" alt="${esc(p.name)} — 画像 ${index+1}" loading="${eager?'eager':'lazy'}" ${eager?'fetchpriority="high"':''} decoding="async">`;
   return !thumb&&img.preview!==img.url?`<picture><source media="(max-width: 760px)" srcset="${esc(img.preview)}">${image}</picture>`:image;
 }
+function descriptionHtml(text) {
+  return text.split(/\r?\n/).filter(line=>line.trim()).map(line=>/^・/.test(line.trim())?`<h3>${esc(line.trim().replace(/^・/,''))}</h3>`:`<p>${esc(line)}</p>`).join('');
+}
 function price(p, fresh, preview) {
-  if ((fresh || preview || publicRecent(p)) && p.price !== null) return `${money(p.price)} <small>税込${!fresh?'・確認時の価格':''}</small>`;
+  if ((fresh || preview || p.source==='base-public-store') && p.price !== null) return `${money(p.price)} <small>税込</small>`;
   return '価格はBASEでご確認ください';
 }
 function card(p, fresh, preview, eager = false) {
   return `<article class="product-card"><a class="product-card-image" href="${esc(p.url)}">${picture(p,0,eager,true)}</a>
     <div class="product-card-copy">${p.brand?`<a class="eyebrow" href="${brandPath(p.brand)}">${esc(p.brand)}</a>`:''}
     <h2><a href="${esc(p.url)}">${esc(p.name)}</a></h2><p class="price" data-volatile>${price(p,fresh,preview)}</p>
-    <p class="stock" data-volatile>${fresh?availability(p):publicStock(p)}</p></div></article>`;
+    <p class="stock" data-volatile ${publicRecent(p)?`data-stock-expires="${Date.parse(p.fetchedAt)+86400000}"`:""}>${fresh?availability(p):publicStock(p)}</p></div></article>`;
 }
 function breadcrumb(parts, siteUrl) {
   const values = [{name:'ホーム',url:'/'},{name:'Products',url:'/products/'},...parts];
@@ -40,12 +44,12 @@ function layout({title,description,path,body,siteUrl,ogImage,schema=[],preview=f
 <link rel="canonical" href="${esc(siteUrl+path)}"><meta property="og:type" content="website"><meta property="og:site_name" content="ReStandard">
 <meta property="og:title" content="${esc(title)} | ReStandard"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${esc(siteUrl+path)}">
 ${ogImage?`<meta property="og:image" content="${esc(ogImage)}">`:''}
-<link rel="stylesheet" href="/css/catalog.css?v=20261016"><script src="/js/catalog.js?v=20261016" defer></script>
-${schema.map(s=>`<script type="application/ld+json">${json(s)}</script>`).join('\n')}</head>
+<link rel="stylesheet" href="/css/catalog.css?v=20261018-2"><link rel="stylesheet" href="/css/language.css?v=20261018-2"><script src="/js/lang-toggle.js?v=20261018-2" defer></script><script src="/js/catalog.js?v=20261018-2" defer></script>
+${schema.map(s=>`<script type="application/ld+json">${json(s)}</script>`).join('\n')}<link rel="stylesheet" href="/css/site-shell.css?v=20261018-2"><script src="/js/editorial.js?v=20261018-2" defer></script></head>
 <body ${expiresAt?`data-offer-expires="${expiresAt}"`:''}><a class="skip-link" href="#main">本文へ</a>
-<header class="catalog-header"><a class="wordmark" href="/">ReStandard</a><nav aria-label="メインナビゲーション"><a href="/products/">Products</a><a href="/brands/">Brands</a><a href="/#lookbook">Lookbook</a></nav></header>
+${header}
 ${preview?'<aside class="preview-notice">確認用ページ・公開前 / 商品情報は公開ページの取得時点の内容です。価格・在庫はBASEでご確認ください。</aside>':''}
-<main id="main">${body}</main><footer class="catalog-footer"><a class="wordmark" href="/">ReStandard</a><p>商品の購入・サイズの選択・お支払いはBASEオンラインストアで承ります。</p><nav aria-label="フッターナビゲーション"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="https://restandard.base.ec/">Online store ↗</a></nav></footer></body></html>`;
+<main id="main">${body}</main>${footer}</body></html>`;
 }
 function productPage(p, catalog, {siteUrl,preview=false,now=Date.now()}) {
   const fresh = isFresh(catalog,now), crumb = breadcrumb(p.brand?[{name:p.brand,url:brandPath(p.brand)},{name:p.name,url:p.url}]:[{name:p.name,url:p.url}],siteUrl);
@@ -70,17 +74,17 @@ function productPage(p, catalog, {siteUrl,preview=false,now=Date.now()}) {
 <div class="gallery-controls" hidden><button type="button" data-prev aria-label="前の画像">←</button><span data-position aria-live="polite">1 / ${p.images.length}</span><button type="button" data-next aria-label="次の画像">→</button></div>
 <nav class="thumbnails" aria-label="画像を選ぶ">${p.images.map((img,i)=>`<a href="#image-${i+1}" data-image-index="${i}" aria-label="画像 ${i+1}" ${i===0?'aria-current="true"':''}>${picture(p,i,false,true)}</a>`).join('')}</nav><p class="caption">左右にスワイプ / 画像をタップして拡大</p></section>
 <section class="product-info">${p.brand?`<a class="eyebrow" href="${brandPath(p.brand)}">${esc(p.brand)}</a>`:''}<h1>${esc(p.name)}</h1>
-<p class="price" data-volatile>${price(p,fresh,preview)}</p><p class="stock" data-volatile>${fresh?availability(p):publicStock(p)}</p>
-<p class="sync-time">商品情報の確認：<time datetime="${esc(catalog.fetchedAt)}">${stamp(catalog.fetchedAt)} JST</time></p>
+<p class="price" data-volatile>${price(p,fresh,preview)}</p><p class="stock" data-volatile ${publicRecent(p)?`data-stock-expires="${Date.parse(p.fetchedAt)+86400000}"`:""}>${fresh?availability(p):publicStock(p)}</p>
+
 <a class="purchase-link" href="${esc(p.baseUrl)}">${(fresh&&p.stock===0)||(publicRecent(p)&&p.publicAvailability==='sold-out')?'BASEで再入荷・掲載状況を確認する':'BASEで購入する'} <span aria-hidden="true">↗</span></a>
-<p class="purchase-note">最新の価格・在庫はBASEでご確認ください。${p.variants.length?'種類・サイズなどの選択は購入先で行えます。':''}</p>
+<p class="purchase-note">${p.variants.length?'種類・サイズなどの選択は購入先で行えます。':''}</p>
 <dl class="specs">${fields.filter(([,value])=>value).map(([name,value])=>`<div><dt>${name}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl>
 ${p.variants.length?`<section class="variants"><h2>BASEに登録された種類</h2><ul>${p.variants.map(v=>`<li>${esc(v.name||'種類名未登録')}${v.identifier?` / ${esc(v.identifier)}`:''}${fresh&&v.stock!==null?` <span data-volatile>— ${v.stock===0?'売り切れ':'在庫あり'}</span>`:''}</li>`).join('')}</ul><p>サイズ・カラーなどの種類はBASEで選択できます。</p></section>`:''}
 <div class="category-links">${categoriesOf(p).map(c=>`<a href="${categoryPath(c)}">${esc(c)}</a>`).join('')}</div>
-</section></div><section class="description-section"><h2>商品について</h2><p class="caption">BASEの商品説明（${stamp(catalog.fetchedAt)} JST 確認時点）</p><div class="original-description">${esc(p.description)}</div></section>
+</section></div><section class="description-section"><h2>商品について</h2><div class="original-description">${descriptionHtml(p.description)}</div></section>
 ${related.length?`<section class="related"><h2>あわせて見る</h2><p>同じブランド・カテゴリーの商品</p><div class="product-grid">${related.map(r=>card(r,fresh,preview)).join('')}</div></section>`:''}
 <dialog class="zoom-dialog" aria-label="商品画像の拡大"><button type="button" data-close-zoom aria-label="拡大画像を閉じる">閉じる ×</button><img alt=""><a data-original-link>元の画像を開く ↗</a></dialog>`;
-  return layout({title:p.name,description,path:p.url,body,siteUrl,ogImage:p.images[0]?.url,schema:[product,crumb.data],preview,expiresAt:fresh?Date.parse(catalog.fetchedAt)+60000:publicRecent(p)?Date.parse(catalog.fetchedAt)+86400000:null});
+  return layout({title:p.name,description,path:p.url,body,siteUrl,ogImage:p.images[0]?.url,schema:[product,crumb.data],preview,expiresAt:fresh?Date.parse(catalog.fetchedAt)+60000:null});
 }
 function listPage(catalog,{siteUrl,preview=false,path='/products/',brand=null,category=null,params=new URLSearchParams(),now=Date.now()}) {
   const fresh = isFresh(catalog,now), all = visible(catalog);
@@ -97,13 +101,13 @@ function listPage(catalog,{siteUrl,preview=false,path='/products/',brand=null,ca
 <form class="catalog-filters" method="get" action="${esc(path)}">
 ${brand?'':`<label>ブランド<select name="brand"><option value="">すべてのブランド</option>${options(all.map(p=>brandKey(p.brand)),brandKey(selectedBrand))}</select></label>`}
 ${category?'':`<label>カテゴリー<select name="category"><option value="">すべてのカテゴリー</option>${options(all.flatMap(categoriesOf),selectedCategory)}</select></label>`}
-<label>販売状況<select name="stock"><option value="">すべて</option>${fresh?`<option value="available"${stock==='available'?' selected':''}>在庫あり</option>`:''}<option value="sold-out"${stock==='sold-out'?' selected':''}>売り切れ${fresh?'':'（確認時）'}</option></select></label>
+<label>販売状況<select name="stock"><option value="">すべて</option>${fresh?`<option value="available"${stock==='available'?' selected':''}>在庫あり</option>`:''}<option value="sold-out"${stock==='sold-out'?' selected':''}>売り切れ</option></select></label>
 <label>並び順<select name="sort"><option value="default">掲載順</option><option value="price-asc"${sort==='price-asc'?' selected':''}>価格の低い順</option><option value="price-desc"${sort==='price-desc'?' selected':''}>価格の高い順</option></select></label><button type="submit">絞り込む</button></form>
-<p class="results-count">${items.length} items${!fresh?` / 商品情報：${stamp(catalog.fetchedAt)} JST 確認。最新の価格・在庫はBASEでご確認ください。`:''}</p>
+<p class="results-count">${items.length} items</p>
 <div class="product-grid">${items.map((p,i)=>card(p,fresh,preview,i===0)).join('')}</div>
 ${!items.length?'<p class="empty-state">条件に一致する商品がありません。<a href="/products/">すべての商品を見る</a></p>':''}
 <nav class="browse-links" aria-label="ブランドから探す"><h2>Brands</h2>${[...new Set(all.map(p=>brandKey(p.brand)).filter(Boolean))].map(b=>`<a href="${brandPath(b)}">${esc(b)}</a>`).join('')}</nav>`;
-  return layout({title,description:`ReStandardの${brand||category||'商品'}一覧。写真と商品詳細を確認し、BASEオンラインストアで購入できます。`,path,body,siteUrl,preview,noindex:[...params].length>0,schema:[crumb.data],expiresAt:fresh?Date.parse(catalog.fetchedAt)+60000:all.some(p=>publicRecent(p))?Date.parse(catalog.fetchedAt)+86400000:null});
+  return layout({title,description:`ReStandardの${brand||category||'商品'}一覧。写真と商品詳細を確認し、BASEオンラインストアで購入できます。`,path,body,siteUrl,preview,noindex:[...params].length>0,schema:[crumb.data],expiresAt:fresh?Date.parse(catalog.fetchedAt)+60000:null});
 }
 function directoryPage(catalog,{siteUrl,preview=false,kind='brands'}) {
   const brands=kind==='brands',title=brands?'Brands':'Categories',path=`/${kind}/`;

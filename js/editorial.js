@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   const toggle=document.querySelector('.rs-nav .navbar-toggler');
   const menu=document.getElementById('navbarNav');
   if(!toggle||!menu)return;
-  if(!document.querySelector('.en-content'))document.querySelector('.rs-nav .language-switcher')?.setAttribute('hidden','');
   function setOpen(open){menu.classList.toggle('show',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'メニューを閉じる':'メニューを開く');toggle.querySelector('span').textContent=open?'−':'＋';}
   toggle.addEventListener('click',()=>setOpen(!menu.classList.contains('show')));
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.classList.contains('show')){setOpen(false);toggle.focus();}});

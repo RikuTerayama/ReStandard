@@ -17,7 +17,7 @@ const server=http.createServer(async(req,res)=>{
     // Local preview serves the original file for Netlify Image CDN URLs.
     // Production still uses Netlify's image service and its configured sizes.
     const pathname=decodeURIComponent(url.pathname==='/.netlify/images'&&url.searchParams.get('url')?.startsWith('/image/')?url.searchParams.get('url'):url.pathname);
-    if(!/^\/(css|js|image|assets|news)\//.test(pathname)&&!['/','/index.html','/about.html','/vision.html','/news.html','/location.html','/contact.html','/sitemap.html','/404.html','/news_src/manifest.json'].includes(pathname))throw new Error('NOT_PUBLIC');
+    if(!/^\/(css|js|image|assets|news)\//.test(pathname)&&!['/','/index.html','/about.html','/vision.html','/news.html','/location.html','/contact.html','/sitemap.html','/lookbook.html','/404.html','/news_src/manifest.json'].includes(pathname))throw new Error('NOT_PUBLIC');
     const file=path.resolve(root,'.'+(pathname.endsWith('/')?pathname+'index.html':pathname));
     if(!file.startsWith(root+path.sep))throw new Error('INVALID_PATH');
     let data=await fs.readFile(file);

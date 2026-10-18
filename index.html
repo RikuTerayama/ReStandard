@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" translate="no">
+<html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="google" content="notranslate">
@@ -171,7 +171,12 @@
   }
   </script>
 <link rel="stylesheet" href="/css/editorial.css?v=20261016-about-copy">
-<script src="/js/editorial.js?v=20261016-1" defer></script>
+<script src="/js/editorial.js?v=20261018-2" defer></script>
+<link rel="stylesheet" href="/css/language.css?v=20261018-2">
+<script src="/js/lang-toggle.js?v=20261018-2" defer></script>
+<link rel="stylesheet" href="/css/home-refinements.css?v=20261018-2">
+<script src="/js/intro-carousel.js?v=20261018-2" defer></script>
+<link rel="stylesheet" href="/css/site-shell.css?v=20261018-2">
 </head>
 <body class="rs-editorial rs-home">
 
@@ -184,9 +189,10 @@
   </div>
   <!-- 1.mov モーダル -->
   <!-- （このブロックを削除） -->
-  <header>
+  <header class="site-header">
   <nav class="navbar rs-nav" aria-label="メインナビゲーション"><div class="container-fluid"><a class="navbar-brand" href="/">ReStandard</a><button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="メニューを開く">Menu <span aria-hidden="true">＋</span></button><div class="navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
 <li class="nav-item"><a class="nav-link" href="/products/">Products</a></li>
+<li class="nav-item"><a class="nav-link" href="/lookbook.html">Lookbook</a></li>
 <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
 <li class="nav-item"><a class="nav-link" href="/vision.html">Vision</a></li>
 <li class="nav-item"><a class="nav-link" href="/news.html">News</a></li>
@@ -326,10 +332,7 @@
   <!-- Hero Video削除 - 背景動画に統合済み -->
     
   <!-- Main Heading - SEO用のH1 -->
-  <section class="sr-only">
-    <h1>欧米アパレルブランド卸｜ReStandard</h1>
-    <p>高品質な欧米ブランドを日本市場へ。Rockmount、Harley of Scotland、William Lockieなど、厳選されたブランドをお客様にご提案します。</p>
-  </section>
+  <section class="home-intro" aria-labelledby="intro-title"><div class="home-intro-copy"><p class="eyebrow">Apparel / Distribution / Japan</p><h1 id="intro-title">欧米の厳選ブランドを、<br>日本のセレクトショップへ。</h1><p class="intro-detail">ReStandardは、欧米のアパレルブランドを日本に紹介するディストリビューターです。32年にわたる取引を通じて、ブランドとショップをつないでいます。</p><div class="intro-actions"><a href="/about.html">私たちについて ↗</a><a href="/contact.html">お取引のご相談 ↗</a></div></div><div class="home-intro-visual" data-intro-carousel role="region" aria-label="スタイリング写真"><div class="intro-slides"><div class="intro-slide" ><img src="/image/base-products/125801949-1.webp" width="956" height="1200" alt="Harley of Scotland クルーネック・ニットカーディガン（cinder） 着用イメージ" fetchpriority="high" decoding="async"></div><div class="intro-slide" hidden><img src="/image/base-products/125801985-1.webp" width="956" height="1200" alt="Harley of Scotland クルーネック・ニットカーディガン（acacia） 着用イメージ" loading="lazy" decoding="async"></div><div class="intro-slide" hidden><img src="https://baseec-img-mng.akamaized.net/images/item/origin/9a7f9a32747061ad86929dc77a835977.png?imformat=generic" width="956" height="1200" alt="Harley of Scotland 2プライ ハイゲージ タートルネック セーター（almond） 着用イメージ" loading="lazy" decoding="async"></div><div class="intro-slide" hidden><img src="/image/base-products/124700837-1.webp" width="956" height="1200" alt="Harley of Scotland 2プライ ハイゲージ タートルネックニット（Mural） 着用イメージ" loading="lazy" decoding="async"></div></div><div class="intro-controls" hidden><button type="button" data-intro-prev aria-label="前の写真">←</button><span data-intro-count translate="no">1 / 4</span><button type="button" data-intro-next aria-label="次の写真">→</button><button type="button" data-intro-pause aria-label="自動切り替えを停止">Ⅱ</button></div></div></section>
 
   <!-- Collection Section - 統合済み -->
   <section id="collection">
@@ -633,7 +636,7 @@
 
   <!-- Lookbook Section -->
   <section id="lookbook">
-    <h2 class="section-title">Lookbook</h2>
+    <h2 class="section-title">Lookbook</h2><p class="lookbook-more"><a href="/lookbook.html">すべてのスタイリングを見る ↗</a></p>
     <p class="sr-only">季節のコーディネートをご紹介します。画像を選ぶと着用商品のBASEページが新しいタブで開きます。</p>
     <div class="lookbook-wrapper lookbook-panel">
       <div class="lookbook-container">
@@ -735,10 +738,10 @@
       <div class="container">
         <div class="text-block delay-2">
           <div class="form-container">
-            <iframe
+            <aside class="english-form-guide" lang="en" translate="no"><h3>Contact form — English guide</h3><p>The form below is provided by Jotform and its field labels are in Japanese. Please use this guide when completing it. Fields marked * are required.</p><dl><dt lang="ja">会社名・店舗名 *</dt><dd>Company / shop name *</dd><dt lang="ja">メールアドレス *</dt><dd>Email address *</dd><dt lang="ja">電話番号</dt><dd>Phone number (optional)</dd><dt lang="ja">お問い合わせ種別</dt><dd>Enquiry type (optional): wholesale / products / catalogues &amp; samples / other, in that order</dd><dt lang="ja">お問い合わせ内容 *</dt><dd>Your message *</dd><dt lang="ja">送信</dt><dd>Submit</dd></dl></aside><iframe
               id="JotFormIFrame-252014412896455"
               title="お問い合わせフォーム"
-              onload="window.parent.scrollTo(0,0)"
+              
               allowtransparency="true"
               allow="geolocation; microphone; camera; fullscreen; payment"
               src="https://form.jotform.com/252014412896455"
@@ -748,7 +751,7 @@
             >
             </iframe>
             <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
-            <script>window.jotformEmbedHandler("iframe[id='JotFormIFrame-252014412896455']", "https://form.jotform.com/")</script>
+            <script>window.jotformEmbedHandler?.("iframe[id='JotFormIFrame-252014412896455']", "https://form.jotform.com/")</script>
           </div>
         </div>
       </div>
@@ -757,8 +760,9 @@
   </main>
 
   <!-- Footer -->
-<footer class="rs-footer"><a class="rs-wordmark" href="/">ReStandard</a><nav aria-label="フッターナビゲーション"><ul class="nav"><li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
+<footer class="rs-footer site-footer"><a class="rs-wordmark" href="/">ReStandard</a><nav aria-label="フッターナビゲーション"><ul class="nav"><li class="nav-item"><a class="nav-link" href="/#brands">Brands</a></li>
 <li class="nav-item"><a class="nav-link" href="/products/">Products</a></li>
+<li class="nav-item"><a class="nav-link" href="/lookbook.html">Lookbook</a></li>
 <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
 <li class="nav-item"><a class="nav-link" href="/vision.html">Vision</a></li>
 <li class="nav-item"><a class="nav-link" href="/news.html">News</a></li>
@@ -799,9 +803,9 @@
       const brandsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            brandsLink.classList.add('active');
+            brandsLink?.classList.add('active');
           } else {
-            brandsLink.classList.remove('active');
+            brandsLink?.classList.remove('active');
           }
         });
       }, {
@@ -812,12 +816,7 @@
         brandsObserver.observe(brandsSection);
       }
 
-      // 保存された言語設定を読み込む
-      const savedLang = localStorage.getItem('rs-lang');
-      if (savedLang) {
-        // 言語切替機能はlang-toggle.jsで処理される
-        console.log('Saved language:', savedLang);
-      }
+
     });
 
     // 言語切り替え機能は lang-toggle.js で管理
@@ -830,7 +829,7 @@
         // 同じドメイン内のリンクの場合
         if (url.hostname === window.location.hostname || 
             url.hostname.includes('restandard')) {
-          sessionStorage.setItem('rs-internal-nav', 'true');
+          try { sessionStorage.setItem('rs-internal-nav', 'true'); } catch {}
         }
       }
     });
@@ -867,7 +866,7 @@
       const isInternalNavigation = referrerHostname && referrerHostname === currentHostname && !isBaseDomain;
       
       // セッションストレージでも内部遷移をチェック
-      const hasInternalSession = sessionStorage.getItem('rs-internal-nav') === 'true';
+      let hasInternalSession = false; try { hasInternalSession = sessionStorage.getItem('rs-internal-nav') === 'true'; } catch {}
       
       // 内部リンクからの遷移の場合はスプラッシュ動画を無効化（BASEからの遷移は除外）
       if ((isInternalNavigation || hasInternalSession) && !isBaseDomain) {
@@ -900,7 +899,7 @@
       });
       
       // 外部からの遷移の場合、セッションストレージをクリア
-      sessionStorage.removeItem('rs-internal-nav');
+      try { sessionStorage.removeItem('rs-internal-nav'); } catch {}
       
       console.log('スプラッシュ動画を外部流入時に表示');
       
@@ -1242,7 +1241,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   <!-- 外部スクリプトの読み込み -->
   <script src="js/reveal.js?v=2025-01-18-final" defer></script>
-  <script src="js/lang-toggle.js?v=2025-01-18-final" defer></script>
+  
   <script>
     // モバイルレイアウト修正のためのJavaScriptガード（最適化）
     let layoutInitialized = false;
@@ -1291,7 +1290,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- セクション初期化スクリプト（defer付きで最適化） -->
   <script src="js/init-sections.js?v=2025-01-20-lookbook-sync" defer></script>
   <!-- Collection / Lookbook: one shared loop and gesture controller -->
-  <script src="js/product-marquee.js?v=2026-10-16-touch" defer></script>
+  <script src="js/product-marquee.js?v=20261018-2" defer></script>
 
   <!-- LCP Detector (temporary) -->
   <script>
