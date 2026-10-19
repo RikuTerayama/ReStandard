@@ -1,7 +1,7 @@
 /* Local, reviewed English copy. No visitor data is sent to a translation service. */
 (() => {
   'use strict';
-  const key = 'rs-lang', version = '20261018-5';
+  const key = 'rs-lang', version = '20261019-1';
   const japanese = /[\u3040-\u30ff\u3400-\u9fff]/;
   const norm = s => s.replace(/\s+/g, ' ').trim();
   const originals = new WeakMap();

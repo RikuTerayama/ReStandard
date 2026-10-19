@@ -28,10 +28,11 @@ function price(p, fresh, preview) {
   return '価格はBASEでご確認ください';
 }
 function card(p, fresh, preview, eager = false) {
+  const stock=fresh?availability(p):publicStock(p);
   return `<article class="product-card"><a class="product-card-image" href="${esc(p.url)}">${picture(p,0,eager,true)}</a>
     <div class="product-card-copy">${p.brand?`<a class="eyebrow" href="${brandPath(p.brand)}">${esc(p.brand)}</a>`:''}
     <h2><a href="${esc(p.url)}">${esc(p.name)}</a></h2><p class="price" data-volatile>${price(p,fresh,preview)}</p>
-    <p class="stock" data-volatile ${publicRecent(p)?`data-stock-expires="${Date.parse(p.fetchedAt)+86400000}"`:""}>${fresh?availability(p):publicStock(p)}</p></div></article>`;
+    ${stock==='在庫はBASEでご確認ください'?'':`<p class="stock" data-volatile data-stock-fallback="hide" ${publicRecent(p)?`data-stock-expires="${Date.parse(p.fetchedAt)+86400000}"`:""}>${stock}</p>`}</div></article>`;
 }
 function breadcrumb(parts, siteUrl, root='Products') {
   const values = [{name:'ホーム',url:'/'},{name:root,url:root==='Brands'?'/brands/':'/products/'},...parts];
@@ -45,8 +46,8 @@ function layout({title,description,path,body,siteUrl,ogImage,schema=[],preview=f
 <link rel="canonical" href="${esc(siteUrl+path)}"><meta property="og:type" content="website"><meta property="og:site_name" content="ReStandard">
 <meta property="og:title" content="${esc(title)} | ReStandard"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${esc(siteUrl+path)}">
 ${ogImage?`<meta property="og:image" content="${esc(ogImage)}">`:''}
-<link rel="stylesheet" href="/css/catalog.css?v=20261018-2"><link rel="stylesheet" href="/css/discovery.css?v=20261018-1"><link rel="stylesheet" href="/css/language.css?v=20261018-2"><script src="/js/lang-toggle.js?v=20261018-5" defer></script><script src="/js/catalog.js?v=20261018-2" defer></script>
-${schema.map(s=>`<script type="application/ld+json">${json(s)}</script>`).join('\n')}<link rel="stylesheet" href="/css/site-shell.css?v=20261018-4"><script src="/js/editorial.js?v=20261018-3" defer></script><link rel="stylesheet" href="/css/cursor.css?v=20261018-1"></head>
+<link rel="stylesheet" href="/css/catalog.css?v=20261019-1"><link rel="stylesheet" href="/css/discovery.css?v=20261018-1"><link rel="stylesheet" href="/css/language.css?v=20261018-2"><script src="/js/lang-toggle.js?v=20261019-1" defer></script><script src="/js/catalog.js?v=20261019-1" defer></script>
+${schema.map(s=>`<script type="application/ld+json">${json(s)}</script>`).join('\n')}<link rel="stylesheet" href="/css/site-shell.css?v=20261019-1"><script src="/js/editorial.js?v=20261018-3" defer></script><link rel="stylesheet" href="/css/cursor.css?v=20261018-1"></head>
 <body ${expiresAt?`data-offer-expires="${expiresAt}"`:''}><a class="skip-link" href="#main">本文へ</a>
 ${header}
 ${preview?'<aside class="preview-notice">確認用ページ・公開前 / 商品情報は公開ページの取得時点の内容です。価格・在庫はBASEでご確認ください。</aside>':''}
@@ -72,7 +73,7 @@ function productPage(p, catalog, {siteUrl,preview=false,now=Date.now()}) {
     .sort((a,b)=>Number(b.brand===p.brand)-Number(a.brand===p.brand)).slice(0,4);
   const body = `${crumb.html}<div class="product-layout"><section class="gallery" aria-label="商品画像">
 <div class="gallery-track" tabindex="0" aria-label="商品画像。左右にスクロールできます">${p.images.map((img,i)=>`<a class="gallery-slide" id="image-${i+1}" href="${esc(img.url)}" data-zoom aria-label="画像 ${i+1} を拡大">${picture(p,i,i===0)}</a>`).join('')}</div>
-<div class="gallery-controls" hidden><button type="button" data-prev aria-label="前の画像">←</button><span data-position aria-live="polite">1 / ${p.images.length}</span><button type="button" data-next aria-label="次の画像">→</button></div>
+<div class="gallery-controls" hidden><button type="button" data-prev aria-label="前の画像">←</button><span data-position translate="no">1 / ${p.images.length}</span><button type="button" data-next aria-label="次の画像">→</button><button type="button" data-gallery-pause aria-label="自動切り替えを停止" aria-pressed="false">Ⅱ</button></div>
 <nav class="thumbnails" aria-label="画像を選ぶ">${p.images.map((img,i)=>`<a href="#image-${i+1}" data-image-index="${i}" aria-label="画像 ${i+1}" ${i===0?'aria-current="true"':''}>${picture(p,i,false,true)}</a>`).join('')}</nav><p class="caption">左右にスワイプ / 画像をタップして拡大</p></section>
 <section class="product-info">${p.brand?`<a class="eyebrow" href="${brandPath(p.brand)}">${esc(p.brand)}</a>`:''}<h1>${esc(p.name)}</h1>
 <p class="price" data-volatile>${price(p,fresh,preview)}</p><p class="stock" data-volatile ${publicRecent(p)?`data-stock-expires="${Date.parse(p.fetchedAt)+86400000}"`:""}>${fresh?availability(p):publicStock(p)}</p>
@@ -100,7 +101,7 @@ function listPage(catalog,{siteUrl,preview=false,path='/products/',brand=null,ca
   const title = brand || category || 'Products';
   const options = (values,selected) => [...new Set(values.filter(Boolean))].sort().map(v=>`<option value="${esc(v)}"${v===selected?' selected':''}>${esc(v)}</option>`).join('');
   const crumb = breadcrumb(brand||category?[{name:title,url:path}]:[],siteUrl,brand?'Brands':'Products');
-  const brandIntro=profile?`<section class="brand-intro"><div class="brand-intro-logo"><img src="${esc(profile.logo)}" alt="${esc(profile.name)}" width="320" height="220"></div><div><p class="eyebrow">${esc(profile.category)}</p><h1>${esc(title)}</h1><p class="brand-description">${esc(profile.description)}</p><nav class="discovery-actions" aria-label="ブランド紹介"><a href="#brand-products">取扱商品 ↓</a><a href="/contact.html#wholesale">このブランドのお取引を相談する ↗</a></nav><div class="brand-references">${profile.article?`<a href="${esc(profile.article)}">ブランドの記事を読む ↗</a>`:''}<a href="${esc(profile.official)}" target="_blank" rel="noopener noreferrer">ブランド公式サイト ↗</a></div></div></section><section class="brand-selection-heading" id="brand-products"><h2>取扱商品</h2><p>${brandHasProducts?'BASEに掲載中の商品を紹介しています。お取引のご相談は、ブランド名・品番とともにお問い合わせください。':'このブランドの掲載商品は現在ありません。取扱いについてはお問い合わせください。'}</p></section>`:'';
+  const brandIntro=profile?`<section class="brand-intro"><div class="brand-intro-logo"><img src="${esc(profile.logo)}" alt="${esc(profile.name)}" width="320" height="220"></div><div><p class="eyebrow">${esc(profile.category)}</p><h1>${esc(title)}</h1><p class="brand-description">${esc(profile.description)}</p><nav class="discovery-actions" aria-label="ブランド紹介">${brandHasProducts?'<a href="#brand-products">取扱商品 ↓</a>':''}<a href="/contact.html#wholesale">このブランドのお取引を相談する ↗</a></nav><div class="brand-references">${profile.article?`<a href="${esc(profile.article)}">ブランドの記事を読む ↗</a>`:''}<a href="${esc(profile.official)}" target="_blank" rel="noopener noreferrer">ブランド公式サイト ↗</a></div></div></section>${brandHasProducts?`<section class="brand-selection-heading" id="brand-products"><h2>取扱商品</h2><p>${brandHasProducts?'BASEに掲載中の商品を紹介しています。お取引のご相談は、ブランド名・品番とともにお問い合わせください。':''}</p></section>`:''}`:'';
   const body = `${crumb.html}${brandIntro||`<section class="collection-heading"><p class="eyebrow">ReStandard / Products</p><h1>${esc(title)}</h1><p>一枚ずつ、ディテールまで。</p></section>`}
 ${!profile||brandHasProducts?`<form class="catalog-filters" method="get" action="${esc(path)}">
 ${brand?'':`<label>ブランド<select name="brand"><option value="">すべてのブランド</option>${options(all.map(p=>brandKey(p.brand)),brandKey(selectedBrand))}</select></label>`}
@@ -118,7 +119,7 @@ function directoryPage(catalog,{siteUrl,preview=false,kind='brands'}) {
   const brands=kind==='brands',title=brands?'Brands':'Categories',path=`/${kind}/`;
   const names=[...new Set([...(brands?brandProfiles.map(p=>p.name):[]),...visible(catalog).flatMap(p=>brands?[brandKey(p.brand)]:categoriesOf(p)).filter(Boolean)])];
   return layout({title,description:`ReStandardの商品を${brands?'ブランド':'カテゴリー'}から探す。`,path,siteUrl,preview,
-    body:`<section class="collection-heading"><p class="eyebrow">ReStandard / ${brands?'Brands':'Products'}</p><h1>${title}</h1>${brands?'<p>ブランドの背景から、一枚との出会いへ。</p>':''}</section><nav class="${brands?'brand-directory':'directory'}">${names.map(n=>{const p=brands&&brandProfiles.find(p=>p.name===n);return `<a href="${brands?brandPath(n):categoryPath(n)}">${p?`<div class="brand-directory-logo"><img src="${esc(p.logo)}" alt="" width="240" height="160" loading="lazy"></div><p class="eyebrow">${esc(p.category)}</p>`:''}<span class="brand-directory-name">${esc(n)} <span>→</span></span>${p?`<p class="brand-directory-status">${visible(catalog).some(p=>brandKey(p.brand)===n)?'商品掲載あり':'商品掲載なし・お問い合わせ'}</p>`:''}</a>`}).join('')}</nav>`});
+    body:`<section class="collection-heading"><p class="eyebrow">ReStandard / ${brands?'Brands':'Products'}</p><h1>${title}</h1>${brands?'<p>ブランドの背景から、一枚との出会いへ。</p>':''}</section><nav class="${brands?'brand-directory':'directory'}">${names.map(n=>{const p=brands&&brandProfiles.find(p=>p.name===n);return `<a href="${brands?brandPath(n):categoryPath(n)}">${p?`<div class="brand-directory-logo"><img src="${esc(p.logo)}" alt="" width="240" height="160" loading="lazy"></div><p class="eyebrow">${esc(p.category)}</p>`:''}<span class="brand-directory-name">${esc(n)} <span>→</span></span></a>`}).join('')}</nav>`});
 }
 function errorPage(status,siteUrl) {
   return layout({title:status===404?'商品が見つかりません':'商品情報を確認しています',description:'ReStandardの商品一覧またはBASEオンラインストアをご利用ください。',path:'/products/',siteUrl,noindex:true,

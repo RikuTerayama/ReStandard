@@ -4,6 +4,7 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
+import newsProducts from './render-news-products.cjs';
 
 const BASE_PATH   = process.env.BASE_PATH || ''; // 環境変数から取得、デフォルトは空文字列
 const OUT_ROOT    = path.resolve('news'); // 出力ルート
@@ -735,6 +736,7 @@ async function main() {
     console.log('✔ built', `/news/${item.slug}/`);
   }
   
+  newsProducts.render();
   // sitemap.xmlとrobots.txtを生成
   await generateSitemap(manifest);
   await generateRobotsTxt();

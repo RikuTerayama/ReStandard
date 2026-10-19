@@ -1,0 +1,16 @@
+html body .news-products{margin:32px 0 48px;padding:24px 0;border-block:1px solid #deded7}
+html body .news-products-title{font-size:14px!important;letter-spacing:.04em;margin:0 0 20px!important}
+html body .news-product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+html body .news-product-card{display:grid;grid-template-columns:112px minmax(0,1fr);gap:20px;align-items:center;color:#1c1c1b!important;text-decoration:none!important;border:0!important;background:transparent!important;padding:0!important;min-width:0}
+html body .news-product-image{aspect-ratio:4/5;background:#f0f0eb;overflow:hidden}
+html body .news-product-image img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:contain!important;margin:0!important;border:0!important}
+html body .news-product-copy{min-width:0}
+html body .news-product-brand{font:10px/1.6 Arial,sans-serif!important;letter-spacing:.09em;text-transform:uppercase}
+html body .news-products .news-product-card h3{font:400 12px/1.8 Arial,"Yu Gothic",sans-serif!important;margin:8px 0 14px!important;padding:0!important;border:0!important}
+html body .news-product-action{font-size:11px!important;line-height:1.8;display:inline-block;border-bottom:1px solid #8c8c83;padding-bottom:4px}
+html body .news-product-card:hover .news-product-action{border-color:#1c1c1b}
+html body .news-product-card:focus-visible{outline:1px solid #1c1c1b;outline-offset:6px}
+html body .news-product-alternative{grid-template-columns:1fr;padding:18px!important;background:#f0f0eb!important}
+html body .news-products .news-product-alternative p{font-size:11px!important;line-height:1.8!important;margin:8px 0 14px!important}
+@media(max-width:760px){html body .news-product-grid{grid-template-columns:1fr;gap:24px}html body .news-product-card{grid-template-columns:96px minmax(0,1fr);gap:18px}html body .news-product-alternative{grid-template-columns:1fr}}
+

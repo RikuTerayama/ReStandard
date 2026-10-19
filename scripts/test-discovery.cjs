@@ -4,7 +4,7 @@ const origin=process.env.TEST_ORIGIN||'http://127.0.0.1:4188',server=process.env
 (async()=>{if(server)await new Promise((r,j)=>{server.stdout.once('data',r);server.once('error',j)});
  const service=createCatalogService(),sitemap=await service('/catalog-sitemap.xml');
  for(const brand of profiles){const path=brandPath(brand.name),result=await service(path);assert.equal(result.status,200,path);assert(result.body.includes('class="brand-intro"'));assert(result.body.includes(brand.description));assert(result.body.includes('/contact.html#wholesale'));assert(sitemap.body.includes(path));const schemas=[...result.body.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(m=>JSON.parse(m[1]));assert(schemas.some(s=>s['@type']==='Brand'&&s.sameAs===brand.official));}
- assert.equal((await service('/brands/missing-brand/')).status,404);assert((await service(brandPath('William Lockie'))).body.includes('このブランドの掲載商品は現在ありません。'));
+ assert.equal((await service('/brands/missing-brand/')).status,404);assert(!(await service(brandPath('William Lockie'))).body.includes('id="brand-products"'));
  browser=await chromium.launch({channel:'chrome',headless:true});const context=await browser.newContext({viewport:{width:1440,height:1000}}),requests=[],errors=[];
  await context.route('**/*',r=>{requests.push(r.request().url());return new URL(r.request().url()).origin===origin?r.continue():r.abort()});const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  await page.goto(origin+'/');await page.waitForFunction(()=>document.querySelector('[data-marquee-toggle]:not([hidden])'));

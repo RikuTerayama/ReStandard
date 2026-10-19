@@ -7,6 +7,7 @@ const {connectHome}=require('../catalog/home-links.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'.catalog-dist');
 (async()=>{
   require('./build-lookbook.cjs');
+  require('./render-news-products.cjs').render();
   require('./sync-site-shell.cjs');
   if(!config.phase1Confirmed||!config.pilotApproved)throw new Error('DESIGN_OR_PILOT_NOT_VALIDATED');
   const snapshot=JSON.parse(await fs.readFile(path.join(root,'catalog/public-snapshot.json'),'utf8'));

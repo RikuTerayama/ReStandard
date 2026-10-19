@@ -57,3 +57,14 @@ html body.rs-home .lookbook-more{padding:0 var(--rs-gutter)!important;margin:-15
 /* Explicit fonts prevent older page-wide !important rules from changing the shell. */
 html body .site-header :is(a,summary,button,span,div,li){font-family:Arial,"Yu Gothic",sans-serif!important}
 html body .site-header .rs-brand{font-family:Georgia,serif!important}
+/* Keep the top row in place when the mobile navigation expands. */
+@media(max-width:1000px){
+ html.rs-menu-ready body .site-header .rs-header-inner{height:72px;min-height:72px;grid-template-rows:72px;row-gap:0}
+ html body .site-header .rs-menu-toggle{width:52px!important}
+ html.rs-menu-ready body .site-header .rs-menu{position:absolute;top:100%;left:0;right:0;width:100%;margin:0;padding:16px clamp(20px,4vw,72px) 28px;background:#fafaf7;max-height:calc(100dvh - 73px);overscroll-behavior-y:contain;border-bottom:1px solid #deded7}
+}
+@media(max-width:400px){html body .site-header .rs-header-inner{column-gap:10px}}
+html body .site-header .rs-language button[data-lang-btn]{background:transparent!important;background-image:none!important;opacity:1!important;transform:none!important;-webkit-text-fill-color:#1c1c1b!important}
+html body .site-header .rs-language button::before,html body .site-header .rs-language button::after,html body .site-header .rs-store-link::before,html body .site-header .rs-store-link::after{content:none!important;display:none!important}
+html body .site-header .rs-external-icon{display:inline-block!important;width:14px!important;height:14px!important;margin:0 0 0 6px!important;vertical-align:-2px!important;transform:none!important;fill:none!important;stroke:none!important}
+html body .site-header .rs-external-icon path{stroke:currentColor!important;fill:none!important;stroke-width:1.2!important}
