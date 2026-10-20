@@ -8,7 +8,9 @@ test('quoted article text cannot break JSON-LD or create script elements',()=>{
   const html='<!doctype html><html><head><title>old</title><meta name="description" content="A &quot;quote&quot; &amp; detail"><meta property="og:image" content="https://example.com/photo.jpg"><link rel="canonical" href="'+siteUrl+'/news/test/"></head><body><h1>A &quot;quote&quot; &lt;/script&gt;&lt;script&gt;alert(1)</h1><time datetime="2025-09-23T20:07:54">2025-09-23</time><p>Body stays untouched.</p></body></html>';
   const output=repair(html,'news/test/index.html'),d=new JSDOM(output).window.document;
   const schemas=[...d.querySelectorAll('script')].map(s=>JSON.parse(s.textContent));
-  assert.equal(schemas.length,3);assert.equal(schemas[1].headline,d.querySelector('h1').textContent);assert.equal(schemas[1].datePublished,'2025-09-23');assert(!schemas[1].dateModified);assert.equal(output.split('<body>')[1],html.split('<body>')[1]);assert.equal(repair(output,'news/test/index.html'),output);
+  assert.equal(schemas.length,3);assert.equal(schemas[1].headline,d.querySelector('h1').textContent);assert(!schemas[1].datePublished);assert(!schemas[1].dateModified);assert.equal(output.split('<body>')[1],html.split('<body>')[1]);assert.equal(repair(output,'news/test/index.html'),output);
+  const dated=new JSDOM(repair(html.replace('2025-09-23T20:07:54','2025-09-23T20:07:54+09:00'),'news/test/index.html'));
+  assert.equal(JSON.parse(dated.window.document.querySelectorAll('script[type="application/ld+json"]')[1].textContent).datePublished,'2025-09-23T20:07:54+09:00');dated.window.close();
   assert.equal(JSON.parse(jsonLD({x:'</script>&"'})).x,'</script>&"');
 });
 test('sitemap discovers added articles, excludes noindex, and never invents lastmod',()=>{

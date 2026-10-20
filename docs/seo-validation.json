@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-20T01:02:03.817Z",
+  "checkedAt": "2026-10-20T01:13:27.772Z",
   "origin": "local-production-build",
   "totalPages": 119,
   "indexable": 118,
@@ -16,8 +16,7 @@
       "h1": "欧米の厳選ブランドを、日本のセレクトショップへ。",
       "schemas": [
         "Organization",
-        "WebSite",
-        "BreadcrumbList"
+        "WebSite"
       ],
       "imageCount": 46,
       "errors": []

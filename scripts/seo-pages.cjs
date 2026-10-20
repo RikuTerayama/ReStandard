@@ -24,8 +24,8 @@ function articleSchemas(document,url){
   const description=document.querySelector('meta[name="description"]')?.content;
   const image=document.querySelector('meta[property="og:image"]')?.content;
   const rawDate=document.querySelector('time[datetime]')?.getAttribute('datetime');
-  // Imported articles have no verified timezone or modification history. Keep only the displayed publication date.
-  const date=rawDate?.match(/^\d{4}-\d{2}-\d{2}/)?.[0];
+  // Google's Article markup requires a timezone-qualified datetime. Never invent a timezone.
+  const date=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(rawDate||'')?rawDate:null;
   return [organization(document),{'@context':'https://schema.org','@type':'Article','@id':url+'#article',headline,description,url,mainEntityOfPage:{'@type':'WebPage','@id':url},...(image?{image:[image]}:{}),...(date?{datePublished:date}:{}),author:{'@type':'Organization','@id':siteUrl+'/#organization',name:'ReStandard',url:siteUrl+'/'},publisher:{'@id':siteUrl+'/#organization'},isPartOf:{'@type':'WebSite','@id':siteUrl+'/#website',name:'ReStandard',url:siteUrl+'/'}}, {'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{name:'Home',item:siteUrl+'/'},{name:'News',item:siteUrl+'/news.html'},{name:headline,item:url}].map((v,i)=>({'@type':'ListItem',position:i+1,...v}))}];
 }
 function repair(html,file){
@@ -40,7 +40,7 @@ function repair(html,file){
       if(value['@type']==='WebSite'){delete value.potentialAction;value['@id']=siteUrl+'/#website';value.publisher={'@id':siteUrl+'/#organization'};}
       if(value['@type']==='WebPage'){value.name=d.title;value.url=url;}
       return value;
-    });
+    }).filter(s=>s['@type']!=='BreadcrumbList'||s.itemListElement?.length>=2);
   }
   // Change only metadata; never reserialize the body (which contains carefully styled legacy markup).
   let result=html.replace(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>\s*/gi,'');

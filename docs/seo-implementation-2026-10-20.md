@@ -7,9 +7,10 @@
 | 発見 | 実施内容 |
 | --- | --- |
 | NewsのJSON-LD構文エラー | 既知4記事に加え、サイトマップ未掲載のHarley記事にも発見。計5記事・6ブロックを修復。全18記事のJSON-LDを安全なJSONシリアライズで生成する方式に統一。 |
-| JSONと本文の不一致 | Articleのheadlineを実際のH1、descriptionをページの説明、公開日を本文の表示日、URLをcanonicalに一致。未確認のdateModified・画像寸法・ロゴ参照を削除。 |
+| JSONと本文の不一致 | Articleのheadlineを実際のH1、descriptionをページの説明、URLをcanonicalに一致。未確認のdateModified・画像寸法・ロゴ参照を削除。公開日のタイムゾーンが不明な場合は任意のdatePublishedを省略し、本文の表示日は維持。 |
 | 仮の会社情報 | トップの `+81-3-1234-5678`、未確認の営業時間、LocalBusiness/priceRange、BrandをOfferとして記載した不適切な定義を除去。Organizationは名称・URL・既存フッターの公式SNSリンクに限定。 |
 | 未実装の検索機能 | WebSiteのSearchActionを削除。検索機能を新設したとは記載しない。 |
+| トップの1項目だけのパンくず | Googleの最低2項目という条件を満たさないホーム単独のBreadcrumbListを削除。他ページの階層を表すパンくずは維持。 |
 | SNS参照の不一致 | OrganizationのFacebook・X等を既存フッターのリンクと一致させた。本文は変更していない。 |
 | 重複するNews検索用タイトル、二重エンティティ | 検索用title・OG/Twitterの見出しを既存のH1から生成。記事本文・商品名は変更しない。 |
 | サイトマップ欠落 | `/news/harley-of-scotland/`、`/news/untitled/` を追加。 |
@@ -28,7 +29,7 @@
 
 Productは71商品に実装済み。公開ストアからの手動取得データでは最新在庫を確認できないため、既存設計どおりOfferを出さない。実在しないレビュー・評価・GTIN・価格・在庫は追加しない。API取得時のOfferについては価格・JPY・在庫0・BASE購入URL・期限切れ時の非表示を既存単体テストで検証。Productの構文が正しくても、Offer/review/aggregateRatingのない現状はGoogleの商品リッチリザルト要件を満たさない。外部BASEで購入するため、自サイトで直接購入できることを条件とする販売者リスティングを目標にしない。
 
-検証はローカルのJSON/schema主要条件・表示一致検証であり、Googleによる掲載認定ではない。Rich Results TestとSearch Consoleの再クロール結果は別途確認する。
+全件検証はJSON/schema主要条件・表示一致検証であり、Googleによる掲載認定ではない。公開後、Google Rich Results Testでも代表記事のArticleとBreadcrumbListを検証。初回は日付だけのdatePublishedに任意項目の日時/タイムゾーン警告が出たため、不明なタイムゾーンを生成せず、その項目を省略するよう修正した。最終の外部テスト結果は公開後記録を参照する。
 
 ## Search Console
 
@@ -64,7 +65,7 @@ GoogleのAI Overviews/AI Modeには通常の検索に必要な技術要件を整
 | サンプル・資料相談 | 何を伝えると相談できるか、連絡先、資料形式 | 貸出可否、費用、返却条件、対応範囲 |
 | よくある質問 | 新規取引・再入荷・サイズ資料など実際の質問を整理 | 実運用に基づく回答。FAQリッチリザルトを前提にしない |
 
-公開日不一致は7件: `1028-2025aw-eribe-amp-restandardrockmount`、`1021restandard2025aw-harley-of-scotland-amp-rockmount`、`1014restandard2025aw-harley-of-scotland-amp-rockmount`、`107restandard2025aw-harley-of-scotland-amp-rockmount`、`930restandard2025aw-harley-of-scotland-amp-rockmount`、`2025-fw-new-arrival-rockmount`、`untitled`。元記事と照合して日付を確定する必要がある。今回は本文の表示日をArticleに反映し、一覧表示の既存日付は変更していない。
+公開日不一致は7件: `1028-2025aw-eribe-amp-restandardrockmount`、`1021restandard2025aw-harley-of-scotland-amp-rockmount`、`1014restandard2025aw-harley-of-scotland-amp-rockmount`、`107restandard2025aw-harley-of-scotland-amp-rockmount`、`930restandard2025aw-harley-of-scotland-amp-rockmount`、`2025-fw-new-arrival-rockmount`、`untitled`。元記事と照合して日付を確定する必要がある。今回はタイムゾーンが確認できない公開日時をArticleから省略し、本文・一覧表示の既存日付は変更していない。
 
 ## 表示速度の実測と提案
 
