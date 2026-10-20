@@ -39,6 +39,8 @@
     "sync:shell": "node scripts/sync-site-shell.cjs",
     "test:header": "node scripts/test-header.cjs",
     "test:cursor": "node scripts/test-cursor.cjs"
+    ,"test:seo": "node --test scripts/test-seo.cjs"
+    ,"audit:seo": "node scripts/audit-seo.cjs"
   },
   "keywords": [],
   "author": "",

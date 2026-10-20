@@ -1,0 +1,324 @@
+{
+  "method": "Lighthouse local Chrome lab navigation against production, one run per configuration; not CrUX field data",
+  "pageSpeedApi": "HTTP 429 daily quota exceeded; no field INP or 75th percentile available",
+  "reports": [
+    {
+      "name": "mobile",
+      "url": "https://restandard-2025.netlify.app/",
+      "measuredAt": "2026-10-19T15:52:47.496Z",
+      "lighthouseVersion": "13.5.0",
+      "settings": {
+        "formFactor": "mobile",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        }
+      },
+      "performance": 46,
+      "metrics": {
+        "first-contentful-paint": {
+          "value": 3069.1529999999993,
+          "display": "3.1 s"
+        },
+        "largest-contentful-paint": {
+          "value": 16699.533000000003,
+          "display": "16.7 s"
+        },
+        "total-blocking-time": {
+          "value": 556,
+          "display": "560 ms"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "speed-index": {
+          "value": 12908.924267826722,
+          "display": "12.9 s"
+        }
+      },
+      "transferBytes": 4861724,
+      "improvements": [
+        {
+          "id": "server-response-time",
+          "title": "Reduce initial server response time",
+          "display": "Root document took 860 ms"
+        },
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "display": "Est savings of 63 KiB"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "display": "Est savings of 15 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "display": "Est savings of 234 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "display": "Est savings of 71 KiB"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "display": "Est savings of 760 ms"
+        },
+        {
+          "id": "forced-reflow-insight",
+          "title": "Forced reflow"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "display": "Est savings of 2,713 KiB"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "title": "LCP breakdown"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree"
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render-blocking requests",
+          "display": "Est savings of 480 ms"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "desktop",
+      "url": "https://restandard-2025.netlify.app/",
+      "measuredAt": "2026-10-19T15:53:28.742Z",
+      "lighthouseVersion": "13.5.0",
+      "settings": {
+        "formFactor": "desktop",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0,
+          "cpuSlowdownMultiplier": 1
+        }
+      },
+      "performance": 64,
+      "metrics": {
+        "first-contentful-paint": {
+          "value": 2277.878,
+          "display": "2.3 s"
+        },
+        "largest-contentful-paint": {
+          "value": 3993.3154999999997,
+          "display": "4.0 s"
+        },
+        "total-blocking-time": {
+          "value": 1,
+          "display": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "value": 0.0162777892683154,
+          "display": "0.016"
+        },
+        "speed-index": {
+          "value": 3155.175847713059,
+          "display": "3.2 s"
+        }
+      },
+      "transferBytes": 4843185,
+      "improvements": [
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "display": "Est savings of 63 KiB"
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "display": "Est savings of 12 KiB"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "display": "Est savings of 235 KiB"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "display": "Est savings of 69 KiB"
+        },
+        {
+          "id": "forced-reflow-insight",
+          "title": "Forced reflow"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "display": "Est savings of 3,187 KiB"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree"
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render-blocking requests",
+          "display": "Est savings of 60 ms"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "product-mobile",
+      "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+      "measuredAt": "2026-10-19T15:57:09.370Z",
+      "lighthouseVersion": "13.5.0",
+      "settings": {
+        "formFactor": "mobile",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        }
+      },
+      "performance": 68,
+      "metrics": {
+        "first-contentful-paint": {
+          "value": 1947.17,
+          "display": "1.9 s"
+        },
+        "largest-contentful-paint": {
+          "value": 4412.7325,
+          "display": "4.4 s"
+        },
+        "total-blocking-time": {
+          "value": 0,
+          "display": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "value": 0.2420264079263828,
+          "display": "0.242"
+        },
+        "speed-index": {
+          "value": 4478.617003998205,
+          "display": "4.5 s"
+        }
+      },
+      "transferBytes": 5025047,
+      "improvements": [
+        {
+          "id": "server-response-time",
+          "title": "Reduce initial server response time",
+          "display": "Root document took 1,570 ms"
+        },
+        {
+          "id": "cls-culprits-insight",
+          "title": "Layout shift culprits"
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "display": "Est savings of 1,470 ms"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "display": "Est savings of 4,580 KiB"
+        },
+        {
+          "id": "lcp-breakdown-insight",
+          "title": "LCP breakdown"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree"
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render-blocking requests"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "lookbook-mobile",
+      "url": "https://restandard-2025.netlify.app/lookbook.html",
+      "measuredAt": "2026-10-19T15:57:30.471Z",
+      "lighthouseVersion": "13.5.0",
+      "settings": {
+        "formFactor": "mobile",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        }
+      },
+      "performance": 93,
+      "metrics": {
+        "first-contentful-paint": {
+          "value": 1838.6875000000002,
+          "display": "1.8 s"
+        },
+        "largest-contentful-paint": {
+          "value": 2976.9855000000002,
+          "display": "3.0 s"
+        },
+        "total-blocking-time": {
+          "value": 14.5,
+          "display": "10 ms"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "display": "0"
+        },
+        "speed-index": {
+          "value": 3011.5928199997243,
+          "display": "3.0 s"
+        }
+      },
+      "transferBytes": 2071252,
+      "improvements": [
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "display": "Est savings of 1,848 KiB"
+        },
+        {
+          "id": "lcp-discovery-insight",
+          "title": "LCP request discovery"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree"
+        },
+        {
+          "id": "render-blocking-insight",
+          "title": "Render-blocking requests"
+        }
+      ],
+      "warnings": []
+    }
+  ]
+}

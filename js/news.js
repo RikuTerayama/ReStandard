@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   const NEWS_ROOT = document.getElementById('news-root');
   const NEWS_GRID = document.getElementById('news-grid');
   const NEWS_LOADING = document.getElementById('news-loading');
+  // Build-time cards remain available to crawlers and visitors without JavaScript.
+  if (NEWS_GRID?.dataset.prerendered === 'true') return;
   
   if (!NEWS_GRID) {
     console.error('NEWS_GRID element not found!');

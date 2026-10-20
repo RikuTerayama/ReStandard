@@ -5,6 +5,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import newsProducts from './render-news-products.cjs';
+import seo from './seo-pages.cjs';
 
 const BASE_PATH   = process.env.BASE_PATH || ''; // 環境変数から取得、デフォルトは空文字列
 const OUT_ROOT    = path.resolve('news'); // 出力ルート
@@ -597,30 +598,8 @@ async function readTemplate() {
   return fs.readFile(TEMPLATE, 'utf-8');
 }
 function applyTemplate(tpl, map) {
-  return tpl
-    .replaceAll('{{BASE_PATH}}', map.BASE_PATH ?? '')
-    .replaceAll('{{TITLE}}', map.TITLE ?? '')
-    .replaceAll('{{TITLE_DECODED}}', map.TITLE_DECODED ?? '')
-    .replaceAll('{{DESCRIPTION}}', map.DESCRIPTION ?? '')
-    .replaceAll('{{CANONICAL}}', map.CANONICAL ?? '')
-    .replaceAll('{{CANONICAL_ABS}}', map.CANONICAL_ABS ?? '')
-    .replaceAll('{{OG_IMAGE}}', map.OG_IMAGE ?? '')
-    .replaceAll('{{OG_IMAGE_ABS}}', map.OG_IMAGE_ABS ?? '')
-    .replaceAll('{{OG_IMAGE_W}}', map.OG_IMAGE_W ?? '800')
-    .replaceAll('{{OG_IMAGE_H}}', map.OG_IMAGE_H ?? '600')
-    .replaceAll('{{OG_IMAGE_ALT}}', map.OG_IMAGE_ALT ?? '')
-    .replaceAll('{{KEYWORDS}}', map.KEYWORDS ?? '')
-    .replaceAll('{{SECTION}}', map.SECTION ?? '')
-    .replaceAll('{{DATE_PUBLISHED}}', map.DATE_PUBLISHED ?? '')
-    .replaceAll('{{DATE_MODIFIED}}', map.DATE_MODIFIED ?? '')
-    .replaceAll('{{DATE}}', map.DATE ?? '')
-    .replaceAll('{{DATE_VIEW}}', map.DATE_VIEW ?? '')
-    .replaceAll('{{CONTENT}}', map.CONTENT ?? '')
-    .replaceAll('{{RELATED_ARTICLES}}', map.RELATED_ARTICLES ?? '')
-    .replaceAll('{{PREV_LINK}}', map.PREV_LINK ?? '')
-    .replaceAll('{{NEXT_LINK}}', map.NEXT_LINK ?? '')
-    .replaceAll('{{HEADER}}', map.HEADER ?? '')
-    .replaceAll('{{FOOTER}}', map.FOOTER ?? '');
+  const raw=new Set(['CONTENT','RELATED_ARTICLES','PREV_LINK','NEXT_LINK','HEADER','FOOTER']);
+  return tpl.replace(/\{\{([A-Z_]+)\}\}/g,(_,key)=>raw.has(key)?(map[key]??''):seo.escape(map[key]??''));
 }
 
 async function main() {
@@ -685,8 +664,8 @@ async function main() {
     const imageAlt = generateImageAlt(ogImage || '', title);
     const keywords = 'ReStandard, ニュース, お知らせ, note, 最新情報, イベント, アパレル卸';
     const section = 'News';
-    const datePublished = date || new Date().toISOString();
-    const dateModified = date || new Date().toISOString();
+    const datePublished = date || '';
+    const dateModified = '';
     
     // 関連記事生成は削除
     
@@ -732,58 +711,16 @@ async function main() {
 
     const outDir = path.join(OUT_ROOT, item.slug);
     await fs.mkdir(outDir, { recursive: true });
-    await fs.writeFile(path.join(outDir, 'index.html'), filled, 'utf-8');
+    await fs.writeFile(path.join(outDir, 'index.html'), seo.repair(filled, `news/${item.slug}/index.html`), 'utf-8');
     console.log('✔ built', `/news/${item.slug}/`);
   }
   
   newsProducts.render();
-  // sitemap.xmlとrobots.txtを生成
-  await generateSitemap(manifest);
-  await generateRobotsTxt();
+  // The publication build owns the sitemap. Never overwrite the site's crawler policy.
+  seo.repairAll();
+  await fs.writeFile('sitemap.xml',seo.generateSitemap(),'utf-8');
   
   console.log('All done.');
-}
-
-// sitemap.xmlを生成
-async function generateSitemap(manifest) {
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${SITE_URL}/</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>${SITE_URL}/news/</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-${manifest.map(item => {
-  const lastmod = item.date ? new Date(item.date).toISOString() : new Date().toISOString();
-  return `  <url>
-    <loc>${SITE_URL}/news/${item.slug}/</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>`;
-}).join('\n')}
-</urlset>`;
-
-  await fs.writeFile('sitemap.xml', sitemap, 'utf-8');
-  console.log('✔ generated sitemap.xml');
-}
-
-// robots.txtを生成
-async function generateRobotsTxt() {
-  const robots = `User-agent: *
-Allow: /
-
-Sitemap: ${SITE_URL}/sitemap.xml`;
-
-  await fs.writeFile('robots.txt', robots, 'utf-8');
-  console.log('✔ generated robots.txt');
 }
 
 main().catch(err => {
