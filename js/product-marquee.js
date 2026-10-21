@@ -7,7 +7,6 @@
   const wrap = (value, width) => ((value % width) + width) % width;
   let frame = 0;
   let lastTime = 0;
-  let viewportWidth = window.innerWidth;
 
   function paint(row) {
     row.track.style.transform = `translate3d(${-row.offset}px, 0, 0)`;
@@ -38,12 +37,8 @@
 
   function tick(time) {
     frame = 0;
-    // Resize/observer events may arrive after the next paint. Reserve enough
-    // repeated images as soon as the viewport changes, even during a loop.
-    if (viewportWidth !== window.innerWidth) {
-      viewportWidth = window.innerWidth;
-      rows.forEach(row => { row.needsMeasure = true; });
-    }
+    // ResizeObserver and the resize event invalidate geometry. Reading viewport
+    // geometry here after the previous frame's transform forces layout at 60fps.
     const seconds = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
     lastTime = time;
     for (const row of rows) {
