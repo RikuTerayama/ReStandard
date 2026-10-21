@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'assets/base-products.json'), 'utf8'));
+const {responsive}=require('../catalog/responsive-images.cjs');
 const escape = value => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const toolbar=(id,caption)=>`<div class="marquee-toolbar"><p>${caption}</p><button type="button" data-marquee-toggle="${id}" aria-pressed="false" aria-controls="${id}-motion" hidden><span aria-hidden="true">Ⅱ</span> <span data-marquee-label>自動スクロールを停止</span></button></div>`;
 function card(entry, wearing = false) {
@@ -10,7 +11,7 @@ function card(entry, wearing = false) {
   const photo = product.photos[entry.photo];
   const alt = product.name + (wearing ? ' 着用イメージ' : ' 商品写真');
   return `          <a href="${escape(product.url)}" target="_blank" rel="noopener noreferrer" style="--image-ratio: ${photo.width / photo.height}">
-            <img src="${escape(photo.file)}" width="${photo.width}" height="${photo.height}" alt="${escape(alt)}" loading="eager" decoding="async" draggable="false">
+            <img src="${escape(photo.file)}" ${responsive(photo.file,wearing?'(max-width: 640px) 184px, (max-width: 1112px) 29vw, 320px':'(max-width: 667px) 128px, (max-width: 1250px) 20vw, 240px')} width="${photo.width}" height="${photo.height}" alt="${escape(alt)}" loading="lazy" decoding="async" draggable="false">
           </a>`;
 }
 const collection = `  <section id="collection">

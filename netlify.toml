@@ -6,6 +6,10 @@
   directory = "_infra/catalog-functions"
   node_bundler = "esbuild"
 
+# Existing BASE originals only; width-only contain preserves the entire image.
+[images]
+  remote_images = ['https://baseec-img-mng\.akamaized\.net/images/item/origin/[a-zA-Z0-9._-]+(\?imformat=generic)?']
+
 # 商品ルートはFunction、既存ページは静的ファイルで提供する。
 # 公開用 _redirects にSPAフォールバックを含めず、不明なURLは404にする。
 

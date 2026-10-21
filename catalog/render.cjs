@@ -2,6 +2,7 @@
 const { availability, isFresh } = require('./normalize.cjs');
 const {header,footer}=require('./site-shell.cjs');
 const brandProfiles=require('./brand-profiles.json');
+const {responsive}=require('./responsive-images.cjs');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const json = value => JSON.stringify(value).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026');
 const money = n => `¥${n.toLocaleString('ja-JP')}`;
@@ -17,8 +18,9 @@ const publicStock = p => publicRecent(p)&&p.publicAvailability==='sold-out'?'売
 function picture(p, index = 0, eager = false, thumb = false) {
   const img = p.images[index];
   if (!img) return '<span class="image-missing">画像を準備しています</span>';
-  const image = `<img src="${esc(thumb ? img.preview : img.url)}" alt="${esc(p.name)} — 画像 ${index+1}" loading="${eager?'eager':'lazy'}" ${eager?'fetchpriority="high"':''} decoding="async">`;
-  return !thumb&&img.preview!==img.url?`<picture><source media="(max-width: 760px)" srcset="${esc(img.preview)}">${image}</picture>`:image;
+  const sizing=responsive(img.url,thumb==='thumbnail'?'64px':thumb?'(max-width: 760px) 46vw, (max-width: 1100px) 30vw, 23vw':'(max-width: 760px) 92vw, (max-width: 1100px) 44vw, 600px',thumb==='thumbnail'?[96,192]:[320,480,640,960,1280]);
+  const image = `<img src="${esc(thumb ? img.preview : img.url)}" ${sizing} alt="${esc(p.name)} — 画像 ${index+1}" loading="${eager?'eager':'lazy'}" ${eager?'fetchpriority="high"':''} decoding="async">`;
+  return !sizing&&!thumb&&img.preview!==img.url?`<picture><source media="(max-width: 760px)" srcset="${esc(img.preview)}">${image}</picture>`:image;
 }
 function descriptionHtml(text) {
   return text.split(/\r?\n/).filter(line=>line.trim()).map(line=>/^・/.test(line.trim())?`<h3>${esc(line.trim().replace(/^・/,''))}</h3>`:`<p>${esc(line)}</p>`).join('');
@@ -40,7 +42,7 @@ function breadcrumb(parts, siteUrl, root='Products') {
     data:{'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:values.map((p,i)=>({'@type':'ListItem',position:i+1,name:p.name,item:siteUrl+p.url}))}};
 }
 function layout({title,description,path,body,siteUrl,ogImage,schema=[],preview=false,noindex=false,expiresAt=null}) {
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script>document.documentElement.classList.add('rs-menu-ready')</script>
 <title>${esc(title)} | ReStandard</title><meta name="description" content="${esc(description)}">
 <meta name="robots" content="${preview||noindex?'noindex,follow':'index,follow,max-image-preview:large'}">
 <link rel="canonical" href="${esc(siteUrl+path)}"><meta property="og:type" content="website"><meta property="og:site_name" content="ReStandard">
@@ -74,7 +76,7 @@ function productPage(p, catalog, {siteUrl,preview=false,now=Date.now()}) {
   const body = `${crumb.html}<div class="product-layout"><section class="gallery" aria-label="商品画像">
 <div class="gallery-track" tabindex="0" aria-label="商品画像。左右にスクロールできます">${p.images.map((img,i)=>`<a class="gallery-slide" id="image-${i+1}" href="${esc(img.url)}" data-zoom aria-label="画像 ${i+1} を拡大">${picture(p,i,i===0)}</a>`).join('')}</div>
 <div class="gallery-controls" hidden><button type="button" data-prev aria-label="前の画像">←</button><span data-position translate="no">1 / ${p.images.length}</span><button type="button" data-next aria-label="次の画像">→</button><button type="button" data-gallery-pause aria-label="自動切り替えを停止" aria-pressed="false">Ⅱ</button></div>
-<nav class="thumbnails" aria-label="画像を選ぶ">${p.images.map((img,i)=>`<a href="#image-${i+1}" data-image-index="${i}" aria-label="画像 ${i+1}" ${i===0?'aria-current="true"':''}>${picture(p,i,false,true)}</a>`).join('')}</nav><p class="caption">左右にスワイプ / 画像をタップして拡大</p></section>
+<nav class="thumbnails" aria-label="画像を選ぶ">${p.images.map((img,i)=>`<a href="#image-${i+1}" data-image-index="${i}" aria-label="画像 ${i+1}" ${i===0?'aria-current="true"':''}>${picture(p,i,false,'thumbnail')}</a>`).join('')}</nav><p class="caption">左右にスワイプ / 画像をタップして拡大</p></section>
 <section class="product-info">${p.brand?`<a class="eyebrow" href="${brandPath(p.brand)}">${esc(p.brand)}</a>`:''}<h1>${esc(p.name)}</h1>
 <p class="price" data-volatile>${price(p,fresh,preview)}</p><p class="stock" data-volatile ${publicRecent(p)?`data-stock-expires="${Date.parse(p.fetchedAt)+86400000}"`:""}>${fresh?availability(p):publicStock(p)}</p>
 

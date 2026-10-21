@@ -158,6 +158,17 @@
       wake();
     });
     measure(row);
+    // Warm an entire repeated strip shortly before it enters view. Native lazy
+    // loading alone can leave the far end blank after a fast swipe or loop wrap.
+    // Keep the animation clock independent of image completion/failure.
+    if ('IntersectionObserver' in window) {
+      const warm = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        track.querySelectorAll('img').forEach(img => { img.loading = 'eager'; });
+        warm.disconnect();
+      }, {rootMargin:'600px 0px'});
+      warm.observe(row.viewport);
+    }
   }
 
   function start() {

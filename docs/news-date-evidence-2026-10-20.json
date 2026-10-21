@@ -1,0 +1,97 @@
+{
+  "checkedAt": "2026-10-20T06:54:48.960Z",
+  "method": "Original note public BlogPosting.datePublished corroborated by visible time[datetime]; export pubDate is creation/export data for scheduled articles.",
+  "articles": [
+    {
+      "slug": "1028-2025aw-eribe-amp-restandardrockmount",
+      "original": "https://note.com/restandard_2025/n/n80e1f060f0ec",
+      "manifest": "2025-09-09T18:57:30",
+      "article": "2025-10-28T18:57:30",
+      "verified": "2025-10-28T20:57:36.000+09:00",
+      "display": [
+        {
+          "date": "2025-10-28T20:57:36.000+09:00",
+          "text": "2025年10月28日 20:57"
+        }
+      ]
+    },
+    {
+      "slug": "1021restandard2025aw-harley-of-scotland-amp-rockmount",
+      "original": "https://note.com/restandard_2025/n/nb5f8c145e52c",
+      "manifest": "2025-09-09T18:48:18",
+      "article": "2025-10-21T18:48:18",
+      "verified": "2025-10-22T19:53:10.000+09:00",
+      "display": [
+        {
+          "date": "2025-10-22T19:53:10.000+09:00",
+          "text": "2025年10月22日 19:53"
+        }
+      ]
+    },
+    {
+      "slug": "1014restandard2025aw-harley-of-scotland-amp-rockmount",
+      "original": "https://note.com/restandard_2025/n/nfcafa06fb104",
+      "manifest": "2025-09-09T18:41:37",
+      "article": "2025-10-14T18:41:37",
+      "verified": "2025-10-14T18:59:18.000+09:00",
+      "display": [
+        {
+          "date": "2025-10-14T18:59:18.000+09:00",
+          "text": "2025年10月14日 18:59"
+        }
+      ]
+    },
+    {
+      "slug": "107restandard2025aw-harley-of-scotland-amp-rockmount",
+      "original": "https://note.com/restandard_2025/n/n83eb1fd85d36",
+      "manifest": "2025-09-09T18:14:18",
+      "article": "2025-10-07T18:14:18",
+      "verified": "2025-10-07T20:10:01.000+09:00",
+      "display": [
+        {
+          "date": "2025-10-07T20:10:01.000+09:00",
+          "text": "2025年10月7日 20:10"
+        }
+      ]
+    },
+    {
+      "slug": "930restandard2025aw-harley-of-scotland-amp-rockmount",
+      "original": "https://note.com/restandard_2025/n/nd9caf0fd0fdc",
+      "manifest": "2025-09-09T18:00:49",
+      "article": "2025-09-30T18:00:49",
+      "verified": "2025-09-30T20:23:12.000+09:00",
+      "display": [
+        {
+          "date": "2025-09-30T20:23:12.000+09:00",
+          "text": "2025年9月30日 20:23"
+        }
+      ]
+    },
+    {
+      "slug": "2025-fw-new-arrival-rockmount",
+      "original": "https://note.com/restandard_2025/n/ncf43100d1e7b",
+      "manifest": "2025-08-19T20:47:57",
+      "article": "2025-07-29T20:11:45",
+      "verified": "2025-08-19T20:47:57.000+09:00",
+      "display": [
+        {
+          "date": "2025-08-19T20:47:57.000+09:00",
+          "text": "2025年8月19日 20:47"
+        }
+      ]
+    },
+    {
+      "slug": "untitled",
+      "original": "https://note.com/restandard_2025/n/nbb0febf53df3",
+      "manifest": "2025-07-15T19:45:22",
+      "article": "2025-07-01T19:59:47",
+      "verified": "2025-07-15T19:45:22.000+09:00",
+      "display": [
+        {
+          "date": "2025-07-15T19:45:22.000+09:00",
+          "text": "2025年7月15日 19:45"
+        }
+      ]
+    }
+  ]
+}

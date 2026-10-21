@@ -14,7 +14,10 @@ const fixture = `<!doctype html><meta name="viewport" content="width=device-widt
 <body class="rs-editorial rs-home">${sections}<script src="/js/product-marquee.js" defer></script></body>`;
 const types = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.webp':'image/webp'};
 const server = http.createServer((req,res) => {
-  const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+  const request = new URL(req.url, 'http://localhost');
+  // Layout tests use the same original for local CDN URLs; transformed dimensions
+  // and successful Image CDN responses are checked separately on production.
+  const pathname = decodeURIComponent(request.pathname==='/.netlify/images'&&request.searchParams.get('url')?.startsWith('/image/')?request.searchParams.get('url'):request.pathname);
   if (pathname === '/') {res.setHeader('Content-Type','text/html; charset=utf-8');res.end(fixture);return;}
   const file = path.resolve(root, '.'+pathname);
   if (!file.startsWith(root+path.sep)) {res.writeHead(403).end();return;}
@@ -133,6 +136,8 @@ async function main() {
   for(const width of [320,375,480,768,1024,1440,2560,3840]){
     await page.setViewportSize({width,height:1100});
     await page.waitForTimeout(50);await advance(100);
+    // All fixture strips are within the 600px warm-up margin at this height.
+    await page.waitForFunction(()=>[...document.querySelectorAll('.marquee-group:not([data-marquee-clone]) img')].every(i=>i.complete&&i.naturalWidth>0));
     for(const g of await geometry()){
       assert.equal(g.animation,'none');
       assert(Math.abs(g.width-g.distance)<0.5,'Repeated groups must include the trailing gap');

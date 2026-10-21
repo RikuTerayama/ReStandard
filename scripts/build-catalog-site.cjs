@@ -6,6 +6,8 @@ const {normalize}=require('../catalog/normalize.cjs');
 const {connectHome}=require('../catalog/home-links.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'.catalog-dist');
 (async()=>{
+  require('./render-product-sections.cjs');
+  require('./optimize-home-images.cjs').render();
   require('./build-lookbook.cjs');
   require('./render-news-products.cjs').render();
   require('./sync-site-shell.cjs');
