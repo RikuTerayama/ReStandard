@@ -23,7 +23,7 @@ html body .contact-embed button{background:transparent;border:1px solid #aaa99f;
 html body .contact-embed iframe{display:block;min-width:0;max-width:100%}
 html body .contact-embed [hidden]{display:none!important}
 .brand-intro{display:grid;grid-template-columns:minmax(180px,.65fr) minmax(0,1.35fr);gap:clamp(32px,6vw,90px);align-items:center;padding:35px 0 65px;max-width:1200px;margin:0 auto}
-.brand-intro-logo{background:#fff;padding:35px;display:grid;place-items:center;min-height:260px}
+.brand-intro-logo{background:transparent;padding:35px;display:grid;place-items:center;min-height:260px}
 .brand-intro-logo img{display:block;width:100%;max-width:280px;height:180px;object-fit:contain}
 .brand-intro h1{font-size:clamp(30px,4vw,54px);font-weight:400;line-height:1.2;letter-spacing:-.025em;margin:15px 0 24px}
 .brand-description{font-size:15px;line-height:2;max-width:42em;color:#55554f}
@@ -36,7 +36,7 @@ html body .contact-embed [hidden]{display:none!important}
 .brand-enquiry>a{flex-shrink:0}
 .brand-directory{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:42px 30px;margin-bottom:80px}
 .brand-directory>a{display:block;text-decoration:none}
-.brand-directory-logo{background:#fff;display:grid;place-items:center;height:200px;margin-bottom:20px;padding:30px}
+.brand-directory-logo{background:transparent;display:grid;place-items:center;height:200px;margin-bottom:20px;padding:30px}
 .brand-directory-logo img{width:100%;max-width:240px;height:140px;object-fit:contain}
 .brand-directory .eyebrow{font-size:10px;margin-bottom:8px;color:#66665f}
 .brand-directory-name{display:flex;justify-content:space-between;gap:12px;font-size:19px}
@@ -71,3 +71,7 @@ html body.lookbook-page .lookbook-copy h4.look-item-label{margin-top:18px}
  .lookbook-theme-nav{font-size:12px;gap:10px 20px}.lookbook-theme-heading{margin-bottom:22px}
  html body.rs-home .intro-theme{flex-wrap:wrap;gap:5px 16px}
 }
+
+/* Display the original artwork with white knocked out; no logo redraw or bitmap changes. */
+html body :is(.brand-logo,.brand-intro-logo img,.brand-directory-logo img){background:transparent!important}
+html body :is(.brand-logo,.brand-intro-logo img,.brand-directory-logo img):is([alt="Sans Arcidet"],[alt="Hat Attack"],[src$="/san arcident.webp"],[src$="/hat attack.webp"]){filter:url("/image/logo-transparency.svg#white")}
