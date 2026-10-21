@@ -1,0 +1,838 @@
+{
+  "date": "2026-10-21",
+  "origin": "https://restandard-2025.netlify.app",
+  "units": {
+    "lcp": "ms",
+    "tbt": "ms",
+    "cls": "unitless",
+    "bytes": "bytes"
+  },
+  "commits": {
+    "before": "92fa1ad9a564b5f6279216e2dc1d901f5a805f89",
+    "productAfter": "a96c8e652741e3809f4b811ca591122a96679d08",
+    "homeAfter": "52950fd8de9b1f9b56f45d9d75cbb3b25d81ae7b"
+  },
+  "methodology": "Three sequential runs per page/device/phase; median per metric. Same Chrome/Lighthouse configuration. No simultaneous browser QA. Laboratory results, not field Core Web Vitals. CPU performance and network varied; warnings retained. Product is unchanged by the last home-only commit.",
+  "before": {
+    "medians": [
+      {
+        "page": "home",
+        "device": "mobile",
+        "score": 50,
+        "lcp": 16422.550500000005,
+        "cls": 0,
+        "tbt": 395.5,
+        "bytes": 4861000
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "score": 79,
+        "lcp": 2089.7355000000002,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 4841404
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "score": 73,
+        "lcp": 4014.2484999999997,
+        "cls": 0.2420264079263828,
+        "tbt": 35,
+        "bytes": 5025015
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "score": 95,
+        "lcp": 1354.7945,
+        "cls": 0.0005860174184612051,
+        "tbt": 0,
+        "bytes": 5757910
+      }
+    ],
+    "runs": [
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 1,
+        "at": "2026-10-20T02:24:25.773Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 45,
+        "lcp": 17682.558000000005,
+        "cls": 0,
+        "tbt": 604,
+        "bytes": 4861075,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1798,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 2,
+        "at": "2026-10-20T02:24:53.396Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 50,
+        "lcp": 8792.368999999999,
+        "cls": 0,
+        "tbt": 380,
+        "bytes": 4860892,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1757.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 3,
+        "at": "2026-10-20T02:25:19.899Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 51,
+        "lcp": 16422.550500000005,
+        "cls": 0,
+        "tbt": 395.5,
+        "bytes": 4861000,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1762.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 1,
+        "at": "2026-10-20T02:25:46.894Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 79,
+        "lcp": 2089.7355000000002,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 4841569,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1750.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 2,
+        "at": "2026-10-20T02:26:12.349Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 66,
+        "lcp": 3338.311999999999,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 4841404,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1783.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 3,
+        "at": "2026-10-20T02:26:38.279Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 86,
+        "lcp": 1735.2510000000002,
+        "cls": 0.016932586955762618,
+        "tbt": 7,
+        "bytes": 4841046,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1784,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "run": 1,
+        "at": "2026-10-20T02:27:03.813Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 73,
+        "lcp": 4087.7070000000003,
+        "cls": 0.2420264079263828,
+        "tbt": 38.99999999999977,
+        "bytes": 5025006,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1577,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "run": 2,
+        "at": "2026-10-20T02:27:23.856Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 73,
+        "lcp": 4014.2484999999997,
+        "cls": 0.2420264079263828,
+        "tbt": 32,
+        "bytes": 5025015,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1657,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "run": 3,
+        "at": "2026-10-20T02:27:43.839Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 72,
+        "lcp": 3989.0869999999995,
+        "cls": 0.2420264079263828,
+        "tbt": 35,
+        "bytes": 5048745,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1827,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "run": 1,
+        "at": "2026-10-20T02:28:04.924Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 97,
+        "lcp": 1189.5225,
+        "cls": 0.0005860174184612051,
+        "tbt": 0,
+        "bytes": 5757910,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1834,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "run": 2,
+        "at": "2026-10-20T02:28:25.086Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 94,
+        "lcp": 1515.0985,
+        "cls": 0.0005860174184612051,
+        "tbt": 4,
+        "bytes": 5780996,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1803,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "run": 3,
+        "at": "2026-10-20T02:28:45.075Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 95,
+        "lcp": 1354.7945,
+        "cls": 0.0005860174184612051,
+        "tbt": 0,
+        "bytes": 5757815,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1781.5,
+          "credits": {}
+        }
+      }
+    ]
+  },
+  "after": {
+    "medians": [
+      {
+        "page": "home",
+        "device": "mobile",
+        "score": 55.00000000000001,
+        "lcp": 6675.1651,
+        "cls": 0,
+        "tbt": 440.9999999999982,
+        "bytes": 1719728
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "score": 72,
+        "lcp": 2685.8738000000003,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 1621203
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "score": 96,
+        "lcp": 2423.8315000000002,
+        "cls": 0.01273652890744308,
+        "tbt": 0,
+        "bytes": 648436
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "score": 99,
+        "lcp": 699.769,
+        "cls": 0.0005860174184612051,
+        "tbt": 0,
+        "bytes": 327512
+      }
+    ],
+    "runs": [
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 1,
+        "at": "2026-10-21T13:55:15.388Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 52,
+        "lcp": 8883.3968,
+        "cls": 0,
+        "tbt": 485.5000000000018,
+        "bytes": 1741118,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1781,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 2,
+        "at": "2026-10-21T13:55:37.909Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 55,
+        "lcp": 6675.1651,
+        "cls": 0,
+        "tbt": 440.9999999999982,
+        "bytes": 1719728,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 3147.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 3,
+        "at": "2026-10-21T13:56:01.249Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 61,
+        "lcp": 6575.179799999999,
+        "cls": 0,
+        "tbt": 292.6125000000011,
+        "bytes": 1719710,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 3120.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 1,
+        "at": "2026-10-21T13:56:23.690Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 72,
+        "lcp": 2685.8738000000003,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 1621459,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 3059,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 2,
+        "at": "2026-10-21T13:56:46.104Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 70,
+        "lcp": 3023.6116,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 1621175,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 3105.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 3,
+        "at": "2026-10-21T13:57:08.418Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 90,
+        "lcp": 1595.1830000000004,
+        "cls": 0.0162777892683154,
+        "tbt": 2,
+        "bytes": 1621203,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 3119,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "run": 1,
+        "at": "2026-10-21T07:11:05.665Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 97,
+        "lcp": 2282.9764999999998,
+        "cls": 0.01273652890744308,
+        "tbt": 0,
+        "bytes": 648460,
+        "warnings": [
+          "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
+        ],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 995.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "run": 2,
+        "at": "2026-10-21T07:11:27.086Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 96,
+        "lcp": 2423.8315000000002,
+        "cls": 0.01273652890744308,
+        "tbt": 0,
+        "bytes": 648434,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 2197.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "mobile",
+        "run": 3,
+        "at": "2026-10-21T07:11:48.157Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 96,
+        "lcp": 2440.8015,
+        "cls": 0.01273652890744308,
+        "tbt": 0,
+        "bytes": 648436,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1613.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "run": 1,
+        "at": "2026-10-21T07:12:11.039Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 99,
+        "lcp": 777.765,
+        "cls": 0.0005860174184612051,
+        "tbt": 0,
+        "bytes": 327473,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1722,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "run": 2,
+        "at": "2026-10-21T07:12:32.323Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 99,
+        "lcp": 699.769,
+        "cls": 0.0005860174184612051,
+        "tbt": 0,
+        "bytes": 327583,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1820.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "product",
+        "device": "desktop",
+        "run": 3,
+        "at": "2026-10-21T07:12:52.220Z",
+        "url": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "version": "13.5.0",
+        "score": 99,
+        "lcp": 633.569,
+        "cls": 0.0005860174184612051,
+        "tbt": 0,
+        "bytes": 327512,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1838,
+          "credits": {}
+        }
+      }
+    ]
+  },
+  "intermediateHome": {
+    "medians": [
+      {
+        "page": "home",
+        "device": "mobile",
+        "score": 41,
+        "lcp": 7713.682400000001,
+        "cls": 0,
+        "tbt": 1179.499999999999,
+        "bytes": 1792555
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "score": 67,
+        "lcp": 3001.2605,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 1693654
+      }
+    ],
+    "runs": [
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 1,
+        "at": "2026-10-21T07:07:56.249Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 49,
+        "lcp": 10015.874000000003,
+        "cls": 0,
+        "tbt": 351,
+        "bytes": 2361407,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1400,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 2,
+        "at": "2026-10-21T07:08:32.402Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 41,
+        "lcp": 7266.893799999999,
+        "cls": 0,
+        "tbt": 1179.499999999999,
+        "bytes": 1792285,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1094.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "mobile",
+        "run": 3,
+        "at": "2026-10-21T07:09:06.054Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 35,
+        "lcp": 7713.682400000001,
+        "cls": 0,
+        "tbt": 1392.499999999999,
+        "bytes": 1792555,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1794,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 1,
+        "at": "2026-10-21T07:09:35.059Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 61,
+        "lcp": 4011.7399999999993,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 2288399,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 845.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 2,
+        "at": "2026-10-21T07:10:04.246Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 82,
+        "lcp": 1856.1419999999998,
+        "cls": 0.01628701512542742,
+        "tbt": 221,
+        "bytes": 1693654,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1713.5,
+          "credits": {}
+        }
+      },
+      {
+        "page": "home",
+        "device": "desktop",
+        "run": 3,
+        "at": "2026-10-21T07:10:37.836Z",
+        "url": "https://restandard-2025.netlify.app/",
+        "version": "13.5.0",
+        "score": 67,
+        "lcp": 3001.2605,
+        "cls": 0.0162777892683154,
+        "tbt": 0,
+        "bytes": 1693630,
+        "warnings": [],
+        "environment": {
+          "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+          "hostUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+          "benchmarkIndex": 1429.5,
+          "credits": {}
+        }
+      }
+    ]
+  },
+  "settings": {
+    "mobile": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "desktop": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "desktop",
+      "throttling": {
+        "rttMs": 40,
+        "throughputKbps": 10240,
+        "requestLatencyMs": 0,
+        "downloadThroughputKbps": 0,
+        "uploadThroughputKbps": 0,
+        "cpuSlowdownMultiplier": 1
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": false,
+        "width": 1350,
+        "height": 940,
+        "deviceScaleFactor": 1,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    }
+  }
+}
