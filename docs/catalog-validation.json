@@ -1,16 +1,16 @@
 {
-  "verifiedAt": "2026-10-16T12:45:52.758Z",
-  "sourceFetchedAt": "2026-10-16T12:14:13.035859+00:00",
-  "products": 71,
-  "imageReferences": 523,
-  "uniqueImageUrls": 523,
+  "verifiedAt": "2026-10-24T18:33:46.327Z",
+  "sourceFetchedAt": "2026-10-24T18:26:12.452272+00:00",
+  "products": 82,
+  "imageReferences": 564,
+  "uniqueImageUrls": 564,
   "failedImages": [],
   "results": [
     {
       "id": "125801949",
       "name": "Harley of Scotland クルーネック・ニットカーディガン（cinder）",
       "url": "/products/harley-of-scotland-cardigan-cinder-125801949/",
-      "images": 12,
+      "images": 11,
       "price": 41800,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -19,17 +19,18 @@
       "imageUrlsOk": true,
       "exactStock": "not acquired",
       "missing": [
+        "size",
         "origin",
         "measurements"
       ]
     },
     {
-      "id": "124702355",
-      "name": "【別注】 Rockmount ティアードスカート フランネル Sp9948（Blackwatch）",
-      "url": "/products/rockmount-sp9948-blackwatch-124702355/",
-      "images": 12,
-      "price": 20680,
-      "publicAvailability": "sold-out",
+      "id": "125884199",
+      "name": "【別注】 Rockmount ティアードスカート ウールツイード Sp9948（blackwatch）",
+      "url": "/products/rockmount-rockmount-sp9948-wool-tweed-check-blackwatch-125884199/",
+      "images": 9,
+      "price": 25080,
+      "publicAvailability": "unknown",
       "sourceMatches": true,
       "seo": true,
       "internalLinks": true,
@@ -43,7 +44,7 @@
       "id": "125801985",
       "name": "Harley of Scotland クルーネック・ニットカーディガン（acacia）",
       "url": "/products/harley-of-scotland-5ha30-acacia-125801985/",
-      "images": 5,
+      "images": 7,
       "price": 41800,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -52,6 +53,7 @@
       "imageUrlsOk": true,
       "exactStock": "not acquired",
       "missing": [
+        "size",
         "origin",
         "measurements"
       ]
@@ -60,7 +62,113 @@
       "id": "125884162",
       "name": "【別注】 Rockmount ティアードスカート コットンフランネル Sp9948（navy/yellow）",
       "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-125884162/",
-      "images": 15,
+      "images": 16,
+      "price": 20680,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "measurements"
+      ]
+    },
+    {
+      "id": "163800394",
+      "name": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(black)",
+      "url": "/products/harley-of-scotland-black-163800394/",
+      "images": 4,
+      "price": 36300,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "itemCode",
+        "size",
+        "origin",
+        "measurements"
+      ]
+    },
+    {
+      "id": "163687582",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/brown",
+      "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-brown-163687582/",
+      "images": 3,
+      "price": 20680,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "measurements"
+      ]
+    },
+    {
+      "id": "163800260",
+      "name": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(agate)",
+      "url": "/products/harley-of-scotland-polo-agate-163800260/",
+      "images": 6,
+      "price": 36300,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "itemCode",
+        "color",
+        "size",
+        "origin",
+        "measurements"
+      ]
+    },
+    {
+      "id": "163687863",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel brown/beige",
+      "url": "/products/rockmount-rockmount-sp9948-flannel-check-brown-beige-163687863/",
+      "images": 3,
+      "price": 20680,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "measurements"
+      ]
+    },
+    {
+      "id": "163800185",
+      "name": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(acacia)",
+      "url": "/products/harley-of-scotland-acacia-163800185/",
+      "images": 3,
+      "price": 36300,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "itemCode",
+        "size",
+        "origin",
+        "measurements"
+      ]
+    },
+    {
+      "id": "163688049",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel grey/royal",
+      "url": "/products/rockmount-rockmount-sp9948-flannel-check-grey-royal-163688049/",
+      "images": 4,
       "price": 20680,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -110,7 +218,7 @@
       "id": "125802440",
       "name": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（elk(brown)）",
       "url": "/products/harley-of-scotland-5ha75-elk-brown-125802440/",
-      "images": 12,
+      "images": 13,
       "price": 30800,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -124,11 +232,11 @@
       ]
     },
     {
-      "id": "125884199",
-      "name": "【別注】 Rockmount ティアードスカート ウールツイード Sp9948（blackwatch）",
-      "url": "/products/rockmount-rockmount-sp9948-wool-tweed-check-blackwatch-125884199/",
-      "images": 11,
-      "price": 25080,
+      "id": "163687474",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel green/white",
+      "url": "/products/rockmount-rockmount-sp9948-flannel-check-green-white-163687474/",
+      "images": 4,
+      "price": 20680,
       "publicAvailability": "unknown",
       "sourceMatches": true,
       "seo": true,
@@ -143,7 +251,7 @@
       "id": "125802414",
       "name": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（almond）",
       "url": "/products/harley-of-scotland-5ha75-almond-125802414/",
-      "images": 12,
+      "images": 13,
       "price": 30800,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -193,7 +301,7 @@
       "id": "125884284",
       "name": "【別注】 Rockmount ティアードスカート ウールフランネル Sp9948（navy）",
       "url": "/products/rockmount-rockmount-sp9948-wool-flannel-navy-125884284/",
-      "images": 6,
+      "images": 7,
       "price": 25080,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -338,7 +446,7 @@
       "id": "124700633",
       "name": "Harley of Scotland 2プライ ハイゲージ タートルネックニット（Pink）",
       "url": "/products/harley-of-scotland-5ha74-pink-124700633/",
-      "images": 12,
+      "images": 11,
       "price": 30800,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -355,6 +463,77 @@
       "name": "【別注】 Rockmount ティアードスカート コットンフランネル Sp9948（royal stewart）",
       "url": "/products/rockmount-rockmount-sp9948-flannel-check-royal-stewart-125884071/",
       "images": 11,
+      "price": 20680,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "measurements"
+      ]
+    },
+    {
+      "id": "163809899",
+      "name": "Harley of Scotland ネップ糸 タートルネックセーター jura(ネイビー) 38",
+      "url": "/products/harley-of-scotland-jura-163809899/",
+      "images": 4,
+      "price": 30800,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "itemCode",
+        "size",
+        "origin",
+        "measurements"
+      ]
+    },
+    {
+      "id": "163688148",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/blue",
+      "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-blue-163688148/",
+      "images": 4,
+      "price": 20680,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "color",
+        "measurements"
+      ]
+    },
+    {
+      "id": "163809707",
+      "name": "Harley of Scotland ネップ糸 タートルネックセーター machair(ベージュ) 38",
+      "url": "/products/harley-of-scotland-machair-163809707/",
+      "images": 4,
+      "price": 30800,
+      "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "itemCode",
+        "size",
+        "origin",
+        "measurements"
+      ]
+    },
+    {
+      "id": "163687745",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/yellow",
+      "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-163687745/",
+      "images": 3,
       "price": 20680,
       "publicAvailability": "unknown",
       "sourceMatches": true,
@@ -482,7 +661,7 @@
       "id": "124702621",
       "name": "【別注】 Rockmount ティアードスカート フランネル ミックス Sp9948（Blue)",
       "url": "/products/rockmount-rockmount-sp9948-flannel-check-mix-blue-124702621/",
-      "images": 7,
+      "images": 4,
       "price": 20680,
       "publicAvailability": "sold-out",
       "sourceMatches": true,
@@ -725,6 +904,22 @@
       "images": 7,
       "price": 50600,
       "publicAvailability": "unknown",
+      "sourceMatches": true,
+      "seo": true,
+      "internalLinks": true,
+      "imageUrlsOk": true,
+      "exactStock": "not acquired",
+      "missing": [
+        "measurements"
+      ]
+    },
+    {
+      "id": "124702355",
+      "name": "【別注】 Rockmount ティアードスカート フランネル Sp9948（Blackwatch）",
+      "url": "/products/rockmount-sp9948-blackwatch-124702355/",
+      "images": 12,
+      "price": 20680,
+      "publicAvailability": "sold-out",
       "sourceMatches": true,
       "seo": true,
       "internalLinks": true,

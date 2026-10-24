@@ -48,7 +48,7 @@ function layout({title,description,path,body,siteUrl,ogImage,schema=[],preview=f
 <link rel="canonical" href="${esc(siteUrl+path)}"><meta property="og:type" content="website"><meta property="og:site_name" content="ReStandard">
 <meta property="og:title" content="${esc(title)} | ReStandard"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${esc(siteUrl+path)}">
 ${ogImage?`<meta property="og:image" content="${esc(ogImage)}">`:''}
-<link rel="stylesheet" href="/css/catalog.css?v=20261019-1"><link rel="stylesheet" href="/css/discovery.css?v=20261021-logos"><link rel="stylesheet" href="/css/language.css?v=20261018-2"><script src="/js/lang-toggle.js?v=20261019-2" defer></script><script src="/js/catalog.js?v=20261019-1" defer></script>
+<link rel="stylesheet" href="/css/catalog.css?v=20261019-1"><link rel="stylesheet" href="/css/discovery.css?v=20261021-transparent-assets"><link rel="stylesheet" href="/css/language.css?v=20261018-2"><script src="/js/lang-toggle.js?v=20261019-2" defer></script><script src="/js/catalog.js?v=20261019-1" defer></script>
 ${schema.map(s=>`<script type="application/ld+json">${json(s)}</script>`).join('\n')}<link rel="stylesheet" href="/css/site-shell.css?v=20261019-2"><script src="/js/editorial.js?v=20261018-3" defer></script><link rel="stylesheet" href="/css/cursor.css?v=20261018-1"></head>
 <body ${expiresAt?`data-offer-expires="${expiresAt}"`:''}><a class="skip-link" href="#main">本文へ</a>
 ${header}

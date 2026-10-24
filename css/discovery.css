@@ -72,6 +72,5 @@ html body.lookbook-page .lookbook-copy h4.look-item-label{margin-top:18px}
  html body.rs-home .intro-theme{flex-wrap:wrap;gap:5px 16px}
 }
 
-/* Display the original artwork with white knocked out; no logo redraw or bitmap changes. */
-html body :is(.brand-logo,.brand-intro-logo img,.brand-directory-logo img){background:transparent!important}
-html body :is(.brand-logo,.brand-intro-logo img,.brand-directory-logo img):is([alt="Sans Arcidet"],[alt="Hat Attack"],[src$="/san arcident.webp"],[src$="/hat attack.webp"]){filter:url("/image/logo-transparency.svg#white")}
+/* Original transparent artwork, including self-contained SVG assets. */
+html body :is(.brand-logo,.brand-intro-logo img,.brand-directory-logo img){background:transparent!important;filter:none!important}

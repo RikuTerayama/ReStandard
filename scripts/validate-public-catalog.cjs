@@ -47,7 +47,7 @@ async function main(){
     failedImages:Object.entries(imageResults).filter(([,v])=>!v.ok).map(([url,result])=>({url,...result})),results:products};
   await fs.mkdir('docs',{recursive:true});await fs.writeFile('docs/catalog-validation.json',JSON.stringify(report,null,2));
   const rows=products.map(p=>{const item=catalog.products.find(x=>x.id===p.id);return `| ${p.name.replaceAll('|','\\|')} | ${p.id} | ${config.siteUrl+p.url} | ${item.baseUrl} | ${p.images} | ${p.price} | title・canonical・OG・Product・パンくず | ${p.imageUrlsOk?'公開情報・画像URL・内部リンク合格':'画像の再確認が必要'}／正確な在庫数は未取得 |`;});
-  await fs.writeFile('docs/catalog-all-products.md',`# 公開ストア全${products.length}商品 — 対応表・検証結果\n\n本番未公開。取得日時：${snapshot.fetchedAt}。検証日時：${report.verifiedAt}。価格は確認時点の税込円。非公開商品は含まない。画像はBASEの登録URL・順序と一致し、HTTP読込応答を確認。全画像の目視検査を意味しない。\n\n| 商品名 | BASE商品ID | ReStandard商品URL（未公開） | BASE購入URL | 画像枚数 | 価格 | SEO設定 | 検証結果 |\n|---|---|---|---|---:|---:|---|---|\n${rows.join('\n')}\n`);
+  await fs.writeFile('docs/catalog-all-products.md',`# 公開ストア全${products.length}商品 — 対応表・検証結果\n\n取得日時：${snapshot.fetchedAt}。検証日時：${report.verifiedAt}。価格は確認時点の税込円。非公開商品は含まない。画像はBASEの登録URL・順序と一致し、HTTP読込応答を確認。全画像の目視検査を意味しない。\n\n| 商品名 | BASE商品ID | ReStandard商品URL | BASE購入URL | 画像枚数 | 価格 | SEO設定 | 検証結果 |\n|---|---|---|---|---:|---:|---|---|\n${rows.join('\n')}\n`);
   console.log(JSON.stringify({...report,results:undefined},null,2));
   if(report.failedImages.length)process.exitCode=1;
 }

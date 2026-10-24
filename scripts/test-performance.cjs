@@ -19,7 +19,7 @@ test('home prioritizes the actual opening image and keeps all 32 BASE links',()=
  assert.equal(d.querySelectorAll('link[rel=preload][as=image]').length,0);
  assert.equal(d.querySelectorAll('img[fetchpriority=high]').length,1);
  assert.equal(d.querySelector('.intro-slide img').getAttribute('fetchpriority'),'high');
- assert.equal(d.querySelectorAll('[data-product-marquee]>a[href^="https://restandard.base.ec/items/"]').length,32);
+ assert.equal(d.querySelectorAll('[data-product-marquee]>a[href^="https://restandard.base.ec/items/"]').length,require('../assets/base-products.json').collection.flat().length+require('../assets/base-products.json').lookbook.length);
  assert([...d.querySelectorAll('[data-product-marquee] img')].every(i=>i.getAttribute('loading')==='lazy'&&i.srcset&&i.width&&i.height));
  assert(!d.querySelector('script[src*="bootstrap"],script[src*="init-sections"],link[href*="font-awesome"]'));
  d.defaultView.close();

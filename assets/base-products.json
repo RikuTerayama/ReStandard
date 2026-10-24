@@ -1,6 +1,6 @@
 {
   "source": "https://restandard.base.ec/",
-  "verifiedOn": "2026-10-15",
+  "verifiedOn": "2026-10-24T18:26:12.452272+00:00",
   "products": [
     {
       "id": "125801949",
@@ -50,6 +50,12 @@
           "width": 956,
           "height": 1200,
           "source": "https://baseec-img-mng.akamaized.net/images/item/origin/5a804a2d89a1c9c649a112c2438e9644.png?imformat=generic"
+        },
+        "102": {
+          "file": "image/base-products/68ea80477e58b02302b2.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/b05f77ce376321f74d8fe8dbf30fbc17.png?imformat=generic"
         }
       }
     },
@@ -108,6 +114,12 @@
           "width": 956,
           "height": 1200,
           "source": "https://baseec-img-mng.akamaized.net/images/item/origin/ed590ea0ff500067d7ae69f8edae4466.png?imformat=generic"
+        },
+        "103": {
+          "file": "image/base-products/bf71ff022791b9d4a4b1.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/049c052f645166d5ca67e9a236db550d.png?imformat=generic"
         }
       }
     },
@@ -122,11 +134,11 @@
           "height": 1200,
           "source": "https://baseec-img-mng.akamaized.net/images/item/origin/c47df5bb37becfd222a3c0b86533b43c.png?imformat=generic"
         },
-        "2": {
-          "file": "image/base-products/125884199-2.webp",
-          "width": 956,
-          "height": 1200,
-          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/8fc8ede5c1f7c9009d33b904754d638b.png?imformat=generic"
+        "102": {
+          "file": "image/base-products/77a0b30bccd93d39fc74.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/21ad6c19f5db7521e87286be340487e7.png?imformat=generic"
         }
       }
     },
@@ -140,6 +152,12 @@
           "width": 956,
           "height": 1200,
           "source": "https://baseec-img-mng.akamaized.net/images/item/origin/43c8c3e518640e5e91ea77bfa8d7d8fb.png?imformat=generic"
+        },
+        "101": {
+          "file": "image/base-products/b1e49e2ef88beb2bd3a1.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/360ff4dab5c6e5091959630676d64176.png?imformat=generic"
         }
       }
     },
@@ -172,6 +190,12 @@
           "width": 956,
           "height": 1200,
           "source": "https://baseec-img-mng.akamaized.net/images/item/origin/72e49e0fc2205089ba7d546c5a640bf2.png?imformat=generic"
+        },
+        "101": {
+          "file": "image/base-products/2376156bf73004ecefbb.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/0842c9c3d9d83d76ed9f0635c3afaa8b.png?imformat=generic"
         }
       }
     },
@@ -361,10 +385,191 @@
           "source": "https://baseec-img-mng.akamaized.net/images/item/origin/7c76d91dc6b7114f25c11a224c4d1430.png?imformat=generic"
         }
       }
+    },
+    {
+      "id": "163800394",
+      "name": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(black)",
+      "url": "https://restandard.base.ec/items/163800394",
+      "photos": {
+        "100": {
+          "file": "image/base-products/1a47b70fc5c459fa625c.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/6dbd80a42a04a9cc469a9bc939eee755.png?imformat=generic"
+        },
+        "101": {
+          "file": "image/base-products/cffb9e22ce2b07ca56b3.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/69c6de229c4ec14873071653239365cb.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163800260",
+      "name": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(agate)",
+      "url": "https://restandard.base.ec/items/163800260",
+      "photos": {
+        "100": {
+          "file": "image/base-products/69fa5e23b0358ea71d83.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/2784db09cc87d36134ff39336f526c79.png?imformat=generic"
+        },
+        "105": {
+          "file": "image/base-products/3f5dfe0904587a5d1477.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/006d2c289c78b2f680c9b3981f683375.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163800185",
+      "name": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(acacia)",
+      "url": "https://restandard.base.ec/items/163800185",
+      "photos": {
+        "100": {
+          "file": "image/base-products/7d04437708d7d403cff5.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/cfaa41da3a405e19bbbee8d148a04a8b.png?imformat=generic"
+        },
+        "101": {
+          "file": "image/base-products/69b815ed93426c824b5b.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/eafe83abcbb728e0fe3534e7f7d0c96d.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163809899",
+      "name": "Harley of Scotland ネップ糸 タートルネックセーター jura(ネイビー) 38",
+      "url": "https://restandard.base.ec/items/163809899",
+      "photos": {
+        "100": {
+          "file": "image/base-products/a933459716ad14cc753b.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/4be3b5cdc5bc117e9e2ee5486bbf8fce.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163809707",
+      "name": "Harley of Scotland ネップ糸 タートルネックセーター machair(ベージュ) 38",
+      "url": "https://restandard.base.ec/items/163809707",
+      "photos": {
+        "100": {
+          "file": "image/base-products/69c1ec928d7fab20bb53.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/6d5eb0acee923ae25be5b478f28ea1ae.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163687582",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/brown",
+      "url": "https://restandard.base.ec/items/163687582",
+      "photos": {
+        "100": {
+          "file": "image/base-products/d36e591f4047f0b486f7.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/351d295f793282c156fe2cf54782bdb7.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163687863",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel brown/beige",
+      "url": "https://restandard.base.ec/items/163687863",
+      "photos": {
+        "100": {
+          "file": "image/base-products/2be3b57cbfe285c595a0.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/08fa7794b6b5a3816d60b5a75c97e76f.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163688049",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel grey/royal",
+      "url": "https://restandard.base.ec/items/163688049",
+      "photos": {
+        "100": {
+          "file": "image/base-products/9967030e487d7b6cc675.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/7460381485a200feb37732499ed9c036.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163687474",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel green/white",
+      "url": "https://restandard.base.ec/items/163687474",
+      "photos": {
+        "100": {
+          "file": "image/base-products/0b91901ea6b08c7df4cc.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/7821f96f81c53b44bd33bd76014881cf.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163688148",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/blue",
+      "url": "https://restandard.base.ec/items/163688148",
+      "photos": {
+        "100": {
+          "file": "image/base-products/ec23945637e1acbc913a.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/e24e144ab63cd801cea257e9d87ebbff.png?imformat=generic"
+        }
+      }
+    },
+    {
+      "id": "163687745",
+      "name": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/yellow",
+      "url": "https://restandard.base.ec/items/163687745",
+      "photos": {
+        "100": {
+          "file": "image/base-products/bf68ae41fddcb0e4eb2d.jpg",
+          "width": 1632,
+          "height": 2048,
+          "source": "https://baseec-img-mng.akamaized.net/images/item/origin/d572c6eba95a02f69557e6068b1e73ab.png?imformat=generic"
+        }
+      }
     }
   ],
   "collection": [
     [
+      {
+        "id": "163800394",
+        "photo": 100
+      },
+      {
+        "id": "163800260",
+        "photo": 100
+      },
+      {
+        "id": "163800185",
+        "photo": 100
+      },
+      {
+        "id": "163809899",
+        "photo": 100
+      },
+      {
+        "id": "163809707",
+        "photo": 100
+      },
       {
         "id": "125801949",
         "photo": 0
@@ -392,29 +597,33 @@
       {
         "id": "125802029",
         "photo": 0
-      },
-      {
-        "id": "125802068",
-        "photo": 0
-      },
-      {
-        "id": "124700837",
-        "photo": 0
-      },
-      {
-        "id": "124700748",
-        "photo": 0
-      },
-      {
-        "id": "124700633",
-        "photo": 0
-      },
-      {
-        "id": "124700335",
-        "photo": 0
       }
     ],
     [
+      {
+        "id": "163687582",
+        "photo": 100
+      },
+      {
+        "id": "163687863",
+        "photo": 100
+      },
+      {
+        "id": "163688049",
+        "photo": 100
+      },
+      {
+        "id": "163687474",
+        "photo": 100
+      },
+      {
+        "id": "163688148",
+        "photo": 100
+      },
+      {
+        "id": "163687745",
+        "photo": 100
+      },
       {
         "id": "124702355",
         "photo": 0
@@ -438,65 +647,41 @@
       {
         "id": "125884284",
         "photo": 0
-      },
-      {
-        "id": "124702404",
-        "photo": 0
-      },
-      {
-        "id": "125884247",
-        "photo": 0
-      },
-      {
-        "id": "124701564",
-        "photo": 0
-      },
-      {
-        "id": "124702544",
-        "photo": 0
-      },
-      {
-        "id": "125884071",
-        "photo": 0
-      },
-      {
-        "id": "125312275",
-        "photo": 0
       }
     ]
   ],
   "lookbook": [
     {
-      "id": "125801949",
-      "photo": 1
+      "id": "163800185",
+      "photo": 101
+    },
+    {
+      "id": "163800394",
+      "photo": 101
+    },
+    {
+      "id": "163800260",
+      "photo": 105
     },
     {
       "id": "125801985",
-      "photo": 1
+      "photo": 102
     },
     {
-      "id": "125802521",
-      "photo": 2
+      "id": "125802440",
+      "photo": 103
+    },
+    {
+      "id": "125802414",
+      "photo": 101
+    },
+    {
+      "id": "125802496",
+      "photo": 101
     },
     {
       "id": "125884199",
-      "photo": 2
-    },
-    {
-      "id": "125884124",
-      "photo": 1
-    },
-    {
-      "id": "124702404",
-      "photo": 2
-    },
-    {
-      "id": "124700837",
-      "photo": 1
-    },
-    {
-      "id": "124700335",
-      "photo": 1
+      "photo": 102
     }
   ]
 }

@@ -11,8 +11,12 @@ const server=process.env.TEST_ORIGIN?null:fork('scripts/preview-catalog.cjs',[],
     await img.scrollIntoViewIfNeeded();await img.evaluate(i=>i.decode());
     const data=await img.evaluate(i=>{const c=getComputedStyle(i),box=i.closest('.brand-directory-logo')||i.parentElement;return{alt:i.alt,source:decodeURIComponent(i.src),background:c.backgroundColor,boxBackground:getComputedStyle(box).backgroundColor,filter:c.filter,loaded:i.naturalWidth>0,fit:c.objectFit}});
     assert(data.loaded);assert.equal(data.background,'rgba(0, 0, 0, 0)');assert.equal(data.boxBackground,'rgba(0, 0, 0, 0)');
-    if(['Sans Arcidet','Hat Attack'].includes(data.alt)||data.source.endsWith('/san arcident.webp')||data.source.endsWith('/hat attack.webp'))assert(data.filter.includes('logo-transparency.svg#white'));results.push({width,route,...data});
+    assert.equal(data.filter,'none','Transparency must belong to the asset, not CSS');
+    const alpha=await img.evaluate(i=>{const c=document.createElement('canvas');c.width=i.naturalWidth;c.height=i.naturalHeight;const ctx=c.getContext('2d');ctx.drawImage(i,0,0);const pixels=ctx.getImageData(0,0,c.width,c.height).data;let clear=0,ink=0;for(let j=3;j<pixels.length;j+=4){if(pixels[j]===0)clear++;if(pixels[j]>128)ink++;}return{clear,ink,pixels:pixels.length/4,currentSrc:i.currentSrc};});
+    assert(alpha.clear>alpha.pixels*.1,'Source pixels must contain transparency');assert(alpha.ink>20,'Logo artwork must remain visible');
+    assert(!alpha.currentSrc.includes('/.netlify/images'),'Serve transparent originals without CDN background conversion');results.push({width,route,...data,alpha});
    }
+   if(route==='/'&&[375,1440].includes(width))await page.locator('#brands').screenshot({path:`.catalog-private/home-brand-backgrounds-${width}.png`});
    if(route==='/brands/'&&[375,1440].includes(width)){await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await page.screenshot({path:`.catalog-private/brand-backgrounds-${width}.png`,fullPage:true});}
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   }await page.close();

@@ -1,9 +1,9 @@
 {
-  "checkedAt": "2026-10-20T01:13:27.772Z",
+  "checkedAt": "2026-10-24T18:37:32.186Z",
   "origin": "local-production-build",
-  "totalPages": 119,
-  "indexable": 118,
-  "sitemapUrls": 118,
+  "totalPages": 130,
+  "indexable": 129,
+  "sitemapUrls": 129,
   "errors": [],
   "pages": [
     {
@@ -118,7 +118,7 @@
         "BreadcrumbList",
         "Brand"
       ],
-      "imageCount": 19,
+      "imageCount": 24,
       "errors": []
     },
     {
@@ -178,7 +178,7 @@
         "BreadcrumbList",
         "Brand"
       ],
-      "imageCount": 44,
+      "imageCount": 50,
       "errors": []
     },
     {
@@ -248,7 +248,7 @@
       "schemas": [
         "BreadcrumbList"
       ],
-      "imageCount": 42,
+      "imageCount": 48,
       "errors": []
     },
     {
@@ -262,7 +262,7 @@
       "schemas": [
         "BreadcrumbList"
       ],
-      "imageCount": 12,
+      "imageCount": 17,
       "errors": []
     },
     {
@@ -376,7 +376,7 @@
       "indexable": true,
       "h1": "Lookbook",
       "schemas": [],
-      "imageCount": 14,
+      "imageCount": 17,
       "errors": []
     },
     {
@@ -694,7 +694,7 @@
       "schemas": [
         "BreadcrumbList"
       ],
-      "imageCount": 71,
+      "imageCount": 82,
       "errors": []
     },
     {
@@ -897,14 +897,14 @@
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-5ha30-acacia-125801985/",
       "title": "Harley of Scotland クルーネック・ニットカーディガン（acacia） | ReStandard",
-      "description": "Harley of Scotland クルーネック・ニットカーディガン（acacia）。カラー：Acacia（イエロー〜ベージュ系）。素材：Lambswool 100%。サイズ：40。全5枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "Harley of Scotland クルーネック・ニットカーディガン（acacia）。カラー：Acacia（イエロー〜ベージュ系）。素材：Lambswool 100%。全7枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "Harley of Scotland クルーネック・ニットカーディガン（acacia）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 15,
+      "imageCount": 19,
       "errors": []
     },
     {
@@ -912,14 +912,14 @@
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-5ha74-pink-124700633/",
       "title": "Harley of Scotland 2プライ ハイゲージ タートルネックニット（Pink） | ReStandard",
-      "description": "Harley of Scotland 2プライ ハイゲージ タートルネックニット（Pink）。カラー：Pink。素材：Lambswool 100%。サイズ：38。全12枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "Harley of Scotland 2プライ ハイゲージ タートルネックニット（Pink）。カラー：Pink。素材：Lambswool 100%。サイズ：38。全11枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "Harley of Scotland 2プライ ハイゲージ タートルネックニット（Pink）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 29,
+      "imageCount": 27,
       "errors": []
     },
     {
@@ -987,14 +987,14 @@
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-5ha75-almond-125802414/",
       "title": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（almond） | ReStandard",
-      "description": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（almond）。カラー：Almond（生成り〜エクリュ系）。素材：Lambswool 100%。サイズ：40。全12枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（almond）。カラー：Almond（生成り〜エクリュ系）。素材：Lambswool 100%。サイズ：40。全13枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（almond）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 29,
+      "imageCount": 31,
       "errors": []
     },
     {
@@ -1032,14 +1032,14 @@
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-5ha75-elk-brown-125802440/",
       "title": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（elk(brown)） | ReStandard",
-      "description": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（elk(brown)）。カラー：Elk(Brown)（ダークブラウン系）。素材：Lambswool 100%。サイズ：40。全12枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（elk(brown)）。カラー：Elk(Brown)（ダークブラウン系）。素材：Lambswool 100%。サイズ：40。全13枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "Harley of Scotland 2プライ ハイゲージ タートルネック セーター（elk(brown)）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 29,
+      "imageCount": 31,
       "errors": []
     },
     {
@@ -1058,18 +1058,48 @@
       "errors": []
     },
     {
+      "path": "/products/harley-of-scotland-acacia-163800185/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-acacia-163800185/",
+      "title": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(acacia) | ReStandard",
+      "description": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(acacia)。カラー：acacia(イエロー)。素材：Lambswool/ラムズウール100%。全3枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(acacia)",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 11,
+      "errors": []
+    },
+    {
+      "path": "/products/harley-of-scotland-black-163800394/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-black-163800394/",
+      "title": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(black) | ReStandard",
+      "description": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(black)。カラー：Black（ブラック）。素材：Lambswool/ラムズウール100%。全4枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(black)",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 13,
+      "errors": []
+    },
+    {
       "path": "/products/harley-of-scotland-cardigan-cinder-125801949/",
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-cardigan-cinder-125801949/",
       "title": "Harley of Scotland クルーネック・ニットカーディガン（cinder） | ReStandard",
-      "description": "Harley of Scotland クルーネック・ニットカーディガン（cinder）。カラー：CINDER（赤系ブラウン）。素材：Lambswool 100%。サイズ：40。全12枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "Harley of Scotland クルーネック・ニットカーディガン（cinder）。カラー：CINDER（赤系ブラウン）。素材：Lambswool 100%。全11枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "Harley of Scotland クルーネック・ニットカーディガン（cinder）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 29,
+      "imageCount": 27,
       "errors": []
     },
     {
@@ -1115,6 +1145,51 @@
         "BreadcrumbList"
       ],
       "imageCount": 23,
+      "errors": []
+    },
+    {
+      "path": "/products/harley-of-scotland-jura-163809899/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-jura-163809899/",
+      "title": "Harley of Scotland ネップ糸 タートルネックセーター jura(ネイビー) 38 | ReStandard",
+      "description": "Harley of Scotland ネップ糸 タートルネックセーター jura(ネイビー) 38。カラー：jura(ネイビー)。素材：wool/ウール100%。全4枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "Harley of Scotland ネップ糸 タートルネックセーター jura(ネイビー) 38",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 13,
+      "errors": []
+    },
+    {
+      "path": "/products/harley-of-scotland-machair-163809707/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-machair-163809707/",
+      "title": "Harley of Scotland ネップ糸 タートルネックセーター machair(ベージュ) 38 | ReStandard",
+      "description": "Harley of Scotland ネップ糸 タートルネックセーター machair(ベージュ) 38。カラー：machair(ベージュ)。素材：wool/ウール100%。全4枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "Harley of Scotland ネップ糸 タートルネックセーター machair(ベージュ) 38",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 13,
+      "errors": []
+    },
+    {
+      "path": "/products/harley-of-scotland-polo-agate-163800260/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/harley-of-scotland-polo-agate-163800260/",
+      "title": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(agate) | ReStandard",
+      "description": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(agate)。素材：Lambswool/ラムズウール100%。全6枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "Harley of Scotland 2ply ハイゲージ ポロ襟セーター(agate)",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 17,
       "errors": []
     },
     {
@@ -1178,18 +1253,63 @@
       "errors": []
     },
     {
+      "path": "/products/rockmount-rockmount-sp9948-flannel-check-brown-beige-163687863/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-brown-beige-163687863/",
+      "title": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel brown/beige | ReStandard",
+      "description": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel brown/beige。カラー：brown/beige（ブラウン×ベージュ系チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全3枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel brown/beige",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 11,
+      "errors": []
+    },
+    {
+      "path": "/products/rockmount-rockmount-sp9948-flannel-check-green-white-163687474/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-green-white-163687474/",
+      "title": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel green/white | ReStandard",
+      "description": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel green/white。カラー：green/white（グリーン×ホワイト系チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全4枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel green/white",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 13,
+      "errors": []
+    },
+    {
+      "path": "/products/rockmount-rockmount-sp9948-flannel-check-grey-royal-163688049/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-grey-royal-163688049/",
+      "title": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel grey/royal | ReStandard",
+      "description": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel grey/royal。カラー：grey/royal（グレー×ブルー系チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全4枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel grey/royal",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 13,
+      "errors": []
+    },
+    {
       "path": "/products/rockmount-rockmount-sp9948-flannel-check-mix-blue-124702621/",
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-mix-blue-124702621/",
       "title": "【別注】 Rockmount ティアードスカート フランネル ミックス Sp9948（Blue) | ReStandard",
-      "description": "【別注】 Rockmount ティアードスカート フランネル ミックス Sp9948（Blue)。カラー：Blue（チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全7枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "【別注】 Rockmount ティアードスカート フランネル ミックス Sp9948（Blue)。カラー：Blue（チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全4枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "【別注】 Rockmount ティアードスカート フランネル ミックス Sp9948（Blue)",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 19,
+      "imageCount": 13,
       "errors": []
     },
     {
@@ -1208,18 +1328,63 @@
       "errors": []
     },
     {
+      "path": "/products/rockmount-rockmount-sp9948-flannel-check-navy-blue-163688148/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-navy-blue-163688148/",
+      "title": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/blue | ReStandard",
+      "description": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/blue。素材：Cotton 100%。サイズ：S（フリーサイズ）。全4枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/blue",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 13,
+      "errors": []
+    },
+    {
+      "path": "/products/rockmount-rockmount-sp9948-flannel-check-navy-brown-163687582/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-navy-brown-163687582/",
+      "title": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/brown | ReStandard",
+      "description": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/brown。カラー：navy/brown（ネイビー×ブラウン系チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全3枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/brown",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 11,
+      "errors": []
+    },
+    {
       "path": "/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-125884162/",
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-125884162/",
       "title": "【別注】 Rockmount ティアードスカート コットンフランネル Sp9948（navy/yellow） | ReStandard",
-      "description": "【別注】 Rockmount ティアードスカート コットンフランネル Sp9948（navy/yellow）。カラー：navy/yellow（ネイビー×イエロー系チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全15枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "【別注】 Rockmount ティアードスカート コットンフランネル Sp9948（navy/yellow）。カラー：navy/yellow（ネイビー×イエロー系チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全16枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "【別注】 Rockmount ティアードスカート コットンフランネル Sp9948（navy/yellow）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 35,
+      "imageCount": 37,
+      "errors": []
+    },
+    {
+      "path": "/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-163687745/",
+      "status": 200,
+      "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-163687745/",
+      "title": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/yellow | ReStandard",
+      "description": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/yellow。カラー：navy/yellow（ネイビー×イエロー系チェック）。素材：Cotton 100%。サイズ：S（フリーサイズ）。全3枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "indexable": true,
+      "h1": "【別注】rockmount ranchwear ティアードスカート sp9948 flannel navy/yellow",
+      "schemas": [
+        "Product",
+        "BreadcrumbList"
+      ],
+      "imageCount": 11,
       "errors": []
     },
     {
@@ -1347,14 +1512,14 @@
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-wool-flannel-navy-125884284/",
       "title": "【別注】 Rockmount ティアードスカート ウールフランネル Sp9948（navy） | ReStandard",
-      "description": "【別注】 Rockmount ティアードスカート ウールフランネル Sp9948（navy）。カラー：Navy（ネイビー無地）。素材：Wool 100%。サイズ：S（フリーサイズ）。全6枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "【別注】 Rockmount ティアードスカート ウールフランネル Sp9948（navy）。カラー：Navy（ネイビー無地）。素材：Wool 100%。サイズ：S（フリーサイズ）。全7枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "【別注】 Rockmount ティアードスカート ウールフランネル Sp9948（navy）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 17,
+      "imageCount": 19,
       "errors": []
     },
     {
@@ -1362,14 +1527,14 @@
       "status": 200,
       "canonical": "https://restandard-2025.netlify.app/products/rockmount-rockmount-sp9948-wool-tweed-check-blackwatch-125884199/",
       "title": "【別注】 Rockmount ティアードスカート ウールツイード Sp9948（blackwatch） | ReStandard",
-      "description": "【別注】 Rockmount ティアードスカート ウールツイード Sp9948（blackwatch）。カラー：Blackwatch（ネイビー×グリーン系チェック）。素材：Wool 67% / Polyester 25% / Nylon 4% / Other 4%。サイズ：S（フリーサイズ）。全11枚の画像と商品詳細を確認し、BASEで購入できます。",
+      "description": "【別注】 Rockmount ティアードスカート ウールツイード Sp9948（blackwatch）。カラー：Blackwatch（ネイビー×グリーン系チェック）。素材：Wool 67% / Polyester 25% / Nylon 4% / Other 4%。サイズ：S（フリーサイズ）。全9枚の画像と商品詳細を確認し、BASEで購入できます。",
       "indexable": true,
       "h1": "【別注】 Rockmount ティアードスカート ウールツイード Sp9948（blackwatch）",
       "schemas": [
         "Product",
         "BreadcrumbList"
       ],
-      "imageCount": 27,
+      "imageCount": 23,
       "errors": []
     },
     {

@@ -217,7 +217,7 @@ async function main() {
   // Static fallback keeps every product available without scripts.
   const noJS=await browser.newPage({javaScriptEnabled:false,viewport:{width:320,height:800}});
   await noJS.goto(url,{waitUntil:'load'});
-  assert.equal(await noJS.locator('[data-product-marquee] a').count(),32);
+  assert.equal(await noJS.locator('[data-product-marquee] a').count(),require('../assets/base-products.json').collection.flat().length+require('../assets/base-products.json').lookbook.length);
   await noJS.close();
   assert.deepEqual(errors,[]);
   console.log('PASS: 8 widths, all 32 product mappings, 2+ cycles, real touch swipes on all rows, drag/release/cancel, touch link, pageshow, reduced motion, failed images, no-JS fallback.');

@@ -6,10 +6,10 @@ const path = require('node:path');
 const {spawnSync} = require('node:child_process');
 const phase = process.argv[2];
 if (!['before','after'].includes(phase)) throw new Error('Specify before or after');
-const dir = path.resolve('.catalog-private/performance-20261020');
+const dir = path.resolve(process.env.PERF_DIR || '.catalog-private/performance-20261020');
 fs.mkdirSync(dir, {recursive:true});
 const origin = 'https://restandard-2025.netlify.app';
-const pages = {home:'/', product:'/products/harley-of-scotland-cardigan-cinder-125801949/'};
+const pages = process.env.PERF_HOME_ONLY==='1' ? {home:'/'} : {home:'/', product:'/products/harley-of-scotland-cardigan-cinder-125801949/'};
 const reports=[];
 for (const [page,route] of Object.entries(pages)) for(const device of ['mobile','desktop']) for(let run=1;run<=3;run++){
   const file=path.join(dir,`${phase}-${page}-${device}-${run}.json`);
@@ -20,7 +20,7 @@ for (const [page,route] of Object.entries(pages)) for(const device of ['mobile',
   }
   const r=JSON.parse(fs.readFileSync(file,'utf8'));
   if(r.runtimeError)throw new Error(JSON.stringify(r.runtimeError));
-  const row={page,device,run,at:r.fetchTime,url:r.finalDisplayedUrl,version:r.lighthouseVersion,settings:r.configSettings,score:r.categories.performance.score*100,
+  const row={page,device,run,at:r.fetchTime,url:r.finalDisplayedUrl,version:r.lighthouseVersion,settings:r.configSettings,environment:r.environment,score:r.categories.performance.score*100,
     lcp:r.audits['largest-contentful-paint'].numericValue,cls:r.audits['cumulative-layout-shift'].numericValue,
     tbt:r.audits['total-blocking-time'].numericValue,bytes:r.audits['total-byte-weight'].numericValue,warnings:r.runWarnings};
   reports.push(row);console.log(JSON.stringify({phase,page,device,run,score:row.score,lcp:Math.round(row.lcp),cls:row.cls,bytes:row.bytes}));

@@ -7,6 +7,7 @@ const {connectHome}=require('../catalog/home-links.cjs');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'.catalog-dist');
 (async()=>{
   require('./render-product-sections.cjs');
+  require('./build-transparent-logos.cjs').render();
   require('./optimize-home-images.cjs').render();
   require('./build-lookbook.cjs');
   require('./render-news-products.cjs').render();
@@ -14,6 +15,7 @@ const root=path.resolve(__dirname,'..'),out=path.join(root,'.catalog-dist');
   require('./prerender-news.cjs').render();
   const seo=require('./seo-pages.cjs');
   seo.repairAll();
+  await require('./build-home-performance.cjs').render();
   if(!config.phase1Confirmed||!config.pilotApproved)throw new Error('DESIGN_OR_PILOT_NOT_VALIDATED');
   const snapshot=JSON.parse(await fs.readFile(path.join(root,'catalog/public-snapshot.json'),'utf8'));
   if(snapshot.source!=='base-public-store'||!snapshot.publicListingComplete)throw new Error('PUBLIC_SNAPSHOT_INCOMPLETE');

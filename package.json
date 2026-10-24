@@ -38,16 +38,18 @@
     "render:lookbook": "node scripts/build-lookbook.cjs",
     "sync:shell": "node scripts/sync-site-shell.cjs",
     "test:header": "node scripts/test-header.cjs",
-    "test:cursor": "node scripts/test-cursor.cjs"
-    ,"test:seo": "node --test scripts/test-seo.cjs"
-    ,"audit:seo": "node scripts/audit-seo.cjs"
+    "test:cursor": "node scripts/test-cursor.cjs",
+    "test:seo": "node --test scripts/test-seo.cjs",
+    "audit:seo": "node scripts/audit-seo.cjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "esbuild": "0.25.12",
     "html-validate": "^10.3.0",
     "jsdom": "^27.1.0",
-    "playwright": "^1.62.1"
+    "playwright": "^1.62.1",
+    "purgecss": "7.0.2"
   }
 }
