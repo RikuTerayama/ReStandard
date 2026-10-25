@@ -1,0 +1,690 @@
+{
+  "commit": "1b2284ea3969940e2f1689fe210b02870840856b",
+  "seo": {
+    "at": "2026-10-24T18:47:34.226Z",
+    "pages": 130,
+    "indexable": 129,
+    "sitemapUrls": 129,
+    "errors": []
+  },
+  "language": {
+    "pages": 130,
+    "errors": []
+  },
+  "production": {
+    "at": "2026-10-24T18:46:41.469Z",
+    "products": [
+      {
+        "id": "125801949",
+        "url": "/products/harley-of-scotland-cardigan-cinder-125801949/",
+        "status": 200,
+        "images": 11,
+        "price": 41800
+      },
+      {
+        "id": "125801985",
+        "url": "/products/harley-of-scotland-5ha30-acacia-125801985/",
+        "status": 200,
+        "images": 7,
+        "price": 41800
+      },
+      {
+        "id": "125884199",
+        "url": "/products/rockmount-rockmount-sp9948-wool-tweed-check-blackwatch-125884199/",
+        "status": 200,
+        "images": 9,
+        "price": 25080
+      },
+      {
+        "id": "125884162",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-125884162/",
+        "status": 200,
+        "images": 16,
+        "price": 20680
+      },
+      {
+        "id": "163800394",
+        "url": "/products/harley-of-scotland-black-163800394/",
+        "status": 200,
+        "images": 4,
+        "price": 36300
+      },
+      {
+        "id": "163687582",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-brown-163687582/",
+        "status": 200,
+        "images": 3,
+        "price": 20680
+      },
+      {
+        "id": "163800260",
+        "url": "/products/harley-of-scotland-polo-agate-163800260/",
+        "status": 200,
+        "images": 6,
+        "price": 36300
+      },
+      {
+        "id": "163687863",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-brown-beige-163687863/",
+        "status": 200,
+        "images": 3,
+        "price": 20680
+      },
+      {
+        "id": "163800185",
+        "url": "/products/harley-of-scotland-acacia-163800185/",
+        "status": 200,
+        "images": 3,
+        "price": 36300
+      },
+      {
+        "id": "125802521",
+        "url": "/products/harley-of-scotland-5ha75-black-125802521/",
+        "status": 200,
+        "images": 11,
+        "price": 30800
+      },
+      {
+        "id": "163688049",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-grey-royal-163688049/",
+        "status": 200,
+        "images": 4,
+        "price": 20680
+      },
+      {
+        "id": "125802440",
+        "url": "/products/harley-of-scotland-5ha75-elk-brown-125802440/",
+        "status": 200,
+        "images": 13,
+        "price": 30800
+      },
+      {
+        "id": "125884016",
+        "url": "/products/rockmount-green-yellow-white-125884016/",
+        "status": 200,
+        "images": 14,
+        "price": 20680
+      },
+      {
+        "id": "125802414",
+        "url": "/products/harley-of-scotland-5ha75-almond-125802414/",
+        "status": 200,
+        "images": 13,
+        "price": 30800
+      },
+      {
+        "id": "163687474",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-green-white-163687474/",
+        "status": 200,
+        "images": 4,
+        "price": 20680
+      },
+      {
+        "id": "125884124",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-anderson-125884124/",
+        "status": 200,
+        "images": 14,
+        "price": 20680
+      },
+      {
+        "id": "125802496",
+        "url": "/products/harley-of-scotland-5ha75-agate-beige-125802496/",
+        "status": 200,
+        "images": 11,
+        "price": 30800
+      },
+      {
+        "id": "125884284",
+        "url": "/products/rockmount-rockmount-sp9948-wool-flannel-navy-125884284/",
+        "status": 200,
+        "images": 7,
+        "price": 25080
+      },
+      {
+        "id": "125802029",
+        "url": "/products/harley-of-scotland-5ha75-cinder-125802029/",
+        "status": 200,
+        "images": 13,
+        "price": 30800
+      },
+      {
+        "id": "124702404",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-black-stewart-124702404/",
+        "status": 200,
+        "images": 11,
+        "price": 20680
+      },
+      {
+        "id": "125802068",
+        "url": "/products/harley-of-scotland-5ha75-acacia-125802068/",
+        "status": 200,
+        "images": 12,
+        "price": 30800
+      },
+      {
+        "id": "125884247",
+        "url": "/products/rockmount-rockmount-sp9948-wool-flannel-dark-grey-125884247/",
+        "status": 200,
+        "images": 6,
+        "price": 25080
+      },
+      {
+        "id": "124700837",
+        "url": "/products/harley-of-scotland-5ha75-mural-124700837/",
+        "status": 200,
+        "images": 10,
+        "price": 30800
+      },
+      {
+        "id": "124701564",
+        "url": "/products/rockmount-rockmount-sp9999-33-denim-124701564/",
+        "status": 200,
+        "images": 2,
+        "price": 21780
+      },
+      {
+        "id": "124700748",
+        "url": "/products/harley-of-scotland-high-gauge-turtle-grey-124700748/",
+        "status": 200,
+        "images": 9,
+        "price": 30800
+      },
+      {
+        "id": "124700633",
+        "url": "/products/harley-of-scotland-5ha74-pink-124700633/",
+        "status": 200,
+        "images": 11,
+        "price": 30800
+      },
+      {
+        "id": "125884071",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-royal-stewart-125884071/",
+        "status": 200,
+        "images": 11,
+        "price": 20680
+      },
+      {
+        "id": "163809899",
+        "url": "/products/harley-of-scotland-jura-163809899/",
+        "status": 200,
+        "images": 4,
+        "price": 30800
+      },
+      {
+        "id": "163688148",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-blue-163688148/",
+        "status": 200,
+        "images": 4,
+        "price": 20680
+      },
+      {
+        "id": "163809707",
+        "url": "/products/harley-of-scotland-machair-163809707/",
+        "status": 200,
+        "images": 4,
+        "price": 30800
+      },
+      {
+        "id": "124702544",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-white-black-check-124702544/",
+        "status": 200,
+        "images": 10,
+        "price": 20680
+      },
+      {
+        "id": "163687745",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-navy-yellow-163687745/",
+        "status": 200,
+        "images": 3,
+        "price": 20680
+      },
+      {
+        "id": "124700335",
+        "url": "/products/harley-of-scotland-fairisle-124700335/",
+        "status": 200,
+        "images": 4,
+        "price": 30800
+      },
+      {
+        "id": "125312275",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-mix-black-black-125312275/",
+        "status": 200,
+        "images": 8,
+        "price": 20680
+      },
+      {
+        "id": "124700445",
+        "url": "/products/harley-of-scotland-5ha74-red-cinder-124700445/",
+        "status": 200,
+        "images": 5,
+        "price": 33000
+      },
+      {
+        "id": "124702204",
+        "url": "/products/rockmount-rockmount-sp9999-corduroy-coral-124702204/",
+        "status": 200,
+        "images": 9,
+        "price": 18480
+      },
+      {
+        "id": "124700532",
+        "url": "/products/harley-of-scotland-5ha74-yellow-corona-124700532/",
+        "status": 200,
+        "images": 6,
+        "price": 33000
+      },
+      {
+        "id": "124702502",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-olive-black-check-124702502/",
+        "status": 200,
+        "images": 10,
+        "price": 20680
+      },
+      {
+        "id": "124700575",
+        "url": "/products/harley-of-scotland-harley-of-scotland-5ha74-grey-124700575/",
+        "status": 200,
+        "images": 7,
+        "price": 33000
+      },
+      {
+        "id": "124702621",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-mix-blue-124702621/",
+        "status": 200,
+        "images": 4,
+        "price": 20680
+      },
+      {
+        "id": "124700874",
+        "url": "/products/harley-of-scotland-5ha03-sandrose-124700874/",
+        "status": 200,
+        "images": 4,
+        "price": 27500
+      },
+      {
+        "id": "124702271",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-grey-124702271/",
+        "status": 200,
+        "images": 2,
+        "price": 18480
+      },
+      {
+        "id": "124700913",
+        "url": "/products/harley-of-scotland-5ha03-navy-tearose-124700913/",
+        "status": 200,
+        "images": 5,
+        "price": 26400
+      },
+      {
+        "id": "124701944",
+        "url": "/products/rockmount-sp9999-corduroy-navy-124701944/",
+        "status": 200,
+        "images": 5,
+        "price": 18480
+      },
+      {
+        "id": "124700945",
+        "url": "/products/harley-of-scotland-5ha03-med-grey-sunshine-124700945/",
+        "status": 200,
+        "images": 5,
+        "price": 26400
+      },
+      {
+        "id": "124702463",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-khaki-124702463/",
+        "status": 200,
+        "images": 2,
+        "price": 18480
+      },
+      {
+        "id": "124700975",
+        "url": "/products/eribe-p3974-yellow-124700975/",
+        "status": 200,
+        "images": 6,
+        "price": 41800
+      },
+      {
+        "id": "124701674",
+        "url": "/products/rockmount-rockmount-sp9948-corduroy-beige-124701674/",
+        "status": 200,
+        "images": 9,
+        "price": 18480
+      },
+      {
+        "id": "124701019",
+        "url": "/products/eribe-p3974-tearose-124701019/",
+        "status": 200,
+        "images": 7,
+        "price": 41800
+      },
+      {
+        "id": "124702093",
+        "url": "/products/rockmount-rockmount-sp9999-corduroy-military-124702093/",
+        "status": 200,
+        "images": 6,
+        "price": 18480
+      },
+      {
+        "id": "124701069",
+        "url": "/products/eribe-p4312-harissa-124701069/",
+        "status": 200,
+        "images": 5,
+        "price": 37400
+      },
+      {
+        "id": "124702689",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-mix-red-124702689/",
+        "status": 200,
+        "images": 7,
+        "price": 20680
+      },
+      {
+        "id": "124701106",
+        "url": "/products/eribe-p4313-mulberry-124701106/",
+        "status": 200,
+        "images": 1,
+        "price": 39600
+      },
+      {
+        "id": "124702307",
+        "url": "/products/rockmount-rockmount-sp9948-flannel-check-yellow-navy-124702307/",
+        "status": 200,
+        "images": 15,
+        "price": 20680
+      },
+      {
+        "id": "124701462",
+        "url": "/products/eribe-p4331-indigo-124701462/",
+        "status": 200,
+        "images": 7,
+        "price": 50600
+      },
+      {
+        "id": "124702355",
+        "url": "/products/rockmount-sp9948-blackwatch-124702355/",
+        "status": 200,
+        "images": 12,
+        "price": 20680
+      },
+      {
+        "id": "124701230",
+        "url": "/products/eribe-v4353-bark-124701230/",
+        "status": 200,
+        "images": 2,
+        "price": 36300
+      },
+      {
+        "id": "124701344",
+        "url": "/products/eribe-p4331-strachan-124701344/",
+        "status": 200,
+        "images": 1,
+        "price": 42900
+      },
+      {
+        "id": "124701288",
+        "url": "/products/eribe-v4353-sand-124701288/",
+        "status": 200,
+        "images": 5,
+        "price": 48400
+      },
+      {
+        "id": "124701407",
+        "url": "/products/eribe-p4331-orange-124701407/",
+        "status": 200,
+        "images": 2,
+        "price": 41800
+      },
+      {
+        "id": "124701516",
+        "url": "/products/eribe-v4358-olive-124701516/",
+        "status": 200,
+        "images": 2,
+        "price": 37400
+      },
+      {
+        "id": "145362212",
+        "url": "/products/rockmount-rockmount-sp9999-36-gingham-145362212/",
+        "status": 200,
+        "images": 8,
+        "price": 22880
+      },
+      {
+        "id": "145362119",
+        "url": "/products/rockmount-rockmount-sp9999-36-gingham-145362119/",
+        "status": 200,
+        "images": 8,
+        "price": 22880
+      },
+      {
+        "id": "145361943",
+        "url": "/products/rockmount-rockmount-sp9999-36-gingham-145361943/",
+        "status": 200,
+        "images": 8,
+        "price": 22880
+      },
+      {
+        "id": "145361831",
+        "url": "/products/rockmount-rockmount-sp9999-33-gingham-mix-145361831/",
+        "status": 200,
+        "images": 6,
+        "price": 18800
+      },
+      {
+        "id": "145361757",
+        "url": "/products/rockmount-rockmount-sp9999-33-gingham-mix-145361757/",
+        "status": 200,
+        "images": 6,
+        "price": 18800
+      },
+      {
+        "id": "145361705",
+        "url": "/products/rockmount-rockmount-sp9999-36-plaids-yellow-145361705/",
+        "status": 200,
+        "images": 6,
+        "price": 22880
+      },
+      {
+        "id": "145361644",
+        "url": "/products/rockmount-rockmount-sp9999-36-plaids-navy-145361644/",
+        "status": 200,
+        "images": 6,
+        "price": 22880
+      },
+      {
+        "id": "145361590",
+        "url": "/products/rockmount-rockmount-sp9999-plaids-yellow-145361590/",
+        "status": 200,
+        "images": 5,
+        "price": 18800
+      },
+      {
+        "id": "145361524",
+        "url": "/products/rockmount-rockmount-sp9999-plaids-navy-145361524/",
+        "status": 200,
+        "images": 5,
+        "price": 18800
+      },
+      {
+        "id": "145361463",
+        "url": "/products/rockmount-rockmount-sp9999-floral-yellow-145361463/",
+        "status": 200,
+        "images": 7,
+        "price": 17800
+      },
+      {
+        "id": "145361391",
+        "url": "/products/rockmount-rockmount-sp9999-floral-beige-145361391/",
+        "status": 200,
+        "images": 7,
+        "price": 17800
+      },
+      {
+        "id": "145361191",
+        "url": "/products/rockmount-rockmount-sp9999-floral-green-145361191/",
+        "status": 200,
+        "images": 7,
+        "price": 17800
+      },
+      {
+        "id": "145361131",
+        "url": "/products/rockmount-rockmount-sp9999-33-floral-yellow-145361131/",
+        "status": 200,
+        "images": 8,
+        "price": 18800
+      },
+      {
+        "id": "145361091",
+        "url": "/products/rockmount-rockmount-sp9999-33-floral-beige-145361091/",
+        "status": 200,
+        "images": 8,
+        "price": 18800
+      },
+      {
+        "id": "145361049",
+        "url": "/products/rockmount-rockmount-sp9999-33-floral-green-145361049/",
+        "status": 200,
+        "images": 8,
+        "price": 18800
+      },
+      {
+        "id": "145360973",
+        "url": "/products/rockmount-rockmount-sp9999-33-dots-navy-145360973/",
+        "status": 200,
+        "images": 4,
+        "price": 19800
+      },
+      {
+        "id": "145360396",
+        "url": "/products/rockmount-rockmount-sp9999-36-denim-145360396/",
+        "status": 200,
+        "images": 4,
+        "price": 22880
+      },
+      {
+        "id": "145360236",
+        "url": "/products/rockmount-rockmount-sp9999-denim-145360236/",
+        "status": 200,
+        "images": 3,
+        "price": 18800
+      },
+      {
+        "id": "145360826",
+        "url": "/products/rockmount-rockmount-sp9999-33-rayon-poly-green-145360826/",
+        "status": 200,
+        "images": 8,
+        "price": 19800
+      },
+      {
+        "id": "145360610",
+        "url": "/products/rockmount-rockmount-sp9999-33-rayon-poly-off-white-145360610/",
+        "status": 200,
+        "images": 8,
+        "price": 19800
+      },
+      {
+        "id": "145360720",
+        "url": "/products/rockmount-rockmount-sp9999-33-rayon-poly-pink-145360720/",
+        "status": 200,
+        "images": 8,
+        "price": 19800
+      }
+    ],
+    "lookbook": 17,
+    "baseLinks": 34,
+    "cachedImages": 19,
+    "passed": true
+  },
+  "browser": {
+    "at": "2026-10-24T18:49:28.466Z",
+    "results": [
+      {
+        "width": 375,
+        "route": "/",
+        "passed": true
+      },
+      {
+        "width": 375,
+        "route": "/lookbook.html",
+        "passed": true
+      },
+      {
+        "width": 375,
+        "route": "/products/harley-of-scotland-black-163800394/",
+        "passed": true
+      },
+      {
+        "width": 768,
+        "route": "/",
+        "passed": true
+      },
+      {
+        "width": 768,
+        "route": "/lookbook.html",
+        "passed": true
+      },
+      {
+        "width": 768,
+        "route": "/products/harley-of-scotland-black-163800394/",
+        "passed": true
+      },
+      {
+        "width": 1024,
+        "route": "/",
+        "passed": true
+      },
+      {
+        "width": 1024,
+        "route": "/lookbook.html",
+        "passed": true
+      },
+      {
+        "width": 1024,
+        "route": "/products/harley-of-scotland-black-163800394/",
+        "passed": true
+      },
+      {
+        "width": 1440,
+        "route": "/",
+        "passed": true
+      },
+      {
+        "width": 1440,
+        "route": "/lookbook.html",
+        "passed": true
+      },
+      {
+        "width": 1440,
+        "route": "/products/harley-of-scotland-black-163800394/",
+        "passed": true
+      }
+    ]
+  },
+  "marquee": {
+    "widths": [
+      320,
+      375,
+      480,
+      768,
+      1024,
+      1440,
+      2560,
+      3840
+    ],
+    "cycles": "2+",
+    "realTouch": true,
+    "noJs": true,
+    "passed": true
+  },
+  "logos": {
+    "widths": [
+      375,
+      768,
+      1024,
+      1440
+    ],
+    "homeAndDirectoryChecks": 80,
+    "brandDetailPages": 10,
+    "actualAlphaPixels": true,
+    "productionPassed": true
+  }
+}
